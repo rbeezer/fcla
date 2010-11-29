@@ -1,0 +1,65 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+\begin{enumerate}
+\item
+If $S$ spans $M_{2,2}$, then for every $2 \times 2$ matrix 
+$B = \begin{bmatrix}x & y \\ z & w\end{bmatrix}$, 
+there exist constants $\alpha, \beta, \gamma$ so that 
+%
+\begin{align*}
+\begin{bmatrix}x & y \\ z & w\end{bmatrix} 
+&= 
+\alpha\begin{bmatrix} 1& 2\\2 & 1 \end{bmatrix} + 
+\beta\begin{bmatrix} 2 & 1\\ -1 & 2\end{bmatrix} + 
+\gamma\begin{bmatrix} 0 & 1\\ 1 & 2\end{bmatrix}
+\end{align*}
+%  
+Applying \acronymref{definition}{ME}, this leads to the linear system
+\begin{align*}
+\alpha + 2\beta  &= x\\
+2\alpha + \beta + \gamma &= y\\
+2\alpha - \beta + \gamma &= z\\
+\alpha + 2\beta + 2\gamma &= w.
+\end{align*}
+We need to row-reduce the augmented matrix of this system by hand due to the symbols $x$, $y$, $z$, and $w$ in the vector of constants.
+%
+\begin{align*}
+\begin{bmatrix} 
+1 & 2 & 0 & x\\ 
+2 & 1 & 1 & y\\
+2 & -1 & 1 & z\\ 
+1 & 2 & 2 & w
+\end{bmatrix} 
+\rref 
+\begin{bmatrix} 
+\leading{1} & 0 & 0 & x - y + z\\
+0 & \leading{1} & 0 & \frac{1}{2}(y - z)\\
+0 & 0 & \leading{1} & \frac{1}{2}(w - x)\\
+0 & 0 & 0 & \frac{1}{2}(5y - 3x - 3z - w)
+\end{bmatrix}
+\end{align*}
+%
+With the apperance of a leading 1 possible in the last column, by \acronymref{theorem}{RCLS} there will exist some matrices 
+$B = \begin{bmatrix}x & y \\ z & w \end{bmatrix}$ so that the linear system above has no solution (namely, whenever $5y - 3x - 3z - w \ne 0$), so the set $S$ does not span $M_{2,2}$. (For example, you can verify that there is no solution when $B = \begin{bmatrix} 3 & 3 \\ 3 & 2\end{bmatrix}$.)
+%
+\item 
+To check for linear independence, we need to see if there are nontrivial coefficients $\alpha, \beta, \gamma$ that solve 
+%
+\begin{align*}
+\begin{bmatrix}0 & 0 \\ 0 & 0\end{bmatrix} 
+&= 
+\alpha\begin{bmatrix} 1& 2\\2 & 1 \end{bmatrix} + 
+\beta\begin{bmatrix} 2 & 1\\ -1 & 2\end{bmatrix}+ 
+\gamma\begin{bmatrix} 0 & 1\\ 1 & 2\end{bmatrix}
+\end{align*}
+%
+This requires the same work that was done in part (a), with $x = y = z = w = 0$.
+In that case, the coefficient matrix row-reduces to have a leading 1 in each of the first three columns and a row of zeros on the bottom, so we know that the only solution to the matrix equation is $\alpha = \beta = \gamma = 0$.  So the set $S$ is linearly independent.
+\end{enumerate}

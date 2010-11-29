@@ -1,0 +1,385 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section SSLE
+%%  Solving Systems of Linear Equations
+%%
+%%%%%%%%%%%
+%
+We will motivate our study of linear algebra by considering the problem of solving several linear equations simultaneously.  The word ``solve'' tends to get abused somewhat, as in ``solve this problem.''  When talking about equations we understand a more precise meaning:  find {\em all} of the values of some variable quantities that make an equation, or several equations, true.
+%
+\subsect{SLE}{Systems of Linear Equations}
+%
+\begin{example}{STNE}{Solving two (nonlinear) equations}{solving nonlinear equations}
+Suppose we desire the simultaneous solutions of the two equations,
+%
+\begin{align*}
+x^2+y^2&=1\\
+-x+\sqrt{3}y&=0\\
+\end{align*}
+%
+You can easily check by substitution that $x=\tfrac{\sqrt{3}}{2},\;y=\tfrac{1}{2}$ and $x=-\tfrac{\sqrt{3}}{2},\;y=-\tfrac{1}{2}$ are both solutions.  We need to also convince ourselves that these are the {\em only} solutions.  To see this, plot each equation on the $xy$-plane, which means to plot $(x,\,y)$ pairs that make an individual equation true.  In this case we get a circle centered at the origin with radius 1 and a straight line through the origin with slope $\tfrac{1}{\sqrt{3}}$.  The intersections of these two curves are our desired simultaneous solutions, and so we believe from our plot that the two solutions we know already are indeed the only ones.  We like to write solutions as sets, so in this case we write the set of solutions as 
+%
+\begin{align*}
+S&=\set{\left(\tfrac{\sqrt{3}}{2},\,\tfrac{1}{2}\right),\,\left(-\tfrac{\sqrt{3}}{2},\,-\tfrac{1}{2}\right)}
+\end{align*}
+%
+\end{example}
+%
+\ifthenelse{\boolean{techniquesappendix}\or\boolean{techniquesinline}}{
+In order to discuss systems of linear equations carefully, we need a precise definition.  And before we do that, we will introduce our periodic discussions about ``Proof Techniques.''  
+Linear algebra is an excellent setting for learning how to read, understand and formulate proofs.  But this is a difficult step in your development as a mathematician, so we have included a series of short essays containing advice and explanations to help you along.
+\ifthenelse{\boolean{techniquesappendix}}
+{These can be found back in \acronymref{section}{PT} of \acronymref{appendix}{P}, and we will reference them as they become appropriate.  Be sure to head back to the appendix to read this as they are introduced.}{\relax}
+\ifthenelse{\boolean{techniquesinline}}
+{These will appear in the text as needed, and the table of contents in front contains a list you can consult when you want to return to re-read them. (Which is strongly encouraged!)}{\relax}
+}{\relax}  % done on techniques generally
+%
+\techniqueinline{D}{Definitions}{definition}
+{With a definition next, now is the time for the first of our proof techniques.}
+{Head back to \acronymref{section}{PT} of \acronymref{appendix}{P} and study \acronymref{technique}{D}.  We'll be right here when you get back.  See you in a bit.}
+%
+\begin{definition}{SLE}{System of Linear Equations}{system of linear equations}
+A \define{system of linear equations} is a collection of $m$ equations in the variable quantities $x_1,\,x_2,\,x_3,\ldots,x_n$ of the form,
+\begin{align*}
+a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&=b_1\\
+a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&=b_2\\
+a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&=b_3\\
+&\vdots\\
+a_{m1}x_1+a_{m2}x_2+a_{m3}x_3+\dots+a_{mn}x_n&=b_m
+\end{align*}
+where the values of $a_{ij}$, $b_i$ and $x_j$ are from the set of complex numbers, $\complex{\null}$.
+\end{definition}
+%
+Don't let the mention of the complex numbers, $\complex{\null}$, rattle you.  We will stick with real numbers exclusively for many more sections, and it will sometimes seem like we only work with integers!  However, we want to leave the possibility of complex numbers open, and there will be occasions in subsequent sections where they are necessary.  You can review the basic properties of complex numbers in \acronymref{section}{CNO}, but these facts will not be critical until we reach \acronymref{section}{O}.\par
+%
+Now we make the notion of a solution to a linear system precise.
+%
+\begin{definition}{SSLE}{Solution of a System of Linear Equations}{solution to a linear system}
+A \define{solution} of a system of linear equations in $n$ variables, $\scalarlist{x}{n}$ (such as the system given in \acronymref{definition}{SLE}, is an ordered list of $n$ complex numbers, $\scalarlist{s}{n}$ such that if we substitute $s_1$ for $x_1$, $s_2$ for $x_2$, $s_3$ for $x_3$, \dots, $s_n$ for $x_n$,  then for every equation of the system the left side will equal the right side, i.e.\ each equation is true simultaneously.
+\end{definition}
+%
+More typically, we will write a solution in a form like $x_1=12$, $x_2=-7$, $x_3=2$ to mean that $s_1=12$, $s_2=-7$, $s_3=2$ in the notation of \acronymref{definition}{SSLE}.  To discuss {\em all} of the possible solutions to a system of linear equations, we now define the set of all solutions.  (So \acronymref{section}{SET} is now applicable, and you may want to go and familiarize yourself with what is there.)
+%
+\begin{definition}{SSSLE}{Solution Set of a System of Linear Equations}{solution set of a linear system}
+The \define{solution set} of a linear system of equations is the set which contains every solution to the system, and nothing more.
+\end{definition}
+%
+Be aware that a solution set can be infinite, or there can be no solutions, in which case we write the solution set as the empty set, $\emptyset=\set{}$ (\acronymref{definition}{ES}).  Here is an example to illustrate using the notation introduced in \acronymref{definition}{SLE} and the notion of a solution (\acronymref{definition}{SSLE}).
+%
+\begin{example}{NSE}{Notation for a system of equations}{notation for a linear system}
+Given the system of linear equations,
+%
+\begin{align*}
+x_1+2x_2 +\quad x_4&= 7\\
+x_1+x_2+x_3-x_4&=3\\
+3x_1+x_2+5x_3-7x_4&=1
+\end{align*}
+%
+we have $n=4$ variables and $m=3$ equations.  Also,
+%
+\begin{align*}
+a_{11}&=1 & a_{12}&=2 & a_{13}&=0 & a_{14}&=1 & b_{1}&=7\\
+a_{21}&=1 & a_{22}&=1 & a_{23}&=1 & a_{24}&=-1 & b_{2}&=3\\
+a_{31}&=3 & a_{32}&=1 & a_{33}&=5 & a_{34}&=-7 & b_{3}&=1
+\end{align*}
+%
+Additionally, convince yourself that $x_{1}=-2$, $x_{2}=4$, $x_{3}=2$, $x_{4}=1$ is one solution (\acronymref{definition}{SSLE}), but it is not the only one!  For example, another solution is $x_{1}=-12$, $x_{2}=11$, $x_{3}=1$, $x_{4}=-3$, and there are more to be found.  So the solution set contains at least two elements.
+\end{example}
+%
+We will often shorten the term  ``system of linear equations'' to ``system of equations'' leaving the linear aspect implied.  After all, this is a book about {\em linear} algebra.
+%
+\subsect{PSS}{Possibilities for Solution Sets}
+The next example illustrates the possibilities for the solution set of a system of linear equations.  We will not be too formal here, and the necessary theorems to back up our claims will come in subsequent sections.  So read for feeling and come back later to revisit this example.
+%
+\begin{example}{TTS}{Three typical systems}{typical systems, $2\times 2$}
+Consider the system of two equations with two variables,
+%
+\begin{align*}
+2x_1+3x_2&=3\\
+x_1-x_2&=4
+\end{align*}
+%
+If we plot the solutions to each of these equations separately on the $x_{1}x_{2}$-plane, we get two lines, one with negative slope, the other with positive slope.  They have exactly one point in common, $(x_1,\,x_2)=(3,\,-1)$, which is the solution $x_1=3$, $x_2=-1$.  From the geometry, we believe that this is the only solution to the system of equations, and so we say it is unique.\par
+%
+Now adjust the system with a different second equation,
+%
+\begin{align*}
+2x_1+3x_2&=3\\
+4x_1+6x_2&=6
+\end{align*}
+%
+A plot of the solutions to these equations individually results in two lines, one on top of the other!  There are infinitely many pairs of points that make both equations true.  We will learn shortly how to describe this infinite solution set precisely (see \acronymref{example}{SAA}, \acronymref{theorem}{VFSLS}).  Notice now how the second equation is just a multiple of the first.\par
+%
+One more minor adjustment provides a third system of linear equations,
+%
+\begin{align*}
+2x_1+3x_2&=3\\
+4x_1+6x_2&=10
+\end{align*}
+%
+A plot now reveals two lines with identical slopes, i.e.\ parallel lines.  They have no points in common, and so the system has a solution set that is empty, $S=\emptyset$.
+\end{example}
+%
+This example exhibits all of the typical behaviors of a system of equations.  A subsequent theorem will tell us that every system of linear equations has a solution set that is empty, contains a single solution or contains infinitely many solutions (\acronymref{theorem}{PSSLS}).  \acronymref{example}{STNE} yielded exactly two solutions, but this does not contradict the forthcoming theorem.  The equations in \acronymref{example}{STNE} are not linear because they do not match the form of \acronymref{definition}{SLE}, and so we cannot apply \acronymref{theorem}{PSSLS} in this case.\par
+%
+\subsect{ESEO}{Equivalent Systems and Equation Operations}
+%
+With all this talk about finding solution sets for systems of linear equations, you might be ready to begin learning how to find these solution sets yourself.  We begin with our first definition that takes a common word and gives it a very precise meaning in the context of systems of linear equations.
+%
+\begin{definition}{ESYS}{Equivalent Systems}{equivalent systems}
+Two systems of linear equations are \define{equivalent} if their solution sets are equal.
+\end{definition}
+%
+Notice here that the two systems of equations could {\em look} very different (i.e.\ not be equal), but still have equal solution sets, and we would then call the systems equivalent.   Two linear equations in two variables might be plotted as two lines that intersect in a single point.  A different system, with three equations in two variables might have a plot that is three lines, all intersecting at a common point, with this common point identical to the intersection point for the first system.  By our definition, we could then say these two very different looking systems of equations are equivalent, since they have identical solution sets.   It is really like a weaker form of equality, where we allow the systems to be different in some respects, but we use the term equivalent to highlight the situation when their solution sets are equal.\par
+%
+With this definition, we can begin to describe our strategy for solving linear systems.  Given a system of linear equations that looks difficult to solve, we would like to have an {\em equivalent} system that is easy to solve.  Since the systems will have equal solution sets, we can solve the ``easy'' system and get the solution set to the ``difficult'' system.  Here come the tools for making this strategy viable.\par
+%
+\begin{definition}{EO}{Equation Operations}{equation operations}
+Given a system of linear equations, the following three operations will transform the system into a different one, and each operation is known as an \define{equation operation}.
+%
+\begin{enumerate}
+\item Swap the locations of two equations in the list of equations.
+\item Multiply each term of an equation by a nonzero quantity.
+\item Multiply each term of one equation by some quantity, and add these terms to a second equation, on both sides of the equality.  Leave the first equation the same after this operation, but replace the second equation by the new one.
+\end{enumerate}
+%
+\end{definition}
+%
+These descriptions might seem a bit vague, but the proof or the examples that follow should make it clear what is meant by each.  We will shortly prove a key theorem about equation operations and solutions to linear systems of equations.
+%
+\techniqueinline{T}{Theorems}{theorem}
+{We are about to give a rather involved proof, so a discussion about just what a theorem really is would be timely.}
+{Head back and read \acronymref{technique}{T}.}
+%
+In the theorem we are about to prove, the conclusion is that two systems are equivalent.  By \acronymref{definition}{ESYS} this translates to requiring that solution sets be equal for the two systems.  So we are being asked to show {\em that two sets are equal}.  How do we do this?  Well, there is a very standard technique, and we will use it repeatedly through the course.  If you have not done so already, head to \acronymref{section}{SET} and familiarize yourself with sets, their operations, and especially the notion of set equality, \acronymref{definition}{SE} and the nearby discussion about its use.\par
+%
+%
+\begin{theorem}{EOPSS}{Equation Operations Preserve Solution Sets}{equation operations}
+If we apply one of the three equation operations of \acronymref{definition}{EO} to a system of linear equations  (\acronymref{definition}{SLE}), then the original system and the transformed system are equivalent.
+\end{theorem}
+%
+\begin{proof}
+%
+We take each equation operation in turn and show that the solution sets of the two systems are equal, using the definition of set equality (\acronymref{definition}{SE}).
+%
+\begin{enumerate}
+%%
+%% Swapping rows
+%%
+\item  It will not be our habit in proofs to resort to saying statements are ``obvious,'' but in this case, it should be.  There is nothing about the {\em order} in which we write linear equations that affects their solutions, so the solution set will be equal if the systems only differ by a rearrangement of the order of the equations.
+%%
+%% One row by nonzero scalar
+%%
+\item  Suppose $\alpha\neq 0$ is a number.  Let's choose to multiply the terms of equation $i$ by $\alpha$ to build the new system of equations,
+%
+\begin{align*}
+a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&=b_1\\
+a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&=b_2\\
+a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&=b_3\\
+&\vdots\\
+\alpha a_{i1}x_1+\alpha a_{i2}x_2+\alpha a_{i3}x_3+\dots+\alpha a_{in}x_n&=\alpha b_i\\
+&\vdots\\
+a_{m1}x_1+a_{m2}x_2+a_{m3}x_3+\dots+a_{mn}x_n&=b_m
+\end{align*}
+%
+Let $S$ denote the solutions to the system in the statement of the theorem, and let $T$ denote the solutions to the transformed system.
+\begin{enumerate}
+%
+\item Show $S\subseteq T$.  Suppose $(x_1,\,x_2,\,\,x_3,\,\ldots,x_n)=(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in S$ is a solution to the original system.  Ignoring the $i$-th equation for a moment, we know it makes all the other equations of the transformed system true.  We also know that
+%
+\begin{align*}
+a_{i1}\beta_1+a_{i2}\beta_2+a_{i3}\beta_3+\dots+a_{in}\beta_n&=b_i\\
+\intertext{which we can multiply by $\alpha$ to get}
+\alpha a_{i1}\beta_1+\alpha a_{i2}\beta_2+\alpha a_{i3}\beta_3+\dots+\alpha a_{in}\beta_n&=\alpha b_i
+\end{align*}
+%
+This says that the $i$-th equation of the transformed system is also true, so we have established that $(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in T$, and therefore $S\subseteq T$.
+%
+\item Now show $T\subseteq S$.  Suppose $(x_1,\,x_2,\,\,x_3,\,\ldots,x_n)=(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in T$ is a solution to the transformed system.  Ignoring the $i$-th equation for a moment, we know it makes all the other equations of the original system true.  We also know that
+%
+\begin{align*}
+\alpha a_{i1}\beta_1+\alpha a_{i2}\beta_2+\alpha a_{i3}\beta_3+\dots+\alpha a_{in}\beta_n&=\alpha b_i
+%
+\intertext{which we can multiply by $\tfrac{1}{\alpha}$, since $\alpha\neq 0$, to get}
+%
+a_{i1}\beta_1+a_{i2}\beta_2+a_{i3}\beta_3+\dots+a_{in}\beta_n&=b_i\\
+\end{align*}
+%
+This says that the $i$-th equation of the original system is also true, so we have established that $(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in S$, and therefore $T\subseteq S$.  Locate the key point where we required that $\alpha\neq 0$, and consider what would happen if $\alpha=0$.
+%
+\end{enumerate}
+%%
+%% One row by scalar, added to another
+%%
+\item  Suppose $\alpha$ is a number.  Let's choose to multiply the terms of equation $i$ by $\alpha$ and add them to equation $j$ in order to build the new system of equations,
+%
+\begin{align*}
+a_{11}x_1+a_{12}x_2+\dots+a_{1n}x_n&=b_1\\
+a_{21}x_1+a_{22}x_2+\dots+a_{2n}x_n&=b_2\\
+a_{31}x_1+a_{32}x_2+\dots+a_{3n}x_n&=b_3\\
+&\vdots\\
+(\alpha a_{i1}+a_{j1})x_1+(\alpha a_{i2}+a_{j2})x_2+\dots+(\alpha a_{in}+a_{jn})x_n&=\alpha b_i+b_{j}\\
+&\vdots\\
+a_{m1}x_1+a_{m2}x_2+\dots+a_{mn}x_n&=b_m
+\end{align*}
+%
+Let $S$ denote the solutions to the system in the statement of the theorem, and let $T$ denote the solutions to the transformed system.
+\begin{enumerate}
+%
+\item Show $S\subseteq T$.  Suppose $(x_1,\,x_2,\,\,x_3,\,\ldots,x_n)=(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in S$ is a solution to the original system.  Ignoring the $j$-th equation for a moment, we know this solution makes all the other equations of the transformed system true.  Using the fact that the solution makes the $i$-th and $j$-th equations of the original system true, we find
+%
+\begin{align*}
+%
+&(\alpha a_{i1}+a_{j1})\beta_1+(\alpha a_{i2}+a_{j2})\beta_2+\dots+(\alpha a_{in}+a_{jn})\beta_n\\
+%
+&\quad\quad=(\alpha a_{i1}\beta_1+\alpha a_{i2}\beta_2+\dots+\alpha a_{in}\beta_n)+
+(a_{j1}\beta_1+a_{j2}\beta_2+\dots+a_{jn}\beta_n)\\
+%
+&\quad\quad=\alpha(a_{i1}\beta_1+a_{i2}\beta_2+\dots+a_{in}\beta_n)+
+(a_{j1}\beta_1+a_{j2}\beta_2+\dots+a_{jn}\beta_n)\\
+&\quad\quad=\alpha b_i+b_j.
+\end{align*}
+%
+This says that the $j$-th equation of the transformed system is also true, so we have established that $(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in T$, and therefore $S\subseteq T$.
+%
+\item Now show $T\subseteq S$.  Suppose $(x_1,\,x_2,\,\,x_3,\,\ldots,x_n)=(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in T$ is a solution to the transformed system.  Ignoring the $j$-th equation for a moment, we know it makes all the other equations of the original system true.  We then find
+%
+\begin{align*}
+&a_{j1}\beta_1+a_{j2}\beta_2+\dots+a_{jn}\beta_n\\
+%
+&\quad\quad=a_{j1}\beta_1+a_{j2}\beta_2+\dots+a_{jn}\beta_n +\alpha b_i -\alpha b_i\\
+%
+&\quad\quad=a_{j1}\beta_1+a_{j2}\beta_2+\dots+a_{jn}\beta_n +(\alpha a_{i1}\beta_1+\alpha a_{i2}\beta_2+\dots+\alpha a_{in}\beta_n) -\alpha b_i\\
+%
+&\quad\quad=a_{j1}\beta_1+\alpha a_{i1}\beta_1+ a_{j2}\beta_2+\alpha a_{i2}\beta_2+ \dots+ a_{jn}\beta_n+\alpha a_{in}\beta_n-\alpha b_i\\
+%
+&\quad\quad=(\alpha a_{i1}+a_{j1})\beta_1+(\alpha a_{i2}+a_{j2})\beta_2+\dots+(\alpha a_{in}+a_{jn})\beta_n -\alpha b_i\\
+%
+&\quad\quad=\alpha b_i + b_j -\alpha b_i\\
+%
+&\quad\quad=b_j
+%
+\end{align*}
+%
+This says that the $j$-th equation of the original system is also true, so we have established that $(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in S$, and therefore $T\subseteq S$.
+%
+\end{enumerate}
+Why didn't we need to require that $\alpha\neq 0$ for this row operation?  In other words, how does the third statement of the theorem read when $\alpha=0$?  Does our proof require some extra care when $\alpha=0$?  Compare your answers with the similar situation for the second row operation.  (See \acronymref{exercise}{SSLE.T20}.)
+\end{enumerate}
+%
+\end{proof}
+%
+\acronymref{theorem}{EOPSS} is the necessary tool to complete our strategy for solving systems of equations.  We will use equation operations to move from one system to another, all the while keeping the solution set the same.  With the right sequence of operations, we will arrive at a simpler equation to solve.  The next two examples illustrate this idea, while saving some of the details for later.
+%
+\begin{example}{US}{Three equations, one solution}{unique solution, $3\times 3$}
+We solve the following system by a sequence of equation operations.  
+\begin{align*}
+x_1+2x_2+2x_3&=4\\
+x_1+3x_2+3x_3&=5\\
+2x_1+6x_2+5x_3&=6
+\intertext{$\alpha=-1$ times equation 1, add to equation 2:}
+x_1+2x_2+2x_3&=4\\
+0x_1+1x_2+ 1x_3&=1\\
+2x_1+6x_2+5x_3&=6
+\intertext{$\alpha=-2$ times equation 1, add to equation 3:}
+x_1+2x_2+2x_3&=4\\
+0x_1+1x_2+ 1x_3&=1\\
+0x_1+2x_2+1x_3&=-2
+\intertext{$\alpha=-2$ times equation 2, add to equation 3:}
+x_1+2x_2+2x_3&=4\\
+0x_1+1x_2+ 1x_3&=1\\
+0x_1+0x_2-1x_3&=-4
+\intertext{$\alpha=-1$ times equation 3:}
+x_1+2x_2+2x_3&=4\\
+0x_1+1x_2+ 1x_3&=1\\
+0x_1+0x_2+1x_3&=4
+\intertext{which can be written more clearly as}
+x_1+2x_2+2x_3&=4\\
+x_2+ x_3&=1\\
+x_3&=4
+\end{align*}
+%
+This is now a very easy system of equations to solve.  The third equation requires that $x_3=4$ to be true.  Making this substitution into equation 2 we arrive at $x_2=-3$, and finally, substituting these values of $x_2$ and $x_3$ into the first equation, we find that $x_1=2$.  Note too that this is the only solution to this final system of equations, since we were forced to choose these values to make the equations true.  Since we performed equation operations on each system to obtain the next one in the list, all of the systems listed here are all equivalent to each other by \acronymref{theorem}{EOPSS}.  Thus $(x_1,\,x_2,\,x_3)=(2,-3,4)$ is the unique solution to the {\em original} system of equations (and all of the other intermediate systems of equations listed as we transformed one into another).
+\end{example}
+%
+\begin{example}{IS}{Three equations, infinitely many solutions}{infinite solutions, $3\times 4$}
+The following system of equations made an appearance earlier in this section (\acronymref{example}{NSE}), where we listed {\em one} of its solutions.  Now, we will try to find all of the solutions to this system.  Don't concern yourself too much about why we choose this particular sequence of equation operations, just believe that the work we do is all correct.
+%
+\begin{align*}
+x_1+2x_2 +0x_3+ x_4&= 7\\
+x_1+x_2+x_3-x_4&=3\\
+3x_1+x_2+5x_3-7x_4&=1
+\intertext{$\alpha=-1$ times equation 1, add to equation 2:}
+x_1+2x_2 +0x_3+ x_4&= 7\\
+0x_1-x_2+x_3-2x_4&=-4\\
+3x_1+x_2+5x_3-7x_4&=1
+\intertext{$\alpha=-3$ times equation 1, add to equation 3:}
+x_1+2x_2 +0x_3+ x_4&= 7\\
+0x_1-x_2+x_3-2x_4&=-4\\
+0x_1-5x_2+5x_3-10x_4&=-20
+\intertext{$\alpha=-5$ times equation 2, add to equation 3:}
+x_1+2x_2 +0x_3+ x_4&= 7\\
+0x_1-x_2+x_3-2x_4&=-4\\
+0x_1+0x_2+0x_3+0x_4&=0
+\intertext{$\alpha=-1$ times equation 2:}
+x_1+2x_2 +0x_3+ x_4&= 7\\
+0x_1+x_2-x_3+2x_4&=4\\
+0x_1+0x_2+0x_3+0x_4&=0
+\intertext{$\alpha=-2$ times equation 2, add to equation 1:}
+x_1+0x_2 +2x_3-3x_4&= -1\\
+0x_1+x_2-x_3+2x_4&=4\\
+0x_1+0x_2+0x_3+0x_4&=0
+\intertext{which can be written more clearly as}
+x_1+2x_3 - 3x_4&= -1\\
+x_2-x_3+2x_4&=4\\
+0&=0
+\end{align*}
+%
+What does the equation $0=0$ mean?  We can choose {\em any} values for $x_1,\,x_2,\,x_3,\,x_4$ and this equation will be true, so we only need to consider further the first two equations, since the third is true no matter what.  We can analyze the second equation without consideration of the variable $x_1$.  It would appear that there is considerable latitude in how we can choose $x_2,\,x_3,\,x_4$ and make this equation true.  Let's choose $x_3$ and $x_4$ to be {\em anything} we please, say $x_3=a$ and $x_4=b$.\par
+%
+Now we can take these arbitrary values for $x_3$ and $x_4$, substitute them in equation 1,
+to obtain
+\begin{align*}
+x_1+2a - 3b&= -1\\
+x_1&=-1-2a+3b
+\intertext{Similarly, equation 2 becomes}
+x_2-a+2b&=4\\
+x_2&=4 +a-2b
+\end{align*}
+So our arbitrary choices of values for $x_3$ and $x_4$ ($a$ and $b$) translate into specific values of $x_1$ and $x_2$.  The lone solution given in \acronymref{example}{NSE} was obtained by choosing $a=2$ and $b=1$.  Now we can easily and quickly find many more (infinitely more).   Suppose we choose $a=5$ and $b=-2$, then we compute 
+%
+\begin{align*}
+x_1&=-1-2(5)+3(-2)=-17\\
+x_2&=4+5-2(-2)=13
+\end{align*}
+%
+and you can verify that $(x_1,\,x_2,\,x_3,\,x_4)=(-17,\,13,\,5,\,-2)$ makes all three equations true.  The entire solution set is written as
+%
+\begin{equation*}
+S=\setparts{(-1-2a+3b,\,4 +a-2b,\,a,\,b)}{ a\in\complex{\null},\,b\in\complex{\null}}
+\end{equation*}
+%
+It would be instructive to finish off your study of this example by taking the general form of the solutions given in this set and substituting them into each of the three equations and verify that they are true in each case (\acronymref{exercise}{SSLE.M40}).
+\end{example}
+%
+In the next section we will describe how to use equation operations to systematically solve any system of linear equations.  
+%
+\techniqueinline{L}{Language}{mathematical language}
+{But first, read one of our more important pieces of advice about speaking and writing mathematics.}
+{See \acronymref{technique}{L}.}
+\par
+%
+\techniqueinline{GS}{Getting Started}{starting proofs}
+{Before attacking the exercises in this section, it will be helpful to read some advice on getting started on the construction of a proof.}
+{See \acronymref{technique}{GS}.}
+%
+%  End  ssle.tex

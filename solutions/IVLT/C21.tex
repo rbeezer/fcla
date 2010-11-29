@@ -1,0 +1,65 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+(a) To check injectivity, we compute the kernel of $S$.  To this end, suppose that $a+bx+cx^2+dx^3\in\krn{S}$, so 
+%
+\begin{equation*}
+\begin{bmatrix}
+0 & 0\\
+0 & 0
+\end{bmatrix}
+=\lt{S}{a+bx+cx^2+dx^3}
+=
+\begin{bmatrix}
+-a+4b+c+2d & 4a-b+6c-d\\
+a+5b-2c+2d & a+2c+5d
+\end{bmatrix}
+\end{equation*}
+%
+this creates the homogeneous system of four equations in four variables,
+%
+\begin{align*}
+-a+4b+c+2d&=0\\
+4a-b+6c-d&=0\\
+a+5b-2c+2d&=0\\
+a+2c+5d&=0
+\end{align*}
+%
+The coefficient matrix of this system row-reduces as,
+%
+\begin{align*}
+\begin{bmatrix}
+ -1 & 4 & 1 & 2 \\
+ 4 & -1 & 6 & -1 \\
+ 1 & 5 & -2 & 2 \\
+ 1 & 0 & 2 & 5
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+ \leading{1} & 0 & 0 & 0 \\
+ 0 & \leading{1} & 0 & 0 \\
+ 0 & 0 & \leading{1} & 0 \\
+ 0 & 0 & 0 & \leading{1}
+\end{bmatrix}
+\end{align*}
+%
+We recognize the coefficient matrix as being nonsingular, so the only solution to the system is $a=b=c=d=0$, and the kernel of $S$ is trivial, $\krn{S}=\set{0+0x+0x^2+0x^3}$.  By \acronymref{theorem}{KILT}, we see that $S$ is injective.\par
+%
+(b)  We can establish that $S$ is surjective by considering the rank and nullity of $S$.
+%
+\begin{align*}
+\rank{S}
+&=\dimension{P_3}-\nullity{S}&&\text{\acronymref{theorem}{RPNDD}}\\
+&=4-0\\
+&=\dimension{M_{22}}
+\end{align*}
+%
+So, $\rng{S}$ is a subspace of $M_{22}$ (\acronymref{theorem}{RLTS}) whose dimension equals that of $M_{22}$.  By \acronymref{theorem}{EDYES}, we gain the set equality $\rng{S}=M_{22}$.  \acronymref{theorem}{RSLT} then implies that $S$ is surjective.\par
+%
+(c)  Since $S$ is both injective and surjective, \acronymref{theorem}{ILTIS} says $S$ is invertible.

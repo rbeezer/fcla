@@ -1,0 +1,944 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section CRS
+%%  Column and Row Spaces
+%%
+%%%%%%%%%%%
+%
+\acronymref{theorem}{SLSLC} showed us that there is a natural correspondence between solutions to linear systems and linear combinations of the columns of the coefficient matrix.  This idea motivates the following important definition.
+%
+\begin{definition}{CSM}{Column Space of a Matrix}{matrix!column space}
+\index{column space!matrix}
+Suppose that $A$ is an $m\times n$ matrix with columns $\set{\vectorlist{A}{n}}$.  Then the \define{column space} of $A$, written $\csp{A}$, is the subset of $\complex{m}$ containing all linear combinations of the columns of $A$,
+%
+\begin{equation*}
+\csp{A}=\spn{\set{\vectorlist{A}{n}}}
+\end{equation*}
+%
+\denote{CSM}{Column Space of a Matrix}{$\csp{A}$}{column space}
+\end{definition}
+%
+Some authors refer to the column space of a matrix as the \define{range}, but we will reserve this term for use with linear transformations (\acronymref{definition}{RLT}).
+%
+\subsect{CSSE}{Column Spaces and Systems of Equations}
+%
+Upon encountering any new set, the first question we ask is what objects are in the set, and which objects are not?  Here's an example of one way to answer this question, and it will motivate a theorem that will then answer the question precisely.
+%
+\begin{example}{CSMCS}{Column space of a matrix and consistent systems}{column space!consistent systems}
+\acronymref{archetype}{D} and \acronymref{archetype}{E} are linear systems of equations, with an identical $3\times 4$ coefficient matrix, which we call $A$ here.  However, \acronymref{archetype}{D} is consistent, while \acronymref{archetype}{E} is not.  We can explain this difference by employing the column space of the matrix $A$.\par
+%
+The column vector of constants, $\vect{b}$, in \acronymref{archetype}{D} is
+%
+\begin{equation*}
+\vect{b}=\colvector{8\\-12\\4}
+\end{equation*}
+%
+One solution to $\linearsystem{A}{\vect{b}}$, as listed, is
+%
+\begin{equation*}
+\vect{x}=\colvector{7\\8\\1\\3}
+\end{equation*}
+%
+By \acronymref{theorem}{SLSLC}, we can summarize this solution as a linear combination of the columns of $A$ that equals $\vect{b}$,
+%
+\begin{equation*}
+7\colvector{2\\-3\\1}+
+8\colvector{1\\4\\1}+
+1\colvector{7\\-5\\4}+
+3\colvector{-7\\-6\\-5}=
+\colvector{8\\-12\\4}=\vect{b}.
+\end{equation*}
+%
+This equation says that $\vect{b}$ is a linear combination of the columns of $A$, and then by \acronymref{definition}{CSM}, we can say that $\vect{b}\in\csp{A}$.\par
+%
+On the other hand, \acronymref{archetype}{E} is the linear system $\linearsystem{A}{\vect{c}}$, where the vector of constants is
+%
+\begin{equation*}
+\vect{c}=\colvector{2\\3\\2}
+\end{equation*}
+%
+and this system of equations is inconsistent.  This means $\vect{c}\not\in\csp{A}$, for if it were, then it would equal a linear combination of the columns of $A$ and \acronymref{theorem}{SLSLC} would lead us to a solution of the system $\linearsystem{A}{\vect{c}}$.
+%
+\end{example}
+%
+So if we fix the coefficient matrix, and vary the vector of constants, we can sometimes find consistent systems, and sometimes inconsistent systems.  The vectors of constants that lead to consistent systems are exactly the elements of the column space.  This is the content of the next theorem, and since it is an equivalence, it provides an alternate view of the column space.
+%
+\begin{theorem}{CSCS}{Column Spaces and Consistent Systems}{column space!consistent system}
+Suppose $A$ is an $m\times n$ matrix and $\vect{b}$ is a vector of size $m$.  Then $\vect{b}\in\csp{A}$ if and only if $\linearsystem{A}{\vect{b}}$ is consistent.
+\end{theorem}
+%
+\begin{proof}
+($\Rightarrow$)  Suppose $\vect{b}\in\csp{A}$.  Then we can write $\vect{b}$ as some linear combination of the columns of $A$.  By \acronymref{theorem}{SLSLC} we can use the scalars from this linear combination to form a solution to  $\linearsystem{A}{\vect{b}}$, so this system is consistent.\par
+%
+($\Leftarrow$) If $\linearsystem{A}{\vect{b}}$ is consistent, there is a solution that may be used with \acronymref{theorem}{SLSLC} to write $\vect{b}$ as a linear combination of the columns of $A$.  This qualifies $\vect{b}$ for membership in $\csp{A}$.
+\end{proof}
+%
+This theorem tells us that asking if the system $\linearsystem{A}{\vect{b}}$ is consistent is exactly the same question as asking if $\vect{b}$ is in the column space of $A$.  Or equivalently, it tells us that the column space of the matrix $A$ is precisely those vectors of constants, $\vect{b}$, that can be paired with $A$ to create a system of linear equations $\linearsystem{A}{\vect{b}}$ that is consistent.\par
+%
+Employing \acronymref{theorem}{SLEMM} we can form the chain of equivalences
+%
+\begin{align*}
+\vect{b}\in\csp{A}
+\iff
+\linearsystem{A}{\vect{b}}\text{ is consistent}
+\iff
+A\vect{x}=\vect{b}\text{ for some }\vect{x}
+\end{align*}
+%
+Thus, an alternative (and popular) definition of the column space of an $m\times n$ matrix $A$ is
+%
+\begin{align*}
+\csp{A}&=
+\setparts{
+\vect{y}\in\complex{m}
+}{
+\vect{y}=A\vect{x}\text{ for some }\vect{x}\in\complex{n}
+}
+=
+\setparts{A\vect{x}}{\vect{x}\in\complex{n}}
+\subseteq\complex{m}
+\end{align*}
+%
+We recognize this as saying create {\em all} the matrix vector products possible with the matrix $A$ by letting $\vect{x}$ range over all of the possibilities.  By \acronymref{definition}{MVP} we see that this means take all possible linear combinations of the columns of $A$ --- precisely the definition of the column space (\acronymref{definition}{CSM}) we have chosen.\par
+%
+Notice how this formulation of the column space looks very much like the definition of the null space of a matrix (\acronymref{definition}{NSM}), but for a rectangular matrix the column vectors of $\csp{A}$ and $\nsp{A}$ have different sizes, so the sets are very different.\par
+%
+Given a vector $\vect{b}$ and a matrix $A$ it is now very mechanical to test if $\vect{b}\in\csp{A}$.  Form the linear system $\linearsystem{A}{\vect{b}}$, row-reduce the augmented matrix, $\augmented{A}{\vect{b}}$, and test for consistency with \acronymref{theorem}{RCLS}.  Here's an example of this procedure.
+%
+%
+\begin{example}{MCSM}{Membership in the column space of a matrix}{column space!testing membership}
+Consider the column space of the $3\times 4$ matrix $A$,
+%
+\begin{equation*}
+A=
+\begin{bmatrix}
+3 & 2 & 1 & -4\\
+-1 & 1 & -2 & 3\\
+2 & -4 & 6 & -8
+\end{bmatrix}
+\end{equation*}
+%
+We first show that $\vect{v}=\colvector{18\\-6\\12}$ is in the column space of $A$, $\vect{v}\in\csp{A}$.  \acronymref{theorem}{CSCS} says we need only check the consistency of $\linearsystem{A}{\vect{v}}$.  Form the augmented matrix and row-reduce,
+%
+\begin{equation*}
+\begin{bmatrix}
+3 & 2 & 1 & -4 & 18\\
+-1 & 1 & -2 & 3 & -6\\
+2 & -4 & 6 & -8 & 12
+\end{bmatrix}
+%
+\rref
+%
+\begin{bmatrix}
+\leading{1} & 0 & 1 & -2 & 6\\
+0 & \leading{1} & -1 & 1 & 0\\
+0 & 0 & 0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+Without a leading 1 in the final column, \acronymref{theorem}{RCLS} tells us the system is consistent and therefore by \acronymref{theorem}{CSCS}, $\vect{v}\in\csp{A}$.\par
+%
+If we wished to demonstrate explicitly that $\vect{v}$ is a linear combination of the columns of $A$, we can find a solution (any solution) of $\linearsystem{A}{\vect{v}}$ and use \acronymref{theorem}{SLSLC} to construct the desired linear combination.  For example, set the free variables to $x_3=2$ and $x_4=1$.  Then a solution has $x_2=1$ and $x_1=6$.  Then by \acronymref{theorem}{SLSLC},
+%
+\begin{equation*}
+\vect{v}=\colvector{18\\-6\\12}=
+6\colvector{3\\-1\\2}+
+1\colvector{2\\1\\-4}+
+2\colvector{1\\-2\\6}+
+1\colvector{-4\\3\\-8}
+\end{equation*}
+%
+Now we show that $\vect{w}=\colvector{2\\1\\-3}$ is not in the column space of $A$, $\vect{w}\not\in\csp{A}$.  \acronymref{theorem}{CSCS} says we need only check the consistency of $\linearsystem{A}{\vect{w}}$.  Form the augmented matrix and row-reduce,
+%
+\begin{equation*}
+\begin{bmatrix}
+3 & 2 & 1 & -4 & 2\\
+-1 & 1 & -2 & 3 & 1\\
+2 & -4 & 6 & -8 & -3
+\end{bmatrix}
+%
+\rref
+%
+\begin{bmatrix}
+\leading{1} & 0 & 1 & -2 & 0\\
+0 & \leading{1} & -1 & 1 & 0\\
+0 & 0 & 0 & 0 & \leading{1}
+\end{bmatrix}
+\end{equation*}
+%
+With a leading 1 in the final column, \acronymref{theorem}{RCLS} tells us the system is inconsistent and therefore by \acronymref{theorem}{CSCS}, $\vect{w}\not\in\csp{A}$.
+%
+\end{example}
+%
+\acronymref{theorem}{CSCS} completes a collection of three theorems, and one definition, that deserve comment.  Many questions about spans, linear independence, null space, column spaces and similar objects can be converted to questions about systems of equations (homogeneous or not), which we understand well from our previous results, especially those in \acronymref{chapter}{SLE}.  These previous results include theorems like \acronymref{theorem}{RCLS} which allows us to quickly decide consistency of a system, and \acronymref{theorem}{BNS} which allows us to describe solution sets for homogeneous systems compactly as the span of a linearly independent set of column vectors.\par
+%
+The table below lists these for definitions and theorems along with a brief reminder of the statement and an example of how the statement is used.
+%
+\begin{center}
+\begin{tabular}{|r|l|}\hline\hline
+%
+\multicolumn{1}{|l}{\acronymref{definition}{NSM}}&\\\hline
+Synopsis&Null space is solution set of homogeneous system\\\hline
+Example&General solution sets described by \acronymref{theorem}{PSPHS}\\\hline\hline
+%
+\multicolumn{1}{|l}{\acronymref{theorem}{SLSLC}}&\\\hline
+Synopsis&Solutions for linear combinations with unknown scalars\\\hline
+Example&Deciding membership in spans\\\hline\hline
+%
+\multicolumn{1}{|l}{\acronymref{theorem}{SLEMM}}&\\\hline
+Synopsis&System of equations represented by matrix-vector product\\\hline
+Example&Solution to $\linearsystem{A}{\vect{b}}$ is $\inverse{A}\vect{b}$ when $A$ is nonsingular\\\hline\hline
+%
+\multicolumn{1}{|l}{\acronymref{theorem}{CSCS}}&\\\hline
+Synopsis&Column space vectors create consistent systems\\\hline
+Example&Deciding membership in column spaces\\\hline\hline
+%
+\end{tabular}
+\end{center}
+%
+\subsect{CSSOC}{Column Space Spanned by Original Columns}
+%
+So we have a foolproof, automated procedure for determining membership in $\csp{A}$.  While this works just fine a vector at a time, we would like to have a more useful description of the set $\csp{A}$ as a whole.  The next example will preview the first of two fundamental results about the column space of a matrix.
+%
+%
+\begin{example}{CSTW}{Column space, two ways}{column space!two computations}
+Consider the $5\times 7$ matrix $A$,
+%
+\begin{equation*}
+\begin{bmatrix}
+ 2 & 4 & 1 & -1 & 1 & 4 & 4 \\
+ 1 & 2 & 1 & 0 & 2 & 4 & 7 \\
+ 0 & 0 & 1 & 4 & 1 & 8 & 7 \\
+ 1 & 2 & -1 & 2 & 1 & 9 & 6 \\
+ -2 & -4 & 1 & 3 & -1 & -2 & -2
+\end{bmatrix}
+\end{equation*}
+%
+According to the definition (\acronymref{definition}{CSM}), the column space of $A$ is
+%
+\begin{equation*}
+\csp{A}=
+\spn{\set{
+\colvector{ 2 \\ 1 \\ 0 \\ 1 \\ -2 },\,
+\colvector{ 4 \\ 2 \\ 0 \\ 2 \\ -4 },\,
+\colvector{ 1 \\ 1 \\ 1 \\ -1 \\ 1 },\,
+\colvector{ -1 \\ 0 \\ 4 \\ 2 \\ 3 },\,
+\colvector{ 1 \\ 2 \\ 1 \\ 1 \\ -1 },\,
+\colvector{ 4 \\ 4 \\ 8 \\ 9 \\ -2 },\,
+\colvector{ 4 \\ 7 \\ 7 \\ 6 \\ -2 }
+}}
+\end{equation*}
+%
+While this is a concise description of an infinite set, we might be able to describe the span with fewer than seven vectors.  This is the substance of \acronymref{theorem}{BS}.  So we take these seven vectors and make them the columns of matrix, which is simply the original matrix $A$ again.  Now we row-reduce,
+%
+\begin{equation*}
+\begin{bmatrix}
+ 2 & 4 & 1 & -1 & 1 & 4 & 4 \\
+ 1 & 2 & 1 & 0 & 2 & 4 & 7 \\
+ 0 & 0 & 1 & 4 & 1 & 8 & 7 \\
+ 1 & 2 & -1 & 2 & 1 & 9 & 6 \\
+ -2 & -4 & 1 & 3 & -1 & -2 & -2
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+ \leading{1} & 2 & 0 & 0 & 0 & 3 & 1 \\
+ 0 & 0 & \leading{1} & 0 & 0 & -1 & 0 \\
+ 0 & 0 & 0 & \leading{1} & 0 & 2 & 1 \\
+ 0 & 0 & 0 & 0 & \leading{1} & 1 & 3 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+The pivot columns are $D=\set{1,\,3,\,4,\,5}$, so we can create the set
+%
+\begin{equation*}
+T=\set{
+\colvector{ 2 \\ 1 \\ 0 \\ 1 \\ -2 },\,
+\colvector{ 1 \\ 1 \\ 1 \\ -1 \\ 1 },\,
+\colvector{ -1 \\ 0 \\ 4 \\ 2 \\ 3 },\,
+\colvector{ 1 \\ 2 \\ 1 \\ 1 \\ -1 }
+}
+\end{equation*}
+%
+and know that $\csp{A}=\spn{T}$ and $T$ is a linearly independent set of columns from the set of columns of $A$.
+%
+\end{example}
+%
+We will now formalize the previous example, which will make it trivial to determine a linearly independent set of vectors that will span the column space of a matrix, and is constituted of just columns of $A$.
+%
+\begin{theorem}{BCS}{Basis of the Column Space}{column space!basis}
+Suppose that $A$ is an $m\times n$ matrix with columns $\vectorlist{A}{n}$, and $B$ is a row-equivalent matrix in reduced row-echelon form with $r$ nonzero rows.  Let $D=\{d_1,\,d_2,\,d_3,\,\ldots,\,d_r\}$ be the set of column indices where $B$ has leading 1's.  Let 
+$T=\set{\vect{A}_{d_1},\,\vect{A}_{d_2},\,\vect{A}_{d_3},\,\ldots,\,\vect{A}_{d_r}}$.  Then
+\begin{enumerate}
+\item $T$ is a linearly independent set.
+\item $\csp{A}=\spn{T}$.
+\end{enumerate}
+%
+\end{theorem}
+%
+\begin{proof}
+\acronymref{definition}{CSM} describes the column space as the span of the set of columns of $A$.  \acronymref{theorem}{BS} tells us that we can reduce the set of vectors used in a span.  If we apply \acronymref{theorem}{BS} to $\csp{A}$, we would collect the columns of $A$ into a matrix (which would just be $A$ again) and bring the matrix to reduced row-echelon form, which is the matrix $B$ in the statement of the theorem.  In this case, the conclusions of \acronymref{theorem}{BS} applied to $A$,  $B$ and $\csp{A}$ are exactly the conclusions we desire.
+%
+\end{proof}
+%
+This is a nice result since it gives us a handful of vectors that describe the entire column space (through the span), and we believe this set is as small as possible because we cannot create any more relations of linear dependence to trim it down further.  Furthermore, we defined the column space (\acronymref{definition}{CSM}) as all linear combinations of the columns of the matrix, and the elements of the set $S$ are still columns of the matrix (we won't be so lucky in the next two constructions of the column space).\par
+%
+Procedurally this theorem is extremely easy to apply.  Row-reduce the original matrix, identify $r$ columns with leading 1's in this reduced matrix, and grab the corresponding columns of the original matrix.  But it is still important to study the proof of \acronymref{theorem}{BS} and its motivation in \acronymref{example}{COV} which lie at the root of this theorem.  We'll trot through an example all the same.
+%
+\begin{example}{CSOCD}{Column space, original columns, Archetype D}{column space!original columns,  Archetype D}
+\index{Archetype D!column space, original columns}
+Let's determine a compact expression for the entire column space of the coefficient matrix of the system of equations that is \acronymref{archetype}{D}.  Notice that in \acronymref{example}{CSMCS} we were only determining if individual vectors were in the column space or not, now we are describing the entire column space.\par
+%
+To start with the application of \acronymref{theorem}{BCS}, call the coefficient matrix $A$
+%
+\begin{equation*}
+A=\archetypepart{D}{purematrix}.
+\end{equation*}
+%
+and row-reduce it to reduced row-echelon form,
+%
+\begin{equation*}
+B=\archetypepart{D}{matrixreduced}.
+\end{equation*}
+%
+There are leading 1's in columns 1 and 2, so $D=\{1,\,2\}$.  To construct a set that spans $\csp{A}$, just grab the columns of $A$ indicated by the set $D$, so
+%
+\begin{equation*}
+\csp{A}=\spn{\set{\colvector{2\\-3\\1},\,\colvector{1\\4\\1}}}.
+\end{equation*}
+%
+That's it.\par
+%
+In \acronymref{example}{CSMCS} we determined that the vector
+%
+\begin{equation*}
+\vect{c}=\colvector{2\\3\\2}
+\end{equation*}
+%
+{\em was not} in the column space of $A$.  Try to write $\vect{c}$ as a linear combination of the first two columns of $A$.  What happens?\par
+%
+Also in \acronymref{example}{CSMCS} we determined that the vector 
+%
+\begin{equation*}
+\vect{b}=\colvector{8\\-12\\4}
+\end{equation*}
+%
+{\em was} in the column space of $A$.  Try to write $\vect{b}$ as a linear combination of the first two columns of $A$.  What happens?  Did you find a unique solution to this question?  Hmmmm.
+%
+\end{example}
+%
+\subsect{CSNM}{Column Space of a Nonsingular Matrix}
+%
+Let's specialize to square matrices and contrast the column spaces of the coefficient matrices in \acronymref{archetype}{A} and \acronymref{archetype}{B}.
+%
+\begin{example}{CSAA}{Column space of Archetype A}{column space!Archetype A}
+\index{Archetype A!column space}
+%
+The coefficient matrix in \acronymref{archetype}{A} is
+%
+\begin{equation*}
+A=\archetypepart{A}{purematrix}
+\end{equation*}
+%
+which row-reduces to
+%
+\begin{equation*}
+\archetypepart{A}{matrixreduced}.
+\end{equation*}
+%
+Columns 1 and 2 have leading 1's, so by \acronymref{theorem}{BCS} we can write
+%
+\begin{equation*}
+\csp{A}=\spn{\set{\vect{A}_1,\,\vect{A}_2}}=\spn{\set{\colvector{1\\2\\1},\,\colvector{-1\\1\\1}}}.
+\end{equation*}
+%
+We want to show in this example that $\csp{A}\neq\complex{3}$.  So take, for example, the vector $\vect{b}=\colvector{1\\3\\2}$.  Then there is no solution to the system $\linearsystem{A}{\vect{b}}$, or equivalently, it is not possible to write $\vect{b}$ as a linear combination of $\vect{A}_1$ and $\vect{A}_2$.  Try  one of these two computations yourself.  (Or try both!).  Since $\vect{b}\not\in\csp{A}$, the column space of $A$ cannot be all of $\complex{3}$.  So by varying the vector of constants, it is possible to create inconsistent systems of equations with this coefficient matrix (the vector $\vect{b}$ being one such example).\par
+%
+In \acronymref{example}{MWIAA} we wished to show that the coefficient matrix from \acronymref{archetype}{A} was not invertible as a first example of a matrix without an inverse.  Our device there was to find an inconsistent linear system with $A$ as the coefficient matrix.  The vector of constants in that example was $\vect{b}$, deliberately chosen outside the column space of $A$.
+%
+\end{example}
+%
+%
+\begin{example}{CSAB}{Column space of Archetype B}{column space!Archetype B}
+\index{Archetype B!column space}
+%
+The coefficient matrix in \acronymref{archetype}{B}, call it $B$ here,  is known to be nonsingular (see \acronymref{example}{NM}).  By \acronymref{theorem}{NMUS}, the linear system $\linearsystem{B}{\vect{b}}$ has a (unique) solution for every choice of $\vect{b}$.  \acronymref{theorem}{CSCS} then says that $\vect{b}\in\csp{B}$ for all $\vect{b}\in\complex{3}$.  Stated differently, there is no way to build an inconsistent system with the coefficient matrix $B$, but then we knew that already from \acronymref{theorem}{NMUS}.
+%
+\end{example}
+%
+\acronymref{example}{CSAA} and \acronymref{example}{CSAB} together motivate the following equivalence, which says that nonsingular matrices have column spaces that are as big as possible.
+%
+\begin{theorem}{CSNM}{Column Space of a Nonsingular Matrix}{column space!nonsingular matrix}
+\index{nonsingular matrix!column space}
+%
+Suppose $A$ is a square matrix of size $n$.  Then $A$ is nonsingular if and only if $\csp{A}=\complex{n}$.
+\end{theorem}
+%
+\begin{proof}
+($\Rightarrow$)  Suppose $A$ is nonsingular.  We wish to establish the set equality $\csp{A}=\complex{n}$.  By \acronymref{definition}{CSM}, $\csp{A}\subseteq\complex{n}$.\par
+%
+To show that  $\complex{n}\subseteq\csp{A}$ choose $\vect{b}\in\complex{n}$.  By \acronymref{theorem}{NMUS}, we know the linear system $\linearsystem{A}{\vect{b}}$ has a (unique) solution and therefore is consistent.  \acronymref{theorem}{CSCS} then says that $\vect{b}\in\csp{A}$.  So  by \acronymref{definition}{SE}, $\csp{A}=\complex{n}$.\par
+%
+($\Leftarrow$)  If $\vect{e}_i$ is column $i$ of the $n\times n$ identity matrix (\acronymref{definition}{SUV}) and by hypothesis $\csp{A}=\complex{n}$, then $\vect{e}_i\in\csp{A}$ for $1\leq i\leq n$.  By \acronymref{theorem}{CSCS}, the system $\linearsystem{A}{\vect{e}_i}$ is consistent for $1\leq i\leq n$.   Let $\vect{b}_i$ denote any one particular solution to $\linearsystem{A}{\vect{e}_i}$, $1\leq i\leq n$.\par
+%
+Define the $n\times n$ matrix $B=\matrixcolumns{b}{n}$.  Then
+%
+\begin{align*}
+AB
+&=A\matrixcolumns{b}{n}\\
+&=[A\vect{b}_1|A\vect{b}_2|A\vect{b}_3|\ldots|A\vect{b}_n]&&\text{\acronymref{definition}{MM}}\\
+&=\matrixcolumns{e}{n}\\
+&=I_n&&\text{\acronymref{definition}{SUV}}\\
+\end{align*}
+%
+So the matrix $B$ is a ``right-inverse'' for $A$.  By \acronymref{theorem}{NMRRI}, $I_n$ is a nonsingular matrix, so by \acronymref{theorem}{NPNT} both $A$ and $B$ are nonsingular.  Thus, in particular, $A$ is nonsingular.  (\travisosborne\ contributed to this proof.)
+%
+\end{proof}
+%
+With this equivalence for nonsingular matrices we can update our list, \acronymref{theorem}{NME3}.
+%
+\begin{theorem}{NME4}{Nonsingular Matrix Equivalences, Round 4}{nonsingular matrix!equivalences}
+Suppose that $A$ is a square matrix of size $n$.  The following are equivalent.
+%
+\begin{enumerate}
+\item $A$ is nonsingular.
+\item $A$ row-reduces to the identity matrix.
+\item The null space of $A$ contains only the zero vector, $\nsp{A}=\set{\zerovector}$.
+\item The linear system $\linearsystem{A}{\vect{b}}$ has a unique solution for every possible choice of $\vect{b}$.
+\item The columns of $A$ are a linearly independent set.
+\item $A$ is invertible.
+\item The column space of $A$ is $\complex{n}$, $\csp{A}=\complex{n}$.
+\end{enumerate}
+\end{theorem}
+%
+\begin{proof}
+Since \acronymref{theorem}{CSNM} is an equivalence, we can add it to the list in \acronymref{theorem}{NME3}.
+\end{proof}
+%
+\subsect{RSM}{Row Space of a Matrix}
+%
+The rows of a matrix can be viewed as vectors, since they are just lists of numbers, arranged horizontally.  So we will transpose a matrix, turning rows into columns, so we can then manipulate rows as column vectors.  As a result we will be able to make some new connections between row operations and solutions to systems of equations.  OK, here is the second primary definition of this section.\par
+%
+\begin{definition}{RSM}{Row Space of a Matrix}{matrix!row space}
+\index{row space!matrix}
+Suppose $A$ is an $m\times n$ matrix.  Then the \define{row space} of $A$, $\rsp{A}$, is the column space of $\transpose{A}$, i.e.\ $\rsp{A}=\csp{\transpose{A}}$.
+\denote{RSM}{Row Space of a Matrix}{$\rsp{A}$}{row space}\end{definition}
+%
+Informally, the row space is the set of all linear combinations of the rows of $A$.  However, we write the rows as column vectors, thus the necessity of using the transpose to make the rows into columns.   Additionally, with the row space defined in terms of the column space, all of the previous results of this section can be applied to row spaces.\par
+%
+Notice that if $A$ is a rectangular $m\times n$ matrix, then $\csp{A}\subseteq\complex{m}$, while $\rsp{A}\subseteq\complex{n}$ and the two sets are not comparable since they do not even hold objects of the same type.  However, when $A$ is square of size $n$, both $\csp{A}$ and $\rsp{A}$ are subsets of $\complex{n}$, though usually the sets will not be equal (but see \acronymref{exercise}{CRS.M20}).
+%
+\begin{example}{RSAI}{Row space of Archetype I}{row space!Archetype I}
+\index{Archetype I!row space}
+%
+The coefficient matrix in \acronymref{archetype}{I} is
+%
+\begin{equation*}
+I=\archetypepart{I}{purematrix}.
+\end{equation*}
+%
+To build the row space, we transpose the matrix, 
+%
+\begin{equation*}
+\transpose{I}=
+\begin{bmatrix}
+1 & 2 & 0 & -1\\ 
+4 & 8 & 0 & -4\\ 
+0 & -1 & 2 & 2\\ 
+-1 & 3 & -3 & 4\\ 
+0 & 9 & -4 & 8\\ 
+7 & -13 & 12 & -31\\ 
+-9 & 7 & -8 & 37
+\end{bmatrix}
+\end{equation*}
+%
+Then the columns of this matrix are used in a span to build the row space,
+%
+\begin{equation*}
+\rsp{I}=\csp{\transpose{I}}=
+\spn{\set{
+\colvector{1\\4\\0\\-1\\0\\7\\-9},\,
+\colvector{2\\8\\-1\\3\\9\\-13\\7},\,
+\colvector{0\\0\\2\\-3\\-4\\12\\-8},\,
+\colvector{-1\\-4\\2\\4\\8\\-31\\37}
+}}.
+\end{equation*}
+%
+However, we can use \acronymref{theorem}{BCS} to get a slightly better description.  First, row-reduce $\transpose{I}$,
+%
+\begin{equation*}
+\begin{bmatrix}
+\leading{1} & 0 & 0 & -\frac{31}{7}\\ 
+0 & \leading{1} & 0 & \frac{12}{7}\\ 
+0 & 0 & \leading{1} & \frac{13}{7}\\ 
+0 & 0 & 0 & 0\\ 
+0 & 0 & 0 & 0\\ 
+0 & 0 & 0 & 0\\ 
+0 & 0 & 0 & 0
+\end{bmatrix}.
+\end{equation*}
+%
+Since there are leading 1's in columns with indices $D=\set{1,\,2,\,3}$, the column space of $\transpose{I}$ can be spanned by just the first three columns of $\transpose{I}$, 
+%
+\begin{equation*}
+\rsp{I}=\csp{\transpose{I}}=
+\spn{\set{
+\colvector{1\\4\\0\\-1\\0\\7\\-9},\,
+\colvector{2\\8\\-1\\3\\9\\-13\\7},\,
+\colvector{0\\0\\2\\-3\\-4\\12\\-8}
+}}.
+\end{equation*}
+%
+\end{example}
+%
+The row space would not be too interesting if it was simply the column space of the transpose.  However, when we do row operations on a matrix we have no effect on the many linear combinations that can be formed with the rows of the matrix.  This is stated more carefully in the following theorem.
+%
+%
+\begin{theorem}{REMRS}{Row-Equivalent Matrices have equal Row Spaces}{row space!row-equivalent matrices}
+\index{row-equivalent matrices!row space}
+Suppose $A$ and $B$ are row-equivalent matrices.  Then $\rsp{A}=\rsp{B}$.
+\end{theorem}
+%
+\begin{proof}
+Two matrices are row-equivalent (\acronymref{definition}{REM}) if one can be obtained from another by a sequence of (possibly many) row operations.  We will prove the theorem for two matrices that differ by a single row operation, and then this result can be applied repeatedly to get the full statement of the theorem.  The row spaces of $A$ and $B$ are spans of the columns of their transposes.  For each row operation we perform on a matrix, we can define an analogous operation on the columns.  Perhaps we should call these \define{column operations}.  Instead, we will still call them row operations, but we will apply them to the columns of the transposes.\par
+%
+Refer to the columns of $\transpose{A}$ and $\transpose{B}$ as $\vect{A}_i$ and $\vect{B}_i$, $1\leq i\leq m$.  The row operation that switches rows will just switch columns of the transposed matrices.  This will have no effect on the possible linear combinations formed by the columns.\par
+%
+Suppose that $\transpose{B}$ is formed from $\transpose{A}$ by multiplying column $\vect{A}_t$ by $\alpha\neq 0$.  In other words, $\vect{B}_t=\alpha\vect{A}_t$, and $\vect{B}_i=\vect{A}_i$ for all $i\neq t$.  We need to establish that two sets are equal, $\csp{\transpose{A}}=\csp{\transpose{B}}$.  We will take a generic element of one and show that it is contained in the other.
+%
+\begin{align*}
+\beta_1\vect{B}_1+
+&
+\beta_2\vect{B}_2+
+\beta_3\vect{B}_3+
+\cdots+
+\beta_t\vect{B}_t+
+\cdots+
+\beta_m\vect{B}_m\\
+%
+&=
+\beta_1\vect{A}_1+
+\beta_2\vect{A}_2+
+\beta_3\vect{A}_3+
+\cdots+
+\beta_t\left(\alpha\vect{A}_t\right)+
+\cdots+
+\beta_m\vect{A}_m\\
+%
+&=
+\beta_1\vect{A}_1+
+\beta_2\vect{A}_2+
+\beta_3\vect{A}_3+
+\cdots+
+\left(\alpha\beta_t\right)\vect{A}_t+
+\cdots+
+\beta_m\vect{A}_m
+\end{align*}
+%
+says that $\csp{\transpose{B}}\subseteq\csp{\transpose{A}}$.  Similarly,
+%
+\begin{align*}
+\gamma_1\vect{A}_1+
+&
+\gamma_2\vect{A}_2+
+\gamma_3\vect{A}_3+
+\cdots+
+\gamma_t\vect{A}_t+
+\cdots+
+\gamma_m\vect{A}_m\\
+%
+&=
+\gamma_1\vect{A}_1+
+\gamma_2\vect{A}_2+
+\gamma_3\vect{A}_3+
+\cdots+
+\left(\frac{\gamma_t}{\alpha}\alpha\right)\vect{A}_t+
+\cdots+
+\gamma_m\vect{A}_m\\
+%
+&=
+\gamma_1\vect{A}_1+
+\gamma_2\vect{A}_2+
+\gamma_3\vect{A}_3+
+\cdots+
+\frac{\gamma_t}{\alpha}\left(\alpha\vect{A}_t\right)+
+\cdots+
+\gamma_m\vect{A}_m\\
+%
+&=
+\gamma_1\vect{B}_1+
+\gamma_2\vect{B}_2+
+\gamma_3\vect{B}_3+
+\cdots+
+\frac{\gamma_t}{\alpha}\vect{B}_t+
+\cdots+
+\gamma_m\vect{B}_m
+\end{align*}
+%
+says that $\csp{\transpose{A}}\subseteq\csp{\transpose{B}}$.   So $\rsp{A}=\csp{\transpose{A}}=\csp{\transpose{B}}=\rsp{B}$ when a single row operation of the second type is performed.\par
+%
+Suppose now that $\transpose{B}$ is formed from $\transpose{A}$ by replacing $\vect{A}_t$ with $\alpha\vect{A}_s+\vect{A}_t$ for some $\alpha\in\complex{\null}$ and $s\neq t$.  In other words, $\vect{B}_t=\alpha\vect{A}_s+\vect{A}_t$, and $\vect{B}_i=\vect{A}_i$ for $i\neq t$.
+ %
+\begin{align*}
+\beta_1\vect{B}_1+
+&
+\beta_2\vect{B}_2+
+\beta_3\vect{B}_3+
+\cdots+
+\beta_s\vect{B}_s+
+\cdots+
+\beta_t\vect{B}_t+
+\cdots+
+\beta_m\vect{B}_m\\
+%
+&=
+\beta_1\vect{A}_1+
+\beta_2\vect{A}_2+
+\beta_3\vect{A}_3+
+\cdots+
+\beta_s\vect{A}_s+
+\cdots+
+\beta_t\left(\alpha\vect{A}_s+\vect{A}_t\right)+
+\cdots+
+\beta_m\vect{A}_m\\
+%
+&=
+\beta_1\vect{A}_1+
+\beta_2\vect{A}_2+
+\beta_3\vect{A}_3+
+\cdots+
+\beta_s\vect{A}_s+
+\cdots+
+\left(\beta_t\alpha\right)\vect{A}_s+\beta_t\vect{A}_t+
+\cdots+
+\beta_m\vect{A}_m\\
+%
+&=
+\beta_1\vect{A}_1+
+\beta_2\vect{A}_2+
+\beta_3\vect{A}_3+
+\cdots+
+\beta_s\vect{A}_s+\left(\beta_t\alpha\right)\vect{A}_s+
+\cdots+
+\beta_t\vect{A}_t+
+\cdots+
+\beta_m\vect{A}_m\\
+%
+&=
+\beta_1\vect{A}_1+
+\beta_2\vect{A}_2+
+\beta_3\vect{A}_3+
+\cdots+
+\left(\beta_s+\beta_t\alpha\right)\vect{A}_s+
+\cdots+
+\beta_t\vect{A}_t+
+\cdots+
+\beta_m\vect{A}_m
+\end{align*}
+%
+says that $\csp{\transpose{B}}\subseteq\csp{\transpose{A}}$.  Similarly,
+%
+% Hidden ampersand in first term to make spacing just fit
+%
+\begin{align*}
+\gamma_1&\vect{A}_1+
+\gamma_2\vect{A}_2+
+\gamma_3\vect{A}_3+
+\cdots+
+\gamma_s\vect{A}_s+
+\cdots+
+\gamma_t\vect{A}_t+
+\cdots+
+\gamma_m\vect{A}_m\\
+%
+&=
+\gamma_1\vect{A}_1+
+\gamma_2\vect{A}_2+
+\gamma_3\vect{A}_3+
+\cdots+
+\gamma_s\vect{A}_s+
+\cdots+
+\left(-\alpha\gamma_t\vect{A}_s + \alpha\gamma_t\vect{A}_s\right)+\gamma_t\vect{A}_t+
+\cdots+
+\gamma_m\vect{A}_m\\
+%
+&=
+\gamma_1\vect{A}_1+
+\gamma_2\vect{A}_2+
+\gamma_3\vect{A}_3+
+\cdots+
+\left(-\alpha\gamma_t\vect{A}_s\right)+\gamma_s\vect{A}_s+
+\cdots+
+\left(\alpha\gamma_t\vect{A}_s+\gamma_t\vect{A}_t\right)+
+\cdots+
+\gamma_m\vect{A}_m\\
+%
+&=
+\gamma_1\vect{A}_1+
+\gamma_2\vect{A}_2+
+\gamma_3\vect{A}_3+
+\cdots+
+\left(-\alpha\gamma_t+\gamma_s\right)\vect{A}_s+
+\cdots+
+\gamma_t\left(\alpha\vect{A}_s+\vect{A}_t\right)+
+\cdots+
+\gamma_m\vect{A}_m\\
+%
+&=
+\gamma_1\vect{B}_1+
+\gamma_2\vect{B}_2+
+\gamma_3\vect{B}_3+
+\cdots+
+\left(-\alpha\gamma_t+\gamma_s\right)\vect{B}_s+
+\cdots+
+\gamma_t\vect{B}_t+
+\cdots+
+\gamma_m\vect{B}_m
+\end{align*}
+%
+says that $\csp{\transpose{A}}\subseteq\csp{\transpose{B}}$.  So $\rsp{A}=\csp{\transpose{A}}=\csp{\transpose{B}}=\rsp{B}$ when a single row operation of the third type is performed.\par
+%
+So the row space of a matrix is preserved by each row operation, and hence row spaces of row-equivalent matrices are equal sets.
+%
+\end{proof}
+%
+\begin{example}{RSREM}{Row spaces of two row-equivalent matrices}{row-equivalent matrices!row spaces}
+In \acronymref{example}{TREM} we saw that the matrices
+\begin{align*}
+A&=\begin{bmatrix}
+2&-1&3&4\\
+5&2&-2&3\\
+1&1&0&6
+\end{bmatrix}
+&
+B&=\begin{bmatrix}
+1&1&0&6\\
+3&0&-2&-9\\
+2&-1&3&4
+\end{bmatrix}
+\end{align*}
+%
+are row-equivalent by demonstrating a sequence of two row operations that converted $A$ into $B$.  Applying \acronymref{theorem}{REMRS} we can say
+%
+\begin{equation*}
+\rsp{A}=
+\spn{\set{\colvector{2\\-1\\3\\4},\,\colvector{5\\2\\-2\\3},\,\colvector{1\\1\\0\\6}}}=
+\spn{\set{\colvector{1\\1\\0\\6},\,\colvector{3\\0\\-2\\-9},\,\colvector{2\\-1\\3\\4}}}
+=\rsp{B}
+\end{equation*}
+%
+\end{example}
+%
+\acronymref{theorem}{REMRS} is at its best when one of the row-equivalent matrices is in reduced row-echelon form.  The vectors that correspond to the zero rows can be ignored. (Who needs the zero vector when building a span? See \acronymref{exercise}{LI.T10}.)  The echelon pattern insures that the nonzero rows yield vectors that are linearly independent.  Here's the theorem.
+%
+\begin{theorem}{BRS}{Basis for the Row Space}{row space!basis}
+Suppose that $A$ is a matrix and $B$ is a row-equivalent matrix in reduced row-echelon form.  Let $S$ be the set of nonzero columns of $\transpose{B}$.  Then
+%
+\begin{enumerate}
+\item $\rsp{A}=\spn{S}$.
+\item $S$ is a linearly independent set.
+\end{enumerate}
+%
+\end{theorem}
+%
+\begin{proof}
+From \acronymref{theorem}{REMRS} we know that $\rsp{A}=\rsp{B}$.  If $B$ has any zero rows, these correspond to columns of $\transpose{B}$ that are the zero vector.  We can safely toss out the zero vector in the span construction, since it can be recreated from the nonzero vectors by a linear combination where all the scalars are zero.  So $\rsp{A}=\spn{S}$.\par
+%
+Suppose $B$ has $r$ nonzero rows and let $D=\set{d_1,\,d_2,\,d_3,\,\ldots,\,d_r}$ denote the column indices of $B$ that have a leading one in them.  Denote the $r$ column vectors of $\transpose{B}$, the vectors in $S$, as $\vectorlist{B}{r}$.  To show that $S$ is linearly independent, start with a relation of linear dependence
+%
+\begin{equation*}
+\lincombo{\alpha}{B}{r}=\zerovector
+\end{equation*}
+%
+Now consider this vector equality in location $d_i$.  Since $B$ is in reduced row-echelon form, the entries of column $d_i$ of $B$ are all zero, except for a (leading) 1 in row $i$.  Thus, in $\transpose{B}$, row $d_i$ is all zeros, excepting a 1 in column $i$.   So, for $1\leq i\leq r$,
+%
+\begin{align*}
+0
+&=\vectorentry{\zerovector}{d_i}&&\text{\acronymref{definition}{ZCV}}\\
+%
+&=\vectorentry{\lincombo{\alpha}{B}{r}}{d_i}
+&&\text{\acronymref{definition}{RLDCV}}\\
+%
+&=
+\vectorentry{\alpha_1\vect{B}_1}{d_i}+
+\vectorentry{\alpha_2\vect{B}_2}{d_i}+
+\vectorentry{\alpha_3\vect{B}_3}{d_i}+
+\cdots+
+\vectorentry{\alpha_r\vect{B}_r}{d_i}+
+&&\text{\acronymref{definition}{MA}}\\
+%
+&=
+\alpha_1\vectorentry{\vect{B}_1}{d_i}+
+\alpha_2\vectorentry{\vect{B}_2}{d_i}+
+\alpha_3\vectorentry{\vect{B}_3}{d_i}+
+\cdots+
+\alpha_r\vectorentry{\vect{B}_r}{d_i}+
+&&\text{\acronymref{definition}{MSM}}\\
+&=
+\alpha_1(0)+
+\alpha_2(0)+
+\alpha_3(0)+
+\cdots+
+\alpha_i(1)+
+\cdots+
+\alpha_r(0)
+&&\text{\acronymref{definition}{RREF}}\\
+%
+&=\alpha_i
+\end{align*}
+%
+So we conclude that $\alpha_i=0$ for all $1\leq i\leq r$, establishing the linear independence of $S$  (\acronymref{definition}{LICV}).
+%
+\end{proof}
+%
+\begin{example}{IAS}{Improving a span}{span!improved}
+Suppose in the course of analyzing a matrix (its column space, its null space, its\dots) we encounter the following set of vectors, described by a span
+%
+\begin{equation*}
+X=\spn{\set{
+\colvector{1\\2\\1\\6\\6},\,
+\colvector{3\\-1\\2\\-1\\6},\,
+\colvector{1\\-1\\0\\-1\\-2},\,
+\colvector{-3\\2\\-3\\6\\-10}
+}}
+\end{equation*}
+%
+Let $A$ be the matrix whose rows are the vectors in $X$, so by design $X=\rsp{A}$,
+%
+\begin{equation*}
+A=
+\begin{bmatrix}
+1 & 2 & 1 & 6 & 6\\
+3 & -1 & 2 & -1 & 6\\ 
+1 & -1 & 0 & -1 & -2\\ 
+-3 & 2 & -3 & 6 & -10
+\end{bmatrix}
+\end{equation*}
+%
+Row-reduce $A$ to form a row-equivalent matrix in reduced row-echelon form, 
+%
+\begin{equation*}
+B=
+\begin{bmatrix}
+\leading{1} & 0 & 0 & 2 & -1\\
+0 & \leading{1} & 0 & 3 & 1\\ 
+0 & 0 & \leading{1} & -2 & 5\\ 
+0 & 0 & 0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+Then \acronymref{theorem}{BRS} says we can grab the nonzero columns of $\transpose{B}$ and write
+%
+\begin{equation*}
+X=\rsp{A}=\rsp{B}=
+\spn{\set{
+\colvector{1\\0\\0\\2\\-1},\,
+\colvector{0\\1\\0\\3\\1},\,
+\colvector{0\\0\\1\\-2\\5}
+}}
+\end{equation*}
+%
+These three vectors provide a much-improved description of $X$.  There are fewer vectors, and the pattern of zeros and ones in the first three entries makes it easier to determine membership in $X$.  And all we had to do was row-reduce the right matrix and toss out a zero row.  Next to row operations themselves, {\em this is probably the most powerful computational technique at your disposal} as it quickly provides a much improved description of a span, any span.
+%
+\end{example}
+%
+\acronymref{theorem}{BRS} and the techniques of \acronymref{example}{IAS} will provide yet another description of the column space of a matrix.  First we state a triviality as a theorem, so we can reference it later.
+%
+\begin{theorem}{CSRST}{Column Space, Row Space, Transpose}{column space!as row space}
+\index{row space!as column space}
+Suppose $A$ is a matrix.  Then $\csp{A}=\rsp{\transpose{A}}$.
+\end{theorem}
+%
+\begin{proof}
+%
+\begin{align*}
+\csp{A}
+&=\csp{\transpose{\left(\transpose{A}\right)}}
+&&\text{\acronymref{theorem}{TT}}\\
+%
+&=\rsp{\transpose{A}}
+&&\text{\acronymref{definition}{RSM}}
+%
+\end{align*}
+%
+\end{proof}
+%
+So to find another expression for the column space of a matrix, build its transpose, row-reduce it, toss out the zero rows, and convert the nonzero rows to column vectors to yield an improved set for the span construction.  We'll do \acronymref{archetype}{I}, then you do \acronymref{archetype}{J}.
+%
+\begin{example}{CSROI}{Column space from row operations, Archetype I}{column space!row operations, Archetype I}
+\index{Archetype I!column space from row operations}
+%
+To find the column space of the coefficient matrix of \acronymref{archetype}{I}, we proceed as follows.  The matrix is
+%
+\begin{equation*}
+I=\archetypepart{I}{purematrix}.
+\end{equation*}
+%
+The transpose is 
+%
+\begin{equation*}
+\begin{bmatrix}
+1 & 2 & 0 & -1\\ 
+4 & 8 & 0 & -4\\ 
+0 & -1 & 2 & 2\\ 
+-1 & 3 & -3 & 4\\ 
+0 & 9 & -4 & 8\\
+7 & -13 & 12 & -31\\ 
+-9 & 7 & -8 & 37
+\end{bmatrix}.
+\end{equation*}
+%
+Row-reduced this becomes,
+%
+\begin{equation*}
+\begin{bmatrix}
+\leading{1} & 0 & 0 & -\frac{31}{7}\\ 
+0 & \leading{1} & 0 & \frac{12}{7}\\ 
+0 & 0 & \leading{1} & \frac{13}{7}\\ 
+0 & 0 & 0 & 0\\ 
+0 & 0 & 0 & 0\\ 
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0
+\end{bmatrix}.
+\end{equation*}
+%
+Now, using \acronymref{theorem}{CSRST} and \acronymref{theorem}{BRS}
+%
+\begin{equation*}
+\csp{I}=\rsp{\transpose{I}}=
+\spn{\set{
+\colvector{1\\0\\0\\-\frac{31}{7}},\,
+\colvector{0\\1\\0\\\frac{12}{7}},\,
+\colvector{0\\0\\1\\\frac{13}{7}} 
+}}.
+\end{equation*}
+%
+This is a very nice description of the column space.  Fewer vectors than the 7 involved in the definition, and the pattern of the zeros and ones in the first 3 slots can be used to advantage.  For example, \acronymref{archetype}{I} is presented as a consistent system of equations with a vector of constants 
+%
+\begin{equation*}
+\vect{b}=\colvector{3\\9\\1\\4}.
+\end{equation*}
+%
+Since $\linearsystem{I}{\vect{b}}$ is consistent, \acronymref{theorem}{CSCS} tells us that $\vect{b}\in\csp{I}$.  But we could see this quickly with the following computation, which really only involves any work in the 4th entry of the vectors as the scalars in the linear combination are {\em dictated} by the first three entries of $\vect{b}$.
+%
+\begin{equation*}
+\vect{b}=\colvector{3\\9\\1\\4}=
+3\colvector{1\\0\\0\\-\frac{31}{7}}+
+9\colvector{0\\1\\0\\\frac{12}{7}}+
+1\colvector{0\\0\\1\\\frac{13}{7}}
+\end{equation*}
+%
+Can you now rapidly construct several vectors, $\vect{b}$, so that $\linearsystem{I}{\vect{b}}$ is consistent, and several more so that the system is inconsistent?
+%
+\end{example}
+%
+%  End  crs.tex

@@ -1,0 +1,236 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section HSE
+%%  Homogenous Systems of Equations
+%%
+%%%%%%%%%%%
+%
+In this section we specialize to systems of linear equations where every equation has a zero as its constant term.  Along the way, we will begin to express more and more ideas in the language of matrices and begin a move away from writing out whole systems of equations.  The ideas initiated in this section will carry through the remainder of the course.  
+%
+\subsect{SHS}{Solutions of Homogeneous Systems}
+%
+As usual, we begin with a definition.
+%
+\begin{definition}{HS}{Homogeneous System}{homogeneous system}
+A system of linear equations, $\linearsystem{A}{\vect{b}}$ is \define{homogeneous} if the vector of constants is the zero vector, in other words, $\vect{b}=\zerovector$.
+%
+\end{definition}
+%
+\begin{example}{AHSAC}{Archetype C as a homogeneous system}{homogeneous system!Archetype C}
+\index{Archetype C!homogeneous system}
+For each archetype that is a system of equations, we have formulated a similar, yet different, homogeneous system of equations by replacing each equation's constant term with a zero.  To wit, for \acronymref{archetype}{C}, we can convert the original system of equations into the homogeneous system,
+%
+\archetypepart{C}{homosystem}
+%
+Can you quickly find a solution to this system without row-reducing the augmented matrix?
+\end{example}
+%
+As you might have discovered by studying \acronymref{example}{AHSAC}, setting each variable to zero will {\em always} be a solution of a homogeneous system.  This is the substance of the following theorem.
+%
+\begin{theorem}{HSC}{Homogeneous Systems are Consistent}{homogeneous system!consistent}
+Suppose that a system of linear equations is homogeneous.  Then the system is consistent.
+\end{theorem}
+%
+\begin{proof}
+Set each variable of the system to zero.  When substituting these values into each equation, the left-hand side evaluates to zero, no matter what the coefficients are.  Since a homogeneous system has zero on the right-hand side of each equation as the constant term, each equation is true.  With one demonstrated solution, we can call the system consistent.
+\end{proof}
+%
+Since this solution is so obvious, we now define it as the trivial solution.
+%
+\begin{definition}{TSHSE}{Trivial Solution to Homogeneous Systems of Equations}{trivial solution!system of equations}
+Suppose a homogeneous system of linear equations has $n$ variables.  The solution $x_1=0$, $x_2=0$,\dots, $x_n=0$ (i.e.\ $\vect{x}=\zerovector$) is called the \define{trivial solution}.
+\end{definition}
+%
+Here are three typical examples, which we will reference throughout this section.  Work through the row operations as we bring each to reduced row-echelon form.  Also notice what is similar in each example, and what differs.
+%
+\begin{example}{HUSAB}{Homogeneous, unique solution, Archetype B}{solving homogeneous system!Archetype B}
+\index{Archetype B!solving homogeneous system}
+Archetype B can be converted to the homogeneous system,
+%
+\archetypepart{B}{homosystem}
+%
+whose augmented matrix row-reduces to
+%
+\begin{equation*}
+\archetypepart{B}{homoaugmentedreduced}
+\end{equation*}
+%
+By \acronymref{theorem}{HSC}, the system is consistent, and so the computation $n-r=3-3=0$ means the solution set contains just a single solution.  Then, this lone solution must be the trivial solution.
+\end{example}
+%
+\begin{example}{HISAA}{Homogeneous, infinite solutions, Archetype A}{solving homogeneous system!Archetype A}
+\index{Archetype A!solving homogeneous system}
+\acronymref{archetype}{A} can be converted to the homogeneous system,
+%
+\archetypepart{A}{homosystem}
+%
+whose augmented matrix row-reduces to
+%
+\begin{equation*}
+\archetypepart{A}{homoaugmentedreduced}
+\end{equation*}
+%
+By \acronymref{theorem}{HSC}, the system is consistent, and so the computation $n-r=3-2=1$ means the solution set contains one free variable by \acronymref{theorem}{FVCS}, and hence has infinitely many solutions.  We can describe this solution set using the free variable $x_3$,
+\begin{equation*}
+S=\setparts{\colvector{x_1\\x_2\\x_3}}{x_1=-x_3,\,x_2=x_3}
+=\setparts{\colvector{-x_3\\x_3\\x_3}}{x_3\in\complex{\null}}
+\end{equation*}
+%
+Geometrically, these are points in three dimensions that lie on a line through the origin.
+%
+\end{example}
+%
+\begin{example}{HISAD}{Homogeneous, infinite solutions, Archetype D}{solving homogeneous system!Archetype D}
+\index{Archetype D!solving homogeneous system}
+\acronymref{archetype}{D} (and identically, \acronymref{archetype}{E}) can be converted to the homogeneous system,
+%
+\archetypepart{D}{homosystem}
+%
+whose augmented matrix row-reduces to
+%
+\begin{equation*}
+\archetypepart{D}{homoaugmentedreduced}
+\end{equation*}
+%
+By \acronymref{theorem}{HSC}, the system is consistent, and so the computation $n-r=4-2=2$ means the solution set contains two free variables by \acronymref{theorem}{FVCS}, and hence has infinitely many solutions.  We can describe this solution set using the free variables $x_3$ and $x_4$,
+\begin{align*}
+S&=\setparts{\colvector{x_1\\x_2\\x_3\\x_4}}{x_1=-3x_3+2x_4,\,x_2=-x_3+3x_4}\\
+ &=\setparts{\colvector{-3x_3+2x_4\\-x_3+3x_4\\x_3\\x_4}}{ x_3,\,x_4\in\complex{\null}}\\
+\end{align*}
+%
+\end{example}
+%
+After working through these examples, you might perform the same computations for the slightly larger example, \acronymref{archetype}{J}.\par
+%
+Notice that when we do row operations on the augmented matrix of a homogeneous system of linear equations the last column of the matrix is all zeros.  Any one of the three allowable row operations will convert zeros to zeros and thus, the final column of the matrix in reduced row-echelon form will also be all zeros.  So in this case, we may be as likely to reference only the coefficient matrix and presume that we remember that the final column begins with zeros, and after any number of row operations is still zero.\par
+%
+\acronymref{example}{HISAD} suggests the following theorem.
+%
+\begin{theorem}{HMVEI}{Homogeneous, More Variables than Equations, Infinite solutions}{homogeneous system!infinitely many solutions}
+Suppose that a homogeneous system of linear equations has $m$ equations and $n$ variables with $n>m$.  Then the system has infinitely many solutions.
+\end{theorem}
+%
+\begin{proof}
+We are assuming the system is homogeneous, so \acronymref{theorem}{HSC} says it is consistent.  Then the hypothesis that $n>m$, together with \acronymref{theorem}{CMVEI}, gives infinitely many solutions.
+\end{proof}
+%
+\acronymref{example}{HUSAB} and \acronymref{example}{HISAA} are concerned with homogeneous systems where $n=m$ and expose a fundamental distinction between the two examples.  One has a unique solution, while the other has infinitely many.  These are exactly the only two possibilities for a homogeneous system and illustrate that each is possible (unlike the case when $n>m$ where \acronymref{theorem}{HMVEI} tells us that there is only one possibility for a homogeneous system).\par
+%
+\subsect{NSM}{Null Space of a Matrix}
+%
+The set of solutions to a homogeneous system (which by \acronymref{theorem}{HSC} is never empty) is of enough interest to warrant its own name.  However, we define it as a property of the coefficient matrix, not as a property of some system of equations.
+%
+\begin{definition}{NSM}{Null Space of a Matrix}{null space!matrix}
+The \define{null space} of a matrix $A$, denoted $\nsp{A}$, is the set of all the vectors that are solutions to the homogeneous system $\homosystem{A}$.
+\denote{NSM}{Null Space of a Matrix}{$\nsp{A}$}{null space}
+\end{definition}
+%
+In the Archetypes (\acronymref{appendix}{A}) each example that is a system of equations also has a corresponding homogeneous system of equations listed, and several sample solutions are given.  These solutions will be elements of the null space of the coefficient matrix.  We'll look at one example.
+%
+\begin{example}{NSEAI}{Null space elements of Archetype I}{null space!Archetype I}
+\index{Archetype I!null space}
+The write-up for \acronymref{archetype}{I} lists several solutions of the corresponding homogeneous system.  Here are two, written as solution vectors.  We can say that they are in the null space of the coefficient matrix for the system of equations in \acronymref{archetype}{I}.
+%
+\begin{align*}
+\vect{x}=\colvector{3\\0\\-5\\-6\\0\\0\\1}&&
+\vect{y}=\colvector{-4\\1\\-3\\-2\\1\\1\\1}
+\end{align*}
+%
+However, the vector
+%
+\begin{equation*}
+\vect{z}=\colvector{1\\0\\0\\0\\0\\0\\2}
+\end{equation*}
+%
+is not in the null space, since it is not a solution to the homogeneous system.  For example, it fails to even make the first equation true.
+%
+\end{example}
+%
+Here are two (prototypical) examples of the computation of the null space of a matrix.
+%
+\begin{example}{CNS1}{Computing a null space, \protect\#1}{null space!computation}
+Let's compute the null space of
+%
+\begin{equation*}
+A=\begin{bmatrix}
+ 2 & -1 & 7 & -3 & -8 \\
+ 1 & 0 & 2 & 4 & 9 \\
+ 2 & 2 & -2 & -1 & 8
+\end{bmatrix}
+\end{equation*}
+%
+which we write as $\nsp{A}$.   Translating \acronymref{definition}{NSM}, we simply desire to solve the homogeneous system $\homosystem{A}$.  So we row-reduce the augmented matrix to obtain
+%
+\begin{equation*}
+\begin{bmatrix}
+ \leading{1} & 0 & 2 & 0 & 1 & 0 \\
+ 0 & \leading{1} & -3 & 0 & 4 & 0 \\
+ 0 & 0 & 0 & \leading{1} & 2 & 0 
+\end{bmatrix}
+\end{equation*}
+%
+The variables (of the homogeneous system) $x_3$ and $x_5$ are free (since columns 1, 2 and 4 are pivot columns), so we arrange the equations represented by the matrix in reduced row-echelon form to
+%
+\begin{align*}
+x_1&=-2x_3-x_5\\
+x_2&=3x_3-4x_5\\
+x_4&=-2x_5\\
+\end{align*}
+%
+So we can write the infinite solution set as sets using column vectors,
+%
+\begin{equation*}
+\nsp{A}=\setparts{
+\colvector{-2x_3-x_5\\3x_3-4x_5\\x_3\\-2x_5\\x_5}
+}{
+x_3,\,x_5\in\complex{\null}
+}
+\end{equation*}
+%
+\end{example}
+%
+\begin{example}{CNS2}{Computing a null space, \protect\#2}{null space!computation}
+Let's compute the null space of
+%
+\begin{equation*}
+C=\begin{bmatrix}
+ -4 & 6 & 1 \\
+ -1 & 4 & 1 \\
+ 5 & 6 & 7 \\
+ 4 & 7 & 1
+\end{bmatrix}
+\end{equation*}
+%
+which we write as $\nsp{C}$.   Translating \acronymref{definition}{NSM}, we simply desire to solve the homogeneous system $\homosystem{C}$.  So we row-reduce the augmented matrix to obtain
+%
+\begin{equation*}
+\begin{bmatrix}
+ \leading{1} & 0 & 0 & 0 \\
+ 0 & \leading{1} & 0 & 0 \\
+ 0 & 0 & \leading{1} & 0 \\
+ 0 & 0 & 0 & 0 
+\end{bmatrix}
+\end{equation*}
+%
+There are no free variables in the homogeneous system represented by the row-reduced matrix, so there is only the trivial solution, the zero vector, $\zerovector$.  So we can write the (trivial) solution set as
+%
+\begin{equation*}
+\nsp{C}=\set{\zerovector}=\set{\colvector{0\\0\\0}}
+\end{equation*}
+%
+\end{example}
+%
+%  End  hse.tex
+
+
+
+

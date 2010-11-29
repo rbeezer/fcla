@@ -1,0 +1,184 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section SR
+%%  Square Roots
+%%
+%%%%%%%%%%%
+%
+{\sc\large This Section is a Draft, Subject to Changes}\\
+{\sc\large Needs Numerical Examples}\par\bigskip
+%
+With all our results about Hermitian matrices, their eigenvalues and their diagonalizations, it will be a nearly trivial matter to now construct a ``square root'' of a positive semi-definite matrix.  We will describe the square root of a matrix $A$ as a matrix $S$ such that $A=S^2$.  In general, a matrix $A$ might have many such square roots.  But with a few results in hand we will be able to impose an extra condition on $S$ that will make a unique $S$ such that $A=S^2$.  At that point we can define {\em the} square root of $A$ formally.
+%
+\subsect{SRM}{Square Root of a Matrix}
+%
+\begin{theorem}{PSMSR}{Positive Semi-Definite Matrices and Square Roots}{square root!positive semi-definite matrix}
+Suppose $A$ is a square matrix.  There is a positive semi-definite matrix $S$ such that $A=S^2$ if and only if $A$ is positive semi-definite.
+\end{theorem}
+%
+\begin{proof}
+Let $n$ denote the size of $A$.\par
+%
+($\Leftarrow$) 
+Suppose that $A$ is positive semi-definite.  Since $A$ is Hermitian (\acronymref{definition}{PSM}) we know $A$ is normal (\acronymref{definition}{NRML}) and so by \acronymref{theorem}{OD} there is a unitary matrix $U$ and a diagonal matrix $D$, whose diagonal entries are the eigenvalues of $A$, such that $D=\adjoint{U}AU$.  The eigenvalues of $A$ are all non-negative (\acronymref{theorem}{EPSM}), which allows us to define a diagonal matrix $E$ whose diagonal entries are the positive square roots of the eigenvalues of $A$, in the same order as they appear in $D$.  More precisely, define $E$ to be the diagonal matrix with non-negative diagonal entries such that $E^2=D$.  Set $S=UE\adjoint{U}$, and compute
+%
+\begin{align*}
+S^2
+&=UE\adjoint{U}UE\adjoint{U}\\
+&=UEI_nE\adjoint{U}&&\text{\acronymref{definition}{UM}}\\
+&=UEE\adjoint{U}&&\text{\acronymref{theorem}{MMIM}}\\
+&=UD\adjoint{U}\\
+&=U\adjoint{U}AU\adjoint{U}&&\text{\acronymref{theorem}{OD}}\\
+&=I_nAI_n&&\text{\acronymref{definition}{UM}}\\
+&=A&&\text{\acronymref{theorem}{MMIM}}
+\end{align*}
+%
+We need to first verify that $S$ is Hermitian.
+%
+\begin{align*}
+\adjoint{S}
+&=\adjoint{\left(UE\adjoint{U}\right)}\\
+&=\adjoint{\left(UE\adjoint{U}\right)}\\
+&=\adjoint{\left(\adjoint{U}\right)}\adjoint{E}\adjoint{U}&&\text{\acronymref{theorem}{MMAD}}\\
+&=U\adjoint{E}\adjoint{U}&&\text{\acronymref{theorem}{AA}}\\
+&=U\transpose{\left(\conjugate{E}\right)}\adjoint{U}&&\text{\acronymref{definition}{A}}\\
+&=U\transpose{E}\adjoint{U}&&\text{\acronymref{theorem}{HMRE}}\\
+&=UE\adjoint{U}&&\text{Diagonal matrix}\\
+&=S
+\end{align*}
+%
+And finally, we want to check the use of $S$ in an inner product.    Notice that $E$ is Hermitian since it is a diagonal matrix with real entries.  Furthermore, as a diagonal matrix, the eigenvalues of $E$ are precisely the diagonal entries, and since these were {\em chosen} to be positive, an application of \acronymref{theorem}{EPSM} tells us that $E$ is positive semi-definite.  Now, for any $\vect{x}\in\complex{n}$,  
+%
+\begin{align*}
+\innerproduct{S\vect{x}}{\vect{x}}
+&=\innerproduct{UE\adjoint{U}\vect{x}}{\vect{x}}\\
+&=\innerproduct{E\adjoint{U}\vect{x}}{\adjoint{U}\vect{x}}&&\text{\acronymref{theorem}{AIP}}\\
+&=\innerproduct{E\left(\adjoint{U}\vect{x}\right)}{\adjoint{U}\vect{x}}\\
+&\geq 0&&\text{\acronymref{definition}{PSM}}
+\end{align*}
+%
+So, according to \acronymref{definition}{PSM}, $S$ is positive semi-definite.\par
+%
+($\Rightarrow$)
+Assume that $A=S^2$, with $S$ positive semi-definite.  Then $S$ is Hermitian, and we check that $A$ is Hermitian.
+%
+\begin{align*}
+\adjoint{A}
+&=\adjoint{\left(SS\right)}\\
+&=\adjoint{S}\adjoint{S}&&\text{\acronymref{theorem}{MMAD}}\\
+&=SS&&\text{\acronymref{definition}{HM}}\\
+&=A
+\end{align*}
+%
+Now for the use of $A$ in an inner product.  For any $\vect{x}\in\complex{n}$,
+%
+\begin{align*}
+\innerproduct{A\vect{x}}{\vect{x}}
+&=\innerproduct{S^2\vect{x}}{\vect{x}}\\
+&=\innerproduct{S\vect{x}}{\adjoint{S}\vect{x}}&&\text{\acronymref{theorem}{AIP}}\\
+&=\innerproduct{S\vect{x}}{S\vect{x}}&&\text{\acronymref{definition}{HM}}\\
+&\geq 0&&\text{\acronymref{theorem}{PIP}}
+\end{align*}
+%
+So by \acronymref{definition}{PSM}, $A$ is positive semi-definite.
+%
+\end{proof}
+%
+There is a very close relationship between the eigenvalues and eigenspaces of a positive semi-definite matrix and its positive semi-definite square root.  The next theorem is interesting in its own right, but is also an important technical step in some other important results, such as the upcoming uniqueness of the square root (\acronymref{theorem}{USR}).
+%
+\begin{theorem}{EESR}{Eigenvalues and Eigenspaces of a Square Root}{square root!eigenvalues, eigenspaces}
+Suppose that $A$ is a positive semi-definite matrix and $S$ is a positive semi-definite matrix such that $A=S^2$.  If $\scalarlist{\lambda}{p}$ are the distinct eigenvalues of $A$, then the distinct eigenvalues of $S$ are $\sqrt{\lambda_1},\,\sqrt{\lambda_2},\,\sqrt{\lambda_3},\,\dots,\,\sqrt{\lambda_p}$, and $\eigenspace{S}{\sqrt{\lambda_i}}=\eigenspace{A}{\lambda_i}$ for $1\leq i\leq p$.
+\end{theorem}
+%
+\begin{proof}
+Let $\vect{x}$ be an eigenvector of $S$ for an eigenvalue $\rho$.  Then, in the style of \acronymref{theorem}{EPM},
+%
+\begin{align*}
+A\vect{x}&=S^2\vect{x}=S\left(S\vect{x}\right)
+=S\left(\rho\vect{x}\right)=\rho S\vect{x}=\rho^2\vect{x}
+\end{align*}
+%
+so $\rho^2$ is an eigenvalue of $A$ and must equal some $\lambda_i$.  Furthermore, because $S$ is positive semi-definite, \acronymref{theorem}{EPSM} tells us that $\rho\geq 0$.  The impact for us here is that we cannot have two different eigenvalues of $S$ whose squares equal the same eigenvalue of $A$, so we can pair each eigenvalue of $S$ with a different eigenvalue of $A$, equal to its square.  (A good exercise is to track through the rest of this proof in the situation where $S$ is not assumed to be positive semi-definite and we do not have this condition on the eigenvalues.  Where does the proof then break down?) Let $\rho_i$, $1\leq i\leq q$ denote the $q$ distinct eigenvalues of $S$.  The discussion above implies that we can order the eigenvalues of $A$ and $S$ so that $\lambda_i=\rho_i^2$ for $1\leq i\leq q$.  Notice that at this point we know that $q\leq p$, though we will be showing that $q=p$.\par
+%
+Additionally, the equation above tells us that every eigenvector of $S$ for $\rho_i$ is again an eigenvector of $A$ for $\rho_i^2$.  So for $1\leq i\leq q$, the relevant eigenspaces are related by
+%
+\begin{align*}
+\eigenspace{S}{\sqrt{\lambda_i}}=\eigenspace{S}{\rho_i}
+\subseteq
+\eigenspace{A}{\rho_i^2}=\eigenspace{A}{\lambda_i}
+\end{align*}
+%
+So the eigenspaces of $S$ are subsets of the eigenspaces of $A$, for the related eigenvalues.  However, we will be showing that these sets are indeed equal to each other.\par
+%
+Both $A$ and $S$ are positive semi-definite, hence Hermitian and therefore normal.  \acronymref{theorem}{OD} then tells us that each is diagonalizable (\acronymref{definition}{DZM}).  Then \acronymref{theorem}{DMFE} says that the algebraic multiplicity and geometric multiplicity of each eigenvalue are equal.  Then, if we let $n$ denote the size of $A$,
+%
+\begin{align*}
+n
+&=\sum_{i=1}^{q}\algmult{S}{\sqrt{\lambda_i}}&&\text{\acronymref{theorem}{NEM}}\\
+&=\sum_{i=1}^{q}\geomult{S}{\sqrt{\lambda_i}}&&\text{\acronymref{theorem}{DMFE}}\\
+&=\sum_{i=1}^{q}\dimension{\eigenspace{S}{\sqrt{\lambda_i}}}&&\text{\acronymref{definition}{GME}}\\
+&\leq\sum_{i=1}^{q}\dimension{\eigenspace{A}{\lambda_i}}&&\text{\acronymref{theorem}{PSSD}}\\
+&\leq\sum_{i=1}^{p}\dimension{\eigenspace{A}{\lambda_i}}&&\text{\acronymref{definition}{D}}\\
+&=\sum_{i=1}^{p}\geomult{A}{\lambda_i}&&\text{\acronymref{definition}{GME}}\\
+&=\sum_{i=1}^{p}\algmult{A}{\lambda_i}&&\text{\acronymref{theorem}{DMFE}}\\
+&=n&&\text{\acronymref{theorem}{NEM}}
+%
+\end{align*}
+%
+With equal values at the two ends of this chain of equalities and inequalities, we know that the two inequalities are forced to actually be equalities.  In particular, the second inequality implies that $p=q$ and the first, in conjunction with \acronymref{theorem}{EDYES}, implies that $\eigenspace{S}{\sqrt{\lambda_i}}=\eigenspace{A}{\lambda_i}$ for $1\leq i\leq p$.
+%
+\end{proof}
+%
+Notice that we defined the singular values of a matrix $A$ as the square roots of the eigenvalues of $\adjoint{A}A$ (\acronymref{definition}{SV}).  With \acronymref{theorem}{EESR} in hand we recognize the singular values of $A$ as simply the eigenvalues of $\sr{\adjoint{A}A}$.  Indeed, many authors take this as the definition of singular values, since it is equivalent to our definition.  We have chosen not to wait for a discussion of square roots before making a definition of singular values, allowing us to present the singular value decomposition (\acronymref{theorem}{SVD}) all the sooner.\par
+%
+In the first half of the proof of \acronymref{theorem}{PSMSR} we could have chosen the matrix $E$ (which was the essential component of the desired matrix $S$) in a variety of ways.  Any collection of diagonal entries of $E$ could be replaced by their negatives and we would maintain the property that $E^2=D$.  However, if we decide to enforce the entries of $E$ as non-negative quantities then $E$ is positive semi-definite, and then $S$ follows along as a positive semi-definite matrix.  We now show that of all the possible square roots of a positive semi-definite matrix, only one is itself again positive semi-definite.  In other words, the $S$ of \acronymref{theorem}{PSMSR} is unique.
+%
+\begin{theorem}{USR}{Unique Square Root}{square root!unique}
+Suppose $A$ is a positive semi-definite matrix.  Then there is a unique positive semi-definite matrix $S$ such that $A=S^2$.
+\end{theorem}
+%
+\begin{proof}
+%
+\acronymref{theorem}{PSMSR} gives us the existence of at least one positive semi-definite matrix $S$ such that $A=S^2$.  As usual, we will assume that $S_1$ and $S_2$ are positive semi-definite matrices such that $A=S_1^2=S_2^2$ (\acronymref{technique}{U}).\par
+%
+As $A$ is diagonalizable, there is a basis of $\complex{n}$ composed entirely of eigenvectors of $A$ (\acronymref{theorem}{DC}), say $B=\set{\vectorlist{x}{n}}$.  Let $\scalarlist{\delta}{n}$ denote the associated eigenvalues.  \acronymref{theorem}{EESR} allows to conclude that  $\eigenspace{A}{\delta_i}=\eigenspace{S_1}{\sqrt{\delta_i}}=\eigenspace{S_2}{\sqrt{\delta_i}}$.   So $S_1\vect{x}_i=\sqrt{\delta_i}\vect{x}_i=S_2\vect{x}_i$ for $1\leq i\leq n$.\par
+%
+Choose any $\vect{x}\in\complex{n}$.  The spanning property of $B$ allows us to conclude the existence of a set of scalars, $\scalarlist{a}{n}$, yielding $\vect{x}$ as a linear combination of the vectors in $B$.  So,
+%
+\begin{align*}
+S_1\vect{x}
+=S_1\sum_{i=1}^{n}a_i\vect{x}_i
+=\sum_{i=1}^{n}a_iS_1\vect{x}_i
+=\sum_{i=1}^{n}a_i\sqrt{\delta_i}\vect{x}_i
+=\sum_{i=1}^{n}a_iS_2\vect{x}_i
+=S_2\sum_{i=1}^{n}a_i\vect{x}_i
+=S_2\vect{x}
+\end{align*}
+%
+Since $S_1$ and $S_2$ have the same action on every vector, \acronymref{theorem}{EMMVP} yields the conclusion that $S_1=S_2$.
+%
+\end{proof}
+%
+With a criteria that distinguishes one square root from all the rest (positive semi-definiteness) we can now define {\em the} square root of a positive semi-definite matrix.
+%
+\begin{definition}{SRM}{Square Root of a Matrix}{square root!matrix}
+Suppose $A$ is a positive semi-definite matrix and $S$ is the positive semi-definite matrix such that $S^2=SS=A$.  Then $S$ is the \define{square root} of $A$ and we write $S=\sr{A}$.
+\denote{SRM}{Square Root of a Matrix}{$\sr{A}$}{square root!matrix}
+\end{definition}
+%
+%%
+%% TODO:  An example with two such square roots.  
+%%             Use a pattern of negative square roots to get non-unique one.  
+%%             HW: 2^n possiblities, minimum
+%%
+%
+%  End  PSM.tex

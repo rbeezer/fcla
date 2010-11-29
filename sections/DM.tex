@@ -1,0 +1,824 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section DM
+%%  Determinants of Matrices
+%%
+%%%%%%%%%%%
+%
+First, a slight detour, as we introduce elementary matrices, which will bring us back to the beginning of the course and our old friend, row operations.
+%
+\subsect{EM}{Elementary Matrices}
+%
+Elementary matrices are very simple, as you might have suspected from their name.  Their purpose is to effect row operations (\acronymref{definition}{RO}) on a matrix through matrix multiplication (\acronymref{definition}{MM}).  Their definitions look more complicated than they really are, so be sure to read ahead after you read the definition for some explanations and an example.
+%
+\begin{definition}{ELEM}{Elementary Matrices}{elementary matrices}
+\begin{enumerate}
+\item For $i\neq j$, $\elemswap{i}{j}$ is the square matrix of size $n$ with 
+%
+\begin{equation*}
+\matrixentry{\elemswap{i}{j}}{k\ell}=
+\begin{cases}
+0 & k\neq i, k\neq j, \ell\neq k\\
+1 & k\neq i, k\neq j, \ell=k\\
+0 & k=i, \ell\neq j\\
+1 & k=i, \ell=j\\
+0 & k=j, \ell\neq i\\
+1 & k=j, \ell=i
+\end{cases}
+\end{equation*}
+%
+\item For $\alpha\neq 0$, $\elemmult{\alpha}{i}$ is the square matrix of size $n$ with 
+%
+\begin{equation*}
+\matrixentry{\elemmult{\alpha}{i}}{k\ell}=
+\begin{cases}
+0        & k\neq i, \ell\neq k\\
+1        & k\neq i, \ell=k\\
+\alpha & k=i, \ell=i
+\end{cases}
+\end{equation*}
+%
+\item For $i\neq j$, $\elemadd{\alpha}{i}{j}$ is the square matrix of size $n$ with 
+%
+\begin{equation*}
+\matrixentry{\elemadd{\alpha}{i}{j}}{k\ell}=
+\begin{cases}
+0 & k\neq j, \ell\neq k\\
+1 & k\neq j, \ell=k\\
+0 & k=j, \ell\neq i, \ell\neq j\\
+1 & k=j, \ell=j\\
+\alpha & k=j, \ell=i\\
+\end{cases}
+\end{equation*}
+%
+\denote{ELEM}{Elementary Matrix}
+{$\elemswap{i}{j}$, $\elemmult{\alpha}{i}$, $\elemadd{\alpha}{i}{j}$}{elementary matrices}
+\end{enumerate}
+\end{definition}
+%
+Again, these matrices are not as complicated as they appear, since they are mostly perturbations of the $n\times n$ identity matrix (\acronymref{definition}{IM}).  $\elemswap{i}{j}$ is the identity matrix with rows (or columns) $i$ and $j$ trading places, $\elemmult{\alpha}{i}$ is the identity matrix where the diagonal entry in row $i$ and column $i$ has been replaced by $\alpha$, and $\elemadd{\alpha}{i}{j}$ is the identity matrix where the entry in row $j$ and column $i$ has been replaced by $\alpha$. (Yes, those subscripts look backwards in the description of $\elemadd{\alpha}{i}{j}$).  Notice that our notation makes no reference to the size of the elementary matrix, since this will always be apparent from the context, or unimportant.\par
+%
+The {\it raison d'\^{e}tre} for elementary matrices is to ``do'' row operations on matrices with matrix multiplication.  So here is an example where we will both see some elementary matrices and see how they can accomplish row operations.
+%
+\begin{example}{EMRO}{Elementary matrices and row operations}{elementary matrices!row operations}
+\index{row operations!elementary matrices}
+We will perform a sequence of row operations (\acronymref{definition}{RO}) on the $3\times 4$ matrix $A$, while also multiplying the matrix on the left by the appropriate $3\times 3$ elementary matrix.
+%
+\begin{equation*}
+A=
+\begin{bmatrix}
+2 & 1 & 3 & 1\\
+1 & 3 & 2 & 4\\
+5 & 0 & 3 & 1
+\end{bmatrix}
+\end{equation*}
+%
+\begin{align*}
+\rowopswap{1}{3}:\ &
+\begin{bmatrix}
+5 & 0 & 3 & 1\\
+1 & 3 & 2 & 4\\
+2 & 1 & 3 & 1
+\end{bmatrix}
+&
+\elemswap{1}{3}:\ &
+\begin{bmatrix}
+0 & 0 & 1\\
+0 & 1 & 0\\
+1 & 0 & 0
+\end{bmatrix}
+\begin{bmatrix}
+2 & 1 & 3 & 1\\
+1 & 3 & 2 & 4\\
+5 & 0 & 3 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+5 & 0 & 3 & 1\\
+1 & 3 & 2 & 4\\
+2 & 1 & 3 & 1
+\end{bmatrix}\\
+%
+%
+\rowopmult{2}{2}:\ &
+\begin{bmatrix}
+5 & 0 & 3 & 1\\
+2 & 6 & 4 & 8\\
+2 & 1 & 3 & 1
+\end{bmatrix}
+&
+\elemmult{2}{2}:\ &
+\begin{bmatrix}
+1 & 0 & 0\\
+0 & 2 & 0\\
+0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+5 & 0 & 3 & 1\\
+1 & 3 & 2 & 4\\
+2 & 1 & 3 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+5 & 0 & 3 & 1\\
+2 & 6 & 4 & 8\\
+2 & 1 & 3 & 1
+\end{bmatrix}\\
+%
+%
+\rowopadd{2}{3}{1}:\ &
+\begin{bmatrix}
+9 & 2 & 9 & 3\\
+2 & 6 & 4 & 8\\
+2 & 1 & 3 & 1
+\end{bmatrix}
+&
+\elemadd{2}{3}{1}:\ &
+\begin{bmatrix}
+1 & 0 & 2\\
+0 & 1 & 0\\
+0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+5 & 0 & 3 & 1\\
+2 & 6 & 4 & 8\\
+2 & 1 & 3 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+9 & 2 & 9 & 3\\
+2 & 6 & 4 & 8\\
+2 & 1 & 3 & 1
+\end{bmatrix}
+%
+%
+\end{align*}
+%
+\end{example}
+%
+The next three theorems establish that each elementary matrix effects a row operation via matrix multiplication.
+%
+\begin{theorem}{EMDRO}{Elementary Matrices Do Row Operations}{elementary matrices!row operations}
+\index{row operations!elementary matrices}
+Suppose that $A$ is an $m\times n$ matrix, and $B$ is a matrix of the same size that is obtained from $A$ by a single row operation (\acronymref{definition}{RO}).  Then there is an elementary matrix of size $m$ that will convert $A$ to $B$ via matrix multiplication on the left.  More precisely,
+\begin{enumerate}
+\item  If the row operation swaps rows $i$ and $j$, 
+then $B=\elemswap{i}{j}A$.
+\item  If the row operation multiplies row $i$ by $\alpha$, 
+then $B=\elemmult{\alpha}{i}A$.
+\item  If the row operation multiplies row $i$ by $\alpha$ and adds the result to row $j$, 
+then $B=\elemadd{\alpha}{i}{j}A$.
+\end{enumerate}
+\end{theorem}
+%
+\begin{proof}
+In each of the three conclusions, performing the row operation on $A$ will create the matrix $B$ where only one or two rows will have changed.  So we will establish the equality of the matrix entries row by row, first for the unchanged rows, then for the changed rows, showing in each case that the result of the matrix product is the same as the result of the row operation.  Here we go.\par
+%
+Row $k$ of the product $\elemswap{i}{j}A$, where $k\neq i$, $k\neq j$, is unchanged from $A$,
+%
+\begin{align*}
+\matrixentry{\elemswap{i}{j}A}{k\ell}
+&=\sum_{p=1}^{n}\matrixentry{\elemswap{i}{j}}{kp}\matrixentry{A}{p\ell}
+&&\text{\acronymref{theorem}{EMP}}\\
+&=\matrixentry{\elemswap{i}{j}}{kk}\matrixentry{A}{k\ell}+
+\sum_{\substack{p=1\\p\neq k}}^{n}\matrixentry{\elemswap{i}{j}}{kp}\matrixentry{A}{p\ell}
+&&\text{\acronymref{property}{CACN}}\\
+&=1\matrixentry{A}{k\ell}+
+\sum_{\substack{p=1\\p\neq k}}^{n}0\matrixentry{A}{p\ell}
+&&\text{\acronymref{definition}{ELEM}}\\
+&=\matrixentry{A}{k\ell}
+\end{align*}
+%
+Row $i$ of the product $\elemswap{i}{j}A$ is row $j$ of $A$,
+%
+\begin{align*}
+\matrixentry{\elemswap{i}{j}A}{i\ell}
+&=\sum_{p=1}^{n}\matrixentry{\elemswap{i}{j}}{ip}\matrixentry{A}{p\ell}
+&&\text{\acronymref{theorem}{EMP}}\\
+&=\matrixentry{\elemswap{i}{j}}{ij}\matrixentry{A}{j\ell}+
+\sum_{\substack{p=1\\p\neq j}}^{n}\matrixentry{\elemswap{i}{j}}{ip}\matrixentry{A}{p\ell}
+&&\text{\acronymref{property}{CACN}}\\
+&=1\matrixentry{A}{j\ell}+
+\sum_{\substack{p=1\\p\neq j}}^{n}0\matrixentry{A}{p\ell}
+&&\text{\acronymref{definition}{ELEM}}\\
+&=\matrixentry{A}{j\ell}
+\end{align*}
+%
+Row $j$ of the product  $\elemswap{i}{j}A$ is row $i$ of $A$,
+%
+\begin{align*}
+\matrixentry{\elemswap{i}{j}A}{j\ell}
+&=\sum_{p=1}^{n}\matrixentry{\elemswap{i}{j}}{jp}\matrixentry{A}{p\ell}
+&&\text{\acronymref{theorem}{EMP}}\\
+&=\matrixentry{\elemswap{i}{j}}{ji}\matrixentry{A}{i\ell}+
+\sum_{\substack{p=1\\p\neq i}}^{n}\matrixentry{\elemswap{i}{j}}{jp}\matrixentry{A}{p\ell}
+&&\text{\acronymref{property}{CACN}}\\
+&=1\matrixentry{A}{i\ell}+\sum_{\substack{p=1\\p\neq i}}^{n}0\matrixentry{A}{p\ell}
+&&\text{\acronymref{definition}{ELEM}}\\
+&=\matrixentry{A}{i\ell}
+\end{align*}
+%
+So the matrix product $\elemswap{i}{j}A$ is the same as the row operation that swaps rows $i$ and $j$.\par
+%
+Row $k$ of the product $\elemmult{\alpha}{i}A$, where $k\neq i$, is unchanged from $A$,
+%
+\begin{align*}
+\matrixentry{\elemmult{\alpha}{i}A}{k\ell}
+&=\sum_{p=1}^{n}\matrixentry{\elemmult{\alpha}{i}}{kp}\matrixentry{A}{p\ell}
+&&\text{\acronymref{theorem}{EMP}}\\
+&=\matrixentry{\elemmult{\alpha}{i}}{kk}\matrixentry{A}{k\ell}+
+\sum_{\substack{p=1\\p\neq k}}^{n}\matrixentry{\elemmult{\alpha}{i}}{kp}\matrixentry{A}{p\ell}
+&&\text{\acronymref{property}{CACN}}\\
+&=1\matrixentry{A}{k\ell}+\sum_{\substack{p=1\\p\neq k}}^{n}0\matrixentry{A}{p\ell}
+&&\text{\acronymref{definition}{ELEM}}\\
+&=\matrixentry{A}{k\ell}
+\end{align*}
+%
+Row $i$ of the product  $\elemmult{\alpha}{i}A$ is $\alpha$ times row $i$ of $A$,
+%
+\begin{align*}
+\matrixentry{\elemmult{\alpha}{i}A}{i\ell}
+&=\sum_{p=1}^{n}\matrixentry{\elemmult{\alpha}{i}}{ip}\matrixentry{A}{p\ell}
+&&\text{\acronymref{theorem}{EMP}}\\
+&=\matrixentry{\elemmult{\alpha}{i}}{ii}\matrixentry{A}{i\ell}+
+\sum_{\substack{p=1\\p\neq i}}^{n}\matrixentry{\elemmult{\alpha}{i}}{ip}\matrixentry{A}{p\ell}
+&&\text{\acronymref{property}{CACN}}\\
+&=\alpha\matrixentry{A}{i\ell}+\sum_{\substack{p=1\\p\neq i}}^{n}0\matrixentry{A}{p\ell}
+&&\text{\acronymref{definition}{ELEM}}\\
+&=\alpha\matrixentry{A}{i\ell}
+\end{align*}
+%
+So the matrix product $\elemmult{\alpha}{i}A$ is the same as the row operation that swaps multiplies row $i$ by $\alpha$.\par
+%
+Row $k$ of the product $\elemadd{\alpha}{i}{j}A$, where $k\neq j$, is unchanged from $A$,
+%
+\begin{align*}
+\matrixentry{\elemadd{\alpha}{i}{j}A}{k\ell}
+&=\sum_{p=1}^{n}\matrixentry{\elemadd{\alpha}{i}{j}}{kp}\matrixentry{A}{p\ell}
+&&\text{\acronymref{theorem}{EMP}}\\
+&=\matrixentry{\elemadd{\alpha}{i}{j}}{kk}\matrixentry{A}{k\ell}+
+\sum_{\substack{p=1\\p\neq k}}^{n}\matrixentry{\elemadd{\alpha}{i}{j}}{kp}\matrixentry{A}{p\ell}
+&&\text{\acronymref{property}{CACN}}\\
+&=1\matrixentry{A}{k\ell}+\sum_{\substack{p=1\\p\neq k}}^{n}0\matrixentry{A}{p\ell}
+&&\text{\acronymref{definition}{ELEM}}\\
+&=\matrixentry{A}{k\ell}
+\end{align*}
+%
+Row $j$ of the product $\elemadd{\alpha}{i}{j}A$, is $\alpha$ times row $i$ of $A$ and then added to row $j$ of $A$,
+%
+\begin{align*}
+\matrixentry{\elemadd{\alpha}{i}{j}A}{j\ell}
+&=\sum_{p=1}^{n}\matrixentry{\elemadd{\alpha}{i}{j}}{jp}\matrixentry{A}{p\ell}
+&&\text{\acronymref{theorem}{EMP}}\\
+&=\matrixentry{\elemadd{\alpha}{i}{j}}{jj}\matrixentry{A}{j\ell}+\\
+&\quad\quad\matrixentry{\elemadd{\alpha}{i}{j}}{ji}\matrixentry{A}{i\ell}+
+\sum_{\substack{p=1\\p\neq j,i}}^{n}\matrixentry{\elemadd{\alpha}{i}{j}}{jp}\matrixentry{A}{p\ell}
+&&\text{\acronymref{property}{CACN}}\\
+&=1\matrixentry{A}{j\ell}+\alpha\matrixentry{A}{i\ell}+\sum_{\substack{p=1\\p\neq j,i}}^{n}0\matrixentry{A}{p\ell}
+&&\text{\acronymref{definition}{ELEM}}\\
+&=\matrixentry{A}{j\ell}+\alpha\matrixentry{A}{i\ell}
+\end{align*}
+%
+So the matrix product $\elemadd{\alpha}{i}{j}A$ is the same as the row operation that multiplies row $i$ by $\alpha$ and adds the result to row $j$.
+%
+\end{proof}
+%
+Later in this section we will need two facts about elementary matrices.
+%
+\begin{theorem}{EMN}{Elementary Matrices are Nonsingular}{elementary matrices!nonsingular}
+If $E$ is an elementary matrix, then $E$ is nonsingular.
+\end{theorem}
+%
+\begin{proof}
+We show that we can row-reduce each elementary matrix to the identity matrix.  Given an elementary matrix of the form $\elemswap{i}{j}$, perform the row operation that swaps row $j$ with row $i$.  Given an elementary matrix of the form $\elemmult{\alpha}{i}$, with $\alpha\neq 0$, perform the row operation that multiplies row $i$ by $1/\alpha$.  Given an elementary matrix of the form $\elemadd{\alpha}{i}{j}$, with $\alpha\neq 0$, perform the row operation that multiplies row $i$ by $-\alpha$ and adds it to row $j$.  In each case, the result of the single row operation is the identity matrix.  So each elementary matrix is row-equivalent to the identity matrix, and by \acronymref{theorem}{NMRRI} is nonsingular.\par
+%
+\end{proof}
+%
+Notice that we have now made use of the nonzero restriction on $\alpha$ in the definition of $\elemmult{\alpha}{i}$.  One more key property of elementary matrices.
+%
+\begin{theorem}{NMPEM}{Nonsingular Matrices are Products of Elementary Matrices}{nonsingular matrix!elementary matrices}
+Suppose that $A$ is a nonsingular matrix.  Then there exists elementary matrices $E_1,\,E_2,\,E_3,\,\dots,\,E_t$ so that $A=E_1 E_2 E_3\dots E_t$.
+\end{theorem}
+%
+\begin{proof}
+Since $A$ is nonsingular, it is row-equivalent to the identity matrix by \acronymref{theorem}{NMRRI}, so there is a sequence of $t$ row operations that converts $I$ to $A$.  For each of these row operations, form the associated elementary matrix from \acronymref{theorem}{EMDRO} and denote these matrices by $E_1,\,E_2,\,E_3,\,\dots,\,E_t$.  Applying the first row operation to $I$ yields the matrix $E_1I$.  The second row operation yields $E_2(E_1I)$, and the third row operation creates $E_3E_2E_1I$.  The result of the full sequence of $t$ row operations will yield $A$, so 
+%
+\begin{equation*}
+A=  E_t\dots E_3E_2E_1I= E_t\dots E_3E_2E_1
+\end{equation*}
+%
+Other than the cosmetic matter of re-indexing these elementary matrices in the opposite order, this is the desired result.
+%
+\end{proof}
+%
+\subsect{DD}{Definition of the Determinant}
+%
+We'll now turn to the definition of a determinant and do some sample computations.  The definition of the determinant function is \define{recursive}, that is, the determinant of a large matrix is defined in terms of the determinant of smaller matrices.  To this end, we will make a few definitions.  
+%
+\begin{definition}{SM}{SubMatrix}{matrix!submatrix}
+Suppose that $A$ is an $m\times n$ matrix.  Then the \define{submatrix} $\submatrix{A}{i}{j}$ is the $(m-1)\times (n-1)$ matrix obtained from $A$ by removing row $i$ and column $j$.
+\denote{SM}{SubMatrix}{$\submatrix{A}{i}{j}$}{submatrix}
+\end{definition}
+%
+%
+\begin{example}{SS}{Some submatrices}{matrix!submatrices}
+For the matrix
+%
+\begin{equation*}
+A=
+\begin{bmatrix}
+1 & -2 & 3 & 9\\
+4 & -2 & 0 & 1\\
+3 & 5 & 2 & 1
+\end{bmatrix}
+\end{equation*}
+%
+we have the submatrices
+%
+%
+\begin{align*}
+\submatrix{A}{2}{3}
+=
+\begin{bmatrix}
+1 & -2 & 9\\
+3 & 5 & 1
+\end{bmatrix}
+&&
+\submatrix{A}{3}{1}
+=
+\begin{bmatrix}
+-2 & 3 & 9\\
+-2 & 0 & 1
+\end{bmatrix}
+\end{align*}
+%
+\end{example}
+%
+%
+\begin{definition}{DM}{Determinant of a Matrix}{determinant}
+Suppose $A$ is a square matrix.  Then its \define{determinant}, $\detname{A}=\detbars{A}$, is an element of $\complex{\null}$ defined recursively by:\\[6pt]
+If $A$ is a $1\times 1$ matrix, then $\detname{A}=\matrixentry{A}{11}$.\\[6pt]
+If $A$ is a matrix of size $n$ with $n\geq 2$, then
+%
+\begin{align*}
+\detname{A}&=
+\matrixentry{A}{11}\detname{\submatrix{A}{1}{1}}
+-\matrixentry{A}{12}\detname{\submatrix{A}{1}{2}}
++\matrixentry{A}{13}\detname{\submatrix{A}{1}{3}}-\\
+&\quad \matrixentry{A}{14}\detname{\submatrix{A}{1}{4}}
++\cdots
++(-1)^{n+1}\matrixentry{A}{1n}\detname{\submatrix{A}{1}{n}}
+\end{align*}
+%
+\denote{DM}{Determinant of a Matrix}{$\detbars{A}$, $\detname{A}$}{determinant}
+\end{definition}
+%
+So to compute the determinant of a $5\times 5$ matrix we must build 5 submatrices, each of size $4$.  To compute the determinants of each the $4\times 4$ matrices we need to create 4 submatrices each, these now of size $3$ and so on.  To compute the determinant of a $10\times 10$ matrix would require computing the determinant of $10!=10\times 9\times 8\times 7\times 6\times 5\times 4\times 3\times 2=3,628,800$
+$1\times 1$ matrices.  Fortunately there are better ways.  However this does suggest an excellent computer programming exercise to write a recursive procedure to compute a determinant.\par
+%
+Let's compute the determinant of a reasonable sized matrix by hand.
+\begin{example}{D33M}{Determinant of a $3\times 3$ matrix}{determinant!size 3 matrix}
+Suppose that we have the $3\times 3$ matrix%
+\begin{equation*}
+A=
+\begin{bmatrix}
+3 & 2 & -1\\
+4 & 1 & 6\\
+-3 & -1 & 2
+\end{bmatrix}
+\end{equation*}
+%
+Then
+%
+\begin{align*}
+\detname{A}=\detbars{A}
+&=\begin{vmatrix}
+3 & 2 & -1\\
+4 & 1 & 6\\
+-3 & -1 & 2
+\end{vmatrix}\\
+&=
+3
+\begin{vmatrix}
+1 & 6\\
+-1 & 2
+\end{vmatrix}
+-2
+\begin{vmatrix}
+4 & 6\\
+-3 & 2
+\end{vmatrix}
++(-1)
+\begin{vmatrix}
+4 & 1\\
+-3 & -1
+\end{vmatrix}\\
+&=
+3\left(
+1\begin{vmatrix}
+2\\
+\end{vmatrix}
+-6\begin{vmatrix}
+-1
+\end{vmatrix}\right)
+-2\left(
+4\begin{vmatrix}
+2
+\end{vmatrix}
+-6\begin{vmatrix}
+-3
+\end{vmatrix}\right)
+-\left(
+4\begin{vmatrix}
+-1
+\end{vmatrix}
+-1\begin{vmatrix}
+-3
+\end{vmatrix}\right)\\
+&=
+3\left(1(2)-6(-1)\right)
+-2\left(4(2)-6(-3)\right)
+-\left(4(-1)-1(-3)\right)\\
+&=24-52+1\\
+&=-27
+\end{align*}
+%
+\end{example}
+ %
+In practice it is a bit silly to decompose a $2\times 2$ matrix down into a couple of $1\times 1$ matrices and then compute the exceedingly easy determinant of these puny matrices.  So here is a simple theorem.
+%
+\begin{theorem}{DMST}{Determinant of Matrices of Size Two}{determinant!size 2 matrix}
+Suppose that $A=\begin{bmatrix}a&b\\c&d\end{bmatrix}$.  Then $\detname{A}=ad-bc$
+\end{theorem}
+%
+\begin{proof}
+Applying \acronymref{definition}{DM},
+%
+\begin{equation*}
+\begin{vmatrix}
+a&b\\c&d
+\end{vmatrix}=
+a\begin{vmatrix}d\end{vmatrix}-b\begin{vmatrix}c\end{vmatrix}=ad-bc
+\end{equation*}
+%
+\end{proof}
+%
+Do you recall seeing the expression $ad-bc$ before?  (Hint:  \acronymref{theorem}{TTMI})
+%
+\subsect{CD}{Computing Determinants}
+%
+There are a variety of ways to compute the determinant.  We will establish first that we can choose to mimic our definition of the determinant, but by using matrix entries and submatrices based on a row other than the first one.
+%
+\begin{theorem}{DER}{Determinant Expansion about Rows}{determinant!expansion, rows}
+Suppose that $A$ is a square matrix of size $n$.  Then
+%
+\begin{align*}
+\detname{A}&=
+(-1)^{i+1}\matrixentry{A}{i1}\detname{\submatrix{A}{i}{1}}+
+(-1)^{i+2}\matrixentry{A}{i2}\detname{\submatrix{A}{i}{2}}\\
+&\quad+(-1)^{i+3}\matrixentry{A}{i3}\detname{\submatrix{A}{i}{3}}+
+\cdots+
+(-1)^{i+n}\matrixentry{A}{in}\detname{\submatrix{A}{i}{n}}
+&&
+1\leq i\leq n
+%
+\end{align*}
+%
+which is known as \define{expansion} about row $i$.
+%
+\end{theorem}
+%
+\begin{proof}
+First, the statement of the theorem coincides with \acronymref{definition}{DM} when $i=1$, so throughout, we need only consider $i>1$.\par
+%
+Given the recursive definition of the determinant, it should be no surprise that we will use induction for this proof (\acronymref{technique}{I}).  When $n=1$, there is nothing to prove since there is but one row.  When $n=2$, we just examine expansion about the second row,
+%
+\begin{align*}
+(-1)^{2+1}\matrixentry{A}{21}&\detname{\submatrix{A}{2}{1}}+
+(-1)^{2+2}\matrixentry{A}{22}\detname{\submatrix{A}{2}{2}}\\
+&=-\matrixentry{A}{21}\matrixentry{A}{12}+\matrixentry{A}{22}\matrixentry{A}{11}
+&&\text{\acronymref{definition}{DM}}\\
+%
+&=\matrixentry{A}{11}\matrixentry{A}{22}-\matrixentry{A}{12}\matrixentry{A}{21}\\
+%
+&=
+\detname{A}&&\text{\acronymref{theorem}{DMST}}\\
+\end{align*}
+%
+So the theorem is true for matrices of size $n=1$ and $n=2$.  Now assume the result is true for all matrices of size $n-1$ as we derive an expression for expansion about row $i$ for a matrix of size $n$.  We will abuse our notation for a submatrix slightly, so $\submatrix{A}{i_1,i_2}{j_1,j_2}$ will denote the matrix formed by removing rows $i_1$ and $i_2$, along with removing columns $j_1$ and $j_2$.  Also, as we take a determinant of a submatrix, we will need to ``jump up'' the index of summation partway through as we ``skip over'' a missing column.  To do this smoothly we will set 
+%
+\begin{equation*}
+\epsilon_{\ell j}=
+\begin{cases}
+0 & \ell<j\\
+1 & \ell>j
+\end{cases}
+\end{equation*}
+%
+Now,
+%
+\begin{align*}
+\detname{A}
+&=
+\sum_{j=1}^{n}(-1)^{1+j}\matrixentry{A}{1j}\detname{\submatrix{A}{1}{j}}
+&&\text{\acronymref{definition}{DM}}\\
+%
+&=
+\sum_{j=1}^{n}(-1)^{1+j}\matrixentry{A}{1j}
+\sum_{\substack{1\leq\ell\leq n\\\ell\neq j}}
+(-1)^{i-1+\ell-\epsilon_{\ell j}}\matrixentry{A}{i\ell}\detname{\submatrix{A}{1,i}{j,\ell}}
+&&\text{Induction Hypothesis}\\
+%
+&=
+\sum_{j=1}^{n}\sum_{\substack{1\leq\ell\leq n\\\ell\neq j}}
+(-1)^{j+i+\ell-\epsilon_{\ell j}}
+\matrixentry{A}{1j}\matrixentry{A}{i\ell}\detname{\submatrix{A}{1,i}{j,\ell}}
+&&\text{\acronymref{property}{DCN}}\\
+%
+&=
+\sum_{\ell=1}^{n}\sum_{\substack{1\leq j\leq n\\j\neq\ell}}
+(-1)^{j+i+\ell-\epsilon_{\ell j}}
+\matrixentry{A}{1j}\matrixentry{A}{i\ell}\detname{\submatrix{A}{1,i}{j,\ell}}
+&&\text{\acronymref{property}{CACN}}\\
+%
+&=
+\sum_{\ell=1}^{n}(-1)^{i+\ell}\matrixentry{A}{i\ell}
+\sum_{\substack{1\leq j\leq n\\j\neq\ell}}
+(-1)^{j-\epsilon_{\ell j}}
+\matrixentry{A}{1j}\detname{\submatrix{A}{1,i}{j,\ell}}
+&&\text{\acronymref{property}{DCN}}\\
+&=
+\sum_{\ell=1}^{n}(-1)^{i+\ell}\matrixentry{A}{i\ell}
+\sum_{\substack{1\leq j\leq n\\j\neq\ell}}
+(-1)^{\epsilon_{\ell j}+j}
+\matrixentry{A}{1j}\detname{\submatrix{A}{i,1}{\ell,j}}
+&&\text{$2\epsilon_{\ell j}$ is even}\\
+&=
+\sum_{\ell=1}^{n}(-1)^{i+\ell}\matrixentry{A}{i\ell}\detname{\submatrix{A}{i}{\ell}}
+&&\text{\acronymref{definition}{DM}}
+%
+\end{align*}
+%
+\end{proof}
+%
+We can also obtain a formula that computes a determinant by expansion about a column, but this will be simpler if we first prove a result about the interplay of determinants and transposes.  Notice how the following proof makes use of the ability to compute a determinant by expanding about {\em any} row.
+%
+\begin{theorem}{DT}{Determinant of the Transpose}{determinant!transpose}
+Suppose that $A$ is a square matrix.  Then $\detname{\transpose{A}}=\detname{A}$.
+\end{theorem}
+%
+\begin{proof}
+%
+With our definition of the determinant (\acronymref{definition}{DM}) and theorems like \acronymref{theorem}{DER}, using induction (\acronymref{technique}{I}) is a natural approach to proving properties of determinants.  And so it is here.  Let $n$ be the size of the matrix $A$, and we will use induction on $n$.\par
+%
+For $n=1$, the transpose of a matrix is identical to the original matrix, so vacuously, the determinants are equal.\par
+%
+Now assume the result is true for matrices of size $n-1$.  Then,
+%
+\begin{align*}
+\detname{\transpose{A}}
+&=\frac{1}{n}\sum_{i=1}^{n}\detname{\transpose{A}}\\
+%
+&=
+\frac{1}{n}\sum_{i=1}^{n}\sum_{j=1}^{n}(-1)^{i+j}
+\matrixentry{\transpose{A}}{ij}\detname{\submatrix{\transpose{A}}{i}{j}}
+&&\text{\acronymref{theorem}{DER}}\\
+%
+&=
+\frac{1}{n}\sum_{i=1}^{n}\sum_{j=1}^{n}(-1)^{i+j}
+\matrixentry{A}{ji}\detname{\submatrix{\transpose{A}}{i}{j}}
+&&\text{\acronymref{definition}{TM}}\\
+%
+&=
+\frac{1}{n}\sum_{i=1}^{n}\sum_{j=1}^{n}(-1)^{i+j}
+\matrixentry{A}{ji}\detname{\transpose{\left(\submatrix{A}{j}{i}\right)}}
+&&\text{\acronymref{definition}{TM}}\\
+%
+&=
+\frac{1}{n}\sum_{i=1}^{n}\sum_{j=1}^{n}(-1)^{i+j}
+\matrixentry{A}{ji}\detname{\submatrix{A}{j}{i}}
+&&\text{Induction Hypothesis}\\
+%
+&=
+\frac{1}{n}\sum_{j=1}^{n}\sum_{i=1}^{n}(-1)^{j+i}
+\matrixentry{A}{ji}\detname{\submatrix{A}{j}{i}}
+&&\text{\acronymref{property}{CACN}}\\
+%
+&=
+\frac{1}{n}\sum_{j=1}^{n}\detname{A}
+&&\text{\acronymref{theorem}{DER}}\\
+%
+&=\detname{A}
+%
+\end{align*}
+%
+\end{proof}
+%
+Now we can easily get the result that a determinant can be computed by expansion about any column as well.
+%
+\begin{theorem}{DEC}{Determinant Expansion about Columns}{determinant!expansion, columns}
+Suppose that $A$ is a square matrix of size $n$.  Then
+%
+\begin{align*}
+\detname{A}&=
+(-1)^{1+j}\matrixentry{A}{1j}\detname{\submatrix{A}{1}{j}}+
+(-1)^{2+j}\matrixentry{A}{2j}\detname{\submatrix{A}{2}{j}}\\
+&\quad+(-1)^{3+j}\matrixentry{A}{3j}\detname{\submatrix{A}{3}{j}}+
+\cdots+
+(-1)^{n+j}\matrixentry{A}{nj}\detname{\submatrix{A}{n}{j}}
+&&
+1\leq j\leq n
+%
+\end{align*}
+%
+which is known as \define{expansion} about column $j$.
+%
+\end{theorem}
+%
+\begin{proof}
+%
+\begin{align*}
+\detname{A}
+&=
+\detname{\transpose{A}}&&\text{\acronymref{theorem}{DT}}\\
+%
+&=
+\sum_{i=1}^{n}(-1)^{j+i}\matrixentry{\transpose{A}}{ji}\detname{\submatrix{\transpose{A}}{j}{i}}
+&&\text{\acronymref{theorem}{DER}}\\
+%
+&=
+\sum_{i=1}^{n}(-1)^{j+i}\matrixentry{\transpose{A}}{ji}\detname{\transpose{\left(\submatrix{A}{i}{j}\right)}}
+&&\text{\acronymref{definition}{TM}}\\
+%
+&=
+\sum_{i=1}^{n}(-1)^{j+i}\matrixentry{\transpose{A}}{ji}\detname{\submatrix{A}{i}{j}}
+&&\text{\acronymref{theorem}{DT}}\\
+%
+&=
+\sum_{i=1}^{n}(-1)^{i+j}\matrixentry{A}{ij}\detname{\submatrix{A}{i}{j}}
+&&\text{\acronymref{definition}{TM}}
+%
+\end{align*}
+%
+\end{proof}
+%
+That the determinant of an $n\times n$ matrix can be computed in $2n$ different (albeit similar) ways is nothing short of remarkable.  For the doubters among us, we will do an example, computing a $4\times 4$ matrix in two different ways.
+%
+\begin{example}{TCSD}{Two computations, same determinant}{determinant!computed two ways}
+Let 
+%
+\begin{equation*}
+A=
+\begin{bmatrix}
+-2 & 3 & 0 & 1\\ 
+9 & -2 & 0 & 1\\ 
+1 & 3 & -2 & -1\\ 
+4 & 1 & 2 & 6
+\end{bmatrix}
+\end{equation*}
+%
+Then expanding about the fourth row (\acronymref{theorem}{DER} with $i=4$) yields,
+%
+\begin{align*}
+\detbars{A}
+&=
+(4)(-1)^{4+1}
+\begin{vmatrix}
+ 3 & 0 & 1\\ 
+ -2 & 0 & 1\\ 
+ 3 & -2 & -1
+\end{vmatrix}
++(1)(-1)^{4+2}
+\begin{vmatrix}
+-2 &  0 & 1\\ 
+9 &  0 & 1\\ 
+1 &  -2 & -1
+\end{vmatrix}\\
+%
+&\quad\quad+(2)(-1)^{4+3}
+\begin{vmatrix}
+-2 & 3 &  1\\ 
+9 & -2 &  1\\ 
+1 & 3  & -1
+\end{vmatrix}
++(6)(-1)^{4+4}
+\begin{vmatrix}
+-2 & 3 & 0 \\ 
+9 & -2 & 0 \\ 
+1 & 3 & -2 
+\end{vmatrix}\\
+&=
+(-4)(10)+(1)(-22)+(-2)(61)+6(46)=92
+\end{align*}
+%
+while expanding about column 3 (\acronymref{theorem}{DEC} with $j=3$) gives
+%
+\begin{align*}
+\detbars{A}
+&=
+(0)(-1)^{1+3}
+\begin{vmatrix}
+9 & -2 & 1\\ 
+1 & 3 & -1\\ 
+4 & 1 & 6
+\end{vmatrix}
++
+(0)(-1)^{2+3}
+\begin{vmatrix}
+-2 & 3 & 1\\ 
+1 & 3 & -1\\ 
+4 & 1 & 6
+\end{vmatrix}
++\\
+%
+&\quad\quad(-2)(-1)^{3+3}
+\begin{vmatrix}
+-2 & 3 & 1\\ 
+9 & -2 & 1\\ 
+4 & 1 & 6
+\end{vmatrix}
++
+(2)(-1)^{4+3}
+\begin{vmatrix}
+-2 & 3 & 1\\ 
+9 & -2 & 1\\ 
+1 & 3 & -1
+\end{vmatrix}\\
+&=0+0+(-2)(-107)+(-2)(61)=92
+\end{align*}
+%
+Notice how much easier the second computation was.  By choosing to expand about the third column, we have two entries that are zero, so two $3\times 3$ determinants need not be computed at all!  
+\end{example}
+%
+When a matrix has all zeros above (or below) the diagonal, exploiting the zeros by expanding about the proper row or column makes computing a determinant insanely easy.
+%
+\begin{example}{DUTM}{Determinant of an upper triangular matrix}{determinant, upper triangular matrix}
+Suppose that 
+%
+\begin{equation*}
+T=
+\begin{bmatrix}
+2 & 3 & -1 & 3 & 3\\
+0 & -1 & 5 & 2 & -1\\
+0 & 0 & 3 & 9 & 2\\
+0 & 0 & 0 & -1 & 3\\
+0 & 0 & 0 & 0 & 5
+\end{bmatrix}
+\end{equation*}
+%
+We will compute the determinant of this $5\times 5$ matrix by consistently expanding about the first column for each submatrix that arises and does not have a zero entry multiplying it.
+%
+\begin{align*}
+\detname{T}&=
+\begin{vmatrix}
+2 & 3 & -1 & 3 & 3\\
+0 & -1 & 5 & 2 & -1\\
+0 & 0 & 3 & 9 & 2\\
+0 & 0 & 0 & -1 & 3\\
+0 & 0 & 0 & 0 & 5
+\end{vmatrix}\\
+%
+&=2(-1)^{1+1}
+\begin{vmatrix}
+-1 & 5 & 2 & -1\\
+ 0 & 3 & 9 & 2\\
+ 0 & 0 & -1 & 3\\
+ 0 & 0 & 0 & 5
+\end{vmatrix}\\
+%
+&=2(-1)(-1)^{1+1}
+\begin{vmatrix}
+ 3 & 9 & 2\\
+ 0 & -1 & 3\\
+ 0 & 0 & 5
+\end{vmatrix}\\
+%
+&=2(-1)(3)(-1)^{1+1}
+\begin{vmatrix}
+ -1 & 3\\
+ 0 & 5
+\end{vmatrix}\\
+%
+&=2(-1)(3)(-1)(-1)^{1+1}
+\begin{vmatrix}
+5
+\end{vmatrix}\\
+%
+&=2(-1)(3)(-1)(5)=30
+\end{align*}
+%
+\end{example}
+%
+If you consult other texts in your study of determinants, you may run into the terms ``minor'' and ``cofactor,'' especially in a discussion centered on expansion about rows and columns.  We've chosen not to make these definitions formally since we've been able to get along without them.  However, informally, a \define{minor} is a determinant of a submatrix, specifically $\detname{\submatrix{A}{i}{j}}$ and is usually referenced as the minor of $\matrixentry{A}{ij}$.  A \define{cofactor} is a signed minor, specifically the cofactor of $\matrixentry{A}{ij}$ is $(-1)^{i+j}\detname{\submatrix{A}{i}{j}}$.
+%
+%
+%  End of  dm.tex

@@ -1,0 +1,554 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%
+%% 
+%%   Author: Robert A Beezer
+%%   File:  archetypes.sty
+%%   Purpose: TeX commands archetypical examples, stash 'em away here
+%%
+% %  Revision History
+%%   January 13, 2003      Initial version
+%%   February 11, 2004     Reworking
+%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Utility commands
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Every entry has a checkbox in front of it
+%
+%  Paragraph indentation is surpressed here
+%
+%  Usage: \checkbox
+%
+\newcommand{\checkbox}
+{\noindent\framebox[8pt]{\rule{0in}{8pt}}\quad}
+
+
+% Between each fact, we skip a set amount
+%
+%  Usage: \archetypeentryskip
+\newcommand{\archetypeentryskip}{\par\vspace*{24pt}}
+
+
+% Between multiple lines, we skip a smaller amount
+%
+%  Usage: \archetypelineskip
+\newcommand{\archetypelineskip}{\\[12pt]}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Entries that provide definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     An archetype is one of the following:
+%     (1) a system of equations
+%     (2) a matrix
+%     (3) a linear transformation
+%
+%     So each is defined a bit differently, but 
+%     all can be connected to a matrix somehow,
+%     so many other entries are shared.
+%
+%     Here are the commands that are used for defining entries.
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Linear systems of equations
+%
+%  Usage:  \systemequations{align*-environment}
+%
+\newcommand{\systemequations}[1]
+{\checkbox A system of linear equations (\acronymref{definition}{SLE}):
+#1
+\archetypeentryskip}
+
+% Pure matrices
+%
+%  Usage:  \purematrix{bmatrix-environment}
+\newcommand{\purematrix}[1]
+{\checkbox 
+A matrix:
+\begin{flalign*}
+#1&&
+\end{flalign*}
+\archetypeentryskip
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Commands for each entry
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     Following commands appear entry-by-entry
+%     as appropriate for the entry type
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Each archetype has a short capsule summary to lead-off
+%
+%   Usage: \capsule{sentences-about-object}
+%
+\newcommand{\capsule}[1]
+{\paragraph{Summary}\ #1\archetypeentryskip}
+
+%%%%%%%%%
+%
+%  System of equations properties
+%
+%%%%%%%%%
+
+% Solutions to systems
+%
+% Each system of equations has a few sample solutions listed
+% 
+%  Usage:  \specificsolutions{one-solution-per-line}
+%
+\newcommand{\specificsolutions}[1]
+{\checkbox Some solutions to the system of linear equations (not necessarily exhaustive):\archetypelineskip
+#1
+\archetypeentryskip}
+
+% Augmented matrix representations for systems
+%
+% Each system of equations has an augmented matrix
+% 
+%  Usage:  \augmentedmatrixrepresentation{bmatrix-environment}
+%
+\newcommand{\augmentedmatrixrepresentation}[1]
+{\checkbox 
+Augmented matrix of the linear system of equations  (\acronymref{definition}{AM}):
+\begin{flalign*}
+#1&&
+\end{flalign*}
+\archetypeentryskip
+}
+
+% Augmented matrix representations for systems, row-reduced
+%
+% Row-reduce augmented matrix, flushed left
+% 
+%  Usage:  \augmentedmatrixreduced{bmatrix-environment}
+%
+\newcommand{\augmentedmatrixreduced}[1]
+{\checkbox 
+Matrix in reduced row-echelon form, row-equivalent to augmented matrix:
+\begin{flalign*}
+#1&&
+\end{flalign*}
+\archetypeentryskip
+}
+
+
+% Augmented matrix row-reduced
+%
+%  Full system, row-reduced
+%
+%  Usage:  \systemmatrixreduced{bmatrix-environment}
+%
+\newcommand{\systemmatrixreduced}[1]
+{\checkbox Augmented matrix of an equivalent linear system, obtained by using row operations to bring the augmented matrix to reduced row-echelon form (\acronymref{definition}{RREF}):
+\begin{equation*}
+#1
+\end{equation*}
+\archetypeentryskip
+}
+
+% Analysis of row-reduced augmented matrix
+%
+%  Usage:  \systemmatrixanalysis{r}{D-comma-delimited}{F-comma-delimited}
+%
+\newcommand{\systemmatrixanalysis}[3]
+{\checkbox Analysis of the augmented matrix (\acronymref{notation}{RREFA}):
+\begin{align*}
+r=#1&&D=\set{#2}&&F=\set{#3}
+\end{align*}
+\archetypeentryskip
+}
+
+%% Vector form of solutions for original system
+\newcommand{\vectorformgeneral}[1]
+{\checkbox Vector form of the solution set to the system of equations (\acronymref{theorem}{VFSLS}).  Notice the relationship between the free variables and the set $F$ above.   Also, notice the pattern of 0's and 1's in the entries of the vectors corresponding to elements of the set $F$ for the larger examples.\archetypelineskip
+#1
+\archetypeentryskip
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Associated homo system of equations
+%
+%  System of equations, converted to homogenous system
+%
+%  Usage:  \homogenoussystem{align*-environment}
+%
+\newcommand{\homogenoussystem}[1]
+{\checkbox Given a system of equations we can always build a new, related, homogeneous system (\acronymref{definition}{HS}) by converting the constant terms to zeros and retaining the coefficients of the variables.  Properties of this new system will have precise relationships with various properties of the original system.
+#1
+\archetypeentryskip
+}
+
+% Solutions to homo systems
+%
+% Each system of equations has a few sample solutions listed
+% 
+%  Usage:  \specifichomosolutions{one-solution-per-line}
+%
+\newcommand{\specifichomosolutions}[1]
+{\checkbox Some solutions to the associated homogenous system of linear equations (not necessarily exhaustive):\\
+#1\archetypeentryskip}
+
+% Homogenous system matrix, w/ columns of zeros, row-reduced
+%
+%  Full homo system, row-reduced
+%
+%  Usage:  \homogenousmatrixreduced{bmatrix-environment}
+%
+\newcommand{\homogenousmatrixreduced}[1]
+{\checkbox Form the augmented matrix of the homogenous linear system, and use row operations to convert to reduced row-echelon form.  Notice how the entries of the final column remain zeros:
+\begin{flalign*}
+#1&&
+\end{flalign*}
+\archetypeentryskip
+}
+
+
+% Analysis of row-reduced homogenous augmented matrix
+%
+%  Usage:  \homomatrixanalysis{r}{D-comma-delimited}{F-comma-delimited}
+%
+\newcommand{\homomatrixanalysis}[3]
+{\checkbox Analysis of the augmented matrix for the homogenous system (\acronymref{notation}{RREFA}).  Notice the slight variation for the same analysis of the original system only when the original system was consistent:
+\begin{align*}
+r=#1&&D=\set{#2}&&F=\set{#3}
+\end{align*}
+\archetypeentryskip
+}
+
+
+%  Row-reduced version of coefficient matrix, or pure matrix
+%
+%  Usage:  \coefficientmatrix{bmatrix-environment}
+%
+\newcommand{\coefficientmatrix}[1]
+{\checkbox Coefficient matrix of original system of equations, and of associated homogenous system.  This matrix will be the subject of further analysis, rather than the systems of equations.
+\begin{flalign*}
+#1&&
+\end{flalign*}
+\archetypeentryskip
+}
+
+%%%%%%%%%
+%
+%  Matrix properties
+%
+%%%%%%%%%
+
+
+%  Row-reduced version of coefficient matrix, or pure matrix
+%
+%  Usage:  \matrixreduced{bmatrix-environment}
+%
+\newcommand{\matrixreduced}[1]
+{\checkbox Matrix brought to reduced row-echelon form:
+\begin{flalign*}
+#1&&
+\end{flalign*}
+\archetypeentryskip
+}
+
+
+% Analysis of row-reduced coefficient (or pure) matrix
+%
+%  Usage:  \matrixanalysis{r}{D-comma-delimited}{F-comma-delimited}
+%
+\newcommand{\matrixanalysis}[3]
+{\checkbox Analysis of the row-reduced matrix (\acronymref{notation}{RREFA}):
+\begin{align*}
+r=#1&&D=\set{#2}&&F=\set{#3}
+\end{align*}
+\archetypeentryskip
+}
+
+\newcommand{\matrixnonsingular}[1]
+{\checkbox Matrix (coefficient matrix) is nonsingular or singular? (\acronymref{theorem}{NMRRI})  at the same time, examine the size of the set $F$ above.Notice that this property does not apply to matrices that are not square.\archetypelineskip
+#1
+\archetypeentryskip
+}
+
+% Null Space of a Matrix
+%
+%  basis of null space
+%
+%  Usage:  \nullspace{a-set-of-vectors}
+%
+\newcommand{\nullspace}[1]
+{\checkbox 
+This is the null space of the matrix.  The set of vectors used in the span construction is a linearly independent set of column vectors that spans the null space of the matrix (\acronymref{theorem}{SSNS}, \acronymref{theorem}{BNS}).  Solve the homogenous system with this matrix as the coefficient matrix and write the solutions in vector form (\acronymref{theorem}{VFSLS}) to see these vectors arise.\archetypelineskip
+$\spn{#1}$
+\archetypeentryskip
+}
+
+%% Column space arising from selecting original columns
+%%
+\newcommand{\rangeoriginal}[1]
+{\checkbox Column space of the matrix, expressed as the span of a set of linearly independent vectors that are also columns of the matrix.  These columns have indices that form the set $D$ above.  (\acronymref{theorem}{BCS})\archetypelineskip
+$\spn{#1}$
+\archetypeentryskip
+}
+
+%% Column space arising from null space of L matrix
+\newcommand{\rangenull}[2]
+{\checkbox The column space of the matrix, as it arises from the extended echelon form of the matrix.  The matrix $L$ is computed as described in \acronymref{definition}{EEF}.  This is followed by the column space described by a set of linearly independent vectors that span the null space of $L$, computed as according to \acronymref{theorem}{FS} and \acronymref{theorem}{BNS}.  When $r=m$, the matrix $L$ has no rows and the column space is all of $\complex{m}$.\archetypelineskip
+$L=\begin{bmatrix}#1\end{bmatrix}$\archetypelineskip
+$\spn{#2}$
+\archetypeentryskip
+}
+
+%% Column space arising from row operations on transpose
+%%
+\newcommand{\rangereduce}[1]
+{\checkbox Column space of the matrix, expressed as the span of a set of linearly independent vectors.  These vectors are computed by row-reducing the transpose of the matrix into reduced row-echelon form, tossing out the zero rows, and writing the remaining nonzero rows as column vectors.  By \acronymref{theorem}{CSRST} and \acronymref{theorem}{BRS}, and in the style of \acronymref{example}{CSROI}, this yields a linearly independent set of vectors that span the column space.\archetypelineskip
+$\spn{#1}$
+\archetypeentryskip
+}
+
+%% Row space
+\newcommand{\rowspace}[1]
+{\checkbox Row space of the matrix, expressed as a span of a set of linearly independent vectors, obtained from the nonzero rows of the equivalent matrix in reduced row-echelon form.  (\acronymref{theorem}{BRS})\archetypelineskip
+$\spn{#1}$
+\archetypeentryskip
+}
+
+%% Matrix inverse for square matrices
+\newcommand{\matrixinverse}[1]
+{\checkbox Inverse matrix, if it exists.  The inverse is not defined for matrices that are not square, and if the matrix is square, then the matrix must be nonsingular. (\acronymref{definition}{MI}, \acronymref{theorem}{NI})\archetypelineskip
+$#1$
+\archetypeentryskip
+}
+
+%% Dimensions: cols, rank, nullity
+\newcommand{\dimensions}[3]
+{\checkbox Subspace dimensions associated with the matrix. (\acronymref{definition}{NOM}, \acronymref{definition}{ROM})  Verify \acronymref{theorem}{RPNC}
+%
+\begin{align*}
+\text{Matrix columns:\ \ }#1&&
+\text{Rank:\ \ }#2&&
+\text{Nullity:\ \ }#3
+\end{align*}
+%
+\archetypeentryskip
+}
+
+%% Determinant: Value
+\newcommand{\determinant}[1]
+{\checkbox Determinant of the matrix, which is only defined for square matrices.   The matrix is nonsingular if and only if the determinant is nonzero (\acronymref{theorem}{SMZD}).   (Product of all eigenvalues?)\archetypelineskip
+$\text{Determinant\ } =\ #1$
+\archetypeentryskip
+}
+
+%% Eigenvalues header, followed by list, just for matrices
+\newcommand{\spectrum}[1]
+{\checkbox Eigenvalues, and bases for eigenspaces.
+(\acronymref{definition}{EEM},\acronymref{definition}{EM})\archetypelineskip
+%
+\begin{align*}
+#1
+\end{align*}
+%
+\archetypeentryskip
+}
+
+%% Diagonalizable: Yes/No  sentence w/ explanation
+\newcommand{\diagonalizable}[1]
+{\checkbox Diagonalizable?  (\acronymref{definition}{DZM})\archetypelineskip
+#1
+\archetypeentryskip
+}
+
+%%  Multiplicities, geometric and algebraic, \\ seperated list per line
+\newcommand{\multiplicities}[1]
+{\checkbox Geometric and algebraic multiplicities.  
+(\acronymref{definition}{GME}\acronymref{definition}{AME})\archetypelineskip
+\begin{align*}
+#1
+\end{align*}
+\archetypeentryskip
+}
+
+%% Diagonalization, S^-1, A, S = D
+\newcommand{\diagonalization}[4]
+{\checkbox The diagonalization.  (\acronymref{theorem}{DC})
+\begin{align*}
+&#1#2#3\\
+&=#4
+\end{align*}
+\archetypeentryskip
+}
+
+
+%% Linear transformation, just show it, sets and name, then definition
+\newcommand{\lintransformation}[1]
+{\checkbox A linear transformation: (\acronymref{definition}{LT})
+%
+\begin{equation*}
+#1
+\end{equation*}
+%
+\archetypeentryskip
+}
+
+%% Injective for a linear transformation, first argument is yes/no, second is explanation.
+\newcommand{\injective}[2]
+{\checkbox Injective: #1. (\acronymref{definition}{ILT})\archetypelineskip
+#2\archetypeentryskip
+}
+
+%% Linear transformation null space
+\newcommand{\ltnullspace}[1]
+{\checkbox A basis for the null space of the linear transformation: (\acronymref{definition}{KLT})\archetypelineskip
+%
+\begin{equation*}
+#1
+\end{equation*}
+%
+\archetypeentryskip
+}
+
+%% Surjective for a linear transformation, first argument is yes/no, second is explanation.
+\newcommand{\surjective}[2]
+{\checkbox Surjective: #1. (\acronymref{definition}{SLT})\archetypelineskip
+#2\archetypeentryskip
+}
+
+%% Linear transformation range
+\newcommand{\ltrange}[2]
+{\checkbox 
+A basis for the range of the linear transformation:  (\acronymref{definition}{RLT})\archetypelineskip
+Evaluate the linear transformation on a standard basis to get a spanning set for the range (\acronymref{theorem}{SSRLT}):\archetypelineskip
+%
+\begin{equation*}
+#1
+\end{equation*}
+%
+If the linear transformation is injective, then the set above is guaranteed to be linearly independent (\acronymref{theorem}{ILTLI}).   This spanning set may be converted to a ``nice'' basis, by making the vectors the rows of a matrix (perhaps after using a vector reperesentation), row-reducing, and retaining the nonzero rows (\acronymref{theorem}{BRS}), and perhaps un-coordinatizing.  A basis for the range is:
+%
+\begin{equation*}
+#2
+\end{equation*}
+%
+\archetypeentryskip
+}
+
+%% Dimensions: domain, rank, nullity
+\newcommand{\ltdimensions}[3]
+{\checkbox Subspace dimensions associated with the linear transformation.  Examine parallels with earlier results for matrices.  Verify \acronymref{theorem}{RPNDD}.
+%
+\begin{align*}
+\text{Domain dimension:\ \ }#1&&
+\text{Rank:\ \ }#2&&
+\text{Nullity:\ \ }#3
+\end{align*}
+%
+\archetypeentryskip
+}
+
+%% Invertible for a linear transformation, first argument is yes/no, second is explanation.
+\newcommand{\invertible}[2]
+{\checkbox Invertible: #1.\archetypelineskip
+#2\archetypeentryskip
+}
+
+%% Inverse of a linear transformation; as linear transformation (not matrix rep)
+\newcommand{\inverselineartransformation}[1]
+{\checkbox Since invertible, the inverse linear transformation. (\acronymref{definition}{IVLT})
+%
+\begin{equation*}
+#1
+\end{equation*}
+%
+\archetypeentryskip
+}
+
+%% Matrix representation for linear transformation, column vector domain/codomain
+\newcommand{\ltmatrixrepresentation}[2]
+{\checkbox Matrix representation (\acronymref{theorem}{MLTCV}):\\
+%
+\begin{equation*}
+#1,\quad A=#2
+\end{equation*}
+%
+\archetypeentryskip
+}
+
+%% Matrix representation for linear transformation, abstract vector spaces
+\newcommand{\ltmatrixrepresentationftmr}[3]
+{\checkbox Matrix representation (\acronymref{definition}{MR}):\\
+%
+\begin{align*}
+B&=#1\\
+C&=#2\\
+\matrixrep{T}{B}{C}&=#3
+\end{align*}
+%
+\archetypeentryskip
+}
+
+%% If invertible, show the inverse transformation
+\newcommand{\ltinversetransformation}[1]
+{\checkbox The inverse linear transformation (\acronymref{definition}{IVLT}):\\
+%
+\begin{equation*}
+#1
+\end{equation*}
+%
+Verify that $T\left(T^{-1}\left(\vect{x}\right)\right)=\vect{x}$ and $T\left(T^{-1}\left(\vect{x}\right)\right)=\vect{x}$, and notice that the representations of the transformation and its inverse are matrix inverses (\acronymref{theorem}{IMR}, \acronymref{definition}{MI}).
+\archetypeentryskip
+}
+
+%% Linear transformation eigenvalues header, followed by list
+\newcommand{\ltspectrum}[1]
+{\checkbox Eigenvalues and eigenvectors (\acronymref{definition}{EELT}, \acronymref{theorem}{EER}):\\[6pt]
+%
+\begin{align*}
+#1
+\end{align*}
+%
+Evaluate the linear transformation with each of these eigenvectors as an interesting check.
+\archetypeentryskip
+}
+
+%% Diagonal matrix representation for linear transformation; basis and the matrix
+\newcommand{\diagonalmatrixrepresentation}[2]
+{\checkbox A diagonal matrix representation relative to a basis of eigenvectors, $B$.
+%
+\begin{align*}
+B&=#1\\
+\matrixrep{T}{B}{B}&=#2
+\end{align*}
+%
+\archetypeentryskip
+}
+
+
+
+
+
+
+
+

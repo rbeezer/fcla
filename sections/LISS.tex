@@ -1,0 +1,655 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section LISS
+%%  Linear Independence and Spanning Sets
+%%
+%%%%%%%%%%%
+%
+A vector space is defined as a set with two operations, meeting ten properties (\acronymref{definition}{VS}).  Just as the definition of span of a set of vectors only required knowing how to add vectors and how to multiply vectors by scalars, so it is with linear independence.  A definition of a linear independent set of vectors in an arbitrary vector space only requires knowing how to form linear combinations and equating these with the zero vector.  Since every vector space must have a zero vector (\acronymref{property}{Z}), we always have a zero vector at our disposal.\par
+%
+In this section we will also put a twist on the notion of the span of a set of vectors.  Rather than beginning with a set of vectors and creating a subspace that is the span, we will instead begin with a subspace and look for a set of vectors whose span equals the subspace.\par
+%
+The combination of linear independence and spanning will be very important going forward.
+%
+\subsect{LI}{Linear Independence}
+%
+Our previous definition of linear independence (\acronymref{definition}{LI}) employed a relation of linear dependence that was a linear combination on one side of an equality and a zero vector on the other side.  As a linear combination in a vector space (\acronymref{definition}{LC}) depends only on vector addition and scalar multiplication, and every vector space must have a zero vector (\acronymref{property}{Z}), we can extend our definition of linear independence from the setting of $\complex{m}$ to the setting of a general vector space $V$ with almost no changes.  Compare these next two definitions with \acronymref{definition}{RLDCV} and \acronymref{definition}{LICV}.
+%
+\begin{definition}{RLD}{Relation of Linear Dependence}{relation of linear dependence}
+Suppose that $V$ is a vector space.
+Given a set of vectors $S=\set{\vectorlist{u}{n}}$, an equation of the form
+%
+\begin{equation*}
+\lincombo{\alpha}{u}{n}=\zerovector
+\end{equation*}
+%
+is a \define{relation of linear dependence} on $S$.  If this equation is formed in a trivial fashion, i.e.\ $\alpha_i=0$, $1\leq i\leq n$, then we say it is a \define{trivial relation of linear dependence} on $S$.
+%
+\end{definition}
+%
+\begin{definition}{LI}{Linear Independence}{linear independence}
+Suppose that $V$ is a vector space.
+The set of vectors $S=\set{\vectorlist{u}{n}}$ from $V$ is \define{linearly dependent} if there is a relation of linear dependence on $S$ that is not trivial.  In the case where the {\em only} relation of linear dependence on $S$ is the trivial one, then $S$ is a \define{linearly independent} set of vectors.
+\end{definition}
+%
+Notice the emphasis on the word ``only.''  This might remind you of the definition of a nonsingular matrix, where if the matrix is employed as the coefficient matrix of a homogeneous system then the {\em only} solution is the {\em trivial} one.
+%
+%
+\begin{example}{LIP4}{Linear independence in $P_4$}{linearly independent!polynomials}
+In the vector space of polynomials with degree 4 or less, $P_4$ (\acronymref{example}{VSP}) consider the set
+%
+\begin{equation*}
+S=\set{
+2x^4+3x^3+2x^2-x+10,\,
+-x^4-2x^3+x^2+5x-8,\,
+2x^4+x^3+10x^2+17x-2
+}.
+\end{equation*}
+%
+Is this set of vectors linearly independent or dependent?  Consider that 
+%
+\begin{align*}
+&3\left(2x^4+3x^3+2x^2-x+10\right)
++4\left(-x^4-2x^3+x^2+5x-8\right)\\
+&\quad +(-1)\left(2x^4+x^3+10x^2+17x-2\right)
+=0x^4+0x^3+0x^2+0x+0=\zerovector
+\end{align*}
+%
+This is a nontrivial relation of linear dependence (\acronymref{definition}{RLD}) on the set $S$ and so convinces us that $S$ is linearly dependent (\acronymref{definition}{LI}).\par
+%
+Now, I hear you say, ``Where did {\em those} scalars come from?''  Do not worry about that right now, just be sure you understand why the above explanation is sufficient to prove that $S$ is linearly dependent.  The remainder of the example will demonstrate how we might find these scalars if they had not been provided so readily.
+%
+Let's look at another set of vectors (polynomials) from $P_4$.  Let
+%
+\begin{align*}
+T&=\left\{
+3x^4-2x^3+4x^2+6x-1,\,
+-3x^4+1x^3+0x^2+4x+2,\right.\\
+&\quad \left.4x^4+5x^3-2x^2+3x+1,\,
+2x^4-7x^3+4x^2+2x+1\right\}
+\end{align*}
+%
+Suppose we have a relation of linear dependence on this set,
+%
+\begin{align*}
+\zerovector&=0x^4+0x^3+0x^2+0x+0\\
+%
+&=\alpha_1\left(3x^4-2x^3+4x^2+6x-1\right)+\alpha_2\left(-3x^4+1x^3+0x^2+4x+2\right)\\
+&\quad +\alpha_3\left(4x^4+5x^3-2x^2+3x+1\right)+\alpha_4\left(2x^4-7x^3+4x^2+2x+1\right)
+\end{align*}
+%
+Using our definitions of vector addition and scalar multiplication in $P_4$ (\acronymref{example}{VSP}), we arrive at,
+%
+\begin{align*}
+0x^4+0x^3+0x^2+0x+0&=
+\left(3\alpha_1-3\alpha_2+4\alpha_3+2\alpha_4\right)x^4+ 
+\left(-2\alpha_1+\alpha_2+5\alpha_3-7\alpha_4\right)x^3\\
+&\quad + 
+\left(4\alpha_1+              -2\alpha_3+4\alpha_4\right)x^2+
+\left(6\alpha_1+4\alpha_2+3\alpha_3+2\alpha_4\right)x\\ 
+&\quad + 
+\left(-\alpha_1+2\alpha_2+\alpha_3+\alpha_4\right).
+\end{align*}
+%
+Equating coefficients, we arrive at the homogeneous system of equations,
+%
+\begin{align*}
+3\alpha_1-3\alpha_2+4\alpha_3+2\alpha_4&=0\\
+-2\alpha_1+\alpha_2+5\alpha_3-7\alpha_4&=0\\
+4\alpha_1+              -2\alpha_3+4\alpha_4&=0\\
+6\alpha_1+4\alpha_2+3\alpha_3+2\alpha_4&=0\\
+-\alpha_1+2\alpha_2+\alpha_3+\alpha_4&=0
+\end{align*}
+%
+We form the coefficient matrix of this homogeneous system of equations and row-reduce to find
+%
+\begin{equation*}
+\begin{bmatrix}
+\leading{1} & 0 & 0 & 0\\ 
+0 & \leading{1} & 0 & 0\\ 
+0 & 0 & \leading{1} & 0\\ 
+0 & 0 & 0 & \leading{1}\\ 
+0 & 0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+We expected the system to be consistent (\acronymref{theorem}{HSC}) and so can compute $n-r=4-4=0$ and \acronymref{theorem}{CSRN} tells us that the solution is unique.  Since this is a homogeneous system, this unique solution is the trivial solution (\acronymref{definition}{TSHSE}),  $\alpha_1=0$, $\alpha_2=0$, $\alpha_3=0$, $\alpha_4=0$.  So by \acronymref{definition}{LI} the set $T$ is linearly independent.\par
+%
+A few observations.  If we had discovered infinitely many solutions, then we could have used one of the non-trivial ones to provide a linear combination in the manner we used to show that $S$ was linearly dependent.  It is important to realize that it is not interesting that we can create a relation of linear dependence with zero scalars --- we can {\em always} do that --- but that for $T$, this is the {\em only} way to create a relation of linear dependence.  It was no accident that we arrived at a homogeneous system of equations in this example, it is related to our use of the zero vector in defining a relation of linear dependence.  It is easy to present a convincing statement that a set is linearly dependent (just exhibit a nontrivial relation of linear dependence) but a convincing statement of linear independence requires demonstrating that there is no relation of linear dependence other than the trivial one.  Notice how we relied on theorems from \acronymref{chapter}{SLE} to provide this demonstration.  Whew!  There's a lot going on in this example.  Spend some time with it, we'll be waiting patiently right here when you get back.
+\end{example}
+%
+%
+\begin{example}{LIM32}{Linear independence in $M_{32}$}{linear independence!matrices}
+Consider the two sets of vectors $R$ and $S$ from the vector space of all $3\times 2$ matrices, $M_{32}$ (\acronymref{example}{VSM})
+%
+\begin{align*}
+R&=\set{
+\begin{bmatrix}
+3 & -1\\1 & 4\\6 & -6
+\end{bmatrix},\,
+\begin{bmatrix}
+-2 & 3\\1 & -3\\-2 & -6
+\end{bmatrix},\,
+\begin{bmatrix}
+6 & -6\\-1 & 0\\7 & -9
+\end{bmatrix},\,
+\begin{bmatrix}
+7 & 9\\-4 & -5\\2 & 5
+\end{bmatrix}
+}\\
+%
+S&=\set{
+\begin{bmatrix}
+2 & 0\\ 1 & -1\\ 1 & 3
+\end{bmatrix},\,
+\begin{bmatrix}
+-4 & 0\\ -2 & 2\\ -2 & -6
+\end{bmatrix},\,
+\begin{bmatrix}
+1 & 1\\ -2 & 1\\ 2 & 4
+\end{bmatrix},\,
+\begin{bmatrix}
+-5 & 3\\ -10 & 7\\ 2 & 0
+\end{bmatrix}
+}
+\end{align*}
+%
+One set is linearly independent, the other is not.  Which is which?  Let's examine $R$ first.  Build a generic relation of linear dependence (\acronymref{definition}{RLD}),
+%
+\begin{equation*}
+\alpha_1\begin{bmatrix}
+3 & -1\\1 & 4\\6 & -6
+\end{bmatrix}+
+\alpha_2\begin{bmatrix}
+-2 & 3\\1 & -3\\-2 & -6
+\end{bmatrix}+
+\alpha_3\begin{bmatrix}
+6 & -6\\-1 & 0\\7 & -9
+\end{bmatrix}+
+\alpha_4\begin{bmatrix}
+7 & 9\\-4 & -5\\2 & 5
+\end{bmatrix}=
+\zerovector
+\end{equation*}
+%
+Massaging the left-hand side with our definitions of vector addition and scalar multiplication in $M_{32}$ (\acronymref{example}{VSM}) we obtain,
+%
+\begin{equation*}
+\begin{bmatrix}
+3\alpha_1-2\alpha_2+6\alpha_3+7\alpha_4 & 
+-1\alpha_1+3\alpha_2-6\alpha_3+9\alpha_4 \\ 
+1\alpha_1+1\alpha_2-\alpha_3-4\alpha_4 &
+4\alpha_1-3\alpha_2+            -5\alpha_4 \\ 
+6\alpha_1-2\alpha_2+7\alpha_3+2\alpha_4 & 
+-6\alpha_1-6\alpha_2-9\alpha_3+5\alpha_4
+\end{bmatrix}
+=\begin{bmatrix}
+0&0\\0&0\\0&0
+\end{bmatrix}
+\end{equation*}
+%
+Using our definition of matrix equality (\acronymref{definition}{ME}) and equating corresponding entries we get the homogeneous system of six equations in four variables,
+%
+\begin{align*}
+3\alpha_1-2\alpha_2+6\alpha_3+7\alpha_4&=0\\
+-1\alpha_1+3\alpha_2-6\alpha_3+9\alpha_4&=0\\
+1\alpha_1+1\alpha_2-\alpha_3-4\alpha_4&=0\\
+4\alpha_1-3\alpha_2+            -5\alpha_4&=0\\
+6\alpha_1-2\alpha_2+7\alpha_3+2\alpha_4&=0\\ 
+-6\alpha_1-6\alpha_2-9\alpha_3+5\alpha_4&=0
+\end{align*}
+%
+Form the coefficient matrix of this homogeneous system and row-reduce to obtain 
+%
+\begin{equation*}
+\begin{bmatrix}
+\leading{1} & 0 & 0 & 0\\ 
+0 & \leading{1} & 0 & 0\\ 
+0 & 0 & \leading{1} & 0\\ 
+0 & 0 & 0 & \leading{1}\\ 
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+Analyzing this matrix we are led to conclude that $\alpha_1=0$, $\alpha_2=0$, $\alpha_3=0$, $\alpha_4=0$.  This means there is {\em only} a trivial relation of linear dependence on the vectors of $R$ and so we call $R$ a linearly independent set (\acronymref{definition}{LI}).\par
+%
+So it must be that $S$ is linearly dependent.  Let's see if we can find a non-trivial relation of linear dependence on $S$.  We will begin as with $R$, by constructing a relation of linear dependence (\acronymref{definition}{RLD}) with unknown scalars,
+%
+\begin{equation*}
+\alpha_1\begin{bmatrix}
+2 & 0\\ 1 & -1\\ 1 & 3
+\end{bmatrix}+
+\alpha_2\begin{bmatrix}
+-4 & 0\\ -2 & 2\\ -2 & -6
+\end{bmatrix}+
+\alpha_3\begin{bmatrix}
+1 & 1\\ -2 & 1\\ 2 & 4
+\end{bmatrix}+
+\alpha_4\begin{bmatrix}
+-5 & 3\\ -10 & 7\\ 2 & 0
+\end{bmatrix}=
+\zerovector
+\end{equation*}
+%
+Massaging the left-hand side with our definitions of vector addition and scalar multiplication in $M_{32}$ (\acronymref{example}{VSM}) we obtain,
+%
+\begin{equation*}
+\begin{bmatrix}
+2\alpha_1-4\alpha_2+\alpha_3-5\alpha_4&
+                              \alpha_3+3\alpha_4\\
+\alpha_1-2\alpha_2-2\alpha_3-10\alpha_4&
+-\alpha_1+2\alpha_2+\alpha_3+7\alpha_4\\ 
+\alpha_1-2\alpha_2+2\alpha_3+2\alpha_4& 
+3\alpha_1-6\alpha_2+4\alpha_3               
+\end{bmatrix}
+=\begin{bmatrix}
+0&0\\0&0\\0&0
+\end{bmatrix}
+\end{equation*}
+%
+Using our definition of matrix equality (\acronymref{definition}{ME}) and equating corresponding entries we get the homogeneous system of six equations in four variables,
+%
+\begin{align*}
+2\alpha_1-4\alpha_2+\alpha_3-5\alpha_4&=0\\
+                             +\alpha_3+3\alpha_4&=0\\
+\alpha_1-2\alpha_2-2\alpha_3-10\alpha_4&=0\\
+-\alpha_1+2\alpha_2+\alpha_3+7\alpha_4&=0\\ 
+\alpha_1-2\alpha_2+2\alpha_3+2\alpha_4&=0\\
+3\alpha_1-6\alpha_2+4\alpha_3               &=0
+\end{align*}
+%
+Form the coefficient matrix of this homogeneous system and row-reduce to obtain 
+%
+\begin{equation*}
+\begin{bmatrix}
+\leading{1} & -2 & 0 & -4\\
+0 & 0 & \leading{1} & 3\\
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+Analyzing this we see that the system is consistent (we expected this since the system is homogeneous, \acronymref{theorem}{HSC}) and has $n-r=4-2=2$ free variables, namely $\alpha_2$ and $\alpha_4$.  This means there are infinitely many solutions, and in particular, we can find a non-trivial solution, so long as we do not pick all of our free variables to be zero.  The mere presence of a nontrivial solution for these scalars is enough to conclude that  $S$ is a linearly dependent set (\acronymref{definition}{LI}).  But let's go ahead and explicitly construct a non-trivial relation of linear dependence.\par
+%
+Choose $\alpha_2=1$ and $\alpha_4=-1$.  There is nothing special about this choice, there are infinitely many possibilities, some ``easier'' than this one, just avoid picking both variables to be zero.  Then we find the corresponding dependent variables to be $\alpha_1=-2$ and $\alpha_3=3$.  So the relation of linear dependence,
+%
+\begin{equation*}
+(-2)\begin{bmatrix}
+2 & 0\\ 1 & -1\\ 1 & 3
+\end{bmatrix}+
+(1)\begin{bmatrix}
+-4 & 0\\ -2 & 2\\ -2 & -6
+\end{bmatrix}+
+(3)\begin{bmatrix}
+1 & 1\\ -2 & 1\\ 2 & 4
+\end{bmatrix}+
+(-1)\begin{bmatrix}
+-5 & 3\\ -10 & 7\\ 2 & 0
+\end{bmatrix}
+=
+\begin{bmatrix}
+0&0\\0&0\\0&0
+\end{bmatrix}
+\end{equation*}
+%
+is an iron-clad demonstration that $S$ is linearly dependent.  Can you construct another such demonstration?
+%
+\end{example}
+%
+\begin{example}{LIC}{Linearly independent set in the crazy vector space}{linearly independent!crazy vector space}
+Is the set $R=\set{(1,\,0),\,(6,\,3)}$ linearly independent in the crazy vector space $C$ (\acronymref{example}{CVS})?  We begin with an arbitrary relation of linear independence on $R$
+%
+\begin{align*}
+\zerovector &= a_1(1,\,0) + a_2(6,\,3)&&\text{\acronymref{definition}{RLD}}\\
+\end{align*}
+%
+and then massage it to a point where we can apply the definition of equality in $C$.  Recall the definitions of vector addition and scalar multiplication in $C$ are not what you would expect.
+%
+\begin{align*}
+(-1,\,-1)
+&=\zerovector
+&&\text{\acronymref{example}{CVS}}\\
+%
+&=a_1(1,\,0) + a_2(6,\,3)
+&&\text{\acronymref{definition}{RLD}}\\
+%
+&=(1a_1+a_1-1,\,0a_1+a_1-1) + (6a_2+a_2-1,\,3a_2+a_2-1)
+&&\text{\acronymref{example}{CVS}}\\
+%
+&=(2a_1-1,\,a_1-1) + (7a_2-1,\,4a_2-1)\\
+%
+&=(2a_1-1+7a_2-1+1,\,a_1-1+4a_2-1+1)
+&&\text{\acronymref{example}{CVS}}\\
+%
+&=(2a_1+7a_2-1,\,a_1+4a_2-1)
+\end{align*}
+%
+Equality in $C$ (\acronymref{example}{CVS}) then yields the two equations,
+%
+\begin{align*}
+2a_1+7a_2-1&=-1\\
+a_1+4a_2-1&=-1
+\end{align*}
+%
+which becomes the homogeneous system
+%
+\begin{align*}
+2a_1+7a_2&=0\\
+a_1+4a_2&=0
+\end{align*}
+%
+Since the coefficient matrix of this system is nonsingular (check this!) the system has only the trivial solution $a_1=a_2=0$.  By \acronymref{definition}{LI} the set $R$ is linearly independent.  Notice that even though the zero vector of $C$ is not what we might first suspected, a question about linear independence still concludes with a question about a homogeneous system of equations.  Hmmm.
+%
+\end{example}
+%
+\subsect{SS}{Spanning Sets}
+%
+In a vector space $V$, suppose we are given a set of vectors $S\subseteq V$.  Then we can immediately construct a subspace, $\spn{S}$, using \acronymref{definition}{SS} and then be assured by \acronymref{theorem}{SSS} that the construction does provide a subspace.  We now turn the situation upside-down.  Suppose we are first given a subspace $W\subseteq V$.  Can we find a set $S$ so that $\spn{S}=W$?  Typically $W$ is infinite and we are searching for a finite set of vectors $S$ that we can combine in linear combinations and ``build'' all of $W$.\par
+%
+I like to think of $S$ as the raw materials that are sufficient for the construction of $W$.  If you have nails, lumber, wire, copper pipe, drywall, plywood, carpet, shingles, paint (and a few other things), then you can combine them in many different ways to create a house (or infinitely many different houses for that matter).  A fast-food restaurant may have beef, chicken, beans, cheese, tortillas, taco shells and hot sauce and from this small list of ingredients build a wide variety of items for sale.  Or maybe a better analogy comes from Ben Cordes --- the additive primary colors (red, green and blue) can be combined to create many different colors by varying the intensity of each.  The intensity is like a scalar multiple, and the combination of the three intensities is like vector addition.  The three individual colors, red, green and blue, are the elements of the spanning set.\par
+%
+Because we will use terms like ``spanned by'' and ``spanning set,'' there is the potential for confusion with ``the span.''  Come back and reread the first paragraph of this subsection whenever you are uncertain about the difference.  Here's the working definition.\par
+%
+%
+\begin{definition}{TSVS}{To Span a Vector Space}{spanning set}
+Suppose $V$ is a vector space.  A subset $S$ of $V$ is a \define{spanning set} for $V$ if $\spn{S}=V$.  In this case, we also say $S$ \define{spans} $V$.
+\end{definition}
+%
+The definition of a spanning set requires that two sets (subspaces actually) be equal.  If $S$ is a subset of $V$, then $\spn{S}\subseteq V$, always.  Thus it is usually only necessary to prove that $V\subseteq\spn{S}$.  Now would be a good time to review \acronymref{definition}{SE}.
+%
+\begin{example}{SSP4}{Spanning set in $P_4$}{spanning set!polynomials}
+In \acronymref{example}{SP4} we showed that
+%
+\begin{equation*}
+W=\setparts{p(x)}{p\in P_4,\ p(2)=0}
+\end{equation*}
+%
+is a subspace of $P_4$, the vector space of polynomials with degree at most $4$ (\acronymref{example}{VSP}).  In this example, we will show that the set
+%
+\begin{equation*}
+S=\set{x-2,\,x^2-4x+4,\,x^3-6x^2+12x-8,\,x^4-8x^3+24x^2-32x+16}
+\end{equation*}
+%
+is a spanning set for $W$.  To do this, we require that $W=\spn{S}$.  This is an equality of sets.  We can check that every polynomial in $S$ has $x=2$ as a root and therefore $S\subseteq W$.  Since $W$ is closed under addition and scalar multiplication, $\spn{S}\subseteq W$ also.\par
+%
+So it remains to show that $W\subseteq \spn{S}$ (\acronymref{definition}{SE}).  To do this, begin by choosing an arbitrary polynomial in $W$, say $r(x)=ax^4+bx^3+cx^2+dx+e\in W$.  This polynomial is not as arbitrary as it would appear, since we also know it must have $x=2$ as a root.  This translates to
+%
+\begin{equation*}
+0=a(2)^4+b(2)^3+c(2)^2+d(2)+e=16a+8b+4c+2d+e
+\end{equation*}
+%
+as a condition on $r$.\par
+%
+We wish to show that $r$ is a polynomial in $\spn{S}$, that is, we want to show that $r$ can be written as a linear combination of the vectors (polynomials) in $S$.  So let's try.
+%
+\begin{align*}
+r(x)&=ax^4+bx^3+cx^2+dx+e\\
+&=\alpha_1\left(x-2\right)+\alpha_2\left(x^2-4x+4\right)+\alpha_3\left(x^3-6x^2+12x-8\right)\\
+&\quad +\alpha_4\left(x^4-8x^3+24x^2-32x+16\right)\\
+%
+&=\alpha_4x^4+
+\left(\alpha_3-8\alpha_4\right)x^3+
+\left(\alpha_2-6\alpha_3+24\alpha_2\right)x^2\\
+&\quad +
+\left(\alpha_1-4\alpha_2+12\alpha_3-32\alpha_4\right)x+
+\left(-2\alpha_1+4\alpha_2-8\alpha_3+16\alpha_4\right)
+\end{align*}
+%
+Equating coefficients (vector equality in $P_4$) gives the system of five equations in four variables,
+%
+\begin{align*}
+\alpha_4&=a\\
+\alpha_3-8\alpha_4&=b\\
+\alpha_2-6\alpha_3+24\alpha_2&=c\\
+\alpha_1-4\alpha_2+12\alpha_3-32\alpha_4&=d\\
+-2\alpha_1+4\alpha_2-8\alpha_3+16\alpha_4&=e\\
+\end{align*}
+%
+Any solution to this system of equations will provide the linear combination we need to determine if $r\in\spn{S}$, but we need to be convinced there is a solution for any values of $a,\,b,\,c,\,d,\,e$ that qualify $r$ to be a member of $W$.  So the question is:  is this system of equations consistent?  We will form the augmented matrix, and row-reduce. (We probably need to do this by hand, since the matrix is symbolic --- reversing the order of the first four rows is the best way to start).  We obtain a matrix in reduced row-echelon form
+%
+\begin{equation*}
+\begin{bmatrix}
+\leading{1}&0&0&0&32a+12b+4c+d\\
+0&\leading{1}&0&0&24a+6b+c\\
+0&0&\leading{1}&0&8a+b\\
+0&0&0&\leading{1}&a\\
+0&0&0&0&16a+8b+4c+2d+e
+\end{bmatrix}
+=
+\begin{bmatrix}
+\leading{1}&0&0&0&32a+12b+4c+d\\
+0&\leading{1}&0&0&24a+6b+c\\
+0&0&\leading{1}&0&8a+b\\
+0&0&0&\leading{1}&a\\
+0&0&0&0&0
+\end{bmatrix}
+\end{equation*}
+%
+For your results to match our first matrix, you may find it necessary to multiply the final row of your row-reduced matrix by the appropriate scalar, and/or add multiples of this row to some of the other rows.  To obtain the second version of the matrix, the last entry of the last column has been simplified to zero according to the one condition we were able to impose on an arbitrary polynomial from $W$.    So with no leading 1's in the last column, \acronymref{theorem}{RCLS} tells us this system is consistent.  Therefore, {\em any} polynomial from $W$ can be written as a linear combination of the polynomials in $S$, so $W\subseteq\spn{S}$. Therefore,  $W=\spn{S}$ and $S$ is a spanning set for $W$ by \acronymref{definition}{TSVS}.\par
+%
+Notice that an alternative to row-reducing the augmented matrix by hand would be to appeal to \acronymref{theorem}{FS} by expressing the column space of the coefficient matrix as a null space, and then verifying that the condition on $r$ guarantees that $r$ is in the column space, thus implying that the system is always consistent.  Give it a try, we'll wait.  This has been a complicated example, but worth studying carefully.
+\end{example}
+%
+Given a subspace and a set of vectors, as in \acronymref{example}{SSP4} it can take some work to determine that the set actually is a spanning set.  An even harder problem is to be confronted with a subspace and required to construct a spanning set with no guidance.  We will now work  an example of this flavor, but some of the steps will be unmotivated.  Fortunately, we will have some better tools for this type of problem later on.
+%
+\begin{example}{SSM22}{Spanning set in $M_{22}$}{spanning set!matrices}
+In the space of all $2\times 2$ matrices, $M_{22}$ consider the subspace
+%
+\begin{equation*}
+Z=\setparts{\begin{bmatrix}a&b\\c&d\end{bmatrix}}{a+3b-c-5d=0,\ -2a-6b+3c+14d=0}
+\end{equation*}
+%
+and find a spanning set for $Z$.\par
+%
+We need to construct a limited number of matrices in $Z$ so that every matrix in $Z$ can be expressed as a linear combination of this limited number of matrices.  Suppose that $B=\begin{bmatrix}a&b\\c&d\end{bmatrix}$ is a matrix in $Z$.  Then we can form a column vector with the entries of $B$ and write
+%
+\begin{equation*}
+\colvector{a\\b\\c\\d}\in
+\nsp{\begin{bmatrix}1 & 3 & -1 & -5\\-2 & -6 & 3 & 14\end{bmatrix}}
+\end{equation*}
+%
+Row-reducing this matrix and applying \acronymref{theorem}{REMES} we obtain the equivalent statement,
+%
+\begin{equation*}
+\colvector{a\\b\\c\\d}\in
+\nsp{\begin{bmatrix}\leading{1} & 3 & 0 & -1\\0 & 0 & \leading{1} & 4\end{bmatrix}}
+\end{equation*}
+%
+We can then express the subspace $Z$ in the following equal forms,
+%
+\begin{align*}
+Z&=\setparts{\begin{bmatrix}a&b\\c&d\end{bmatrix}}{a+3b-c-5d=0,\ -2a-6b+3c+14d=0}\\
+&=\setparts{\begin{bmatrix}a&b\\c&d\end{bmatrix}}{a+3b-d=0,\ c+4d=0}\\
+&=\setparts{\begin{bmatrix}a&b\\c&d\end{bmatrix}}{a=-3b+d,\ c=-4d}\\
+&=\setparts{\begin{bmatrix}-3b+d&b\\-4d&d\end{bmatrix}}{b,\,d\in\complex{\null}}\\
+%
+&=\setparts{
+\begin{bmatrix}-3b&b\\0&0\end{bmatrix}+
+\begin{bmatrix}d&0\\-4d&d\end{bmatrix}
+}{b,\,d\in\complex{\null}}\\
+%
+&=\setparts{
+b\begin{bmatrix}-3&1\\0&0\end{bmatrix}+
+d\begin{bmatrix}1&0\\-4&1\end{bmatrix}
+}{b,\,d\in\complex{\null}}\\
+%
+&=\spn{\set{
+\begin{bmatrix}-3&1\\0&0\end{bmatrix},\,
+\begin{bmatrix}1&0\\-4&1\end{bmatrix}
+}}
+%
+\end{align*}
+%
+So the set 
+%
+\begin{equation*}
+Q=\set{
+\begin{bmatrix}-3&1\\0&0\end{bmatrix},\,
+\begin{bmatrix}1&0\\-4&1\end{bmatrix}
+}
+\end{equation*}
+%
+spans $Z$ by \acronymref{definition}{TSVS}.
+%
+\end{example}
+%
+%
+\begin{example}{SSC}{Spanning set in the crazy vector space}{spanning set!crazy vector space}
+In \acronymref{example}{LIC} we determined that the set $R=\set{(1,\,0),\,(6,\,3)}$ is linearly independent in the crazy vector space $C$ (\acronymref{example}{CVS}).  We now show that $R$ is a spanning set for $C$.\par
+%
+Given an arbitrary vector $(x,\,y)\in C$ we desire to show that it can be written as a linear combination of the elements of $R$.  In other words, are there scalars $a_1$ and $a_2$ so that 
+%
+\begin{equation*}
+(x,\,y)=a_1(1,\,0) + a_2(6,\,3)
+\end{equation*}
+%
+We will act as if this equation is true and try to determine just what $a_1$ and $a_2$ would be (as functions of $x$ and $y$).
+%
+\begin{align*}
+(x,\,y)&=a_1(1,\,0) + a_2(6,\,3)\\
+&= (1a_1+a_1-1,\,0a_1+a_1-1) + (6a_2+a_2-1,\,3a_2+a_2-1)
+&&\text{Scalar mult in $C$}\\
+%
+&= (2a_1-1,\,a_1-1) + (7a_2-1,\,4a_2-1)\\
+%
+&= (2a_1-1+7a_2-1+1,\,a_1-1+4a_2-1+1)
+&&\text{Addition in $C$}\\
+%
+&= (2a_1+7a_2-1,\,a_1+4a_2-1)
+\end{align*}
+%
+Equality in $C$ then yields the two equations,
+%
+\begin{align*}
+2a_1+7a_2-1&=x\\
+a_1+4a_2-1&=y
+\end{align*}
+%
+which becomes the linear system with a matrix representation
+%
+\begin{equation*}
+\begin{bmatrix}
+2 & 7 \\ 1 & 4
+\end{bmatrix}
+\colvector{a_1\\a_2}
+=
+\colvector{x+1\\y+1}
+\end{equation*}
+%
+The coefficient matrix of this system is nonsingular, hence invertible (\acronymref{theorem}{NI}), and we can employ its inverse to find a solution (\acronymref{theorem}{TTMI}, \acronymref{theorem}{SNCM}),
+%
+\begin{equation*}
+\colvector{a_1\\a_2}=
+\inverse{\begin{bmatrix} 2 & 7 \\ 1 & 4 \end{bmatrix}}\colvector{x+1\\y+1}=
+\begin{bmatrix} 4 & -7 \\ -1 & 2 \end{bmatrix}\colvector{x+1\\y+1}=
+\colvector{4x-7y-3\\-x+2y+1}
+\end{equation*}
+%
+We could chase through the above implications backwards and take the existence of these solutions as sufficient evidence for $R$ being a spanning set for $C$.  Instead, let us view the above as simply scratchwork and now get serious with a simple direct proof that $R$ is a spanning set.  Ready?  Suppose $(x,\,y)$ is any vector from $C$, then compute the following linear combination using the definitions of the operations in $C$,
+%
+\begin{align*}
+(4x-7y-3)(1,\,0)&+(-x+2y+1)(6,\,3)\\
+%
+&=\left(1(4x-7y-3)+(4x-7y-3)-1,\,0(4x-7y-3)+(4x-7y-3)-1\right)+\\
+&\quad\left(6(-x+2y+1)+(-x+2y+1)-1,\,3(-x+2y+1)+(-x+2y+1)-1\right)\\
+%
+&=(8x-14y-7,\,4x-7y-4)+(-7x+14y+6,\,-4x+8y+3)\\
+%
+&=((8x-14y-7)+(-7x+14y+6)+1,\,(4x-7y-4)+(-4x+8y+3)+1)\\
+%
+&=(x,\,y)
+%
+\end{align*}
+%
+This final sequence of computations in $C$ is sufficient to demonstrate that any element of $C$ {\em can} be written (or expressed) as a linear combination of the two vectors in $R$, so $C\subseteq\spn{R}$.  Since the reverse inclusion $\spn{R}\subseteq C$ is trivially true, $C=\spn{R}$ and we say $R$ spans $C$ (\acronymref{definition}{TSVS}).  Notice that this demonstration is no more or less valid if we hide from the reader our scratchwork that suggested $a_1=4x-7y-3$ and $a_2=-x+2y+1$.
+%
+\end{example}
+%
+\subsect{VR}{Vector Representation}
+%
+In \acronymref{chapter}{R} we will take up the matter of representations fully, where \acronymref{theorem}{VRRB} will be critical for \acronymref{definition}{VR}.  We will now motivate and prove a critical theorem that tells us how to ``represent'' a vector.   This theorem could wait, but working with it now will provide some extra insight into the nature of linearly independent spanning sets.  First an example, then the theorem.
+%
+%
+\begin{example}{AVR}{A vector representation}{vector representation}
+Consider the set 
+%
+\begin{equation*}
+S=\set{\colvector{-7\\5\\1},\,\colvector{-6\\5\\0},\,\colvector{-12\\7\\4}}
+\end{equation*}
+%
+from the vector space $\complex{3}$.  Let $A$ be the matrix whose columns are the set $S$, and verify that $A$ is nonsingular.  By \acronymref{theorem}{NMLIC} the elements of $S$ form a linearly independent set.  Suppose that $\vect{b}\in\complex{3}$.  Then $\linearsystem{A}{\vect{b}}$ has a (unique) solution (\acronymref{theorem}{NMUS}) and hence is consistent.  By \acronymref{theorem}{SLSLC}, $\vect{b}\in\spn{S}$.  Since $\vect{b}$ is arbitrary, this is enough to show that $\spn{S}=\complex{3}$, and therefore $S$ is a spanning set for $\complex{3}$ (\acronymref{definition}{TSVS}).  (This set comes from the columns of the coefficient matrix of \acronymref{archetype}{B}.)\par
+%
+Now examine the situation for a particular choice of $\vect{b}$, say $\vect{b}=\colvector{-33\\24\\5}$.  Because $S$ is a spanning set for $\complex{3}$, we know we can write $\vect{b}$ as a linear combination of the vectors in $S$,
+%
+\begin{equation*}
+\colvector{-33\\24\\5}=
+(-3)\colvector{-7\\5\\1}+(5)\colvector{-6\\5\\0}+(2)\colvector{-12\\7\\4}.
+\end{equation*}
+%
+The nonsingularity of the matrix $A$ tells that the scalars in this linear combination are unique.  More precisely, it is the linear independence of $S$ that provides the uniqueness.  We will refer to the scalars $a_1=-3$, $a_2=5$, $a_3=2$ as a ``representation of $\vect{b}$ relative to $S$.''  In other words, once we settle on $S$ as a linearly independent set that spans $\complex{3}$, the vector $\vect{b}$ is recoverable just by knowing the scalars $a_1=-3$, $a_2=5$, $a_3=2$ (use these scalars in a linear combination of the vectors in $S$).   This is all an illustration of the following important theorem, which we prove in the setting of a general vector space.
+\end{example}
+%
+\begin{theorem}{VRRB}{Vector Representation Relative to a Basis}{vector representation}
+Suppose that $V$ is a vector space and $B=\set{\vectorlist{v}{m}}$ is a linearly independent set that spans $V$.  Let $\vect{w}$ be any vector in $V$.  Then there exist {\em unique} scalars $a_1,\,a_2,\,a_3,\,\ldots,\,a_m$ such that 
+%
+\begin{equation*}
+\vect{w}=\lincombo{a}{v}{m}.
+\end{equation*}
+%
+\end{theorem}
+%
+\begin{proof}
+That $\vect{w}$ can be written as a linear combination of the vectors in $B$ follows from the spanning property of the set (\acronymref{definition}{TSVS}).  This is good, but not the meat of this theorem.  We now know that for any choice of the vector $\vect{w}$ there exist {\em some} scalars that will create $\vect{w}$ as a linear combination of the basis vectors.  The real question is:  Is there {\em more} than one way to write $\vect{w}$ as a linear combination of $\{\vectorlist{v}{m}\}$?  Are the scalars $a_1,\,a_2,\,a_3,\,\ldots,\,a_m$ unique?  (\acronymref{technique}{U})\par
+%
+Assume there are two ways to express $\vect{w}$ as a linear combination of $\{\vectorlist{v}{m}\}$.  In other words there exist scalars $a_1,\,a_2,\,a_3,\,\ldots,\,a_m$ and $b_1,\,b_2,\,b_3,\,\ldots,\,b_m$ so that 
+%
+\begin{align*}
+\vect{w}&=\lincombo{a}{v}{m}\\
+\vect{w}&=\lincombo{b}{v}{m}.
+\end{align*}
+%
+Then notice that
+%
+\begin{align*}
+\zerovector
+&=\vect{w}+(\vect{-w})&&\text{\acronymref{property}{AI}}\\
+%
+&=\vect{w}+(-1)\vect{w}&&\text{\acronymref{theorem}{AISM}}\\
+%
+&=(\lincombo{a}{v}{m})+\\
+&\quad\quad(-1)(\lincombo{b}{v}{m})\\
+%
+&=(\lincombo{a}{v}{m})+\\
+&\quad\quad (-b_1\vect{v}_1-b_2\vect{v}_2-b_3\vect{v}_3-\ldots-b_m\vect{v}_m)&&\text{\acronymref{property}{DVA}}\\
+%  
+&=(a_1-b_1)\vect{v_1}+(a_2-b_2)\vect{v_2}+(a_3-b_3)\vect{v_3}+\\
+&\quad\quad\cdots+(a_m-b_m)\vect{v_m}&&\text{\acronymref{property}{C}, \acronymref{property}{DSA}}
+\end{align*}
+%
+But this is a relation of linear dependence on a linearly independent set of vectors (\acronymref{definition}{RLD})! Now we are using the other assumption about $B$, that $\{\vectorlist{v}{m}\}$ is a linearly independent set.   So by \acronymref{definition}{LI} it {\em must} happen that the scalars are all zero.  That is,
+%
+\begin{align*}
+(a_1-b_1)&=0&(a_2-b_2)&=0&(a_3-b_3)&=0&\ldots&&(a_m-b_m)&=0\\
+a_1&=b_1&a_2&=b_2&a_3&=b_3&\ldots&&a_m&=b_m.
+\end{align*}
+%
+And so we find that the scalars are unique.
+%
+\end{proof}
+%
+This is a very typical use of the hypothesis that a set is linearly independent --- obtain a relation of linear dependence and then conclude that the scalars {\em must} all be zero.  The result of this theorem tells us that we can write any vector in a vector space as a linear combination of the vectors in a linearly independent spanning set, but only just.  There is only enough raw material in the spanning set to write each vector one way as a linear combination.  So in this sense, we could call a linearly independent spanning set a ``minimal spanning set.''  These sets are so important that we will give them a simpler name (``basis'') and explore their properties further in the next section.
+%
+%
+%  End  liss.tex

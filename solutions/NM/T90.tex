@@ -1,0 +1,84 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+We assume $A$ is nonsingular, and try to solve the system $\linearsystem{A}{\vect{b}}$ without making any assumptions about $\vect{b}$.  To do this we will begin by constructing a new homogeneous linear system of equations that looks very much like the original.  Suppose $A$ has size $n$ (why must it be square?) and write the original system as,
+%
+\begin{align*}
+a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&=b_1\\
+a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&=b_2\\
+a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&=b_3\\
+\vdots&\tag{$*$}\\
+a_{n1}x_1+a_{n2}x_2+a_{n3}x_3+\dots+a_{nn}x_n&=b_n
+\end{align*}
+%
+Form the new, homogeneous system in $n$ equations with $n+1$ variables, by adding a new variable $y$, whose coefficients are the negatives of the constant terms,
+%
+\begin{align*}
+a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n-b_1y&=0\\
+a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n-b_2y&=0\\
+a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n-b_3y&=0\\
+\vdots&\tag{$**$}\\
+a_{n1}x_1+a_{n2}x_2+a_{n3}x_3+\dots+a_{nn}x_n-b_ny&=0
+\end{align*}
+%
+Since this is a homogeneous system with more variables than equations ($m=n+1>n$), \acronymref{theorem}{HMVEI} says that the system has infinitely many solutions.  We will choose one of these solutions, {\em any} one of these solutions, so long as it is {\em not} the trivial solution.  Write this solution as
+%
+\begin{align*}
+x_1=c_1&&x_2=c_2&&x_3=c_3&&\ldots&&x_n=c_n&&y=c_{n+1}
+\end{align*}
+%
+We know that at least one value of the $c_i$ is nonzero, but we will now show that in particular $c_{n+1}\neq 0$.  We do this using a proof by contradiction (\acronymref{technique}{CD}).  So suppose the $c_i$ form a solution as described, and in addition that $c_{n+1}=0$.  Then we can write the $i$-th equation of system $(**)$ as,
+%
+\begin{align*}
+a_{i1}c_1+a_{i2}c_2+a_{i3}c_3+\dots+a_{in}c_n-b_i(0)&=0\\
+%
+\intertext{which becomes}
+%
+a_{i1}c_1+a_{i2}c_2+a_{i3}c_3+\dots+a_{in}c_n&=0\\
+\end{align*}
+%
+Since this is true for each $i$, we have that $x_1=c_1,\,x_2=c_2,\,x_3=c_3,\ldots,\,x_n=c_n$ is a solution to the homogeneous system $\homosystem{A}$ formed with a nonsingular coefficient matrix.  This means that the only possible solution is the trivial solution, so $c_1=0,\,c_2=0,\,c_3=0,\,\ldots,\,c_n=0$.  So, assuming simply that $c_{n+1}=0$, we conclude that {\em all} of the $c_i$ are zero.  But this contradicts our choice of the $c_i$ as not being the trivial solution to the system $(**)$.  So $c_{n+1}\neq 0$.\par
+%
+We now propose and verify a solution to the original system $(*)$.  Set
+%
+\begin{align*}
+x_1=\frac{c_1}{c_{n+1}}&&x_2=\frac{c_2}{c_{n+1}}&&x_3=\frac{c_3}{c_{n+1}}&&\ldots&&x_n=\frac{c_n}{c_{n+1}}
+\end{align*}
+%
+Notice how it was necessary that we know that $c_{n+1}\neq 0$ for this step to succeed.  Now, evaluate the $i$-th equation of system $(*)$ with this proposed solution, and recognize in the third line that $c_1$ through $c_{n+1}$  appear as if they were substituted into the left-hand side of the $i$-th equation of system $(**)$,
+%
+\begin{align*}
+&a_{i1}\frac{c_1}{c_{n+1}}+a_{i2}\frac{c_2}{c_{n+1}}+a_{i3}\frac{c_3}{c_{n+1}}+\dots+a_{in}\frac{c_n}{c_{n+1}}\\
+&=\frac{1}{c_{n+1}}\left(a_{i1}c_1+a_{i2}c_2+a_{i3}c_3+\dots+a_{in}c_n\right)\\
+&=\frac{1}{c_{n+1}}\left(a_{i1}c_1+a_{i2}c_2+a_{i3}c_3+\dots+a_{in}c_n-b_ic_{n+1}\right)+b_i\\
+&=\frac{1}{c_{n+1}}\left(0\right)+b_i\\
+&=b_i
+\end{align*}
+%
+Since this equation is true for every $i$, we have found a solution to system $(*)$.  To finish, we still need to establish that this solution is {\em unique}.\par
+%
+With one solution in hand, we will entertain the possibility of a second solution.  So assume system $(*)$ has two solutions,
+%
+\begin{align*}
+x_1=d_1&&x_2=d_2&&x_3=d_3&&\ldots&&x_n=d_n\\
+x_1=e_1&&x_2=e_2&&x_3=e_3&&\ldots&&x_n=e_n
+\end{align*}
+%
+Then,
+%
+\begin{align*}
+&\left(a_{i1}(d_1-e_1)+a_{i2}(d_2-e_2)+a_{i3}(d_3-e_3)+\dots+a_{in}(d_n-e_n)\right)\\
+&=\left(a_{i1}d_1+a_{i2}d_2+a_{i3}d_3+\dots+a_{in}d_n\right)-\left(a_{i1}e_1+a_{i2}e_2+a_{i3}e_3+\dots+a_{in}e_n\right)\\
+&=b_i-b_i\\
+&=0
+\end{align*}
+%
+This is the $i$-th equation of the homogeneous system $\homosystem{A}$ evaluated with $x_j=d_j-e_j$, $1\leq j\leq n$.  Since $A$ is nonsingular, we must conclude that this solution is the trivial solution, and so $0=d_j-e_j$, $1\leq j\leq n$.  That is, $d_j=e_j$ for all $j$ and the two solutions are identical, meaning any solution to $(*)$ is unique.\par\medskip
+%
+Notice that the proposed solution ($x_i=\frac{c_i}{c_{n+1}}$) appeared in this proof with no motivation whatsoever.  This is just fine in a proof.  A proof should {\em convince} you that a theorem is {\em true}.  It is your job to {\em read} the proof and be convinced of every assertion.  Questions like ``Where did that come from?'' or ``How would I think of that?'' have no bearing on the {\em validity} of the proof.

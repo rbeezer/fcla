@@ -1,0 +1,45 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+The analysis of $R$ will be easiest if we analyze a matrix representation of $R$.  Since we can use any matrix representation, we might as well use natural bases that allow us to construct the matrix representation quickly and easily,
+%
+\begin{align*}
+B&=\set{
+\begin{bmatrix}1&0\\0&0\end{bmatrix},\,
+\begin{bmatrix}0&1\\1&0\end{bmatrix},\,
+\begin{bmatrix}0&0\\0&1\end{bmatrix}
+}
+&
+C&=\set{1,\,x,\,x^2}
+\end{align*}
+%
+then we can practically build the matrix representation on sight,
+%
+\begin{equation*}
+\matrixrep{R}{B}{C}=
+\begin{bmatrix}
+1 & -1 & 0\\
+2 & -3 & -2\\
+1 & -1 & 1
+\end{bmatrix}
+\end{equation*}
+%
+This matrix representation is invertible (it has a nonzero determinant of $-1$, \acronymref{theorem}{SMZD}, \acronymref{theorem}{NI}) so \acronymref{theorem}{IMR} tells us that the linear transformation $R$ is also invertible.  To find a formula for $\ltinverse{R}$  we compute,
+%
+\begin{align*}
+\lt{\ltinverse{R}}{a+bx+cx^2}
+&=\vectrepinv{B}{\matrixrep{\ltinverse{R}}{C}{B}\vectrep{C}{a+bx+cx^2}}&&\text{\acronymref{theorem}{FTMR}}\\
+&=\vectrepinv{B}{\inverse{\left(\matrixrep{R}{B}{C}\right)}\vectrep{C}{a+bx+cx^2}}&&\text{\acronymref{theorem}{IMR}}\\
+&=\vectrepinv{B}{\inverse{\left(\matrixrep{R}{B}{C}\right)}\colvector{a\\b\\c}}&&\text{\acronymref{definition}{VR}}\\
+&=\vectrepinv{B}{
+\begin{bmatrix}5&-1&-2\\4&-1&-2\\-1&0&1\end{bmatrix}
+\colvector{a\\b\\c}}&&\text{\acronymref{definition}{MI}}\\
+&=\vectrepinv{B}{\colvector{5a-b-2c\\4a-b-2c\\-a+c}}&&\text{\acronymref{definition}{MVP}}\\
+&=\begin{bmatrix}5a-b-2c&4a-b-2c\\4a-b-2c&-a+c\end{bmatrix}&&\text{\acronymref{definition}{VR}}
+\end{align*}

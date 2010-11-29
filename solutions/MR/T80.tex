@@ -1,0 +1,54 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+Suppose that 
+$B=\set{\vectorlist{u}{m}}$, $C=\set{\vectorlist{v}{n}}$ and $D=\set{\vectorlist{w}{p}}$.  For convenience, set $M=\matrixrep{T}{B}{C}$, $m_{ij}=\matrixentry{M}{ij}$, $1\leq i\leq n$, $1\leq j\leq m$, and similarly, set $N=\matrixrep{S}{C}{D}$, $n_{ij}=\matrixentry{N}{ij}$, $1\leq i\leq p$, $1\leq j\leq n$.   We want to learn about the matrix representation of $\ltdefn{\compose{S}{T}}{V}{W}$ relative to $B$ and $D$.  We will examine a single (generic) entry of this representation.\par
+%
+%
+\begin{align*}
+\matrixentry{\matrixrep{\compose{S}{T}}{B}{D}}{ij}
+%
+&=\vectorentry{\vectrep{D}{\lt{\left(\compose{S}{T}\right)}{\vect{u}_j}}}{i}
+&&\text{\acronymref{definition}{MR}}\\
+%
+&=\vectorentry{\vectrep{D}{\lt{S}{\lt{T}{\vect{u}_j}}}}{i}
+&&\text{\acronymref{definition}{LTC}}\\
+%
+&=\vectorentry{\vectrep{D}{\lt{S}{\sum_{k=1}^{n}m_{kj}\vect{v}_k}}}{i}
+&&\text{\acronymref{definition}{MR}}\\
+%
+&=\vectorentry{\vectrep{D}{\sum_{k=1}^{n}m_{kj}\lt{S}{\vect{v}_k}}}{i}
+&&\text{\acronymref{theorem}{LTLC}}\\
+%
+&=\vectorentry{\vectrep{D}{\sum_{k=1}^{n}m_{kj}\sum_{\ell=1}^{p}n_{\ell k}\vect{w}_\ell}}{i}
+&&\text{\acronymref{definition}{MR}}\\
+%
+&=\vectorentry{\vectrep{D}{\sum_{k=1}^{n}\sum_{\ell=1}^{p}m_{kj}n_{\ell k}\vect{w}_\ell}}{i}
+&&\text{\acronymref{property}{DVA}}\\
+%
+&=\vectorentry{\vectrep{D}{\sum_{\ell=1}^{p}\sum_{k=1}^{n}m_{kj}n_{\ell k}\vect{w}_\ell}}{i}
+&&\text{\acronymref{property}{C}}\\
+%
+&=\vectorentry{\vectrep{D}{\sum_{\ell=1}^{p}\left(\sum_{k=1}^{n}m_{kj}n_{\ell k}\right)\vect{w}_\ell}}{i}
+&&\text{\acronymref{property}{DSA}}\\
+%
+&=\sum_{k=1}^{n}m_{kj}n_{ik}
+&&\text{\acronymref{definition}{VR}}\\
+%
+&=\sum_{k=1}^{n}n_{ik}m_{kj}
+&&\text{\acronymref{property}{CMCN}}\\
+%
+&=\sum_{k=1}^{n}\matrixentry{\matrixrep{S}{C}{D}}{ik}\matrixentry{\matrixrep{T}{B}{C}}{kj}
+&&\text{\acronymref{property}{CMCN}}
+%
+\end{align*}
+%
+This formula for the entry of a matrix should remind you of \acronymref{theorem}{EMP}.  However, while the theorem presumed we knew how to multiply matrices, the solution before us never uses any understanding of matrix products.  It uses the definitions of vector and matrix representations, properties of linear transformations and vector spaces.  So if we began a course by first discussing vector space, and then linear transformations between vector spaces, we could carry matrix representations into a {\em motivation} for a definition of matrix multiplication that is grounded in function composition.  That is worth saying again --- a definition of matrix representations of linear transformations {\em results} in a matrix product being the representation of a composition of linear transformations.\par
+%
+This exercise is meant to explain why many authors take the formula in \acronymref{theorem}{EMP} as their {\em definition} of matrix multiplication, and why it is a natural choice when the proper motivation is in place.  If we first defined matrix multiplication in the style of \acronymref{theorem}{EMP}, then the above argument, followed by a simple application of the definition of matrix equality (\acronymref{definition}{ME}), would yield \acronymref{theorem}{MRCLT}.

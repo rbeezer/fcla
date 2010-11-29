@@ -1,0 +1,431 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section TD
+%%  Triangular Decomposition
+%%
+%%%%%%%%%%%
+%
+{\sc\large This Section is a Draft, Subject to Changes}\par\bigskip
+%
+Our next decomposition will break a square matrix into a product of two matrices, one lower triangular and the other upper triangular.  So we will write $A=LU$, and hence many refer to this as \define{LU decomposition}.  We will see that this decomposition is very easy to compute and that it has a direct application to solving systems of equations.  Since this section is about triangular matrices you might want to review the definitions and a couple of basic theorems back in \acronymref{subsection}{OD.TM}.
+%
+\subsect{TD}{Triangular Decomposition}
+%
+With a slight condition on the nonsingularity of certain submatrices, we can split a matrix into a product of two triangular matrices.
+%
+\begin{theorem}{TD}{Triangular Decomposition}{triangular decomposition}
+Suppose $A$ is a square matrix of size $n$.  Let $A_k$ be the $k\times k$ matrix formed from $A$ by taking the first $k$ rows and the first $k$ columns.  Suppose that $A_k$ is nonsingular for all $1\leq k\leq n$.  Then there is a lower triangular matrix $L$ with all of its diagonal entries equal to 1 and an upper triangular matrix $U$ such that $A=LU$.  Furthermore, this decomposition is unique.
+\end{theorem}
+%
+\begin{proof}
+We will row reduce $A$ to a row-equivalent upper triangular matrix through a series of row operations, forming intermediate matrices $A^\prime_j$, $1\leq j\leq n$, that denote the state of the conversion after working on column $j$.  First, the lone entry of $A_1$ is $\matrixentry{A}{11}$ and this scalar must be nonzero if $A_1$ is nonsingular (\acronymref{theorem}{SMZD}).  We can use row operations \acronymref{definition}{RO} of the form $\rowopadd{\alpha}{1}{k}$, $2\leq k\leq n$, where $\alpha=-\matrixentry{A}{1k}/\matrixentry{A}{11}$ to place zeros in the first column below the diagonal.  The first two rows and columns of $A^\prime_1$ are a $2\times 2$ upper triangular matrix whose determinant is equal to the determinant of $A_2$, since the matrices are row-equivalent through a sequence of row operations strictly of the third type (\acronymref{theorem}{DRCMA}).  As such the diagonal entries of this $2\times 2$ submatrix of $A^\prime_1$ are nonzero.  We can employ this nonzero diagonal element with row operations of the form $\rowopadd{\alpha}{2}{k}$, $3\leq k\leq n$ to place zeros below the diagonal in the second column.  We can continue this process, column by column.  The key observations are that our hypothesis on the nonsingularity of the $A_k$ will guarantee a nonzero diagonal entry for each column when we need it, that the row operations employed are always of the third type using a multiple of a row to transform another row {\em with a greater row index}, and that the final result will be a nonsingular upper triangular matrix.  This is the desired matrix $U$.\par
+%
+Each row operation described in the previous paragraph can be accomplished with matrix multiplication by the appropriate elementary matrix (\acronymref{theorem}{EMDRO}).  Since every row operation employed is adding a multiple of a row to a subsequent row these elementary matrices are of the form $\elemadd{\alpha}{j}{k}$ with $j<k$.  By \acronymref{definition}{ELEM}, these matrices are lower triangular with every diagonal entry equal to 1.  We know that the product of two such matrices will again be lower triangular (\acronymref{theorem}{PTMT}), but also, as you can also easily check using a proof with a style similar to one above, that the product maintains all 1's on the diagonal.  Let $E_1,\,E_2,\,E_3,\,\dots,\,E_m$ denote the elementary matrices for this sequence of row operations.  Then
+%
+\begin{align*}
+U&=E_mE_{m-1}\dots E_3E_2E_1A=L^{\prime}A
+\end{align*}
+%
+where $L^\prime$ is the product of the elementary matrices, and we know $L^\prime$ is lower triangular with all 1's on the diagonal.  Our desired matrix $L$ is then $L=\inverse{\left(L^\prime\right)}$.  By \acronymref{theorem}{ITMT}, $L$ is lower triangular with all 1's on the diagonal and $A=LU$, as desired.\par
+%
+The process just described is deterministic.  That is, the proof is constructive, with no freedom for each of us to walk through it differently.  But could there be other matrices with the same properties as $L$ and $U$ that give such a decomposition of $A$.  In other words, is the decomposition unique (\acronymref{technique}{U})?  Suppose that we have two triangular decompositions, $A=L_1U_1$ and $A=L_2U_2$.  Since $A$ is nonsingular, two applications of \acronymref{theorem}{NPNT} imply that $L_1,\,L_2,\,U_1,\,U_2$ are all nonsingular.  We have
+%
+\begin{align*}
+\inverse{L_2}L_1
+&=\inverse{L_2}I_nL_1&&\text{\acronymref{theorem}{MMIM}}\\
+&=\inverse{L_2}A\inverse{A}L_1&&\text{\acronymref{definition}{MI}}\\
+&=\inverse{L_2}L_2U_2\inverse{\left(L_1U_1\right)}L_1\\
+&=\inverse{L_2}L_2U_2\inverse{U_1}\inverse{L_1}L_1&&\text{\acronymref{theorem}{SS}}\\
+&=I_nU_2\inverse{U_1}I_n&&\text{\acronymref{definition}{MI}}\\
+&=U_2\inverse{U_1}&&\text{\acronymref{theorem}{MMIM}}
+\end{align*}
+%
+\acronymref{theorem}{ITMT} tells us that $\inverse{L_2}$ is lower triangular and has 1's as the diagonal entries.  By \acronymref{theorem}{PTMT}, the product $\inverse{L_2}L_1$ is again lower triangular, and it is simple to check (as before) that the diagonal entries of the product are again all 1's.  By the entirely similar process we can conclude that the product $U_2\inverse{U_1}$ is upper triangular.  Because these two products are equal, their common value is a matrix that is both lower triangular {\em and} upper triangular, with all 1's on the diagonal.  The only matrix meeting these three requirements is the identity matrix (\acronymref{definition}{IM}).  So, we have,
+%
+\begin{align*}
+I_n=\inverse{L_2}L_1&\Rightarrow
+L_2=L_1
+&
+I_n=U_2\inverse{U_1}&\Rightarrow
+U_1=U_2
+\end{align*}
+%
+which establishes the uniqueness of the decomposition.
+%
+\end{proof}
+%
+Studying the proofs of some previous theorems will perhaps give you an idea for an approach to computing a triangular decomposition.  In the proof of \acronymref{theorem}{CINM} we augmented a nonsingular matrix with an identity matrix of the same size, and row-reduced until the original matrix became the identity matrix (as we knew in advance would happen, since we knew \acronymref{theorem}{NMRRI}).  \acronymref{theorem}{PEEF} tells us about properties of extended echelon form, and in particular, that $B=JA$, where $A$ is the matrix that begins on the left, and $B$ is the reduced row-echelon form of $A$.  The matrix $J$ is the result on the right side of the augmented matrix, which is the result of applying the same row operations to the identity matrix.  We should recognize now that $J$ is just the product of the elementary matrices (\acronymref{subsection}{DM.EM}) that perform these row operations.  \acronymref{theorem}{ITMT} used the extended echelon form to discern properties of the inverse of a triangular matrix.  \acronymref{theorem}{TD} proves the existence of a triangular decomposition by applying specific row operations, and tracking the relevant elementary row operations.  It is not a great leap to combine these observations into a computational procedure.\par
+%
+To find the triangular decomposition of $A$, augment $A$ with the identity matrix of the same size and call this new $2n\times n$ matrix, $M$.  Perform row operations on $M$ that convert the first $n$ columns to an upper triangular matrix.  Do this using only row operations that add a scalar multiple of one row to another row {\em with higher index} (i.e.\ lower down).  In this way, the last $n$ columns of $M$ will be converted into a lower triangular matrix with 1's on the diagonal (since $M$ has 1's in these locations initially).  We could think of this process as doing about half of the work required to compute the inverse of $A$.  Take the first $n$ columns of the row-equivalent version of $M$ and call this matrix $U$.  
+Take the final $n$ columns of the row-equivalent version of $M$ and call this matrix $L^\prime$.  Then by a proof employing elementary matrices, or a proof similar in spirit to the one used to prove \acronymref{theorem}{PEEF}, we arrive at a result similar to the second assertion of \acronymref{theorem}{PEEF}.  Namely, $U=L^\prime A$.  Multiplication on the left, by the inverse of $L^\prime$, will give us a decomposition of $A$ (which we know to be unique).  Ready? Lets try it.
+%
+%
+\begin{example}{TD4}{Triangular decomposition, size 4}{triangular decomposition!size 4}
+In this example, we will illustrate the process for computing a triangular decomposition, as described in the previous paragraphs.  Consider the nonsingular square matrix $A$ of size 4,
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+ -2 & 6 & -8 & 7 \\
+ -4 & 16 & -14 & 15 \\
+ -6 & 22 & -23 & 26 \\
+ -6 & 26 & -18 & 17
+\end{bmatrix}
+\end{align*}
+%
+We form $M$ by augmenting $A$ with the size 4 identity matrix $I_4$.  We will perform the allowed operations, column by column, only reporting intermediate results as we finish converting each column.  It is easy to determine exactly which row operations we perform, since the final four columns contain a record of each such operation.  We will not verify our hypotheses about the nonsingularity of the $A_k$, since if we do not have these conditions, we will reach a stage where a diagonal entry is zero and we cannot create the row operations we need to zero out the bottom portion of the associated column.  In other words, we can boldly proceed and the necessity of our hypotheses will become apparent.
+%
+\begin{align*}
+M=&
+\begin{bmatrix}
+ -2 & 6 & -8 & 7 & 1 & 0 & 0 & 0 \\
+ -4 & 16 & -14 & 15 & 0 & 1 & 0 & 0 \\
+ -6 & 22 & -23 & 26 & 0 & 0 & 1 & 0 \\
+ -6 & 26 & -18 & 17 & 0 & 0 & 0 & 1
+\end{bmatrix}\\
+%
+\rightarrow&
+\begin{bmatrix}
+ -2 & 6 & -8 & 7 & 1 & 0 & 0 & 0 \\
+ 0 & 4 & 2 & 1 & -2 & 1 & 0 & 0 \\
+ 0 & 4 & 1 & 5 & -3 & 0 & 1 & 0 \\
+ 0 & 8 & 6 & -4 & -3 & 0 & 0 & 1
+\end{bmatrix}\\
+%
+\rightarrow&
+\begin{bmatrix}
+ -2 & 6 & -8 & 7 & 1 & 0 & 0 & 0 \\
+ 0 & 4 & 2 & 1 & -2 & 1 & 0 & 0 \\
+ 0 & 0 & -1 & 4 & -1 & -1 & 1 & 0 \\
+ 0 & 0 & 2 & -6 & 1 & -2 & 0 & 1
+\end{bmatrix}\\
+%
+\rightarrow&
+\begin{bmatrix}
+ -2 & 6 & -8 & 7 & 1 & 0 & 0 & 0 \\
+ 0 & 4 & 2 & 1 & -2 & 1 & 0 & 0 \\
+ 0 & 0 & -1 & 4 & -1 & -1 & 1 & 0 \\
+ 0 & 0 & 0 & 2 & -1 & -4 & 2 & 1
+\end{bmatrix}
+%
+\end{align*}
+%
+So at this point, we have $U$ and $L^\prime$,
+%
+\begin{align*}
+%
+U&=
+\begin{bmatrix}
+ -2 & 6 & -8 & 7 \\
+ 0 & 4 & 2 & 1 \\
+ 0 & 0 & -1 & 4  \\
+ 0 & 0 & 0 & 2 
+\end{bmatrix}
+&
+L^\prime&=
+\begin{bmatrix}
+ 1 & 0 & 0 & 0 \\
+ -2 & 1 & 0 & 0 \\
+ -1 & -1 & 1 & 0\\
+ -1 & -4 & 2 & 1
+\end{bmatrix}
+%
+\end{align*}
+%
+Then by whatever procedure we like (such as \acronymref{theorem}{CINM}), we find
+%
+\begin{align*}
+L&=\inverse{\left(L^\prime\right)}=
+\begin{bmatrix}
+ 1 & 0 & 0 & 0 \\
+ 2 & 1 & 0 & 0 \\
+ 3 & 1 & 1 & 0 \\
+ 3 & 2 & -2 & 1
+\end{bmatrix}
+\end{align*}
+%
+It is instructive to verify that indeed $LU=A$.
+%
+\end{example}
+%
+\subsect{TDSSE}{Triangular Decomposition and Solving Systems of Equations}
+%
+In this section we give an explanation of why you might be interested in a triangular decomposition for a matrix.  Many of the computational problems in linear algebra revolve around solving large systems of equations, or nearly equivalently, finding inverses of large matrices.  Suppose we have a system of equations with coefficient matrix $A$ and vector of constants $\vect{b}$, and suppose further that $A$ has the triangular decomposition $A=LU$.\par
+%
+Let $\vect{y}$ be the solution to the linear system $\linearsystem{L}{\vect{b}}$, so that by \acronymref{theorem}{SLEMM}, we have $L\vect{y}=\vect{b}$.  Notice that since $L$ is nonsingular, this solution is unique, and the form of $L$ makes it trivial to solve the system.  The first component of $\vect{y}$ is determined easily, and we can continue on through determining the components of $\vect{y}$, without even ever dividing.  Now, with $\vect{y}$ in hand, consider the linear system, $\linearsystem{U}{\vect{y}}$.  Let $\vect{x}$ be the unique solution to this system, so by \acronymref{theorem}{SLEMM} we have $U\vect{x}=\vect{y}$.  Notice that a system of equations with $U$ as a coefficient matrix is also straightforward to solve, though we will compute the bottom entries of $\vect{x}$ first, and we will need to divide.  The upshot of all this is that $\vect{x}$ is a solution to $\linearsystem{A}{\vect{b}}$, as we now show,
+%
+\begin{align*}
+A\vect{x}
+&=LU\vect{x}
+=L\left(U\vect{x}\right)
+=L\vect{y}
+=\vect{b}
+\end{align*}
+%
+An application of \acronymref{theorem}{SLEMM} demonstrates that $\vect{x}$ is a solution to $\linearsystem{A}{\vect{b}}$.
+%
+\begin{example}{TDSSE}{Triangular decomposition solves a system of equations}{triangular decomposition!solving systems of equations}
+Here we illustrate the previous discussion, recycling the decomposition found previously in \acronymref{example}{TD4}.  Consider the linear system $\linearsystem{A}{\vect{b}}$ with 
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+ -2 & 6 & -8 & 7 \\
+ -4 & 16 & -14 & 15 \\
+ -6 & 22 & -23 & 26 \\
+ -6 & 26 & -18 & 17
+\end{bmatrix}
+&
+\vect{b}
+&=\colvector{-10\\-2\\-1\\-8}
+\end{align*}
+%
+First we solve the system $\linearsystem{L}{\vect{b}}$ (see \acronymref{example}{TD4} for $L$),
+%
+\begin{align*}
+y_1 &= -10\\ 
+2y_1 + y_2 &= -2\\ 
+3y_1 + y_2 + y_3 &= -1\\ 
+3y_1 + 2y_2 - 2y_3 + y_4 &= -8
+\end{align*}
+%
+Then
+%
+\begin{align*}
+y_1 &= -10\\ 
+y_2 &= -2-2y_1=-2-2(-10)=18\\ 
+y_3 &= -1-3y_1 - y_2 =-1-3(-10)-18=11\\ 
+y_4 &= -8-3y_1 - 2y_2 + 2y_3 = -8-3(-10)-2(18)+2(11)=8
+\end{align*}
+%
+so
+%
+\begin{align*}
+\vect{y}&=\colvector{-10\\18\\11\\8}
+\end{align*}
+%
+Then we solve the system $\linearsystem{U}{\vect{y}}$ (see \acronymref{example}{TD4} for $U$),
+%
+\begin{align*}
+-2x_1 + 6x_2 - 8x_3 + 7x_4 &=-10\\
+4x_2 + 2x_3 +x_4 &=18\\
+-x_3 + 4x_4 &= 11\\
+2x_4 &=8
+\end{align*}
+%
+Then
+%
+\begin{align*}
+x_4&=8/2=4 \\
+x_3 &= \left(11-4x_4\right)/(-1)=\left(11-4(4)\right)/(-1)=5\\
+x_2 &= \left(18-2x_3-x_4\right)/4= \left(18-2(5)-4\right)/4=1\\
+x_1 &= \left(-10-6x_2+8x_3-7x_4\right)/(-2)=\left(-10-6(1)+8(5)-7(4)\right)/(-2)=2
+\end{align*}
+%
+And so
+%
+\begin{align*}
+\vect{x}&=\colvector{4\\5\\1\\2}
+\end{align*}
+%
+is the solution to $\linearsystem{U}{\vect{y}}$ and consequently is the unique solution to $\linearsystem{A}{\vect{b}}$, as you can easily verify.
+%
+\end{example}
+%
+\subsect{CTD}{Computing Triangular Decompositions}
+%
+It would be a simple matter to adjust the algorithm for converting a matrix to reduced row-echelon form and obtain an algorithm to compute the triangular decomposition of the matrix, along the lines of \acronymref{example}{TD4} and the discussion preceding this example.  However, it is possible to obtain relatively simple formulas for the entries of the decomposition, and if computed in the proper order, an implementation will be straightforward.  We will state the result as a theorem and then give an example of its use.
+%
+\begin{theorem}{TDEE}{Triangular Decomposition, Entry by Entry}{triangular decomposition!entry by entry}
+Suppose that $A$ is a squarematrix of size $n$ with a triangular decomposition $A=LU$, where $L$ is lower triangular with diagonal entries all equal to 1, and $U$ is upper triangular.  Then
+%
+\begin{align*}
+\matrixentry{U}{ij}&=
+\matrixentry{A}{ij}-\sum_{k=1}^{i-1}\matrixentry{L}{ik}\matrixentry{U}{kj}
+&&1\leq i\leq j\leq n\\
+\matrixentry{L}{ij}&=
+\frac{1}{\matrixentry{U}{jj}}
+\left(\matrixentry{A}{ij}-\sum_{k=1}^{j-1}\matrixentry{L}{ik}\matrixentry{U}{kj}\right)
+&&1\leq j<i\leq n
+\end{align*}
+%
+\end{theorem}
+%
+\begin{proof}
+Consider a single scalar product of an entry of $L$ with an entry of $U$ of the form $\matrixentry{L}{ik}\matrixentry{U}{kj}$.  By \acronymref{definition}{LTM}, if $k>i$ then $\matrixentry{L}{ik}=0$, while \acronymref{definition}{UTM}, says that if $k>j$ then $\matrixentry{U}{kj}=0$.  So we can combine these two facts to assert that if $k>\min(i,\,j)$, $\matrixentry{L}{ik}\matrixentry{U}{kj}=0$ since at least one term of the product will be zero.  Employing this observation,
+%
+\begin{align*}
+\matrixentry{A}{ij}
+&=\sum_{k=1}^{n}\matrixentry{L}{ik}\matrixentry{U}{kj}&&\text{\acronymref{theorem}{EMP}}\\
+&=\sum_{k=1}^{\min(i,\,j)}\matrixentry{L}{ik}\matrixentry{U}{kj}
+\end{align*}
+%
+Now, assume that $1\leq i\leq j\leq n$,
+%
+\begin{align*}
+\matrixentry{U}{ij}
+&=\matrixentry{A}{ij}-\matrixentry{A}{ij}+\matrixentry{U}{ij}\\
+&=\matrixentry{A}{ij}-\sum_{k=1}^{\min(i,\,j)}\matrixentry{L}{ik}\matrixentry{U}{kj}+\matrixentry{U}{ij}\\
+&=\matrixentry{A}{ij}-\sum_{k=1}^{i}\matrixentry{L}{ik}\matrixentry{U}{kj}+\matrixentry{U}{ij}\\
+&=\matrixentry{A}{ij}-\sum_{k=1}^{i-1}\matrixentry{L}{ik}\matrixentry{U}{kj}-\matrixentry{L}{ii}\matrixentry{U}{ij}+\matrixentry{U}{ij}\\
+&=\matrixentry{A}{ij}-\sum_{k=1}^{i-1}\matrixentry{L}{ik}\matrixentry{U}{kj}-\matrixentry{U}{ij}+\matrixentry{U}{ij}\\
+&=\matrixentry{A}{ij}-\sum_{k=1}^{i-1}\matrixentry{L}{ik}\matrixentry{U}{kj}
+\end{align*}
+%
+And for $1\leq j<i\leq n$,
+%
+\begin{align*}
+\matrixentry{L}{ij}
+&=
+\frac{1}{\matrixentry{U}{jj}}
+\left(\matrixentry{L}{ij}\matrixentry{U}{jj}\right)\\
+&=
+\frac{1}{\matrixentry{U}{jj}}
+\left(\matrixentry{A}{ij}-\matrixentry{A}{ij}+\matrixentry{L}{ij}\matrixentry{U}{jj}\right)\\
+&=
+\frac{1}{\matrixentry{U}{jj}}
+\left(\matrixentry{A}{ij}-\sum_{k=1}^{\min(i,\,j)}\matrixentry{L}{ik}\matrixentry{U}{kj}+\matrixentry{L}{ij}\matrixentry{U}{jj}\right)\\
+&=
+\frac{1}{\matrixentry{U}{jj}}
+\left(\matrixentry{A}{ij}-\sum_{k=1}^{j}\matrixentry{L}{ik}\matrixentry{U}{kj}+\matrixentry{L}{ij}\matrixentry{U}{jj}\right)\\
+&=
+\frac{1}{\matrixentry{U}{jj}}
+\left(\matrixentry{A}{ij}-\sum_{k=1}^{j-1}\matrixentry{L}{ik}\matrixentry{U}{kj}-\matrixentry{L}{ij}\matrixentry{U}{jj}+\matrixentry{L}{ij}\matrixentry{U}{jj}\right)\\
+&=
+\frac{1}{\matrixentry{U}{jj}}
+\left(\matrixentry{A}{ij}-\sum_{k=1}^{j-1}\matrixentry{L}{ik}\matrixentry{U}{kj}\right)
+%
+\end{align*}
+%
+\end{proof}
+%
+At first glance, these formulas may look exceedingly complex.  Upon closer examination, it looks even worse.  We have expressions for entries of $U$ that depend on other entries of $U$ and also on entries of $L$.  But then the formula for entries of $L$ depend on entries from $L$ and entries from $U$.  Do these formula have circular dependencies?  Or perhaps equivalently, how do we get started?  The key is to be organized about the computations and employ these two (similar) formulas in a specific order.  First compute the first row of $L$, followed by the first column of $U$.  Then the second row of $L$, followed by the second column of $U$.  And so on.  In this way, all of the values required for each new entry will have already been computed previously.\par
+%
+Of course, the formula for entries of $L$ require division by diagonal entries of $U$.  These entries might be zero, but in this case $A$ is nonsingular and does not have a triangular decomposition.  So we need not check the hypothesis carefully and can launch into the arithmetic dictated by the formulas, confident that we will be reminded when a decomposition is not possible.  Note that these formula give us all of the values that we need for the decomposition, since we require that $L$ has 1's on the diagonal.  If we replace the 1's on the diagonal of $L$ by zeros, and add the matrix $U$, we get an $n\times n$ matrix containing all the information we need to resurrect the triangular decomposition.  This is mostly a notational convenience, but it is a frequent way of presenting the information.  We'll employ it in the next example.
+%
+%
+\begin{example}{TDEE6}{Triangular decomposition, entry by entry, size 6}{triangular decomposition! entry by entry, size 6}
+%
+We illustrate the application of the formulas in \acronymref{theorem}{TDEE} for the $6\times 6$ matrix $A$.  
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+ 3 & 3 & -3 & -2 & -1 & 0 \\
+ -6 & -4 & 5 & 2 & 4 & 2 \\
+ 9 & 9 & -7 & -7 & 0 & 1 \\
+ -6 & -10 & 8 & 10 & -1 & -7 \\
+ 6 & 4 & -9 & -2 & -10 & 1 \\
+ 9 & 3 & -12 & -3 & -21 & -2
+\end{bmatrix}
+\end{align*}
+%
+Using the notational convenience of packaging the two triangular matrices into one matrix, and using the ordering of the computations mentioned above, we display the results after computing a single row and column of each of the two triangular matrices.
+%
+\begin{align*}
+%
+&
+\begin{bmatrix}
+3&3&-3&-2&-1&0\\
+ -2  \\
+ 3  \\
+ -2  \\
+ 2  \\
+ 3
+\end{bmatrix}
+%
+&&
+\begin{bmatrix}
+ 3 & 3 & -3 & -2 & -1 & 0 \\
+ -2 & 2 & -1 & -2 & 2 & 2 \\
+ 3 & 0  \\
+ -2 & -2  \\
+ 2 & -1  \\
+ 3 & -3 
+\end{bmatrix}\\
+%%
+%%
+&
+\begin{bmatrix}
+ 3 & 3 & -3 & -2 & -1 & 0 \\
+ -2 & 2 & -1 & -2 & 2 & 2 \\
+ 3 & 0 & 2 & -1 & 3 & 1 \\
+ -2 & -2 & 0  \\
+ 2 & -1 & -2  \\
+ 3 & -3 & -3 
+\end{bmatrix}
+%
+&&
+\begin{bmatrix}
+ 3 & 3 & -3 & -2 & -1 & 0 \\
+ -2 & 2 & -1 & -2 & 2 & 2 \\
+ 3 & 0 & 2 & -1 & 3 & 1 \\
+ -2 & -2 & 0 & 2 & 1 & -3 \\
+ 2 & -1 & -2 & -1  \\
+ 3 & -3 & -3 & -3 
+\end{bmatrix}\\
+%%
+%%
+&
+\begin{bmatrix}
+ 3 & 3 & -3 & -2 & -1 & 0 \\
+ -2 & 2 & -1 & -2 & 2 & 2 \\
+ 3 & 0 & 2 & -1 & 3 & 1 \\
+ -2 & -2 & 0 & 2 & 1 & -3 \\
+ 2 & -1 & -2 & -1 & 1 & 2 \\
+ 3 & -3 & -3 & -3 & 0 
+\end{bmatrix}
+&&
+\begin{bmatrix}
+ 3 & 3 & -3 & -2 & -1 & 0 \\
+ -2 & 2 & -1 & -2 & 2 & 2 \\
+ 3 & 0 & 2 & -1 & 3 & 1 \\
+ -2 & -2 & 0 & 2 & 1 & -3 \\
+ 2 & -1 & -2 & -1 & 1 & 2 \\
+ 3 & -3 & -3 & -3 & 0 & -2
+\end{bmatrix}
+%
+\end{align*}
+%
+Splitting out the pieces of this matrix, we have the decomposition,
+%
+\begin{align*}
+L&=
+\begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 & 0 \\
+ -2 & 1 & 0 & 0 & 0 & 0 \\
+ 3 & 0 & 1 & 0 & 0 & 0 \\
+ -2 & -2 & 0 & 1 & 0 & 0 \\
+ 2 & -1 & -2 & -1 & 1 & 0 \\
+ 3 & -3 & -3 & -3 & 0 & 1
+\end{bmatrix}
+&
+U&=
+\begin{bmatrix}
+ 3 & 3 & -3 & -2 & -1 & 0 \\
+ 0 & 2 & -1 & -2 & 2 & 2 \\
+ 0 & 0 & 2 & -1 & 3 & 1 \\
+ 0 & 0 & 0 & 2 & 1 & -3 \\
+ 0 & 0 & 0 & 0 & 1 & 2 \\
+ 0 & 0 & 0 & 0 & 0 & -2
+\end{bmatrix}
+%
+\end{align*}
+%
+\end{example}
+%
+The hypotheses of \acronymref{theorem}{TD} can be weakened slightly to include matrices where not every $A_k$ is nonsingular.  The introduces a rearrangement of the rows and columns of $A$ to force as many as possible of the smaller submatrices to be nonsingular.  Then permutation matrices also enter into the decomposition.  We will not present the details here, but instead suggest consulting a more advanced text on matrix analysis.
+%
+%  End  TD.tex
+  
+  
+

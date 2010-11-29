@@ -1,0 +1,353 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section TSS
+%%  Types of Solution Sets
+%%
+%%%%%%%%%%%
+%
+We will now be more careful about analyzing the reduced row-echelon form derived from the  augmented matrix of a system of linear equations.    In particular, we will see how to systematically handle the situation when we have infinitely many solutions to a system, and we will prove that every system of linear equations has either zero, one or infinitely many solutions.  With these tools, we will be able to solve any system by a well-described method.
+%
+\subsect{CS}{Consistent Systems}
+%
+The computer scientist Donald Knuth said, ``Science is what we understand well enough to explain to a computer. Art is everything else.''  In this section we'll remove solving systems of equations from the realm of art, and into the realm of science.  We begin with a definition.
+%
+\begin{definition}{CS}{Consistent System}{consistent system}
+A system of linear equations is \define{consistent} if it has at least one solution.  Otherwise, the system is called \define{inconsistent}.
+\end{definition}
+%
+We will want to first recognize when a system is inconsistent or consistent, and in the case of consistent systems we will be able to further refine the types of solutions possible.  We will do this by analyzing the reduced row-echelon form of a matrix, using the value of $r$, and the sets of column indices, $D$ and $F$, first defined back in \acronymref{definition}{RREF}.\par
+%
+Use of the notation for the elements of $D$ and $F$ can be a bit confusing, since we have subscripted variables that are in turn equal to integers used to index the matrix.  However, many questions about matrices and systems of equations can be answered once we know $r$, $D$ and $F$.  The choice of the letters $D$ and $F$ refer to our upcoming definition of dependent and free variables (\acronymref{definition}{IDV}).  An example will help us begin to get comfortable with this aspect of reduced row-echelon form.
+%
+\begin{example}{RREFN}{Reduced row-echelon form notation}{reduced row-echelon form!notation}
+For the $5\times 9$ matrix
+\begin{align*}
+B&=
+\begin{bmatrix}
+\leading{1}&5&0&0&2&8&0&5&-1\\
+0&0&\leading{1}&0&4&7&0&2&0\\
+0&0&0&\leading{1}&3&9&0&3&-6\\
+0&0&0&0&0&0&\leading{1}&4&2\\
+0&0&0&0&0&0&0&0&0
+\end{bmatrix}
+\end{align*}
+in reduced row-echelon form we have 
+\begin{align*}
+r&=4\\
+d_1&=1
+&
+d_2&=3
+&
+d_3&=4
+&
+d_4&=7\\
+f_1&=2
+&
+f_2&=5
+&
+f_3&=6
+&
+f_4&=8
+&
+f_5&=9
+\end{align*}
+Notice that the sets 
+%
+\begin{align*}
+D&=\set{d_1,\,d_2,\,d_3,\,d_4}=\set{1,\,3,\,4,\,7}
+&
+F=\set{f_1,\,f_2,\,f_3,\,f_4,\,f_5}=\set{2,\,5,\,6,\,8,\,9}
+\end{align*}
+%
+have nothing in common and together account for all of the columns of $B$ (we say it is a \define{partition} of the set of column indices).
+\end{example}
+%
+The number $r$ is the single most important piece of information we can get from the reduced row-echelon form of a matrix.  It is defined as the number of nonzero rows, but since each nonzero row has a leading 1, it is also the number of leading 1's present.   For each leading 1, we have a pivot column, so $r$ is also the number of pivot columns.  Repeating ourselves, $r$ is the number of nonzero rows, the number of leading 1's {\em and} the number of pivot columns.  Across different situations, each of these interpretations of the meaning of $r$ will be useful.\par
+%
+Before proving some theorems about the possibilities for solution sets to systems of equations, let's analyze one particular system with an infinite solution set very carefully as an example.  We'll use this technique frequently, and shortly we'll refine it slightly.\par
+%
+Archetypes I and J are both fairly large for doing computations by hand (though not impossibly large).  Their properties are very similar, so we will frequently analyze the situation in Archetype I, and leave you the joy of analyzing Archetype J yourself.  So work through Archetype I with the text,  by hand and/or with a computer, and then tackle Archetype J yourself (and check your results with those listed).  Notice too that the archetypes describing systems of equations each lists the values of $r$, $D$ and $F$.  Here we go\dots
+%
+\begin{example}{ISSI}{Describing infinite solution sets, Archetype I}{infinite solution set}
+\acronymref{archetype}{I} is the system of $m=4$ equations in $n=7$ variables.
+%
+\archetypepart{I}{definition}
+%
+This system has a $4\times 8$ augmented matrix that is row-equivalent to the following matrix (check this!), and which is in reduced row-echelon form (the existence of this matrix is guaranteed by \acronymref{theorem}{REMEF} and its uniqueness is guaranteed by \acronymref{theorem}{RREFU}),
+%
+\begin{align*}
+\archetypepart{I}{augmentedreduced}
+\end{align*}
+%
+So we find that $r=3$ and
+%
+\begin{align*}
+D&=\set{d_1,\,d_2,\,d_3}=\set{1,\,3,\,4}
+&
+F&=\set{f_1,\,f_2,\,f_3,\,f_4,\,f_5}=\set{2,\,5,\,6,\,7,\,8}
+\end{align*}
+Let $i$ denote one of the $r=3$ non-zero rows, and then we see that we can solve the corresponding equation represented by this row for the variable  $x_{d_i}$ and write it as a linear function of the variables $x_{f_1},\,x_{f_2},\,x_{f_3},\,x_{f_4}$ (notice that $f_5=8$ does not reference a variable).  We'll do this now, but you can already see how the subscripts upon subscripts takes some getting used to.
+%
+\begin{align*}
+(i=1)& & x_{d_1}&=x_1=4-4x_2-2x_5-x_6+3x_7\\
+(i=2)& & x_{d_2}&=x_3=2-x_5+3x_6-5x_7\\
+(i=3)& & x_{d_3}&=x_4=1-2x_5+6x_6-6x_7
+\end{align*}
+%
+Each element of the set $F=\set{f_1,\,f_2,\,f_3,\,f_4,\,f_5}=\set{2,\,5,\,6,\,7,\,8}$ is the index of a variable, except for $f_5=8$.  We refer to $x_{f_1}=x_2$, $x_{f_2}=x_5$, $x_{f_3}=x_6$ and $x_{f_4}=x_7$ as ``free'' (or ``independent'') variables since they are allowed to assume any possible combination of values that we can imagine and we can continue on to build a solution to the system by solving individual equations for the values of the other (``dependent'') variables.\par
+%
+Each element of the set $D=\set{d_1,\,d_2,\,d_3}=\set{1,\,3,\,4}$ is the index of a variable.  We refer to the variables $x_{d_1}=x_1$, $x_{d_2}=x_3$ and $x_{d_3}=x_4$ as  ``dependent'' variables since they {\em depend} on the {\em independent} variables.  More precisely, for each possible choice of values for the independent variables we get {\em exactly one} set of values for the dependent variables that combine to form a solution of the system.\par
+%
+To express the solutions as a set, we write
+\begin{equation*}
+\setparts{
+\colvector{
+4-4x_2-2x_5-x_6+3x_7\\
+x_2\\
+2-x_5+3x_6-5x_7\\
+1-2x_5+6x_6-6x_7\\
+x_5\\
+x_6\\
+x_7
+}
+}{
+x_2,\,x_5,\,x_6,\,x_7\in\complex{\null}
+}
+\end{equation*}
+%
+The condition that $x_2,\,x_5,\,x_6,\,x_7\in\complex{\null}$ is how we specify that the variables $x_2,\,x_5,\,x_6,\,x_7$ are ``free'' to assume any possible values.\par
+%
+This systematic approach to solving a system of equations will allow us to create a precise description of the solution set for any consistent system once we have found the reduced row-echelon form of the augmented matrix.  It will work just as well when the set of free variables is empty and we get just a single solution.  And we could program a computer to do it!  Now have a whack at Archetype J (\acronymref{exercise}{TSS.T10}), mimicking the discussion in this example.  We'll still be here when you get back.
+\end{example}
+%
+Using the reduced row-echelon form of the augmented matrix of a system of equations to determine the nature of the solution set of the system is a very key idea.  So let's look at one more example like the last one.  But first a definition, and then the example.   We mix our metaphors a bit when we call variables free versus dependent.  Maybe we should call dependent variables ``enslaved''?
+%
+\begin{definition}{IDV}{Independent and Dependent Variables}{independent, dependent variables}
+Suppose $A$ is the augmented matrix of a consistent system of linear equations and $B$ is a row-equivalent matrix in reduced row-echelon form.  Suppose $j$ is the index of a column of $B$ that contains the leading 1 for some row (i.e.\ column $j$ is a pivot column).  Then the variable $x_j$ is \define{dependent}.  A variable that is not dependent is called \define{independent} or \define{free}.
+\end{definition}
+%
+If you studied this definition carefully, you might wonder what to do if the system has $n$ variables and column $n+1$ is a pivot column?  We will see shortly, by \acronymref{theorem}{RCLS}, that this never happens for a consistent system.
+
+\begin{example}{FDV}{Free and dependent variables}{free, independent variables}
+Consider the system of five equations in five variables, 
+%
+\begin{align*}
+ x_1  - x_2  -2 x_3 +  x_4 + 11 x_5 &= 13 \\
+x_1 - x_2 +  x_3+  x_4 + 5 x_5 &= 16 \\
+ 2 x_1  -2 x_2       +  x_4 + 10 x_5 &= 21 \\
+ 2 x_1  -2 x_2  - x_3 + 3 x_4 + 20 x_5 &= 38 \\
+ 2 x_1  -2 x_ 2 +  x_3 +  x_4 + 8 x_ 5&= 22
+\end{align*}
+%
+whose augmented matrix row-reduces to
+%
+\begin{equation*}
+\begin{bmatrix}
+ \leading{1} & -1 & 0 & 0 & 3 & 6 \\
+ 0 & 0 & \leading{1} & 0 & -2 & 1 \\
+ 0 & 0 & 0 & \leading{1} & 4 & 9 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+There are leading 1's in columns 1, 3 and 4, so $D=\set{1,\,3,\,4}$.  From this we know that the variables $x_1$, $x_3$ and $x_4$ will be dependent variables, and each of the $r=3$ nonzero rows of the row-reduced matrix will yield an expression for one of these three variables.  The set $F$ is all the remaining column indices, $F=\set{2,\,5,\,6}$.  That $6\in F$ refers to the column originating from the vector of constants, but the remaining indices in $F$ will correspond to free variables, so $x_2$ and $x_5$ (the remaining variables) are our free variables.  The resulting three equations that describe our solution set are then,
+%
+\begin{align*}
+(x_{d_1}=x_1)& & x_1&=6+x_2-3x_5\\
+(x_{d_2}=x_3)& & x_3&=1+2x_5\\
+(x_{d_3}=x_4)& & x_4&=9-4x_5
+\end{align*}
+%
+Make sure you understand where these three equations came from, and notice how the location of the leading 1's determined the variables on the left-hand side of each equation.  We can compactly describe the solution set as,
+%
+\begin{equation*}
+S=
+\setparts{
+\colvector{6+x_2-3x_5\\x_2\\1+2x_5\\9-4x_5\\x_5}
+}{x_2,\,x_5\in\complex{\null}}
+\end{equation*}
+%
+Notice how we express the freedom for $x_2$ and $x_5$: $x_2,\,x_5\in\complex{\null}$.
+%
+\end{example}
+%
+Sets are an important part of algebra, and we've seen a few already.  Being comfortable with sets is important for understanding and writing proofs.  If you haven't already, pay a visit now to \acronymref{section}{SET}.\par
+%
+We can now use the values of $m$, $n$, $r$, and the independent and dependent variables to categorize the solution sets for linear systems through a sequence of theorems.  
+%
+\techniqueinline{E}{Equivalences}{equivalence statements}
+{Through the following sequence of proofs, you will want to consult three proof techniques.}{See \acronymref{technique}{E}.}
+\techniqueinline{N}{Negation}{negation of statements}
+{\relax}{See \acronymref{technique}{N}.}
+\techniqueinline{CP}{Contrapositives}{contrapositive}
+{\relax}{See \acronymref{technique}{CP}.}\par
+%
+First we have an important theorem that explores the distinction between consistent and inconsistent linear systems.
+%
+\begin{theorem}{RCLS}{Recognizing Consistency of a Linear System}{linear system!consistent}
+\index{consistent linear system}
+Suppose $A$ is the augmented matrix of a system of linear equations with $n$ variables.  Suppose also that $B$ is a row-equivalent matrix in reduced row-echelon form with $r$ nonzero rows.  Then the system of equations is inconsistent if and only if the leading 1 of row $r$ is located in column $n+1$ of $B$.
+\end{theorem}
+%
+\begin{proof}
+($\Leftarrow$)  The first half of the proof begins with the assumption that the leading 1 of row $r$ is located in column $n+1$ of $B$.  Then row $r$ of $B$ begins with $n$ consecutive zeros, finishing with the leading 1.  This is a representation of the equation $0=1$, which is false.  Since this equation is false for any collection of values we might choose for the variables, there are no solutions for the system of equations, and it is inconsistent.\par
+%
+($\Rightarrow$)  For the second half of the proof, we wish to show that if we assume the system is inconsistent, then the final leading 1 is located in the last column.  But instead of proving this directly, we'll form the logically equivalent statement that is the contrapositive, and prove that instead (see \acronymref{technique}{CP}).  Turning the implication around, and negating each portion, we arrive at the logically equivalent statement:  If the leading 1 of row $r$ is not in column $n+1$, then the system of equations is consistent.\par
+%
+If the  leading 1 for row $r$ is located somewhere in columns 1 through $n$, then {\em every} preceding row's leading 1 is also located in columns 1 through $n$.  In other words, since the last leading 1 is not in the last column, no leading 1 for any row is in the last column, due to the echelon layout of the leading 1's (\acronymref{definition}{RREF}).  We will now construct a solution to the system by setting each dependent variable to the entry of the final column for the row with the corresponding leading 1, and setting each free variable to zero.  That sentence is pretty vague, so let's be more precise.  Using our notation for the sets $D$ and $F$ from the reduced row-echelon form (\acronymref{notation}{RREFA}):
+%
+\begin{align*}
+x_{d_i}&=\matrixentry{B}{i,n+1},\quad 1\leq i\leq r
+&
+x_{f_i}&=0,\quad 1\leq i\leq n-r
+\end{align*}
+%
+These values for the variables make the equations represented by the first $r$ rows of $B$ all true (convince yourself of this).  Rows numbered greater than $r$ (if any) are all zero rows, hence represent the equation $0=0$ and are also all true.  We have now identified one solution to the system represented by $B$, and hence a solution to the system represented by $A$ (\acronymref{theorem}{REMES}).  So we can say the system is consistent (\acronymref{definition}{CS}).
+\end{proof}
+%
+The beauty of this theorem being an equivalence is that we can unequivocally test to see if a system is consistent or inconsistent by looking at just a single entry of the reduced row-echelon form matrix.  We could program a computer to do it!\par
+%
+Notice that for a consistent system the row-reduced augmented matrix has $n+1\in F$, so the largest element of $F$ does not refer to a variable.  Also, for an inconsistent system, $n+1\in D$, and it then does not make much sense to discuss whether or not variables are free or dependent since there is no solution.  Take a look back at \acronymref{definition}{IDV} and see why we did not need to consider the possibility of referencing $x_{n+1}$ as a dependent variable.\par
+%
+With the characterization of \acronymref{theorem}{RCLS}, we can explore the relationships between $r$ and $n$ in light of the consistency of a system of equations.  First, a situation where we can quickly conclude the inconsistency of a system.
+%
+\begin{theorem}{ISRN}{Inconsistent Systems, $r$ and $n$}{inconsistent linear systems}
+Suppose $A$ is the augmented matrix of a system of linear equations in $n$ variables.  Suppose also that $B$ is a row-equivalent matrix in reduced row-echelon form with $r$ rows that are not completely zeros.  If $r=n+1$, then the system of equations is inconsistent.
+\end{theorem}
+%
+\begin{proof}
+If  $r=n+1$, then $D=\set{1,\,2,\,3,\,\ldots,\,n,\,n+1}$ and every column of $B$ contains a leading 1 and is a pivot column.  In particular, the entry of column $n+1$ for row $r=n+1$ is a leading 1.  \acronymref{theorem}{RCLS} then says that the system is inconsistent.
+\end{proof}
+%
+\techniqueinline{CV}{Converses}{converse}
+{Do not confuse \acronymref{theorem}{ISRN} with its converse!}
+{Go check out \acronymref{technique}{CV} right now.}
+\par
+%
+Next, if a system is consistent, we can distinguish between a unique solution and infinitely many solutions, and furthermore, we recognize that these are the only two possibilities.
+%
+\begin{theorem}{CSRN}{Consistent Systems, $r$ and $n$}{consistent linear systems}
+Suppose $A$ is the augmented matrix of a {\em consistent} system of linear equations with $n$ variables.  Suppose also that $B$ is a row-equivalent matrix in reduced row-echelon form with $r$ rows that are not zero rows.  Then $r\leq n$.  If $r=n$, then the system has a unique solution, and if $r<n$, then the system has infinitely many solutions.
+\end{theorem}
+%
+\begin{proof}
+This theorem contains three implications that we must establish.  Notice first that $B$ has $n+1$ columns, so there can be at most $n+1$ pivot columns, i.e.\ $r\leq n+1$.  If $r=n+1$, then \acronymref{theorem}{ISRN} tells us that the system is inconsistent, contrary to our hypothesis. We are left with $r\leq n$.\par
+%
+When $r=n$, we find $n-r=0$ free variables (i.e.\ $F=\set{n+1}$) and any solution must equal the unique solution given by the first $n$ entries of column $n+1$ of $B$.\par
+%
+When $r<n$, we have $n-r>0$ free variables, corresponding to columns of $B$ without a leading 1, excepting the final column, which also does not contain a leading 1 by \acronymref{theorem}{RCLS}.  By varying the values of the free variables suitably, we can demonstrate infinitely many solutions.
+\end{proof}
+%
+\subsect{FV}{Free Variables}
+%
+The next theorem simply states a conclusion from the final paragraph of the previous proof, allowing us to state explicitly the number of free variables for a consistent system.
+%
+\begin{theorem}{FVCS}{Free Variables for Consistent Systems}{free variables, number}
+Suppose $A$ is the augmented matrix of a {\em consistent} system of linear equations with $n$ variables.  Suppose also that $B$ is a row-equivalent matrix in reduced row-echelon form with $r$ rows that are not completely zeros.  Then the solution set can be described with $n-r$ free variables.
+\end{theorem}
+%
+\begin{proof}
+See the proof of \acronymref{theorem}{CSRN}.
+\end{proof}
+%
+\begin{example}{CFV}{Counting free variables}{free variables}
+For each archetype that is a system of equations, the values of $n$ and $r$ are listed.  Many also contain a few sample solutions.  We can use this information profitably, as illustrated by four examples.
+%
+\begin{enumerate}
+%
+\item \acronymref{archetype}{A} has $n=3$ and $r=2$.  It can be seen to be consistent by the sample solutions given.  Its solution set then has $n-r=1$ free variables, and therefore will be infinite.
+%
+\item \acronymref{archetype}{B} has $n=3$ and $r=3$.  It can be seen to be consistent by the single sample solution given.  Its solution set can then be described with $n-r=0$ free variables, and therefore will have just the single solution.
+%
+\item \acronymref{archetype}{H} has $n=2$ and $r=3$.  In this case, $r=n+1$, so \acronymref{theorem}{ISRN} says the system is inconsistent.  We should not try to apply \acronymref{theorem}{FVCS} to count free variables, since the theorem only applies to consistent systems. (What would happen if you did?)
+%
+\item \acronymref{archetype}{E} has $n=4$ and $r=3$.  However, by looking at the reduced row-echelon form of the augmented matrix, we find a leading 1 in row 3, column 5.  By \acronymref{theorem}{RCLS} we recognize the system as inconsistent.  (Why doesn't this example contradict \acronymref{theorem}{ISRN}?)
+%
+\end{enumerate}
+%
+\end{example}
+%
+We have accomplished a lot so far, but our main goal has been the following theorem, which is now very simple to prove.  The proof is so simple that we ought to call it a corollary, but the result is important enough that it deserves to be called a theorem.    (See \acronymref{technique}{LC}.)  Notice that this theorem was presaged first by \acronymref{example}{TTS} and further foreshadowed by other examples.
+%
+\begin{theorem}{PSSLS}{Possible Solution Sets for Linear Systems}{solution sets!possibilities}
+A system of linear equations has no solutions, a unique solution or infinitely many solutions.
+\end{theorem}
+%
+\begin{proof}
+By its definition, a system is either inconsistent or consistent (\acronymref{definition}{CS}).  The first case describes systems with no solutions.  For consistent systems, we have the remaining two possibilities as guaranteed by, and described in, \acronymref{theorem}{CSRN}.
+\end{proof}
+%
+Here is a diagram that consolidates several of our theorems from this section, and which is of practical use when you analyze systems of equations.
+%
+\diagram{DTSLS}{Decision Tree for Solving Linear Systems}
+%
+We have one more theorem to round out our set of tools for determining solution sets to systems of linear equations.
+%
+\begin{theorem}{CMVEI}{Consistent, More Variables than Equations, Infinite solutions}{more variables than equations}
+Suppose a consistent system of linear equations has $m$ equations in $n$ variables.  If $n>m$, then the system has infinitely many solutions.
+\end{theorem}
+%
+\begin{proof}
+Suppose that the augmented matrix of the system of equations is row-equivalent to $B$, a matrix in reduced row-echelon form with $r$ nonzero rows.
+Because $B$ has $m$ rows in total, the number that are nonzero rows is less.  In other words, $r\leq m$.
+Follow this with the hypothesis that $n>m$ and we find that the system has a solution set described by at least one free variable because
+%
+\begin{equation*}
+n-r\geq n-m>0.
+\end{equation*}
+%
+A consistent system with free variables will have an infinite number of solutions, as given by \acronymref{theorem}{CSRN}.
+\end{proof}
+%
+Notice that to use this theorem we need only know that the system is consistent, together with the values of $m$ and $n$.  We do not necessarily have to compute a row-equivalent reduced row-echelon form matrix, even though we discussed such a matrix in the proof.  This is the substance of the following example.
+%
+\begin{example}{OSGMD}{One solution gives many, Archetype D}{more variables than equations}
+Archetype D is the system of $m=3$ equations in $n=4$ variables,
+%
+\archetypepart{D}{definition}
+%
+and the solution $x_1 = 0$, $x_2 = 1$, $x_3 = 2$, $x_4 = 1$ can be checked easily by substitution.  Having been {\em handed} this solution, we know the system is consistent.  This, together with $n>m$, allows us to apply \acronymref{theorem}{CMVEI} and conclude that the system has infinitely many solutions.
+\end{example}
+%
+These theorems give us the procedures and implications that allow us to completely solve any system of linear equations.  The main computational tool is using row operations to convert an augmented matrix into reduced row-echelon form.  Here's a broad outline of how we would instruct a computer to solve  a system of linear equations.
+%
+\begin{enumerate}
+\item  Represent a system of linear equations by an augmented matrix (an array is the appropriate data structure in most computer languages).
+\item  Convert the matrix to a row-equivalent matrix in reduced row-echelon form using the procedure from the proof of \acronymref{theorem}{REMEF}.
+\item  Determine $r$ and locate the leading 1 of row $r$.  If it is in column $n+1$, output the statement that the system is inconsistent and halt.
+\item With the leading 1 of row $r$ not in column $n+1$, there are two possibilities:
+\begin{enumerate}
+\item $r=n$ and the solution is unique.  It can be read off directly from the entries in rows 1 through $n$ of column $n+1$.
+\item $r<n$ and there are infinitely many solutions.  If only a single solution is needed, set all the free variables to zero and read off the dependent variable values from column $n+1$, as in the second half of the proof of \acronymref{theorem}{RCLS}.  If the entire solution set is required, figure out some nice compact way to describe it, since your finite computer is not big enough to hold all the solutions (we'll have such a way soon).
+\end{enumerate}
+\end{enumerate}
+%
+The above makes it all sound a bit simpler than it really is.  In practice, row operations employ division (usually to get a leading entry of a row to convert to a leading 1) and that will introduce round-off errors.  Entries that should be zero sometimes end up being very, very small nonzero entries, or small entries lead to overflow errors when used as divisors.  A variety of strategies can be employed to minimize these sorts of errors, and this is one of the main topics in the important subject known as numerical linear algebra.\par
+%
+% TODO:  An applied chapter to reference here????
+%
+\computenote{\boolean{hasmathematica}\or\boolean{hassage}}
+{Solving a linear system is such a fundamental problem in so many areas of mathematics, and its applications, that any computational device worth using for linear algebra will have a built-in routine to do just that.}
+{
+\ifthenelse{\boolean{hasmathematica}}{\computedevicetopic{MMA}{Mathematica}{mathematica}{LS}{Linear Solve}{linear solve}}{\relax}
+\ifthenelse{\boolean{hasmathematica}}{\computedevicetopic{SAGE}{SAGE}{sage}{LS}{Linear Solve}{linear solve}}{\relax}
+}{
+\ifthenelse{\boolean{hasmathematica}}{\quad\acronymref{computation}{LS.MMA}}{\relax}
+\ifthenelse{\boolean{hassage}}{\quad\acronymref{computation}{LS.SAGE}}{\relax}
+}
+%
+In this section we've gained a foolproof procedure for solving any system of linear equations, no matter how many equations or variables.  We also have a handful of theorems that allow us to determine partial information about a solution set without actually constructing the whole set itself.  Donald Knuth would be proud.
+%
+%  End  tss.tex
+
+

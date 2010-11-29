@@ -1,0 +1,1065 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section JCF
+%%  Jordan Canonical Form
+%%
+%%%%%%%%%%%
+%
+{\sc\large This section is in draft form}\\
+{\sc\large Needs examples near beginning}
+\par\medskip
+%
+We have seen in \acronymref{section}{IS} that generalized eigenspaces are invariant subspaces that in every instance have led to a direct sum decomposition of the domain of the associated linear transformation.  This allows us to create a block diagonal matrix representation (\acronymref{example}{ISMR4}, \acronymref{example}{ISMR6}).     We also know from \acronymref{theorem}{RGEN} that the restriction of a linear transformation to a generalized eigenspace is almost a nilpotent linear transformation.  Of course, we understand nilpotent linear transformations very well from \acronymref{section}{NLT} and we have carefully determined a nice matrix representation for them.\par
+%
+So here is the game plan for the final push.  Prove that the domain of a linear transformation always decomposes into a direct sum of generalized eigenspaces.  We have unravelled \acronymref{theorem}{RGEN} at \acronymref{theorem}{MRRGE} so that we can formulate the matrix representations of the restrictions on the generalized eigenspaces using our storehouse of results about nilpotent linear transformations.  Arrive at a matrix representation of {\em any} linear transformation that is block diagonal with each block being a Jordan block.\par
+%
+\subsect{GESD}{Generalized Eigenspace Decomposition}
+%
+In \acronymref{theorem}{UTMR} we were able to show that any linear transformation from $V$ to $V$ has an upper triangular matrix representation (\acronymref{definition}{UTM}).  We will now show that we can improve on the basis yielding this representation by massaging the basis so that the matrix representation is also block diagonal.  The subspaces associated with each block will be generalized eigenspaces, so the most general result will be a decomposition of the domain of a linear transformation into a direct sum of generalized eigenspaces.
+%
+\begin{theorem}{GESD}{Generalized Eigenspace Decomposition}{generalized eigenspace decomposition}
+Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation with distinct eigenvalues $\scalarlist{\lambda}{m}$.  Then 
+%
+\begin{align*}
+V&=
+\geneigenspace{T}{\lambda_1}\ds
+\geneigenspace{T}{\lambda_2}\ds
+\geneigenspace{T}{\lambda_3}\ds
+\cdots\ds
+\geneigenspace{T}{\lambda_m}
+\end{align*}
+%
+\end{theorem}
+%
+\begin{proof}
+%
+Suppose that $\dimension{V}=n$ and the $n$ (not necessarily distinct) eigenvalues of $T$ are $\scalarlist{\rho}{n}$.   We begin with a basis of $V$ that yields an upper triangular matrix representation, as guaranteed by \acronymref{theorem}{UTMR}, $B=\set{\vectorlist{x}{n}}$. Since the matrix representation is upper triangular, and the eigenvalues of the linear transformation are the diagonal elements we can choose this basis so that there are then scalars $a_{ij}$, $1\leq j\leq n$, $1\leq i\leq j-1$ such that
+%
+\begin{align*}
+\lt{T}{\vect{x}_j}&=\sum_{i=1}^{j-1}\,a_{ij}\vect{x}_i + \rho_j\vect{x}_j
+\end{align*}
+%
+We now define a new basis for $V$ which is just a slight variation in the basis $B$.  Choose any $k$ and $\ell$ such that $1\leq k<\ell\leq n$ and $\rho_k\neq\rho_\ell$.  Define the scalar $\alpha=a_{kl}/\left(\rho_\ell-\rho_k\right)$.  The new basis is $C=\set{\vectorlist{y}{n}}$ where
+%
+\begin{align*}
+\vect{y}_j&=\vect{x}_j,\quad j\neq\ell,\ 1\leq j\leq n
+&
+\vect{y}_\ell&=\vect{x}_\ell+\alpha\vect{x}_k
+\end{align*}
+%
+We now compute the values of the linear transformation $T$ with inputs from $C$, noting carefully the changed scalars in the linear combinations of $C$ describing the outputs.  These changes will translate to minor changes in the matrix representation built using the basis $C$.  There are three cases to consider, depending on which column of the matrix representation we are examining.  First, assume $j<\ell$.  Then
+%
+\begin{align*}
+\lt{T}{\vect{y}_j}
+&=\lt{T}{\vect{x}_j}\\
+&=\sum_{i=1}^{j-1}\,a_{ij}\vect{x}_i + \rho_j\vect{x}_j\\
+&=\sum_{i=1}^{j-1}\,a_{ij}\vect{y}_i + \rho_j\vect{y}_j
+\end{align*}
+%
+That seems a bit pointless.  The first $\ell-1$ columns of the matrix representations of $T$ relative to $B$ and $C$ are identical.  OK, if that was too easy, here's the main act.  Assume $j=\ell$.
+Then
+%
+\begin{align*}
+\lt{T}{\vect{y}_\ell}
+&=\lt{T}{\vect{x}_\ell+\alpha\vect{x}_k}\\
+%
+&=\lt{T}{\vect{x}_\ell}+\alpha\lt{T}{\vect{x}_k}\\
+%
+&=\left(\sum_{i=1}^{\ell-1}\,a_{i\ell}\vect{x}_i + \rho_\ell\vect{x}_\ell\right)+
+\alpha\left(\sum_{i=1}^{k-1}\,a_{ik}\vect{x}_i + \rho_k\vect{x}_k\right)\\
+%
+&=\sum_{i=1}^{\ell-1}\,a_{i\ell}\vect{x}_i + \rho_\ell\vect{x}_\ell+
+\sum_{i=1}^{k-1}\,\alpha a_{ik}\vect{x}_i + \alpha\rho_k\vect{x}_k\\
+%
+&=\sum_{i=1}^{\ell-1}\,a_{i\ell}\vect{x}_i + \sum_{i=1}^{k-1}\,\alpha a_{ik}\vect{x}_i +
+ \alpha\rho_k\vect{x}_k + \rho_\ell\vect{x}_\ell\\
+%
+&=\sum_{\substack{i=1\\i\neq k}}^{\ell-1}\,a_{i\ell}\vect{x}_i + 
+\sum_{i=1}^{k-1}\,\alpha a_{ik}\vect{x}_i +
+a_{kl}\vect{x}_k + \alpha\rho_k\vect{x}_k + \rho_\ell\vect{x}_\ell\\
+%
+&=\sum_{\substack{i=1\\i\neq k}}^{\ell-1}\,a_{i\ell}\vect{x}_i + 
+\sum_{i=1}^{k-1}\,\alpha a_{ik}\vect{x}_i +
+a_{kl}\vect{x}_k + \alpha\rho_k\vect{x}_k - \rho_\ell\alpha\vect{x}_k +  \rho_\ell\alpha\vect{x}_k + \rho_\ell\vect{x}_\ell\\
+%
+&=\sum_{\substack{i=1\\i\neq k}}^{\ell-1}\,a_{i\ell}\vect{x}_i + 
+\sum_{i=1}^{k-1}\,\alpha a_{ik}\vect{x}_i +
+\left(a_{kl}+\alpha\rho_k-\rho_\ell\alpha\right)\vect{x}_k +\rho_\ell\left(\alpha\vect{x}_k+\vect{x}_\ell\right)\\
+%
+&=\sum_{\substack{i=1\\i\neq k}}^{\ell-1}\,a_{i\ell}\vect{x}_i + 
+\sum_{i=1}^{k-1}\,\alpha a_{ik}\vect{x}_i +
+\left(a_{kl}+\alpha\left(\rho_k-\rho_\ell\right)\right)\vect{x}_k +\rho_\ell\left(\vect{x}_\ell+\alpha\vect{x}_k\right)\\
+%
+&=\sum_{\substack{i=1\\i\neq k}}^{\ell-1}\,a_{i\ell}\vect{y}_i + 
+\sum_{i=1}^{k-1}\,\alpha a_{ik}\vect{y}_i +
+\left(a_{kl}+\alpha\left(\rho_k-\rho_\ell\right)\right)\vect{y}_k +\rho_\ell\vect{y}_\ell
+%
+\end{align*}
+%
+So how different are the matrix representations relative to $B$ and $C$ in column $\ell$?  For $i>k$, the coefficient of $\vect{y}_i$ is $a_{ij}$, as in the representation relative to $B$.  It is a different story for $i\leq k$, where the coefficients of $\vect{y}_i$ may be very different.  We are especially interested in the coefficient of $\vect{y}_k$.  In fact, this whole first part of this proof is about this particular entry of the matrix representation.  The coefficient of  $\vect{y}_k$ is
+%
+\begin{align*}
+a_{kl}+\alpha\left(\rho_k-\rho_\ell\right)
+&=a_{kl}+\frac{a_{kl}}{\rho_\ell-\rho_k}\left(\rho_k-\rho_\ell\right)\\
+&=a_{kl}+(-1)a_{kl}\\
+&=0
+\end{align*}
+%
+If the definition of $\alpha$ was a mystery, then no more.  In the matrix representation of $T$ relative to $C$, the entry in column $\ell$, row $k$ is a zero.  Nice.  The only price we pay is that other entries in column $\ell$, specifically rows $1$ through $k-1$, may also change in a way we can't control.\par
+%
+One more case to consider.  Assume $j>\ell$.  Then 
+%
+\begin{align*}
+\lt{T}{\vect{y}_j}
+&=\lt{T}{\vect{x}_j}\\
+%
+&=\sum_{i=1}^{j-1}\,a_{ij}\vect{x}_i + \rho_j\vect{x}_j\\
+%
+&=\sum_{\substack{i=1\\i\neq\ell,k}}^{j-1}\,a_{ij}\vect{x}_i + a_{\ell j}\vect{x}_\ell+ a_{kj}\vect{x}_k + \rho_j\vect{x}_j\\
+%
+&=\sum_{\substack{i=1\\i\neq\ell,k}}^{j-1}\,a_{ij}\vect{x}_i+  
+a_{\ell j}\vect{x}_\ell + \alpha a_{\ell j}\vect{x}_k - \alpha a_{\ell j}\vect{x}_k+ a_{kj}\vect{x}_k  + \rho_j\vect{x}_j\\
+%
+&=\sum_{\substack{i=1\\i\neq\ell,k}}^{j-1}\,a_{ij}\vect{x}_i+  
+a_{\ell j}\left(\vect{x}_\ell + \alpha\vect{x}_k\right)+
+\left(a_{kj}-\alpha a_{\ell j}\right)\vect{x}_k  + \rho_j\vect{x}_j\\
+%
+&=\sum_{\substack{i=1\\i\neq\ell,k}}^{j-1}\,a_{ij}\vect{y}_i+
+a_{\ell j}\vect{y}_\ell+
+\left(a_{kj}-\alpha a_{\ell j}\right)\vect{y}_k  + \rho_j\vect{y}_j
+%
+\end{align*}
+%
+As before, we ask: how different are the matrix representations relative to $B$ and $C$ in column $j$?  Only $\vect{y}_k$ has a coefficient different from the corresponding coefficient when the basis is $B$.  So in the matrix representations, the only entries to change are in row $k$, for columns $\ell+1$ through $n$.\par
+%
+What have we accomplished?  With a change of basis, we can place a zero in a desired entry (row $k$, column $\ell$) of the matrix representation, leaving most of the entries untouched.  The only entries to possibly change are above the new zero entry, or to the right of the new zero entry.  Suppose we repeat this procedure, starting by ``zeroing out'' the entry above the diagonal in the second column and first row.  Then we move right to the third column, and zero out the element just above the diagonal in the second row.  Next we zero out the element in the third column and first row.  Then tackle the fourth column, work upwards from the diagonal, zeroing out elements as we go. 
+Entries above, and to the right will repeatedly change, but newly created zeros will never get wrecked, since they are below, or just to the left of the entry we are working on.  Similarly the values on the diagonal do not change either.   This entire argument can be retooled in the language of change-of-basis matrices and similarity transformations, and this is the approach taken by Noble in his {\sl Applied Linear Algebra}.  It is interesting to concoct the change-of-basis matrix between the matrices $B$ and $C$ and compute the inverse.\par
+%
+Perhaps you have noticed that we have to be just a bit more careful than the previous paragraph suggests.  The definition of $\alpha$ has a denominator that cannot be zero, which restricts our maneuvers to zeroing out entries in row $k$ and column $\ell$ only when $\rho_k\neq\rho_\ell$.   So we do not necessarily arrive at a diagonal matrix.  More carefully we can write
+%
+\begin{align*}
+\lt{T}{\vect{y}_j}&=\sum_{\substack{i=1\\i:\,\rho_i=\rho_j}}^{j-1}\,b_{ij}\vect{y}_i + \rho_j\vect{y}_j
+\end{align*}
+%
+where the $b_{ij}$ are our new coefficients after repeated changes, the $\vect{y}_j$ are the new basis vectors, and the condition ``$i:\,\rho_i=\rho_j$'' means that we only have terms in the sum involving vectors whose final coefficients are identical diagonal values (the eigenvalues).   Now reorder the basis vectors carefully.  Group together vectors that have equal diagonal entries in the matrix representation, but within each group preserve the order of the precursor basis.  This grouping will create a block diagonal structure for the matrix representation, while otherwise preserving the order of the basis will retain the upper triangular form of the representation.
+So we can arrive at a basis that yields a matrix representation that is upper triangular and block diagonal, with the diagonal entries of each block all equal to a common eigenvalue of the linear transformation.\par
+%
+More carefully, employing the distinct eigenvalues of $T$, $\lambda_i$, $1\leq i\leq m$, we can assert there is a set of basis vectors for $V$, $\vect{u}_{ij}$, $1\leq i\leq m$, $1\leq j\leq\algmult{T}{\lambda_i}$, such that
+%
+\begin{align*}
+\lt{T}{\vect{u}_{ij}}&=\sum_{k=1}^{j-1}\,b_{ijk}\vect{u}_{ik} + \lambda_i\vect{u}_{ij}
+\end{align*}
+%
+So the subspace $U_i=\spn{\setparts{\vect{u}_{ij}}{1 \leq j\leq\algmult{T}{\lambda_i}}}$, $1\leq i\leq m$  is an invariant subspace of $V$ relative to $T$ and the restriction $\restrict{T}{U_i}$ has an upper triangular matrix representation relative to the basis $\setparts{\vect{u}_{ij}}{1 \leq j\leq\algmult{T}{\lambda_i}}$ where the diagonal entries are all equal to $\lambda_i$.  Notice too that with this definition,
+%
+\begin{align*}
+V&=U_1\ds U_2\ds U_3\ds\cdots\ds U_m
+\end{align*}
+%
+Whew.  This is a good place to take a break, grab a cup of coffee, use the toilet, or go for a short stroll, before we show that $U_i$ is a subspace of the generalized eigenspace $\geneigenspace{T}{\lambda_i}$.  This will follow if we can prove that each of the basis vectors for $U_i$ is a generalized eigenvector of $T$ for $\lambda_i$ (\acronymref{definition}{GEV}).  We need some power of $T-\lambda_i I_V$ that takes $\vect{u}_{ij}$ to the zero vector.  We prove by induction on $j$ (\acronymref{technique}{I}) the claim that $\lt{\left(T-\lambda_i I_V\right)^j}{\vect{u}_{ij}}=\zerovector$.  For $j=1$ we have,
+%
+\begin{align*}
+\lt{\left(T-\lambda_i I_V\right)}{\vect{u}_{i1}}
+&=\lt{T}{\vect{u}_{i1}}-\lambda_i \lt{I_V}{\vect{u}_{i1}}\\
+&=\lt{T}{\vect{u}_{i1}}-\lambda_i\vect{u}_{i1}\\
+&=\lambda_i\vect{u}_{i1}-\lambda_i\vect{u}_{i1}\\
+&=\zerovector
+\end{align*}
+%
+For the induction step, assume that if $k<j$, then $\left(T-\lambda_i I_V\right)^k$ takes $\vect{u}_{ik}$ to the zero vector.  Then
+%
+\begin{align*}
+\lt{\left(T-\lambda_i I_V\right)^j}{\vect{u}_{ij}}
+&=
+\lt{\left(T-\lambda_i I_V\right)^{j-1}}{\lt{\left(T-\lambda_i I_V\right)}{\vect{u}_{ij}}}\\
+%
+&=\lt{\left(T-\lambda_i I_V\right)^{j-1}}{
+\lt{T}{\vect{u}_{ij}}-\lambda_i\lt{I_V}{\vect{u}_{ij}}
+}\\
+%
+&=\lt{\left(T-\lambda_i I_V\right)^{j-1}}{
+\lt{T}{\vect{u}_{ij}}-\lambda_i\vect{u}_{ij}
+}\\
+%
+&=\lt{\left(T-\lambda_i I_V\right)^{j-1}}{
+\sum_{k=1}^{j-1}\,b_{ijk}\vect{u}_{ik} + \lambda_i\vect{u}_{ij}-\lambda_i\vect{u}_{ij}
+}\\
+%
+&=\lt{\left(T-\lambda_i I_V\right)^{j-1}}{
+\sum_{k=1}^{j-1}\,b_{ijk}\vect{u}_{ik}
+}\\
+%
+&=\sum_{k=1}^{j-1}\,b_{ijk}\lt{\left(T-\lambda_i I_V\right)^{j-1}}{\vect{u}_{ik}}\\
+%
+&=\sum_{k=1}^{j-1}\,b_{ijk}
+\lt{\left(T-\lambda_i I_V\right)^{j-1-k}}{\lt{\left(T-\lambda_i I_V\right)^{k}}{\vect{u}_{ik}}}\\
+%
+&=\sum_{k=1}^{j-1}\,b_{ijk}\lt{\left(T-\lambda_i I_V\right)^{j-1-k}}{\zerovector}\\
+%
+&=\sum_{k=1}^{j-1}\,b_{ijk}\zerovector\\
+%
+&=\zerovector
+%
+\end{align*}
+%
+This completes the induction step.  Since every vector of the spanning set for $U_i$ is an element of the subspace $\geneigenspace{T}{\lambda_i}$, \acronymref{property}{AC} and \acronymref{property}{SC} allow us to conclude that $U_i\subseteq\geneigenspace{T}{\lambda_i}$.  Then by \acronymref{definition}{S}, $U_i$ is a subspace of $\geneigenspace{T}{\lambda_i}$.  Notice that this inductive proof could be interpreted to say that every element of $U_i$ is a generalized eigenvector of $T$ for $\lambda_i$, and the algebraic multiplicity of $\lambda_i$ is a sufficiently high power to demonstrate this via the definition for each vector.\par
+%
+We are now prepared for our final argument in this long proof.  We wish to establish that the dimension of the subspace $\geneigenspace{T}{\lambda_i}$ is the algebraic multiplicity of $\lambda_i$.  This will be enough to show that $U_i$ and $\geneigenspace{T}{\lambda_i}$ are equal, and will finally provide the desired direct sum decomposition.\par
+%
+We will prove by induction (\acronymref{technique}{I}) the following claim.  Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation and $B$ is a basis for $V$ that provides an upper triangular matrix representation of $T$.  The number of times any eigenvalue $\lambda$ occurs on the diagonal of the representation is greater than or equal to the dimension of the generalized eigenspace  $\geneigenspace{T}{\lambda}$.\par
+%
+We will use the symbol $m$ for the dimension of $V$ so as to avoid confusion with our notation for the nullity.  So $\dim{V}=m$ and our proof will proceed by induction on $m$.  Use the notation $\#_T(\lambda)$ to count the number of times $\lambda$ occurs on the diagonal of a matrix representation of $T$.  We want to show that 
+%
+\begin{align*}
+\#_T(\lambda)&\geq\dimension{\geneigenspace{T}{\lambda}}\\
+&=\dimension{\krn{\left(T-\lambda\right)^m}}&&\text{\acronymref{theorem}{GEK}}\\
+&=\nullity{\left(T-\lambda\right)^m}&&\text{\acronymref{definition}{NOLT}}\\
+\end{align*}
+%
+For the base case, $\dim{V}=1$.  Every matrix representation of $T$ is an upper triangular matrix with the lone eigenvalue of $T$, $\lambda$, as the single diagonal entry.  So $\#_T(\lambda)=1$.  The generalized eigenspace of $\lambda$ is not trivial (since by \acronymref{theorem}{GEK} it equals the regular eigenspace), so it cannot be a subspace of dimension zero, and thus $\dimension{\geneigenspace{T}{\lambda}}=1$.\par
+%
+Now for the induction step, assume the claim is true for any linear transformation defined on a vector space with dimension $m-1$ or less.  Suppose that $B=\set{\vectorlist{v}{m}}$ is a basis for $V$ that yields an upper triangular matrix representation for $T$ with diagonal entries $\scalarlist{\lambda}{m}$.   Then $U=\spn{\set{\vectorlist{v}{m-1}}}$ is a subspace of $V$ that is invariant relative to $T$.  The restriction $\ltdefn{\restrict{T}{U}}{U}{U}$ is then a linear transformation defined on $U$, a vector space of dimension $m-1$.  A matrix representation of $\restrict{T}{U}$ relative to the basis $C=\set{\vectorlist{v}{m-1}}$ will be an upper triangular matrix with diagonal entries $\scalarlist{\lambda}{m-1}$.  We can therefore apply the induction hypothesis to $\restrict{T}{U}$ and its representation relative to $C$.\par
+%
+Suppose that $\lambda$ is any eigenvalue of $T$.  Then suppose that $\vect{v}\in\krn{\left(T-\lambda I_V\right)^m}$.  As an element of $V$, we can write $\vect{v}$ as a linear combination of the basis elements of $B$, or more compactly, there is a vector $\vect{u}\in U$ and a scalar $\alpha$ such that $\vect{v}=\vect{u}+\alpha\vect{v}_m$.  Then,
+%
+\begin{align*}
+&\alpha\left(\lambda_m-\lambda\right)^m\vect{v}_m\\
+&\quad\quad=
+\alpha\lt{\left(T-\lambda I_V\right)^m}{\vect{v}_m}&&\text{\acronymref{theorem}{EOMP}}\\
+%
+&\quad\quad=
+\zerovector+
+\alpha\lt{\left(T-\lambda I_V\right)^m}{\vect{v}_m}&&\text{\acronymref{property}{Z}}\\
+%
+&\quad\quad=
+-\lt{\left(T-\lambda I_V\right)^m}{\vect{u}}+
+\lt{\left(T-\lambda I_V\right)^m}{\vect{u}}+
+\alpha\lt{\left(T-\lambda I_V\right)^m}{\vect{v}_m}&&\text{\acronymref{property}{AI}}\\
+%
+&\quad\quad=
+-\lt{\left(T-\lambda I_V\right)^m}{\vect{u}}+
+\lt{\left(T-\lambda I_V\right)^m}{\vect{u}+\alpha\vect{v}_m}&&\text{\acronymref{theorem}{LTLC}}\\
+%
+&\quad\quad=
+-\lt{\left(T-\lambda I_V\right)^m}{\vect{u}}+
+\lt{\left(T-\lambda I_V\right)^m}{\vect{v}}&&\text{\acronymref{theorem}{LTLC}}\\
+%
+&\quad\quad=
+-\lt{\left(T-\lambda I_V\right)^m}{\vect{u}}+\zerovector
+&&\text{\acronymref{definition}{KLT}}\\
+%
+&\quad\quad=
+-\lt{\left(T-\lambda I_V\right)^m}{\vect{u}}
+&&\text{\acronymref{property}{Z}}\\
+%
+\end{align*}
+%
+The final expression in this string of equalities is an element of $U$ since $U$ is invariant relative to both $T$ and $I_V$.  The expression at the beginning is a scalar multiple of $\vect{v}_m$, and as such cannot be a nonzero element of $U$ without violating the linear independence of $B$.  So 
+%
+\begin{align*}
+\alpha\left(\lambda_m-\lambda\right)^m\vect{v}_m&=\zerovector
+\end{align*}
+%
+The vector $\vect{v}_m$ is nonzero since $B$ is linearly independent, so \acronymref{theorem}{SMEZV} tells us that $\alpha\left(\lambda_m-\lambda\right)^m=0$.  From the properties of scalar multiplication, we are confronted with two possibilities.\par
+%
+Our first case is that $\lambda\neq\lambda_m$.  Notice then that $\lambda$ occurs the same number of times along the diagonal in the representations of $\restrict{T}{U}$ and $T$.  Now $\alpha=0$ and $\vect{v}=\vect{u}+0\vect{v}_m=\vect{u}$.   Since $\vect{v}$ was chosen as an arbitrary element of $\krn{\left(T-\lambda I_V\right)^m}$, \acronymref{definition}{SSET} says that $\krn{\left(T-\lambda I_V\right)^m}\subseteq U$.  It is always the case that $\krn{\left(\restrict{T}{U}-\lambda I_U\right)^m}\subseteq\krn{\left(T-\lambda I_V\right)^m}$.  However, we can also see that in this case, the opposite set inclusion is true as well.  By \acronymref{definition}{SE} we have $\krn{\left(\restrict{T}{U}-\lambda I_U\right)^m}=\krn{\left(T-\lambda I_V\right)^m}$.  Then
+%
+\begin{align*}
+\#_{T}(\lambda)
+&=\#_{\restrict{T}{U}}(\lambda)\\
+%
+&\geq\dimension{\geneigenspace{\restrict{T}{U}}{\lambda}}
+&&\text{Induction Hypothesis}\\
+%
+&=\dimension{\krn{\left(\restrict{T}{U}-\lambda I_U\right)^{m-1}}}
+&&\text{\acronymref{theorem}{GEK}}\\
+%
+&=\dimension{\krn{\left(\restrict{T}{U}-\lambda I_U\right)^m}}
+&&\text{\acronymref{theorem}{KPLT}}\\
+%
+&=\dimension{\krn{\left(T-\lambda I_V\right)^m}}\\
+%
+&=\dimension{\geneigenspace{T}{\lambda}}
+&&\text{\acronymref{theorem}{GEK}}\\
+%
+\end{align*}
+%
+The second case is that $\lambda=\lambda_m$.  Notice then that $\lambda$ occurs one more time along the diagonal in the representation of $T$ compared to the representation of $\restrict{T}{U}$.
+Then
+%
+\begin{align*}
+\lt{\left(\restrict{T}{U}-\lambda I_U\right)^m}{\vect{u}}
+&=
+\lt{\left(T-\lambda I_V\right)^m}{\vect{u}}\\
+%
+&=
+\lt{\left(T-\lambda I_V\right)^m}{\vect{u}}+\zerovector
+&&\text{\acronymref{property}{Z}}\\
+%
+&=
+\lt{\left(T-\lambda I_V\right)^m}{\vect{u}}+\alpha(\lambda_m-\lambda)^m\vect{v}_m
+&&\text{\acronymref{theorem}{ZSSM}}\\
+%
+&=
+\lt{\left(T-\lambda I_V\right)^m}{\vect{u}}+\alpha\lt{\left(T-\lambda I_V\right)^m}{\vect{v}_m}
+&&\text{\acronymref{theorem}{EOMP}}\\
+%
+&=
+\lt{\left(T-\lambda I_V\right)^m}{\vect{u}+\alpha\vect{v}_m}
+&&\text{\acronymref{theorem}{LTLC}}\\
+%
+&=
+\lt{\left(T-\lambda I_V\right)^m}{\vect{v}}\\
+%
+&=\zerovector
+&&\text{\acronymref{definition}{KLT}}
+%
+\end{align*}
+%
+So $\vect{u}\in\krn{\left(\restrict{T}{U}-\lambda I_U\right)^m}$.  The vector $\vect{v}$ was chosen as an arbitrary member of 
+$\krn{\left(T-\lambda I_V\right)^m}$.  From the expression $\vect{v}=\vect{u}+\alpha\vect{v}_m$ we can now see $\vect{v}$ also as an element of $\krn{\left(\restrict{T}{U}-\lambda I_U\right)^m}$ plus a scalar multiple of  $\vect{v}_m$.  This observation yields
+%
+\begin{align*}
+\dimension{\krn{\left(T-\lambda I_V\right)^m}}&\leq\dimension{\krn{\left(\restrict{T}{U}-\lambda I_U\right)^m}}+1
+\end{align*}
+%
+Now count eigenvalues on the diagonal,
+%
+\begin{align*}
+\#_{T}(\lambda)
+&=\#_{\restrict{T}{U}}(\lambda)+1\\
+%
+&\geq\dimension{\geneigenspace{\restrict{T}{U}}{\lambda}}+1
+&&\text{Induction Hypothesis}\\
+%
+&=\dimension{\krn{\left(\restrict{T}{U}-\lambda I_U\right)^{m-1}}}+1
+&&\text{\acronymref{theorem}{GEK}}\\
+%
+&=\dimension{\krn{\left(\restrict{T}{U}-\lambda I_U\right)^m}}+1
+&&\text{\acronymref{theorem}{KPLT}}\\
+%
+&\geq\dimension{\krn{\left(T-\lambda I_V\right)^m}}\\
+%
+&=\dimension{\geneigenspace{T}{\lambda}}
+&&\text{\acronymref{theorem}{GEK}}\\
+%
+\end{align*}
+%
+In \acronymref{theorem}{UTMR} we constructed an upper triangular matrix representation of $T$ where each eigenvalue occurred $\algmult{T}{\lambda}$ times on the diagonal.  So
+%
+\begin{align*}
+\algmult{T}{\lambda_i}
+&=\#_T(\lambda_i)&&\text{\acronymref{theorem}{UTMR}}\\
+&\geq\dimension{\geneigenspace{T}{\lambda_i}}\\
+&\geq\dimension{U_i}&&\text{\acronymref{theorem}{PSSD}}\\
+&=\algmult{T}{\lambda_i}&&\text{\acronymref{theorem}{PSSD}}\\
+\end{align*}
+%
+Thus, $\dimension{\geneigenspace{T}{\lambda_i}}=\algmult{T}{\lambda_i}$ and by 
+\acronymref{theorem}{EDYES}, $U_i=\geneigenspace{T}{\lambda_i}$ and we can write
+%
+\begin{align*}
+V&=U_1\ds U_2\ds U_3\ds\cdots\ds U_m\\
+&=
+\geneigenspace{T}{\lambda_1}\ds
+\geneigenspace{T}{\lambda_2}\ds
+\geneigenspace{T}{\lambda_3}\ds
+\cdots\ds
+\geneigenspace{T}{\lambda_m}
+\end{align*}
+%
+\end{proof}
+%
+Besides a nice decomposition into invariant subspaces, this proof has a bonus for us.
+%
+\begin{theorem}{DGES}{Dimension of Generalized Eigenspaces}{generalized eigenspace!dimension}
+Suppose $\ltdefn{T}{V}{V}$ is a linear transformation with eigenvalue $\lambda$.  Then the dimension of the generalized eigenspace for $\lambda$ is the algebraic multiplicity of $\lambda$, $\dimension{\geneigenspace{T}{\lambda_i}}=\algmult{T}{\lambda_i}$.
+\end{theorem}
+%
+\begin{proof}
+At the very end of the proof of \acronymref{theorem}{GESD} we obtain the inequalities
+%
+\begin{align*}
+\algmult{T}{\lambda_i}
+&\leq\dimension{\geneigenspace{T}{\lambda_i}}
+\leq\algmult{T}{\lambda_i}
+\end{align*}
+%
+which establishes the desired equality.
+%
+\end{proof}
+%
+\subsect{JCF}{Jordan Canonical Form}
+%
+Now we are in a position to define what we (and others) regard as an especially nice matrix representation.  The word ``canonical'' has at its root, the word ``canon,'' which has various meanings.  One is the set of laws established by a church council.  Another is a set of writings that are authentic, important or representative.  Here we take it to mean the accepted, or best, representative among a variety of choices.  Every linear transformation admits a variety of representations, and we will declare one as the best.  Hopefully you will agree.
+%
+\begin{definition}{JCF}{Jordan Canonical Form}{Jordan canonical form}
+A square matrix is in \define{Jordan canonical form} if it meets the following requirements:
+\begin{enumerate}
+\item The matrix is block diagonal.
+\item Each block is a Jordan block.
+\item If $\rho<\lambda$ then the block $\jordan{k}{\rho}$ occupies rows with indices greater than the indices of the rows occupied by $\jordan{\ell}{\lambda}$.
+\item If $\rho=\lambda$ and $\ell<k$, then the block $\jordan{\ell}{\lambda}$ occupies rows with indices greater than the indices of the rows occupied by $\jordan{k}{\lambda}$.
+\end{enumerate}
+\end{definition}
+%
+\begin{theorem}{JCFLT}{Jordan Canonical Form for a Linear Transformation}{linear transformation!Jordan canonical form}
+Suppose $\ltdefn{T}{V}{V}$ is a linear transformation.  Then there is a basis $B$ for $V$ such that the matrix representation of $T$ with the following properties:
+\begin{enumerate}
+\item The matrix representation is in Jordan canonical form.
+\item If $\jordan{k}{\lambda}$ is one of the Jordan blocks, then $\lambda$ is an eigenvalue of $T$.
+\item For a fixed value of $\lambda$, the largest block of the form $\jordan{k}{\lambda}$ has size equal to the index of $\lambda$, $\indx{T}{\lambda}$.
+\item For a fixed value of $\lambda$, the number of blocks of the form $\jordan{k}{\lambda}$ is the geometric multiplicity of $\lambda$, $\geomult{T}{\lambda}$.
+\item For a fixed value of $\lambda$, the number of rows occupied by blocks of the form $\jordan{k}{\lambda}$ is the algebraic multiplicity of $\lambda$, $\algmult{T}{\lambda}$.
+\end{enumerate}
+%
+\end{theorem}
+%
+\begin{proof}
+This theorem is really just the consequence of applying to $T$, consecutively \acronymref{theorem}{GESD}, \acronymref{theorem}{MRRGE} and \acronymref{theorem}{CFNLT}.\par
+%
+\acronymref{theorem}{GESD} gives us a decomposition of $V$ into generalized eigenspaces, one for each distinct eigenvalue.  Since these generalized eigenspaces ar invariant relative to $T$, this provides a block diagonal matrix representation where each block is the matrix representation of the restriction of $T$ to the generalized eigenspace.\par
+%
+Restricting $T$ to a generalized eigenspace results in a ``nearly nilpotent'' linear transformation, as stated more precisely in \acronymref{theorem}{RGEN}.  We unravel \acronymref{theorem}{RGEN} in the proof of \acronymref{theorem}{MRRGE} so that we can apply \acronymref{theorem}{CFNLT} about representations of nilpotent linear transformations.\par
+%
+We know the dimension of a generalized eigenspace is the algebraic multiplicity of the eigenvalue (\acronymref{theorem}{DGES}), so the blocks associated with the generalized eigenspaces are square with a size equal to the algebraic multiplicity.  In refining the basis for this block, and producing Jordan blocks the results of \acronymref{theorem}{CFNLT} apply.  The total number of blocks will be the nullity of $\restrict{T}{\geneigenspace{T}{\lambda}}-\lambda I_{\geneigenspace{T}{\lambda}}$, which is the geometric multiplicity of $\lambda$ as an eigenvalue of $T$ (\acronymref{definition}{GME}).  The largest of the Jordan blocks will have size equal to the index of the nilpotent linear transformation $\restrict{T}{\geneigenspace{T}{\lambda}}-\lambda I_{\geneigenspace{T}{\lambda}}$, which is exactly the definition of the index of the eigenvalue $\lambda$ (\acronymref{definition}{IE}).
+%
+\end{proof}
+%
+Before we do some examples of this result, notice how close Jordan canonical form is to a diagonal matrix.  Or, equivalently, notice how close we have come to diagonalizing a matrix (\acronymref{definition}{DZM}).  We have a matrix representation which has diagonal entries that are the eigenvalues of a matrix.  Each occurs on the diagonal as many times as the algebraic multiplicity.  However, when the geometric multiplicity is strictly less than the algebraic multiplicity, we have some entries in the representation just above the diagonal (the ``superdiagonal'').  Furthermore, we have some idea how often this happens if we know the geometric multiplicity and the index of the eigenvalue.\par
+%
+We now recognize just how simple a diagonalizable linear transformation really is.  For each eigenvalue, the generalized eigenspace is just the regular eigenspace, and it decomposes into a direct sum of one-dimensional subspaces, each spanned by a different eigenvector chosen from a basis of eigenvectors for the eigenspace.\par
+%
+Some authors create matrix representations of nilpotent linear transformations where the Jordan block has the ones just below the diagonal (the ``subdiagonal'').  No matter, it is really the same, just different.  We have also defined Jordan canonical form to place blocks for the larger eigenvalues earlier, and for blocks with the same eigenvalue, we place the bigger ones earlier.  This is fairly standard, but there is no reason we couldn't order the blocks differently.  It'd be the same, just different.  The reason for choosing {\em some} ordering is to be assured that there is just {\em one} canonical matrix representation for each linear transformation.
+%
+\begin{example}{JCF10}{Jordan canonical form, size 10}{Jordan canonical form!size 10}
+%
+Suppose that $\ltdefn{T}{\complex{10}}{\complex{10}}$ is the linear transformation defined by $\lt{T}{\vect{x}}=A\vect{x}$ where
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+ -6 & 9 & -7 & -5 & 5 & 12 & -22 & 14 & 8 & 21 \\
+ -3 & 5 & -3 & -1 & 2 & 7 & -12 & 9 & 1 & 12 \\
+ 8 & -9 & 8 & 6 & 0 & -14 & 25 & -13 & -4 & -26 \\
+ -7 & 9 & -7 & -5 & 0 & 13 & -23 & 13 & 2 & 24 \\
+ 0 & -1 & 0 & -1 & -3 & -2 & 3 & -4 & -2 & -3 \\
+ 3 & 2 & 1 & 2 & 9 & -1 & 1 & 5 & 5 & -5 \\
+ -1 & 3 & -3 & -2 & 4 & 3 & -6 & 4 & 4 & 3 \\
+ 3 & -4 & 3 & 2 & 1 & -5 & 9 & -5 & 1 & -9 \\
+ 0 & 2 & 0 & 0 & 2 & 2 & -4 & 4 & 2 & 4 \\
+ -4 & 4 & -5 & -4 & -1 & 6 & -11 & 4 & 1 & 10
+\end{bmatrix}
+\end{align*}
+%
+We'll find a basis for $\complex{10}$ that will yield a matrix representation of $T$ in  Jordan canonical form.  First we find the eigenvalues, and their multiplicities, with the techniques of \acronymref{chapter}{E}.
+%
+\begin{align*}
+\lambda&=2  & \algmult{T}{2}&=2  & \geomult{T}{2}&=2\\
+\lambda&=0  & \algmult{T}{0}&=3  & \geomult{T}{-1}&=2\\
+\lambda&=-1 & \algmult{T}{-1}&=5 & \geomult{T}{-1}&=2
+\end{align*}
+%
+For each eigenvalue, we can compute a generalized eigenspace.  By \acronymref{theorem}{GESD} we know that $\complex{10}$ will decompose into a direct sum of these eigenspaces, and we can restrict $T$ to each part of this decomposition.  At this stage we know that the Jordan canonical form will be block diagonal with blocks of size $2$, $3$ and $5$, since the dimensions of the generalized eigenspaces are equal to the algebraic multiplicities of the eigenvalues (\acronymref{theorem}{DGES}).  The geometric multiplicities tell us how many Jordan blocks occupy each of the three larger blocks, but we will discuss this as we analyze each eigenvalue.  We do not yet know the index of each eigenvalue (though we can easily infer it for $\lambda=2$) and even if we did have this information, it only determines the size of the largest Jordan block (per eigenvalue).  We will press ahead, considering each eigenvalue one at a time.\par
+%
+The eigenvalue $\lambda=2$ has ``full'' geometric multiplicity, and is not an impediment to diagonalizing $T$.  We will treat it in full generality anyway.  First we compute the generalized eigenspace.  Since \acronymref{theorem}{GEK} says that $\geneigenspace{T}{2}=\krn{\left(T-2I_{\complex{10}}\right)^{10}}$ we can compute this generalized eigenspace as a null space derived from the matrix $A$,
+%
+\begin{align*}
+\left(A-2I_{10}\right)^{10}
+&\rref
+\begin{bmatrix}
+ \leading{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -2 & -1 \\
+ 0 & \leading{1} & 0 & 0 & 0 & 0 & 0 & 0 & -1 & -1 \\
+ 0 & 0 & \leading{1} & 0 & 0 & 0 & 0 & 0 & 1 & 2 \\
+ 0 & 0 & 0 & \leading{1} & 0 & 0 & 0 & 0 & -1 & -2 \\
+ 0 & 0 & 0 & 0 & \leading{1} & 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & \leading{1} & 0 & 0 & -2 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & \leading{1} & 0 & -1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & \leading{1} & 0 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+\geneigenspace{T}{2}&=\krn{\left(A-2I_{10}\right)^{10}}=
+\spn{\set{
+\colvector{2 \\ 1 \\ -1 \\ 1 \\ -1 \\ 2 \\ 1 \\ 0 \\ 1 \\ 0},\,
+\colvector{1 \\ 1 \\ -2 \\ 2 \\ 0 \\ -1 \\ 0 \\ -1 \\ 0 \\ 1}
+}}
+\end{align*}
+%
+The restriction of $T$ to $\geneigenspace{T}{2}$ relative to the two basis vectors above has a matrix representation that is a $2\times 2$ diagonal matrix with the eigenvalue $\lambda=2$ as the diagonal entries.  So these two vectors will be the first two vectors in our basis for $\complex{10}$,
+%
+\begin{align*}
+\vect{v}_1&=\colvector{2 \\ 1 \\ -1 \\ 1 \\ -1 \\ 2 \\ 1 \\ 0 \\ 1 \\ 0}
+&
+\vect{v}_2&=\colvector{1 \\ 1 \\ -2 \\ 2 \\ 0 \\ -1 \\ 0 \\ -1 \\ 0 \\ 1}
+\end{align*}
+%
+Notice that it was not strictly necessary to compute the 10-th power of $A-2I_{10}$.  With $\algmult{T}{2}=\geomult{T}{2}$ the null space of the matrix $A-2I_{10}$ contains {\em all} of the generalized eigenvectors of $T$ for the eigenvalue $\lambda=2$.  But there was no harm in computing the 10-th power either.  This discussion is equivalent to the observation that the linear transformation $\ltdefn{\restrict{T}{\geneigenspace{T}{2}}}{\geneigenspace{T}{2}}{\geneigenspace{T}{2}}$ is nilpotent of index $1$.  In other words, $\indx{T}{2}=1$.\par
+%
+The eigenvalue $\lambda=0$ will not be quite as simple, since the geometric multiplicity is strictly less than the geometric multiplicity.  As before, we first compute the generalized eigenspace.  Since \acronymref{theorem}{GEK} says that $\geneigenspace{T}{0}=\krn{\left(T-0I_{\complex{10}}\right)^{10}}$ we can compute this generalized eigenspace as a null space derived from the matrix $A$,
+%
+\begin{align*}
+\left(A-0I_{10}\right)^{10}
+&\rref
+\begin{bmatrix}
+ \leading{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 & -1 \\
+ 0 & \leading{1} & 0 & 0 & 0 & 0 & -1 & 0 & -1 & 0 \\
+ 0 & 0 & \leading{1} & 0 & 0 & 0 & 0 & 0 & 1 & 2 \\
+ 0 & 0 & 0 & \leading{1} & 0 & 0 & 0 & 0 & -2 & -1 \\
+ 0 & 0 & 0 & 0 & \leading{1} & 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & \leading{1} & -1 & 0 & -1 & 2 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & \leading{1} & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+\geneigenspace{T}{0}&=\krn{\left(A-0I_{10}\right)^{10}}=
+\spn{\set{
+\colvector{0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 1 \\ 1 \\ 0 \\ 0 \\ 0},\,
+\colvector{1 \\ 1 \\ -1 \\ 2 \\ -1 \\ 1 \\ 0 \\ -1 \\ 1 \\ 0},\,
+\colvector{1 \\ 0 \\ -2 \\ 1 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+}}
+=\spn{F}
+\end{align*}
+%
+So $\dimension{\geneigenspace{T}{0}}=3=\algmult{T}{0}$, as expected.  We will use these three basis vectors for the generalized eigenspace to construct a matrix representation of $\restrict{T}{\geneigenspace{T}{0}}$, where $F$ is being defined implicitly as the basis of $\geneigenspace{T}{0}$.  We construct this representation as usual, applying \acronymref{definition}{MR},
+%
+\begin{align*}
+\vectrep{F}{
+\lt{\restrict{T}{\geneigenspace{T}{0}}}
+{\colvector{0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 1 \\ 1 \\ 0 \\ 0 \\ 0}}
+}
+&=
+\vectrep{F}{
+\colvector{-1 \\ 0 \\ 2 \\ -1 \\ 0 \\ 2 \\ 0 \\ 0 \\ 0 \\ -1}
+}
+=
+\vectrep{F}{
+(-1)\colvector{1 \\ 0 \\ -2 \\ 1 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+}
+=\colvector{0\\0\\-1}\\
+%
+\vectrep{F}{
+\lt{\restrict{T}{\geneigenspace{T}{0}}}
+{\colvector{1 \\ 1 \\ -1 \\ 2 \\ -1 \\ 1 \\ 0 \\ -1 \\ 1 \\ 0}}
+}
+&=
+\vectrep{F}{
+\colvector{1 \\ 0 \\ -2 \\ 1 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+}
+=
+\vectrep{F}{
+(1)\colvector{1 \\ 0 \\ -2 \\ 1 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+}
+=\colvector{0\\0\\1}\\
+%
+\vectrep{F}{
+\lt{\restrict{T}{\geneigenspace{T}{0}}}
+{\colvector{1 \\ 0 \\ -2 \\ 1 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}}
+}
+&=
+\vectrep{F}{
+\colvector{0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}
+}
+=\colvector{0\\0\\0}
+%
+\end{align*}
+%
+So we have the matrix representation
+%
+\begin{align*}
+M&=\matrixrep{\restrict{T}{\geneigenspace{T}{0}}}{F}{F}
+=
+\begin{bmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+-1 & 1 & 0
+\end{bmatrix}
+%
+\end{align*}
+%
+By \acronymref{theorem}{RGEN} we can obtain a nilpotent matrix from this matrix representation by subtracting the eigenvalue from the diagonal elements, and then we can apply \acronymref{theorem}{CFNLT} to $M-(0)I_3$.  First check that $\left(M-(0)I_3\right)^2=\zeromatrix$, so we know that the index of $M-(0)I_3$ as a nilpotent matrix, and that therefore $\lambda=0$ is an eigenvalue of $T$ with index $2$, $\indx{T}{0}=2$.  To determine a basis of $\complex{3}$ that converts $M-(0)I_3$ to canonical form, we need the null spaces of the powers of $M-(0)I_3$.  For convenience, set $N=M-(0)I_3$.
+%
+\begin{align*}
+\nsp{N^1}&=\spn{\set{
+\colvector{1\\1\\0},\,\colvector{0\\0\\1}
+}}\\
+%
+\nsp{N^2}&=\spn{\set{
+\colvector{1\\0\\0},\,\colvector{0\\1\\0},\,\colvector{0\\0\\1}
+}}
+=\complex{3}
+\end{align*}
+%
+Then we choose a vector from $\nsp{N^2}$ that is not an element of $\nsp{N^1}$.  Any vector with unequal first two entries will fit the bill, say
+%
+\begin{align*}
+\vect{z}_{2,1}&=\colvector{1\\0\\0}
+\end{align*}
+%
+where we are employing the notation in \acronymref{theorem}{CFNLT}.  The next step is to multiply this vector by $N$ to get part of the basis for $\nsp{N^1}$,
+%
+\begin{align*}
+\vect{z}_{1,1}&=
+N\vect{z}_{2,1}=
+\begin{bmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+-1 & 1 & 0
+\end{bmatrix}
+\colvector{1\\0\\0}
+=
+\colvector{0\\0\\-1}
+\end{align*}
+%
+We need a vector to pair with $\vect{z}_{1,1}$ that will make a basis for the two-dimensional subspace $\nsp{N^1}$.  Examining the basis for $\nsp{N^1}$ we see that a vector with its first two entries equal will do the job.
+%
+\begin{align*}
+\vect{z}_{1,2}=\colvector{1\\1\\0}
+\end{align*}
+%
+Reordering, we find the basis,
+%
+\begin{align*}
+C
+&=\set{\vect{z}_{1,1},\,\vect{z}_{2,1},\,\vect{z}_{1,2}}
+=\set{\colvector{0\\0\\-1},\,\colvector{1\\0\\0},\,\colvector{1\\1\\0}}
+\end{align*}
+%
+From this basis, we can get a matrix representation of $N$ (when viewed as a linear transformation) relative to the basis $C$ for $\complex{3}$,
+%
+\begin{align*}
+\begin{bmatrix}
+0 & 1 & 0 \\
+0 & 0 & 0 \\
+0 & 0 & 0
+\end{bmatrix}
+&=
+\begin{bmatrix}
+\jordan{2}{0} & \zeromatrix \\
+\zeromatrix & \jordan{1}{0} \\
+\end{bmatrix}
+%
+\end{align*}
+%
+Now we add back the eigenvalue $\lambda=0$ to the representation of $N$ to obtain a representation for $M$.  Of course, with an eigenvalue of zero, the change is not apparent, so we won't display the same matrix again.  This is the second block of the Jordan canonical form for $T$.  However, the three vectors in $C$ will not suffice as basis vectors for the domain of $T$ --- they have the wrong size!  The vectors in $C$ are vectors in the domain of a linear transformation defined by the matrix $M$.  But $M$ was a matrix representation of $\restrict{T}{\geneigenspace{T}{0}}-0I_{\geneigenspace{T}{0}}$ relative to the basis $F$ for $\geneigenspace{T}{0}$.  We need to ``uncoordinatize'' each of the basis vectors in $C$ to produce a linear combination of vectors in $F$ that will be an element of the generalized eigenspace $\geneigenspace{T}{0}$.  These will be the next three vectors of our final answer, a basis for $\complex{10}$ that has a pleasing matrix representation.
+%
+\begin{align*}
+\vect{v}_3&=\vectrepinv{F}{\colvector{0\\0\\-1}}=
+0\colvector{0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 1 \\ 1 \\ 0 \\ 0 \\ 0}+
+0\colvector{1 \\ 1 \\ -1 \\ 2 \\ -1 \\ 1 \\ 0 \\ -1 \\ 1 \\ 0}+
+(-1)\colvector{1 \\ 0 \\ -2 \\ 1 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+=
+\colvector{-1 \\ 0 \\ 2 \\ -1 \\ 0 \\ 2 \\ 0 \\ 0 \\ 0 \\ -1}\\
+%
+\vect{v}_4&=\vectrepinv{F}{\colvector{1\\0\\0}}=
+1\colvector{0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 1 \\ 1 \\ 0 \\ 0 \\ 0}+
+0\colvector{1 \\ 1 \\ -1 \\ 2 \\ -1 \\ 1 \\ 0 \\ -1 \\ 1 \\ 0}+
+0\colvector{1 \\ 0 \\ -2 \\ 1 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+=
+\colvector{0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 1 \\ 1 \\ 0 \\ 0 \\ 0}\\
+%
+\vect{v}_5&=\vectrepinv{F}{\colvector{1\\1\\0}}=
+1\colvector{0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 1 \\ 1 \\ 0 \\ 0 \\ 0}+
+1\colvector{1 \\ 1 \\ -1 \\ 2 \\ -1 \\ 1 \\ 0 \\ -1 \\ 1 \\ 0}+
+0\colvector{1 \\ 0 \\ -2 \\ 1 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+=
+\colvector{1 \\ 2 \\ -1 \\ 2 \\ -1 \\ 2 \\ 1 \\ -1 \\ 1 \\ 0}
+%
+\end{align*}
+%
+Five down, five to go.  Basis vectors, that is.  $\lambda=-1$ is the smallest eigenvalue, but it will require the most computation.  First we compute the generalized eigenspace.  Since \acronymref{theorem}{GEK} says that $\geneigenspace{T}{-1}=\krn{\left(T-(-1)I_{\complex{10}}\right)^{10}}$ we can compute this generalized eigenspace as a null space derived from the matrix $A$,
+%
+\begin{align*}
+\left(A-(-1)I_{10}\right)^{10}
+&\rref
+\begin{bmatrix}
+ \leading{1} & 0 & 1 & 0 & 1 & 0 & -1 & 1 & 0 & 1 \\
+ 0 & \leading{1} & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & \leading{1} & 1 & 0 & 1 & 0 & 0 & -2 \\
+ 0 & 0 & 0 & 0 & 0 & \leading{1} & -2 & 1 & 0 & 2 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \leading{1} & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+\geneigenspace{T}{-1}&=\krn{\left(A-(-1)I_{10}\right)^{10}}=
+\spn{\set{
+\colvector{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0},\,
+\colvector{-1 \\ -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0},\,
+\colvector{1 \\ 0 \\ 0 \\ -1 \\ 0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 0},\,
+\colvector{-1 \\ -1 \\ 0 \\ 0 \\ 0 \\ -1 \\ 0 \\ 1 \\ 0 \\ 0},\,
+\colvector{-1 \\ 0 \\ 0 \\ 2 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+}}
+=\spn{F}
+\end{align*}
+%
+So $\dimension{\geneigenspace{T}{-1}}=5=\algmult{T}{-1}$, as expected.  We will use these five basis vectors for the generalized eigenspace to construct a matrix representation of $\restrict{T}{\geneigenspace{T}{-1}}$, where $F$ is being recycled and defined now implicitly as the basis of $\geneigenspace{T}{-1}$.  
+We construct this representation as usual, applying \acronymref{definition}{MR},
+%
+\begin{align*}
+&\vectrep{F}{
+\lt{\restrict{T}{\geneigenspace{T}{-1}}}
+{\colvector{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}}
+}
+=\vectrep{F}{\colvector{-1 \\ 0 \\ 0 \\ 0 \\ 0 \\ -2 \\ -2 \\ 0 \\ 0 \\ -1}}\\
+&=
+\vectrep{F}{
+0\colvector{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+0\colvector{-1 \\ -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+(-2)\colvector{1 \\ 0 \\ 0 \\ -1 \\ 0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 0}+
+0\colvector{-1 \\ -1 \\ 0 \\ 0 \\ 0 \\ -1 \\ 0 \\ 1 \\ 0 \\ 0}+
+(-1)\colvector{-1 \\ 0 \\ 0 \\ 2 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+}
+=\colvector{0\\0\\-2\\0\\-1}\\
+%
+&\vectrep{F}{
+\lt{\restrict{T}{\geneigenspace{T}{-1}}}
+{\colvector{-1 \\ -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}}
+}
+=\vectrep{F}{\colvector{7 \\ 1 \\ -5 \\ 3 \\ -1 \\ 2 \\ 4 \\ 0 \\ 0 \\ 3}}\\
+&=
+\vectrep{F}{
+(-5)\colvector{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+(-1)\colvector{-1 \\ -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+4\colvector{1 \\ 0 \\ 0 \\ -1 \\ 0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 0}+
+0\colvector{-1 \\ -1 \\ 0 \\ 0 \\ 0 \\ -1 \\ 0 \\ 1 \\ 0 \\ 0}+
+3\colvector{-1 \\ 0 \\ 0 \\ 2 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+}
+=\colvector{-5\\-1\\4\\0\\3}\\
+%
+&\vectrep{F}{
+\lt{\restrict{T}{\geneigenspace{T}{-1}}}
+{\colvector{1 \\ 0 \\ 0 \\ -1 \\ 0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 0}}
+}
+=\vectrep{F}{\colvector{1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 1 \\ 0 \\ 0 \\ 1}}\\
+&=
+\vectrep{F}{
+(-1)\colvector{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+0\colvector{-1 \\ -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+1\colvector{1 \\ 0 \\ 0 \\ -1 \\ 0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 0}+
+0\colvector{-1 \\ -1 \\ 0 \\ 0 \\ 0 \\ -1 \\ 0 \\ 1 \\ 0 \\ 0}+
+1\colvector{-1 \\ 0 \\ 0 \\ 2 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+}
+=\colvector{-1\\0\\1\\0\\1}\\
+%
+&\vectrep{F}{
+\lt{\restrict{T}{\geneigenspace{T}{-1}}}
+{\colvector{-1 \\ -1 \\ 0 \\ 0 \\ 0 \\ -1 \\ 0 \\ 1 \\ 0 \\ 0}}
+}
+=\vectrep{F}{\colvector{-1 \\ 0 \\ 2 \\ -2 \\ -1 \\ 1 \\ -1 \\ 1 \\ 0 \\ -2}}\\
+&=
+\vectrep{F}{
+2\colvector{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+(-1)\colvector{-1 \\ -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+(-1)\colvector{1 \\ 0 \\ 0 \\ -1 \\ 0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 0}+
+1\colvector{-1 \\ -1 \\ 0 \\ 0 \\ 0 \\ -1 \\ 0 \\ 1 \\ 0 \\ 0}+
+(-2)\colvector{-1 \\ 0 \\ 0 \\ 2 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+}
+=\colvector{2\\-1\\-1\\1\\-2}\\
+%
+&\vectrep{F}{
+\lt{\restrict{T}{\geneigenspace{T}{-1}}}
+{\colvector{-1 \\ 0 \\ 0 \\ 2 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}}
+}
+=\vectrep{F}{\colvector{-7 \\ -1 \\ 6 \\ -5 \\ -1 \\ -2 \\ -6 \\ 2 \\ 0 \\ -6}}\\
+&=
+\vectrep{F}{
+6\colvector{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+(-1)\colvector{-1 \\ -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+(-6)\colvector{1 \\ 0 \\ 0 \\ -1 \\ 0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 0}+
+2\colvector{-1 \\ -1 \\ 0 \\ 0 \\ 0 \\ -1 \\ 0 \\ 1 \\ 0 \\ 0}+
+(-6)\colvector{-1 \\ 0 \\ 0 \\ 2 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+}
+=\colvector{6\\-1\\-6\\2\\-6}\\
+%
+\end{align*}
+%
+So we have the matrix representation of the restriction of $T$ (again recycling and redefining the matrix $M$)
+%
+\begin{align*}
+M&=\matrixrep{\restrict{T}{\geneigenspace{T}{-1}}}{F}{F}
+=
+\begin{bmatrix}
+ 0 & -5 & -1 & 2 & 6 \\
+ 0 & -1 & 0 & -1 & -1 \\
+ -2 & 4 & 1 & -1 & -6 \\
+ 0 & 0 & 0 & 1 & 2 \\
+ -1 & 3 & 1 & -2 & -6
+\end{bmatrix}
+%
+\end{align*}
+%
+By \acronymref{theorem}{RGEN} we can obtain a nilpotent matrix from this matrix representation by subtracting the eigenvalue from the diagonal elements, and then we can apply \acronymref{theorem}{CFNLT} to $M-(-1)I_5$.  First check that $\left(M-(-1)I_5\right)^3=\zeromatrix$, so we know that the index of $M-(-1)I_5$ as a nilpotent matrix, and that therefore $\lambda=-1$ is an eigenvalue of $T$ with index $3$, $\indx{T}{-1}=3$.  To determine a basis of $\complex{5}$ that converts $M-(-1)I_5$ to canonical form, we need the null spaces of the powers of $M-(-1)I_5$.  Again, for convenience, set $N=M-(-1)I_5$.
+\begin{align*}
+\nsp{N^1}&=\spn{\set{
+\colvector{1 \\ 0 \\ 1 \\ 0 \\ 0},\,
+\colvector{-3 \\ 1 \\ 0 \\ -2 \\ 2}
+}}\\
+%
+\nsp{N^2}&=\spn{\set{
+\colvector{3 \\ 1 \\ 0 \\ 0 \\ 0},\,
+\colvector{1 \\ 0 \\ 1 \\ 0 \\ 0},\,
+\colvector{0 \\ 0 \\ 0 \\ 1 \\ 0},\,
+\colvector{-3 \\ 0 \\ 0 \\ 0 \\ 1}
+}}\\
+%
+\nsp{N^3}&=\spn{\set{
+\colvector{1 \\ 0 \\ 0 \\ 0 \\ 0},\,
+\colvector{0 \\ 1 \\ 0 \\ 0 \\ 0},\,
+\colvector{0 \\ 0 \\ 1 \\ 0 \\ 0},\,
+\colvector{0 \\ 0 \\ 0 \\ 1 \\ 0},\,
+\colvector{0 \\ 0 \\ 0 \\ 0 \\ 1}
+}}
+=\complex{5}
+\end{align*}
+%
+Then we choose a vector from $\nsp{N^3}$ that is not an element of $\nsp{N^2}$.  The sum of the four basis vectors for $\nsp{N^2}$ sum to a vector with all five entries equal to 1.  We will mess with the first entry to create a vector not in $\nsp{N^2}$,
+%
+\begin{align*}
+\vect{z}_{3,1}&=\colvector{0\\1\\1\\1\\1}
+\end{align*}
+%
+where we are employing the notation in \acronymref{theorem}{CFNLT}.  The next step is to multiply this vector by $N$ to get a portion of the basis for $\nsp{N^2}$,
+%
+\begin{align*}
+\vect{z}_{2,1}&=
+N\vect{z}_{3,1}=
+\begin{bmatrix}
+ 1 & -5 & -1 & 2 & 6 \\
+ 0 & 0 & 0 & -1 & -1 \\
+ -2 & 4 & 2 & -1 & -6 \\
+ 0 & 0 & 0 & 2 & 2 \\
+ -1 & 3 & 1 & -2 & -5
+\end{bmatrix}
+\colvector{0\\1\\1\\1\\1}
+=
+\colvector{2 \\ -2 \\ -1 \\ 4 \\ -3}
+\end{align*}
+%
+We have a basis for the two-dimensional subspace $\nsp{N^1}$ and we can add to that the vector $\vect{z}_{2,1}$ and we have three of four basis vectors for $\nsp{N^2}$.  These three vectors span the subspace we call $Q_2$.  We need a fourth vector outside of $Q_2$ to complete a basis of the four-dimensional subspace $\nsp{N^2}$.  Check that the vector
+%
+\begin{align*}
+\vect{z}_{2,2}=\colvector{3\\1\\3\\1\\1}
+\end{align*}
+%
+is an element of $\nsp{N^2}$ that lies outside of the subspace $Q_2$.  This vector was constructed by getting a nice basis for $Q_2$ and forming a linear combination of this basis that specifies three of the five entries of the result.  Of the remaining two entries, one was changed to move the vector outside of $Q_2$ and this was followed by a change to the remaining entry to place the vector into  $\nsp{N^2}$.  The vector $\vect{z}_{2,2}$ is the lone basis vector for the subspace we call $R_2$.\par
+%
+The remaining two basis vectors are easy to come by.  They are the result of applying $N$ to each of the two most recently determined basis vectors,
+%
+\begin{align*}
+\vect{z}_{1,1}&=N\vect{z}_{2,1}=\colvector{3 \\ -1 \\ 0 \\ 2 \\ -2}
+&
+\vect{z}_{1,2}&=N\vect{z}_{2,2}=\colvector{3 \\ -2 \\ -3 \\ 4 \\ -4}
+\end{align*}
+%
+Now we reorder these basis vectors, to arrive at the basis
+%
+\begin{align*}
+C
+&=\set{\vect{z}_{1,1},\,\vect{z}_{2,1},\,\vect{z}_{3,1},\,\vect{z}_{1,2},\,\vect{z}_{2,2}}
+=\set{
+\colvector{3 \\ -1 \\ 0 \\ 2 \\ -2},\,
+\colvector{2 \\ -2 \\ -1 \\ 4 \\ -3},\,
+\colvector{0 \\ 1 \\ 1 \\ 1 \\ 1},\,
+\colvector{3 \\ -2 \\ -3 \\ 4 \\ -4},\,
+\colvector{3 \\ 1 \\ 3 \\ 1 \\ 1}
+}
+\end{align*}
+%
+A matrix representation of $N$ relative to $C$ is
+%
+\begin{align*}
+\begin{bmatrix}
+0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 
+\end{bmatrix}
+&=
+\begin{bmatrix}
+\jordan{3}{0} & \zeromatrix \\
+\zeromatrix & \jordan{2}{0} \\
+\end{bmatrix}
+%
+\end{align*}
+%
+To obtain a matrix representation of $M$, we add back in the matrix $(-1)I_5$, placing the eigenvalue back along the diagonal, and slightly modifying the Jordan blocks,
+%
+\begin{align*}
+\begin{bmatrix}
+-1 & 1 & 0 & 0 & 0 \\
+0 & -1 & 1 & 0 & 0 \\
+0 & 0 & -1 & 0 & 0 \\
+0 & 0 & 0 & -1 & 1 \\
+0 & 0 & 0 & 0 & -1 
+\end{bmatrix}
+&=
+\begin{bmatrix}
+\jordan{3}{-1} & \zeromatrix \\
+\zeromatrix & \jordan{2}{-1} \\
+\end{bmatrix}
+%
+\end{align*}
+%
+The basis $C$ yields a pleasant matrix representation for the {\em restriction} of the linear transformation $T-(-1)I$ to the generalized eigenspace $\geneigenspace{T}{-1}$.  However, we must remember that these vectors in $\complex{5}$ are representations of vectors in $\complex{10}$ relative to the basis $F$.  Each needs to be ``un-coordinatized'' before joining our final basis.  Here we go,
+%
+\begin{align*}
+\vect{v}_6&=\vectrepinv{F}{\colvector{3 \\ -1 \\ 0 \\ 2 \\ -2}}=
+3\colvector{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+(-1)\colvector{-1 \\ -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+0\colvector{1 \\ 0 \\ 0 \\ -1 \\ 0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 0}+
+2\colvector{-1 \\ -1 \\ 0 \\ 0 \\ 0 \\ -1 \\ 0 \\ 1 \\ 0 \\ 0}+
+(-2)\colvector{-1 \\ 0 \\ 0 \\ 2 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+=
+\colvector{-2 \\ -1 \\ 3 \\ -3 \\ -1 \\ 2 \\ 0 \\ 2 \\ 0 \\ -2}\\
+%
+\vect{v}_7&=\vectrepinv{F}{\colvector{2 \\ -2 \\ -1 \\ 4 \\ -3}}=
+2\colvector{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+(-2)\colvector{-1 \\ -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+(-1)\colvector{1 \\ 0 \\ 0 \\ -1 \\ 0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 0}+
+4\colvector{-1 \\ -1 \\ 0 \\ 0 \\ 0 \\ -1 \\ 0 \\ 1 \\ 0 \\ 0}+
+(-3)\colvector{-1 \\ 0 \\ 0 \\ 2 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+=
+\colvector{-2 \\ -2 \\ 2 \\ -3 \\ -2 \\ 0 \\ -1 \\ 4 \\ 0 \\ -3}\\
+%
+\vect{v}_8&=\vectrepinv{F}{\colvector{0 \\ 1 \\ 1 \\ 1 \\ 1}}=
+0\colvector{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+1\colvector{-1 \\ -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+1\colvector{1 \\ 0 \\ 0 \\ -1 \\ 0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 0}+
+1\colvector{-1 \\ -1 \\ 0 \\ 0 \\ 0 \\ -1 \\ 0 \\ 1 \\ 0 \\ 0}+
+1\colvector{-1 \\ 0 \\ 0 \\ 2 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+=
+\colvector{-2 \\ -2 \\ 0 \\ 0 \\ 1 \\ -1 \\ 1 \\ 1 \\ 0 \\ 1}\\
+%
+\vect{v}_9&=\vectrepinv{F}{\colvector{3 \\ -2 \\ -3 \\ 4 \\ -4}}=
+3\colvector{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+(-2)\colvector{-1 \\ -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+(-3)\colvector{1 \\ 0 \\ 0 \\ -1 \\ 0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 0}+
+4\colvector{-1 \\ -1 \\ 0 \\ 0 \\ 0 \\ -1 \\ 0 \\ 1 \\ 0 \\ 0}+
+(-4)\colvector{-1 \\ 0 \\ 0 \\ 2 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+=
+\colvector{-4 \\ -2 \\ 3 \\ -3 \\ -2 \\ -2 \\ -3 \\ 4 \\ 0 \\ -4}\\
+%
+\vect{v}_{10}&=\vectrepinv{F}{\colvector{3 \\ 1 \\ 3 \\ 1 \\ 1}}=
+3\colvector{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+1\colvector{-1 \\ -1 \\ 0 \\ -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0}+
+3\colvector{1 \\ 0 \\ 0 \\ -1 \\ 0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 0}+
+1\colvector{-1 \\ -1 \\ 0 \\ 0 \\ 0 \\ -1 \\ 0 \\ 1 \\ 0 \\ 0}+
+1\colvector{-1 \\ 0 \\ 0 \\ 2 \\ 0 \\ -2 \\ 0 \\ 0 \\ 0 \\ 1}
+=
+\colvector{-3 \\ -2 \\ 3 \\ -2 \\ 1 \\ 3 \\ 3 \\ 1 \\ 0 \\ 1}
+%
+\end{align*}
+%
+To summarize, we list the entire basis $B=\set{\vectorlist{v}{10}}$,
+%
+\begin{align*}
+\vect{v}_1&=\colvector{2 \\ 1 \\ -1 \\ 1 \\ -1 \\ 2 \\ 1 \\ 0 \\ 1 \\ 0}
+&
+\vect{v}_2&=\colvector{1 \\ 1 \\ -2 \\ 2 \\ 0 \\ -1 \\ 0 \\ -1 \\ 0 \\ 1}
+&
+\vect{v}_3&=\colvector{-1 \\ 0 \\ 2 \\ -1 \\ 0 \\ 2 \\ 0 \\ 0 \\ 0 \\ -1}
+&
+\vect{v}_4&=\colvector{0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 1 \\ 1 \\ 0 \\ 0 \\ 0}
+&
+\vect{v}_5&=\colvector{1 \\ 2 \\ -1 \\ 2 \\ -1 \\ 2 \\ 1 \\ -1 \\ 1 \\ 0}\\
+%%
+%%
+\vect{v}_6&=\colvector{-2 \\ -1 \\ 3 \\ -3 \\ -1 \\ 2 \\ 0 \\ 2 \\ 0 \\ -2}
+&
+\vect{v}_7&=\colvector{-2 \\ -2 \\ 2 \\ -3 \\ -2 \\ 0 \\ -1 \\ 4 \\ 0 \\ -3}
+&
+\vect{v}_8&=\colvector{-2 \\ -2 \\ 0 \\ 0 \\ 1 \\ -1 \\ 1 \\ 1 \\ 0 \\ 1}
+&
+\vect{v}_9&=\colvector{-4 \\ -2 \\ 3 \\ -3 \\ -2 \\ -2 \\ -3 \\ 4 \\ 0 \\ -4}
+&
+\vect{v}_{10}&=\colvector{-3 \\ -2 \\ 3 \\ -2 \\ 1 \\ 3 \\ 3 \\ 1 \\ 0 \\ 1}
+\end{align*}
+%
+The resulting matrix representation is
+%
+\begin{align*}
+\matrixrep{T}{B}{B}
+&=
+\begin{bmatrix}
+ 2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & -1 & 1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & -1 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1
+\end{bmatrix}
+%
+\end{align*}
+%
+If you are not inclined to check all of these computations, here are a few that should convince you of the amazing properties of the basis $B$.  Compute the matrix-vector products $A\vect{v}_i$, $1\leq i\leq 10$.  In each case the result will be a vector of the form $\lambda\vect{v}_i+\delta\vect{v}_{i-1}$, where $\lambda$ is one of the eigenvalues (you should be able to predict ahead of time {\em which} one) and $\delta\in\set{0,1}$.\par
+%
+Alternatively, if we can write inputs to the linear transformation $T$ as linear combinations of the vectors in $B$ (which we can do uniquely since $B$ is a basis, \acronymref{theorem}{VRRB}), then the ``action'' of $T$ is reduced to a matrix-vector product  with the exceedingly simple matrix that is the Jordan canonical form.  Wow!
+%
+\end{example}
+%
+%
+%% TODO:  Needs another big example
+%
+\subsect{CHT}{Cayley-Hamilton Theorem}
+%
+Jordan was a French mathematician who was active in the late 1800's.  Cayley and Hamilton were 19th-century contemporaries of Jordan from Britain.  The theorem that bears their names is perhaps one of the most celebrated in basic linear algebra.  While our result applies only to vector spaces and linear transformations with scalars from the set of complex numbers, $\complexes$, the result is equally true if we restrict our scalars to the real numbers, $\real{\null}$.  It says that every matrix satisfies its own characteristic polynomial.
+%
+\begin{theorem}{CHT}{Cayley-Hamilton Theorem}{Cayley-Hamilton}
+Suppose $A$ is a square matrix with characteristic polynomial $\charpoly{A}{x}$.  Then $\charpoly{A}{A}=\zeromatrix$.
+\end{theorem}
+%
+\begin{proof}
+Suppose $B$ and $C$ are similar matrices via the matrix $S$, $B=\similar{C}{S}$, and $q(x)$ is any polynomial.  Then $q\left(B\right)$ is similar to $q\left(C\right)$ via $S$, $q\left(B\right)=\similar{q\left(C\right)}{S}$.  (See \acronymref{example}{HPDM} for hints on how to convince yourself of this.)\par
+%
+By \acronymref{theorem}{JCFLT} and \acronymref{theorem}{SCB} we know $A$ is similar to a matrix, $J$, in Jordan canonical form.  Suppose $\scalarlist{\lambda}{m}$ are the distinct eigenvalues of $A$ (and are therefore the eigenvalues and diagonal entries of $J$).  Then by \acronymref{theorem}{EMRCP} and \acronymref{definition}{AME}, we can factor the characteristic polynomial as 
+%
+\begin{align*}
+\charpoly{A}{x}&=
+\left(x-\lambda_1\right)^{\algmult{A}{\lambda_1}}
+\left(x-\lambda_2\right)^{\algmult{A}{\lambda_2}}
+\left(x-\lambda_3\right)^{\algmult{A}{\lambda_3}}
+\cdots
+\left(x-\lambda_m\right)^{\algmult{A}{\lambda_m}}
+\end{align*}
+%
+On substituting the matrix $J$ we have
+%
+\begin{align*}
+\charpoly{A}{J}&=
+\left(J-\lambda_1 I\right)^{\algmult{A}{\lambda_1}}
+\left(J-\lambda_2 I\right)^{\algmult{A}{\lambda_2}}
+\left(J-\lambda_3 I\right)^{\algmult{A}{\lambda_3}}
+\cdots
+\left(J-\lambda_m I\right)^{\algmult{A}{\lambda_m}}
+\end{align*}
+%
+The matrix $J-\lambda_k I$ will be block diagonal, and the block arising from the generalized eigenspace for $\lambda_k$ will have zeros along the diagonal.  Suitably adjusted for matrices (rather than linear transformations), \acronymref{theorem}{RGEN} tells us this matrix is nilpotent.  Since the size of this nilpotent matrix is equal 
+to the algebraic multiplicity of $\lambda_k$, the power $\left(J-\lambda_k I\right)^{\algmult{A}{\lambda_k}}$ will be a zero matrix (\acronymref{theorem}{KPNLT}) in the location of this block.\par
+%
+Repeating this argument for each of the $m$ eigenvalues will place a zero block in some term of the product at every location on the diagonal.  The entire product will then be zero blocks on the diagonal, and zero off the diagonal.  In other words, it will be the zero matrix.  Since $A$ and $J$ are similar, $\charpoly{A}{A}=\charpoly{A}{J}=\zeromatrix$.
+%
+\end{proof}
+%
+%
+%  End  JCF.tex
+  
+  
+

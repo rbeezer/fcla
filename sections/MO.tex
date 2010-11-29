@@ -1,0 +1,590 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section MO
+%%  Matrix Operations
+%%
+%%%%%%%%%%%
+%
+In this section we will back up and start simple.  First a definition of a totally general set of matrices.
+%
+\begin{definition}{VSM}{Vector Space of $m\times n$ Matrices}{vector space of matrices}
+The vector space $M_{mn}$ is the set of all $m\times n$ matrices with entries from the set of complex numbers.
+\denote{VSM}{Vector Space of Matrices}{$M_{mn}$}{vector space of matrices}
+\end{definition}
+%
+\subsect{MEASM}{Matrix Equality, Addition, Scalar Multiplication}
+%
+Just as we made, and used, a careful definition of equality for column vectors, so too, we have precise definitions for matrices.
+%
+\begin{definition}{ME}{Matrix Equality}{matrix!equality}
+The $m\times n$ matrices $A$ and $B$ are \define{equal}, written $A=B$ provided $\matrixentry{A}{ij}=\matrixentry{B}{ij}$ for all $1\leq i\leq m$, $1\leq j\leq n$.
+\denote{ME}{Matrix Equality}{$A=B$}{matrix!equality}
+\end{definition}
+%
+So equality of matrices translates to the equality of complex numbers, on an entry-by-entry basis.  Notice that we now have yet another definition that uses the symbol ``='' for shorthand.  Whenever a theorem has a conclusion saying two matrices are equal (think about your objects), we will consider appealing to this definition as a way of formulating the top-level structure of the proof.
+%
+We will now define two operations on the set $M_{mn}$.  Again, we will overload a symbol (`+') and a convention (juxtaposition for scalar multiplication).
+%
+\begin{definition}{MA}{Matrix Addition}{matrix!addition}
+Given the $m\times n$ matrices  $A$ and $B$, define the \define{sum} of $A$ and $B$ as an $m\times n$ matrix, written $A+B$, according to
+%
+\begin{align*}
+\matrixentry{A+B}{ij}&=\matrixentry{A}{ij}+\matrixentry{B}{ij}
+&&1\leq i\leq m,\,1\leq j\leq n
+\end{align*}
+%
+\denote{MA}{Matrix Addition}{$A+B$}{matrix!addition}
+\end{definition}
+%
+So matrix addition takes two matrices of the same size and combines them (in a natural way!) to create a new matrix of the same size.  Perhaps this is the ``obvious'' thing to do, but it doesn't relieve us from the obligation to state it carefully.
+%
+\begin{example}{MA}{Addition of two matrices in $M_{23}$}{matrix addition}
+If
+%
+\begin{align*}
+A=
+\begin{bmatrix}
+2&-3&4\\
+1&0&-7
+\end{bmatrix}
+&&
+B=
+\begin{bmatrix}
+6&2&-4\\
+3&5&2
+\end{bmatrix}
+\end{align*}
+%
+then
+%
+\begin{equation*}
+A+B=
+\begin{bmatrix}
+2&-3&4\\
+1&0&-7
+\end{bmatrix}
++
+\begin{bmatrix}
+6&2&-4\\
+3&5&2
+\end{bmatrix}
+=
+\begin{bmatrix}
+2+6&-3+2&4+(-4)\\
+1+3&0+5&-7+2
+\end{bmatrix}
+=\begin{bmatrix}
+8&-1&0\\
+4&5&-5
+\end{bmatrix}
+\end{equation*}
+%
+\end{example}
+%
+Our second operation takes two objects of different types, specifically a number and a matrix, and combines them to create another matrix.  As with vectors, in this context we call a number a \define{scalar} in order to emphasize that it is not a matrix.
+%
+\begin{definition}{MSM}{Matrix Scalar Multiplication}{matrix!scalar multiplication}
+Given the $m\times n$ matrix $A$
+and the scalar $\alpha\in\complex{\null}$, the \define{scalar multiple} of $A$ is an $m\times n$ matrix, written $\alpha A$ and defined according to
+%
+\begin{align*}
+\matrixentry{\alpha A}{ij}&=\alpha\matrixentry{A}{ij}&&
+\quad 1\leq i\leq m,\,1\leq j\leq n
+\end{align*}
+%
+\denote{MSM}{Matrix Scalar Multiplication}{$\alpha A$}{matrix!scalar multiplication}
+\end{definition}
+%
+Notice again that we have yet another kind of multiplication, and it is again written putting two symbols side-by-side.  Computationally, scalar matrix multiplication is very easy.
+%
+\begin{example}{MSM}{Scalar multiplication in $M_{32}$}{matrix scalar multiplication}
+If
+%
+\begin{equation*}
+A=
+\begin{bmatrix}
+2&8\\
+-3&5\\0&1
+\end{bmatrix}
+\end{equation*}
+%
+and $\alpha=7$, then
+%
+\begin{equation*}
+\alpha A=
+7\begin{bmatrix}2&8\\-3&5\\0&1\end{bmatrix}=
+\begin{bmatrix}7(2)&7(8)\\7(-3)&7(5)\\7(0)&7(1)\end{bmatrix}=
+\begin{bmatrix}14&56\\-21&35\\0&7\end{bmatrix}
+\end{equation*}
+%
+\end{example}
+%
+%  TODO: MLC: matrix linear combos:  
+%  Its usually straightforward to have a calculator do these computations.
+%
+%
+\subsect{VSP}{Vector Space Properties}
+%
+With definitions of matrix addition and scalar multiplication we can now state, and prove, several properties of each operation, and some properties that involve their interplay.  We now collect ten of them here for later reference.
+%
+%
+\begin{theorem}{VSPM}{Vector Space Properties of Matrices}{vector space properties!matrices}
+Suppose that $M_{mn}$ is the set of all $m\times n$ matrices (\acronymref{definition}{VSM}) with addition and scalar multiplication as defined in \acronymref{definition}{MA} and \acronymref{definition}{MSM}.  Then
+\begin{itemize}
+%
+\item\property{ACM}{Additive Closure, Matrices}{additive closure!matrices}
+If $A,\,B\in M_{mn}$, then $A+B\in M_{mn}$.
+%
+\item\property{SCM}{Scalar Closure, Matrices}{scalar closure!matrices}
+If $\alpha\in\complex{\null}$ and $A\in M_{mn}$, then $\alpha A\in M_{mn}$.
+%
+\item\property{CM}{Commutativity, Matrices}{commutativity!matrices}
+If $A,\,B\in M_{mn}$, then $A+B=B+A$.
+%
+\item\property{AAM}{Additive Associativity, Matrices}{additive associativity!matrices}
+If $A,\,B,\,C\in M_{mn}$, then $A+\left(B+C\right)=\left(A+B\right)+C$.
+%
+\item\property{ZM}{Zero Vector, Matrices}{zero vector!matrices}
+There is a matrix, $\zeromatrix$, called the \define{zero matrix}, such that  $A+\zeromatrix=A$  for all $A\in M_{mn}$.
+%
+\item\property{AIM}{Additive Inverses, Matrices}{additive inverses!matrices}
+If $A\in M_{mn}$, then there exists a matrix $-A\in M_{mn}$ so that $A+(-A)=\zeromatrix$.
+%
+\item\property{SMAM}{Scalar Multiplication Associativity, Matrices}{scalar multiplication associativity!matrices}
+If $\alpha,\,\beta\in\complex{\null}$ and $A\in M_{mn}$, then $\alpha(\beta A)=(\alpha\beta)A$.
+%
+\item\property{DMAM}{Distributivity across Matrix Addition, Matrices}{distributivity, matrix addition!matrices}
+If $\alpha\in\complex{\null}$ and $A,\,B\in M_{mn}$, then $\alpha(A+B)=\alpha A+\alpha B$.
+%
+\item\property{DSAM}{Distributivity across Scalar Addition, Matrices}{distributivity, scalar addition!matrices}
+If $\alpha,\,\beta\in\complex{\null}$ and $A\in M_{mn}$, then 
+$(\alpha+\beta)A=\alpha A+\beta A$.
+%
+\item\property{OM}{One, Matrices}{one!matrices}
+If $A\in M_{mn}$, then $1A=A$.
+%
+\end{itemize}
+\end{theorem}
+%
+\begin{proof}
+While some of these properties seem very obvious, they all require proof.  However, the proofs are not very interesting, and border on tedious. We'll prove one version of distributivity very carefully, and you can test your proof-building skills on some of the others.  We'll give our new notation for matrix entries a workout here.  Compare the style of the proofs here with those given for vectors in \acronymref{theorem}{VSPCV} --- while the objects here are more complicated, our notation makes the proofs cleaner.\par
+%
+To prove \acronymref{property}{DSAM},  $(\alpha+\beta)A=\alpha A+\beta A$, we need to establish the equality of two matrices (see \acronymref{technique}{GS}).  \acronymref{definition}{ME} says we need to establish the equality of their entries, one-by-one.  How do we do this, when we do not even know how many entries the two matrices might have?  This is where \acronymref{notation}{ME} comes into play.  Ready?  Here we go.\par
+%
+For {\em any} $i$ and $j$, $1\leq i\leq m$, $1\leq j\leq n$,
+%
+\begin{align*}
+\matrixentry{(\alpha+\beta)A}{ij}&=
+(\alpha+\beta)\matrixentry{A}{ij}&&\text{\acronymref{definition}{MSM}}\\
+&=\alpha\matrixentry{A}{ij}+\beta\matrixentry{A}{ij}&&\text{Distributivity in $\complex{\null}$}\\
+&=\matrixentry{\alpha A}{ij}+\matrixentry{\beta A}{ij}&&\text{\acronymref{definition}{MSM}}\\
+&=\matrixentry{\alpha A+\beta A}{ij}&&\text{\acronymref{definition}{MA}}
+\end{align*}
+%
+There are several things to notice here.  (1)  Each equals sign is an equality of numbers.  (2) The two ends of the equation, being true for any $i$ and $j$, allow us to conclude the equality of the matrices by \acronymref{definition}{ME}.  (3)  There are several plus signs, and several instances of juxtaposition.  Identify each one, and state exactly what operation is being represented by each. 
+%
+\end{proof}
+%
+For now, note the similarities between \acronymref{theorem}{VSPM} about matrices and \acronymref{theorem}{VSPCV} about vectors.\par
+%
+The zero matrix described in this theorem, $\zeromatrix$, is what you would expect --- a matrix full of zeros.
+%
+\begin{definition}{ZM}{Zero Matrix}{matrix!zero}
+The $m\times n$ \define{zero matrix} is written as $\zeromatrix=\zeromatrix_{m\times n}$ and defined by $\matrixentry{\zeromatrix}{ij}=0$, for all $1\leq i\leq m$, $1\leq j\leq n$.
+\denote{ZM}{Zero Matrix}{$\zeromatrix$}{zero matrix}
+\end{definition}
+%
+\subsect{TSM}{Transposes and Symmetric Matrices}
+%
+We describe one more common operation we can perform on matrices.  Informally, to transpose a matrix is to build a new matrix by swapping its rows and columns.
+%
+\begin{definition}{TM}{Transpose of a Matrix}{matrix!transpose}
+Given an $m\times n$ matrix $A$, its \define{transpose} is the $n\times m$ matrix $\transpose{A}$ given by
+%
+\begin{equation*}
+\matrixentry{\transpose{A}}{ij}=\matrixentry{A}{ji},\quad 1\leq i\leq n,\,1\leq j\leq m.
+\end{equation*}
+%
+\denote{TM}{Transpose of a Matrix}{$\transpose{A}$}{transpose}
+\end{definition}
+%
+\begin{example}{TM}{Transpose of a $3\times 4$ matrix}{transpose}
+Suppose
+%
+\begin{equation*}
+D=
+\begin{bmatrix}
+3&7&2&-3\\
+-1&4&2&8\\
+0&3&-2&5
+\end{bmatrix}.
+\end{equation*}
+%
+We could formulate the transpose, entry-by-entry, using the definition.  But it is easier to just systematically rewrite rows as columns (or vice-versa).  The form of the definition given will be more useful in proofs.  So we have
+%
+\begin{equation*}
+\transpose{D}=
+\begin{bmatrix}
+3&-1&0\\
+7&4&3\\
+2&2&-2\\
+-3&8&5
+\end{bmatrix}
+\end{equation*}
+%
+\end{example}
+%
+It will sometimes happen that a matrix is equal to its transpose.  In this case, we will call a matrix \define{symmetric}.  These matrices occur naturally in certain situations, and also have some nice properties, so it is worth stating the definition carefully.  Informally a matrix is symmetric if we can ``flip'' it about the main diagonal (upper-left corner, running down to the lower-right corner) and have it look unchanged.
+%
+\begin{definition}{SYM}{Symmetric Matrix}{matrix!symmetric}
+The matrix $A$ is \define{symmetric} if $A=\transpose{A}$.
+\end{definition}
+%
+\begin{example}{SYM}{A symmetric $5\times 5$ matrix}{symmetric matrix}
+The matrix
+%
+\begin{equation*}
+E=
+\begin{bmatrix}
+2&3&-9&5&7\\
+3&1&6&-2&-3\\
+-9&6&0&-1&9\\
+5&-2&-1&4&-8\\
+7&-3&9&-8&-3
+\end{bmatrix}
+\end{equation*}
+%
+is symmetric.
+\end{example}
+%
+You might have noticed that \acronymref{definition}{SYM} did not specify the size of the matrix $A$, as has been our custom.  That's because it wasn't necessary.  An alternative would have been to state the definition just for square matrices, but this is the substance of the next proof.  
+%
+\techniqueinline{P}{Practice}{practice}
+{Before reading the next proof, we want to offer you some advice about how to become more proficient at constructing proofs.  Perhaps you can apply this advice to the next theorem.}
+{Have a peek at \acronymref{technique}{P} now.}
+%
+\begin{theorem}{SMS}{Symmetric Matrices are Square}{symmetric matrices}
+Suppose that $A$ is a symmetric matrix.  Then $A$ is square.
+\end{theorem}
+%
+\begin{proof}
+We start by specifying $A$'s size, without assuming it is square, since we are trying to {\em prove} that, so we can't also assume it.  Suppose $A$ is an $m\times n$ matrix.  Because $A$ is symmetric, we know by \acronymref{definition}{SM} that $A=\transpose{A}$.  So, in particular, \acronymref{definition}{ME} requires that $A$ and $\transpose{A}$ must have the same size.  The size of $\transpose{A}$ is $n\times m$.  Because $A$ has $m$ rows and $\transpose{A}$ has $n$ rows, we conclude that $m=n$, and hence $A$ must be square by \acronymref{definition}{SQM}.
+\end{proof}
+%
+We finish this section with three easy theorems, but they illustrate the interplay of our three new operations, our new notation, and the techniques used to prove matrix equalities.
+%
+\begin{theorem}{TMA}{Transpose and Matrix Addition}{transpose!matrix addition}
+Suppose that $A$ and $B$ are $m\times n$ matrices.  Then  $\transpose{(A+B)}=\transpose{A}+\transpose{B}$.
+%
+\end{theorem}
+%
+\begin{proof}
+The statement  to be proved is an equality of matrices, so we work entry-by-entry and use \acronymref{definition}{ME}.  Think carefully about the objects involved here, and the many uses of the plus sign.  For $1\leq i\leq m$, $1\leq j\leq n$,
+%
+\begin{align*}
+\matrixentry{\transpose{(A+B)}}{ij}
+&=\matrixentry{A+B}{ji}&&\text{\acronymref{definition}{TM}}\\
+&=\matrixentry{A}{ji}+\matrixentry{B}{ji}&&\text{\acronymref{definition}{MA}}\\
+&=\matrixentry{\transpose{A}}{ij}+\matrixentry{\transpose{B}}{ij}&&\text{\acronymref{definition}{TM}}\\
+&=\matrixentry{\transpose{A}+\transpose{B}}{ij}&&\text{\acronymref{definition}{MA}}
+%
+\end{align*}
+%
+Since the matrices $\transpose{(A+B)}$ and $\transpose{A}+\transpose{B}$ agree at each entry, \acronymref{definition}{ME} tells us the two matrices are equal.
+%
+\end{proof}
+%
+\begin{theorem}{TMSM}{Transpose and Matrix Scalar Multiplication}{transpose! matrix scalar multiplication}
+Suppose that $\alpha\in\complex{\null}$ and $A$ is an $m\times n$ matrix.  Then $\transpose{(\alpha A)}=\alpha\transpose{A}$.
+%
+\end{theorem}
+%
+\begin{proof}
+The statement  to be proved is an equality of matrices, so we work entry-by-entry and use \acronymref{definition}{ME}.  Notice that the desired equality is of $n\times m$ matrices, and think carefully about the objects involved here, plus the many uses of juxtaposition.  For $1\leq i\leq m$, $1\leq j\leq n$,
+%
+\begin{align*}
+\matrixentry{\transpose{(\alpha A)}}{ji}&=
+\matrixentry{\alpha A}{ij}&&\text{\acronymref{definition}{TM}}\\
+&=\alpha\matrixentry{A}{ij}&&\text{\acronymref{definition}{MSM}}\\
+&=\alpha\matrixentry{\transpose{A}}{ji}&&\text{\acronymref{definition}{TM}}\\
+&=\matrixentry{\alpha\transpose{A}}{ji}&&\text{\acronymref{definition}{MSM}}
+\end{align*}
+%
+Since the matrices $\transpose{(\alpha A)}$ and $\alpha\transpose{A}$ agree at each entry, \acronymref{definition}{ME} tells us the two matrices are equal.
+%
+\end{proof}
+%
+\begin{theorem}{TT}{Transpose of a Transpose}{transpose of a transpose}
+\index{transpose!scalar multiplication}
+Suppose that $A$ is an $m\times n$ matrix.  Then $\transpose{\left(\transpose{A}\right)}=A$.
+%
+\end{theorem}
+%
+\begin{proof}
+We again want to prove an equality of matrices, so we work entry-by-entry and use \acronymref{definition}{ME}.  For $1\leq i\leq m$, $1\leq j\leq n$,
+%
+\begin{align*}
+%
+\matrixentry{\transpose{\left(\transpose{A}\right)}}{ij}
+&=\matrixentry{\transpose{A}}{ji}&&\text{\acronymref{definition}{TM}}\\
+&=\matrixentry{A}{ij}&&\text{\acronymref{definition}{TM}}
+%
+\end{align*}
+%
+\end{proof}
+%
+\computenote{\boolean{hasmathematica}\or\boolean{hasti86}\or\boolean{hassage}}
+{Its usually straightforward to coax the transpose of a matrix out of a computational device.}
+{
+\ifthenelse{\boolean{hasmathematica}}
+{\computedevicetopic{MMA}{Mathematica}{mathematica}{TM}{Transpose of a Matrix}{transpose of a matrix}}{\relax}%
+\ifthenelse{\boolean{hasti86}}
+{\computedevicetopic{TI86}{TI-86}{ti86}{TM}{Transpose of a Matrix}{transpose of a matrix}}{\relax}%
+\ifthenelse{\boolean{hassage}}
+{\computedevicetopic{SAGE}{SAGE}{sage}{TM}{Transpose of a Matrix}{transpose of a matrix}}{\relax}%
+}{
+\ifthenelse{\boolean{hasmathematica}}{\quad\acronymref{computation}{TM.MMA}}{\relax}%
+\ifthenelse{\boolean{hasti86}}{\quad\acronymref{computation}{TM.TI86}}{\relax}%
+\ifthenelse{\boolean{hassage}}{\quad\acronymref{computation}{TM.SAGE}}{\relax}%
+}
+%
+\subsect{MCC}{Matrices and Complex Conjugation}
+%
+As we did with vectors (\acronymref{definition}{CCCV}), we can define what it means to take the conjugate of a matrix.
+%
+\begin{definition}{CCM}{Complex Conjugate of a Matrix}{conjugate!matrix}
+Suppose $A$ is an $m\times n$ matrix.  Then the \define{conjugate} of $A$, written $\conjugate{A}$ is an $m\times n$ matrix defined by
+%
+\begin{equation*}
+\matrixentry{\conjugate{A}}{ij}=\conjugate{\matrixentry{A}{ij}}
+\end{equation*}
+%
+\denote{CCM}{Complex Conjugate of a Matrix}{$\conjugate{A}$}{conjugate!matrix}
+\end{definition}
+%
+%
+\begin{example}{CCM}{Complex conjugate of a matrix}{matrix!complex conjugate}
+If 
+%
+\begin{equation*}
+A=
+\begin{bmatrix}
+2-i & 3 & 5+4i\\
+-3+6i & 2-3i & 0
+\end{bmatrix}
+\end{equation*}
+%
+then
+%
+\begin{equation*}
+\conjugate{A}=
+\begin{bmatrix}
+2+i & 3 & 5-4i\\
+-3-6i & 2+3i & 0
+\end{bmatrix}
+\end{equation*}
+%
+\end{example}
+%
+The interplay between the conjugate of a matrix and the two operations on matrices is what you might expect.
+%
+\begin{theorem}{CRMA}{Conjugation Respects Matrix Addition}{conjugation!matrix addition}
+Suppose that $A$ and $B$ are $m\times n$ matrices.  Then $\conjugate{A+B}=\conjugate{A}+\conjugate{B}$.
+\end{theorem}
+%
+\begin{proof}
+%
+For $1\leq i\leq m$, $1\leq j\leq n$,
+%
+\begin{align*}
+%
+\matrixentry{\conjugate{A+B}}{ij}
+&=\conjugate{\matrixentry{A+B}{ij}}&&\text{\acronymref{definition}{CCM}}\\
+&=\conjugate{\matrixentry{A}{ij}+\matrixentry{B}{ij}}&&\text{\acronymref{definition}{MA}}\\
+&=\conjugate{\matrixentry{A}{ij}}+\conjugate{\matrixentry{B}{ij}}&&\text{\acronymref{theorem}{CCRA}}\\
+&=\matrixentry{\conjugate{A}}{ij}+\matrixentry{\conjugate{B}}{ij}&&\text{\acronymref{definition}{CCM}}\\
+&=\matrixentry{\conjugate{A}+\conjugate{B}}{ij}&&\text{\acronymref{definition}{MA}}
+%
+\end{align*}
+%
+Since the matrices  $\conjugate{A+B}$ and $\conjugate{A}+\conjugate{B}$  are equal in each entry, \acronymref{definition}{ME} says that $\conjugate{A+B}=\conjugate{A}+\conjugate{B}$.
+%
+\end{proof}
+%
+\begin{theorem}{CRMSM}{Conjugation Respects Matrix Scalar Multiplication}{conjugation!matrix scalar multiplication}
+Suppose that $\alpha\in\complex{\null}$ and $A$ is an $m\times n$ matrix.  Then $\conjugate{\alpha A}=\conjugate{\alpha}\conjugate{A}$.
+\end{theorem}
+%
+\begin{proof}
+%
+For $1\leq i\leq m$, $1\leq j\leq n$,
+%
+\begin{align*}
+%
+\matrixentry{\conjugate{\alpha A}}{ij}
+&=\conjugate{\matrixentry{\alpha A}{ij}}&&\text{\acronymref{definition}{CCM}}\\
+&=\conjugate{\alpha\matrixentry{A}{ij}}&&\text{\acronymref{definition}{MSM}}\\
+&=\conjugate{\alpha}\conjugate{\matrixentry{A}{ij}}&&\text{\acronymref{theorem}{CCRM}}\\
+&=\conjugate{\alpha}\matrixentry{\conjugate{A}}{ij}&&\text{\acronymref{definition}{CCM}}\\
+&=\matrixentry{\conjugate{\alpha}\conjugate{A}}{ij}&&\text{\acronymref{definition}{MSM}}
+%
+\end{align*}
+%
+Since the matrices  $\conjugate{\alpha A}$ and $\conjugate{\alpha}\conjugate{A}$  are equal in each entry, \acronymref{definition}{ME} says that $\conjugate{\alpha A}=\conjugate{\alpha}\conjugate{A}$.
+%
+\end{proof}
+%
+%
+\begin{theorem}{CCM}{Conjugate of the Conjugate of a Matrix}{conjugate!of conjugate of a matrix}
+Suppose that $A$ is an $m\times n$ matrix.  Then $\conjugate{\left(\conjugate{A}\right)}=A$.
+\end{theorem}
+%
+\begin{proof}
+For $1\leq i\leq m$, $1\leq j\leq n$,
+%
+\begin{align*}
+%
+\matrixentry{\conjugate{\left(\conjugate{A}\right)}}{ij}
+&=\conjugate{\matrixentry{\conjugate{A}}{ij}}&&\text{\acronymref{definition}{CCM}}\\
+&=\conjugate{\conjugate{\matrixentry{A}{ij}}}&&\text{\acronymref{definition}{CCM}}\\
+&=\matrixentry{A}{ij}&&\text{\acronymref{theorem}{CCT}}%
+\end{align*}
+%
+Since the matrices  $\conjugate{\left(\conjugate{A}\right)}$ and $A$  are equal in each entry, \acronymref{definition}{ME} says that $\conjugate{\left(\conjugate{A}\right)}=A$.
+%
+\end{proof}
+%
+Finally, we will need the following result about matrix conjugation and transposes later.
+%
+\begin{theorem}{MCT}{Matrix Conjugation and Transposes}{conjugation!matrix transpose}
+Suppose that $A$ is an $m\times n$ matrix.  Then $\conjugate{\left(\transpose{A}\right)}=\transpose{\left(\conjugate{A}\right)}$.
+\end{theorem}
+%
+\begin{proof}
+%
+For $1\leq i\leq m$, $1\leq j\leq n$,
+%
+\begin{align*}
+%
+\matrixentry{\conjugate{\left(\transpose{A}\right)}}{ji}
+%
+&=\conjugate{\matrixentry{\transpose{A}}{ji}}
+&&\text{\acronymref{definition}{CCM}}\\
+%
+&=\conjugate{\matrixentry{A}{ij}}
+&&\text{\acronymref{definition}{TM}}\\
+%
+&=\matrixentry{\conjugate{A}}{ij}
+&&\text{\acronymref{definition}{CCM}}\\
+%
+&=\matrixentry{\transpose{\left(\conjugate{A}\right)}}{ji}
+&&\text{\acronymref{definition}{TM}}\\
+%
+\end{align*}
+%
+Since the matrices  $\conjugate{\left(\transpose{A}\right)}$ and $\transpose{\left(\conjugate{A}\right)}$  are equal in each entry, \acronymref{definition}{ME} says that $\conjugate{\left(\transpose{A}\right)}=\transpose{\left(\conjugate{A}\right)}$.
+%
+\end{proof}
+%
+\subsect{AM}{Adjoint of a Matrix}
+%
+The combination of transposing and conjugating a matrix will be important in subsequent sections, such as \acronymref{subsection}{MINM.UM} and \acronymref{section}{OD}.  We make a key definition here and prove some basic results in the same spirit as those above.
+%
+\begin{definition}{A}{Adjoint}{adjoint}
+If $A$ is a matrix, then its \define{adjoint} is 
+$\adjoint{A}=\transpose{\left(\conjugate{A}\right)}$.
+\denote{A}{Adjoint}{$\adjoint{A}$}{adjoint}
+\end{definition}
+%
+You will see the adjoint written elsewhere variously as $A^H$, $A^\ast$ or $A^\dagger$.  Notice that \acronymref{theorem}{MCT} says it does not really matter if we conjugate and then transpose, or transpose and then conjugate.
+%
+\begin{theorem}{AMA}{Adjoint and Matrix Addition}{adjoint!of a matrix sum}
+Suppose $A$ and $B$ are matrices of the same size.  Then $\adjoint{\left(A+B\right)}=\adjoint{A}+\adjoint{B}$.
+\end{theorem}
+%
+\begin{proof}
+%
+\begin{align*}
+\adjoint{\left(A+B\right)}
+&=\transpose{\left(\conjugate{A+B}\right)}
+&&\text{\acronymref{definition}{A}}\\
+%
+&=\transpose{\left(\conjugate{A}+\conjugate{B}\right)}
+&&\text{\acronymref{theorem}{CRMA}}\\
+%
+&=\transpose{\left(\conjugate{A}\right)}+\transpose{\left(\conjugate{B}\right)}
+&&\text{\acronymref{theorem}{TMA}}\\
+%
+&=\adjoint{A}+\adjoint{B}
+&&\text{\acronymref{definition}{A}}
+%
+\end{align*}
+%
+\end{proof}
+%
+\begin{theorem}{AMSM}{Adjoint and Matrix Scalar Multiplication}{adjoint!of matrix scalar multiplication}
+Suppose $\alpha\in\complexes$ is a scalar and $A$ is a matrix.  Then $\adjoint{\left(\alpha A\right)}=\conjugate{\alpha}\adjoint{A}$.
+\end{theorem}
+%
+\begin{proof}
+%
+\begin{align*}
+\adjoint{\left(\alpha A\right)}
+&=\transpose{\left(\conjugate{\alpha A}\right)}
+&&\text{\acronymref{definition}{A}}\\
+%
+&=\transpose{\left(\conjugate{\alpha}\conjugate{A}\right)}
+&&\text{\acronymref{theorem}{CRMSM}}\\
+%
+&=\conjugate{\alpha}\transpose{\left(\conjugate{A}\right)}
+&&\text{\acronymref{theorem}{TMSM}}\\
+%
+&=\conjugate{\alpha}\adjoint{A}
+&&\text{\acronymref{definition}{A}}
+%
+\end{align*}
+%
+\end{proof}
+%
+\begin{theorem}{AA}{Adjoint of an Adjoint}{adjoint!of an adjoint}
+Suppose that $A$ is a matrix.  Then $\adjoint{\left(\adjoint{A}\right)}=A$
+\end{theorem}
+%
+\begin{proof}
+%
+\begin{align*}
+\adjoint{\left(\adjoint{A}\right)}
+&=\transpose{\left(\conjugate{\left(\adjoint{A}\right)}\right)}
+&&\text{\acronymref{definition}{A}}\\
+%
+&=\conjugate{\left(\transpose{\left(\adjoint{A}\right)}\right)}
+&&\text{\acronymref{theorem}{MCT}}\\
+%
+&=\conjugate{\left(\transpose{\left(\transpose{\left(\conjugate{A}\right)}\right)}\right)}
+&&\text{\acronymref{definition}{A}}\\
+%
+&=\conjugate{\left(\conjugate{A}\right)}
+&&\text{\acronymref{theorem}{TT}}\\
+%
+&=A
+&&\text{\acronymref{theorem}{CCM}}
+%
+\end{align*}
+%
+\end{proof}
+%
+Take note of how the theorems in this section, while simple, build on earlier theorems and definitions and never descend to the level of entry-by-entry proofs based on \acronymref{definition}{ME}.  In other words, the equal signs that appear in the previous proofs are equalities of matrices, not scalars (which is the opposite of a proof like that of \acronymref{theorem}{TMA}).
+%
+%  End  mo.tex
+
+
+

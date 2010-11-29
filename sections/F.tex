@@ -1,0 +1,271 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section F
+%%  Fields
+%%
+%%%%%%%%%%%
+%
+%% {\sc\large This Section Under Construction}\par\bigskip
+{\sc\large Draft: This Section Complete, But Subject To Change}\par\bigskip
+%
+We have chosen to present introductory linear algebra in the Core (\acronymref{part}{C}) using scalars from the set of complex numbers, $\complexes$.  We could have instead chosen to use scalars from the set of real numbers, $\real{\null}$.  This would have presented certain difficulties when we encountered characteristic polynomials with complex roots (\acronymref{definition}{CP}) or when we needed to be sure every matrix had at least one eigenvalue (\acronymref{theorem}{EMHE}).  However, much of the basics would be unchanged.  The definition of a vector space would not change, nor would the ideas of linear independence, spanning, or bases.  Linear transformations would still behave the same and we would still obtain matrix representations, though our ideas about canonical forms would have to be adjusted slightly.\par
+%
+The real numbers and the complex numbers are both examples of what are called fields, and we can ``do'' linear algebra in just a bit more generality by letting our scalars take values from some unspecified field.  So in this section we will describe exactly what constitutes a field, give some finite examples, and discuss another connection between fields and vector spaces.   Vector spaces over finite fields are very important in certain applications, so this is partially background for other topics.  As such, we will not prove every claim we make.
+%
+\subsect{F}{Fields}
+%
+Like a vector space, a field is a set along with two binary operations.  The distinction is that both operations accept two elements of the set, and then produce a new element of the set.  In a vector space we have two sets --- the vectors and the scalars, and scalar multiplication mixes one of each to produce a vector.  Here is the careful definition of a field.
+%
+\begin{definition}{F}{Field}{field}
+%
+Suppose that $F$ is a set upon which we have defined two operations: (1) \define{addition}, which combines two elements of $F$ and is denoted by ``+'', and (2) \define{multiplication}, which combines two elements of $F$ and is denoted by juxtaposition.   Then $F$, along with the two operations, is a \define{field} if the following properties hold.
+%
+\begin{itemize}
+%
+\item\property{ACF}{Additive Closure, Field}{additive closure!field}
+If $\alpha,\beta\in F$, then $\alpha+\beta\in F$.
+%
+\item\property{MCF}{Multiplicative Closure, Field}{multiplicative closure!field}
+If $\alpha,\beta\in F$, then $\alpha\beta\in F$.
+%
+\item\property{CAF}{Commutativity of Addition, Field}{commutativity!additive!field}
+If $\alpha,\beta\in F$, then $\alpha+\beta=\beta+\alpha$.
+%
+\item\property{CMF}{Commutativity of Multiplication, Field}{commutativity!multiplicative!field}
+If $\alpha,\beta\in F$, then $\alpha\beta=\beta\alpha$.
+%
+\item\property{AAF}{Additive Associativity, Field}{associativity!additive!field}
+If $\alpha,\,\beta,\,\gamma\in F$, then $\alpha+\left(\beta+\gamma\right)=\left(\alpha+\beta\right)+\gamma$.
+%
+\item\property{MAF}{Multiplicative Associativity, Field}{associativity!multiplicative!field}
+If $\alpha,\,\beta,\,\gamma\in F$, then $\alpha\left(\beta\gamma\right)=\left(\alpha\beta\right)\gamma$.
+%
+\item\property{DF}{Distributivity, Field}{distributivity!field}
+If $\alpha,\,\beta,\,\gamma\in F$ , then $\alpha(\beta+\gamma)=\alpha\beta+\alpha\gamma$.
+%
+\item\property{ZF}{Zero, Field}{zero!field}
+There is an element, $0\in F$, called \define{zero}, such that  $\alpha+0=\alpha$  for all $\alpha\in F$.
+%
+\item\property{OF}{One, Field}{one!field}
+There is an element, $1\in F$, called \define{one}, such that  $\alpha(1)=\alpha$  for all $\alpha\in F$.
+%
+\item\property{AIF}{Additive Inverse, Field}{inverses!additive!field}
+If $\alpha\in F$, then there exists $-\alpha\in F$ so that $\alpha+ (-\alpha)=0$.
+%
+\item\property{MIF}{Multiplicative Inverse, Field}{inverses!multiplicative!field}
+If $\alpha\in F$, $\alpha\neq 0$, then there exists $\frac{1}{\alpha}\in F$ so that $\alpha\left(\frac{1}{\alpha}\right)=1$.
+%
+\end{itemize}
+%
+\end{definition}
+%
+Mostly this definition says that all the good things you might expect, really do happen in a field.  The one technicality is that the special element, $0$, the additive identity element, does not have a multiplicative inverse.  In other words, no dividing by zero.\par
+%
+This definition should remind you of \acronymref{theorem}{PCNA}, and indeed, \acronymref{theorem}{PCNA} provides the justification for the statement that the complex numbers form a field.  Another example of field is the set of rational numbers
+%
+\begin{align*}
+{\mathbb Q}=\setparts{\frac{p}{q}}{p,\,q\text{ are integers, }q\neq 0}
+\end{align*}
+%
+Of course, the real numbers, $\real{\null}$, also form a field.  It is this field that you probably studied for many years.  You began studying the integers (``counting''), then the rationals (``fractions''), then the reals (``algebra''), along with some excursions in the complex numbers (``imaginary numbers'').  So you should have seen three fields already in your previous studies.\par
+%
+Our first observation about fields is that we can go back to our definition of a vector space (\acronymref{definition}{VS}) and replace every occurrence of $\complexes$ by some general, unspecified field, $F$, and all our subsequent definitions and theorems are still true, so long as we avoid roots of polynomials (or equivalently, factoring polynomials).  So if you consult more advanced texts on linear algebra, you will see this sort of approach.  You might study some of the first theorems we proved about vector spaces in \acronymref{subsection}{VS.VSP} and work through their proofs in the more general setting of an arbitrary field.  This exercise should convince you that very little changes when we move from $\complexes$ to an arbitrary field $F$.  (See \acronymref{exercise}{F.T10}.)
+%
+\subsect{FF}{Finite Fields}
+%
+It may sound odd at first, but there exist finite fields, and even finite vector spaces.  We will find certain of these important in subsequent applications, so we collect some ideas and properties here.
+%
+\begin{definition}{IMP}{Integers Modulo a Prime}{integers!mod $p$}
+Suppose that $p$ is a prime number.  Let $\Z_p=\set{0,\,1,\,2,\,\dots,\,p-1}$.  Add and multiply elements of $\Z_p$ as integers, but whenever a result lies outside of the set $\Z_p$, find its remainder after division by $p$ and replace the result by this remainder.
+\end{definition}
+%
+We have defined a set, and two binary operations.  The result is a field.
+%
+\begin{theorem}{FIMP}{Field of Integers Modulo a Prime}{integers!mod $p$, field}
+The set of integers modulo a prime $p$, $\Z_p$, is a field.
+\end{theorem}
+%
+%
+\begin{example}{IM11}{Integers mod 11}{integers!mod 11}
+$\Z_{11}$ is a field by \acronymref{theorem}{FIMP}.  Here we provide some sample calculations.
+%
+\begin{align*}
+8 + 5 &= 2   &   -8 &= 3                   &   5 - 9 &= 7  \\
+5(7)&=2       &   \frac{1}{7}&=8       & \frac{6}{5}&=10\\
+2^5&=10     &    -1 &= 10                & \frac{1}{0} &=\text{?}
+\end{align*}
+%
+\end{example}
+%
+We can now ``do'' linear algebra using scalars from a finite field.
+%
+\begin{example}{VSIM5}{Vector space over integers mod 5}{vector space!over integers mod 5}
+Let $\left(\Z_5\right)^3$ be the set of all column vectors of length $3$ with entries from $\Z_5$.  Use $\Z_5$ as the set of scalars.   Define addition and multiplication the usual way.  We exhibit a few sample calculations.
+%
+\begin{align*}
+\colvector{2\\3\\4}+\colvector{4\\1\\3}&=\colvector{1\\4\\2}
+&
+3\colvector{2\\0\\4}&=\colvector{1\\0\\2}
+\end{align*}
+%
+We can, of course, build linear combinations, such as
+%
+\begin{align*}
+2\colvector{1\\3\\0}-4\colvector{2\\1\\1}+\colvector{1\\2\\4}&=\colvector{0\\4\\0}
+\end{align*}
+%
+which almost looks like a relation of linear dependence.  The set
+%
+\begin{align*}
+\set{
+\colvector{1\\3\\1},\,
+\colvector{2\\2\\0}
+}
+\end{align*}
+%
+is linearly independent, while the set
+%
+\begin{align*}
+\set{
+\colvector{1\\3\\1},\,
+\colvector{2\\2\\0},\,
+\colvector{4\\3\\2}
+}
+\end{align*}
+%
+is linearly dependent, as can be seen from the relation of linear dependence formed by the scalars $a_1=2$, $a_2=1$ and $a_3=4$.  To find these scalars, one would take the same approach as \acronymref{example}{LDS}, but in performing row operations to solve a homogeneous system, you would need to take care that all scalar (field) operations are performed over $\Z_5$, especially when multiplying a row by a scalar to make a leading entry equal to 1.  One more observation about this example --- the set
+%
+\begin{align*}
+\set{
+\colvector{1\\0\\0},\,
+\colvector{1\\1\\0},\,
+\colvector{1\\1\\1}
+}
+\end{align*}
+%
+is a basis for $\left(\Z_5\right)^3$, since it is both linearly independent and spans $\left(\Z_5\right)^3$.
+%
+\end{example}
+%
+In applications to computer science or electrical engineering, $\Z_2$ is the most important field, since it can be used to describe the binary nature of logic, circuitry, communications and their intertwined relationships.  The vector space of column vectors with entries from $\Z_2$, $\left(\Z_2\right)^n$, with scalars taken from $\Z_2$ is the natural extension of this idea.  Notice that $\Z_2$ has the minimum number of elements to be a field, since any field must contain a zero and a one (\acronymref{property}{ZF},\,\acronymref{property}{OF}).\par
+%
+%
+\begin{example}{SM2Z7}{Symmetric matrices of size 2 over $\Z_7$}{indesxstring}
+We can employ the field of integers modulo a prime to build other examples of vector spaces with novel fields of scalars.  Define
+%
+\begin{align*}
+S_{22}\left(\Z_7\right)
+&=
+\setparts{\begin{bmatrix}a&b\\b&c\end{bmatrix}}{a,\,b,\,c\in\Z_7}
+\end{align*}
+%
+which is the set of all $2\times 2$ symmetric matrices with entries from $\Z_7$.  Use the field $\Z_7$ as the set of scalars, and define vector addition and scalar multiplication in the natural way.  The result will be a vector space.\par
+%
+Notice that the field of scalars is finite, as is the vector space, since there are $7^3=343$ matrices in $S_{22}\left(\Z_7\right)$.
+%
+The set
+%
+\begin{align*}
+\set{
+\begin{bmatrix}1&0\\0&0\end{bmatrix},\,
+\begin{bmatrix}0&1\\1&0\end{bmatrix},\,
+\begin{bmatrix}0&0\\0&1\end{bmatrix}
+}
+\end{align*}
+%
+is a basis, so $\dimension{S_{22}\left(\Z_7\right)}=3$.
+%
+\end{example}
+%
+In a more advanced algebra course it is possible to prove that the number of elements in a finite field must be of the form $p^n$, where $p$ is a prime.  We can't go so far afield as to prove this here, but we can demonstrate an example.
+%
+\begin{example}{FF8}{Finite field of size 8}{finite field!size 8}
+Define the set $F$ as $F=\setparts{a+bt+ct^2}{a,\,b,\,c\in\Z_2}$.  Add and multiply these quantities as polynomials in the variable $t$, but replace any occurrence of $t^3$ by $t+1$.\par
+%
+This defines a set, and the two operations on elements of that set.  Do not be concerned with what $t$ ``is,''  because it isn't.  $t$ is just a handy device that makes the example a field.  We'll say a bit more about $t$ when we finish.  But first, some examples.  Remember that $1+1=0$ in $\Z_2$.  Addition is quite simple, for example,
+%
+\begin{align*}
+\left(1+t+t^2\right)+\left(1+t^2\right)&=(1+1)+(1+0)t+(1+1)t^2=t\\
+\end{align*}
+%
+Multiplication gets more involved, for example,
+%
+\begin{align*}
+\left(1+t+t^2\right)\left(1+t^2\right)
+&=1+t^2+t+t^3+t^2+t^4\\
+&=1+t+(1+1)t^2+t^3\left(1+t\right)\\
+&=1+t+\left(1+t\right)\left(1+t\right)\\
+&=1+t+1+t+t+t^2\\
+&=(1+1)+(1+1+1)t+t^2\\
+&=t+t^2\\
+\end{align*}
+%
+Every element has a multiplicative inverse (\acronymref{property}{MIF}).  What is the inverse of $t+t^2$?  Check that
+%
+\begin{align*}
+\left(t+t^2\right)\left(1+t\right)
+&=t+t^2+t^2+t^3\\
+&=t+(1+1)t^2+\left(1+t\right)\\
+&=t+1+t\\
+&=1+(1+1)t\\
+&=1
+\end{align*}
+%
+So we can write $\frac{1}{t+t^2}=1+t$.  So that you may experiment, we give you the complete addition and multiplication tables for this field.  Addition is simple, while multiplication is more interesting, so verify a few entries of each table.  Because of the commutativity of addition and multiplication (\acronymref{property}{CAF}, \acronymref{property}{CMF}), we have just listed half of each table. 
+%
+$$
+\begin{array}{l|llllllll}
++ & 0 & 1 & t & t^2 & t+1 & t^2+t & t^2+t+1 & t^2+1 \\\hline
+0      & 0 & 1 & t & t^2 & t+1 & t^2+t & t^2+t+1 & t^2+1 \\
+1      &    & 0 & t+1 & t^2+1 & t & t^2+t+1 & t^2+t & t^2 \\
+ t      &    &     & 0 & t^2+t & 1 & t^2 & t^2+1 & t^2+t+1 \\
+ t^2 &      &       &        & 0 & t^2+t+1 & t & t+1 & 1 \\
+ t+1 &      &       &        &    & 0 & t^2+1 & t^2 & t^2+t \\
+ t^2+t&   &       &       &     &    & 0 & 1 & t+1 \\
+ t^2+t+1&&       &       &     &    &    &  0 & t \\
+ t^2+1&   &      &        &    &     &        &    & 0
+\end{array}
+$$
+%
+$$
+\begin{array}{l|llllllll}
+\cdot & 0 & 1 & t & t^2 & t+1 & t^2+t & t^2+t+1 & t^2+1 \\\hline
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 1 &   & 1 & t & t^2 & t+1 & t^2+t & t^2+t+1 & t^2+1 \\
+ t &    &    & t^2 & t+1 & t^2+t & t^2+t+1 & t^2+1 & 1 \\
+ t^2 & &    &      & t^2+t & t^2+t+1 & t^2+1 & 1 & t \\
+ t+1 &   &  &      &           & t^2+1 & 1 & t & t^2 \\
+ t^2+t &  &  &    &           &           & t & t^2 & t+1 \\
+ t^2+t+1&& &  &  &          &           & 1+t & t^2+t \\
+ t^2+1 &   &  &  &  &          &           &    & t^2+t+1
+\end{array}
+$$
+%
+Note that every element of $F$ is a linear combination (with scalars from $\Z_2$) of the polynomials $1$, $t$, $t^2$.  So $B=\set{1,\,t,\,t^2}$ is a spanning set for $F$.  Further, $B$ is linearly independent since there is no nontrivial relation of linear dependence, and $B$ is a basis.  So $\dimension{F}=3$.  Of course, this paragraph presumes that $F$ is also a vector space over $\Z_2$ (which it is).
+%
+\end{example}
+%
+The defining relation for $t$ ($t^3=t+1$) in  \acronymref{example}{FF8}  arises from the polynomial $t^3+t+1$, which has no factorization with coefficients from $\Z_2$.  This is an example of an \define{irreducible polynomial}, which involves considerable theory to fully understand.  In the exercises, we provide you with a few more irreducible polynomials to experiment with.  See the suggested readings if you would like to learn more.\par
+%
+Trivially, every field (finite or otherwise) is a vector space.  Suppose we begin with a field $F$.  From this we know $F$ has two binary operations defined on it.  We need to somehow create a vector space from $F$, in a general way.  First we need a set of vectors.  That'll be $F$.  We also need a set of scalars.  That'll be $F$ as well.  How do we define the addition of two vectors?  By the same rule that we use to add them when they are in the field.  How do we define scalar multiplication?  Since a scalar is an element of $F$, and a vector is an element of $F$, we can define scalar multiplication to be the same rule that we use to multiply the two elements as members of the field.  With these definitions, $F$ will be a vector space (\acronymref{exercise}{F.T20}).  This is something of a trivial situation, since the set of vectors and the set of scalars are identical.  In particular, do not confuse this with \acronymref{example}{FF8} where the set of vectors has eight elements, and the set of scalars has just two elements.
+%
+\paragraph{Further Reading}\ \\
+%
+Robert J.\ McEliece, Finite Fields for Scientists and Engineers. Kluwer Academic Publishers, 1987.\par
+%
+Rudolpf Lidl, Harald Niederreiter, Introduction to Finite Fields and Their Applications, Revised Edition.  Cambridge University Press, 1994.
+%
+%
+%  End  F.tex
+  
+  
+

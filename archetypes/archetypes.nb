@@ -1,0 +1,3237 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.2'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     63908,       2397]*)
+(*NotebookOutlinePosition[     64626,       2422]*)
+(*  CellTagsIndexPosition[     64582,       2418]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell["\<\
+Archetypes Workbook
+A First Course in Linear Algebra
+(Needs GFDL notice)\
+\>", "Subtitle"],
+
+Cell[CellGroupData[{
+
+Cell["Revision History", "Subsection"],
+
+Cell["Alt-5 for subsection headings", "Text"],
+
+Cell["\<\
+2003/01/13   First whack
+2003/01/20   Added System I
+2003/01/21   Added matrices J, K
+2003/03/26   Added eigensystems for square matrices
+2003/03/31   Added linear transformations
+2004/01/29   Changed B, moved into FCLA directory
+2004/11/04   Started adding matrix reps of linear transformations
+2006/10/05   Worked up S through X\
+\>", "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+System A (3\[Times]3, singular, nullity1, consistent, 2 eigenvalues)\
+\>", "Subsection"],
+
+Cell["\<\
+A  3\[Times]3 system with non-trivial nullspace, and a degenerate eigenspace.\
+\
+\>", "Text"],
+
+Cell[BoxData[{
+    \(\(a = \ {{1, \(-1\), 2}, {2, 1, 1}, {1, 1, 
+            0}};\)\), "\[IndentingNewLine]", 
+    \(\(as = {{1, \(-1\), 2, \ 1}, {2, 1, 1, \ 8}, {1, 1, 0, \ 
+            5}};\)\), "\[IndentingNewLine]", 
+    \(\(ab\  = {1, 8, 5};\)\)}], "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(a // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", \(-1\), "2"},
+            {"2", "1", "1"},
+            {"1", "1", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LinearSolve[a, \ ab]\)], "Input"],
+
+Cell[BoxData[
+    \({3, 2, 0}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[as] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "1", "3"},
+            {"0", "1", \(-1\), "2"},
+            {"0", "0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[a]\)], "Input"],
+
+Cell[BoxData[
+    \({{\(-1\), 1, 1}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Transpose[RowReduce[Transpose[a]]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0"},
+            {"0", "1", "0"},
+            {\(-\(1\/3\)\), \(2\/3\), "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[Join[Transpose[a], IdentityMatrix[3]]]] // 
+      MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "1", "0", "1", \(-1\)},
+            {"0", "1", \(-1\), "0", \(-1\), "2"},
+            {"0", "0", "0", "1", \(-2\), "3"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Eigensystem[a] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"0", "0", "2"},
+            {\({\(-1\), 1, 1}\), \({0, 0, 0}\), \({1, 5, 3}\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["System B (3\[Times]3, nonsingular, 3 eigenvalues)", "Subsection"],
+
+Cell[BoxData[{
+    \(\(b = {{\(-7\), \(-6\), \(-12\)}, {5, 5, 7}, {1, 0, 
+            4}};\)\), "\[IndentingNewLine]", 
+    \(\(bs = {{\(-7\), \(-6\), \(-12\), \(-33\)}, \[IndentingNewLine]{5, 5, 
+            7, 24}, \[IndentingNewLine]{1, 0, 4, 
+            5}};\)\), "\[IndentingNewLine]", 
+    \(\(bb\  = \ {\(-33\), 24, 5};\)\)}], "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Built from similarity transformation with unimodular matrix  and diagonal \
+matrix buried under this cell.  Distinct integer eigenvalues.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+    \(uni\  = \ {{1, 0, 0}, {1, 1, 0}, {2, 1, 1}} . {{1, 1, 1}, {0, 
+            1, \(-2\)}, {0, 0, 1}}\), "\n", 
+    \(Inverse[uni] . DiagonalMatrix[{\(-1\), 2, 1}] . uni\)}], "Input"],
+
+Cell[BoxData[
+    \({{1, 1, 1}, {1, 2, \(-1\)}, {2, 3, 1}}\)], "Output"],
+
+Cell[BoxData[
+    \({{\(-7\), \(-6\), \(-12\)}, {5, 5, 7}, {1, 0, 4}}\)], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(b // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-7\), \(-6\), \(-12\)},
+            {"5", "5", "7"},
+            {"1", "0", "4"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LinearSolve[b, \ bb]\)], "Input"],
+
+Cell[BoxData[
+    \({\(-3\), 5, 2}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[bs] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", \(-3\)},
+            {"0", "1", "0", "5"},
+            {"0", "0", "1", "2"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[b]\)], "Input"],
+
+Cell[BoxData[
+    \({}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Transpose[RowReduce[Transpose[b]]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0"},
+            {"0", "1", "0"},
+            {"0", "0", "1"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[Join[Transpose[b], IdentityMatrix[3]]]] // 
+      MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", \(-10\), \(-12\), \(-9\)},
+            {"0", "1", "0", \(13\/2\), "8", \(11\/2\)},
+            {"0", "0", "1", \(5\/2\), "3", \(5\/2\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Eigensystem[b] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-1\), "1", "2"},
+            {\({\(-5\), 3, 1}\), \({\(-3\), 2, 1}\), \({\(-2\), 1, 1}\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["System C (3\[Times]4, nullity 1, consistent)", "Subsection"],
+
+Cell["3\[Times]4 system, dimension 1 null space for coefficient matrix", \
+"Text"],
+
+Cell[BoxData[{
+    \(\(c = {{2, \(-3\), 1, \(-6\)}, {4, 1, 2, 9}, {3, 1, 1, 8}};\)\), "\n", 
+    \(\(cb\  = \ {\(-7\), \(-7\), \(-8\)};\)\), "\n", 
+    \(\(cs = {{2, \(-3\), 1, \(-6\), \(-7\)}, {4, 1, 2, 9, \(-7\)}, {3, 1, 1, 
+            8, \(-8\)}};\)\)}], "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(c // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"2", \(-3\), "1", \(-6\)},
+            {"4", "1", "2", "9"},
+            {"3", "1", "1", "8"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LinearSolve[c, \ cb]\)], "Input"],
+
+Cell[BoxData[
+    \({\(-5\), 1, 6, 0}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[cs] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "2", \(-5\)},
+            {"0", "1", "0", "3", "1"},
+            {"0", "0", "1", \(-1\), "6"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[c]\)], "Input"],
+
+Cell[BoxData[
+    \({{\(-2\), \(-3\), 1, 1}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Transpose[RowReduce[Transpose[c]]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0"},
+            {"0", "1", "0", "0"},
+            {"0", "0", "1", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[Join[Transpose[c], IdentityMatrix[3]]]] // 
+      MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "2", \(1\/7\), \(-\(4\/7\)\), "1"},
+            {"0", "1", "0", "3", \(-\(2\/7\)\), \(1\/7\), "0"},
+            {"0", "0", "1", \(-1\), \(-\(1\/7\)\), \(11\/7\), \(-2\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Systems D, E (3\[Times]4, nullity 2, consistent/inconsistent)", \
+"Subsection"],
+
+Cell["\<\
+Identical coefficient matrix, with nullity 2.  Constant vector inside/outside \
+of column space. D = E throughout, so only system of equations are analyzed \
+twice.\
+\>", "Text"],
+
+Cell[BoxData[{
+    \(\(d = {{2, 1, 7, \(-7\)}, {\(-3\), 4, \(-5\), \(-6\)}, {1, 1, 
+            4, \(-5\)}};\)\), "\[IndentingNewLine]", 
+    \(\(ds = {{2, 1, 7, \(-7\), 8}, {\(-3\), 4, \(-5\), \(-6\), \(-12\)}, {1, 
+            1, 4, \(-5\), 4}};\)\), "\[IndentingNewLine]", 
+    \(\(db = {8, \(-12\), 4};\)\), "\[IndentingNewLine]", 
+    \(\(e = d;\)\), "\[IndentingNewLine]", 
+    \(\(es\  = \ {{2, 1, 7, \(-7\), 2}, {\(-3\), 4, \(-5\), \(-6\), 3}, {1, 
+            1, 4, \(-5\), 2}};\)\), "\[IndentingNewLine]", 
+    \(\(eb = {2, 3, 2};\)\)}], "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(d // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"2", "1", "7", \(-7\)},
+            {\(-3\), "4", \(-5\), \(-6\)},
+            {"1", "1", "4", \(-5\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LinearSolve[d, \ db]\)], "Input"],
+
+Cell[BoxData[
+    \({4, 0, 0, 0}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[ds] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "3", \(-2\), "4"},
+            {"0", "1", "1", \(-3\), "0"},
+            {"0", "0", "0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LinearSolve[e, \ eb]\)], "Input"],
+
+Cell[BoxData[
+    \(LinearSolve::"nosol" \(\(:\)\(\ \)\) 
+      "Linear equation encountered which has no solution."\)], "Message"],
+
+Cell[BoxData[
+    \(LinearSolve[{{2, 1, 7, \(-7\)}, {\(-3\), 4, \(-5\), \(-6\)}, {1, 1, 
+          4, \(-5\)}}, {2, 3, 2}]\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[es] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "3", \(-2\), "0"},
+            {"0", "1", "1", \(-3\), "0"},
+            {"0", "0", "0", "0", "1"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[d]\)], "Input"],
+
+Cell[BoxData[
+    \({{2, 3, 0, 1}, {\(-3\), \(-1\), 1, 0}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Transpose[RowReduce[Transpose[d]]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0"},
+            {"0", "1", "0", "0"},
+            {\(7\/11\), \(1\/11\), "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[Join[Transpose[d], IdentityMatrix[3]]]] // 
+      MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "3", \(-2\), "0", \(-\(1\/7\)\), \(4\/7\)},
+            {"0", "1", "1", \(-3\), "0", \(1\/7\), \(3\/7\)},
+            {"0", "0", "0", "0", "1", \(1\/7\), \(-\(11\/7\)\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["System F (4\[Times]4, nonsingular, eigenvalues)", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Nonsingular, unimodular construction matrix, diagonal matrix, buried under \
+this cell.  One eigenvalue with multiplicity 2, other two with multiplicity \
+1.\
+\>", "Text"],
+
+Cell[BoxData[{
+    \(\(uni4 = {{12, \(-5\), 1, \(-1\)}, {26, \(-12\), 
+            5, \(-2\)}, {39, \(-18\), 7, \(-3\)}, {\(-11\), 5, \(-2\), 
+            1}};\)\), "\[IndentingNewLine]", 
+    \(\(diag\  = \ 
+        DiagonalMatrix[{\(-1\), 3, 2, 3}];\)\), "\[IndentingNewLine]", 
+    \(Inverse[uni4] . diag . uni4\)}], "Input"]
+}, Open  ]],
+
+Cell[BoxData[{
+    \(\(f = {{33, \(-16\), 10, \(-2\)}, {99, \(-47\), 
+            27, \(-7\)}, {78, \(-36\), 17, \(-6\)}, {\(-9\), 2, 3, 
+            4}};\)\), "\[IndentingNewLine]", 
+    \(\(fb = {\(-27\), \(-77\), \(-52\), 5};\)\), "\[IndentingNewLine]", 
+    \(\(fs = {{33, \(-16\), 10, \(-2\), \ \(-27\)}, {99, \(-47\), 
+            27, \(-7\), \ \(-77\)}, {78, \(-36\), 
+            17, \(-6\), \ \(-52\)}, {\(-9\), 2, 3, 4, \ 
+            5}};\)\), "\[IndentingNewLine]", 
+    \(\)}], "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(f // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"33", \(-16\), "10", \(-2\)},
+            {"99", \(-47\), "27", \(-7\)},
+            {"78", \(-36\), "17", \(-6\)},
+            {\(-9\), "2", "3", "4"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LinearSolve[f, \ fb]\)], "Input"],
+
+Cell[BoxData[
+    \({1, 2, \(-2\), 4}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[fs] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "1"},
+            {"0", "1", "0", "0", "2"},
+            {"0", "0", "1", "0", \(-2\)},
+            {"0", "0", "0", "1", "4"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Transpose[RowReduce[Transpose[f]]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0"},
+            {"0", "1", "0", "0"},
+            {"0", "0", "1", "0"},
+            {"0", "0", "0", "1"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[Join[Transpose[f], IdentityMatrix[4]]]] // 
+      MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", 
+              "0", \(-\(86\/3\)\), \(38\/3\), \(-\(11\/3\)\), \(7\/3\)},
+            {"0", "1", "0", 
+              "0", \(-\(129\/2\)\), \(86\/3\), \(-\(17\/2\)\), \(31\/6\)},
+            {"0", "0", "1", "0", \(-13\), "6", \(-2\), "1"},
+            {"0", "0", "0", 
+              "1", \(-\(45\/2\)\), \(29\/3\), \(-\(5\/2\)\), \(13\/6\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Eigensystem[f] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-1\), "2", "3", "3"},
+            {\({1, 2, 0, 1}\), \({2, 5, 2, 1}\), \({1, 1, 0, 7}\), \({17, 45, 
+                21, 0}\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Systems G, H (5\[Times]2, nullity 0, consistent/inconsistent)", \
+"Subsection"],
+
+Cell[BoxData[{
+    \(\(g = {{2, 3}, {\(-1\), 4}, {3, 10}, {3, \(-1\)}, {6, 
+            9}};\)\), "\[IndentingNewLine]", 
+    \(\(gb = {6, \(-14\), \(-2\), 20, 18};\)\), "\[IndentingNewLine]", 
+    \(\(gs = {{2, 3, 6}, {\(-1\), 4, \(-14\)}, {3, 10, \(-2\)}, {3, \(-1\), 
+            20}, {6, 9, 18}};\)\), "\[IndentingNewLine]", 
+    \(\(h = g;\)\), "\[IndentingNewLine]", 
+    \(\(hb = {5, 6, 2, \(-1\), 3};\)\), "\[IndentingNewLine]", 
+    \(\(hs = {{2, 3, \ 5}, {\(-1\), 4, \ 6}, {3, 10, \ 
+            2}, {3, \(-1\), \(-1\)}, {6, 9, \ 3}};\)\)}], "Input",
+  InitializationCell->True],
+
+Cell["\<\
+Identical coefficient matrix, with nullity 0.  Constant vector inside/outside \
+of column space. G = H throughout, so only system of equations are analyzed \
+twice.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(g // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"2", "3"},
+            {\(-1\), "4"},
+            {"3", "10"},
+            {"3", \(-1\)},
+            {"6", "9"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LinearSolve[g, \ gb]\)], "Input"],
+
+Cell[BoxData[
+    \({6, \(-2\)}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[gs] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "6"},
+            {"0", "1", \(-2\)},
+            {"0", "0", "0"},
+            {"0", "0", "0"},
+            {"0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LinearSolve[h, hb]\)], "Input"],
+
+Cell[BoxData[
+    \(LinearSolve::"nosol" \(\(:\)\(\ \)\) 
+      "Linear equation encountered which has no solution."\)], "Message"],
+
+Cell[BoxData[
+    \(LinearSolve[{{2, 3}, {\(-1\), 4}, {3, 10}, {3, \(-1\)}, {6, 9}}, {5, 6, 
+        2, \(-1\), 3}]\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[hs] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0"},
+            {"0", "1", "0"},
+            {"0", "0", "1"},
+            {"0", "0", "0"},
+            {"0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[g]\)], "Input"],
+
+Cell[BoxData[
+    \({}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Transpose[RowReduce[Transpose[g]]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0"},
+            {"0", "1"},
+            {"2", "1"},
+            {"1", \(-1\)},
+            {"3", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[Join[Transpose[g], IdentityMatrix[5]]]] // 
+      MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "0", \(3\/11\), \(1\/33\)},
+            {"0", "1", "0", "0", "0", \(-\(2\/11\)\), \(1\/11\)},
+            {"0", "0", "1", "0", "0", "0", \(-\(1\/3\)\)},
+            {"0", "0", "0", "1", "0", "1", \(-\(1\/3\)\)},
+            {"0", "0", "0", "0", "1", "1", \(-1\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["System I (4\[Times]7, nullity 4, consistent)", "Subsection"],
+
+Cell[BoxData[{
+    \(\(i = {{1, 4, 0, \(-1\), 0, 7, \(-9\)}, {2, 8, \(-1\), 3, 9, \(-13\), 
+            7}, {0, 0, 2, \(-3\), \(-4\), 12, \(-8\)}, {\(-1\), \(-4\), 2, 4, 
+            8, \(-31\), 37}};\)\), "\[IndentingNewLine]", 
+    \(\(ib = {3, 9, 1, 4};\)\), "\[IndentingNewLine]", 
+    \(\(is\  = \ {{1, 4, 0, \(-1\), 0, 7, \(-9\), 3}, {2, 8, \(-1\), 3, 
+            9, \(-13\), 7, 9}, {0, 0, 2, \(-3\), \(-4\), 12, \(-8\), 
+            1}, {\(-1\), \(-4\), 2, 4, 8, \(-31\), 37, 4}};\)\)}], "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(i // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "4", "0", \(-1\), "0", "7", \(-9\)},
+            {"2", "8", \(-1\), "3", "9", \(-13\), "7"},
+            {"0", "0", "2", \(-3\), \(-4\), "12", \(-8\)},
+            {\(-1\), \(-4\), "2", "4", "8", \(-31\), "37"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LinearSolve[i, \ ib]\)], "Input"],
+
+Cell[BoxData[
+    \({4, 0, 2, 1, 0, 0, 0}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[is] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "4", "0", "0", "2", "1", \(-3\), "4"},
+            {"0", "0", "1", "0", "1", \(-3\), "5", "2"},
+            {"0", "0", "0", "1", "2", \(-6\), "6", "1"},
+            {"0", "0", "0", "0", "0", "0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[i]\)], "Input"],
+
+Cell[BoxData[
+    \({{3, 0, \(-5\), \(-6\), 0, 0, 1}, {\(-1\), 0, 3, 6, 0, 1, 0}, {\(-2\), 
+        0, \(-1\), \(-2\), 1, 0, 0}, {\(-4\), 1, 0, 0, 0, 0, 0}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Transpose[RowReduce[Transpose[i]]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "0", "0", "0"},
+            {"0", "1", "0", "0", "0", "0", "0"},
+            {"0", "0", "1", "0", "0", "0", "0"},
+            {\(-\(31\/7\)\), \(12\/7\), \(13\/7\), "0", "0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[Join[Transpose[i], IdentityMatrix[4]]]] // 
+      MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "4", "0", "0", "2", "1", \(-3\), 
+              "0", \(14\/31\), \(10\/31\), \(-\(3\/31\)\)},
+            {"0", "0", "1", "0", "1", \(-3\), "5", 
+              "0", \(3\/31\), \(11\/31\), \(6\/31\)},
+            {"0", "0", "0", "1", "2", \(-6\), "6", 
+              "0", \(2\/31\), \(-\(3\/31\)\), \(4\/31\)},
+            {"0", "0", "0", "0", "0", "0", "0", 
+              "1", \(-\(12\/31\)\), \(-\(13\/31\)\), \(7\/31\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["System J (6\[Times]9, nullity 5, consistent)", "Subsection"],
+
+Cell[BoxData[{
+    \(\(j = {{1, 2, \(-2\), 9, 3, \(-5\), \(-2\), 1, 27}, {2, 4, 3, 
+            4, \(-1\), 4, 10, 2, \(-23\)}, {1, 2, 1, 3, 1, 1, 5, 
+            2, \(-7\)}, {2, 4, 3, 4, \(-7\), 2, 4, 0, \(-11\)}, {1, 2, 0, 5, 
+            2, \(-4\), 3, 8, 13}, {\(-3\), \(-6\), \(-1\), \(-13\), 
+            2, \(-5\), \(-4\), 13, 10}};\)\), "\[IndentingNewLine]", 
+    \(\(jb = {\(-5\), 18, 6, 
+          20, \(-4\), \(-29\)};\)\), "\[IndentingNewLine]", 
+    \(\(js = {{1, 2, \(-2\), 9, 3, \(-5\), \(-2\), 1, 27, \(-5\)}, {2, 4, 3, 
+            4, \(-1\), 4, 10, 2, \(-23\), 18}, {1, 2, 1, 3, 1, 1, 5, 
+            2, \(-7\), 6}, {2, 4, 3, 4, \(-7\), 2, 4, 0, \(-11\), 20}, {1, 2, 
+            0, 5, 2, \(-4\), 3, 8, 
+            13, \(-4\)}, {\(-3\), \(-6\), \(-1\), \(-13\), 2, \(-5\), \(-4\), 
+            13, 10, \(-29\)}};\)\)}], "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(j // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "2", \(-2\), "9", "3", \(-5\), \(-2\), "1", "27"},
+            {"2", "4", "3", "4", \(-1\), "4", "10", "2", \(-23\)},
+            {"1", "2", "1", "3", "1", "1", "5", "2", \(-7\)},
+            {"2", "4", "3", "4", \(-7\), "2", "4", "0", \(-11\)},
+            {"1", "2", "0", "5", "2", \(-4\), "3", "8", "13"},
+            {\(-3\), \(-6\), \(-1\), \(-13\), "2", \(-5\), \(-4\), "13", 
+              "10"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(LinearSolve[j, jb]\)], "Input"],
+
+Cell[BoxData[
+    \({6, 0, \(-1\), 0, \(-1\), 2, 0, 0, 0}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[js] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "2", "0", "5", "0", "0", "1", \(-2\), "3", "6"},
+            {"0", "0", "1", \(-2\), "0", "0", "3", "5", \(-6\), \(-1\)},
+            {"0", "0", "0", "0", "1", "0", "1", "1", \(-1\), \(-1\)},
+            {"0", "0", "0", "0", "0", "1", "0", \(-2\), \(-3\), "2"},
+            {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
+            {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[j]\)], "Input"],
+
+Cell[BoxData[
+    \({{\(-3\), 0, 6, 0, 1, 3, 0, 0, 1}, {2, 0, \(-5\), 0, \(-1\), 2, 0, 1, 
+        0}, {\(-1\), 0, \(-3\), 0, \(-1\), 0, 1, 0, 0}, {\(-5\), 0, 2, 1, 0, 
+        0, 0, 0, 0}, {\(-2\), 1, 0, 0, 0, 0, 0, 0, 0}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Transpose[RowReduce[Transpose[j]]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "0", "0", "0", "0", "0"},
+            {"0", "1", "0", "0", "0", "0", "0", "0", "0"},
+            {"0", "0", "1", "0", "0", "0", "0", "0", "0"},
+            {"0", "0", "0", "1", "0", "0", "0", "0", "0"},
+            {\(-1\), \(-\(11\/2\)\), "10", \(3\/2\), "0", "0", "0", "0", 
+              "0"},
+            {\(-\(29\/7\)\), \(-\(94\/7\)\), "22", "3", "0", "0", "0", "0", 
+              "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[Join[Transpose[j], IdentityMatrix[6]]]] // 
+      MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "2", "0", "5", "0", "0", "1", \(-2\), "3", "0", 
+              "0", \(-\(30\/131\)\), \(-\(4\/131\)\), \(43\/131\), \
+\(-\(42\/131\)\)},
+            {"0", "0", "1", \(-2\), "0", "0", "3", "5", \(-6\), "0", 
+              "0", \(107\/131\), \(23\/131\), \(-\(18\/131\)\), \(45\/131\)},
+            {"0", "0", "0", "0", "1", "0", "1", "1", \(-1\), "0", 
+              "0", \(41\/131\), \(-\(12\/131\)\), \(-\(2\/131\)\), \
+\(5\/131\)},
+            {"0", "0", "0", "0", "0", "1", "0", \(-2\), \(-3\), "0", 
+              "0", \(13\/131\), \(-\(7\/131\)\), \(-\(23\/131\)\), \
+\(-\(8\/131\)\)},
+            {"0", "0", "0", "0", "0", "0", "0", "0", "0", "1", 
+              "0", \(186\/131\), \(51\/131\), \(-\(188\/131\)\), \
+\(77\/131\)},
+            {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", 
+              "1", \(-\(272\/131\)\), \(-\(45\/131\)\), \(58\/131\), \
+\(-\(14\/131\)\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Matrix K (5\[Times]5, nonsingular, 3 eigenvalues)", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell["Built from unimodular and diagonal matrices buried below", "Text"],
+
+Cell[BoxData[{
+    \(\(uni5\  = \ {\[IndentingNewLine]{1, 0, 0, 0, 
+              0}, \[IndentingNewLine]{\(-2\), 1, 0, 0, 
+              0}, \[IndentingNewLine]{2, 3, 1, 0, 0}, \[IndentingNewLine]{1, 
+              0, 1, 1, 0}, \[IndentingNewLine]{\(-1\), 1, 2, 3, 
+              1}} . \[IndentingNewLine]{{1, 1, 1, 
+              1, \(-1\)}, \[IndentingNewLine]{0, 1, 1, 0, 
+              1}, \[IndentingNewLine]{0, 0, 1, 
+              2, \(-1\)}, \[IndentingNewLine]{0, 0, 0, 1, \(-2\)}, {0, 0, 0, 
+              0, 1}};\)\), "\[IndentingNewLine]", 
+    \(\(diag = DiagonalMatrix[{1, 1, 4, \(-2\), \(-2\)}];\)\)}], "Input"]
+}, Open  ]],
+
+Cell[BoxData[
+    \(\(k = {{10, 18, 24, 24, \(-12\)}, {12, \(-2\), \(-6\), 
+            0, \(-18\)}, {\(-30\), \(-21\), \(-23\), \(-30\), 39}, {27, 30, 
+            36, 37, \(-30\)}, {18, 24, 30, 30, \(-20\)}};\)\)], "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(b\)], "Input"],
+
+Cell[BoxData[
+    \({{\(-7\), \(-6\), \(-12\)}, {5, 5, 7}, {1, 0, 4}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(k // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"10", "18", "24", "24", \(-12\)},
+            {"12", \(-2\), \(-6\), "0", \(-18\)},
+            {\(-30\), \(-21\), \(-23\), \(-30\), "39"},
+            {"27", "30", "36", "37", \(-30\)},
+            {"18", "24", "30", "30", \(-20\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Det[k]\)], "Input"],
+
+Cell[BoxData[
+    \(16\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[k]\)], "Input"],
+
+Cell[BoxData[
+    \({}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Transpose[RowReduce[Transpose[k]]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "0"},
+            {"0", "1", "0", "0", "0"},
+            {"0", "0", "1", "0", "0"},
+            {"0", "0", "0", "1", "0"},
+            {"0", "0", "0", "0", "1"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[Join[Transpose[k], IdentityMatrix[5]]]] // 
+      MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "0", "1", \(-\(9\/4\)\), \(-\(3\/2\)\), 
+              "3", \(-6\)},
+            {"0", "1", "0", "0", "0", \(21\/2\), \(43\/4\), \(21\/2\), 
+              "9", \(-9\)},
+            {"0", "0", "1", "0", 
+              "0", \(-15\), \(-\(21\/2\)\), \(-11\), \(-15\), \(39\/2\)},
+            {"0", "0", "0", "1", "0", "9", \(15\/4\), \(9\/2\), 
+              "10", \(-15\)},
+            {"0", "0", "0", "0", "1", \(9\/2\), \(3\/4\), \(3\/2\), 
+              "6", \(-\(19\/2\)\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Eigensystem[k]\)], "Input"],
+
+Cell[BoxData[
+    \({{\(-2\), \(-2\), 1, 1, 
+        4}, {{2, \(-2\), 1, 0, 1}, {\(-1\), 2, \(-2\), 1, 0}, {4, \(-10\), 7, 
+          0, 2}, {\(-4\), 18, \(-17\), 5, 0}, {1, \(-1\), 0, 1, 
+          1}}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Eigensystem[k] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-2\), \(-2\), "1", "1", "4"},
+            {\({2, \(-2\), 1, 0, 1}\), \({\(-1\), 2, \(-2\), 1, 
+                0}\), \({4, \(-10\), 7, 0, 2}\), \({\(-4\), 18, \(-17\), 5, 
+                0}\), \({1, \(-1\), 0, 1, 1}\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Matrix L (5\[Times]5, singular, 2 eigenvalues)", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell["Built from unimodular and diagonal matrices buried below", "Text"],
+
+Cell[BoxData[{
+    \(\(uni5\  = \ {\[IndentingNewLine]{1, 0, 0, 0, 
+              0}, \[IndentingNewLine]{\(-2\), 1, 0, 0, 
+              0}, \[IndentingNewLine]{2, 3, 1, 0, 0}, \[IndentingNewLine]{1, 
+              0, 1, 1, 0}, \[IndentingNewLine]{\(-1\), 1, 2, 3, 
+              1}} . \[IndentingNewLine]{{1, 1, 1, 
+              1, \(-1\)}, \[IndentingNewLine]{0, 1, 1, 0, 
+              1}, \[IndentingNewLine]{0, 0, 1, 
+              2, \(-1\)}, \[IndentingNewLine]{0, 0, 0, 1, \(-2\)}, {0, 0, 0, 
+              0, 1}};\)\), "\[IndentingNewLine]", 
+    \(\(diag = DiagonalMatrix[{\(-1\), \(-1\), \(-1\), 0, 0}];\)\)}], "Input"]
+}, Closed]],
+
+Cell[BoxData[
+    \(\(l = {{\(-2\), \(-1\), \(-2\), \(-4\), 
+            4}, {\(-6\), \(-5\), \(-4\), \(-4\), 6}, {10, 7, 7, 
+            10, \(-13\)}, {\(-7\), \(-5\), \(-6\), \(-9\), 
+            10}, {\(-4\), \(-3\), \(-4\), \(-6\), 6}};\)\)], "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(l // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-2\), \(-1\), \(-2\), \(-4\), "4"},
+            {\(-6\), \(-5\), \(-4\), \(-4\), "6"},
+            {"10", "7", "7", "10", \(-13\)},
+            {\(-7\), \(-5\), \(-6\), \(-9\), "10"},
+            {\(-4\), \(-3\), \(-4\), \(-6\), "6"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Det[l]\)], "Input"],
+
+Cell[BoxData[
+    \(0\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[l]\)], "Input"],
+
+Cell[BoxData[
+    \({{2, \(-2\), 1, 0, 1}, {\(-1\), 2, \(-2\), 1, 0}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Transpose[RowReduce[Transpose[l]]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "0"},
+            {"0", "1", "0", "0", "0"},
+            {"0", "0", "1", "0", "0"},
+            {\(9\/4\), \(5\/4\), \(1\/2\), "0", "0"},
+            {\(5\/2\), \(3\/2\), "1", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[Join[Transpose[l], IdentityMatrix[5]]]] // 
+      MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "1", \(-2\), "0", "0", \(-2\), \(-7\), "7"},
+            {"0", "1", "0", \(-2\), "2", "0", "0", "4", "12", \(-11\)},
+            {"0", "0", "1", "2", \(-1\), "0", "0", \(-1\), \(-2\), "1"},
+            {"0", "0", "0", "0", "0", "1", "0", \(-2\), \(-6\), "5"},
+            {"0", "0", "0", "0", "0", "0", "1", "4", "10", \(-9\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Eigensystem[l]\)], "Input"],
+
+Cell[BoxData[
+    \({{\(-1\), \(-1\), \(-1\), 0, 
+        0}, {{\(-5\), 9, 0, 0, 1}, {6, \(-10\), 0, 1, 0}, {2, \(-4\), 1, 0, 
+          0}, {2, \(-2\), 1, 0, 1}, {\(-1\), 2, \(-2\), 1, 0}}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Eigensystem[l] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-1\), \(-1\), \(-1\), "0", "0"},
+            {\({\(-5\), 9, 0, 0, 1}\), \({6, \(-10\), 0, 1, 
+                0}\), \({2, \(-4\), 1, 0, 0}\), \({2, \(-2\), 1, 0, 
+                1}\), \({\(-1\), 2, \(-2\), 1, 0}\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Transformation M (5\[Rule]3, not onto)\
+\>", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(m = {{1, 2, 3, 4, 4}, {3, 1, 4, \(-3\), 7}, {1, \(-1\), 0, \(-5\), 
+          1}}\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \({{1, 2, 3, 4, 4}, {3, 1, 4, \(-3\), 7}, {1, \(-1\), 0, \(-5\), 
+        1}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(m // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "2", "3", "4", "4"},
+            {"3", "1", "4", \(-3\), "7"},
+            {"1", \(-1\), "0", \(-5\), "1"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[m] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "1", \(-2\), "2"},
+            {"0", "1", "1", "3", "1"},
+            {"0", "0", "0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[m]\)], "Input"],
+
+Cell[BoxData[
+    \({{\(-2\), \(-1\), 0, 0, 1}, {2, \(-3\), 0, 1, 0}, {\(-1\), \(-1\), 1, 
+        0, 0}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[m]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", \(-\(4\/5\)\)},
+            {"0", "1", \(3\/5\)},
+            {"0", "0", "0"},
+            {"0", "0", "0"},
+            {"0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Transformation N (5\[Rule]3, onto)", "Subsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(n = {{2, 1, 3, \(-4\), 5}, {1, \(-2\), 3, \(-9\), 3}, {3, 0, 4, \(-6\), 
+          5}}\)], "Input",
+  InitializationCell->True],
+
+Cell[BoxData[
+    \({{2, 1, 3, \(-4\), 5}, {1, \(-2\), 3, \(-9\), 3}, {3, 0, 4, \(-6\), 
+        5}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(n // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"2", "1", "3", \(-4\), "5"},
+            {"1", \(-2\), "3", \(-9\), "3"},
+            {"3", "0", "4", \(-6\), "5"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[n] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "2", \(-1\)},
+            {"0", "1", "0", "1", "1"},
+            {"0", "0", "1", \(-3\), "2"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[n]\)], "Input"],
+
+Cell[BoxData[
+    \({{1, \(-1\), \(-2\), 0, 1}, {\(-2\), \(-1\), 3, 1, 0}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[n]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0"},
+            {"0", "1", "0"},
+            {"0", "0", "1"},
+            {"0", "0", "0"},
+            {"0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Transformation O (3\[Rule]5, not 1-1)\
+\>", "Subsection"],
+
+Cell[BoxData[
+    \(\(o = {{\(-1\), 1, \(-3\)}, {\(-1\), 2, \(-4\)}, {1, 1, 1}, {2, 3, 
+            1}, {1, 0, 2}};\)\)], "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(o // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-1\), "1", \(-3\)},
+            {\(-1\), "2", \(-4\)},
+            {"1", "1", "1"},
+            {"2", "3", "1"},
+            {"1", "0", "2"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[o] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "2"},
+            {"0", "1", \(-1\)},
+            {"0", "0", "0"},
+            {"0", "0", "0"},
+            {"0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[o]\)], "Input"],
+
+Cell[BoxData[
+    \({{\(-2\), 1, 1}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[o]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", \(-3\), \(-7\), \(-2\)},
+            {"0", "1", "2", "5", "1"},
+            {"0", "0", "0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Transformation P (3\[Rule]5, 1-1)", "Subsection"],
+
+Cell[BoxData[
+    \(\(p = {{\(-1\), 1, 1}, {\(-1\), 2, 2}, {1, 1, 3}, {2, 3, 1}, {\(-2\), 
+            1, 3}};\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(p // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-1\), "1", "1"},
+            {\(-1\), "2", "2"},
+            {"1", "1", "3"},
+            {"2", "3", "1"},
+            {\(-2\), "1", "3"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[p] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0"},
+            {"0", "1", "0"},
+            {"0", "0", "1"},
+            {"0", "0", "0"},
+            {"0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[p]\)], "Input"],
+
+Cell[BoxData[
+    \({}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[p]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", \(-10\), "6"},
+            {"0", "1", "0", "7", \(-3\)},
+            {"0", "0", "1", \(-1\), "1"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Transformation Q (5\[Rule]5, not 1-1, not onto, 3 eigenvalues)\
+\>", "Subsection"],
+
+Cell[BoxData[
+    \(\(q = {{\(-2\), 3, 3, \(-6\), 3}, {\(-16\), 9, 12, \(-28\), 
+            28}, {\(-19\), 7, 14, \(-32\), 37}, {\(-21\), 9, 15, \(-35\), 
+            39}, {\(-9\), 5, 7, \(-16\), 16}};\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(q // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-2\), "3", "3", \(-6\), "3"},
+            {\(-16\), "9", "12", \(-28\), "28"},
+            {\(-19\), "7", "14", \(-32\), "37"},
+            {\(-21\), "9", "15", \(-35\), "39"},
+            {\(-9\), "5", "7", \(-16\), "16"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[q] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", \(-1\)},
+            {"0", "1", "0", "0", \(-\(4\/3\)\)},
+            {"0", "0", "1", "0", \(-\(1\/3\)\)},
+            {"0", "0", "0", "1", \(-1\)},
+            {"0", "0", "0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[q]\)], "Input"],
+
+Cell[BoxData[
+    \({{3, 4, 1, 3, 3}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[q]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "1"},
+            {"0", "1", "0", "0", \(-1\)},
+            {"0", "0", "1", "0", \(-1\)},
+            {"0", "0", "0", "1", "2"},
+            {"0", "0", "0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Eigensystem[q]\)], "Input"],
+
+Cell[BoxData[
+    \({{\(-1\), 0, 1, 1, 
+        1}, {{0, 2, 3, 3, 1}, {3, 4, 1, 3, 3}, {5, 3, 0, 0, 2}, {\(-3\), 1, 
+          0, 2, 0}, {1, \(-1\), 2, 0, 0}}}\)], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Transformation R (5\[Rule]5, invertible, 3 eigenvalues)\
+\>", "Subsection"],
+
+Cell[BoxData[
+    \(\(r = {{\(-65\), 128, 10, \(-262\), 40}, {36, \(-73\), \(-1\), 
+            151, \(-16\)}, {\(-44\), 88, 5, \(-180\), 
+            24}, {34, \(-68\), \(-3\), 140, \(-18\)}, {12, \(-24\), \(-1\), 
+            49, \(-5\)}};\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(r // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-65\), "128", "10", \(-262\), "40"},
+            {"36", \(-73\), \(-1\), "151", \(-16\)},
+            {\(-44\), "88", "5", \(-180\), "24"},
+            {"34", \(-68\), \(-3\), "140", \(-18\)},
+            {"12", \(-24\), \(-1\), "49", \(-5\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[r] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "0"},
+            {"0", "1", "0", "0", "0"},
+            {"0", "0", "1", "0", "0"},
+            {"0", "0", "0", "1", "0"},
+            {"0", "0", "0", "0", "1"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[r]\)], "Input"],
+
+Cell[BoxData[
+    \({}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[r]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "0"},
+            {"0", "1", "0", "0", "0"},
+            {"0", "0", "1", "0", "0"},
+            {"0", "0", "0", "1", "0"},
+            {"0", "0", "0", "0", "1"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Eigensystem[r]\)], "Input"],
+
+Cell[BoxData[
+    \({{\(-1\), \(-1\), 1, 1, 
+        2}, {{\(-57\), 0, \(-18\), 14, 5}, {2, 1, 0, 0, 
+          0}, {\(-10\), \(-5\), \(-6\), 0, 1}, {2, 3, 1, 1, 0}, {\(-6\), 
+          3, \(-4\), 3, 1}}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Inverse[r] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-47\), "92", "1", \(-181\), \(-14\)},
+            {"27", \(-55\), \(7\/2\), \(221\/2\), "11"},
+            {\(-32\), "64", \(-1\), \(-126\), \(-12\)},
+            {"25", \(-50\), \(3\/2\), \(199\/2\), "9"},
+            {"9", \(-18\), \(1\/2\), \(71\/2\), "4"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Transformation S (3\[Rule]4, not 1-1, not onto)\
+\>", "Subsection"],
+
+Cell[BoxData[
+    \(\(s = {{1, \(-1\), 0}, {2, 2, 1}, {3, 1, 
+            1}, {\(-2\), \(-6\), \(-2\)}};\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(s // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", \(-1\), "0"},
+            {"2", "2", "1"},
+            {"3", "1", "1"},
+            {\(-2\), \(-6\), \(-2\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[s] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", \(1\/4\)},
+            {"0", "1", \(1\/4\)},
+            {"0", "0", "0"},
+            {"0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[s]\)], "Input"],
+
+Cell[BoxData[
+    \({{\(-1\), \(-1\), 4}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[s]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "1", "2"},
+            {"0", "1", "1", \(-2\)},
+            {"0", "0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Transformation T (5\[Rule]6, 1-1, not onto)\
+\>", "Subsection"],
+
+Cell[BoxData[
+    \(\(t = {{\(-2\), 0, 0, 0, 0}, {1, \(-2\), 0, 0, 0}, {0, 1, \(-2\), 0, 
+            0}, {0, 0, 1, \(-2\), 0}, \ {0, 0, 0, 1, \(-2\)}, \ {0, 0, 0, 0, 
+            1}};\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(t // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-2\), "0", "0", "0", "0"},
+            {"1", \(-2\), "0", "0", "0"},
+            {"0", "1", \(-2\), "0", "0"},
+            {"0", "0", "1", \(-2\), "0"},
+            {"0", "0", "0", "1", \(-2\)},
+            {"0", "0", "0", "0", "1"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[t] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "0"},
+            {"0", "1", "0", "0", "0"},
+            {"0", "0", "1", "0", "0"},
+            {"0", "0", "0", "1", "0"},
+            {"0", "0", "0", "0", "1"},
+            {"0", "0", "0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[t]\)], "Input"],
+
+Cell[BoxData[
+    \({}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[t]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "0", \(-\(1\/32\)\)},
+            {"0", "1", "0", "0", "0", \(-\(1\/16\)\)},
+            {"0", "0", "1", "0", "0", \(-\(1\/8\)\)},
+            {"0", "0", "0", "1", "0", \(-\(1\/4\)\)},
+            {"0", "0", "0", "0", "1", \(-\(1\/2\)\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Transformation U (6\[Rule]4, not 1-1, onto)\
+\>", "Subsection"],
+
+Cell[BoxData[
+    \(\(u = {{1, 2, 12, \(-3\), 1, 6}, {2, \(-1\), \(-1\), 1, 
+            0, \(-11\)}, {1, 1, 7, 2, 1, \(-3\)}, {1, 2, 12, 0, 
+            5, \(-5\)}};\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(u // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "2", "12", \(-3\), "1", "6"},
+            {"2", \(-1\), \(-1\), "1", "0", \(-11\)},
+            {"1", "1", "7", "2", "1", \(-3\)},
+            {"1", "2", "12", "0", "5", \(-5\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[u] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "2", "0", "0", \(-3\)},
+            {"0", "1", "5", "0", "0", "4"},
+            {"0", "0", "0", "1", "0", \(-1\)},
+            {"0", "0", "0", "0", "1", \(-2\)}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[u]\)], "Input"],
+
+Cell[BoxData[
+    \({{3, \(-4\), 0, 1, 2, 1}, {\(-2\), \(-5\), 1, 0, 0, 0}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[u]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0"},
+            {"0", "1", "0", "0"},
+            {"0", "0", "1", "0"},
+            {"0", "0", "0", "1"},
+            {"0", "0", "0", "0"},
+            {"0", "0", "0", "0"}
+            }], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Transformation V (4\[Rule] 4, invertible, not eigenvalues)\
+\>", "Subsection"],
+
+Cell[BoxData[
+    \(\(v = {{1, 1, 0, 0}, {1, 0, \(-2\), 0}, {0, 0, 0, 1}, {0, 1, 
+            0, \(-1\)}};\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(v // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "1", "0", "0"},
+            {"1", "0", \(-2\), "0"},
+            {"0", "0", "0", "1"},
+            {"0", "1", "0", \(-1\)}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[v] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0"},
+            {"0", "1", "0", "0"},
+            {"0", "0", "1", "0"},
+            {"0", "0", "0", "1"}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[v]\)], "Input"],
+
+Cell[BoxData[
+    \({}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[v]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0"},
+            {"0", "1", "0", "0"},
+            {"0", "0", "1", "0"},
+            {"0", "0", "0", "1"}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Det[v]\)], "Input"],
+
+Cell[BoxData[
+    \(\(-2\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[Join[Transpose[v], IdentityMatrix[4]]]] // 
+      MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "0", "1", "0", \(-1\), \(-1\)},
+            {"0", "1", "0", "0", "0", "0", "1", "1"},
+            {"0", "0", "1", 
+              "0", \(1\/2\), \(-\(1\/2\)\), \(-\(1\/2\)\), \(-\(1\/2\)\)},
+            {"0", "0", "0", "1", "0", "0", "1", "0"}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Transformation W (3\[Rule]3, invertible, 3 eigenvalues)\
+\>", "Subsection"],
+
+Cell[BoxData[
+    \(\(w = {{19, 6, \(-4\)}, {\(-24\), \(-7\), 4}, {36, 
+            12, \(-9\)}};\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(w // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"19", "6", \(-4\)},
+            {\(-24\), \(-7\), "4"},
+            {"36", "12", \(-9\)}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[w] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0"},
+            {"0", "1", "0"},
+            {"0", "0", "1"}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[w]\)], "Input"],
+
+Cell[BoxData[
+    \({}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[w]] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0"},
+            {"0", "1", "0"},
+            {"0", "0", "1"}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Det[w]\)], "Input"],
+
+Cell[BoxData[
+    \(\(-3\)\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[Join[Transpose[w], IdentityMatrix[3]]]] // 
+      MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", \(-5\), \(-2\), \(4\/3\)},
+            {"0", "1", "0", "24", "9", \(-\(20\/3\)\)},
+            {"0", "0", "1", "12", "4", \(-\(11\/3\)\)}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Eigensystem[w] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"3", \(-1\), "1"},
+            {\({1, \(-2\), 1}\), \({0, 2, 3}\), \({\(-1\), 3, 0}\)}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Transformation X (4\[Rule]4, not invertible, 3 eigenvalues)\
+\>", "Subsection"],
+
+Cell[BoxData[
+    \(\(x = {{\(-2\), 15, 3, 27}, {0, 10, 6, 18}, {1, \(-5\), 
+            0, \(-9\)}, {\(-1\), \(-4\), \(-5\), \(-8\)}};\)\)], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(x // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-2\), "15", "3", "27"},
+            {"0", "10", "6", "18"},
+            {"1", \(-5\), "0", \(-9\)},
+            {\(-1\), \(-4\), \(-5\), \(-8\)}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[x] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {"1", "0", "0", "6"},
+            {"0", "1", "0", "3"},
+            {"0", "0", "1", \(-2\)},
+            {"0", "0", "0", "0"}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(NullSpace[x]\)], "Input"],
+
+Cell[BoxData[
+    \({{\(-6\), \(-3\), 2, 1}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(RowReduce[Transpose[x]]\)], "Input"],
+
+Cell[BoxData[
+    \({{1, 0, \(-\(1\/2\)\), 0}, {0, 1, 1\/4, 0}, {0, 0, 0, 1}, {0, 0, 0, 
+        0}}\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Det[x]\)], "Input"],
+
+Cell[BoxData[
+    \(0\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Eigensystem[x] // MatrixForm\)], "Input"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(-2\), "1", "1", "0"},
+            {\({\(-3\), \(-2\), 1, 1}\), \({\(-1\), \(-2\), 0, 
+                1}\), \({\(-7\), \(-2\), 3, 0}\), \({\(-6\), \(-3\), 2, 1}\)}
+            },
+          RowSpacings->1,
+          ColumnSpacings->1,
+          ColumnAlignments->{Left}], "\[NoBreak]", ")"}],
+      Function[ BoxForm`e$, 
+        MatrixForm[ BoxForm`e$]]]], "Output"]
+}, Open  ]]
+}, Closed]]
+},
+FrontEndVersion->"5.2 for Microsoft Windows",
+ScreenRectangle->{{0, 1920}, {0, 1102}},
+AutoGeneratedPackage->None,
+CellGrouping->Manual,
+WindowSize->{871, 1076},
+WindowMargins->{{218, Automatic}, {Automatic, -1}},
+Magnification->1.5
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 100, 4, 162, "Subtitle"],
+
+Cell[CellGroupData[{
+Cell[1879, 59, 38, 0, 56, "Subsection"],
+Cell[1920, 61, 45, 0, 47, "Text"],
+Cell[1968, 63, 354, 9, 229, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[2359, 77, 98, 2, 42, "Subsection"],
+Cell[2460, 81, 103, 3, 47, "Text"],
+Cell[2566, 86, 290, 6, 94, "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+Cell[2881, 96, 48, 1, 42, "Input"],
+Cell[2932, 99, 269, 8, 99, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3238, 112, 53, 1, 42, "Input"],
+Cell[3294, 115, 43, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3374, 121, 60, 1, 42, "Input"],
+Cell[3437, 124, 284, 8, 99, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3758, 137, 45, 1, 42, "Input"],
+Cell[3806, 140, 50, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[3893, 146, 81, 1, 42, "Input"],
+Cell[3977, 149, 281, 8, 111, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[4295, 162, 113, 2, 94, "Input"],
+Cell[4411, 166, 323, 8, 99, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[4771, 179, 61, 1, 42, "Input"],
+Cell[4835, 182, 272, 7, 77, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[5156, 195, 71, 0, 42, "Subsection"],
+Cell[5230, 197, 371, 7, 146, "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+Cell[5626, 208, 161, 3, 73, "Text"],
+
+Cell[CellGroupData[{
+Cell[5812, 215, 200, 3, 180, "Input"],
+Cell[6015, 220, 72, 1, 70, "Output"],
+Cell[6090, 223, 83, 1, 70, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[6222, 230, 48, 1, 35, "Input"],
+Cell[6273, 233, 276, 8, 99, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6586, 246, 53, 1, 42, "Input"],
+Cell[6642, 249, 48, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6727, 255, 60, 1, 42, "Input"],
+Cell[6790, 258, 284, 8, 99, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[7111, 271, 45, 1, 42, "Input"],
+Cell[7159, 274, 36, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[7232, 280, 81, 1, 42, "Input"],
+Cell[7316, 283, 266, 8, 99, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[7619, 296, 113, 2, 94, "Input"],
+Cell[7735, 300, 344, 8, 125, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[8116, 313, 61, 1, 42, "Input"],
+Cell[8180, 316, 285, 7, 77, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[8514, 329, 66, 0, 42, "Subsection"],
+Cell[8583, 331, 82, 1, 47, "Text"],
+Cell[8668, 334, 295, 5, 94, "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+Cell[8988, 343, 48, 1, 42, "Input"],
+Cell[9039, 346, 287, 8, 80, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[9363, 359, 53, 1, 42, "Input"],
+Cell[9419, 362, 51, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[9507, 368, 60, 1, 42, "Input"],
+Cell[9570, 371, 302, 8, 80, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[9909, 384, 45, 1, 42, "Input"],
+Cell[9957, 387, 58, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[10052, 393, 81, 1, 42, "Input"],
+Cell[10136, 396, 281, 8, 80, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[10454, 409, 113, 2, 94, "Input"],
+Cell[10570, 413, 378, 8, 137, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[10997, 427, 85, 1, 42, "Subsection"],
+Cell[11085, 430, 188, 4, 73, "Text"],
+Cell[11276, 436, 584, 10, 172, "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+Cell[11885, 450, 48, 1, 42, "Input"],
+Cell[11936, 453, 296, 8, 99, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[12269, 466, 53, 1, 42, "Input"],
+Cell[12325, 469, 46, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[12408, 475, 60, 1, 42, "Input"],
+Cell[12471, 478, 302, 8, 99, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[12810, 491, 53, 1, 42, "Input"],
+Cell[12866, 494, 131, 2, 60, "Message"],
+Cell[13000, 498, 136, 2, 66, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[13173, 505, 60, 1, 42, "Input"],
+Cell[13236, 508, 302, 8, 99, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[13575, 521, 45, 1, 42, "Input"],
+Cell[13623, 524, 72, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[13732, 530, 81, 1, 42, "Input"],
+Cell[13816, 533, 293, 8, 111, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[14146, 546, 113, 2, 94, "Input"],
+Cell[14262, 550, 373, 8, 137, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[14684, 564, 69, 0, 42, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[14778, 568, 181, 4, 73, "Text"],
+Cell[14962, 574, 328, 6, 120, "Input"]
+}, Open  ]],
+Cell[15305, 583, 527, 10, 172, "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+Cell[15857, 597, 48, 1, 42, "Input"],
+Cell[15908, 600, 345, 9, 102, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[16290, 614, 53, 1, 42, "Input"],
+Cell[16346, 617, 51, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[16434, 623, 60, 1, 42, "Input"],
+Cell[16497, 626, 338, 9, 102, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[16872, 640, 81, 1, 42, "Input"],
+Cell[16956, 643, 315, 9, 102, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[17308, 657, 113, 2, 94, "Input"],
+Cell[17424, 661, 548, 12, 159, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[18009, 678, 61, 1, 42, "Input"],
+Cell[18073, 681, 322, 8, 58, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[18444, 695, 85, 1, 42, "Subsection"],
+Cell[18532, 698, 588, 10, 224, "Input",
+  InitializationCell->True],
+Cell[19123, 710, 188, 4, 73, "Text"],
+
+Cell[CellGroupData[{
+Cell[19336, 718, 48, 1, 42, "Input"],
+Cell[19387, 721, 306, 10, 143, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[19730, 736, 53, 1, 42, "Input"],
+Cell[19786, 739, 45, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[19868, 745, 60, 1, 42, "Input"],
+Cell[19931, 748, 327, 10, 143, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[20295, 763, 51, 1, 42, "Input"],
+Cell[20349, 766, 131, 2, 60, "Message"],
+Cell[20483, 770, 129, 2, 66, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[20649, 777, 60, 1, 42, "Input"],
+Cell[20712, 780, 324, 10, 143, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[21073, 795, 45, 1, 42, "Input"],
+Cell[21121, 798, 36, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[21194, 804, 81, 1, 42, "Input"],
+Cell[21278, 807, 302, 10, 143, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[21617, 822, 113, 2, 94, "Input"],
+Cell[21733, 826, 476, 10, 195, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[22258, 842, 66, 0, 42, "Subsection"],
+Cell[22327, 844, 532, 8, 146, "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+Cell[22884, 856, 48, 1, 42, "Input"],
+Cell[22935, 859, 409, 9, 121, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[23381, 873, 53, 1, 42, "Input"],
+Cell[23437, 876, 55, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[23529, 882, 60, 1, 42, "Input"],
+Cell[23592, 885, 404, 9, 121, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[24033, 899, 45, 1, 42, "Input"],
+Cell[24081, 902, 170, 2, 66, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[24288, 909, 81, 1, 42, "Input"],
+Cell[24372, 912, 398, 9, 133, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[24807, 926, 113, 2, 94, "Input"],
+Cell[24923, 930, 621, 13, 173, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[25593, 949, 66, 0, 42, "Subsection"],
+Cell[25662, 951, 874, 14, 302, "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+Cell[26561, 969, 48, 1, 42, "Input"],
+Cell[26612, 972, 601, 12, 165, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[27250, 989, 51, 1, 42, "Input"],
+Cell[27304, 992, 71, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[27412, 998, 60, 1, 42, "Input"],
+Cell[27475, 1001, 587, 11, 165, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[28099, 1017, 45, 1, 42, "Input"],
+Cell[28147, 1020, 237, 3, 91, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[28421, 1028, 81, 1, 42, "Input"],
+Cell[28505, 1031, 606, 13, 191, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[29148, 1049, 113, 2, 94, "Input"],
+Cell[29264, 1053, 1087, 22, 243, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[30400, 1081, 71, 0, 42, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[30496, 1085, 72, 0, 47, "Text"],
+Cell[30571, 1087, 627, 10, 302, "Input"]
+}, Open  ]],
+Cell[31213, 1100, 253, 4, 94, "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+Cell[31491, 1108, 34, 1, 42, "Input"],
+Cell[31528, 1111, 83, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[31648, 1117, 48, 1, 42, "Input"],
+Cell[31699, 1120, 426, 10, 124, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[32162, 1135, 39, 1, 42, "Input"],
+Cell[32204, 1138, 36, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[32277, 1144, 45, 1, 42, "Input"],
+Cell[32325, 1147, 36, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[32398, 1153, 81, 1, 42, "Input"],
+Cell[32482, 1156, 374, 10, 124, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[32893, 1171, 113, 2, 68, "Input"],
+Cell[33009, 1175, 689, 15, 188, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[33735, 1195, 47, 1, 42, "Input"],
+Cell[33785, 1198, 217, 4, 66, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[34039, 1207, 61, 1, 42, "Input"],
+Cell[34103, 1210, 415, 9, 58, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[34567, 1225, 68, 0, 42, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[34660, 1229, 72, 0, 47, "Text"],
+Cell[34735, 1231, 632, 10, 453, "Input"]
+}, Closed]],
+Cell[35382, 1244, 283, 5, 61, "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+Cell[35690, 1253, 48, 1, 42, "Input"],
+Cell[35741, 1256, 429, 10, 143, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[36207, 1271, 39, 1, 42, "Input"],
+Cell[36249, 1274, 35, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[36321, 1280, 45, 1, 42, "Input"],
+Cell[36369, 1283, 83, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[36489, 1289, 81, 1, 42, "Input"],
+Cell[36573, 1292, 399, 10, 169, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[37009, 1307, 113, 2, 94, "Input"],
+Cell[37125, 1311, 535, 10, 143, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[37697, 1326, 47, 1, 42, "Input"],
+Cell[37747, 1329, 204, 3, 66, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[37988, 1337, 61, 1, 42, "Input"],
+Cell[38052, 1340, 411, 9, 77, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[38512, 1355, 68, 2, 42, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[38605, 1361, 142, 3, 42, "Input",
+  InitializationCell->True],
+Cell[38750, 1366, 109, 2, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[38896, 1373, 48, 1, 42, "Input"],
+Cell[38947, 1376, 305, 8, 80, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[39289, 1389, 59, 1, 42, "Input"],
+Cell[39351, 1392, 299, 8, 80, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[39687, 1405, 45, 1, 42, "Input"],
+Cell[39735, 1408, 119, 2, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[39891, 1415, 70, 1, 42, "Input"],
+Cell[39964, 1418, 339, 10, 150, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[40352, 1434, 56, 0, 42, "Subsection"],
+
+Cell[CellGroupData[{
+Cell[40433, 1438, 147, 3, 102, "Input",
+  InitializationCell->True],
+Cell[40583, 1443, 114, 2, 70, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[40734, 1450, 48, 1, 63, "Input"],
+Cell[40785, 1453, 308, 8, 120, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[41130, 1466, 59, 1, 63, "Input"],
+Cell[41192, 1469, 302, 8, 120, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[41531, 1482, 45, 1, 63, "Input"],
+Cell[41579, 1485, 88, 1, 61, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[41704, 1491, 70, 1, 63, "Input"],
+Cell[41777, 1494, 324, 10, 186, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[42150, 1510, 67, 2, 42, "Subsection"],
+Cell[42220, 1514, 158, 3, 102, "Input",
+  InitializationCell->True],
+
+Cell[CellGroupData[{
+Cell[42403, 1521, 48, 1, 63, "Input"],
+Cell[42454, 1524, 336, 10, 214, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[42827, 1539, 59, 1, 63, "Input"],
+Cell[42889, 1542, 327, 10, 214, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[43253, 1557, 45, 1, 63, "Input"],
+Cell[43301, 1560, 50, 1, 61, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[43388, 1566, 70, 1, 63, "Input"],
+Cell[43461, 1569, 305, 8, 148, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[43815, 1583, 55, 0, 42, "Subsection"],
+Cell[43873, 1585, 125, 2, 102, "Input"],
+
+Cell[CellGroupData[{
+Cell[44023, 1591, 48, 1, 63, "Input"],
+Cell[44074, 1594, 333, 10, 186, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[44444, 1609, 59, 1, 63, "Input"],
+Cell[44506, 1612, 324, 10, 186, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[44867, 1627, 45, 1, 63, "Input"],
+Cell[44915, 1630, 36, 1, 61, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[44988, 1636, 70, 1, 63, "Input"],
+Cell[45061, 1639, 306, 8, 120, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[45416, 1653, 92, 2, 42, "Subsection"],
+Cell[45511, 1657, 217, 3, 94, "Input"],
+
+Cell[CellGroupData[{
+Cell[45753, 1664, 48, 1, 42, "Input"],
+Cell[45804, 1667, 418, 10, 124, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[46259, 1682, 59, 1, 42, "Input"],
+Cell[46321, 1685, 400, 10, 150, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[46758, 1700, 45, 1, 42, "Input"],
+Cell[46806, 1703, 51, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[46894, 1709, 70, 1, 42, "Input"],
+Cell[46967, 1712, 380, 10, 124, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[47384, 1727, 47, 1, 42, "Input"],
+Cell[47434, 1730, 173, 3, 66, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[47656, 1739, 85, 2, 42, "Subsection"],
+Cell[47744, 1743, 256, 4, 94, "Input"],
+
+Cell[CellGroupData[{
+Cell[48025, 1751, 48, 1, 42, "Input"],
+Cell[48076, 1754, 438, 10, 124, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[48551, 1769, 59, 1, 42, "Input"],
+Cell[48613, 1772, 374, 10, 124, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[49024, 1787, 45, 1, 42, "Input"],
+Cell[49072, 1790, 36, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[49145, 1796, 70, 1, 42, "Input"],
+Cell[49218, 1799, 374, 10, 124, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[49629, 1814, 47, 1, 42, "Input"],
+Cell[49679, 1817, 218, 4, 66, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[49934, 1826, 57, 1, 42, "Input"],
+Cell[49994, 1829, 455, 10, 243, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[50498, 1845, 77, 2, 42, "Subsection"],
+Cell[50578, 1849, 119, 2, 42, "Input"],
+
+Cell[CellGroupData[{
+Cell[50722, 1855, 48, 1, 42, "Input"],
+Cell[50773, 1858, 307, 9, 102, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[51117, 1872, 59, 1, 42, "Input"],
+Cell[51179, 1875, 305, 9, 128, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[51521, 1889, 45, 1, 42, "Input"],
+Cell[51569, 1892, 55, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[51661, 1898, 70, 1, 42, "Input"],
+Cell[51734, 1901, 284, 8, 80, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[52067, 1915, 73, 2, 42, "Subsection"],
+Cell[52143, 1919, 199, 3, 68, "Input"],
+
+Cell[CellGroupData[{
+Cell[52367, 1926, 48, 1, 42, "Input"],
+Cell[52418, 1929, 428, 11, 146, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[52883, 1945, 59, 1, 42, "Input"],
+Cell[52945, 1948, 413, 11, 146, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[53395, 1964, 45, 1, 42, "Input"],
+Cell[53443, 1967, 36, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[53516, 1973, 70, 1, 42, "Input"],
+Cell[53589, 1976, 451, 10, 188, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[54089, 1992, 73, 2, 42, "Subsection"],
+Cell[54165, 1996, 181, 3, 68, "Input"],
+
+Cell[CellGroupData[{
+Cell[54371, 2003, 48, 1, 42, "Input"],
+Cell[54422, 2006, 376, 9, 102, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[54835, 2020, 59, 1, 42, "Input"],
+Cell[54897, 2023, 364, 9, 102, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[55298, 2037, 45, 1, 42, "Input"],
+Cell[55346, 2040, 89, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[55472, 2046, 70, 1, 42, "Input"],
+Cell[55545, 2049, 383, 11, 146, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[55977, 2066, 88, 2, 42, "Subsection"],
+Cell[56068, 2070, 121, 2, 42, "Input"],
+
+Cell[CellGroupData[{
+Cell[56214, 2076, 48, 1, 42, "Input"],
+Cell[56265, 2079, 412, 12, 121, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[56714, 2096, 59, 1, 42, "Input"],
+Cell[56776, 2099, 406, 12, 121, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[57219, 2116, 45, 1, 42, "Input"],
+Cell[57267, 2119, 36, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[57340, 2125, 70, 1, 42, "Input"],
+Cell[57413, 2128, 406, 12, 121, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[57856, 2145, 39, 1, 42, "Input"],
+Cell[57898, 2148, 40, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[57975, 2154, 113, 2, 68, "Input"],
+Cell[58091, 2158, 542, 13, 133, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[58682, 2177, 85, 2, 42, "Subsection"],
+Cell[58770, 2181, 112, 2, 42, "Input"],
+
+Cell[CellGroupData[{
+Cell[58907, 2187, 48, 1, 42, "Input"],
+Cell[58958, 2190, 373, 11, 99, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[59368, 2206, 59, 1, 42, "Input"],
+Cell[59430, 2209, 357, 11, 99, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[59824, 2225, 45, 1, 42, "Input"],
+Cell[59872, 2228, 36, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[59945, 2234, 70, 1, 42, "Input"],
+Cell[60018, 2237, 357, 11, 99, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[60412, 2253, 39, 1, 42, "Input"],
+Cell[60454, 2256, 40, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[60531, 2262, 113, 2, 68, "Input"],
+Cell[60647, 2266, 437, 11, 137, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[61121, 2282, 61, 1, 42, "Input"],
+Cell[61185, 2285, 371, 10, 77, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[61605, 2301, 89, 2, 42, "Subsection"],
+Cell[61697, 2305, 150, 2, 42, "Input"],
+
+Cell[CellGroupData[{
+Cell[61872, 2311, 48, 1, 42, "Input"],
+Cell[61923, 2314, 431, 12, 121, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[62391, 2331, 59, 1, 42, "Input"],
+Cell[62453, 2334, 409, 12, 121, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[62899, 2351, 45, 1, 42, "Input"],
+Cell[62947, 2354, 58, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[63042, 2360, 56, 1, 42, "Input"],
+Cell[63101, 2363, 114, 2, 57, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[63252, 2370, 39, 1, 42, "Input"],
+Cell[63294, 2373, 35, 1, 41, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[63366, 2379, 61, 1, 42, "Input"],
+Cell[63430, 2382, 450, 11, 77, "Output"]
+}, Open  ]]
+}, Closed]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+

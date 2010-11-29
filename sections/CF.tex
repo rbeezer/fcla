@@ -1,0 +1,206 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section CF
+%%  Curve Fitting
+%%
+%%%%%%%%%%%
+%
+% {\sc\large This Section is a Draft, Subject to Changes}\par\bigskip
+{\sc\large This Section is Incomplete}\par\bigskip
+%
+Given two points in the plane, there is a unique line through them.  Given three points in the plane, and not in a line, there is a unique parabola through them.  Given four points in the plane, there is a unique polynomial, of degree 3 or less, passing through them.  And so on.  We can prove this result, and give a procedure for finding the polynomial with the help of Vandermonde matrices (\acronymref{section}{VM}).
+%
+\begin{theorem}{IP}{Interpolating Polynomial}{interpolating polynomial}
+Suppose $\setparts{(x_i,\,y_i)}{1\leq i\leq n+1}$ is a set of $n+1$ points in the plane where the $x$-coordinates are all different.  Then there is a unique polynomial of degree $n$ or less, $p(x)$, such that $p(x_i)=y_i$, $1\leq i\leq n+1$.
+\end{theorem}
+%
+\begin{proof}
+Write $p(x)=a_0+a_1x+a_2x^2+\cdots+a_nx^n$.  To meet the conclusion of the theorem, we desire,
+%
+\begin{align*}
+y_i&=p(x_i)=a_0+a_1x_i+a_2x_i^2+\cdots+a_nx_i^n
+&
+1\leq i\leq n+1&
+\end{align*}
+%
+This is a system of $n+1$ linear equations in the $n+1$ variables $a_0,\,a_1,\,a_2,\,\ldots,\,a_n$.  The vector of constants in this system is the vector containing the $y$-coordinates of the points.   More importantly, the coefficient matrix is a Vandermonde matrix (\acronymref{definition}{VM}) built from the $x$-coordinates $\scalarlist{x}{n+1}$.  Since we have required that these scalars all be different, \acronymref{theorem}{NVM} tells us that the coefficient matrix is nonsingular and 
+\acronymref{theorem}{NMUS} says the solution for the coefficients of the polynomial exists, and is unique.  As a practical matter, \acronymref{theorem}{SNCM} provides an expression for the solution.
+%
+\end{proof}
+%
+%
+\begin{example}{PTFP}{Polynomial through five points}{curve fitting!polynomial through 5 points}
+Suppose we have the following 5 points in the plane and we wish to pass a degree 4 polynomial through them.
+%
+\begin{center}
+\begin{tabular}{l|cccccc}
+$i$&1&2&3&4&5\\\hline
+$x_i$ & -3 & -1 & 2 & 3 & 6 \\\hline
+$y_i$ & 276 & 16 & 31 & 144 2319
+\end{tabular}
+\end{center}
+%
+The required system of equations has a coefficient matrix that is the Vandermonde matrix where row $i$ is successive powers of $x_i$
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+ 1 & -3 & 9 & -27 & 81 \\
+ 1 & -1 & 1 & -1 & 1 \\
+ 1 & 2 & 4 & 8 & 16 \\
+ 1 & 3 & 9 & 27 & 81 \\
+ 1 & 6 & 36 & 216 & 1296
+\end{bmatrix}
+\end{align*}
+%
+\acronymref{theorem}{NMUS} provides a solution as
+%
+\begin{align*}
+\colvector{a_0\\a_1\\a_2\\a_3\\a_4}
+&=\inverse{A}\colvector{276 \\ 16 \\ 31 \\ 144 \\ 2319}
+=
+\begin{bmatrix}
+ -\frac{1}{15} & \frac{9}{14} & \frac{9}{10} & -\frac{1}{2} & \frac{1}{42} \\
+ 0 & -\frac{3}{7} & \frac{3}{4} & -\frac{1}{3} & \frac{1}{84} \\
+ \frac{5}{108} & -\frac{1}{56} & -\frac{1}{4} & \frac{17}{72} & -\frac{11}{756} \\
+ -\frac{1}{54} & \frac{1}{21} & -\frac{1}{12} & \frac{1}{18} & -\frac{1}{756} \\
+ \frac{1}{540} & -\frac{1}{168} & \frac{1}{60} & -\frac{1}{72} & \frac{1}{756}
+\end{bmatrix}
+\colvector{276 \\ 16 \\ 31 \\ 144 \\ 2319}
+=\colvector{3 \\ -4 \\ 5 \\ -2 \\ 2}
+\end{align*}
+%
+So the polynomial is $p(x)=3 - 4x + 5x^2 - 2x^3 + 2x^4$.
+%
+\end{example}
+%
+The unique polynomial passing through a set of points is known as the \define{interpolating polynomial} and it has many uses.  Unfortunately, when confronted with data from an experiment the situation may not be so simple or clear cut.  Read on.
+%
+\subsect{DF}{Data Fitting}
+%
+Suppose that we have $n$ real variables, $\scalarlist{x}{n}$, that we can measure in an experiment.  We believe that these variables combine, in a linear fashion, to equal another real variable, $y$.  In other words, we have reason to believe from our understanding of the experiment, that
+%
+\begin{align*}
+y&=a_1x_1+a_2x_2+a_3x_3+\cdots+a_nx_n
+\end{align*}
+%
+where the scalars $\scalarlist{a}{n}$ are not known to us, but are instead desirable.  We would call this our model of the situation.  Then we run the experiment $m$ times, collecting sets of values for the variables of the experiment.  For run number $k$ we might denote these values as $y_k$, $x_{k1}$, $x_{k2}$, $x_{k3}$, \dots, $x_{kn}$.  If we substitute these values into the model equation, we get $m$ linear equations in the unknown coefficients $\scalarlist{a}{n}$.  If $m=n$, then we have a square coefficient matrix of the system which might happen to be nonsingular and there would be a unique solution.\par
+%
+However, more likely $m>n$ (the more data we collect, the greater our confidence in the results) and the resulting system is inconsistent.  It may be that our model is only an approximate understanding of the relationship between the $x_i$ and $y$, or our measurements are not completely accurate.  Still we would like to understand the situation we are studying, and would like some best answer for $\scalarlist{a}{n}$.\par
+%
+Let $\vect{y}$ denote the vector with $\vectorentry{\vect{y}}{i}=y_i$, $1\leq i\leq m$, let $\vect{a}$ denote the vector with $\vectorentry{\vect{a}}{j}=a_j$, $1\leq j\leq n$, and let $X$ denote the $m\times n$ matrix with $\matrixentry{X}{ij}=x_{ij}$, $1\leq i\leq m$, $1\leq j\leq n$.  Then the model equation, evaluated with each run of the experiment, translates to $X\vect{a}=\vect{y}$.  With the presumption that this system has no solution, we can try to minimize the difference between the two side of the equation $\vect{y}-X\vect{a}$.  As a vector, it is hard to imagine what the minimum might be, so we instead minimize the square of its norm 
+%
+\begin{align*}
+S=\transpose{\left(\vect{y}-X\vect{a}\right)}\left(\vect{y}-X\vect{a}\right)
+\end{align*}
+%
+To keep the logical flow accurate, we will define the minimizing value and then give the proof that it behaves as desired.
+%
+\begin{definition}{LSS}{Least Squares Solution}{least squares solution}
+Given the equation $X\vect{a}=\vect{y}$, where $X$ is an $m\times n$ matrix of rank $n$, the \define{least squares solution} for $\vect{a}$ is $\inverse{\left(\transpose{X}X\right)}\transpose{X}\vect{y}$.
+\end{definition}
+%
+%
+\begin{theorem}{LSMR}{Least Squares Minimizes Residuals}{least squares!minimizes residuals}
+Suppose that $X$ is an $m\times n$ matrix of rank $n$.  The least squares solution of $X\vect{a}=\vect{y}$, $\vect{a}^\prime=\inverse{\left(\transpose{X}X\right)}\transpose{X}\vect{y}$, minimizes the expression 
+%
+\begin{align*}
+S=\transpose{\left(\vect{y}-X\vect{a}\right)}\left(\vect{y}-X\vect{a}\right)
+\end{align*}
+%
+\end{theorem}
+%
+\begin{proof}
+We begin by finding the critical points of $S$.  In preparation, let $\vect{X}_j$ denote column $j$ of $X$, for $1\leq j\leq n$ and compute partial derivatives with respect to $a_j$, $1\leq j\leq n$.  A matrix product of the form $\transpose{\vect{x}}\vect{y}$ is a sum of products, so a derivative is a sum of applications of the product rule,
+%
+\begin{align*}
+\frac{\partial}{\partial a_j}S
+&=\frac{\partial}{\partial a_j}\left(\transpose{\left(\vect{y}-X\vect{a}\right)}\left(\vect{y}-X\vect{a}\right)\right)\\
+&=\sum_{i=1}^m
+\frac{\partial}{\partial a_j}\left(\vectorentry{\vect{y}-X\vect{a}}{i}\right)
+\vectorentry{\vect{y}-X\vect{a}}{i}
++
+\vectorentry{\vect{y}-X\vect{a}}{i}
+\frac{\partial}{\partial a_j}\left(\vectorentry{\vect{y}-X\vect{a}}{i}\right)\\
+%
+&=2\sum_{i=1}^m
+\frac{\partial}{\partial a_j}\left(\vectorentry{\vect{y}-X\vect{a}}{i}\right)
+\vectorentry{\vect{y}-X\vect{a}}{i}\\
+%
+&=2\sum_{i=1}^m
+\frac{\partial}{\partial a_j}
+\left(\vectorentry{\vect{y}}{i}-\sum_{k=1}^n\matrixentry{X}{ik}\vectorentry{\vect{a}}{k}\right)
+\vectorentry{\vect{y}-X\vect{a}}{i}\\
+%
+&=2\sum_{i=1}^m
+-\matrixentry{X}{ij}\vectorentry{\vect{y}-X\vect{a}}{i}\\
+%
+&=-2\transpose{\left(\vect{X}_j\right)}\left(\vect{y}-X\vect{a}\right)\\
+%
+\end{align*}
+%
+The first partial derivatives will allow us to find critical points, while second partial derivatives will be needed to confirm that a critical point will yield a minimum.  Return to the next-to-last expression for the first partial derivative of $S$,
+%
+\begin{align*}
+\frac{\partial}{\partial a_\ell a_j}S
+&=\frac{\partial}{\partial a_\ell} 2\sum_{i=1}^m
+-\matrixentry{X}{ij}\vectorentry{\vect{y}-X\vect{a}}{i}\\
+%
+&=-2\sum_{i=1}^m \frac{\partial}{\partial a_\ell} 
+\matrixentry{X}{ij}\vectorentry{\vect{y}-X\vect{a}}{i}\\
+%
+&=-2\sum_{i=1}^m\matrixentry{X}{ij} \frac{\partial}{\partial a_\ell} 
+\left(\vectorentry{\vect{y}}{i}-\sum_{k=1}^n\matrixentry{X}{ik}\vectorentry{\vect{a}}{k}\right)\\
+%
+&=-2\sum_{i=1}^m\matrixentry{X}{ij}\left(-\matrixentry{X}{i\ell}\right)\\
+%
+&=2\sum_{i=1}^m\matrixentry{X}{ij}\matrixentry{X}{i\ell}\\
+%
+&=2\sum_{i=1}^m\matrixentry{\transpose{X}}{ji}\matrixentry{X}{i\ell}\\
+%
+&=2\matrixentry{\transpose{X}X}{j\ell}
+%
+\end{align*}
+%
+For $1\leq j\leq n$, set $\frac{\partial}{\partial a_j}S=0$.  This results in the $n$ scalar equations 
+%
+\begin{align*}
+\transpose{\left(\vect{X}_j\right)}X\vect{a}
+&=\transpose{\left(\vect{X}_j\right)}\vect{y}
+&
+1\leq j\leq n&
+\end{align*}
+%
+These $n$ vector equations can be summarized in the single vector equation,
+%
+\begin{align*}
+\transpose{X}X\vect{a}=\transpose{X}\vect{y}
+\end{align*}
+%
+$\transpose{X}X$ is an $n\times n$ matrix and since we have assumed that $X$ has rank $n$, $\transpose{X}X$ will also have rank $n$.  Since $\transpose{X}X$ is invertible, we have a critical point at
+%
+\begin{align*}
+\vect{a}^\prime=\inverse{\left(\transpose{X}X\right)}\transpose{X}\vect{y}
+\end{align*}
+%
+Is this lone critical point really a minimum?  The matrix of second partial derivatives is constant, and a positive multiple of $\transpose{X}X$.  \acronymref{theorem}{CPSM} tells us that this matrix is positive semi-definite.  In an advanced course on multivariable calculus, it is shown that a minimum occurs exactly where the matrix of second partial derivatives is positive semi-definite.  You may have seen this in the two-variable case, where a check on the positive semi-definiteness is disguised with a determinant of the $2\times 2$ matrix of second partial derivatives.
+%
+\end{proof}
+
+
+%%  Computational example
+%%  define "residuals"
+%%  Linearlizing equations
+%%  Generalized inverse?
+
+%  
+%  End of  CF.tex

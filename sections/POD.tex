@@ -1,0 +1,105 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section POD
+%%  Polar Decomposition
+%%
+%%%%%%%%%%%
+%
+{\sc\large This Section is a Draft, Subject to Changes}\\
+{\sc\large Needs Numerical Examples}\par\bigskip
+%
+The polar decomposition of a matrix writes any matrix as the product of a unitary matrix (\acronymref{definition}{UM})and a positive semi-definite matrix (\acronymref{definition}{PSM}).  It takes its name from a special way to write complex numbers.  If you've had a basic course in complex analysis, the next paragraph will help explain the name.  If the next paragraph makes no sense to you, there's no harm in skipping it.\par
+%
+Any complex number $z\in\complexes$ can be written as $z=re^{i\theta}$ where $r$ is a positive number (computed as a square root of a function of the real amd imaginary parts of $z$) and $\theta$ is an angle of rotation that converts $1$ to the complex number $e^{i\theta}=\cos(\theta)+i\sin(\theta)$.  The polar form of a square matrix is a product of a positive semi-definite matrix that is a square root of a function of the matrix together with a unitary matrix, which can be viewed as achieving a rotation (\acronymref{theorem}{UMPIP}).\par
+%
+OK, enough preliminaries.  We have all the tools in place to jump straight to our main theorem.
+%
+\begin{theorem}{PDM}{Polar Decomposition of a Matrix}{polar decomposition}
+Suppose that $A$ is a square matrix.  Then there is a unitary matrix $U$ such that $A=\sr{\left(A\adjoint{A}\right)}U$.
+\end{theorem}
+%
+\begin{proof}
+This theorem only claims the existence of a unitary matrix $U$ that does a certain job.  We will manufacture $U$ and check that it meets the requirements.\par
+%
+Suppose $A$ has size $n$ and rank $r$.  We begin by applying \acronymref{theorem}{EEMAP} to $A$.  Let $B=\set{\vectorlist{x}{n}}$ be the orthonormal basis of $\complex{n}$ composed of eigenvectors for $\adjoint{A}A$, and let $C=\set{\vectorlist{y}{n}}$ be the orthonormal basis of $\complex{n}$ composed of eigenvectors for $A\adjoint{A}$.  We have $A\vect{x}_i=\sqrt{\delta_i}\vect{x_i}$, $1\leq i\leq r$, and $A\vect{x}_i=\zerovector$, $r+1\leq i\leq n$, where $\delta_i$, $1\leq i\leq r$ are the distinct nonzero eigenvalues of $\adjoint{A}A$.\par
+%
+Define $\ltdefn{T}{\complex{n}}{\complex{n}}$ to be the unique linear transformation such that $\lt{T}{\vect{x}_i}=\vect{y}_i$, $1\leq i\leq n$, as guaranteed by \acronymref{theorem}{LTDB}.  Let $E$ be the basis of standard unit vectors for $\complex{n}$ (\acronymref{definition}{SUV}), and define $U$ to be the matrix representation (\acronymref{definition}{MR}) of $T$ with respect to $E$, more carefully $U=\matrixrep{T}{E}{E}$.  This is the matrix we are after. 
+Notice that 
+%
+\begin{align*}
+U\vect{x}_i
+&=
+\matrixrep{T}{E}{E}\vectrep{E}{\vect{x}_i}
+&&\text{\acronymref{definition}{VR}}\\
+%
+&=\vectrep{E}{\lt{T}{\vect{x}_i}}
+&&\text{\acronymref{theorem}{FTMR}}\\
+%
+&=\vectrep{E}{\vect{y}_i}
+&&\text{\acronymref{theorem}{FTMR}}\\
+%
+&=\vect{y}_i
+&&\text{\acronymref{definition}{VR}}
+%
+\end{align*}
+%
+Since $B$ and $C$ are orthonormal bases, and $C$ is the result of multiplying the vectors of $B$ by $U$, we conclude that $U$ is unitary by \acronymref{theorem}{UMCOB}.  So once again, \acronymref{theorem}{EEMAP} is a big part of the setup for a decomposition.\par
+%
+Let $\vect{x}\in\complex{n}$ be any vector.  Since $B$ is a basis of $\complex{n}$, there are scalars $\scalarlist{a}{n}$ expressing $\vect{x}$ as a linear combination of the vectors in $B$.  then
+%
+\begin{align*}
+\sr{\left(A\adjoint{A}\right)}U\vect{x}
+&=\sr{\left(A\adjoint{A}\right)}U\sum_{i=1}^{n}a_i\vect{x}_i
+&&\text{\acronymref{definition}{B}}\\
+%
+&=\sum_{i=1}^{n}\sr{\left(A\adjoint{A}\right)}Ua_i\vect{x}_i
+&&\text{\acronymref{theorem}{MMDAA}}\\
+%
+&=\sum_{i=1}^{n}a_i\sr{\left(A\adjoint{A}\right)}U\vect{x}_i
+&&\text{\acronymref{theorem}{MMSMM}}\\
+%
+&=\sum_{i=1}^{n}a_i\sr{\left(A\adjoint{A}\right)}\vect{y}_i\\
+%
+&=\sum_{i=1}^{r}a_i\sr{\left(A\adjoint{A}\right)}\vect{y}_i
++\sum_{i=r+1}^{n}a_i\sr{\left(A\adjoint{A}\right)}\vect{y}_i
+&&\text{\acronymref{property}{AAC}}\\
+%
+&=\sum_{i=1}^{r}a_i\sqrt{\delta_i}\vect{y}_i
++\sum_{i=r+1}^{n}a_i(0)\vect{y}_i
+&&\text{\acronymref{theorem}{EESR}}\\
+%
+&=\sum_{i=1}^{r}a_i\sqrt{\delta_i}\vect{y}_i
++\sum_{i=r+1}^{n}a_i\zerovector
+&&\text{\acronymref{theorem}{ZSSM}}\\
+%
+&=\sum_{i=1}^{r}a_iA\vect{x}_i
++\sum_{i=r+1}^{n}a_iA\vect{x}_i
+&&\text{\acronymref{theorem}{EEMAP}}\\
+%
+&=\sum_{i=1}^{n}a_iA\vect{x}_i
+&&\text{\acronymref{property}{AAC}}\\
+%
+&=\sum_{i=1}^{n}Aa_i\vect{x}_i
+&&\text{\acronymref{theorem}{MMSMM}}\\
+%
+&=A\sum_{i=1}^{n}a_i\vect{x}_i
+&&\text{\acronymref{theorem}{MMDAA}}\\
+%
+&=A\vect{x}
+%
+\end{align*}
+%
+So by \acronymref{theorem}{EMMVP} we have the matrix equality $\sr{\left(A\adjoint{A}\right)}U=A$.
+%
+\end{proof}
+%  
+%  End of  POD.tex

@@ -1,0 +1,1112 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section IS
+%%  Invariant Subspaces
+%%
+%%%%%%%%%%%
+%
+{\sc\large This section is in draft form}\\
+{\sc\large Nearly complete}
+\par\medskip
+%
+We have seen in \acronymref{section}{NLT} that nilpotent linear transformations are almost never diagonalizable (\acronymref{theorem}{DNLT}), yet have matrix representations that are very nearly diagonal (\acronymref{theorem}{CFNLT}).  Our goal in this section, and the next (\acronymref{section}{JCF}), is to obtain a matrix representation of {\em any} linear transformation that is very nearly diagonal.  A key step in reaching this goal is an understanding of invariant subspaces, and a particular type of invariant subspace that contains vectors known as ``generalized eigenvectors.''
+%
+\subsect{IS}{Invariant Subspaces}
+%
+As is often the case, we start with a definition.
+%
+\begin{definition}{IS}{Invariant Subspace}{invariant subspace}
+Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation and $W$ is a subspace of $V$.  Suppose further that $\lt{T}{\vect{w}}\in W$ for every $\vect{w}\in W$.  Then $W$ is an \define{invariant subspace} of $V$ relative to $T$.
+\end{definition}
+%
+We do not have any special notation for an invariant subspace, so it is important to recognize that an invariant subspace is always relative to both a superspace ($V$) and a linear transformation ($T$), which will sometimes not be mentioned, yet will be clear from the context.  Note also that the linear transformation involved must have an equal domain and codomain --- the definition would not make much sense if our outputs were not of the same type as our inputs.\par
+%
+As usual, we begin with an example that demonstrates the existence of invariant subspaces.  We will return later to understand how this example was constructed, but for now, just understand how we check the existence of the invariant subspaces.
+%
+\begin{example}{TIS}{Two invariant subspaces}{invariant subspace}
+Consider the linear transformation $\ltdefn{T}{\complex{4}}{\complex{4}}$ defined by $\lt{T}{\vect{x}}=A\vect{x}$ where $A$ is given by
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+ -8 & 6 & -15 & 9 \\
+ -8 & 14 & -10 & 18 \\
+ 1 & 1 & 3 & 0 \\
+ 3 & -8 & 2 & -11
+\end{bmatrix}
+\end{align*}
+%
+Define (with zero motivation),
+%
+\begin{align*}
+\vect{w_1}&=\colvector{-7\\-2\\3\\0}
+&
+\vect{w_2}&=\colvector{-1\\-2\\0\\1}
+\end{align*}
+%
+and set $W=\spn{\set{\vect{w}_1,\,\vect{w}_2}}$.  We verify that $W$ is an invariant subspace of $\complex{4}$ with respect to $T$.  By the definition of $W$, any vector chosen from $W$ can be written as a linear combination of $\vect{w}_1$ and $\vect{w}_2$.  Suppose that $\vect{w}\in W$, and then check the details of the following verification,
+%
+\begin{align*}
+\lt{T}{\vect{w}}
+&=\lt{T}{a_1\vect{w}_1+a_2\vect{w}_2}&&\text{\acronymref{definition}{SS}}\\
+&=a_1\lt{T}{\vect{w}_1}+a_2\lt{T}{\vect{w}_2}&&\text{\acronymref{theorem}{LTLC}}\\
+&=a_1\colvector{-1\\-2\\0\\1}+a_2\colvector{5\\-2\\-3\\2}\\
+&=a_1\vect{w}_2+a_2\left((-1)\vect{w}_1+2\vect{w}_2\right)\\
+&=(-a_2)\vect{w}_1+(a_1+2a_2)\vect{w}_2\\
+&\in W&&\text{\acronymref{definition}{SS}}
+\end{align*}
+%
+So, by \acronymref{definition}{IS}, $W$ is an invariant subspace of $\complex{4}$ relative to $T$.  In an entirely similar manner we construct another invariant subspace of $T$.\par
+%
+With zero motivation, define
+%
+\begin{align*}
+\vect{x_1}&=\colvector{-3\\-1\\1\\0}
+&
+\vect{x_2}&=\colvector{0\\-1\\0\\1}
+\end{align*}
+%
+and set $X=\spn{\set{\vect{x}_1,\,\vect{x}_2}}$.  We verify that $X$ is an invariant subspace of $\complex{4}$ with respect to $T$.  By the definition of $X$, any vector chosen from $X$ can be written as a linear combination of $\vect{x}_1$ and $\vect{x}_2$.  Suppose that $\vect{x}\in X$, and then check the details of the following verification,
+%
+\begin{align*}
+\lt{T}{\vect{x}}
+&=\lt{T}{b_1\vect{x}_1+b_2\vect{x}_2}&&\text{\acronymref{definition}{SS}}\\
+&=b_1\lt{T}{\vect{x}_1}+b_2\lt{T}{\vect{x}_2}&&\text{\acronymref{theorem}{LTLC}}\\
+&=b_1\colvector{3\\0\\-1\\1}+b_2\colvector{3\\4\\-1\\-3}\\
+&=b_1\left((-1)\vect{x}_1+\vect{x}_2\right)+b_2\left((-1)\vect{x}_1+(-3)\vect{x}_2\right)\\
+&=(-b_1-b_2)\vect{x}_1+(b_1-3b_2)\vect{x}_2\\
+&\in X&&\text{\acronymref{definition}{SS}}
+\end{align*}
+%
+So, by \acronymref{definition}{IS}, $X$ is an invariant subspace of $\complex{4}$ relative to $T$. \par
+%
+There is a bit of magic in each of these verifications where the two outputs of $T$ happen to equal linear combinations of the two inputs.  But this is the essential nature of an invariant subspace.  We'll have a peek under the hood later, and it won't look so magical after all.\par
+%
+As a hint of things to come, verify that $B=\set{\vect{w}_1,\,\vect{w}_2,\,\vect{x}_1,\,\vect{x}_2}$ is a basis of $\complex{4}$.  Splitting this basis in half, \acronymref{theorem}{DSFB}, tells us that $\complex{4}=W\ds X$.  To see why a decomposition of a vector space into a direct sum of invariant subspaces might be interesting, construct the matrix representation of $T$ relative to $B$, $\matrixrep{T}{B}{B}$.  Hmmmmmm.
+%
+\end{example}
+%
+\acronymref{example}{TIS} is a bit mysterious at this stage.   Do we know any other examples of invariant subspaces?  Yes, as it turns out, we have already seen quite a few.  We'll give some examples now, and in more general situations, describe broad classes of invariant subspaces with theorems.  First up is eigenspaces.
+%
+\begin{theorem}{EIS}{Eigenspaces are Invariant Subspaces}{eigenspace!invariant subspace}\index{invariant subspace!eigenspace}
+Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation with eigenvalue $\lambda$ and associated eigenspace $\eigenspace{T}{\lambda}$.  Let $W$ be any subspace of $\eigenspace{T}{\lambda}$.  Then $W$ is an invariant subspace of $V$ relative to $T$.
+\end{theorem}
+%
+\begin{proof}
+Choose $\vect{w}\in W$.  Then
+%
+\begin{align*}
+\lt{T}{\vect{w}}
+&=\lambda\vect{w}&&\text{\acronymref{definition}{EELT}}\\
+&\in W&&\text{\acronymref{property}{SC}}
+\end{align*}
+%
+So by \acronymref{definition}{IS}, $W$ is an invariant subspace of $V$ relative to $T$.
+\end{proof}
+%
+\acronymref{theorem}{EIS} is general enough to determine that an entire eigenspace is an invariant subspace, or that simply the span of a single eigenvector is an invariant subspace.  It is not always the case that any subspace of an invariant subspace is again an invariant subspace, but eigenspaces do have this property.  Here is an example of the theorem, which also allows us to very quickly build several several invariant (4x4, 2 evs, 1 2x2 jordan, 1 2x2 diag)
+%
+\begin{example}{EIS}{Eigenspaces as invariant subspaces}{invariant subspace!eigenspaces}
+Define the linear transformation $\ltdefn{S}{M_{22}}{M_{22}}$ by
+%
+\begin{align*}
+\lt{S}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}
+&=
+\begin{bmatrix}
+-2a + 19b - 33c + 21d  &  -3a + 16b - 24c + 15d \\
+-2a + 9b - 13c + 9d    &   -a + 4b - 6c + 5d
+\end{bmatrix}
+\end{align*}
+%
+Build a matrix representation of $S$ relative to the standard basis (\acronymref{definition}{MR}, \acronymref{example}{BM}) and compute eigenvalues and eigenspaces of $S$ with the computational techniques of \acronymref{chapter}{E} in concert with \acronymref{theorem}{EER}.  Then
+%
+\begin{align*}
+\eigenspace{S}{1}&=\spn{\set{\begin{bmatrix}4&3\\2&1\end{bmatrix}}}
+&
+\eigenspace{S}{2}&=\spn{\set{
+\begin{bmatrix} 6& 3\\1&0\end{bmatrix},\,
+\begin{bmatrix}-9&-3\\0&1\end{bmatrix}
+}}
+\end{align*}
+%
+So by \acronymref{theorem}{EIS}, both $\eigenspace{S}{1}$ and $\eigenspace{S}{2}$ are invariant subspaces of $M_{22}$ relative to $S$.  However, \acronymref{theorem}{EIS} provides even more invariant subspaces.  Since $\eigenspace{S}{1}$ has dimension 1, it has no interesting subspaces, however $\eigenspace{S}{2}$ has dimension 2 and has a plethora of subspaces.  For example, set
+%
+\begin{align*}
+\vect{u}&=
+2\begin{bmatrix} 6& 3\\1&0\end{bmatrix}+
+3\begin{bmatrix}-9&-3\\0&1\end{bmatrix}
+=
+\begin{bmatrix}-6&-3\\2&3\end{bmatrix}
+\end{align*}
+%
+and define $U=\spn{\set{\vect{u}}}$.  Then since $U$ is a subspace of $\eigenspace{S}{2}$, \acronymref{theorem}{EIS} says that $U$ is an invariant subspace of $M_{22}$ (or we could check this claim directly based simply on the fact that $\vect{u}$ is an eigenvector of $S$).
+%
+\end{example}
+%
+For every linear transformation there are some obvious, trivial invariant subspaces.  Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation.  Then simply because $T$ is a function (\acronymref{definition}{LT}), the subspace $V$ is an invariant subspace of $T$.  In only a minor twist on this theme, the range of $T$, $\rng{T}$, is an invariant subspace of $T$ by \acronymref{definition}{RLT}.  Finally, \acronymref{theorem}{LTTZZ} provides the justification for claiming that $\set{\zerovector}$ is an invariant subspace of $T$.\par
+%
+That the trivial subspace is always an invariant subspace is a special case of the next theorem.  As an easy exercise before reading the next theorem, prove that the kernel of a linear transformation (\acronymref{definition}{KLT}), $\krn{T}$, is an invariant subspace.  We'll wait.
+%
+\begin{theorem}{KPIS}{Kernels of Powers are Invariant Subspaces}{invariant subspace!kernels of powers}
+Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation.  Then $\krn{T^k}$ is an invariant subspace of $V$.
+\end{theorem}
+%
+\begin{proof}
+Suppose that $\vect{z}\in\krn{T^k}$.  Then
+%
+\begin{align*}
+\lt{T^k}{\lt{T}{\vect{z}}}
+&=\lt{T^{k+1}}{\vect{z}}&&\text{\acronymref{definition}{LTC}}\\
+&=\lt{T}{\lt{T^k}{\vect{z}}}&&\text{\acronymref{definition}{LTC}}\\
+&=\lt{T}{\zerovector}&&\text{\acronymref{definition}{KLT}}\\
+&=\zerovector&&\text{\acronymref{theorem}{LTTZZ}}
+\end{align*}
+%
+So by \acronymref{definition}{KLT}, we see that $\lt{T}{\vect{z}}\in\krn{T^k}$.  Thus $\krn{T^k}$ is an invariant subspace of $V$ relative to $T$ (\acronymref{definition}{IS}).
+%
+\end{proof}
+%
+Two interesting special cases of  \acronymref{theorem}{KPIS} occur when choose $k=0$ and $k=1$.  Rather than give an example of this theorem, we will refer you back to \acronymref{example}{KPNLT} where we work with null spaces of the first four powers of a nilpotent matrix.  By \acronymref{theorem}{KPIS} each of these null spaces is an invariant subspace of the associated linear transformation.\par
+%
+Here's one more example of invariant subspaces we have encountered previously.
+%
+\begin{example}{ISJB}{Invariant subspaces and Jordan blocks}{invariant subspace!Jordan block}
+Refer back to \acronymref{example}{CFNLT}.  We decomposed the vector space $\complex{6}
+$ into a direct sum of the subspaces $Z_1,\,Z_2,\,Z_3,\,Z_4$.  The union of the basis vectors for these subspaces is a basis of $\complex{6}$, which we reordered prior to building a matrix representation of the linear transformation $T$.  A principal reason for this reordering was to create invariant subspaces (though it was not obvious then).\par
+%
+Define
+%
+\begin{align*}
+X_1
+&=\spn{\set{\vect{z}_{1,1},\,\vect{z}_{2,1},\,\vect{z}_{3,1},\,\vect{z}_{4,1}}}
+=\spn{\set{
+\colvector{1\\1\\0\\1\\1\\1},\,
+\colvector{1\\0\\3\\1\\0\\-1},\,
+\colvector{-3\\-3\\-3\\-3\\-3\\-2},\,
+\colvector{1\\0\\0\\0\\0\\0}
+}}\\
+%
+X_2
+&=\spn{\set{\vect{z}_{1,2},\,\vect{z}_{2,2}}}
+=\spn{\set{\colvector{-2\\-2\\-5\\-2\\-1\\0},\,\colvector{2\\1\\2\\2\\2\\1}}}
+\end{align*}
+%
+Recall from the proof of \acronymref{theorem}{CFNLT} or the computations in \acronymref{example}{CFNLT} that first elements of $X_1$ and $X_2$ are in the kernel of $T$, $\krn{T}$, and each element of $X_1$ and $X_2$ is the output of $T$ when evaluated with the subsequent element of the set.  This was by design, and it is this feature of these basis vectors that leads to the nearly diagonal matrix representation with Jordan blocks.  However, we also recognize now that this property of these basis vectors allow us to conclude easily that $X_1$ and $X_2$ are invariant subspaces of $\complex{6}$ relative to $T$.\par
+%
+Furthermore, $\complex{6}=X_1\ds X_2$ (\acronymref{theorem}{DSFB}).  So the domain of $T$ is the direct sum of invariant subspaces and the resulting matrix representation has a block diagonal form.  Hmmmmm.
+%
+\end{example}
+%
+\subsect{GEE}{Generalized Eigenvectors and Eigenspaces}
+%
+We now define a new type of invariant subspace and explore its key properties.  This generalization of eigenvalues and eigenspaces will allow us to move from diagonal matrix representations of diagonalizable matrices to nearly diagonal matrix representations of arbitrary matrices.  Here are the definitions.
+%
+\begin{definition}{GEV}{Generalized Eigenvector}{generalized eigenvector}
+Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation.  Suppose further that for $\vect{x}\neq\zerovector$, $\lt{\left(T-\lambda I_V\right)^k}{\vect{x}}=\zerovector$ for some $k>0$.  Then $\vect{x}$ is a \define{generalized eigenvector} of $T$ with eigenvalue $\lambda$.
+\end{definition}
+%
+\begin{definition}{GES}{Generalized Eigenspace}{generalized eigenspace}
+Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation.  Define the \define{generalized eigenspace} of $T$ for $\lambda$ as
+%
+\begin{align*}
+\geneigenspace{T}{\lambda}
+&=\setparts{\vect{x}}{\lt{\left(T-\lambda I_V\right)^k}{\vect{x}}=\zerovector\text{\ for some\ }k\geq 0}
+\end{align*}
+%
+\denote{GES}{Generalized Eigenspace}{$\geneigenspace{T}{\lambda}$}{generalized eigenspace}
+\end{definition}
+%
+So the generalized eigenspace is composed of generalized eigenvectors, plus the zero vector.  As the name implies, the generalized eigenspace is a subspace of $V$.  But more topically, it is an invariant subspace of $V$ relative to $T$.
+%
+\begin{theorem}{GESIS}{Generalized Eigenspace is an Invariant Subspace}{generalized eigenspace!invariant subspace}
+Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation. Then the generalized eigenspace $\geneigenspace{T}{\lambda}$ is an invariant subspace of $V$ relative to $T$.
+\end{theorem}
+%
+\begin{proof}
+First we establish that $\geneigenspace{T}{\lambda}$ is a subspace of $V$.  First
+$\lt{\left(T-\lambda I_V\right)^1}{\zerovector}=\zerovector$ by \acronymref{theorem}{LTTZZ}, so $\zerovector\in\geneigenspace{T}{\lambda}$.\par
+%
+Suppose that $\vect{x},\,\vect{y}\in\geneigenspace{T}{\lambda}$.  Then there are integers $k,\,\ell$ such that $\lt{\left(T-\lambda I_V\right)^k}{\vect{x}}=\zerovector$ and $\lt{\left(T-\lambda I_V\right)^\ell}{\vect{y}}=\zerovector$.  Set $m=k+\ell$,
+%
+\begin{align*}
+\lt{\left(T-\lambda I_V\right)^m}{\vect{x}+\vect{y}}
+&=
+\lt{\left(T-\lambda I_V\right)^m}{\vect{x}}+
+\lt{\left(T-\lambda I_V\right)^m}{\vect{y}}
+&&\text{\acronymref{definition}{LT}}\\
+%
+&=
+\lt{\left(T-\lambda I_V\right)^{k+\ell}}{\vect{x}}+
+\lt{\left(T-\lambda I_V\right)^{k+\ell}}{\vect{y}}\\
+%
+&=
+\lt{\left(T-\lambda I_V\right)^{\ell}}{\lt{\left(T-\lambda I_V\right)^{k}}{\vect{x}}}+\\
+&\quad\quad\lt{\left(T-\lambda I_V\right)^{k}}{\lt{\left(T-\lambda I_V\right)^{\ell}}{\vect{y}}}
+&&\text{\acronymref{definition}{LTC}}\\
+%
+&=
+\lt{\left(T-\lambda I_V\right)^{\ell}}{\zerovector}+
+\lt{\left(T-\lambda I_V\right)^{k}}{\zerovector}
+&&\text{\acronymref{definition}{GES}}\\
+%
+&=\zerovector+\zerovector&&\text{\acronymref{theorem}{LTTZZ}}\\
+&=\zerovector&&\text{\acronymref{property}{Z}}
+%
+\end{align*}
+%
+So $\vect{x}+\vect{y}\in\geneigenspace{T}{\lambda}$.\par
+%
+Suppose that $\vect{x}\in\geneigenspace{T}{\lambda}$ and $\alpha\in\complexes$.  Then there is an integer $k$ such that $\lt{\left(T-\lambda I_V\right)^k}{\vect{x}}=\zerovector$.
+%
+\begin{align*}
+\lt{\left(T-\lambda I_V\right)^k}{\alpha\vect{x}}
+&=\alpha\lt{\left(T-\lambda I_V\right)^k}{\vect{x}}&&\text{\acronymref{definition}{LT}}\\
+&=\alpha\zerovector&&\text{\acronymref{definition}{GES}}\\
+&=\zerovector&&\text{\acronymref{theorem}{ZVSM}}
+\end{align*}
+%
+So $\alpha\vect{x}\in\geneigenspace{T}{\lambda}$.  By \acronymref{theorem}{TSS}, $\geneigenspace{T}{\lambda}$ is a subspace of $V$.\par
+%
+Now we show that $\geneigenspace{T}{\lambda}$ is invariant relative to $T$.  Suppose that $\vect{x}\in\geneigenspace{T}{\lambda}$.  Then by \acronymref{definition}{GES} there is an integer $k$ such that $\lt{\left(T-\lambda I_V\right)^k}{\vect{x}}=\zerovector$.  The following argument is due to \zoltantoth.
+%
+\begin{align*}
+\lt{\left(T-\lambda I_V\right)^k}{\lt{T}{\vect{x}}}
+%
+&=\lt{\left(T-\lambda I_V\right)^k}{\lt{T}{\vect{x}}} - \zerovector
+&&\text{\acronymref{property}{Z}}\\
+%
+&=\lt{\left(T-\lambda I_V\right)^k}{\lt{T}{\vect{x}}} - \lambda\zerovector
+&&\text{\acronymref{theorem}{ZVSM}}\\
+%
+&=\lt{\left(T-\lambda I_V\right)^k}{\lt{T}{\vect{x}}} 
+- \lambda\lt{\left(T-\lambda I_V\right)^k}{\vect{x}}
+&&\text{\acronymref{definition}{GES}}\\
+%
+&=\lt{\left(T-\lambda I_V\right)^k}{\lt{T}{\vect{x}}} 
+- \lt{\left(T-\lambda I_V\right)^k}{\lambda\vect{x}}
+&&\text{\acronymref{definition}{LT}}\\
+%
+&=\lt{\left(T-\lambda I_V\right)^k}{\lt{T}{\vect{x}}-\lambda\vect{x}} 
+&&\text{\acronymref{definition}{LT}}\\
+%
+&=\lt{\left(T-\lambda I_V\right)^k}{\lt{\left(T-\lambda I_V\right)}{\vect{x}}} 
+&&\text{\acronymref{definition}{LTA}}\\
+%
+&=\lt{\left(T-\lambda I_V\right)^{k+1}}{\vect{x}} 
+&&\text{\acronymref{definition}{LTC}}\\
+%
+&=\lt{\left(T-\lambda I_V\right)}{\lt{\left(T-\lambda I_V\right)^k}{\vect{x}}} 
+&&\text{\acronymref{definition}{LTC}}\\
+%
+&=\lt{\left(T-\lambda I_V\right)}{\zerovector} 
+&&\text{\acronymref{definition}{GES}}\\
+%
+&=\zerovector 
+&&\text{\acronymref{theorem}{LTTZZ}}
+\end{align*}
+%
+This qualifies $\lt{T}{\vect{x}}$ for membership in $\geneigenspace{T}{\lambda}$, so by \acronymref{definition}{GES}, $\geneigenspace{T}{\lambda}$ is invariant relative to $T$.
+\end{proof}
+%
+Before we compute some generalized eigenspaces, we state and prove one theorem that will make it much easier to create a generalized eigenspace, since it will allow us to use tools we already know well, and will remove some the ambiguity of the clause ``for some $k$'' in the definition.
+%
+%
+\begin{theorem}{GEK}{Generalized Eigenspace as a Kernel}{generalized eigenspace!as kernel}
+Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation, $\dimension{V}=n$, and $\lambda$ is an eigenvalue of $T$.  Then $\geneigenspace{T}{\lambda}=\krn{\left(T-\lambda I_V\right)^n}$.
+\end{theorem}
+%
+\begin{proof}
+The conclusion of this theorem is a set equality, so we will apply \acronymref{definition}{SE} by establishing two set inclusions.  First, suppose that $\vect{x}\in\geneigenspace{T}{\lambda}$.  Then there is an integer $k$ such that $\lt{\left(T-\lambda I_V\right)^k}{\vect{x}}=\zerovector$.  This is equivalent to the statement that $\vect{x}\in\krn{\left(T-\lambda I_V\right)^k}$.  No matter what the value of $k$ is, \acronymref{theorem}{KPLT} gives
+%
+\begin{align*}
+\vect{x}&\in\krn{\left(T-\lambda I_V\right)^k}\subseteq\krn{\left(T-\lambda I_V\right)^n}
+\end{align*}
+%
+So, $\geneigenspace{T}{\lambda}\subseteq\krn{\left(T-\lambda I_V\right)^n}$.  For the opposite inclusion, suppose $\vect{y}\in\krn{\left(T-\lambda I_V\right)^n}$.  Then $\lt{\left(T-\lambda I_V\right)^n}{\vect{y}}=\zerovector$, so $\vect{y}\in\geneigenspace{T}{\lambda}$ and thus $\krn{\left(T-\lambda I_V\right)^n}\subseteq\geneigenspace{T}{\lambda}$.  By \acronymref{definition}{SE} we have the desired equality of sets.
+%
+\end{proof}
+%
+\acronymref{theorem}{GEK} allows us to compute generalized eigenspaces as a single kernel (or null space of a matrix representation) with tools like \acronymref{theorem}{KNSI} and \acronymref{theorem}{BNS}.  Also, we do not need to consider all possible powers $k$ and can simply consider the case where $k=n$.  It is worth noting that the ``regular'' eigenspace is a subspace of the generalized eigenspace since
+%
+\begin{align*}
+\eigenspace{T}{\lambda}
+&=\krn{\left(T-\lambda I_V\right)^1}
+\subseteq\krn{\left(T-\lambda I_V\right)^n}
+=\geneigenspace{T}{\lambda}
+\end{align*}
+%
+where the subset inclusion is a consequence of \acronymref{theorem}{KPLT}.  Also, there is no such thing as a ``generalized eigenvalue.'' If $\lambda$ is not an eigenvalue of $T$, then the kernel of $T-\lambda I_V$ is trivial and therefore subsequent powers of $T-\lambda I_V$ also have trivial kernels (\acronymref{theorem}{KPLT}).  So the generalized eigenspace of a scalar that is not already an eigenvalue would be trivial.  Alright, we know enough now to compute some generalized eigenspaces.  We will record some information about algebraic and geometric multiplicities of eigenvalues (\acronymref{definition}{AME}, \acronymref{definition}{GME}) as we go, since these observations will be of interest in light of some future theorems.
+%
+\begin{example}{GE4}{Generalized eigenspaces, dimension 4 domain}{generalized eigenspace!dimension 4 domain}
+In \acronymref{example}{TIS} we presented two invariant subspaces of $\complex{4}$.  There was some mystery about just how these were constructed, but we can now reveal that they are generalized eigenspaces.  \acronymref{example}{TIS} featured $\ltdefn{T}{\complex{4}}{\complex{4}}$ defined by $\lt{T}{\vect{x}}=A\vect{x}$ with $A$ given by
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+ -8 & 6 & -15 & 9 \\
+ -8 & 14 & -10 & 18 \\
+ 1 & 1 & 3 & 0 \\
+ 3 & -8 & 2 & -11
+\end{bmatrix}
+\end{align*}
+%
+A matrix representation of $T$ relative to the standard basis (\acronymref{definition}{SUV}) will equal $A$.  So we can analyze $A$ with the techniques of \acronymref{chapter}{E}.  Doing so, we find two eigenvalues, $\lambda=1,\,-2$, with multiplicities,
+%
+\begin{align*}
+\algmult{T}{1}&=2  &  \geomult{T}{1}&=1\\
+\algmult{T}{-2}&=2  &  \geomult{T}{-2}&=1\\
+\end{align*}
+%
+To apply \acronymref{theorem}{GEK} we subtract each eigenvalue from the diagonal entries of $A$, raise the result to the power $\dimension{\complex{4}}=4$, and compute a basis for the null space.
+%
+\begin{align*}
+\lambda&=-2
+&
+\left(A-(-2)I_4\right)^4
+&=
+\begin{bmatrix}
+ 648 & -1215 & 729 & -1215 \\
+ -324 & 486 & -486 & 486 \\
+ -405 & 729 & -486 & 729 \\
+ 297 & -486 & 405 & -486
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+ 1 & 0 & 3 & 0 \\
+ 0 & 1 & 1 & 1 \\
+ 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+&&
+\geneigenspace{T}{-2}
+&=\spn{\set{\colvector{-3\\-1\\1\\0},\,\colvector{0\\-1\\0\\1}}}\\
+%
+%
+\lambda&=1
+&
+\left(A-(1)I_4\right)^4
+&=
+\begin{bmatrix}
+ 81 & -405 & -81 & -729 \\
+ -108 & -189 & -378 & -486 \\
+ -27 & 135 & 27 & 243 \\
+ 135 & 54 & 351 & 243
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+ 1 & 0 & \frac{7}{3} & 1 \\
+ 0 & 1 & \frac{2}{3} & 2 \\
+ 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+&&
+\geneigenspace{T}{1}
+&=\spn{\set{\colvector{-7\\-2\\3\\0},\,\colvector{-1\\-2\\0\\1}}}
+%
+\end{align*}
+%
+In \acronymref{example}{TIS} we concluded that these two invariant subspaces formed a direct sum of $\complex{4}$, only at that time, they were called $X$ and $W$.  Now we can write
+%
+\begin{align*}
+\complex{4}=\geneigenspace{T}{1}\ds\geneigenspace{T}{-2}
+\end{align*}
+%
+This is no accident.   Notice that the dimension of each of these invariant subspaces is equal to the algebraic multiplicity of the associated eigenvalue.  Not an accident either. (See the upcoming \acronymref{theorem}{GESD}.)
+%
+\end{example}
+%
+\begin{example}{GE6}{Generalized eigenspaces, dimension 6 domain}{generalized eigenspace!dimension 6 domain}
+Define the linear transformation $\ltdefn{S}{\complex{6}}{\complex{6}}$  by $\lt{S}{\vect{x}}=B\vect{x}$ where
+%
+\begin{align*}
+\begin{bmatrix}
+ 2 & -4 & 25 & -54 & 90 & -37 \\
+ 2 & -3 & 4 & -16 & 26 & -8 \\
+ 2 & -3 & 4 & -15 & 24 & -7 \\
+ 10 & -18 & 6 & -36 & 51 & -2 \\
+ 8 & -14 & 0 & -21 & 28 & 4 \\
+ 5 & -7 & -6 & -7 & 8 & 7
+\end{bmatrix}
+\end{align*}
+%
+Then $B$ will be the matrix representation of $S$ relative to the standard basis (\acronymref{definition}{SUV}) and we can use the techniques of \acronymref{chapter}{E} applied to $B$ in order to find the eigenvalues of $S$.
+%
+\begin{align*}
+\algmult{S}{3}&=2  &  \geomult{S}{3}&=1\\
+\algmult{S}{-1}&=4  &  \geomult{S}{-1}&=2\\
+\end{align*}
+%
+To find the generalized eigenspaces of $S$ we need to subtract an eigenvalue from the diagonal elements of $B$, raise the result to the power $\dimension{\complex{6}}=6$ and compute the null space.  Here are the results for the two eigenvalues of $S$,
+%
+\begin{align*}
+\lambda&=3
+&
+\left(B-3I_6\right)^6
+&=
+\begin{bmatrix}
+64000 & -152576 & -59904 & 26112 & -95744 & 133632 \\
+15872 & -39936 & -11776 & 8704 & -29184 & 36352 \\
+12032 & -30208 & -9984 & 6400 & -20736 & 26368 \\
+-1536 & 11264 & -23040 & 17920 & -17920 & -1536 \\
+-9728 & 27648 & -6656 & 9728 & -1536 & -17920 \\
+-7936 & 17920 & 5888 & 1792 & 4352 & -14080
+\end{bmatrix}\\
+%
+&&
+\rref&
+\begin{bmatrix}
+ 1 & 0 & 0 & 0 & -4 & 5 \\
+ 0 & 1 & 0 & 0 & -1 & 1 \\
+ 0 & 0 & 1 & 0 & -1 & 1 \\
+ 0 & 0 & 0 & 1 & -2 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+&&
+\geneigenspace{S}{3}
+&=\spn{\set{\colvector{4\\1\\1\\2\\1\\0},\,\colvector{-5\\-1\\-1\\-1\\0\\1}}}\\
+%
+%
+\lambda&=-1
+&
+\left(B-(-1)I_6\right)^6
+&=
+\begin{bmatrix}
+ 6144 & -16384 & 18432 & -36864 & 57344 & -18432 \\
+ 4096 & -8192 & 4096 & -16384 & 24576 & -4096 \\
+ 4096 & -8192 & 4096 & -16384 & 24576 & -4096 \\
+ 18432 & -32768 & 6144 & -61440 & 90112 & -6144 \\
+ 14336 & -24576 & 2048 & -45056 & 65536 & -2048 \\
+ 10240 & -16384 & -2048 & -28672 & 40960 & 2048
+\end{bmatrix}\\
+%
+&&
+\rref&
+\begin{bmatrix}
+ 1 & 0 & -5 & 2 & -4 & 5 \\
+ 0 & 1 & -3 & 3 & -5 & 3 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+&&
+\geneigenspace{S}{-1}
+&=\spn{\set{
+\colvector{5\\3\\1\\0\\0\\0},\,
+\colvector{-2\\-3\\0\\1\\0\\0},\,
+\colvector{4\\5\\0\\0\\1\\0},\,
+\colvector{-5\\-3\\0\\0\\0\\1}
+}}
+%
+\end{align*}
+%
+If we take the union of the two bases for these two invariant subspaces we obtain the set
+%
+\begin{align*}
+C
+&=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4,\,\vect{v}_5,\,\vect{v}_6}\\
+&=\set{
+\colvector{4\\1\\1\\2\\1\\0},\,
+\colvector{-5\\-1\\-1\\-1\\0\\1},\,
+\colvector{5\\3\\1\\0\\0\\0},\,
+\colvector{-2\\-3\\0\\1\\0\\0},\,
+\colvector{4\\5\\0\\0\\1\\0},\,
+\colvector{-5\\-3\\0\\0\\0\\1}
+}
+\end{align*}
+%
+You can check that this set is linearly independent (right now we have no guarantee this will happen).  Once this is verified, we have a linearly independent set of size 6 inside a vector space of dimension 6, so by \acronymref{theorem}{G}, the set $C$ is a basis for $\complex{6}$.   This is enough to apply \acronymref{theorem}{DSFB} and conclude that 
+%
+\begin{align*}
+\complex{6}=\geneigenspace{S}{3}\ds\geneigenspace{S}{-1}
+\end{align*}
+%
+This is no accident.  Notice that the dimension of each of these invariant subspaces is equal to the algebraic multiplicity of the associated eigenvalue.  Not an accident either. (See the upcoming \acronymref{theorem}{GESD}.) 
+%
+\end{example}
+%
+\subsect{RLT}{Restrictions of Linear Transformations}
+%
+Generalized eigenspaces will prove to be an important type of invariant subspace.  A second reason for our interest in invariant subspaces is they provide us with another method for creating new linear transformations from old ones.
+%
+\begin{definition}{LTR}{Linear Transformation Restriction}{linear transformation!restriction}
+Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation, and $U$ is an invariant subspace of $V$ relative to $T$.  Define the \define{restriction} of $T$ to $U$ by
+%
+\begin{align*}
+\ltdefn{\restrict{T}{U}}{U}{U}&
+&
+\lt{\restrict{T}{U}}{\vect{u}}&=\lt{T}{\vect{u}}
+\end{align*}
+%
+\denote{LTR}{Linear Transformation Restriction}{$\restrict{T}{U}$}{linear transformation!restriction}
+\end{definition}
+%
+It might appear that this definition has not accomplished anything, as $\restrict{T}{U}$ would appear to take on exactly the same values as $T$.  And this is true.  However, $\restrict{T}{U}$ differs from $T$ in the choice of domain and codomain.  We tend to give little attention to the domain and codomain of functions, while their defining rules get the spotlight.  But the restriction of a linear transformation is all about the choice of domain and codomain.  We are {\em restricting} the rule of the function to a smaller subspace.  Notice the importance of only using this construction with an invariant subspace, since otherwise we cannot be assured that the outputs of the function are even contained in the codomain.  Maybe this observation should be the key step in the proof of a theorem saying that $\restrict{T}{U}$ is also a linear transformation, but we won't bother.\par
+%
+\begin{example}{LTRGE}{Linear transformation restriction on generalized eigenspace}{linear transformation restriction!on generalized eigenspace}
+In order to gain some experience with restrictions of linear transformations, we construct one and then also construct a matrix representation for the restriction.  Furthermore, we will use a generalized eigenspace as the invariant subspace for the construction of the restriction.\par
+%
+Consider the linear transformation $\ltdefn{T}{\complex{5}}{\complex{5}}$ defined by $\lt{T}{\vect{x}}=A\vect{x}$, where
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+ -22 & -24 & -24 & -24 & -46 \\
+ 3 & 2 & 6 & 0 & 11 \\
+ -12 & -16 & -6 & -14 & -17 \\
+ 6 & 8 & 4 & 10 & 8 \\
+ 11 & 14 & 8 & 13 & 18
+\end{bmatrix}
+\end{align*}
+%
+One of the eigenvalues of $A$ is $\lambda=2$, with geometric multiplicity $\geomult{T}{2}=1$, and algebraic multiplicity $\algmult{T}{2}=3$.  We get the generalized eigenspace in the usual manner,
+%
+\begin{align*}
+W&=
+\geneigenspace{T}{2}
+=\krn{\left(T-2I_{\complex{5}}\right)^5}
+=\spn{\set{
+\colvector{-2\\1\\1\\0\\0},\,
+\colvector{0\\-1\\0\\1\\0},\,
+\colvector{-4\\2\\0\\0\\1}
+}}
+=\spn{\set{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3}}
+\end{align*}
+%
+By \acronymref{theorem}{GESIS}, we know $W$ is invariant relative to $T$, so we can employ \acronymref{definition}{LTR} to form the restriction, $\ltdefn{\restrict{T}{W}}{W}{W}$.\par
+%
+To better understand exactly what a restriction is (and isn't), we'll form a matrix representation of $\restrict{T}{W}$.  This will also be a skill we will use in subsequent examples.  For a basis of $W$ we will use $C=\set{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3}$.  Notice that $\dimension{W}=3$, so our matrix representation will be a square matrix of size 3.  Applying \acronymref{definition}{MR}, we compute
+%
+\begin{align*}
+\vectrep{C}{\lt{T}{\vect{w}_1}}
+&=\vectrep{C}{A\vect{w}_1}
+=\vectrep{C}{\colvector{-4\\2\\2\\0\\0}}
+=\vectrep{C}{
+2\colvector{-2\\1\\1\\0\\0}+
+0\colvector{0\\-1\\0\\1\\0}+
+0\colvector{-4\\2\\0\\0\\1}
+}
+=\colvector{2\\0\\0}\\
+%
+\vectrep{C}{\lt{T}{\vect{w}_2}}
+&=\vectrep{C}{A\vect{w}_2}
+=\vectrep{C}{\colvector{0\\-2\\2\\2\\-1}}
+=\vectrep{C}{
+2\colvector{-2\\1\\1\\0\\0}+
+2\colvector{0\\-1\\0\\1\\0}+
+(-1)\colvector{-4\\2\\0\\0\\1}
+}
+=\colvector{2\\2\\-1}\\
+%
+\vectrep{C}{\lt{T}{\vect{w}_3}}
+&=\vectrep{C}{A\vect{w}_3}
+=\vectrep{C}{\colvector{-6\\3\\-1\\0\\2}}
+=\vectrep{C}{
+(-1)\colvector{-2\\1\\1\\0\\0}+
+0\colvector{0\\-1\\0\\1\\0}+
+2\colvector{-4\\2\\0\\0\\1}
+}
+=\colvector{-1\\0\\2}\\
+%
+\end{align*}
+%
+So the matrix representation of $\restrict{T}{W}$ relative to $C$ is
+%
+\begin{align*}
+\matrixrep{\restrict{T}{W}}{C}{C}&=
+\begin{bmatrix}
+2 & 2 & -1\\
+0 & 2 & 0\\
+0 & -1 & 2
+\end{bmatrix}
+\end{align*}
+%
+The question arises:  how do we use a $3\times 3$ matrix to compute with vectors from $\complex{5}$?  To answer this question, consider the randomly chosen vector
+%
+\begin{align*}
+\vect{w}=\colvector{-4\\4\\4\\-2\\-1}
+\end{align*}
+%
+First check that $\vect{w}\in\geneigenspace{T}{2}$.  There are two ways to do this, first verify that 
+%
+\begin{align*}
+\lt{\left(T-2I_{\complex{5}}\right)^5}{\vect{w}}
+&=\left(A-2I_5\right)^5\vect{w}=\zerovector
+\end{align*}
+%
+meeting \acronymref{definition}{GES} (with $k=5$).  Or, express $\vect{w}$ as a linear combination of the basis $C$ for $W$, to wit, $\vect{w}=4\vect{w}_1-2\vect{w}_2-\vect{w}_3$.  Now compute $\lt{\restrict{T}{W}}{\vect{w}}$ directly using \acronymref{definition}{LTR}, 
+%
+\begin{align*}
+\lt{\restrict{T}{W}}{\vect{w}}
+&=\lt{T}{\vect{w}}
+=A\vect{w}
+=\colvector{-10\\9\\5\\-4\\0}
+\end{align*}
+%
+It was necessary to verify that $\vect{w}\in\geneigenspace{T}{2}$, and if we trust our work so far, then this output will also be an element of $W$, but it would be wise to check this anyway (using either of the methods we used for $\vect{w}$).  We'll wait.\par
+%
+Now we will repeat this sample computation, but instead using the matrix representation of $\restrict{T}{W}$ relative to $C$.
+%
+\begin{align*}
+\lt{\restrict{T}{W}}{\vect{w}}
+&=\vectrepinv{C}{\matrixrep{\restrict{T}{W}}{C}{C}\vectrep{C}{\vect{w}}}
+&&\text{\acronymref{theorem}{FTMR}}\\
+%
+&=\vectrepinv{C}{\matrixrep{\restrict{T}{W}}{C}{C}\vectrep{C}{4\vect{w}_1-2\vect{w}_2-\vect{w}_3}}\\
+%
+&=\vectrepinv{C}{
+\begin{bmatrix}
+2 & 2 & -1 \\
+0 & 2 & 0 \\
+0 & -1 & 2
+\end{bmatrix}
+\colvector{4\\-2\\-1}}
+&&\text{\acronymref{definition}{VR}}\\
+%
+&=\vectrepinv{C}{\colvector{5\\-4\\0}}
+&&\text{\acronymref{definition}{MVP}}\\
+%
+&=5\vect{w}_1-4\vect{w}_2+0\vect{w}_3
+&&\text{\acronymref{definition}{VR}}\\
+%
+&=5\colvector{-2\\1\\1\\0\\0}+
+(-4)\colvector{0\\-1\\0\\1\\0}+
+0\colvector{-4\\2\\0\\0\\1}\\
+%
+&=\colvector{-10\\9\\5\\-4\\0}
+%
+\end{align*}
+%
+which matches the previous computation.  Notice how the ``action'' of $\restrict{T}{W}$ is accomplished by a $3\times 3$ matrix multiplying a column vector of size 3.  If you would like more practice with these sorts of computations, mimic the above using the other eigenvalue of $T$, which is $\lambda=-2$.  The generalized eigenspace has dimension 2, so the matrix representation of the restriction to the generalized eigenspace will be a $2\times 2$ matrix.
+%
+\end{example}
+%
+Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation and we can find a decomposition of $V$ as a direct sum, say $V=U_1\ds U_2\ds U_3\ds\cdots\ds U_m$ where each $U_i$ is an invariant subspace of $V$ relative to $T$.  Then, for any $\vect{v}\in V$ there is a unique decomposition $\vect{v}=\vect{u}_1+\vect{u}_2+\vect{u}_3+\cdots+\vect{u}_m$ with $\vect{u}_i\in U_i$, $1\leq i\leq m$ and furthermore
+%
+\begin{align*}
+\lt{T}{\vect{v}}
+&=\lt{T}{\vect{u}_1+\vect{u}_2+\vect{u}_3+\cdots+\vect{u}_m}
+&&\text{\acronymref{definition}{DS}}\\
+%
+&=\lt{T}{\vect{u}_1}+\lt{T}{\vect{u}_2}+\lt{T}{\vect{u}_3}+\cdots+\lt{T}{\vect{u}_m}
+&&\text{\acronymref{theorem}{LTLC}}\\
+%
+&=\lt{\restrict{T}{U_1}}{\vect{u}_1}+\lt{\restrict{T}{U_2}}{\vect{u}_2}+\lt{\restrict{T}{U_3}}{\vect{u}_3}+\cdots+\lt{\restrict{T}{U_m}}{\vect{u}_m}
+\end{align*}
+%
+So in a very real sense, we obtain a decomposition of the linear transformation $T$ into the restrictions $\restrict{T}{U_i}$, $1\leq i\leq m$.  If we wanted to be more careful, we could extend each restriction to a linear transformation defined on $V$ by setting the output of $\restrict{T}{U_i}$ to be the zero vector for inputs outside of $U_i$.  Then $T$ would be exactly equal to the sum (\acronymref{definition}{LTA}) of these extended restrictions.  However, the irony of extending our restrictions is more than we could handle right now.\par
+%
+Our real interest is in the matrix representation of a linear transformation when the domain decomposes as a direct sum of invariant subspaces.  Consider forming a basis $B$ of $V$ as the union of bases $B_i$ from the individual $U_i$, i.e.\ $B=\cup_{i=1}^m\,B_i$.  Now form the matrix representation of $T$ relative to $B$.  The result will be block diagonal, where each block is the matrix representation of a restriction $\restrict{T}{U_i}$ relative to a basis $B_i$, $\matrixrep{\restrict{T}{U_i}}{B_i}{B_i}$.  Though we did not have the definitions to describe it then, this is exactly what was going on in the latter portion of the proof of  \acronymref{theorem}{CFNLT}.   Two examples should help to clarify these ideas.\par
+%
+\begin{example}{ISMR4}{Invariant subspaces, matrix representation, dimension 4 domain}{invariant subspaces!matrix representation!dimension 4 domain}
+\acronymref{example}{TIS} and \acronymref{example}{GE4} describe a basis of $\complex{4}$ which is derived from bases for two invariant subspaces (both generalized eigenspaces).  In this example we will construct a matrix representation of the linear transformation $T$ relative to this basis.  Recycling the notation from \acronymref{example}{TIS}, we work with the basis,
+%
+\begin{align*}
+B&=\set{\vect{w}_1,\,\vect{w}_2,\,\vect{x}_1,\,\vect{x}_2}
+=\set{
+\colvector{-7\\-2\\3\\0},\,
+\colvector{-1\\-2\\0\\1},\,
+\colvector{-3\\-1\\1\\0},\,
+\colvector{0\\-1\\0\\1}
+}
+\end{align*}
+%
+Now we compute the matrix representation of $T$ relative to $B$, borrowing some computations from \acronymref{example}{TIS},
+%
+\begin{align*}
+%
+\vectrep{B}{\lt{T}{\vect{w}_1}}
+&=\vectrep{B}{\colvector{-1\\-2\\0\\1}}
+=\vectrep{B}{(0)\vect{w}_1+(1)\vect{w}_2}
+=\colvector{0\\1\\0\\0}\\
+%
+\vectrep{B}{\lt{T}{\vect{w}_2}}
+&=\vectrep{B}{\colvector{5\\-2\\-3\\2}}
+=\vectrep{B}{(-1)\vect{w}_1+(2)\vect{w}_2}
+=\colvector{-1\\2\\0\\0}\\
+%
+\vectrep{B}{\lt{T}{\vect{x}_1}}
+&=\vectrep{B}{\colvector{3\\0\\-1\\1}}
+=\vectrep{B}{(-1)\vect{x}_1+(1)\vect{x}_2}
+=\colvector{0\\0\\-1\\1}\\
+%
+\vectrep{B}{\lt{T}{\vect{x}_2}}
+&=\vectrep{B}{\colvector{3\\4\\-1\\-3}}
+=\vectrep{B}{(-1)\vect{x}_1+(-3)\vect{x}_2}
+=\colvector{0\\0\\-1\\-3}
+%
+\end{align*}
+%
+Applying \acronymref{definition}{MR}, we have
+%
+\begin{align*}
+\matrixrep{T}{B}{B}&=
+\begin{bmatrix}
+0 & -1 & 0 & 0 \\
+1 & 2 & 0 & 0 \\
+0 & 0 & -1 & -1 \\
+0 & 0 &  1 & -3 
+\end{bmatrix}
+\end{align*}
+%
+The interesting feature of this representation is the two $2\times 2$ blocks on the diagonal that arise from the decomposition of $\complex{4}$ into a direct sum (of generalized eigenspaces).  Or maybe the interesting feature of this matrix is the two $2\times 2$ submatrices in the ``other'' corners that are all zero.  You decide.
+%
+\end{example}
+%
+%
+\begin{example}{ISMR6}{Invariant subspaces, matrix representation, dimension 6 domain}{invariant subspaces!matrix representation!dimension 6 domain}
+In \acronymref{example}{GE6} we computed the generalized eigenspaces of the linear transformation $\ltdefn{S}{\complex{6}}{\complex{6}}$  by $\lt{S}{\vect{x}}=B\vect{x}$ where
+%
+\begin{align*}
+\begin{bmatrix}
+ 2 & -4 & 25 & -54 & 90 & -37 \\
+ 2 & -3 & 4 & -16 & 26 & -8 \\
+ 2 & -3 & 4 & -15 & 24 & -7 \\
+ 10 & -18 & 6 & -36 & 51 & -2 \\
+ 8 & -14 & 0 & -21 & 28 & 4 \\
+ 5 & -7 & -6 & -7 & 8 & 7
+\end{bmatrix}
+\end{align*}
+%
+From this we found the basis 
+%
+\begin{align*}
+C
+&=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4,\,\vect{v}_5,\,\vect{v}_6}\\
+&=\set{
+\colvector{4\\1\\1\\2\\1\\0},\,
+\colvector{-5\\-1\\-1\\-1\\0\\1},\,
+\colvector{5\\3\\1\\0\\0\\0},\,
+\colvector{-2\\-3\\0\\1\\0\\0},\,
+\colvector{4\\5\\0\\0\\1\\0},\,
+\colvector{-5\\-3\\0\\0\\0\\1}
+}
+\end{align*}
+%
+of $\complex{6}$ where $\set{\vect{v}_1,\,\vect{v}_2}$ is a basis of $\geneigenspace{S}{3}$ and 
+$\set{\vect{v}_3,\,\vect{v}_4,\,\vect{v}_5,\,\vect{v}_6}$ is a basis of $\geneigenspace{S}{-1}$.
+We can employ $C$ in the construction of a matrix representation of $S$ (\acronymref{definition}{MR}).  Here are the computations,
+%
+\begin{align*}
+%
+\vectrep{C}{\lt{S}{\vect{v}_1}}
+&=\vectrep{C}{\colvector{11\\3\\3\\7\\4\\1}}
+=\vectrep{C}{4\vect{v}_1+1\vect{v}_2}
+=\colvector{4\\1\\0\\0\\0\\0}\\
+%
+\vectrep{C}{\lt{S}{\vect{v}_2}}
+&=\vectrep{C}{\colvector{-14\\-3\\-3\\-4\\-1\\2}}
+=\vectrep{C}{(-1)\vect{v}_1+2\vect{v}_2}
+=\colvector{-1\\2\\0\\0\\0\\0}\\
+%
+\vectrep{C}{\lt{S}{\vect{v}_3}}
+&=\vectrep{C}{\colvector{23\\5\\5\\2\\-2\\-2}}
+=\vectrep{C}{5\vect{v}_3+2\vect{v}_4+(-2)\vect{v}_5+(-2)\vect{v}_6}
+=\colvector{0\\0\\5\\2\\-2\\-2}\\
+%
+\vectrep{C}{\lt{S}{\vect{v}_4}}
+&=\vectrep{C}{\colvector{-46\\-11\\-10\\-2\\5\\4}}
+=\vectrep{C}{(-10)\vect{v}_3+(-2)\vect{v}_4+5\vect{v}_5+4\vect{v}_6}
+=\colvector{0\\0\\-10\\-2\\5\\4}\\
+%
+\vectrep{C}{\lt{S}{\vect{v}_5}}
+&=\vectrep{C}{\colvector{78\\19\\17\\1\\-10\\-7}}
+=\vectrep{C}{17\vect{v}_3+1\vect{v}_4+(-10)\vect{v}_5+(-7)\vect{v}_6}
+=\colvector{0\\0\\17\\1\\-10\\-7}\\
+%
+\vectrep{C}{\lt{S}{\vect{v}_6}}
+&=\vectrep{C}{\colvector{-35\\-9\\-8\\2\\6\\3}}
+=\vectrep{C}{(-8)\vect{v}_3+2\vect{v}_4+6\vect{v}_5+3\vect{v}_6}
+=\colvector{0\\0\\-8\\2\\6\\3}
+%
+\end{align*}
+%
+These column vectors are the columns of the matrix representation, so we obtain
+%
+\begin{align*}
+\matrixrep{S}{C}{C}&=
+\begin{bmatrix}
+4 & -1 &  0 & 0& 0 & 0\\
+1 & 2 &  0 & 0& 0 & 0\\
+0 & 0 &  5 & -10& 17 & -8\\
+0 & 0 &  2 &  -2& 1 & 2\\
+0 & 0 & -2 &   5& -10 & 6\\
+0 & 0 & -2 &   4& -7 & 3
+\end{bmatrix}
+\end{align*}
+%
+As before, the key feature of this representation is the $2\times 2$ and $4\times 4$ blocks on the diagonal.  We will discover in the final theorem of this section (\acronymref{theorem}{RGEN}) that we already understand these blocks fairly well.  For now, we recognize them as arising from generalized eigenspaces and suspect that their sizes are equal to the algebraic multiplicities of the eigenvalues.
+%
+\end{example}
+%
+The paragraph prior to these last two examples is worth repeating.   A basis derived from a direct sum decomposition into invariant subspaces will provide a matrix representation of a linear transformation with a block diagonal form.\par
+%
+Diagonalizing a linear transformation is the most extreme example of decomposing a vector space into invariant subspaces.  When a linear transformation is diagonalizable, then there is a basis composed of eigenvectors (\acronymref{theorem}{DC}).  Each of these basis vectors can be used individually as the lone element of a spanning set for an invariant subspace (\acronymref{theorem}{EIS}).  So the domain decomposes into a direct sum of one-dimensional invariant subspaces (\acronymref{theorem}{DSFB}).  The corresponding matrix representation is then block diagonal with all the blocks of size 1, i.e.\ the matrix is diagonal.  \acronymref{section}{NLT}, \acronymref{section}{IS} and \acronymref{section}{JCF} are all devoted to generalizing this extreme situation when there are not enough eigenvectors available to make such a complete decomposition and arrive at such an elegant matrix representation.\par
+%
+One last theorem will roll up much of this section and \acronymref{section}{NLT} into one nice, neat package.
+%
+\begin{theorem}{RGEN}{Restriction to Generalized Eigenspace is Nilpotent}{generalized eigenspace!nilpotent restriction}
+Suppose $\ltdefn{T}{V}{V}$ is a linear transformation with eigenvalue $\lambda$.  Then the linear transformation $\restrict{T}{\geneigenspace{T}{\lambda}}-\lambda I_{\geneigenspace{T}{\lambda}}$ is nilpotent.
+\end{theorem}
+%
+\begin{proof}
+Notice first that every subspace of $V$ is invariant with respect to $I_V$, so $I_{\geneigenspace{T}{\lambda}}=\restrict{I_V}{\geneigenspace{T}{\lambda}}$.    Let $n=\dimension{V}$ and choose $\vect{v}\in\geneigenspace{T}{\lambda}$.  Then
+%
+\begin{align*}
+\lt{\left(\restrict{T}{\geneigenspace{T}{\lambda}}-\lambda I_{\geneigenspace{T}{\lambda}}\right)^n}{\vect{v}}
+&=\lt{\left(T-\lambda I_V\right)^n}{\vect{v}}&&\text{\acronymref{definition}{LTR}}\\
+&=\zerovector&&\text{\acronymref{theorem}{GEK}}
+\end{align*}
+%
+So by \acronymref{definition}{NLT}, $\restrict{T}{\geneigenspace{T}{\lambda}}-\lambda I_{\geneigenspace{T}{\lambda}}$ is nilpotent.
+\end{proof}
+%
+The proof of \acronymref{theorem}{RGEN} indicates that the index of the nilpotent linear transformation is less than or equal to the dimension of $V$.  In practice, it will be less than or equal to the dimension of the domain of the linear transformation, $\geneigenspace{T}{\lambda}$.  In any event, the exact value of this index will be of some interest, so we define it now.  Notice that this is a property of the eigenvalue $\lambda$, similar to the algebraic and geometric multiplicities (\acronymref{definition}{AME}, \acronymref{definition}{GME}).
+%
+\begin{definition}{IE}{Index of an Eigenvalue}{index!eigenvalue}
+\index{eigenvalue!index}
+Suppose $\ltdefn{T}{V}{V}$ is a linear transformation with eigenvalue $\lambda$.  Then the \define{index} of $\lambda$, $\indx{T}{\lambda}$, is the index of the nilpotent linear transformation $\restrict{T}{\geneigenspace{T}{\lambda}}-\lambda I_{\geneigenspace{T}{\lambda}}$.
+\denote{IE}{Index of an Eigenvalue}{$\indx{T}{\lambda}$}{index!eigenvalue}
+\end{definition}
+%
+%
+\begin{example}{GENR6}{Generalized eigenspaces and nilpotent restrictions, dimension 6 domain}{generalized eigenspace!nilpotent restrictions, dimension 6 domain}
+%
+In \acronymref{example}{GE6} we computed the generalized eigenspaces of the linear transformation $\ltdefn{S}{\complex{6}}{\complex{6}}$  defined by $\lt{S}{\vect{x}}=B\vect{x}$ where
+%
+\begin{align*}
+\begin{bmatrix}
+ 2 & -4 & 25 & -54 & 90 & -37 \\
+ 2 & -3 & 4 & -16 & 26 & -8 \\
+ 2 & -3 & 4 & -15 & 24 & -7 \\
+ 10 & -18 & 6 & -36 & 51 & -2 \\
+ 8 & -14 & 0 & -21 & 28 & 4 \\
+ 5 & -7 & -6 & -7 & 8 & 7
+\end{bmatrix}
+\end{align*}
+%
+The generalized eigenspace, $\geneigenspace{S}{3}$, has dimension $2$, while  $\geneigenspace{S}{-1}$, has dimension $4$.  We'll investigate each thoroughly in turn, with the intent being to illustrate \acronymref{theorem}{RGEN}.  Much of our computations will be repeats of those done in \acronymref{example}{ISMR6}.\par
+%
+For $U=\geneigenspace{S}{3}$ we compute a matrix representation of $\restrict{S}{U}$ using the basis found in \acronymref{example}{GE6},
+%
+\begin{align*}
+B&=\set{\vect{u}_1,\,\vect{u}_2}
+=\set{\colvector{4\\1\\1\\2\\1\\0},\,\colvector{-5\\-1\\-1\\-1\\0\\1}}
+\end{align*}
+%
+Since $B$ has size 2, we obtain a $2\times 2$ matrix representation (\acronymref{definition}{MR})  from 
+%
+\begin{align*}
+\vectrep{B}{\lt{\restrict{S}{U}}{\vect{u}_1}}
+&=\vectrep{B}{\colvector{11\\3\\3\\7\\4\\1}}
+=\vectrep{B}{4\vect{u}_1+\vect{u}_2}
+=\colvector{4\\1}\\
+%
+\vectrep{B}{\lt{\restrict{S}{U}}{\vect{u}_2}}
+&=\vectrep{B}{\colvector{-14\\-3\\-3\\-4\\-1\\2}}
+=\vectrep{B}{(-1)\vect{u}_1+2\vect{u}_2}
+=\colvector{-1\\2}
+%
+\end{align*}
+%
+Thus
+%
+\begin{align*}
+M&=\matrixrep{\restrict{S}{U}}{U}{U}
+=
+\begin{bmatrix}
+4 & -1 \\
+1 & 2
+\end{bmatrix}
+\end{align*}
+%
+Now we can illustrate \acronymref{theorem}{RGEN} with powers of the matrix representation (rather than the restriction itself),
+%
+\begin{align*}
+%
+M-3I_2&=
+\begin{bmatrix}
+1 & -1 \\
+1 & -1
+\end{bmatrix}
+&
+\left(M-3I_2\right)^2&=
+\begin{bmatrix}
+0 & 0 \\
+0 & 0
+\end{bmatrix}
+%
+\end{align*}
+%
+So $M-3I_2$ is a nilpotent matrix of index 2 (meaning that $\restrict{S}{U}-3I_U$ is a nilpotent linear transformation of index 2) and according to \acronymref{definition}{IE} we say $\indx{S}{3}=2$.\par
+%
+For $W=\geneigenspace{S}{-1}$ we compute a matrix representation of $\restrict{S}{W}$ using the basis found in \acronymref{example}{GE6},
+%
+\begin{align*}
+C&=\set{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3,\,\vect{w}_4}
+=\set{
+\colvector{5\\3\\1\\0\\0\\0},\,
+\colvector{-2\\-3\\0\\1\\0\\0},\,
+\colvector{4\\5\\0\\0\\1\\0},\,
+\colvector{-5\\-3\\0\\0\\0\\1}
+}
+\end{align*}
+%
+Since $C$ has size 4, we obtain a $4\times 4$ matrix representation (\acronymref{definition}{MR}) from 
+%
+\begin{align*}
+\vectrep{C}{\lt{\restrict{S}{W}}{\vect{w}_1}}
+&=\vectrep{C}{\colvector{23\\5\\5\\2\\-2\\-2}}
+=\vectrep{C}{
+5\vect{w}_1+
+2\vect{w}_2+
+(-2)\vect{w}_3+
+(-2)\vect{w}_4
+}
+=\colvector{5\\2\\-2\\-2}\\
+%
+\vectrep{C}{\lt{\restrict{S}{W}}{\vect{w}_2}}
+&=\vectrep{C}{\colvector{-46\\-11\\-10\\-2\\5\\4}}
+=\vectrep{C}{
+(-10)\vect{w}_1+
+(-2)\vect{w}_2+
+5\vect{w}_3+
+4\vect{w}_4
+}
+=\colvector{-10\\-2\\5\\4}\\
+%
+\vectrep{C}{\lt{\restrict{S}{W}}{\vect{w}_3}}
+&=\vectrep{C}{\colvector{78\\19\\17\\1\\-10\\-7}}
+=\vectrep{C}{
+17\vect{w}_1+
+\vect{w}_2+
+(-10)\vect{w}_3+
+(-7)\vect{w}_4
+}
+=\colvector{17\\1\\-10\\-7}\\
+%
+\vectrep{C}{\lt{\restrict{S}{W}}{\vect{w}_4}}
+&=\vectrep{C}{\colvector{-35\\-9\\-8\\2\\6\\3}}
+=\vectrep{C}{
+(-8)\vect{w}_1+
+2\vect{w}_2+
+6\vect{w}_3+
+3\vect{w}_4
+}
+=\colvector{-8\\2\\6\\3}
+%
+\end{align*}
+%
+Thus
+%
+\begin{align*}
+N
+&=\matrixrep{\restrict{S}{W}}{W}{W}
+=
+\begin{bmatrix}
+ 5 & -10 & 17 & -8 \\
+ 2 & -2 & 1 & 2 \\
+ -2 & 5 & -10 & 6 \\
+ -2 & 4 & -7 & 3
+\end{bmatrix}
+\end{align*}
+%
+Now we can illustrate \acronymref{theorem}{RGEN} with powers of the matrix representation (rather than the restriction itself),
+%
+\begin{align*}
+%
+N-(-1)I_4
+&=
+\begin{bmatrix}
+ 6 & -10 & 17 & -8 \\
+ 2 & -1 & 1 & 2 \\
+ -2 & 5 & -9 & 6 \\
+ -2 & 4 & -7 & 4
+\end{bmatrix}\\
+%
+\left(N-(-1)I_4\right)^2
+&=
+\begin{bmatrix}
+ -2 & 3 & -5 & 2 \\
+ 4 & -6 & 10 & -4 \\
+ 4 & -6 & 10 & -4 \\
+ 2 & -3 & 5 & -2
+\end{bmatrix}\\
+%
+\left(N-(-1)I_4\right)^3
+&=
+\begin{bmatrix}
+ 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0
+\end{bmatrix}
+%
+\end{align*}
+%
+So $N-(-1)I_4$ is a nilpotent matrix of index 3 (meaning that $\restrict{S}{W}-(-1)I_W$ is a nilpotent linear transformation of index 3) and according to \acronymref{definition}{IE} we say $\indx{S}{-1}=3$.\par
+%
+Notice that if we were to take the union of the two bases of the generalized eigenspaces, we would have a basis for $\complex{6}$.  Then a matrix representation of $S$ relative to this basis would be the same block diagonal matrix we found in \acronymref{example}{ISMR6}, only we now understand each of these blocks as being very close to being a nilpotent matrix.
+%
+\end{example}
+%
+Invariant subspaces, and restrictions of linear transformations, are topics you will see again and again if you continue with further study of linear algebra.  Our reasons for discussing them now is to arrive at a nice matrix representation of the restriction of a linear transformation to one of its generalized eigenspaces.  Here's the theorem.
+%
+\begin{theorem}{MRRGE}{Matrix Representation of a Restriction to a Generalized Eigenspace}{matrix representation!restriction to generalized eigenspace}
+Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation with eigenvalue $\lambda$.  Then there is a basis of the the generalized eigenspace $\geneigenspace{T}{\lambda}$ such that the restriction $\ltdefn{\restrict{T}{\geneigenspace{T}{\lambda}}}{\geneigenspace{T}{\lambda}}{\geneigenspace{T}{\lambda}}$ has a matrix representation that is block diagonal where each block is a Jordan block of the form $\jordan{n}{\lambda}$.
+\end{theorem}
+%
+\begin{proof}
+\acronymref{theorem}{RGEN} tells us that $\restrict{T}{\geneigenspace{T}{\lambda}}-\lambda I_{\geneigenspace{T}{\lambda}}$ is a nilpotent linear transformation.  \acronymref{theorem}{CFNLT} tells us that a nilpotent linear transformation has a basis for its domain that yields a matrix representation that is block diagonal where the blocks are Jordan blocks of the form $\jordan{n}{0}$.  Let $B$ be a basis of $\geneigenspace{T}{\lambda}$ that yields such a matrix representation for $\restrict{T}{\geneigenspace{T}{\lambda}}-\lambda I_{\geneigenspace{T}{\lambda}}$.\par
+%
+By \acronymref{definition}{LTA}, we can write
+%
+\begin{align*}
+\restrict{T}{\geneigenspace{T}{\lambda}}
+&=\left(
+\restrict{T}{\geneigenspace{T}{\lambda}}-\lambda I_{\geneigenspace{T}{\lambda}}
+\right)
++\lambda I_{\geneigenspace{T}{\lambda}}
+\end{align*}
+%
+The matrix representation of $\lambda I_{\geneigenspace{T}{\lambda}}$ relative to the basis $B$ is then simply the diagonal matrix $\lambda I_m$, where $m=\dimension{\geneigenspace{T}{\lambda}}$.  By \acronymref{theorem}{MRSLT} we have the rather unwieldy expression,
+%
+\begin{align*}
+\matrixrep{\restrict{T}{\geneigenspace{T}{\lambda}}}{B}{B}
+&=
+\matrixrep{\left(
+\restrict{T}{\geneigenspace{T}{\lambda}}-\lambda I_{\geneigenspace{T}{\lambda}}
+\right)
++\lambda I_{\geneigenspace{T}{\lambda}}}{B}{B}\\
+&=
+\matrixrep{
+\restrict{T}{\geneigenspace{T}{\lambda}}-\lambda I_{\geneigenspace{T}{\lambda}}
+}{B}{B}
++
+\matrixrep{I_{\geneigenspace{T}{\lambda}}}{B}{B}
+\end{align*}
+%
+The first of these matrix representations has Jordan blocks with zero in every diagonal entry, while the second matrix representation has $\lambda$ in every diagonal entry.  The result of adding the two representations is to convert the Jordan blocks from the form $\jordan{n}{0}$ to the form $\jordan{n}{\lambda}$.
+%
+\end{proof}
+%
+Of course, \acronymref{theorem}{CFNLT} provides some extra information on the sizes of the Jordan blocks in a representation and we could carry over this information to \acronymref{theorem}{MRRGE}, but will save that for a subsequent application of this result.
+%
+%  End  IS.tex
+  
+  
+

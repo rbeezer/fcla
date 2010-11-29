@@ -1,0 +1,384 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section ROD
+%%  Rank One Decomposition
+%%
+%%%%%%%%%%%
+%
+{\sc\large This Section is a Draft, Subject to Changes}\par\bigskip
+%
+Our first decomposition applies only to diagonalizable (\acronymref{definition}{DZM}) matrices, and yields a decomposition into a sum of very simple matrices.
+%
+\begin{theorem}{ROD}{Rank One Decomposition}{rank one decomposition}
+Suppose that $A$ is a diagonalizable matrix of size $n$ and rank $r$.  Then there are $r$ square matrices $A_1,\,A_2,\,A_3,\,\dots,\,A_r$, each of size $n$ and rank $1$ such that
+%
+\begin{align*}
+A&=A_1+A_2+A_3+\dots+A_r
+\end{align*}
+%
+Furthermore, if $\scalarlist{\lambda}{r}$ are the nonzero eigenvalues of $A$, then there are two sets of $r$ linearly independent vectors from $\complex{n}$,
+%
+\begin{align*}
+X&=\set{\vectorlist{x}{r}}
+&
+Y&=\set{\vectorlist{y}{r}}
+\end{align*}
+%
+such that $A_k=\lambda_k\vect{x}_k\transpose{\vect{y}_k}$, $1\leq k\leq r$.
+\end{theorem}
+%
+\begin{proof}
+The proof is constructive.  Generally, we will diagonalize $A$, creating a nonsingular matrix $S$ and a diagonal matrix $D$.  Then we split up the diagonal matrix into a sum of matrices with a single nonzero entry (on the diagonal).  This fundamentally creates the decomposition in the statement of the theorem, the remainder is just bookkeeping.  The vectors in $X$ and $Y$ will result from the columns of $S$ and the rows of $\inverse{S}$.\par
+%
+Let $\scalarlist{\lambda}{n}$ be the eigenvalues of $A$ (repeated according to their algebraic multiplicity).  If $A$ has rank $r$, then $\dimension{\nsp{A}}=n-r$ (\acronymref{theorem}{RPNC}).  The null space of $A$ is the eigenspace of the eigenvalue $\lambda=0$ (\acronymref{theorem}{EMNS}), so it follows that the algebraic multiplicity of $\lambda=0$ is $n-r$, $\algmult{A}{0}=n-r$.  Presume that the complete list of eigenvalues is ordered so that $\lambda_k=0$ for $r+1\leq k\leq n$.\par
+%
+Since $A$ is hypothesized to be diagonalizable, there exists a diagonal matrix $D$ and an invertible matrix $S$, such that $D=\similar{A}{S}$.  We can rearrange tis equation to read, $A=SD\inverse{S}$.  Also, the proof of \acronymref{theorem}{DC} says that the diagonal elements of $D$ are the eigenvalues of $A$ and we have the flexibility to assume they lie on the diagonal in the same order as we have specified above.   Now, let $X^\ast=\set{\vectorlist{x}{n}}$ be the columns of $S$, and let $Y^\ast=\set{\vectorlist{y}{n}}$ be the rows of $\inverse{S}$ converted to column vectors.  With little motivation other than the statement of the theorem, define size $n$ matrices $A_k$, $1\leq k\leq n$ by $A_k=\lambda_k\vect{x}_k\transpose{\vect{y}_k}$.  Finally, let $D_k$ be the size $n$ matrix that is totally zero, other than having $\lambda_k$ in row $k$ and column $k$.\par
+%
+With everything in place, we compute entry-by-entry,
+%
+\begin{align*}
+\matrixentry{A}{ij}
+&=\matrixentry{SD\inverse{S}}{ij}
+&&\text{\acronymref{definition}{DZM}}\\
+%
+&=\matrixentry{S\left(\sum_{k=1}^{n}D_k\right)\inverse{S}}{ij}&&\text{\acronymref{definition}{MA}}\\
+%
+&=\matrixentry{S\left(\sum_{k=1}^{n}D_k\inverse{S}\right)}{ij}&&\text{\acronymref{theorem}{MMDAA}}\\
+%
+&=\matrixentry{\sum_{k=1}^{n}SD_k\inverse{S}}{ij}
+&&\text{\acronymref{theorem}{MMDAA}}\\
+%
+&=\sum_{k=1}^{n}\matrixentry{SD_k\inverse{S}}{ij}
+&&\text{\acronymref{definition}{MA}}\\
+%
+&=\sum_{k=1}^{n}\sum_{\ell=1}^{n}\matrixentry{SD_k}{i\ell}\matrixentry{\inverse{S}}{\ell j}
+&&\text{\acronymref{theorem}{EMP}}\\
+%
+&=\sum_{k=1}^{n}\sum_{\ell=1}^{n}\sum_{p=1}^{n}
+\matrixentry{S}{ip}\matrixentry{D_k}{p\ell}\matrixentry{\inverse{S}}{\ell j}
+&&\text{\acronymref{theorem}{EMP}}\\
+%
+&=\sum_{k=1}^{n}
+\matrixentry{S}{ik}\matrixentry{D_k}{kk}\matrixentry{\inverse{S}}{kj}
+&&\text{$\matrixentry{D_k}{p\ell}=0$ if $p\neq k$, or $\ell\neq k$}\\
+%
+&=\sum_{k=1}^{n}
+\matrixentry{S}{ik}\lambda_k\matrixentry{\inverse{S}}{kj}
+&&\matrixentry{D_k}{kk}=\lambda_k\\
+%
+&=\sum_{k=1}^{n}\lambda_k\matrixentry{S}{ik}\matrixentry{\inverse{S}}{kj}
+&&\text{\acronymref{property}{CMCN}}\\
+%
+&=\sum_{k=1}^{n}\lambda_k\matrixentry{\vect{x}_k}{i1}\matrixentry{\transpose{\vect{y}_k}}{1j}
+&&\text{Definition of $X^\ast$, $Y^\ast$}\\
+%
+&=\sum_{k=1}^{n}\lambda_k\sum_{q=1}^{1}\matrixentry{\vect{x}_k}{iq}\matrixentry{\transpose{\vect{y}_k}}{qj}\\
+%
+&=\sum_{k=1}^{n}\lambda_k\matrixentry{\vect{x}_k\transpose{\vect{y}_k}}{ij}&&\text{\acronymref{theorem}{EMP}}\\
+%
+&=\sum_{k=1}^{n}\matrixentry{\lambda_k\vect{x}_k\transpose{\vect{y}_k}}{ij}&&\text{\acronymref{definition}{MSM}}\\
+%
+&=\sum_{k=1}^{n}\matrixentry{A_k}{ij}&&\text{Definition of $A_k$}\\
+%
+&=\matrixentry{\sum_{k=1}^{n}A_k}{ij}&&\text{\acronymref{definition}{MA}}\\
+%
+\end{align*}
+%
+So by \acronymref{definition}{ME} we have the desired equality of matrices.  The careful reader will have noted that $A_k=\zeromatrix$, $r+1\leq k\leq n$, since $\lambda_k=0$ in these instances.  To get the sets $X$ and $Y$ from $X^\ast$ and $Y^\ast$, simply discard the last $n-r$ vectors.  We can safely ignore (or remove) $A_{r+1},\,A_{r+2},\,\dots,\,A_n$ from the summation just derived.\par
+%
+One last assertion to check.  What is the rank of $A_k$, $1\leq k\leq r$?   Every row of $A_k$ is a scalar multiple of $\transpose{\vect{y}_k}$, row $k$ of the nonsingular matrix $\inverse{S}$ (\acronymref{theorem}{MIMI}).  As a row of a nonsingular matrix, $\transpose{\vect{y}_k}$ cannot be all zeros.  In particular, row $i$ of $A_k$ is obtained as a scalar multiple of $\transpose{\vect{y}_k}$ by the scalar $\alpha_k\vectorentry{\vect{x}_k}{i}$.  We have restricted ourselves to the nonzero eigenvalues of $A$, and as $S$ is nonsingular, some entry of $\vect{x}_k$ is nonzero.  This all implies that some row of $A_k$ will be nonzero.  Now consider row-reducing $A_k$.  Swap the nonzero row up into row 1.  Use scalar multiples of this row to zero out every other row.  This leaves a single nonzero row in the reduced row-echelon form, so $A_k$ has rank one.
+%
+\end{proof}
+%
+We record two observations that was not stated in our theorem above.  First, the vectors in $X$, chosen as columns of $S$, are eigenvectors of $A$.  Second, the product of two vectors from $X$ and $Y$ in the opposite order, by which we mean $\transpose{\vect{y}_i}\vect{x}_j$, is the entry in row $i$ and column $j$ of the matrix product $\inverse{S}S=I_n$ (\acronymref{theorem}{EMP}).  In particular, 
+%
+\begin{align*}
+\transpose{\vect{y}_i}\vect{x}_j
+&=
+\begin{cases}
+1&\text{if $i=j$}\\
+0&\text{if $i\neq j$}
+\end{cases}
+\end{align*}
+%
+We give two computational examples.  One small, one a bit bigger.
+%
+\begin{example}{ROD2}{Rank one decomposition, size 2}{rank one decomposition!size 2}
+Consider the $2\times 2$ matrix,
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+ -16 & -6 \\
+ 45 & 17
+\end{bmatrix}
+%
+\end{align*}
+%
+By the techniques of \acronymref{chapter}{E} we find the eigenvalues and eigenspaces,
+%
+\begin{align*}
+\lambda_1&=2
+&
+\eigenspace{A}{2}&=\spn{\set{\colvector{-1\\3}}}
+&
+\lambda_2&=-1
+&
+\eigenspace{A}{-1}&=\spn{\set{\colvector{-2\\5}}}
+\end{align*}
+%
+With $n=2$ distinct eigenvalues, \acronymref{theorem}{DED} tells us that $A$ is diagonalizable, and with no zero eigenvalues we see that $A$ has full rank.  \acronymref{theorem}{DC} says we can construct the nonsingular matrix $S$ with eigenvectors of $A$ as columns, so we have
+%
+\begin{align*}
+S&=
+\begin{bmatrix}
+-1 & -2 \\
+3 & 5
+\end{bmatrix}
+&
+\inverse{S}&=
+%
+\begin{bmatrix}
+5 & 2 \\
+-3 & -1
+\end{bmatrix}
+%
+\end{align*}
+%
+From these matrices we obtain the sets of vectors
+%
+\begin{align*}
+X&=\set{\colvector{-1\\3},\,\colvector{-2\\5}}
+&
+Y&=\set{\colvector{5\\2},\,\colvector{-3\\-1}}
+\end{align*}
+%
+And we have the matrices,
+%
+\begin{align*}
+A_1&=
+2\colvector{-1\\3}\transpose{\colvector{5\\2}}
+=
+2
+\begin{bmatrix}
+-5 & -2 \\
+15 & 6
+\end{bmatrix}
+=
+\begin{bmatrix}
+-10 & -4 \\
+30 & 12
+\end{bmatrix}\\
+%%
+%%
+A_2&=
+(-1)\colvector{-2\\5}\transpose{\colvector{-3\\-1}}
+=
+(-1)
+\begin{bmatrix}
+6 & 2 \\
+-15 & -5
+\end{bmatrix}
+=
+\begin{bmatrix}
+-6 & -2 \\
+15 & 5
+\end{bmatrix}
+%
+\end{align*}
+%
+And you can easily verify that $A=A_1+A_2$.
+%
+\end{example}
+%
+Here's a slightly larger example, and the matrix does not have full rank.
+%
+
+
+
+
+
+
+
+%
+\begin{example}{ROD4}{Rank one decomposition, size 4}{rank one decomposition!size 4}
+Consider the $4\times4$ matrix,
+%
+\begin{align*}
+B&=
+\begin{bmatrix}
+ 34 & 18 & -1 & -6 \\
+ -44 & -24 & -1 & 9 \\
+ 36 & 18 & -3 & -6 \\
+ 36 & 18 & -6 & -3
+\end{bmatrix}
+%
+\end{align*}
+%
+By the techniques of \acronymref{chapter}{E} we find the eigenvalues and eigenvectors,
+%
+\begin{align*}
+\lambda_1&=3
+&
+\eigenspace{B}{3}&=\spn{\set{\colvector{1\\-2\\1\\-1},\,\colvector{1\\-1\\1\\2}}}\\
+%
+\lambda_2&=-2
+&
+\eigenspace{B}{-2}&=\spn{\set{\colvector{-1\\2\\0\\0}}}\\
+%
+\lambda_3&=0
+&
+\eigenspace{A}{0}&=\spn{\set{\colvector{2\\-3\\2\\2}}}
+\end{align*}
+%
+The algebraic and geometric multiplicities of each eigenvalue are equal, so \acronymref{theorem}{DMFE} tells us that $A$ is diagonalizable.  With a single zero eigenvalue we see that $A$ has rank $4-1=3$.  \acronymref{theorem}{DC} says we can construct the nonsingular matrix $S$ with eigenvectors of $A$ as columns, so we have
+%
+\begin{align*}
+S&=
+\begin{bmatrix}
+ 1 & 1 & -1 & 2 \\
+ -2 & -1 & 2 & -3 \\
+ 1 & 1 & 0 & 2 \\
+ -1 & 2 & 0 & 2
+\end{bmatrix}
+&
+\inverse{S}&=
+%
+\begin{bmatrix}
+ 4 & 2 & 0 & -1 \\
+ 8 & 4 & -1 & -1 \\
+ -1 & 0 & 1 & 0 \\
+ -6 & -3 & 1 & 1
+\end{bmatrix}
+%
+\end{align*}
+%
+Since $r=3$, we need only collect three vectors from each of these matrices,
+%
+\begin{align*}
+X&=\set{
+\colvector{1\\-2\\1\\-1},\,
+\colvector{1\\-1\\1\\2},\,
+\colvector{-1\\2\\0\\0}
+}
+&
+Y&=\set{
+\colvector{4\\2\\0\\-1},\,
+\colvector{8\\4\\-1\\-1},\,
+\colvector{-1\\0\\1\\0}
+}
+\end{align*}
+%
+And we obtain the matrices,
+%
+\begin{align*}
+B_1&=
+3\colvector{1\\-2\\1\\-1}\transpose{\colvector{4\\2\\0\\-1}}
+=
+3
+\begin{bmatrix}
+ 4 & 2 & 0 & -1 \\
+ -8 & -4 & 0 & 2 \\
+ 4 & 2 & 0 & -1 \\
+ -4 & -2 & 0 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+ 12 & 6 & 0 & -3 \\
+ -24 & -12 & 0 & 6 \\
+ 12 & 6 & 0 & -3 \\
+ -12 & -6 & 0 & 3
+\end{bmatrix}\\
+%%
+%%
+B_2&=
+3\colvector{1\\-1\\1\\2}\transpose{\colvector{8\\4\\-1\\-1}}
+=
+3
+\begin{bmatrix}
+ 8 & 4 & -1 & -1 \\
+ -8 & -4 & 1 & 1 \\
+ 8 & 4 & -1 & -1 \\
+ 16 & 8 & -2 & -2
+\end{bmatrix}
+=
+\begin{bmatrix}
+ 24 & 12 & -3 & -3 \\
+ -24 & -12 & 3 & 3 \\
+ 24 & 12 & -3 & -3 \\
+ 48 & 24 & -6 & -6
+\end{bmatrix}\\
+%%
+%%
+B_3&=
+(-2)\colvector{-1\\2\\0\\0}\transpose{\colvector{-1\\0\\1\\0}}
+=
+(-2)
+\begin{bmatrix}
+ 1 & 0 & -1 & 0 \\
+ -2 & 0 & 2 & 0 \\
+ 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0
+\end{bmatrix}
+=
+\begin{bmatrix}
+ -2 & 0 & 2 & 0 \\
+ 4 & 0 & -4 & 0 \\
+ 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0
+\end{bmatrix}
+%
+\end{align*}
+%
+Then we verify that
+%
+\begin{align*}
+B&=
+B_1+B_2+B_3\\
+&=
+\begin{bmatrix}
+ 12 & 6 & 0 & -3 \\
+ -24 & -12 & 0 & 6 \\
+ 12 & 6 & 0 & -3 \\
+ -12 & -6 & 0 & 3
+\end{bmatrix}
++
+\begin{bmatrix}
+ 24 & 12 & -3 & -3 \\
+ -24 & -12 & 3 & 3 \\
+ 24 & 12 & -3 & -3 \\
+ 48 & 24 & -6 & -6
+\end{bmatrix}
++
+\begin{bmatrix}
+ -2 & 0 & 2 & 0 \\
+ 4 & 0 & -4 & 0 \\
+ 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+&=
+\begin{bmatrix}
+ 34 & 18 & -1 & -6 \\
+ -44 & -24 & -1 & 9 \\
+ 36 & 18 & -3 & -6 \\
+ 36 & 18 & -6 & -3
+\end{bmatrix}
+%
+\end{align*}
+%
+\end{example}
+%
+%  End  ROD.tex
+  
+  
+

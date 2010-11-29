@@ -1,0 +1,819 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section O
+%%  Orthogonality
+%%
+%%%%%%%%%%%
+%
+In this section we define a couple more operations with vectors, and prove a few theorems.  At first blush these definitions and results will not appear central to what follows, but we will make use of them at key points in the remainder of the course (such as \acronymref{section}{MINM}, \acronymref{section}{OD}).  Because we have chosen to use $\complexes$ as our set of scalars, this subsection is a bit more, uh, \dots\ complex than it would be for the real numbers.  We'll explain as we go along how things get easier for the real numbers ${\mathbb R}$.  If you haven't already, now would be a good time to review some of the basic properties of arithmetic with complex numbers described in \acronymref{section}{CNO}.  With that done, we can extend the basics of complex number arithmetic to our study of vectors in $\complex{m}$.\par
+%
+\subsect{CAV}{Complex Arithmetic and Vectors}
+%
+We know how the addition and multiplication of complex numbers is employed in defining the operations for vectors in $\complex{m}$ (\acronymref{definition}{CVA} and \acronymref{definition}{CVSM}).  We can also extend the idea of the conjugate to vectors.
+%
+\begin{definition}{CCCV}{Complex Conjugate of a Column Vector}{conjugate!column vector}
+Suppose that $\vect{u}$ is a vector from $\complex{m}$.  Then the conjugate of the vector, $\conjugate{\vect{u}}$, is defined by 
+%
+\begin{align*}
+\vectorentry{\conjugate{\vect{u}}}{i}
+&=\conjugate{\vectorentry{\vect{u}}{i}}
+&&\text{$1\leq i\leq m$}
+\end{align*}
+%
+\denote{CCCV}{Complex Conjugate of a Column Vector}{$\conjugate{\vect{u}}$}{conjugate of a vector}
+\end{definition}
+%
+With this definition we can show that the conjugate of a column vector behaves as we would expect with regard to vector addition and scalar multiplication.
+%
+\begin{theorem}{CRVA}{Conjugation Respects Vector Addition}{conjugate!vector addition}
+Suppose $\vect{x}$ and $\vect{y}$ are two vectors from $\complex{m}$.  Then
+%
+\begin{equation*}
+\conjugate{\vect{x}+\vect{y}}=\conjugate{\vect{x}}+\conjugate{\vect{y}}
+\end{equation*}
+%
+\end{theorem}
+%
+\begin{proof}
+%
+For each $1\leq i\leq m$,
+%
+\begin{align*}
+\vectorentry{\conjugate{\vect{x}+\vect{y}}}{i}
+&=\conjugate{\vectorentry{\vect{x}+\vect{y}}{i}}&&\text{\acronymref{definition}{CCCV}}\\
+&=\conjugate{\vectorentry{\vect{x}}{i}+\vectorentry{\vect{y}}{i}}&&\text{\acronymref{definition}{CVA}}\\
+&=\conjugate{\vectorentry{\vect{x}}{i}}+\conjugate{\vectorentry{\vect{y}}{i}}&&\text{\acronymref{theorem}{CCRA}}\\
+&=\vectorentry{\conjugate{\vect{x}}}{i}+\vectorentry{\conjugate{\vect{y}}}{i}&&\text{\acronymref{definition}{CCCV}}\\
+&=\vectorentry{\conjugate{\vect{x}}+\conjugate{\vect{y}}}{i}&&\text{\acronymref{definition}{CVA}}
+%
+\end{align*}
+%
+Then by \acronymref{definition}{CVE} we have $\conjugate{\vect{x}+\vect{y}}=\conjugate{\vect{x}}+\conjugate{\vect{y}}$.
+%
+\end{proof}
+%
+%
+\begin{theorem}{CRSM}{Conjugation Respects Vector Scalar Multiplication}{conjugate!scalar multiplication}
+Suppose $\vect{x}$ is a vector from $\complex{m}$, and $\alpha\in\complexes$ is a scalar.  Then
+%
+\begin{equation*}
+\conjugate{\alpha\vect{x}}=\conjugate{\alpha}\,\conjugate{\vect{x}}
+\end{equation*}
+%
+\end{theorem}
+%
+\begin{proof}
+%
+For $1\leq i\leq m$,
+%
+\begin{align*}
+\vectorentry{\conjugate{\alpha\vect{x}}}{i}
+&=\conjugate{\vectorentry{\alpha\vect{x}}{i}}&&\text{\acronymref{definition}{CCCV}}\\
+%
+&=\conjugate{\alpha\vectorentry{\vect{x}}{i}}&&\text{\acronymref{definition}{CVSM}}\\
+%
+&=\conjugate{\alpha}\,\conjugate{\vectorentry{\vect{x}}{i}}&&\text{\acronymref{theorem}{CCRM}}\\
+%
+&=\conjugate{\alpha}\,\vectorentry{\conjugate{\vect{x}}}{i}&&\text{\acronymref{definition}{CCCV}}\\
+%
+&=\vectorentry{\conjugate{\alpha}\,\conjugate{\vect{x}}}{i}&&\text{\acronymref{definition}{CVSM}}\\
+%
+\end{align*}
+%
+Then by \acronymref{definition}{CVE} we have $\conjugate{\alpha\vect{x}}=\conjugate{\alpha}\,\conjugate{\vect{x}}$.
+%
+\end{proof}
+%
+These two theorems together tell us how we can ``push'' complex conjugation through linear combinations. 
+%
+\subsect{IP}{Inner products}
+%
+\begin{definition}{IP}{Inner Product}{vector!inner product}
+Given the vectors $\vect{u},\,\vect{v}\in\complex{m}$ the \define{inner product} of $\vect{u}$ and $\vect{v}$ is the scalar quantity in $\complex{\null}$,
+%
+\begin{equation*}
+\innerproduct{\vect{u}}{\vect{v}}=
+\vectorentry{\vect{u}}{1}\conjugate{\vectorentry{\vect{v}}{1}}+
+\vectorentry{\vect{u}}{2}\conjugate{\vectorentry{\vect{v}}{2}}+
+\vectorentry{\vect{u}}{3}\conjugate{\vectorentry{\vect{v}}{3}}+
+\cdots+
+\vectorentry{\vect{u}}{m}\conjugate{\vectorentry{\vect{v}}{m}}
+=
+\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}\conjugate{\vectorentry{\vect{v}}{i}}
+\end{equation*}
+%
+\denote{IP}{Inner Product}{$\innerproduct{\vect{u}}{\vect{v}}$}{inner product}
+\end{definition}
+%
+This operation is a bit different in that we begin with two vectors but produce a scalar.  Computing one is straightforward.
+%
+\begin{example}{CSIP}{Computing some inner products}{inner product} 
+The scalar product of 
+%
+\begin{align*}
+\vect{u}=\colvector{2+3i\\5+2i\\-3+i}&&\text{and}&&
+\vect{v}=\colvector{1+2i\\-4+5i\\0+5i}
+\end{align*}
+%
+is
+%
+\begin{align*}
+\innerproduct{\vect{u}}{\vect{v}}
+&=(2+3i)(\conjugate{1+2i})+(5+2i)(\conjugate{-4+5i})+(-3+i)(\conjugate{0+5i})\\
+&=(2+3i)(1-2i)+(5+2i)(-4-5i)+(-3+i)(0-5i)\\
+&=(8-i)+(-10-33i)+(5+15i)\\
+&=3-19i
+\end{align*}
+%
+The scalar product of 
+%
+\begin{align*}
+\vect{w}=\colvector{2\\4\\-3\\2\\8}&&\text{and}&&
+\vect{x}=\colvector{3\\1\\0\\-1\\-2}
+\end{align*}
+%
+is
+%
+\begin{equation*}
+\innerproduct{\vect{w}}{\vect{x}}=
+2(\conjugate{3})+4(\conjugate{1})+(-3)(\conjugate{0})+2(\conjugate{-1})+8(\conjugate{-2})
+=2(3)+4(1)+(-3)0+2(-1)+8(-2)=-8.
+\end{equation*}
+%
+\end{example}
+%
+In the case where the entries of our vectors are all real numbers (as in the second part of \acronymref{example}{CSIP}), the computation of the inner product may look familiar and be known to you as a \define{dot product} or \define{scalar product}.  So you can view the inner product as a generalization of the scalar product to vectors from $\complex{m}$ (rather than ${\mathbb R}^m$).\par
+%
+Also, note that we have chosen to conjugate the entries of the {\em second} vector listed in the inner product, while many authors choose to conjugate entries from the {\em first} component.  It really makes no difference which choice is made, it just requires that subsequent definitions and theorems are consistent with the choice.  You can study the conclusion of  \acronymref{theorem}{IPAC} as an explanation of the magnitude of the difference that results from this choice.  But be careful as you read other treatments of the inner product or its use in applications, and be sure you know ahead of time {\em which} choice has been made.\par
+%
+There are several quick theorems we can now prove, and they will each be useful later.
+%
+%
+\begin{theorem}{IPVA}{Inner Product and Vector Addition}{inner product!vector addition}
+Suppose $\vect{u},\,\vect{v},\,\vect{w}\in\complex{m}$.  Then
+%
+\begin{align*}
+\text{1.}\quad\innerproduct{\vect{u}+\vect{v}}{\vect{w}}&=\innerproduct{\vect{u}}{\vect{w}}+\innerproduct{\vect{v}}{\vect{w}}\\
+\text{2.}\quad\innerproduct{\vect{u}}{\vect{v}+\vect{w}}&=\innerproduct{\vect{u}}{\vect{v}}+\innerproduct{\vect{u}}{\vect{w}}
+\end{align*}
+%
+\end{theorem}
+%
+\begin{proof}
+The proofs of the two parts are very similar, with the second one requiring just a bit more effort due to the conjugation that occurs.  We will prove part 2 and you can prove part 1 (\acronymref{exercise}{O.T10}).
+%
+\begin{align*}
+\innerproduct{\vect{u}}{\vect{v}+\vect{w}}
+&=\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}\conjugate{\vectorentry{\vect{v}+\vect{w}}{i}}
+&&\text{\acronymref{definition}{IP}}\\
+%
+&=\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}(\conjugate{\vectorentry{\vect{v}}{i}+\vectorentry{\vect{w}}{i}})
+&&\text{\acronymref{definition}{CVA}}\\
+%
+&=\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}(\conjugate{\vectorentry{\vect{v}}{i}}+\conjugate{\vectorentry{\vect{w}}{i}})
+&&\text{\acronymref{theorem}{CCRA}}\\
+%
+&=\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}\conjugate{\vectorentry{\vect{v}}{i}}+\vectorentry{\vect{u}}{i}\conjugate{\vectorentry{\vect{w}}{i}}
+&&\text{\acronymref{property}{DCN}}\\
+%
+&=\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}\conjugate{\vectorentry{\vect{v}}{i}}
+  +\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}\conjugate{\vectorentry{\vect{w}}{i}}
+&&\text{\acronymref{property}{CACN}}\\
+%
+&=\innerproduct{\vect{u}}{\vect{v}}+\innerproduct{\vect{u}}{\vect{w}}&&\text{\acronymref{definition}{IP}}
+%
+\end{align*}
+%
+\end{proof}
+%
+%
+\begin{theorem}{IPSM}{Inner Product and Scalar Multiplication}{inner product!scalar multiplication}
+Suppose $\vect{u},\,\vect{v}\in\complex{m}$ and $\alpha\in\complex{\null}$.  Then
+%
+\begin{align*}
+\text{1.}\quad\innerproduct{\alpha\vect{u}}{\vect{v}}&=\alpha\innerproduct{\vect{u}}{\vect{v}}\\
+\text{2.}\quad\innerproduct{\vect{u}}{\alpha\vect{v}}&=\conjugate{\alpha}\innerproduct{\vect{u}}{\vect{v}}
+\end{align*}
+%
+\end{theorem}
+%
+\begin{proof}
+The proofs of the two parts are very similar, with the second one requiring just a bit more effort due to the conjugation that occurs.  We will prove part 2 and you can prove part 1  (\acronymref{exercise}{O.T11}).
+%
+\begin{align*}
+\innerproduct{\vect{u}}{\alpha\vect{v}}
+&=\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}\conjugate{\vectorentry{\alpha\vect{v}}{i}}
+&&\text{\acronymref{definition}{IP}}\\
+%
+&=\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}\conjugate{\alpha\vectorentry{\vect{v}}{i}}
+&&\text{\acronymref{definition}{CVSM}}\\
+%
+&=\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}\conjugate{\alpha}\,\conjugate{\vectorentry{\vect{v}}{i}}
+&&\text{\acronymref{theorem}{CCRM}}\\
+%
+&=\sum_{i=1}^{m}\conjugate{\alpha}\vectorentry{\vect{u}}{i}\conjugate{\vectorentry{\vect{v}}{i}}
+&&\text{\acronymref{property}{CMCN}}\\
+%
+&=\conjugate{\alpha}\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}\conjugate{\vectorentry{\vect{v}}{i}}
+&&\text{\acronymref{property}{DCN}}\\
+%
+&=\conjugate{\alpha}\innerproduct{\vect{u}}{\vect{v}}
+&&\text{\acronymref{definition}{IP}}
+%
+\end{align*}
+%
+\end{proof}
+%
+\begin{theorem}{IPAC}{Inner Product is Anti-Commutative}{inner product!anti-commutative}
+Suppose that $\vect{u}$ and $\vect{v}$ are vectors in $\complex{m}$.  Then
+$\innerproduct{\vect{u}}{\vect{v}}=\conjugate{\innerproduct{\vect{v}}{\vect{u}}}$.
+\end{theorem}
+%
+\begin{proof}
+\begin{align*}
+\innerproduct{\vect{u}}{\vect{v}}
+&=\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}\conjugate{\vectorentry{\vect{v}}{i}}
+&&\text{\acronymref{definition}{IP}}\\
+%
+&=\sum_{i=1}^{m}\conjugate{\conjugate{\vectorentry{\vect{u}}{i}}}\,\conjugate{\vectorentry{\vect{v}}{i}}
+&&\text{\acronymref{theorem}{CCT}}\\
+%
+&=\sum_{i=1}^{m}\conjugate{\conjugate{\vectorentry{\vect{u}}{i}}\vectorentry{\vect{v}}{i}}
+&&\text{\acronymref{theorem}{CCRM}}\\
+%
+&=\conjugate{\left(\sum_{i=1}^{m}\conjugate{\vectorentry{\vect{u}}{i}}\vectorentry{\vect{v}}{i}\right)}
+&&\text{\acronymref{theorem}{CCRA}}\\
+%
+&=\conjugate{\left(\sum_{i=1}^{m}\vectorentry{\vect{v}}{i}\conjugate{\vectorentry{\vect{u}}{i}}\right)}
+&&\text{\acronymref{property}{CMCN}}\\
+%
+&=\conjugate{\innerproduct{\vect{v}}{\vect{u}}}
+&&\text{\acronymref{definition}{IP}}\\
+\end{align*}
+\end{proof}
+%
+\subsect{N}{Norm}
+%
+If treating linear algebra in a more geometric fashion, the length of a vector occurs  naturally, and is what you would expect from its name.   With complex numbers, we will define a similar function.  Recall that if $c$ is a complex number, then $\modulus{c}$ denotes its modulus (\acronymref{definition}{MCN}).
+%
+\begin{definition}{NV}{Norm of a Vector}{vector!norm}
+The \define{norm} of the vector $\vect{u}$ is the scalar quantity in $\complex{\null}$
+%
+\begin{equation*}
+\norm{\vect{u}}=
+\sqrt{
+\modulus{\vectorentry{\vect{u}}{1}}^2+
+\modulus{\vectorentry{\vect{u}}{2}}^2+
+\modulus{\vectorentry{\vect{u}}{3}}^2+
+\cdots+
+\modulus{\vectorentry{\vect{u}}{m}}^2
+}
+=
+\sqrt{\sum_{i=1}^{m}\modulus{\vectorentry{\vect{u}}{i}}^2}
+\end{equation*}
+%
+\denote{NV}{Norm of a Vector}{$\norm{\vect{v}}$}{norm}
+\end{definition}
+%
+Computing a norm is also easy to do.
+%
+\begin{example}{CNSV}{Computing the norm of some vectors}{norm} 
+The norm of 
+%
+\begin{equation*}
+\vect{u}=\colvector{3+2i\\1-6i\\2+4i\\2+i}
+\end{equation*}
+%
+is
+%
+\begin{equation*}
+\norm{\vect{u}}=
+\sqrt{\modulus{3+2i}^2+\modulus{1-6i}^2+\modulus{2+4i}^2+\modulus{2+i}^2}
+=\sqrt{13+37+20+5}=\sqrt{75}=5\sqrt{3}.
+\end{equation*}
+%
+The norm of 
+%
+\begin{equation*}
+\vect{v}=\colvector{3\\-1\\2\\4\\-3}
+\end{equation*}
+%
+is
+%
+\begin{equation*}
+\norm{\vect{v}}=
+\sqrt{\modulus{3}^2+\modulus{-1}^2+\modulus{2}^2+\modulus{4}^2+\modulus{-3}^2}
+=\sqrt{3^2+1^2+2^2+4^2+3^2}=\sqrt{39}.
+\end{equation*}
+%
+\end{example}
+%
+Notice how the norm of a vector with real number entries is just the length of the vector.  Inner products and norms are related by the following theorem.\par
+%
+\begin{theorem}{IPN}{Inner Products and Norms}{inner product!norm}
+\index{norm!inner product}
+Suppose that $\vect{u}$ is a vector in $\complex{m}$.  Then
+$\norm{\vect{u}}^2=\innerproduct{\vect{u}}{\vect{u}}$.
+\end{theorem}
+%
+\begin{proof}
+\begin{align*}
+\norm{\vect{u}}^2
+&=\left(\sqrt{\sum_{i=1}^{m}\modulus{\vectorentry{\vect{u}}{i}}^2}\right)^2
+&&\text{\acronymref{definition}{NV}}\\
+%
+&=\sum_{i=1}^{m}\modulus{\vectorentry{\vect{u}}{i}}^2\\
+%
+&=\sum_{i=1}^{m}\vectorentry{\vect{u}}{i}\conjugate{\vectorentry{\vect{u}}{i}}
+&&\text{\acronymref{definition}{MCN}}\\
+%
+&=\innerproduct{\vect{u}}{\vect{u}}
+&&\text{\acronymref{definition}{IP}}
+%
+\end{align*}
+\end{proof}
+%
+When our vectors have entries only from the real numbers \acronymref{theorem}{IPN} says that the dot product of a vector with itself is equal to the length of the vector squared.
+%
+\begin{theorem}{PIP}{Positive Inner Products}{inner product!positive}
+Suppose that $\vect{u}$ is a vector in $\complex{m}$.  Then
+$\innerproduct{\vect{u}}{\vect{u}}\geq 0$ with equality if and only if $\vect{u}=\zerovector$.
+\end{theorem}
+%
+\begin{proof}
+From the proof of \acronymref{theorem}{IPN}  we see that
+%
+\begin{equation*}
+\innerproduct{\vect{u}}{\vect{u}}
+=
+\modulus{\vectorentry{\vect{u}}{1}}^2+
+\modulus{\vectorentry{\vect{u}}{2}}^2+
+\modulus{\vectorentry{\vect{u}}{3}}^2+
+\cdots+
+\modulus{\vectorentry{\vect{u}}{m}}^2
+\end{equation*}
+%
+Since each modulus is squared, every term is positive, and the sum must also be positive.  (Notice that in general the inner product is a complex number and cannot be compared with zero, but in the special case of $\innerproduct{\vect{u}}{\vect{u}}$ the result is a real number.)
+%
+The phrase, ``with equality if and only if'' means that we want to show that the statement $\innerproduct{\vect{u}}{\vect{u}}= 0$ (i.e.\ with equality) is equivalent (``if and only if'') to the statement $\vect{u}=\zerovector$.\par
+%
+If $\vect{u}=\zerovector$, then it is a straightforward computation to see that $\innerproduct{\vect{u}}{\vect{u}}= 0$.  In the other direction, assume that $\innerproduct{\vect{u}}{\vect{u}}= 0$.  As before, $\innerproduct{\vect{u}}{\vect{u}}$ is a sum of moduli.  So we have
+%
+\begin{equation*}
+0=\innerproduct{\vect{u}}{\vect{u}}=
+\modulus{\vectorentry{\vect{u}}{1}}^2+
+\modulus{\vectorentry{\vect{u}}{2}}^2+
+\modulus{\vectorentry{\vect{u}}{3}}^2+
+\cdots+
+\modulus{\vectorentry{\vect{u}}{m}}^2
+\end{equation*}
+%
+Now we have a sum of squares equaling zero, so each term must be zero.  Then by similar logic, 
+$\modulus{\vectorentry{\vect{u}}{i}}=0$ 
+will imply that 
+$\vectorentry{\vect{u}}{i}=0$, 
+since $0+0i$ is the only complex number with zero modulus.  Thus every entry of $\vect{u}$ is zero and so $\vect{u}=\zerovector$, as desired.
+%
+\end{proof}
+%
+Notice that \acronymref{theorem}{PIP} contains {\em three} implications:
+\begin{align*}
+\vect{u}\in\complex{m}&\Rightarrow\innerproduct{\vect{u}}{\vect{u}}\geq 0\\
+\vect{u}=\zerovector&\Rightarrow\innerproduct{\vect{u}}{\vect{u}}=0\\
+\innerproduct{\vect{u}}{\vect{u}}=0&\Rightarrow\vect{u}=\zerovector
+\end{align*}
+%
+The results contained in \acronymref{theorem}{PIP} are summarized by saying ``the inner product is \define{positive definite}.''
+%
+\subsect{OV}{Orthogonal Vectors}
+%
+``Orthogonal'' is a generalization of ``perpendicular.''  You may have used mutually perpendicular vectors in a physics class, or you may recall from a calculus class that perpendicular vectors have a zero dot product.  We will now extend these ideas into the realm of higher dimensions and complex scalars.
+%
+%
+\begin{definition}{OV}{Orthogonal Vectors}{orthogonal!vector pairs}
+A pair of vectors, $\vect{u}$ and $\vect{v}$, from $\complex{m}$ are \define{orthogonal} if their inner product is zero, that is, $\innerproduct{\vect{u}}{\vect{v}}=0$.
+\end{definition}
+%
+%
+\begin{example}{TOV}{Two orthogonal vectors}{orthogonal vectors}
+The vectors
+%
+\begin{align*}
+\vect{u}&=\colvector{2 + 3i\\4 - 2i\\1 + i\\1 + i}
+&
+\vect{v}&=\colvector{1 - i\\2 + 3i\\4 - 6i\\1}
+\end{align*}
+%
+are orthogonal since
+%
+\begin{align*}
+\innerproduct{\vect{u}}{\vect{v}}
+&=(2+3i)(1+i)+(4-2i)(2-3i)+(1+i)(4+6i)+(1+i)(1)\\
+&=(-1+5i)+(2-16i)+(-2+10i)+(1+i)\\
+&=0+0i.
+\end{align*}
+%
+\end{example}
+%
+We extend this definition to whole sets by requiring vectors to be pairwise orthogonal.  Despite using the same word, careful thought about what objects you are using will eliminate any source of confusion.
+%
+\begin{definition}{OSV}{Orthogonal Set of Vectors}{orthogonal!set of vectors}
+Suppose that $S=\set{\vectorlist{u}{n}}$ is a set of vectors from $\complex{m}$.  Then $S$ is an \define{orthogonal set} if every pair of different vectors from $S$ is orthogonal, that is $\innerproduct{\vect{u}_i}{\vect{u}_j}=0$ whenever $i\neq j$.
+\end{definition}
+%
+%TODO: Need a good example right here
+%
+We now define the prototypical orthogonal set, which we will reference repeatedly.
+%
+\begin{definition}{SUV}{Standard Unit Vectors}{unit vectors}
+Let $\vect{e}_j\in\complex{m}$, $1\leq j\leq m$ denote the column vectors defined by
+%
+\begin{align*}
+\vectorentry{\vect{e}_j}{i}
+&=
+\begin{cases}
+0&\text{if $i\neq j$}\\
+1&\text{if $i=j$}
+\end{cases}
+\end{align*}
+%
+Then the set
+%
+\begin{align*}
+\set{\vectorlist{e}{m}}&=\setparts{\vect{e}_j}{1\leq j\leq m}
+\end{align*}
+%
+is the set of \define{standard unit vectors} in $\complex{m}$.
+\denote{SUV}{Standard Unit Vectors}{$\vect{e}_i$}{standard unit vector}
+\end{definition}
+%
+Notice that $\vect{e}_j$ is identical to column $j$ of the $m\times m$ identity matrix $I_m$ (\acronymref{definition}{IM}).  This observation will often be useful.  It is not hard to see that the set of standard unit vectors is an orthogonal set.  We will reserve the notation $\vect{e}_i$ for these vectors.
+%
+\begin{example}{SUVOS}{Standard Unit Vectors are an Orthogonal Set}{unit vectors!orthogonal}
+Compute the inner product of two distinct vectors from the set of standard unit vectors (\acronymref{definition}{SUV}), say $\vect{e}_i$, $\vect{e}_j$, where $i\neq j$, 
+%
+\begin{align*}
+\innerproduct{\vect{e}_i}{\vect{e}_j}&=
+0\conjugate{0}+0\conjugate{0}+\cdots+
+1\conjugate{0}+\cdots+
+0\conjugate{0}+\cdots+
+0\conjugate{1}+\cdots+
+0\conjugate{0}+0\conjugate{0}\\
+%
+&=0(0)+0(0)+\cdots+1(0)+\cdots+0(1)+\cdots+0(0)+0(0)\\
+&=0
+\end{align*}
+%
+So the set $\set{\vectorlist{e}{m}}$ is an orthogonal set.
+%
+\end{example}
+%
+% Next example output (rescaled) from:
+% GramSchmidt[{{1+I,1, 1-I,I},{I,1+I,-1, -I}, {I,-I, -1+I,1}, {-1-I,I,1,-1}}, 
+% InnerProduct(arrow)(Conjugate[#1].#2&)]//Simplify
+%
+\begin{example}{AOS}{An orthogonal set}{orthogonal!set}
+The set
+%
+\begin{equation*}
+\set{\vect{x}_1,\,\vect{x}_2,\,\vect{x}_3,\,\vect{x}_4}=
+\set{
+\colvector{1+i\\1\\1-i\\i},\,
+\colvector{1+5i\\6+5i\\-7-i\\1-6i},\,
+\colvector{-7+34i\\-8-23i\\-10+22i\\30+13i},\,
+\colvector{-2-4i\\6+i\\4+3i\\6-i}
+}
+\end{equation*}
+%
+is an orthogonal set.  Since the inner product is anti-commutative (\acronymref{theorem}{IPAC}) we can test pairs of different vectors in any order.  If the result is zero, then it will also be zero if the inner product is computed in the opposite order.  This means there are six pairs of different vectors to use in an inner product computation.  We'll do two and you can practice your inner products on the other four.
+%
+\begin{align*}
+\innerproduct{\vect{x}_1}{\vect{x}_3}&=
+(1+i)(-7-34i)+(1)(-8+23i)+(1-i)(-10-22i)+(i)(30-13i)\\
+&=(27-41i)+(-8+23i)+(-32-12i)+(13+30i)\\
+&=0+0i
+\intertext{and}
+\innerproduct{\vect{x}_2}{\vect{x}_4}&=
+(1+5i)(-2+4i)+(6+5i)(6-i)+(-7-i)(4-3i)+(1-6i)(6+i)\\
+&=(-22-6i)+(41+24i)+(-31+17i)+(12-35i)\\
+&=0+0i
+\end{align*}
+%
+\end{example}
+%
+So far, this section has seen lots of definitions, and lots of theorems establishing un-surprising consequences of those definitions.  But here is our first theorem that suggests that inner products and orthogonal vectors have some utility.  It is also one of our first illustrations of how to arrive at linear independence as the conclusion of a theorem. 
+%
+\begin{theorem}{OSLI}{Orthogonal Sets are Linearly Independent}{orthogonal!linear independence}
+\index{linear independence!orthogonal}
+Suppose that $S$ is an orthogonal set of nonzero vectors.  Then $S$ is linearly independent.
+\end{theorem}
+%
+\begin{proof}
+Let $S=\set{\vectorlist{u}{n}}$ be an orthogonal set of nonzero vectors.  To prove the linear independence of $S$, we can appeal to the definition (\acronymref{definition}{LICV}) and begin with an arbitrary relation of linear dependence (\acronymref{definition}{RLDCV}),
+%
+\begin{equation*}
+\lincombo{\alpha}{u}{n}=\zerovector.
+\end{equation*}
+%
+Then, for every $1\leq i\leq n$, we have
+%
+\begin{align*}
+\alpha_i
+&=
+\frac{1}{\innerproduct{\vect{u}_i}{\vect{u}_i}}\left(
+\alpha_i\innerproduct{\vect{u}_i}{\vect{u}_i}
+\right)
+&&\text{\acronymref{theorem}{PIP}}\\
+%
+&=
+\frac{1}{\innerproduct{\vect{u}_i}{\vect{u}_i}}\left(
+\alpha_1(0)+\alpha_2(0)+\cdots+\alpha_i\innerproduct{\vect{u}_i}{\vect{u}_i}+\cdots+\alpha_n(0)
+\right)
+&&\text{\acronymref{property}{ZCN}}\\
+%
+&=
+\frac{1}{\innerproduct{\vect{u}_i}{\vect{u}_i}}\left(
+\alpha_1\innerproduct{\vect{u}_1}{\vect{u}_i}+
+\cdots+
+\alpha_i\innerproduct{\vect{u}_i}{\vect{u}_i}+
+\cdots+
+\alpha_n\innerproduct{\vect{u}_n}{\vect{u}_i}
+\right)
+&&\text{\acronymref{definition}{OSV}}\\
+%
+&=
+\frac{1}{\innerproduct{\vect{u}_i}{\vect{u}_i}}\left(
+\innerproduct{\alpha_1\vect{u}_1}{\vect{u}_i}+
+\innerproduct{\alpha_2\vect{u}_2}{\vect{u}_i}+
+\cdots+
+\innerproduct{\alpha_n\vect{u}_n}{\vect{u}_i}
+\right)
+&&\text{\acronymref{theorem}{IPSM}}\\
+%
+&=
+\frac{1}{\innerproduct{\vect{u}_i}{\vect{u}_i}}
+\innerproduct{\lincombo{\alpha}{u}{n}}{\vect{u}_i}
+&&\text{\acronymref{theorem}{IPVA}}\\
+%
+&=
+\frac{1}{\innerproduct{\vect{u}_i}{\vect{u}_i}}
+\innerproduct{\zerovector}{\vect{u}_i}
+&&\text{\acronymref{definition}{RLDCV}}\\
+%
+&=
+\frac{1}{\innerproduct{\vect{u}_i}{\vect{u}_i}}\,0
+&&\text{\acronymref{definition}{IP}}\\
+%
+&=0&&\text{\acronymref{property}{ZCN}}
+%
+\end{align*}
+%
+So we conclude that $\alpha_i=0$ for all $1\leq i\leq n$ in any relation of linear dependence on $S$.  But this says that $S$ is a linearly independent set since the only way to form a relation of linear dependence is the trivial way (\acronymref{definition}{LICV}).  Boom!
+\end{proof}
+%
+\subsect{GSP}{Gram-Schmidt Procedure}
+%
+The Gram-Schmidt Procedure is really a theorem.  It says that if we begin with a linearly independent set of $p$ vectors, $S$, then we can do a number of calculations with these vectors and produce an orthogonal set of $p$ vectors, $T$, so that $\spn{S}=\spn{T}$.  Given the large number of computations involved, it is indeed a procedure to do all the necessary computations, and it is best employed on a computer.  However, it also has value in proofs where we may on occasion wish to replace a linearly independent set by an orthogonal set.\par
+%
+\techniqueinline{I}{Induction}{induction}
+{This is our first occasion to use the technique of ``mathematical induction'' for a proof, a technique we will see again several times, especially in \acronymref{chapter}{D}.}{So study the simple example described in \acronymref{technique}{I} first.}
+%
+\begin{theorem}{GSP}{Gram-Schmidt Procedure}{Gram-Schmidt!column vectors}
+Suppose that $S=\set{\vectorlist{v}{p}}$ is a linearly independent set of vectors in $\complex{m}$.  Define the vectors $\vect{u}_i$, $1\leq i\leq p$ by
+%
+\begin{equation*}
+\vect{u}_i=\vect{v}_i
+-\frac{\innerproduct{\vect{v}_i}{\vect{u}_1}}{\innerproduct{\vect{u}_1}{\vect{u}_1}}\vect{u}_1
+-\frac{\innerproduct{\vect{v}_i}{\vect{u}_2}}{\innerproduct{\vect{u}_2}{\vect{u}_2}}\vect{u}_2
+-\frac{\innerproduct{\vect{v}_i}{\vect{u}_3}}{\innerproduct{\vect{u}_3}{\vect{u}_3}}\vect{u}_3
+-\cdots
+-\frac{\innerproduct{\vect{v}_i}{\vect{u}_{i-1}}}{\innerproduct{\vect{u}_{i-1}}{\vect{u}_{i-1}}}\vect{u}_{i-1}
+\end{equation*}
+%
+Then if $T=\set{\vectorlist{u}{p}}$, then $T$ is an orthogonal set of non-zero vectors, and $\spn{T}=\spn{S}$.
+%
+\end{theorem}
+%
+\begin{proof}
+We will prove the result by using induction on $p$ (\acronymref{technique}{I}).  To begin, we prove that $T$ has the desired properties when $p=1$.  In this case $\vect{u}_1=\vect{v}_1$ and $T=\set{\vect{u}_1}=\set{\vect{v}_1}=S$.  Because $S$ and $T$ are equal, $\spn{S}=\spn{T}$.  Equally trivial, $T$ is an orthogonal set.  If $\vect{u}_1=\zerovector$, then $S$ would be a linearly dependent set, a contradiction.\par
+%
+Suppose that the theorem is true for any set of $p-1$ linearly independent vectors.  Let $S=\set{\vectorlist{v}{p}}$ be a linearly independent set of $p$ vectors.  Then $S^\prime=\set{\vectorlist{v}{p-1}}$ is also linearly independent.  So we can apply the theorem to $S^\prime$ and construct the vectors $T^\prime=\set{\vectorlist{u}{p-1}}$.  $T^\prime$ is therefore an orthogonal set of nonzero vectors and $\spn{S^\prime}=\spn{T^\prime}$.  Define
+%
+\begin{equation*}
+\vect{u}_p=\vect{v}_p
+-\frac{\innerproduct{\vect{v}_p}{\vect{u}_1}}{\innerproduct{\vect{u}_1}{\vect{u}_1}}\vect{u}_1
+-\frac{\innerproduct{\vect{v}_p}{\vect{u}_2}}{\innerproduct{\vect{u}_2}{\vect{u}_2}}\vect{u}_2
+-\frac{\innerproduct{\vect{v}_p}{\vect{u}_3}}{\innerproduct{\vect{u}_3}{\vect{u}_3}}\vect{u}_3
+-\cdots
+-\frac{\innerproduct{\vect{v}_p}{\vect{u}_{p-1}}}{\innerproduct{\vect{u}_{p-1}}{\vect{u}_{p-1}}}\vect{u}_{p-1}
+\end{equation*}
+%
+and let $T=T^\prime\cup\set{\vect{u}_p}$.  We need to now show that $T$ has several properties by building on what we know about $T^\prime$.  But first notice that the above equation has no problems with the denominators ($\innerproduct{\vect{u}_i}{\vect{u}_i}$) being zero, since the $\vect{u}_i$ are from $T^\prime$, which is composed of nonzero vectors.\par
+%
+We show that $\spn{T}=\spn{S}$, by first establishing that $\spn{T}\subseteq\spn{S}$.  Suppose $\vect{x}\in\spn{T}$, so
+%
+\begin{equation*}
+\vect{x}=\lincombo{a}{u}{p}
+\end{equation*}
+%
+The term $a_p\vect{u}_p$ is a linear combination of vectors from $T^\prime$ and the vector $\vect{v}_p$, while the remaining terms are a linear combination of vectors from $T^\prime$.  Since $\spn{T^\prime}=\spn{S^\prime}$, any term that is a multiple of a vector from $T^\prime$ can be rewritten as a linear combination of vectors from $S^\prime$.  The remaining term $a_p\vect{v}_p$ is a multiple of a vector in $S$.  So we see that $\vect{x}$ can be rewritten as a linear combination of vectors from $S$, i.e.\ $\vect{x}\in\spn{S}$.\par
+%
+To show that $\spn{S}\subseteq\spn{T}$, begin with $\vect{y}\in\spn{S}$, so
+%
+\begin{equation*}
+\vect{y}=\lincombo{a}{v}{p}
+\end{equation*}
+%
+Rearrange our defining equation for $\vect{u}_p$ by solving for $\vect{v}_p$.  Then the term $a_p\vect{v}_p$ is a multiple of a linear combination of elements of $T$.  The remaining terms are a linear combination of $\vectorlist{v}{p-1}$, hence an element of $\spn{S^\prime}=\spn{T^\prime}$.  Thus these remaining terms can be written as a linear combination of the vectors in $T^\prime$.   So $\vect{y}$ is a linear combination of vectors from $T$, i.e.\ $\vect{y}\in\spn{T}$.\par
+%
+The elements of $T^\prime$ are nonzero, but what about $\vect{u}_p$?  Suppose to the contrary that $\vect{u}_p=\zerovector$,
+%
+\begin{align*}
+\zerovector&=\vect{u}_p=\vect{v}_p
+-\frac{\innerproduct{\vect{v}_p}{\vect{u}_1}}{\innerproduct{\vect{u}_1}{\vect{u}_1}}\vect{u}_1
+-\frac{\innerproduct{\vect{v}_p}{\vect{u}_2}}{\innerproduct{\vect{u}_2}{\vect{u}_2}}\vect{u}_2
+-\frac{\innerproduct{\vect{v}_p}{\vect{u}_3}}{\innerproduct{\vect{u}_3}{\vect{u}_3}}\vect{u}_3
+-\cdots
+-\frac{\innerproduct{\vect{v}_p}{\vect{u}_{p-1}}}{\innerproduct{\vect{u}_{p-1}}{\vect{u}_{p-1}}}\vect{u}_{p-1}\\
+%
+&\vect{v}_p=
+\frac{\innerproduct{\vect{v}_p}{\vect{u}_1}}{\innerproduct{\vect{u}_1}{\vect{u}_1}}\vect{u}_1
++\frac{\innerproduct{\vect{v}_p}{\vect{u}_2}}{\innerproduct{\vect{u}_2}{\vect{u}_2}}\vect{u}_2
++\frac{\innerproduct{\vect{v}_p}{\vect{u}_3}}{\innerproduct{\vect{u}_3}{\vect{u}_3}}\vect{u}_3
++\cdots
++\frac{\innerproduct{\vect{v}_p}{\vect{u}_{p-1}}}{\innerproduct{\vect{u}_{p-1}}{\vect{u}_{p-1}}}\vect{u}_{p-1}
+\end{align*}
+%
+Since $\spn{S^\prime}=\spn{T^\prime}$ we can write the vectors $\vectorlist{u}{p-1}$ on the right side of this equation in terms of the vectors $\vectorlist{v}{p-1}$ and we then have the vector $\vect{v}_p$ expressed as a linear combination of the other $p-1$ vectors in $S$, implying that $S$ is a linearly dependent set (\acronymref{theorem}{DLDS}), contrary to our lone hypothesis about $S$.\par
+%
+Finally, it is a simple matter to establish that $T$ is an orthogonal set, though it will not appear so simple looking.  Think about your objects as you work through the following --- what is a vector and what is a scalar.  Since $T^\prime$ is an orthogonal set by induction, most pairs of elements in $T$ are already known to be orthogonal.  We just need to test ``new'' inner products, between $\vect{u}_p$ and $\vect{u}_i$, for $1\leq i\leq p-1$.  Here we go, using summation notation,
+%
+\begin{align*}
+\innerproduct{\vect{u}_p}{\vect{u}_i}&=
+\innerproduct{
+\vect{v}_p-\sum_{k=1}^{p-1}\frac{\innerproduct{\vect{v}_p}{\vect{u}_k}}{\innerproduct{\vect{u}_k}{\vect{u}_k}}\vect{u}_k
+}
+{\vect{u}_i}\\
+%
+&=
+\innerproduct{\vect{v}_p}{\vect{u}_i}
+-
+\innerproduct{
+\sum_{k=1}^{p-1}\frac{\innerproduct{\vect{v}_p}{\vect{u}_k}}{\innerproduct{\vect{u}_k}{\vect{u}_k}}\vect{u}_k
+}
+{\vect{u}_i}
+&&\text{\acronymref{theorem}{IPVA}}\\
+%
+&=
+\innerproduct{\vect{v}_p}{\vect{u}_i}
+-
+\sum_{k=1}^{p-1}\innerproduct{
+\frac{\innerproduct{\vect{v}_p}{\vect{u}_k}}{\innerproduct{\vect{u}_k}{\vect{u}_k}}\vect{u}_k
+}
+{\vect{u}_i}
+&&\text{\acronymref{theorem}{IPVA}}\\
+%
+&=
+\innerproduct{\vect{v}_p}{\vect{u}_i}
+-
+\sum_{k=1}^{p-1}\frac{\innerproduct{\vect{v}_p}{\vect{u}_k}}{\innerproduct{\vect{u}_k}{\vect{u}_k}}\innerproduct{\vect{u}_k}{\vect{u}_i}
+&&\text{\acronymref{theorem}{IPSM}}\\
+%
+&=
+\innerproduct{\vect{v}_p}{\vect{u}_i}
+-
+\frac{\innerproduct{\vect{v}_p}{\vect{u}_i}}{\innerproduct{\vect{u}_i}{\vect{u}_i}}\innerproduct{\vect{u}_i}{\vect{u}_i}
+-
+\sum_{k\neq i}\frac{\innerproduct{\vect{v}_p}{\vect{u}_k}}{\innerproduct{\vect{u}_k}{\vect{u}_k}}(0)
+&&\text{Induction Hypothesis}\\
+%
+&=
+\innerproduct{\vect{v}_p}{\vect{u}_i}
+-
+\innerproduct{\vect{v}_p}{\vect{u}_i}
+-
+\sum_{k\neq i}0\\
+&=0
+\end{align*}
+%
+\end{proof}
+%
+%
+\begin{example}{GSTV}{Gram-Schmidt of three vectors}{Gram-Schmidt!three vectors}
+%
+We will illustrate the Gram-Schmidt process with three vectors.  Begin with the linearly independent (check this!) set
+%
+\begin{equation*}
+S=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3}=\set{
+\colvector{1\\1+i\\1},\,
+\colvector{-i\\1\\1+i},\,
+\colvector{0\\i\\i}
+}
+\end{equation*}
+%
+Then
+%
+\begin{align*}
+\vect{u}_1&=\vect{v_1}=\colvector{1\\1+i\\1}\\
+\vect{u}_2&=\vect{v}_2
+-\frac{\innerproduct{\vect{v}_2}{\vect{u}_1}}{\innerproduct{\vect{u}_1}{\vect{u}_1}}\vect{u}_1
+=\frac{1}{4}\colvector{-2-3i\\1-i\\2+5i}\\
+\vect{u}_3&=\vect{v}_3
+-\frac{\innerproduct{\vect{v}_3}{\vect{u}_1}}{\innerproduct{\vect{u}_1}{\vect{u}_1}}\vect{u}_1
+-\frac{\innerproduct{\vect{v}_3}{\vect{u}_2}}{\innerproduct{\vect{u}_2}{\vect{u}_2}}\vect{u}_2
+=\frac{1}{11}\colvector{-3-i\\1+3i\\-1-i}
+\end{align*}
+%
+and
+%
+\begin{equation*}
+T=\set{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3}
+=\set{
+\colvector{1\\1+i\\1},\,
+\frac{1}{4}\colvector{-2-3i\\1-i\\2+5i},\,
+\frac{1}{11}\colvector{-3-i\\1+3i\\-1-i}
+}
+%
+\end{equation*}
+is an orthogonal set (which you can check) of nonzero vectors and $\spn{T}=\spn{S}$ (all by \acronymref{theorem}{GSP}).  Of course, as a by-product of orthogonality, the set $T$ is also linearly independent (\acronymref{theorem}{OSLI}).
+%
+\end{example}
+%
+One final definition related to orthogonal vectors.
+%
+\begin{definition}{ONS}{OrthoNormal Set}{orthonormal}
+Suppose $S=\set{\vectorlist{u}{n}}$ is an orthogonal set of vectors such that $\norm{\vect{u}_i}=1$ for all $1\leq i\leq n$.  Then $S$ is an \define{orthonormal} set of vectors.
+\end{definition}
+%
+Once you have an orthogonal set, it is easy to convert it to an orthonormal set --- multiply each vector by the reciprocal of its norm, and the resulting vector will have norm 1.  This scaling of each vector will not affect the orthogonality properties (apply \acronymref{theorem}{IPSM}).
+%
+\begin{example}{ONTV}{Orthonormal set, three vectors}{orthonormal set!three vectors}
+The set
+%
+\begin{equation*}
+T=\set{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3}
+=\set{
+\colvector{1\\1+i\\1},\,
+\frac{1}{4}\colvector{-2-3i\\1-i\\2+5i},\,
+\frac{1}{11}\colvector{-3-i\\1+3i\\-1-i}
+}
+\end{equation*}
+%
+from \acronymref{example}{GSTV} is an orthogonal set.  We compute the norm of each vector,
+%
+\begin{align*}
+\norm{\vect{u}_1}=2&&
+\norm{\vect{u}_2}=\frac{1}{2}\sqrt{11}&&
+\norm{\vect{u}_3}=\frac{\sqrt{2}}{\sqrt{11}}
+\end{align*}
+%
+Converting each vector to a norm of 1, yields an orthonormal set,
+%
+\begin{align*}
+\vect{w}_1&=\frac{1}{2}\colvector{1\\1+i\\1}\\
+%
+\vect{w}_2&=\frac{1}{\frac{1}{2}\sqrt{11}}\frac{1}{4}\colvector{-2-3i\\1-i\\2+5i}=\frac{1}{2\sqrt{11}}\colvector{-2-3i\\1-i\\2+5i}\\
+%
+\vect{w}_3&=\frac{1}{\frac{\sqrt{2}}{\sqrt{11}}}\frac{1}{11}\colvector{-3-i\\1+3i\\-1-i}=\frac{1}{\sqrt{22}}\colvector{-3-i\\1+3i\\-1-i}
+\end{align*}
+%
+\end{example}
+%
+%
+\begin{example}{ONFV}{Orthonormal set, four vectors}{orthonormal set!four vectors}
+As an exercise convert the linearly independent set
+%
+\begin{equation*}
+S=\set{
+\colvector{1+i\\1\\1-i\\i},\,
+\colvector{i\\1+i\\-1\\-i},\,
+\colvector{i\\-i\\ -1+i\\1},\,
+\colvector{-1-i\\i\\1\\-1}
+}
+\end{equation*}
+%
+to an orthogonal set via the Gram-Schmidt Process (\acronymref{theorem}{GSP}) and then scale the vectors to norm 1 to create an orthonormal set.  You should get the same set you would if you scaled the orthogonal set of \acronymref{example}{AOS} to become an orthonormal set.
+\end{example}
+%
+\computenote{\boolean{hasmathematica}}
+{It is crazy to do all but the simplest and smallest instances of the Gram-Schmidt procedure by hand.  Well, OK, maybe just once or twice to get a good understanding of \acronymref{theorem}{GSP}.  After that, let a machine do the work for you.  That's what they are for.}
+{
+\ifthenelse{\boolean{hasmathematica}}{\computedevicetopic{MMA}{Mathematica}{mathematica}{GSP}{Gram-Schmidt Procedure}{gram-schmidt}}{\relax}
+}{
+\ifthenelse{\boolean{hasmathematica}}{\quad\acronymref{computation}{GSP.MMA}}{\relax}
+}
+\par
+%
+We will see orthonormal sets again in \acronymref{subsection}{MINM.UM}.   They are intimately related to unitary matrices (\acronymref{definition}{UM}) through \acronymref{theorem}{CUMOS}.  Some of the utility of orthonormal sets is captured by \acronymref{theorem}{COB} in \acronymref{subsection}{B.OBC}.   Orthonormal sets appear once again in \acronymref{section}{OD} where they are key in orthonormal diagonalization.
+%
+%  End  o.tex
+

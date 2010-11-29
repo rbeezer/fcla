@@ -1,0 +1,1017 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%%
+%%  
+%%  Document management
+%%
+%%%%%%%%%%%%
+%
+
+%%%%%%%%%%%%
+%%  
+%%  Acronym variables
+%%
+%%%%%%%%%%%%
+
+% \FCLA acronym internal variables
+%   We track acronyms for various sections as we go
+%   Each call to a new division will reset as appropriate
+%
+\newcommand*{\FCLApartacronym}{\null}
+\newcommand*{\FCLAchapteracronym}{\null}
+\newcommand*{\FCLAsectionacronym}{\null}
+\newcommand*{\FCLAsubsectionacronym}{\null}
+
+%%%%%%%%%%%%
+%%  
+%%  Lists
+%%
+%%%%%%%%%%%%
+%
+%  The tocloft package makes it easy to 
+%  form lists in the frontmatter
+%  From  tocloft  package:
+%    \newlistof{counter-name}{file-extension}{printed-heading}
+%    counter-name is not used, but
+%    \listofcounter-name is created
+%  TODO:  Could control formatting of page headers in contents section here
+%
+\newlistof{definition}{dfn}{Definitions}
+\newlistof{theorem}{thm}{Theorems}
+\newlistof{example}{exm}{Examples}
+\newlistof{notation}{not}{Notation}
+\newlistof{diagram}{dia}{Diagrams}
+\newlistof{technique}{tec}{Proof Techniques}
+\newlistof{computation}{cmp}{Computation Notes}
+\newlistof{contributor}{con}{Contributors}
+%
+%  Each list gets a blank line at the start to 
+%    act as a target for hyperref's hyperlink
+%    target name is the type
+%  Page references (\label{}) are made in \frontlist command
+%
+\addtocontents{dfn}{\protect\hypertarget{definition}{\ }\\}
+\addtocontents{thm}{\protect\hypertarget{theorem}{\ }\\}
+\addtocontents{exm}{\protect\hypertarget{example}{\ }\\}
+\addtocontents{not}{\protect\hypertarget{notation}{\ }\\}
+\addtocontents{dia}{\protect\hypertarget{diagram}{\ }\\}
+\ifthenelse{\boolean{techniquesinline}}{
+\addtocontents{tec}{\protect\hypertarget{technique}{\ }\\}
+}{\relax}
+\ifthenelse{\boolean{computationnotesinline}}{
+\addtocontents{cmp}{\protect\hypertarget{computation}{\ }\\}
+}{\relax}
+\addtocontents{con}{\protect\hypertarget{contributor}{\ }\\}
+%
+%  With many lists in the front matter, the toc entries
+%  in roman numerals have many symbols.  We open
+%  up the box for these numbers to avoid overfull
+%  spillage in the toc
+%  Determined experimentally as a multiple of m-width
+%
+\cftsetpnumwidth{3em}
+
+%  LaTeX puts page numbers in the toc for Parts
+%  Chicago Manual of Style says no
+%
+\cftpagenumbersoff{part}
+
+
+%%%%%%%%%%%%
+%%  
+%%  Page Sizing, Margins
+%%
+%%%%%%%%%%%%
+%
+%  This is only relevant for PDF editions
+%
+%
+\ifthenelse{\boolean{PDFtarget}}{
+%
+%  Papers
+%     screen "papers" are deduced from 
+%       6.5in textwidth at 12pt, 0.5in margins all around
+%     Sony505 is roughly 50% oversized, so scales to 8pt-ish on device
+%       http://www.learningcenter.sony.us/assets/itpd/reader/CreatingPDFsReaderGuide.pdf
+%       says 88.2mm wide and 115.4mm high in portrait mode, we rotate this to landscape
+%     KindleDX is 5.5in x 8in, we use this true size as paper size and go with 10pt fonts
+%
+\ifthenelse{\boolean{lettersize}}{\geometry{letterpaper}}{\relax}
+\ifthenelse{\boolean{A4size}}{\geometry{a4paper}}{\relax}
+\ifthenelse{\boolean{electricsize}}{\geometry{letterpaper}}{\relax}
+\ifthenelse{\boolean{fourthreesize}}
+  {\geometry{paperwidth=7.5in, paperheight=5.625in}}{\relax}
+\ifthenelse{\boolean{sixteenninesize}}
+  {\geometry{paperwidth=7.5in, paperheight=4.21875in}}{\relax}
+\ifthenelse{\boolean{sony505size}}
+  {\geometry{paperwidth=173.1mm, paperheight=132.3mm}}{\relax}
+\ifthenelse{\boolean{kindleDXsize}}
+  {\geometry{paperwidth=5.5in, paperheight=8.0in}}{\relax}
+
+%
+%
+%  Two-sided option
+%     geometry package does this, handles side margin ratio automatically
+%
+\ifthenelse{\boolean{twosided}}
+{\geometry{twoside=true}}{\geometry{twoside=false}}
+%
+% 6.25 inch text width at 12pt is primary development dimension
+%   Provides guidance on line-breaking generally
+%   Also use this for screen versions' paper dimensions
+%
+% Header lies outside of text area
+%   geometry keys  headheight, headsep  control this
+%   LaTeX book style sets this to reasonable defaults, so leave it
+%
+%  Horizontal sizing
+%
+\geometry{bindingoffset=\FCLAbinding}
+\geometry{hdivide={*,\FCLAwidth,*}}  
+%
+%  Vertical sizing
+%
+\geometry{vmarginratio=\FCLAvmargin}
+\geometry{vdivide={\FCLAtopmargin,*,*}}
+\geometry{footskip=1.5\baselineskip}
+%
+}{\relax}
+
+
+
+
+%%%%%%%%%%%%
+%%  
+%%  Page Headers
+%%
+%%%%%%%%%%%%
+
+%   We treat chapter names as mostly irrelevant
+%   And so employ sections and subsections for page headers
+%   We use the fancy header package and LaTeX's marking system
+%   Version number and page numbers on right when two-sided
+%   Version number and page numbers on outside when two-sided
+%   Only relevant for PDF versions
+%
+\ifthenelse{\boolean{PDFtarget}}{
+\pagestyle{fancy}
+\fancyhead{}    % Clears all fields
+\fancyfoot{}     % Clears all fields
+\renewcommand{\headrulewidth}{0.5pt}
+\ifthenelse{\boolean{twosided}}{
+  \fancyhead[RO]{\rightmark\quad\thepage}
+  \fancyhead[LE]{\thepage\quad\leftmark}
+  \ifthenelse{\boolean{versionfoot}}{
+    \fancyfoot[RO]{{\tiny Version \FCLAversion}}
+    \fancyfoot[LE]{{\tiny Version \FCLAversion}}
+  }{\relax}
+}{
+  \fancyhead[R]{\rightmark\quad\thepage}
+  \ifthenelse{\boolean{versionfoot}}{
+    \fancyfoot[R]{{\tiny Version \FCLAversion}}
+  }{\relax}
+}
+}{\relax}
+
+%%%%%%%%%%%%
+%%  
+%%  Sectioning
+%%
+%%%%%%%%%%%%
+
+% Sectioning Generally
+%   Parts (Core, Topics, Apps)
+%    Chapters & Appendices
+%      Sections (Archetypes, Computation Devices)
+%        Subsections (Reading Questions, Exercises, Annotated Acronyms, Solutions, Proof Techniques)
+
+% Part 
+%   Heading as a hypertarget
+%   Label for subsequent \pageref's only
+%   These two targets are just the acronym, so keep them unique
+%   Table of contents entry with vertical line below
+%   Internal subsection variables get sensible defaults
+%
+%   Target:  part.partacronym
+%
+% Usage: \prt{upper-case-acronym}{upper-case-title}
+%
+\newcommand*{\prt}[2]{
+  \renewcommand*{\FCLApartacronym}{#1}
+  \renewcommand*{\FCLAchapteracronym}{\null}
+  \renewcommand*{\FCLAsectionacronym}{\null}
+  \renewcommand*{\FCLAsubsectionacronym}{\null}
+  %
+  \ifthenelse{\boolean{PDFtarget}}{
+  \hypertarget{part.#1}{\part*{Part #1\\#2}}  
+  \thispagestyle{empty}
+  \markboth{Part~#1\quad#2}{Part~#1\quad#2}
+  \phantomsection
+  \addcontentsline{toc}{part}{Part #1 #2}
+  \addtocontents{toc}{\protect\mbox{}\protect\hrulefill\par}
+  }{\relax}
+  %
+  \ifthenelse{\boolean{XMLtarget}}{
+  \part*{Part #1\ \ #2}
+  \hypertarget{part.#1}{\null}  
+  }{\relax}
+  %
+  \label{part.#1}
+  \index{#1 (part)}
+}
+
+% Chapter level formatting
+%   Formatting for a chapter or appendix at chapter level
+%   FCLA internal command
+%   First argument has just two choices (exactly)
+%   Heading as a hypertarget
+%   Label for subsequent \pageref's only
+%   Table of contents entry unadorned
+%   Internal section variables get set here
+%   Internal subsection variables get sensible defaults
+%   Horizontal rule gets scooched up some
+%
+%   Usage:  \FCLAchaplevel{chapter|appendix}{Chapter|Appendix}{upper-case-acronym}{upper-case-title}
+%
+\newcommand*{\FCLAchaplevel}[4]{
+  \renewcommand*{\FCLAchapteracronym}{#3}
+  \renewcommand*{\FCLAsectionacronym}{\null}
+  \renewcommand*{\FCLAsubsectionacronym}{\null}
+  %
+  \ifthenelse{\boolean{PDFtarget}}{
+  \hypertarget{#1.#3}{\chapter*{\noindent{#2 #3\\#4}\nopagebreak\\[-0.5\baselineskip]
+     \rule[6pt]{\textwidth}{1pt}\hspace*{-\textwidth}%Long line
+     \rule{6pt}{6pt}\hspace*{\fill}\rule{6pt}{6pt}\\% One large box, then one
+  }}  
+  \markboth{#2~#3\quad#4}{#2~#3\quad#4}
+  \phantomsection
+  \addcontentsline{toc}{chapter}{#2 #3 #4}
+  }{\relax}
+  %
+  \ifthenelse{\boolean{XMLtarget}}{
+  \chapter*{#2 #3\ \ #4}
+  \hypertarget{#1.#3}{\null}  
+  }{\relax}
+  %
+  \label{#1.#3}
+  \index{#3 (#1)}
+  \par
+}
+  
+% Chapter 
+%   Simple call to \FCLAchaplevel
+%   Followed by chapter intro inclusion
+%   Target:  chapter.chapteracronym
+%
+%   Usage: \chap{upper-case-acronym}{upper-case-title}
+%
+\newcommand*{\chap}[2]{
+\FCLAchaplevel{chapter}{Chapter}{#1}{#2}
+\IfFileExists{chapintros/#1.tex}{\input{chapintros/#1.tex}}{\relax}
+}
+
+% Appendix 
+%   Simple call to \FCLAchaplevel
+%   Followed by appendix intro inclusion
+%   Target:  appendix.chapteracronym
+%
+%   Usage: \appdx{upper-case-acronym}{upper-case-title}
+%
+\newcommand*{\appdx}[2]{
+\FCLAchaplevel{appendix}{Appendix}{#1}{#2}
+\IfFileExists{appdxintros/#1.tex}{\input{appdxintros/#1.tex}}{\relax}
+}
+
+% Section level formatting
+%   For sections and archetypes
+%   Table of contents entry unadorned
+%   Internal section variables get set here
+%   Internal subsection variables get sensible defaults
+%   Two styled boxes on line, half the area each of chapter level
+%   Parameter #4 is null for archetypes, makes toc link-box too big
+%
+%   Usage:  \FCLAsectlevel{section|archetype}{Section|Archetype}{upper-case-acronym}{upper-case-title}
+%
+\newcommand*{\FCLAsectlevel}[4]{
+\renewcommand*{\FCLAsectionacronym}{#3}
+\renewcommand*{\FCLAsubsectionacronym}{\null}
+%
+\ifthenelse{\boolean{PDFtarget}}{
+\hypertarget{#1.#3}{\section*{\noindent{#2 #3}\nopagebreak\\
+ #4\nopagebreak\\[-0.5\baselineskip]
+ \rule[4.24pt]{\textwidth}{1pt}\hspace*{-\textwidth}%Long line
+ \rule{4.24pt}{4.24pt}\hspace*{4.24pt}\rule{4.24pt}{4.24pt}\hspace*{\fill}\rule{4.24pt}{4.24pt}\\% Two medium boxes, then one
+}}  
+\markboth{#2~#3\quad#4}{#2~#3\quad#4}
+\phantomsection
+\addcontentsline{toc}{section}{#3\ #4}
+}{\relax}
+%
+\ifthenelse{\boolean{XMLtarget}}{
+\section*{#2 #3\ \ #4}
+\hypertarget{#1.#3}{\null}
+From \href{http://linear.ups.edu/}{{\it A First Course in Linear Algebra}}\\
+Version \FCLAversion\\
+\copyright\ 2004.\\
+Licensed under the \href{http://www.gnu.org/licenses/fdl.html}{GNU Free Documentation License}.\\
+\url{http://linear.ups.edu/}\\\\
+}{\relax}
+%
+\label{#1.#3}
+\index{#3 (#1)}
+}
+
+% Section 
+%   Eventually wrap entirely in a boolean switch
+%   A section is the main unit of subdivision
+%   Pedagogy, document-structure, and file structure
+%   Begin with simple call to \FCLAsectlevel, which handles targets, index, etc
+%   Section lines to delimit definition, theorem, example lists
+%   Input the section itself
+%   Switchable, check extant:  reading questions, exercises, solutions
+%
+%   Target:  section.sectionacronym
+%
+% Usage: \sect{upper-case-acronym}{upper-case-title}
+%
+\newcommand*{\sect}[2]{%
+%
+\FCLAsectlevel{section}{Section}{#1}{#2}%
+%
+\ifthenelse{\boolean{PDFtarget}}{
+\addtocontents{dfn}{\protect\ \\\noindent Section~#1}%
+\addtocontents{thm}{\protect\ \\\noindent Section~#1}%
+\addtocontents{exm}{\protect\ \\\noindent Section~#1}%
+}{\relax}%
+\ifthenelse{\boolean{XMLtarget}}{
+\addtocontents{dfn}{\protect\ \\\noindent Section~#1\\}%
+\addtocontents{thm}{\protect\ \\\noindent Section~#1\\}%
+\addtocontents{exm}{\protect\ \\\noindent Section~#1\\}%
+}{\relax}%
+%
+\input{sections/#1.tex}%
+%
+\ifthenelse{\boolean{hasreadingquestions}}{%
+\IfFileExists{readingquestions/#1.tex}{%
+\subsect{READ}{Reading Questions}%
+\input{readingquestions/#1.tex}%
+}{\relax}%  done if file exists
+}{\relax}%  done if has reading questions
+%x% \ifthenelse{\boolean{PDFtarget}}{%
+%x% \ifthenelse{\boolean{twosided}}{\cleardoublepage}{\clearpage}%
+%x% }{\relax}%
+%
+\ifthenelse{\boolean{hasexercises}}{%
+\IfFileExists{exercises/#1.tex}{%
+\clearpage
+\subsect{EXC}{Exercises}%
+\input{exercises/#1.tex}%
+}{\relax}%  done if file exists
+}{\relax}%  done if has reading exercises
+%x% \ifthenelse{\boolean{PDFtarget}}{%
+%x% \ifthenelse{\boolean{twosided}}{\cleardoublepage}{\clearpage}%
+%x% }{\relax}%
+%
+\ifthenelse{\boolean{hassolutions}}{%
+\IfFileExists{solutions/#1.tex}{%
+\clearpage
+\subsect{SOL}{Solutions}%
+\input{solutions/#1.tex}%
+}{\relax}%  done if file exists
+}{\relax}%  done ifhas solutions
+%x% \ifthenelse{\boolean{PDFtarget}}{%
+%x% \ifthenelse{\boolean{twosided}}{\cleardoublepage}{\clearpage}%
+%x% }{\relax}%
+%
+\cleardoublepage
+}
+
+% Archetypes
+%   Archetypes are sections of Appendix A
+%   Simple call to \FCLAsectlevel
+%
+%   Target:  archetype.archetypeletter
+%
+%  Usage:  \archetypename{single-upper-case letter}
+%
+\newcommand*{\archetypename}[1]{%
+\FCLAsectlevel{archetype}{Archetype}{#1}{\ }%
+}
+
+% Computation Notes
+%  When computation notes are in an appendix,
+%  they are grouped into sections by device.
+%
+%  Usage: \computesection{device-acronym}{UC-device-name}
+\newcommand*{\computesection}[2]{
+\FCLAsectlevel{section}{Section}{#1}{#2}%
+}
+
+% Subsection level formatting
+%   Style for subsections reading questions, exercises, solutions
+%   Also proof techniques and computation notes when in appendices
+%   Heading as a hypertarget
+%   These two targets are just the section acroynm, dot, subsection acronym
+%      thus subsection acronym need only be unique within a section
+%   Proof techniques are an exception, no section prefix desired
+%   Table of contents entry unadorned
+%   Internal subsection variables get set here
+%   Additional leading parameter allows for dotted vs. non-dotted forms of subsection targets
+%
+% Usage: \FCLAsubsectionlevel{target-prefix}{lctype}{UCtype}{upper-case-acronym}{upper-case-title-no-period}
+%
+\newcommand*{\FCLAsubsectionlevel}[5]{
+  \renewcommand*{\FCLAsubsectionacronym}{#4}
+  %
+  \ifthenelse{\boolean{PDFtarget}}{
+  \subsection*{\noindent\hypertarget{#1.#4}{#3 #4}\nopagebreak\\
+     #5\nopagebreak\\[-0.5\baselineskip]
+     \rule[3pt]{\textwidth}{1pt}\hspace*{-\textwidth}%Long line
+     \rule{3pt}{3pt}\hspace*{3pt}\rule{3pt}{3pt}\hspace*{3pt}\rule{3pt}{3pt}\hspace*{\fill}\rule{3pt}{3pt}\\% Three small boxes, then one
+  }  
+  \markright{#3~\FCLAsectionacronym.#4\quad#5}
+  \phantomsection
+  \addcontentsline{toc}{subsection}{#4\ #5}
+  }{\relax}
+  %
+  \ifthenelse{\boolean{XMLtarget}}{
+  \subsection*{#3 #4: #5}
+  \hypertarget{#1.#4}{\null}
+  }{\relax}
+  %
+  \label{#1.#4}
+  \index{#4 (#2, section~\FCLAsectionacronym)}
+}
+
+% Subsections
+%  Short call to \FCLAsubsectionlevel
+%  Usage: \subsect{upper-case-acronym}{sentence-case-title-no-period}
+%
+%  Target:  subsection.sectionacronym.subsectionacronym
+%  
+\newcommand{\subsect}[2]{
+\FCLAsubsectionlevel{subsection.\FCLAsectionacronym}{subsection}{Subsection}{#1}{#2}
+}
+
+% Annotated Acronyms
+%  Chapter-by-chapter, formatted as a subsection
+%  Place at the end of each chapter in fcla.tex
+%  Short call to \FCLAsubsectionlevel
+%  And then read them in
+%
+%  TODO: Headers (and more?) are picking up \FCLAsectionacronym in places
+%        via the \subsection header call.  Investigate this
+%
+%  Usage:  \acronyms{chapter-acronym}{chapter-title-upper-case}
+%
+%  Target: acronyms.chapteracronym
+%
+\newcommand{\annotated}[2]{
+\ifthenelse{\boolean{hasannotatedacronyms}}{%
+\IfFileExists{annotatedacronyms/#1.tex}%
+{\FCLAsubsectionlevel{acronyms}{acronyms}{Annotated Acronyms}{#1}{#2}%
+\input{annotatedacronyms/#1.tex}%
+}
+{\relax}%  done IfFileExists
+}
+{\relax}%  done hasannotatedacronyms
+}
+
+% Here is where we actually format an annotation of an acronym
+\newcommand{\annoacro}[3]{\noindent\acronymref{#1}{#2}\\[4pt]#3\par\bigskip}
+
+% Proof Techniques
+%   These may appear inline or within a section in the Preliminaries appendix
+%      Not both, possibly not at all
+%      If not at all, then some links will break
+%   Consistently enforce a target of the following form
+%
+%   Target:  technique.techniqueacronym
+%
+%   New technique:  
+%      add line to Section PT using \techniqueappendix
+%      add at relevant occurence, two more text parameters, include appendix link
+%
+
+%   First as residents (subsections of an appendix)
+%   We'll wrap the whole appendix in the boolean \techniquesappendix
+%   Issue  \newpage  as seperator on each
+%   Also control soon with a minimal pagebreak switch
+%
+%   Usage: \techniqueappendix{UC-acronym}{titleUC}{index}
+%
+\newcommand{\techniqueappendix}[3]{
+\FCLAsubsectionlevel{technique}{technique}{Proof Technique}{#1}{#2}
+\index{#3!technique #1}%                    index-phrase is an index entry, with type+acronym
+\index{technique!#1}%                         Grand alpha list of a certain type's acronyms
+\input{techniques/#1.tex}
+}
+
+%   Now as inline occurences
+%   Usual parameters for acronym, title
+%   Intro text on importance, timing
+%   Encouragement to backmatter when appendicized
+%   Format within an environment
+%
+%   Usage:  \techniqueinline{UC-acronym}{UC-title}{index}{intro-text}{send-appendix}
+%
+\newcommand{\techniqueinline}[5]{
+\ifthenelse{\boolean{techniquesappendix}\or\boolean{techniquesinline}}{%
+#4\ % Intro no matter what
+\ifthenelse{\boolean{techniquesappendix}}{#5\ }{\relax}% appendix only, send away
+\ifthenelse{\boolean{techniquesinline}}{%
+\begin{technique}{#1}{#2}{#3}%
+\index{technique!#1}%
+\input{techniques/#1.tex}%
+\end{technique}%
+}{\relax}%   done with inline only 
+}{\relax}%   done with appendix or inline
+}
+
+% Diagrams
+%
+%   Target:  diagram.diagramacronym
+%
+%   Usage: \diagram{UC-acronym}{titleUC}
+%
+%  To make XML portable
+%    deposit PNG versions in source directory
+%  List of diagrams
+%  Auto to index
+
+\newcommand*{\diagram}[2]{
+\label{diagram.#1}%      Allows subsequent pagerefs
+\index{#1 (diagram)}%    Acronym, with hint as to type
+\index{diagram!#1}%      Grand alpha list of a certain type's acronyms
+%
+\begin{center}%
+\ifthenelse{\boolean{PDFtarget}}{%
+\includegraphics{diagrams/pdf/#1.pdf}\\%
+\phantomsection%
+\addcontentsline{dia}{diagram}{\protect\makebox[5.0em][l]{#1}#2}%
+}{\relax}%
+%
+\ifthenelse{\boolean{XMLtarget}}{
+\includegraphics{#1.png}\\
+\addtocontents{dia}{\protect\hyperlink{diagram.#1}{#1\ \ #2}\newline}
+}{\relax}
+%
+\hypertarget{diagram.#1}{Diagram #1.\quad #2}
+\par\medskip%
+\end{center}%
+}
+
+
+
+%%%%%%%%%%%%
+%%  
+%%  Misc Targets
+%%
+%%%%%%%%%%%%
+%
+%  Notation references
+%
+%    Place these at the end of a definition that introduces notation.
+%    Several could be used in a single definition.  Creates links, etc
+%    and makes an entry for environment section of notations.
+%
+%  Usage:  \denote{upper-case-acronym}{upper-case-title}{example-usage}{index-phrase}
+%
+\newcommand*{\denote}[4]{%
+\label{notation.#1}%                          Allows subsequent pagerefs
+\index{#4!notation}%                   index-phrase is an index entry, with type+acronym
+\index{#1 (notation)}%                     Acronym, with hint as to type
+\index{notation!#1}%                       Grand alpha list of a certain type's acronyms
+\ifthenelse{\boolean{PDFtarget}}{
+\phantomsection
+\addcontentsline{not}{notation}{\protect\makebox[5.0em][l]{#1}#3:\ #2}%
+}{\relax}
+\ifthenelse{\boolean{XMLtarget}}{
+\addtocontents{not}{\protect\hyperlink{notation.#1}{#1 #3\ \ #2}\newline}
+}{\relax}
+\par\noindent(This definition contains \hypertarget{notation.#1}{Notation #1}.)\nopagebreak[4]%
+}
+
+% Vector space property, axiom tags
+%   Axioms are tagged, so they can be referenced in proofs
+%   Acronyms are of the form  xyyy, where x is C, M or V
+%   for Columns, Matrices and Vectors
+%   The yyy part is variable length and common across axiom structures
+%   These are slightly different for the field of complex numbers, but similar in spirit
+%
+%      AC      Additive Closure
+%      SC      Scalar Closure
+%      C        Commutativity
+%      AA      Additive Associativity
+%      Z        Zero vector
+%      AI       Additive Inverses
+%      MA     Scalar multiplication associativity
+%      DVA   Scalar multiplication distributes across vector addition
+%      DSA   Scalar multiplication distributes across scalar addition
+%      O       Properties of one
+%
+%  Target:  property.propertyacronym
+%
+%  Usage:  \property{acronym}{title}{index}
+%
+\newcommand*{\property}[3]{%
+\label{property.#1}%                          Allows subsequent pagerefs
+\index{#3!Property #1}%                   index-phrase is an index entry, with type+acronym
+\index{#1 (Property)}%                    Acronym, with hint as to type
+\index{Property!#1}%                        Grand alpha list of a certain type's acronyms
+%                                                     Acronym as hypertarget
+{\bf\hypertarget{property.#1}{#1}}\quad{\bf #2}\nopagebreak\\%
+}
+
+%%%%%%%%%%%%
+%%  
+%%  Exercises, Solutions
+%%
+%%%%%%%%%%%%
+%
+% Exercises
+%
+%   Formatting for an exercise, creates a leading hypertarget
+%   and a reference for subsequent pageref's.  
+%   Contributor link, and solution link (if solution file exists).
+%
+%   Target:  solution.sectionacronym.number
+%
+%   Usage:  \exercise{number}{contributor-nickname}
+%
+\newcommand*{\exercise}[2]{
+\noindent\hypertarget{exercise.\FCLAsectionacronym.#1}{{\bf#1}}%
+\label{exercise.\FCLAsectionacronym.#1}%
+\quad\input{exercises/\FCLAsectionacronym/#1.tex}\ \\%
+\contributedby{#2}%
+\IfFileExists{solutions/\FCLAsectionacronym/#1.tex}{%
+\ifthenelse{\boolean{hassolutions}}{%
+\quad\hyperlink{solution.\FCLAsectionacronym.#1}{Solution}~[\pageref{solution.\FCLAsectionacronym.#1}]}%
+{\quad(s)}%
+}{\relax}\par\vspace{8pt}%
+}
+
+%TODO?:  \group instructions to precede problems in a group, start/stop numbers as arguments
+
+% Solutions
+%
+%   A companion to the above \exercise command. 
+%   Puts a link back to the exercise  (which should exist!)
+%
+%   Target:  solution.sectionacronym.number
+%
+% Usage:  \solution{number}{contributor-nickname}
+%
+\newcommand*{\solution}[2]{%
+\noindent\hypertarget{solution.\FCLAsectionacronym.#1}{{\bf#1}}%
+\quad\contributedby{#2}%
+\quad\hyperlink{exercise.\FCLAsectionacronym.#1}{Statement}~[\pageref{exercise.\FCLAsectionacronym.#1}]\\%
+\label{solution.\FCLAsectionacronym.#1}%
+\input{solutions/\FCLAsectionacronym/#1.tex}%
+\par\vspace{6pt}%
+}
+
+%%%%%%%%%%%%
+%%  
+%%  Cross-References
+%%
+%%%%%%%%%%%%
+%
+%  Many divisions and items above make "targets"
+%  This command recreates these targets as links, 
+%  with roughly correct text to go along
+%
+%  Possible values for first parameter are
+%    chapter, appendix, section, definition, theorem, example, 
+%    notation, property, technique, computation, archetype
+%
+%  Some acronyms are "dotted" as two-parters, 
+%  the first part is the section
+%    subsection, exercise, solution
+%
+%  PDF version has page numbers, XML does not
+%  2006/11/30  Removed non-breaking spaces in PDF form
+%                     fixed 80% of "too wide" overruns
+%
+% Usage: \acronymref{lower-case-item-type}{acronym}
+%
+\ifthenelse{\boolean{PDFtarget}}{%
+\newcommand*{\acronymref}[2]{\hyperlink{#1.#2}{\MakeUppercase#1 #2} [\pageref{#1.#2}]}}{\relax}%
+\ifthenelse{\boolean{XMLtarget}}{%
+\newcommand*{\acronymref}[2]{\hyperlink{#1.#2}{\text{\MakeUppercase#1~#2}}}}{\relax}
+
+% Table of Archetypes has links as column headings, just single letters
+%  Used in archetype reference sheet as well
+\newcommand*{\archetyperef}[1]{\hyperlink{archetype.#1}{#1}} 
+
+% In various sections, such as the frontmatter,
+%   we insert \hypertarget's and label's.  
+% This command will format the references correctly
+%
+% Usage: \miscref{target}{real-text}
+%
+\ifthenelse{\boolean{PDFtarget}}{
+\newcommand*{\miscref}[2]{\hyperlink{#1}{#2} [\pageref{#1}]}
+}{\relax}
+\ifthenelse{\boolean{XMLtarget}}{
+\newcommand*{\miscref}[2]{\hyperlink{#1}{#2}}
+}{\relax}
+
+ 
+%%%%%%%%%%%%
+%%  
+%%  Front matter
+%%
+%%%%%%%%%%%%
+%
+%  The tocloft package makes lists easy to create
+%  on the fly.  This macro creates a consistent way
+%  to include them and format them, along with a 
+%  label and entry into the table of contents at 
+%  the section level.
+%
+%  XML target needs sectioning,
+%     but list itself has a heading
+%     so we get it twice
+%
+% Usage:  \frontlist{titleUC}{listlabel}{list-macro-tocloft}
+%
+\newcommand{\frontlist}[3]{
+\ifthenelse{\boolean{PDFtarget}}{
+\phantomsection
+\addcontentsline{toc}{chapter}{#1}
+\label{#2}
+#3                                % the goods, courtesy of tocloft package
+\ifthenelse{\boolean{twosided}}{\cleardoublepage}{\clearpage}
+}{\relax}
+\ifthenelse{\boolean{XMLtarget}}{
+\chapter*{#1}
+\label{#2}
+#3                                % the goods, courtesy of tocloft package
+}{\relax}
+}
+
+%%%%%%%%%%%%
+%%  
+%%  Environments
+%%
+%%%%%%%%%%%%
+
+% Definitions, Theorems, Proofs, Examples, Techniques, Computation Notes
+%
+%  All are formatted similarly, and each has a list to go with it.
+%
+%  LaTeX \newenvironment takes care of begin/end construction
+
+% Environment lead in
+% Usage:  \envleadin{text-name}{env-type}{type-ext}{acronym}{title}{index}
+%
+\newcommand{\envleadin}[6]{%
+\par\medskip%
+\noindent%
+\ifthenelse{\boolean{PDFtarget}}{%
+{\bf#1\ #4\nopagebreak\\}%
+{\bf\hypertarget{#2.#4}{#5}\nopagebreak}%
+\phantomsection%
+\addcontentsline{#3}{#2}{\protect\makebox[5.0em][l]{#4}#5}%
+}{\relax}%
+%
+\ifthenelse{\boolean{XMLtarget}}{%
+{\bf#1\ #4\\}%
+{\bf\hypertarget{#2.#4}{#5}}%
+\addtocontents{#3}{\protect\hyperlink{#2.#4}{#1 #4 #5}\newline}%
+}{\relax}%
+%
+\label{#2.#4}%                          Allows subsequent pagerefs
+\index{#6!#2 #4}%                    index-phrase is an index entry, with type+acronym
+\index{#4 (#2)}%                       Acronym, with hint as to type
+\index{#2!#4}%                         Grand alpha list of a certain type's acronyms
+%
+\newline%                                          Lead without an indentation
+}
+
+% Environment lead out
+%   Usage:  \envleadout{some-halmos}
+%
+\newcommand{\envleadout}[1]{\nopagebreak[4]\hfill#1\par\medskip}
+
+% Environment end markers
+%   Markers are symbolology for end of environments, "halmos" generically
+%  See AMS  short-math-guide.pdf  for variants
+%
+\newcommand*{\definitionmarker}{$\triangle$}
+\newcommand*{\theoremmarker}{$\square$}
+\newcommand*{\examplemarker}{$\boxtimes$}
+\newcommand*{\techniquemarker}{$\circleddash$}
+\newcommand*{\computationmarker}{$\oplus$}
+\newcommand*{\proofmarker}{$\blacksquare$}
+
+% Environment Declarations
+%
+%  Usage: \begin{an-environment}{acronym}{title}{index-string}....\end{an-environment}
+%   
+\newenvironment{definition}[3]
+  {\envleadin{Definition}{definition}{dfn}{#1}{#2}{#3}}
+  {\envleadout{\definitionmarker}}
+\newenvironment{theorem}[3]
+  {\envleadin{Theorem}{theorem}{thm}{#1}{#2}{#3}}
+  {\envleadout{\theoremmarker}}
+\newenvironment{example}[3]
+  {\envleadin{Example}{example}{exm}{#1}{#2}{#3}}
+  {\envleadout{\examplemarker}}
+%% A \small after \envleadin macro seems to be effective, Nancy Neudauer suggestion
+\newenvironment{technique}[3]
+  {\envleadin{Proof Technique}{technique}{tec}{#1}{#2}{#3}}
+  {\envleadout{\techniquemarker}}
+\newenvironment{computation}[3]
+  {\envleadin{Computation Note}{computation}{cmp}{#1}{#2}{#3}}
+  {\envleadout{\computationmarker}}
+\newenvironment{proof}{\noindent{\bf Proof}\ \ }{\envleadout{\proofmarker}}
+
+
+
+
+%%%%%%%%%%%%
+%%  
+%%  Contributors
+%%
+%%%%%%%%%%%%
+
+% Contributors
+%   For each contibutor a line of a table is added
+%   into the master list.  It is a hypertarget
+%   and a new command is made for use
+%   every time a contributor is acknowledged.
+%   PDF gets slightly different spacing
+%
+% Usage:  \contributor{nickname}{real-first-name}{real-last-name}{affiliation}{econtact}
+%\makebox[0.33\textwidth][l]{
+\def\contributor#1#2#3#4#5{%
+\expandafter\def\csname #1\endcsname{\hyperlink{#3#2}{#2\ #3}}%
+\ifthenelse{\boolean{PDFtarget}}{%
+\addtocontents{con}{\protect\hypertarget{#3#2}{#3, #2.}\quad#4\quad#5\\[3pt]}%
+}{\relax}%
+\ifthenelse{\boolean{XMLtarget}}{%
+\addtocontents{con}{\protect\hypertarget{#3#2}{#3, #2.}\quad #4\quad#5\\}%
+}{\relax}%
+}
+%
+% Acknowledge a contribution
+%
+%  Usage:  \contributedby{\nick-name}
+%     Creates a string with linked name, but no line breaks, etc.
+%
+\newcommand{\contributedby}[1]{
+Contributed~by~#1
+}
+
+%%%%%%%%%%%%
+%%  
+%%  Archetypes
+%%
+%%%%%%%%%%%%
+%
+% We'll recycle bits and pieces from the archetypes for convenience
+% and consistency (correctness).
+% This macro will just go get the right stuff from the archetypes
+% subdirectories, where we'll name files carefully.  Syntax for file names
+% is for example, /B/B-rowspacebasis.tex, which would contain
+% a set of vectors forming a basis of the row-space for archetype B.
+%
+% Mostly these need to be included in a math environment,  and some
+% parts (like systems of equations) are already in an align environment.
+%
+% Allowable "parts" are:
+%
+%    definition (systems of equations)
+%    augmented  (augmented matrix of system of equations)
+%    augmentedreduced
+%
+%    homosystem
+%    homoaugmentedreduced
+%
+%    purematrix 
+%    matrixreduced
+%
+%    nullspacebasis
+%    matrixinverse (if nonsingular)
+%
+%    rangebasisoriginal
+%    rangebasisreduce
+%    rangebasisnull
+%    rowspacebasis
+%
+%    spectrum
+%
+%    ltdefn
+%    ltnullspacebasis
+%    ltrangebasis
+%    matrixrepresentation
+%
+%    Usage: \archetypepart{upper-case-letter}{allowable-part-type}
+%
+\newcommand{\archetypepart}[2]{\input{archetypes/#1/#1-#2}}
+
+
+%%%%%%%%%%%%
+%%  
+%%  Computation notes
+%%
+%%%%%%%%%%%%
+%
+%  Computational topics are (in order of appearance):
+%      ME         Matrix Entry
+%      RR         Row Reduce
+%      LS         Linear Solve
+%      VLC       Vector Linear Combinations
+%      NS         Null Space
+%      VFSS      Vector Form of Solution Set
+%      GSP       Gram-Schmidt Procedure
+%      TM         Transpose of a Matrix
+%      MM        Matrix Multiplication
+%      MI         Matrix Inverse
+%
+%      TODO:  D=Determinants, MLC=Matrix Linear Combinations
+%
+%  Devices are:
+%      Need a boolean for each in fcla-switches.tex, form  "has{lc-id-string}"
+%      Listed here in order of perceived usefulness
+%
+%      MMA (mathematica)
+%      TI86 (ti86)
+%      TI83 (ti83)
+%
+%   Notes are a subset of the Cartesian product:  devices x topics
+%   Switches control which devices are present, and appendix vs. inline organization (or none)
+%   With few devices shown, a topical slice may be empty, so watch for this
+%
+%   At occurence of  topic:
+%   Overall wrapper with all topical devices' has'es or'ed
+%   Intro text no matter what.
+%   \computetopic for inline use at location, in device order
+%   Text for pointers when appendix, use has'es to wrap references, in device order
+%
+%   In appendix
+%   Wrap sections in has'es, list in order of occurence in text
+%
+%   Expanding computational support
+%   New device:  add section to appendix, new boolean to fcla-switches.sty, 
+%                       to boolean control on appendix use, update here
+%   New topic:  new \computationnote at most relevant location in text, update here
+%   New topic+device on existing possibilities:
+%       Expand possibilities in \computenote at location:  boolean, \computetopic, appendix link
+%       Add a \computetopic to correct location in appendix
+
+%  This macro wraps a single piece of advice for a single device/program.  
+%  When appearing inline in the text, we use an environment.
+%  When in the appendix, it is a subsection of a section devoted to the device.
+%  Either case should make a target of the form  computation.topicacronym.deviceacronym
+%    This works for the appendix iff section acronym is the same as device acronym
+%
+%  Usage:  \computedevicetopic{UC-device-acronym}{UC-device-name}{lc-device-string}
+%          {UC-topic-acronym}{UC-topic-title}{lc-topic-index-string}
+%
+\newcommand{\computedevicetopic}[6]{%
+\ifthenelse{\boolean{has#3}}{%
+\ifthenelse{\boolean{computationnotesinline}}{%
+\begin{computation}{#4.#1}{#5\quad(#2)}{#3!#6}%
+\index{#6!#3}%
+\input{computenotes/#3/#4.tex}%
+\end{computation}%
+}{\relax}%          done if inline
+\ifthenelse{\boolean{computationnotesappendix}}{%
+\FCLAsubsectionlevel{computation}{computation}{Computation Note}{#4.#1}{#5}%
+\index{#6!#3}%
+\index{#3!#6 (computation)}%
+\input{computenotes/#3/#4.tex}%
+}{\relax}%      done if appendix
+}{\relax}%      done if has device
+}
+
+%  This macro simplifies (somewhat) the introduction of computation notes.
+%  In text, list booleans (or'ed) for devices described, so no mention if not relevant
+%  Also check for at least the inclusion of some notes
+%  Only then is an introductory paragraph is written
+%  Either a list of environments follows (wrapped in \ifthenelse on inclusion)
+%  Or a list of links to appendix entries (each prefaced with a \quad)
+%
+%  Usage:  \computenote{boolean-relevant}{intro-text}{inline-environments}{appendix-links}
+%
+\newcommand{\computenote}[4]{%
+\ifthenelse{\(#1\)\and\(\boolean{computationnotesinline}\or\boolean{computationnotesappendix}\)}{%
+#2%
+\ifthenelse{\boolean{computationnotesinline}}{#3}{\relax}%     inline environment list
+\ifthenelse{\boolean{computationnotesappendix}}{\ \ See:#4}{\relax}%            acronymrefs to appendix
+}{\relax}%                done with relevant notes
+}
+
+%
+%  End of fcla-developer.sty
+%

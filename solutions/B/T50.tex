@@ -1,0 +1,148 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+Our first proof relies mostly on definitions of linear independence and spanning, which is a good exercise.  The second proof is shorter and turns on a technical result from our work with matrix inverses, \acronymref{theorem}{NPNT}.\par
+%
+$\left(\Rightarrow\right)$\quad  Assume that $A$ is nonsingular and prove that $C$ is a basis of $\complex{n}$.  First show that $C$ is linearly independent.  Work on a relation of linear dependence on $C$,
+%
+\begin{align*}
+\zerovector
+&=
+a_1A\vect{x}_1+
+a_2A\vect{x}_2+
+a_3A\vect{x}_3+
+\cdots+
+a_nA\vect{x}_n
+&&\text{\acronymref{definition}{RLD}}\\
+%
+&=
+Aa_1\vect{x}_1+
+Aa_2\vect{x}_2+
+Aa_3\vect{x}_3+
+\cdots+
+Aa_n\vect{x}_n
+&&\text{\acronymref{theorem}{MMSMM}}\\
+%
+&=
+A\left(
+a_1\vect{x}_1+
+a_2\vect{x}_2+
+a_3\vect{x}_3+
+\cdots+
+a_n\vect{x}_n
+\right)
+&&\text{\acronymref{theorem}{MMDAA}}
+\end{align*}
+%
+Since $A$ is nonsingular, \acronymref{definition}{NM} and \acronymref{theorem}{SLEMM} allows us to conclude that 
+%
+\begin{align*}
+a_1\vect{x}_1+
+a_2\vect{x}_2+
+\cdots+
+a_n\vect{x}_n
+&=\zerovector
+\end{align*}
+%
+But this is a relation of linear dependence of the linearly independent set $B$, so the scalars are trivial, $a_1=a_2=a_3=\cdots=a_n=0$.  By \acronymref{definition}{LI}, the set $C$ is linearly independent.\par
+%
+Now prove that $C$ spans $\complex{n}$.  Given an arbitrary vector $\vect{y}\in\complex{n}$, can it be expressed as a linear combination of the vectors in $C$?  Since $A$ is a nonsingular matrix we can define the vector $\vect{w}$ to be the unique solution of the system $\linearsystem{A}{\vect{y}}$ (\acronymref{theorem}{NMUS}).  Since $\vect{w}\in\complex{n}$ we can write $\vect{w}$ as a linear combination of the vectors in the basis $B$.  So there are scalars, $\scalarlist{b}{n}$ such that
+%
+\begin{align*}
+\vect{w}&=\lincombo{b}{x}{n}
+\end{align*}
+%
+Then,
+%
+\begin{align*}
+\vect{y}
+&=A\vect{w}
+&&\text{\acronymref{theorem}{SLEMM}}\\
+&=A\left(\lincombo{b}{x}{n}\right)
+&&\text{\acronymref{definition}{TSVS}}\\
+%
+&=
+Ab_1\vect{x}_1+
+Ab_2\vect{x}_2+
+Ab_3\vect{x}_3+
+\cdots+
+Ab_n\vect{x}_n
+&&\text{\acronymref{theorem}{MMDAA}}\\
+%
+&=
+b_1A\vect{x}_1+
+b_2A\vect{x}_2+
+b_3A\vect{x}_3+
+\cdots+
+b_nA\vect{x}_n
+&&\text{\acronymref{theorem}{MMSMM}}
+%
+\end{align*}
+%
+So we can write an arbitrary vector of $\complex{n}$ as a linear combination of the elements of $C$.  In other words, $C$ spans $\complex{n}$ (\acronymref{definition}{TSVS}).  By \acronymref{definition}{B}, the set $C$ is a basis for $\complex{n}$.\par
+%
+$\left(\Leftarrow\right)$\quad  Assume that $C$ is a basis and prove that $A$ is nonsingular.  Let $\vect{x}$ be a solution to the homogeneous system $\homosystem{A}$.  Since $B$ is a basis of $\complex{n}$ there are  scalars, $\scalarlist{a}{n}$, such that
+%
+\begin{align*}
+\vect{x}&=\lincombo{a}{x}{n}
+\end{align*}
+%
+Then
+%
+\begin{align*}
+\zerovector
+&=A\vect{x}
+&&\text{\acronymref{theorem}{SLEMM}}\\
+%
+&=A\left(\lincombo{a}{x}{n}\right)
+&&\text{\acronymref{definition}{TSVS}}\\
+%
+&=
+Aa_1\vect{x}_1+
+Aa_2\vect{x}_2+
+Aa_3\vect{x}_3+
+\cdots+
+Aa_n\vect{x}_n
+&&\text{\acronymref{theorem}{MMDAA}}\\
+%
+&=
+a_1A\vect{x}_1+
+a_2A\vect{x}_2+
+a_3A\vect{x}_3+
+\cdots+
+a_nA\vect{x}_n
+&&\text{\acronymref{theorem}{MMSMM}}
+%
+\end{align*}
+%
+This is a relation of linear dependence on the linearly independent set $C$, so the scalars must all be zero, $a_1=a_2=a_3=\cdots=a_n=0$.  Thus,
+%
+\begin{align*}
+\vect{x}&=\lincombo{a}{x}{n}=0\vect{x}_1+0\vect{x}_2+0\vect{x}_3+\cdots+0\vect{x}_n=\zerovector.
+\end{align*}
+%
+By \acronymref{definition}{NM} we see that $A$ is nonsingular.\par
+%
+\medskip
+%
+Now for a second proof.  Take the vectors for $B$ and use them as the columns of a matrix, $G=\matrixcolumns{x}{n}$.  By \acronymref{theorem}{CNMB}, because we have the hypothesis that $B$ is a basis of $\complex{n}$, $G$ is a nonsingular matrix.  Notice that the columns of $AG$ are exactly the vectors in the set $C$, by \acronymref{definition}{MM}.
+%
+\begin{align*}
+A\text{ nonsingular}
+&\iff AG\text{ nonsingular}
+&&\text{\acronymref{theorem}{NPNT}}\\
+%
+&\iff C\text{ basis for }\complex{n}
+&&\text{\acronymref{theorem}{CNMB}}\\
+\end{align*}
+%
+That was easy!
+
+
+

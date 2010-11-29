@@ -1,0 +1,44 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+Given a matrix $A$, Mathematica will compute a set of column vectors whose span is the null space of the matrix with the \computerfont{NullSpace[\,]} command.  Perhaps not coincidentally, this set is exactly $\setparts{\vect{z}_j}{1\leq j\leq n-r}$.  However, Mathematica prefers to output the vectors in the opposite order than one we have chosen.  Here's a small example.\par
+%
+Begin with the $3\times 4$ matrix $A$, and its row-reduced version $B$,
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+ 1 & 2 & -1 & 0 \\
+ 3 & 4 & 1 & -2 \\
+ -1 & 1 & -5 & 3
+\end{bmatrix}
+&
+&\rref
+&
+B&=
+\begin{bmatrix}
+ \leading{1} & 0 & 3 & -2 \\
+ 0 & \leading{1} & -2 & 1 \\
+ 0 & 0 & 0 & 0
+\end{bmatrix}
+\end{align*}
+%
+We could extract entries from $B$ to build the vectors $\vect{z}_1$ and $\vect{z}_2$ according to \acronymref{theorem}{SSNS} and describe $\nsp{A}$ as a span of the set $\set{\vect{z}_1,\,\vect{z}_2}$.  Instead, if $\computerfont{a}$ has been set to $A$, then executing the command \computerfont{NullSpace[a]} yields the list of lists (column vectors),
+%
+\begin{align*}
+\{\{2, -1, 0, 1\}, \{-3, 2, 1, 0\}\}
+\end{align*}
+%
+Notice how our $\vect{z}_1$ is second in the list.  To ``correct'' this we can use a list-processing command from Mathematica, \computerfont{Reverse[\,]}, as follows,
+%
+\begin{align*}
+\text{\computerfont{Reverse[NullSpace[a]]}}
+\end{align*}
+%
+and receive the output in our preferred order.  Give it a try yourself.

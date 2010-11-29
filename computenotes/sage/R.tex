@@ -1,0 +1,29 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+\contributedby{\stevecanfield}\\
+SAGE uses different rings to denote the type of an object. The rings are as follows:\\
+\begin{align*}
+&\text{ZZ: The set of integers}\\
+&\text{QQ: The set of rational numbers}\\
+&\text{RR: The real numbers}\\
+&\text{CC: The complex numbers}\\
+\end{align*}
+Most objects in SAGE will tell you which they are using with the \computerfont{base\_ring()} command. Keep this in mind, especially when row reducing or factoring. Here's a quick example of where you might go wrong.
+\begin{align*}
+&\computerfont{m = matrix([[2,3],[4,7]])}\\
+&\computerfont{m.base\_ring()}\\
+&\computerfont{Integer Ring}\\
+&\computerfont{m.echelon\_form()}\\
+&\begin{bmatrix}
+2 & 0 \\
+0 & 1
+\end{bmatrix}
+\end{align*}
+As you can clearly see, \computerfont{m} isn't even in reduced row-echelon form. This is because \computerfont{m} is defined over the ZZ. You have to create matrices with the correct ring or you will get this type of odd result. This problem comes up in more places than just calculating the reduced row-echelon form, so unless you are specifically working with integers take note.

@@ -1,0 +1,600 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+\documentclass{book}
+
+%%%%%%%%%%
+%%
+%%  Packages
+%%
+%%%%%%%%%%
+ 
+% ifthen
+%   Various options are contolled by
+%   the  ifthen  package, and we read in custom
+%   switches right now, at the very first opportunity
+%   Read the *end* of the styles/fcla-switches.tex file
+%   to learn about overriding options here
+%
+\usepackage{ifthen}
+\usepackage{styles/fcla-switches}
+
+% Pointsize
+%   A bit of a hack to reset pointsize related dimensions programatically.
+%   Files read in here are slightly modified versions of LaTeX's class files
+\ifthenelse{\boolean{tenpoint}}{\usepackage{styles/tenadjust}}{\relax}
+\ifthenelse{\boolean{elevenpoint}}{\usepackage{styles/elevenadjust}}{\relax}
+\ifthenelse{\boolean{twelvepoint}}{\usepackage{styles/twelveadjust}}{\relax}
+
+% Customization
+%   Copies of this file are processed by scripts
+%   Lines here get replaced by sed under program control
+%   DO NOT edit second line (even if it looks like a comment)
+\newcommand{\FCLAversion}{DRAFT (\today)}
+%% version substitution %%
+
+% rotating
+%  Allows a table about archetypes to layout sideways
+%  Only needed in PDF versions
+%
+\ifthenelse{\boolean{PDFtarget}}{\usepackage{rotating}}{\relax}
+
+% graphics
+%  Tex4ht seems to need this, pdflatex does not?
+\usepackage{graphics}
+
+
+% fancyhdr
+%  Yields headers, footers and improved float control
+%  Only needed in PDF versions
+%
+\ifthenelse{\boolean{PDFtarget}}{\usepackage{fancyhdr}}{\relax}
+
+% makeidx
+%  Utility package for the MakeIndex scheme
+%  Run makeindex executable on fcla.idx as needed
+%
+\usepackage{makeidx}
+
+% amsmath, amssymb, amscd  packages
+%   amsmath has lots of support for matrices and displayed equations
+%   so we use it heavily, see amsldoc.pdf for documentation
+%   see short-math-guide.pdf for guidance
+%   We use some wide matrices, so overide the maximum columns here
+%   amssymb gets blackboardbold, proof symbols, etc.
+%   amscd provides simple commutative diagrams
+%   \allowdisplaybreaks prevents underfull pages due to 
+%    a reluctance to break in mid-display on PDF only
+%
+\usepackage{amsmath,amssymb,amscd}
+\setcounter{MaxMatrixCols}{12}
+\ifthenelse{\boolean{PDFtarget}}{\allowdisplaybreaks}{\relax}
+
+% hyperref package
+%   gets hyperlinks into pdf or xml
+%   like everybody else, it wants to be last
+%   See manual.pdf in \tex\latex\hyperref\doc section of hyperef
+%   Boolean "electronic" controls coloring on pdf versions
+%   TeX4ht defaults on link styles seem OK
+%
+\ifthenelse{\boolean{PDFtarget}}{
+\usepackage[pdftex]{hyperref}
+\hypersetup{breaklinks=true}
+\hypersetup{bookmarksopen=true,bookmarksopenlevel=1}
+\hypersetup{pdftitle=A First Course in Linear Algebra, pdfauthor=Robert A. Beezer}
+\hypersetup{pdfkeywords=free linear algebra textbook}
+  \ifthenelse{\boolean{electronic}}{
+  \hypersetup{colorlinks=true,linkcolor=blue}
+  }{
+  \hypersetup{colorlinks=false}
+  }
+}{\relax}
+%
+%%  Hand-edit for POD version
+%%  Just to be careful that no link boxes come through
+%
+%% \hypersetup{colorlinks=true, linkcolor=black}
+%
+%
+\ifthenelse{\boolean{XMLtarget}}{
+\usepackage[tex4ht]{hyperref}
+}{\relax}
+
+% tocloft  package
+%  included to make extra lists
+%  e.g. theorems, definitions, contributors, etc
+\usepackage{tocloft}
+
+% geometry package
+%   Controls page layout and papersize
+%   Paper sizing only important for PDF's
+%   pdftex option is correct for pdflatex
+%
+\ifthenelse{\boolean{PDFtarget}}{\usepackage[pdftex]{geometry}}{\relax}
+
+% fcla-developer, fcla-math, archetypes
+%   custom stuff just for this book
+%   First controls formatting and references
+%   Second is for mathematical structures.
+%   Third enforces common look on archetype layouts
+%
+\usepackage{styles/fcla-developer}
+\usepackage{styles/fcla-math}
+\usepackage{styles/fcla-archetype}
+
+% Index control
+%   This command turns on index entry file creation (fcla.idx).
+\makeindex
+
+
+
+\begin{document}
+%
+%  Font weight is option for PDF versions
+%
+%  For e-ink devices, bold as much as possible throughout
+%    Reset immediately after \begin{document}
+%  Attempt (just below) to make bold material even bolder, failed
+%    \DeclareFontShape{OT1}{cmr}{ub}{ux}{<12> [3.0] cmbx10}
+%    \renewcommand{\bf}{\fontseries{ubux}\selectfont}
+%
+\ifthenelse{\boolean{PDFtarget}\and\boolean{heavyweight}}{%
+\fontseries{bx}\selectfont%
+\mathversion{bold}%
+}
+{\relax}
+%
+%  Read in contributors, makes macros, list entries, no text results here
+%
+\input{includes/contributors.tex}
+%
+% Mostly we follow the Chicago Manual of Style 
+%    for ordering of parts in the frontmatter
+%  An exception is Contributors, which as befits a free book
+%    will figure promintently and early
+%
+% First, the more involved PDF/Print-On-Demand version
+%
+\ifthenelse{\boolean{PDFtarget}}{
+%
+% Half title page first
+%
+\thispagestyle{empty}
+\input{includes/halftitle.tex}
+\ifthenelse{\boolean{twosided}}
+{\clearpage\ \thispagestyle{empty}\clearpage}{\clearpage}
+%
+\frontmatter
+%
+% Title page
+%
+% Blind folios so far, count 2 for half-title
+%   so set pagecounter to 3
+%
+\setcounter{page}{3}
+\thispagestyle{empty}
+\input{includes/title.tex}
+\clearpage
+%
+%  Copyright etc, on verso
+%
+\thispagestyle{empty}
+%
+%  Author bio
+%
+\input{includes/authorbio.tex}\par
+%
+\vspace*{\stretch{2}}
+%
+%  Edition info, set variant in place for POD runs
+%
+\noindent{\bf Edition}\\\input{includes/editioninfo.tex}\\[24pt]
+%
+%  Cover info
+%     set in place manually just for print-on-demand runs
+%     POD only, so can contain formatting
+%
+\IfFileExists{includes/coverinfo.tex}{\input{includes/coverinfo.tex}}{\relax}
+%
+%
+%  Publisher info
+%
+\noindent{\bf Publisher}\\\input{includes/publisherinfo.tex}\\[24pt]
+%
+%  Copyright notice, etc
+%
+\noindent
+\input{includes/notice.tex}\par
+%
+\vspace*{\stretch{1}}
+\clearpage
+%
+%  Dedication
+%
+\thispagestyle{empty}
+\vspace*{\stretch{1}}
+\begin{center}
+{\Large \input{includes/dedication.tex}}
+\end{center}\par
+\vspace*{\stretch{3}}
+\ifthenelse{\boolean{twosided}}
+{\clearpage\ \thispagestyle{empty}\clearpage}{\clearpage}
+%
+%  Table of contents  (XML does this automatically)
+%
+\phantomsection
+\addcontentsline{toc}{chapter}{Table of Contents}
+\tableofcontents
+\ifthenelse{\boolean{twosided}}{\cleardoublepage}{\clearpage}
+%
+}{\relax}
+%
+%  Now for the XML version
+%
+\ifthenelse{\boolean{XMLtarget}}{
+%
+%  Title first, before any sectioning, 
+%    followed by copyright/GNU notice
+%
+\input{includes/title.tex}
+\input{includes/notice.tex}\par
+%
+%  Front Matter as a chapter
+%     with items as sections
+%
+\chapter*{Front Matter}
+%
+\section*{Author Biography}
+\input{includes/authorbio.tex}
+%
+\section*{Edition}
+\input{includes/editioninfo.tex}
+%
+\section*{Publisher}
+\input{includes/publisherinfo.tex}  
+%
+\section*{Dedication}
+\input{includes/dedication.tex}
+%
+}{\relax}
+%
+%  Front Lists
+%    Many of the lists in front are formatted and displayed here
+%    Only show the Proof Technique list if they are included inline
+%    Only show the Computation list if they are included inline
+%    Works fine for both XML and PDF/POD via \frontlist macro
+%
+\frontlist{Contributors}{contributors}{\listofcontributor}
+\frontlist{Definitions}{definition}{\listofdefinition}
+\frontlist{Theorems}{theorem}{\listoftheorem}
+\frontlist{Notation}{notation}{\listofnotation}
+\frontlist{Diagrams}{diagram}{\listofdiagram}
+\frontlist{Examples}{example}{\listofexample}
+\ifthenelse{\boolean{techniquesinline}}{
+\frontlist{Proof Techniques}{technique}{\listoftechnique}
+}{\relax}
+\ifthenelse{\boolean{computationnotesinline}}{
+\frontlist{Computation Notes}{computation}{\listofcomputation}
+}{\relax}
+%
+%  Preface, Acknowledgements 
+%    As plain chapters in frontmatter
+%  Needs its own page header, style consistent with  tocloft  package
+%  
+%  First as PDF/POD
+%
+\ifthenelse{\boolean{PDFtarget}}{
+%
+%  Preface, as a chapter
+%
+\chapter*{Preface}
+\markboth{PREFACE}{PREFACE}
+\phantomsection
+\addcontentsline{toc}{chapter}{Preface}
+\input{includes/preface.tex}
+\ifthenelse{\boolean{twosided}}{\cleardoublepage}{\clearpage}
+%
+%  Acknowledgements, as a chapter
+%
+\chapter*{Acknowledgements}
+\markboth{ACKNOWLEDGEMENTS}{ACKNOWLEDGEMENTS}
+\phantomsection
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\input{includes/acknowledgements.tex}
+\ifthenelse{\boolean{twosided}}{\cleardoublepage}{\clearpage}
+%
+}{\relax}
+%
+% Now for XML version
+%
+\ifthenelse{\boolean{XMLtarget}}{
+%
+\chapter*{Preface}
+\input{includes/preface.tex}
+%
+\chapter*{Acknowledgements}
+\input{includes/acknowledgements.tex}
+%
+}{\relax}
+%
+\mainmatter
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Part C  Core
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\prt{C}{Core}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter SLE  Systems of Linear Equations
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{SLE}{Systems of Linear Equations}
+%
+\sect{WILA}{What is Linear Algebra?}
+\sect{SSLE}{Solving Systems of Linear Equations}
+\sect{RREF}{Reduced Row-Echelon Form}
+\sect{TSS}{Types of Solution Sets}
+\sect{HSE}{Homogeneous Systems of Equations}
+\sect{NM}{Nonsingular Matrices}
+\annotated{SLE}{Systems of Linear Equations}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter V  Vectors
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{V}{Vectors}
+%
+\sect{VO}{Vector Operations}
+\sect{LC}{Linear Combinations}
+\sect{SS}{Spanning Sets}
+\sect{LI}{Linear Independence}
+\sect{LDS}{Linear Dependence and Spans}
+\sect{O}{Orthogonality}
+\annotated{V}{Vectors}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter M Matrices
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{M}{Matrices}
+%
+\sect{MO}{Matrix Operations}
+\sect{MM}{Matrix Multiplication}
+\sect{MISLE}{Matrix Inverses and Systems of Linear Equations}
+\sect{MINM}{Matrix Inverses and Nonsingular Matrices}
+\sect{CRS}{Column and Row Spaces}
+\sect{FS}{Four Subsets}
+\annotated{M}{Matrices}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter VS Vector Spaces
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{VS}{Vector Spaces}
+%
+\sect{VS}{Vector Spaces}
+\sect{S}{Subspaces}
+\sect{LISS}{Linear Independence and Spanning Sets}
+\sect{B}{Bases}
+\sect{D}{Dimension}
+\sect{PD}{Properties of Dimension}
+\annotated{VS}{Vector Spaces}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter D Determinants
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{D}{Determinants}
+%
+\sect{DM}{Determinant of a Matrix}
+\sect{PDM}{Properties of Determinants of Matrices}
+\annotated{D}{Determinants}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter E  Eigenvalues
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{E}{Eigenvalues}
+%
+\sect{EE}{Eigenvalues and Eigenvectors}
+\sect{PEE}{Properties of Eigenvalues and Eigenvectors}
+\sect{SD}{Similarity and Diagonalization}
+\annotated{E}{Eigenvalues}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter LT Linear Transformations
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{LT}{Linear Transformations}
+%
+\sect{LT}{Linear Transformations}
+\sect{ILT}{Injective Linear Transformations}
+\sect{SLT}{Surjective Linear Transformations}
+\sect{IVLT}{Invertible Linear Transformations}
+\annotated{LT}{Linear Transformations}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter R Representations
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{R}{Representations}
+%
+\sect{VR}{Vector Representations}
+\sect{MR}{Matrix Representations}
+\sect{CB}{Change of Basis}
+\sect{OD}{Orthonormal Diagonalization}
+\sect{NLT}{Nilpotent Linear Transformations}
+\sect{IS}{Invariant Subspaces}
+\sect{JCF}{Jordan Canonical Form}
+\annotated{R}{Representations}
+
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Appendix CN Computation Notes
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+% No appendix if no devices are chosen
+%
+\ifthenelse{\boolean{computationnotesappendix}\and
+\(\boolean{hassage}\or\boolean{hasmathematica}\or\boolean{hasti86}\or\boolean{hasti83}\or\boolean{hassage}\)}{
+\appdx{CN}{Computation Notes}
+\hypertarget{computation}{\ \\}
+\input{appendices/CN.tex}
+}{\relax}  %  done with appendix
+%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Appendix P Preliminaries
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\appdx{P}{Preliminaries}
+\sect{CNO}{Complex Number Operations}
+\sect{SET}{Sets}
+\ifthenelse{\boolean{techniquesappendix}}{
+\sect{PT}{Proof Techniques}
+\hypertarget{technique}{\ \\}
+}{\relax}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Appendix A Archetypes
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\appdx{A}{Archetypes}
+%
+\input{appendices/A.tex}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Appendix GFDL GNU Free Documentation License
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\appdx{GFDL}{GNU Free Documentation License}
+\input{includes/gfdl}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Part T, Topics
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\prt{T}{Topics}
+%
+\sect{F}{Fields}
+\sect{T}{Trace}
+\sect{HP}{Hadamard Product}
+\sect{VM}{Vandermonde Matrix}
+\sect{PSM}{Positive Semi-definite Matrices}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter MD Matrix Decompositions
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{MD}{Matrix Decompositions}
+%
+\sect{ROD}{Rank One Decomposition}
+\sect{TD}{Triangular Decomposition}
+\sect{SVD}{Singular Value Decomposition}
+\sect{SR}{Square Roots}
+\sect{POD}{Polar Decomposition}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Part A, Applications
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\prt{A}{Applications}
+%
+\sect{CF}{Curve Fitting}
+\sect{SAS}{Sharing A Secret}
+%
+%  We trash the index files after each production run
+%  Stuff below prevents a pause on the first pass asking for it 
+%
+\IfFileExists{fcla.ind}{
+\ifthenelse{\boolean{PDFtarget}}{
+\addcontentsline{toc}{part}{Index}
+}{\relax}
+%% \phantomsection
+%% \hypertarget{Index}{index}
+\input{fcla.ind}
+}{\relax}
+%
+%
+\end{document}
+

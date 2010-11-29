@@ -1,0 +1,117 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+\documentclass[12pt]{article}
+
+%%  Fills 5 pages when up to Z,  wouldn't fit on 4
+%%  Edit   letterpaper   to accomodate different sizes
+%%  9 inch height accomodates table of 24 archetypes (not quite)
+%%
+\usepackage{geometry}
+\geometry{letterpaper,total={6.5in,9in}}
+\pagestyle{empty}
+
+%% Math styles, of course
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{styles/fcla-math}
+
+%% Need sideways environment for summarytable
+\usepackage{rotating}
+
+%% Hyperref package makes URL's in notices live in PDFs
+\usepackage[pdftex]{hyperref}
+\hypersetup{breaklinks=true,colorlinks=false}
+\hypersetup{pdftitle=A First Course in Linear Algebra - Archetype Supplement}
+\hypersetup{pdfauthor=Robert A. Beezer}
+\hypersetup{pdfkeywords=free linear algebra textbook archetype}
+
+%  Adjust spacing manually
+%  3.25em, 12pt, 9 inch height works well for 24 + 2 planned
+\newlength{\summaryskip}
+\setlength{\summaryskip}{3.25em}
+
+% Table of Archetypes has links as column headings, just single letters
+%  Here we do nothing, since linking is not viable or needed
+\newcommand*{\archetyperef}[1]{#1}
+
+%  Systems are in align environment already
+%  Rest get wrapped in align environment
+%
+\newcommand*{\archetypesummary}[2]
+{
+{\bf Archetype\ #1}\nopagebreak[4]
+\input{archetypes/#1/#1-#2.tex}
+\par\vspace{\summaryskip}
+}
+\newcommand*{\archetypesummarymath}[2]
+{
+{\bf Archetype\ #1}\nopagebreak[4]
+\begin{align*}
+\input{archetypes/#1/#1-#2.tex}
+\end{align*}
+\par\vspace{\summaryskip}
+}
+
+% Table in front of archetypes has switches to control rotation
+% We just mimic it here
+\newboolean{PDFtarget}
+\setboolean{PDFtarget}{true}
+
+% Customization
+%   Copies of this file are processed by scripts
+%   Lines here get replaced by sed under program control
+\newcommand{\FCLAversion}{DRAFT (\today)}
+%% version substitution %%
+
+\begin{document}
+%
+%
+\begin{titlepage}
+\vspace*{\stretch{2}}
+\begin{center}
+{\fontsize{24}{24}\selectfont  Archetype Summary}\\[12pt]
+{\large to accompany}
+\input{includes/title.tex}
+\end{center}
+\end{titlepage}
+\vspace*{\stretch{2}}
+\input{includes/supplement_notice.tex}
+\vspace*{\stretch{1}}
+\clearpage
+%
+% Load in the summary table first
+%
+\input{archetypes/archetypetable}\newpage
+%
+\archetypesummary{A}{definition}
+\archetypesummary{B}{definition}
+\archetypesummary{C}{definition}
+\archetypesummary{D}{definition}
+\archetypesummary{E}{definition}
+\archetypesummary{F}{definition}
+\archetypesummary{G}{definition}
+\archetypesummary{H}{definition}
+\archetypesummary{I}{definition}
+\archetypesummary{J}{definition}
+\archetypesummarymath{K}{purematrix}
+\archetypesummarymath{L}{purematrix}
+\archetypesummarymath{M}{ltdefn}
+\archetypesummarymath{N}{ltdefn}
+\archetypesummarymath{O}{ltdefn}
+\archetypesummarymath{P}{ltdefn}
+\archetypesummarymath{Q}{ltdefn}
+\archetypesummarymath{R}{ltdefn}
+\archetypesummarymath{S}{ltdefn}
+\archetypesummarymath{T}{ltdefn}
+\archetypesummarymath{U}{ltdefn}
+\archetypesummarymath{V}{ltdefn}
+\archetypesummarymath{W}{ltdefn}
+\archetypesummarymath{X}{ltdefn}
+\end{document}

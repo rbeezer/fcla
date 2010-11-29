@@ -1,0 +1,25 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+{\sl SAGE} can solve a variety of systems of equations with the \computerfont{solve( )} command, even when the equations are not linear (see \acronymref{exercise}{SSLE.M70}).  But we can afford to specialize here to just linear systems.  First, you must specify your variables in advance, so for example,  \computerfont{var('x1,x2,x3')}  might precede a system with three equations.  Equations are then written just as you might expect, except that equality is written as \computerfont{==}, since computer programs have traditionally reserved \computerfont{=} to assign values to variables.  And remember to use a \computerfont{*} to indicate that a coefficient multiplies a variable.\par
+%
+The example below illustrates the use of the command and the possibilities for results.  Each system would be preceded by establishing the variables with the command \computerfont{var('x,y')}.  In the case of an infinite solution set, free variables are denoted as \computerfont{rx} where \computerfont{x} is an integer that increases throughout a session.  The style of this description of a solution set is reminiscent of the style we used in \acronymref{chapter}{SLE} before we were accustomed to using linear combinations of vectors (\acronymref{theorem}{VFSLS}).
+%
+\begin{center}
+\begin{tabular}{lcl}
+\multicolumn{1}{c}{System}&
+\multicolumn{1}{c}{Solution Set}&
+\multicolumn{1}{c}{Result}\\
+\computerfont{solve([2*x+y==5, 3*x+2*y==15], x, y)} & Unique   & \computerfont{[[x == -5, y == 15]]} \\
+\computerfont{solve([2*x+y==5, 6*x+3*y==15], x, y)} & Infinite & \computerfont{[[x == (5 - r1)/2, y == r1]]} \\
+\computerfont{solve([2*x+y==5, 6*x+3*y==10], x, y)} & Empty    & \computerfont{ValueError: Unable to solve\dots}
+\end{tabular}
+\end{center}
+%
+Notice how the output contains equations written a format that might be suitable as input for further use within {\sl SAGE}.

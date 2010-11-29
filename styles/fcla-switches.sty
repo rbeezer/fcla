@@ -1,0 +1,451 @@
+%%%%(c)
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+% Switches
+%
+%   We define global switches to control the layout and format of the book.
+%   
+%   Switches can all be set simultaneously in a command of the form
+%
+%      \FCLAstyle{<key>=<value>,<key>=<value>,....}
+%
+%   where allowable  <key> and <value>  pairs follow, with defaults in [ ]
+%
+%   An "edition" of the book can be constructed by putting any number
+%   of these commands into a file in the   editions   subdirectory
+%   Then copy such a file to the file  editions/current-edition.tex
+%   This   current-edition.tex   file is the last thing read by   fcla-switches.sty
+%   Temporary or experimental overrides can be placed in  fcla.tex
+%     just after where this file is input
+%
+%   The following comments describe the available switches provided
+%   This is basically an interface to a set of boolean macros and page dimensions
+%      used in  fcla.tex  and  fcla-developer.tex  (almost exclusively)
+%
+%   Formats
+%   ~~~~~~~~~~
+%
+%   format:  xml, pdf [pdf]
+%
+%   File format of output.
+%
+%
+%   Point Size
+%   ~~~~~~~~~~
+%
+%   pointsize:  ten, eleven, twelve [twelve]
+%
+%   Font point size and associated LaTeX style.
+%
+%
+%   Font Weight
+%   ~~~~~~~~~~
+%
+%   fontweight:  normal, heavy [normal]
+%
+%   Font weight, heavy (bold) for e-ink devices.
+%
+%
+%   Paper
+%   ~~~~~~~~~~
+%
+%   paper: letter, A4, sixteennine, fourthree, sony505, kindleDX [letter]
+%
+%   Exterior boundary of a page.
+%   sixteennine is a 16:9 aspect ratio for widescreen viewing
+%   fourthree is a 4:3 aspect ratio for normal screen viewing
+%   sony505 is 50% oversize for Sony PRS-500/505 Reader
+%   kindleDX is actual size, 10pt type gives scaled width properly
+%
+%
+%   Sides
+%   ~~~~~~~~~~
+%
+%   sides: one, two  [one]
+%
+%   One-sided versus two-sided output.  Only makes sense for print output.
+%
+%
+%   Sizing, margins
+%   ~~~~~~~~~~
+%
+%   width: decimal-unit [6.5in]
+%   binding:  decimal-unit [0in]
+%   topmargin:  decimal-unit [0.75in]
+%   vmargin:  top:bottom [1:1]
+%
+%   These control width of text, and amount given up along spine for binding.
+%   Right/left, inner/outer margins are what's left over
+%     inner:outer  defaults are 1:1 for one-sided, 2:3 for two sided
+%   Top and bottom margins are set via topmargin and vmargin.
+%     top:bottom  defaults to 1:1, vmargin will override
+%
+%
+%   Electronic
+%   ~~~~~~~~~~
+%
+%   electronic:  yes, no  [no]
+%
+%   Print versus electronic: link formats in pdf, etc.
+%
+%
+%   Version Footer
+%   ~~~~~~~~~~
+%
+%   versionfooter:  omit, include [include]
+%
+%   Footer contains version info for minor versions
+%
+%
+%   Exercises, Solutions, Reading Questions, Annotaed Acronyms
+%   ~~~~~~~~~~
+%
+%   exercises:  include, omit [include]
+%   solutions:  include, omit [include]
+%   readingquestions:   include, omit [include]
+%   annotatedacronyms: include, omit [include]
+%
+%   Exercises, solutions, reading questions, annotated acronyms.
+%   Included or not in sections (chapters), set globally
+%
+%
+%   Proof Techniques, Computations Notes
+%   ~~~~~~~~~~
+%
+%   techniques:  omit, inline, appendix [appendix]
+%   computationnotes:  omit, inline, appendix [appendix]
+%
+%   Proof Techniques omitted, otherwise appendix or just-in-time
+%      If omitted, lots of dead links result, so not encouraged
+%   Computation Notes omitted, otherwise appendix or just-in-time
+%
+%
+%   Device support
+%   ~~~~~~~~~~
+%
+%   mathematica:         include, omit [include]
+%   ti86:                      include, omit [include]
+%   ti83:                      include, omit [include]
+%
+%   Whether or not certain computational devices are explained.
+%
+%
+%   TODO:  index, individual sections, margins
+%
+%
+%% Carlisle's keyval package makes parameter passing work
+%% We read it in here, we also define a simple macro for setting keys
+%%
+\usepackage{keyval}
+\newcommand*{\FCLAstyle}[1]{\setkeys{fcla}{#1}}
+%%
+%%  format
+%%
+\newboolean{PDFtarget}
+\setboolean{PDFtarget}{true}
+\newboolean{XMLtarget}
+\setboolean{XMLtarget}{false}
+\define@key{fcla}{format}
+{
+\ifthenelse{\equal{#1}{pdf}}{\setboolean{PDFtarget}{true}\setboolean{XMLtarget}{false}}{\null}
+\ifthenelse{\equal{#1}{xml}}{\setboolean{PDFtarget}{false}\setboolean{XMLtarget}{true}}{\null}
+}
+%%
+%%  pointsize
+%%
+\newboolean{tenpoint}
+\setboolean{tenpoint}{false}
+\newboolean{elevenpoint}
+\setboolean{elevenpoint}{false}
+\newboolean{twelvepoint}
+\setboolean{twelvepoint}{true}
+\define@key{fcla}{pointsize}
+{
+\ifthenelse{\equal{#1}{ten}}{
+\setboolean{tenpoint}{true}
+\setboolean{elevenpoint}{false}
+\setboolean{twelvepoint}{false}
+}{\null}
+\ifthenelse{\equal{#1}{eleven}}{
+\setboolean{tenpoint}{false}
+\setboolean{elevenpoint}{true}
+\setboolean{twelvepoint}{false}
+}{\null}
+\ifthenelse{\equal{#1}{twelve}}{
+\setboolean{tenpoint}{false}
+\setboolean{elevenpoint}{false}
+\setboolean{twelvepoint}{true}
+}{\null}
+}
+%%
+%%  fontweight
+%%
+\newboolean{normalweight}
+\setboolean{normalweight}{true}
+\newboolean{heavyweight}
+\setboolean{heavyweight}{false}
+\define@key{fcla}{fontweight}
+{
+\ifthenelse{\equal{#1}{normal}}{
+\setboolean{normalweight}{true}
+\setboolean{heavyweight}{false}
+}{\null}
+\ifthenelse{\equal{#1}{heavy}}{
+\setboolean{normalweight}{false}
+\setboolean{heavyweight}{true}
+}{\null}
+}
+%%
+%%
+%%  paper
+%%  
+\newboolean{lettersize}
+\newboolean{A4size}
+\newboolean{electricsize}
+\newboolean{sixteenninesize}
+\newboolean{fourthreesize}
+\newboolean{sony505size}
+\newboolean{kindleDXsize}
+\setboolean{lettersize}{true}
+\setboolean{A4size}{false}
+\setboolean{sixteenninesize}{false}
+\setboolean{fourthreesize}{false}
+\setboolean{sony505size}{false}
+\setboolean{kindleDXsize}{false}
+\define@key{fcla}{paper}
+{
+\ifthenelse{\equal{#1}{letter}} 
+  {
+  \setboolean{lettersize}{true}
+  \setboolean{A4size}{false}
+  \setboolean{sixteenninesize}{false}
+  \setboolean{fourthreesize}{false}
+  \setboolean{sony505size}{false}
+  \setboolean{kindleDXsize}{false}
+  }{\null}
+\ifthenelse{\equal{#1}{A4}} 
+  {
+  \setboolean{lettersize}{false}
+  \setboolean{A4size}{true}
+  \setboolean{sixteenninesize}{false}
+  \setboolean{fourthreesize}{false}
+  \setboolean{sony505size}{false}
+  \setboolean{kindleDXsize}{false}
+  }{\null}
+\ifthenelse{\equal{#1}{sixteennine}} 
+  {
+  \setboolean{lettersize}{false}
+  \setboolean{A4size}{false}
+  \setboolean{sixteenninesize}{true}
+  \setboolean{fourthreesize}{false}
+  \setboolean{sony505size}{false}
+  \setboolean{kindleDXsize}{false}
+  }{\null}
+\ifthenelse{\equal{#1}{fourthree}} 
+  {
+  \setboolean{lettersize}{false}
+  \setboolean{A4size}{false}
+  \setboolean{sixteenninesize}{false}
+  \setboolean{fourthreesize}{true}
+  \setboolean{sony505size}{false}
+  \setboolean{kindleDXsize}{false}
+  }{\null}
+\ifthenelse{\equal{#1}{sony505}}
+  {
+  \setboolean{lettersize}{false}
+  \setboolean{A4size}{false}
+  \setboolean{sixteenninesize}{false}
+  \setboolean{fourthreesize}{false}
+  \setboolean{sony505size}{true}
+  \setboolean{kindleDXsize}{false}
+  }{\null}
+\ifthenelse{\equal{#1}{kindleDX}}
+  {
+  \setboolean{lettersize}{false}
+  \setboolean{A4size}{false}
+  \setboolean{sixteenninesize}{false}
+  \setboolean{fourthreesize}{false}
+  \setboolean{sony505size}{false}
+  \setboolean{kindleDXsize}{true}
+  }{\null}
+}
+%%
+%%
+%%  sided
+%%
+\newboolean{twosided}
+\setboolean{twosided}{true}
+\define@key{fcla}{sides}
+{
+\ifthenelse{\equal{#1}{one}}{\setboolean{twosided}{false}}{\null}
+\ifthenelse{\equal{#1}{two}}{\setboolean{twosided}{true}}{\null}
+}
+%%
+%%
+%%  width, binding, topmargin, vmargin
+%%  
+\newcommand*{\FCLAwidth}{6.5in}
+\define@key{fcla}{width}
+{
+\renewcommand*{\FCLAwidth}{#1}
+}
+\newcommand*{\FCLAbinding}{0in}
+\define@key{fcla}{binding}
+{
+\renewcommand*{\FCLAbinding}{#1}
+}
+\newcommand*{\FCLAtopmargin}{0.75in}
+\define@key{fcla}{topmargin}
+{
+\renewcommand*{\FCLAtopmargin}{#1}
+}
+\newcommand*{\FCLAvmargin}{1:1}
+\define@key{fcla}{vmargin}
+{
+\renewcommand*{\FCLAvmargin}{#1}
+}
+%%
+%%
+%%  electronic
+%%  
+\newboolean{electronic}
+\setboolean{electronic}{false}
+\define@key{fcla}{electronic}
+{
+\ifthenelse{\equal{#1}{yes}} {\setboolean{electronic}{true}} {\null}
+\ifthenelse{\equal{#1}{no}} {\setboolean{electronic}{false}} {\null}
+}
+%%
+%%
+%%  versionfooter
+%%  
+\newboolean{versionfoot}
+\setboolean{versionfoot}{true}
+\define@key{fcla}{versionfooter}
+{
+\ifthenelse{\equal{#1}{include}}{\setboolean{versionfoot}{true}} {\relax}
+\ifthenelse{\equal{#1}{omit}}{\setboolean{versionfoot}{false}} {\relax}
+}
+%%
+%%
+%%  exercises, solutions, readingquestions, annotatedacronyms
+%%  
+\newboolean{hasexercises}
+\newboolean{hassolutions}
+\newboolean{hasreadingquestions}
+\newboolean{hasannotatedacronyms}
+\setboolean{hasexercises}{true}
+\setboolean{hassolutions}{true}
+\setboolean{hasreadingquestions}{true}
+\setboolean{hasannotatedacronyms}{true}
+\define@key{fcla}{exercises}
+{
+\ifthenelse{\equal{#1}{include}}{\setboolean{hasexercises}{true}}{\null}
+\ifthenelse{\equal{#1}{omit}}{\setboolean{hasexercises}{false}}{\null}
+}
+\define@key{fcla}{solutions}
+{
+\ifthenelse{\equal{#1}{include}}{\setboolean{hassolutions}{true}} {\null}
+\ifthenelse{\equal{#1}{omit}}{\setboolean{hassolutions}{false}} {\null}
+}
+\define@key{fcla}{readingquestions}
+{
+\ifthenelse{\equal{#1}{include}}{\setboolean{hasreadingquestions}{true}} {\null}
+\ifthenelse{\equal{#1}{omit}}{\setboolean{hasreadingquestions}{false}} {\null}
+}
+\define@key{fcla}{annotatedacronyms}
+{
+\ifthenelse{\equal{#1}{include}}{\setboolean{hasannotatedacronyms}{true}} {\null}
+\ifthenelse{\equal{#1}{omit}}{\setboolean{hasannotatedacronyms}{false}} {\null}
+}
+%%
+%%
+%%  techniques, computationnotes
+%%  
+\newboolean{techniquesinline}
+\setboolean{techniquesinline}{false}
+\newboolean{techniquesappendix}
+\setboolean{techniquesappendix}{true}
+\newboolean{computationnotesinline}
+\setboolean{computationnotesinline}{false}
+\newboolean{computationnotesappendix}
+\setboolean{computationnotesappendix}{true}
+\define@key{fcla}{techniques}
+{
+\ifthenelse{\equal{#1}{omit}}{
+\setboolean{techniquesinline}{false}
+\setboolean{techniquesappendix}{false}
+}{\null}
+\ifthenelse{\equal{#1}{inline}}{
+\setboolean{techniquesinline}{true}
+\setboolean{techniquesappendix}{false}
+}{\null}
+\ifthenelse{\equal{#1}{appendix}}{
+\setboolean{techniquesinline}{false}
+\setboolean{techniquesappendix}{true}
+}{\null}
+}
+\define@key{fcla}{computationnotes}
+{
+\ifthenelse{\equal{#1}{omit}}{
+\setboolean{computationnotesinline}{false}
+\setboolean{computationnotesappendix}{false}
+}{\null}
+\ifthenelse{\equal{#1}{inline}}{
+\setboolean{computationnotesinline}{true}
+\setboolean{computationnotesappendix}{false}
+}{\null}
+\ifthenelse{\equal{#1}{appendix}}{
+\setboolean{computationnotesinline}{false}
+\setboolean{computationnotesappendix}{true}
+}{\null}
+}
+%%
+%%
+%%  mathematica, ti86, ti83
+%%
+\newboolean{hasmathematica}
+\setboolean{hasmathematica}{true}
+\newboolean{hasti86}
+\setboolean{hasti86}{true}
+\newboolean{hasti83}
+\setboolean{hasti83}{true}
+\newboolean{hassage}
+\setboolean{hassage}{true}
+\define@key{fcla}{mathematica}
+{
+\ifthenelse{\equal{#1}{include}}{\setboolean{hasmathematica}{true}}{\null}
+\ifthenelse{\equal{#1}{omit}}{\setboolean{hasmathematica}{false}}{\null}
+}
+\define@key{fcla}{ti86}
+{
+\ifthenelse{\equal{#1}{include}}{\setboolean{hasti86}{true}}{\null}
+\ifthenelse{\equal{#1}{omit}}{\setboolean{hasti86}{false}}{\null}
+}
+\define@key{fcla}{ti83}
+{
+\ifthenelse{\equal{#1}{include}}{\setboolean{hasti83}{true}}{\null}
+\ifthenelse{\equal{#1}{omit}}{\setboolean{hasti83}{false}}{\null}
+}
+\define@key{fcla}{sage}
+{
+\ifthenelse{\equal{#1}{include}}{\setboolean{hassage}{true}}{\null}
+\ifthenelse{\equal{#1}{omit}}{\setboolean{hassage}{false}}{\null}
+}
+%%
+%%  We read the file  current-edition.tex  to override
+%%  the above default values of booleans and/or switches
+%%  through a \FCLAstyle{}  statement (or several)
+%%  This allows for quick script processing by copying 
+%%  standard files of switches (editions) onto this file
+%%  The file you are reading is read very early in fcla.tex
+%%  so an overriding \FCLAstyle{} could be issued right afterwards
+%%
+\input{editions/current-edition.tex}

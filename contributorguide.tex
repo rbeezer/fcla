@@ -1,0 +1,126 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+\documentclass[12pt]{article}
+
+\usepackage{geometry}
+\geometry{letterpaper,total={7.5in,10in}}
+
+%% File names
+\newcommand{\sourcefile}[1]{{\tt#1}}
+%% TeX literals
+\newcommand{\rawtex}[1]{{\tt#1}}
+%% Dummy for convenience
+\newcommand{\acronymref}[2]{\MakeUppercase#1 #2}
+
+
+
+\begin{document}
+\begin{center}
+{\Large
+A First Course in Linear Algebra\\
+Contribution and Customization Guide}\\[12pt]
+Draft:\quad \today
+\end{center}
+%
+A note on terminology:  If you are a contributor to the text, then you will want to work in collaboration with the editor/maintainer.  If you are customizing the text for your own use, or are creating a fork, then you are probably both the contributor and the editor/maintainer.\par
+%
+This guide assumes varying degrees of familiarity with \LaTeX.
+%
+\section*{Gross Changes: Editions and Switches}
+%
+The easiest way to customize the book is to take advantage of the many switches designed to change how the book is formatted and structured.  A collection of such switches, set to certain values, is known as an edition.\par
+%
+The source tree includes a directory called \sourcefile{editions}.  When the main \LaTeX\ file, \sourcefile{fcla.tex}, is processed, early on it will read in the file \sourcefile{editions/current-edition.tex}.  By changing this file, the look and content of the text can be changed from one run of \LaTeX\ to the next.  While you could edit this file, the preferred method is to create a brand new file, say \sourcefile{editions/my-edition.tex},with desired switches and then copy this new file as \sourcefile{editions/current-edition.tex} prior to processing.  By looking at the other edition files in the \sourcefile{editions} directory, you may be able to quickly infer how to make the most basic changes you desire.  To see exactly which switches are available, study the annotated \sourcefile{styles/fcla-switches.sty} file.\par
+%
+The presence, or absence, of exercises, solutions and reading questions can be controlled (respectively) by three switches.  Until switches are created to control individual parts, chapters, and sections, you can easily comment out parts of \sourcefile{fcla.tex} (near the end).  Studying the structure of the existing sections should be enough to learn how to add a new section.\par
+%
+To understand how a switch affects the look or structure of the book, either experiment or study the implementation, which should be limited to the files \sourcefile{fcla.tex} and \sourcefile{styles/fcla-developer.sty}.
+%
+\section*{Particular Changes: Mathematical Notation}
+%
+If your desire to customize is limited to changes in mathematical notation, study the \sourcefile{fcla-math.sty} file, which is long list of relatively straightforward one-line \LaTeX\ macros to effect the use and placement of certain symbols and structures.  A few of these rely on the AMS packages \rawtex{amssymb} and \rawtex{amsmath}.  For example, experiment by writing the transpose of a matrix $A$ as $\overline{A}$ rather than $A^t$.
+%
+\section*{\TeX\ Environment}
+%
+The book is written with the TeXLive distribution, as part of the Debian/Ubuntu Linux distribution.  A complete list of \LaTeX\ packages required can be found by searching through the \sourcefile{fcla.tex} file, which should result in about 10 external required packages.  Typically, it has been my experience that all of the necessary packages are part of the standard TeXLive distribution.
+%
+\section*{Acronyms}
+%
+Ever forget what Theorem 8.7.2 was about?  Me too.  So we use acronyms.  These serve several purposes.  If we add new sections, or rearrange sections, there is no numbering to mess up.  And while very confusing initially, after time, the more frequently used acronyms become familiar.  Acronyms or not, a key feature of text is the presence of links from {\bf applications} of theorems or definitions back to the {\bf statements} of theorems and definitions.  This works extremely well in electronic versions (PDF or XML) especially when a ``Back'' button can return you to wherever you were reading.  On paper we have to rely on page numbers for navigation.  as an open-source book, we have no hesitation about distributing electronic versions without digital rights restrictions, and so can take advantage of this hyperlinking.\par
+%
+Each ``structure'' in the book (sections, theorems, proof techniques, solutions to exercises) is assigned an acronym, and programatically also gets a target for use by the \rawtex{hyperref} package.  This is accomplished through macros that title each structure, often taking several arguments.  These can be found in \sourcefile{fcla-developer.sty} by searching for the \rawtex{hypertarget} macro buried deep inside other macros.\par
+%
+Every such hypertarget is a word, denoting some structural type (like a section or a theorem), followed by a period, and then the acronym.  So the hypertarget \rawtex{theorem.RCLS} is a reference to \acronymref{theorem}{RCLS}.  Acronyms can be recycled (witness \acronymref{chapter}{VS}, \acronymref{section}{VS}, \acronymref{subsection}{VS}, and \acronymref{definition}{VS} in rapid succession), but when types are considered they must be unique in order for linking to work properly.  If you are adding substantial new content, do a search (through the PDF version typically works just fine) before settlig on a newly-devised acronym, to be sure that it is not ``taken.''  Some structures, like exercises and computational notes are common to more than one section.  For example, there is more than one Exercise C30 and more than one computational note about matrix entry (ME).  These objects have more complicated acronyms, which are prefaced with section acronyms into a dotted form.  For example, \acronymref{Exercise}{VS.C30}, is the exercise labeled C30 in Section VS.\par
+%
+How do we link to these objects?  A very simple macro, \rawtex{acronymref}, takes two arguments.  The first is a lower-case name for the structure and the second is the acronym of the desired structure.  The macro makes the name upper-case for what the reader sees, followed by a space and then the acronym.  For the action of the link, it merely joins the type-name with the acronym by a period in the middle and employs the \rawtex{hyperlink} macro of the \rawtex{hyperref} package.  PDF versions get page numbers in links, the XML version does not.  The \rawtex{acronymref} macro is defined in the \sourcefile{fcla-developer.sty} file.
+%
+\section*{Source Tree Organization}
+%
+TODO.  A table of the various directories/files with brief descriptions.\par
+%
+\section*{\LaTeX\ style}
+%
+There has been an effort to make the source files readable and editable.  Please do the same.  Here are some hints, advice and requests.
+%
+\begin{itemize}
+\item No blank lines.  Ever.
+\item Use empty comment lines (just a \% in column 1) where you might want a blank line.
+\item Use empty comment lines to make the source mimic the typeset version.  For example, a theorem will have some vertical space above and below, so use an empty comment line before and after.
+\item It would be nice to ignore the width restriction of an 8.5 inch (or so) wide piece of paper.  In reality, people still seem to like physical books.  6.5 inch wide at 12pt is the design goal.
+\item TODO: familiarize with fcla-math.sty
+\item TODO: displayed math in align environment
+\item TODO: repeat in threes
+\item TODO: much more in this vein
+\end{itemize}
+%
+\section*{Computational Notes}
+%
+Computational Notes (CN) are meant to be short explanations of how to use the syntax and commands of a calculating device (calculator, computer algebra system, etc.).  It is not meant to be a how-to guide on starting the program, using the interface, etc.  There are good guides elsewhere for this, and no real point in duplicating those efforts.  Pointers to one or two stable, high-quality versions these resources could be a good idea though.\par
+%
+Ideally, a computational note appears, or is referenced, close to the first occurrence of a computation.  For example, the computation of a matrix inverse occurs in the first section to discuss a matrix inverse.  Of course, some computation notes are about manipulating the basic objects.  So the entry of a matrix occurs, or is referenced, close to the definition of a matrix.
+%
+\subsection*{Appearance of Computation Notes in Text}
+%
+CN's appear in the text in two possible ways.  They are collected in sections of \acronymref{appendix}{CN}, one section per computational device.  Or, they appear in the narrative, several notes together, all on the same computation (located nearby), describing several different systems.\par
+%
+Computation notes are organized as small files in the source, atomically describing one computation (topic) for one system (device).  The book displays some subset of the Cartesian product of ${\rm topics}\times {\rm devices}$.  Appearance in the appendix is device-major, while appearance in the narrative is topic-major.
+%
+\subsection*{Controlling Appearance of Computation Notes in Text}
+%
+One switch (reference discussion elsewhere about switches) controls whether or not CN's appear in the narrative or the appendix.  This switch is \rawtex{computenotes} and it can have the possible values: \rawtex{omit}, \rawtex{inline}, \rawtex{appendix} (\rawtex{inline} means in the narrative).  If the switch is not used, the default is \rawtex{appendix}.\par
+%
+Each computational ``device'' (calculator, software, etc) has a switch of its own.  For example, {\sl Mathematica} has a switch called, not suprisingly, \rawtex{mathematica}.  Each such switch, two values are possible: \rawtex{omit} and \rawtex{include}.  The default is \rawtex{include}.
+%
+\subsection*{Adding a New Device to the Source}
+%
+To initiate the inclusion of a new device, the editor needs to create a new device switch in \sourcefile{styles/fcla-switches.tex}, create a new directory in the source tree under \sourcefile{computenotes}, and settle on an acronym for the device (e.g. MMA for {\sl Mathematica}), and initiate a new section in the appendix (\sourcefile{appendix/CN.tex}) using the \rawtex{computenote} macro (see \sourcefile{styles/fcla-developer.sty} for usage).  The acronym for the device and the acronym for the corresponding subsection of the appendix must be identical.  If you are the first to contribute notes for a particular device, please collaborate with the editor on these choices before starting.\par
+%
+\subsection*{Adding a New Note to the Source}
+%
+Assume now that everything is in place for a particular device and you have a new note to add.  If the computation you describe already has notes for other devices than it is easy.  Place your note into the device's subdirectory of \sourcefile{computenotes}, using the same acronym for the computation as is used for the other devices.  Acronym is the upper-case basename of the file, with \sourcefile{.tex} as the extension.  At the location in the narrative where the CN occurs, or is referenced, add to the \rawtex{computenote} macro.  The device switch creates a \LaTeX\ boolean which begins with \rawtex{has}, followed by the device switch.  This boolean is used three times in the \rawtex{computenote} macro (described below) and you can mimic the uses for the other devices.  There also needs to be a single line added to the subsection of \acronymref{appendix}{CN} using the \rawtex{computedevicetopic} macro (documented in \sourcefile{styles/fcla-developer.sty}).\par
+%
+If you want to add a new computational topic for your device (in other words, none of the other devices has been documented for some particular computation), then you need to construct a use of the \rawtex{computenote} macro in the narrative and decide on an acronym for the computation.  This macro takes four arguments.  The first is a list of boolean switches, all OR'ed together, with the effect that if the edition being processed includes no devices that have descriptions of this computation, then we add nothing to the text (i.e.\ we are silent).  Otherwise, the second argument is a short paragraph introducing the computation in the context of the text, making a smooth transition.  The third argument is a list of \rawtex{computedevicetopic} macros, wrapped in \rawtex{ifthenelse} macros.  If we are including notes in the narrative, and desire notes for a particular device, this is how the note is incorporated in the narrative.  The fourth argument is a list of links (the \rawtex{acronymref} macro) to the notes in \acronymref{appendix}{CN}.\par
+%
+If you are a contributor, you can simply create notes for the subdirectory of \sourcefile{computenotes}, being careful to name the files properly.  The editor can make the appropriate changes elsewhere to make the notes appear.
+%
+\subsection*{Acronyms and Links for Computation Notes}
+%
+The \rawtex{computedevicetopic} macro creates a \rawtex{hyperref} macro of the form \rawtex{computation.topicacronym.deviceacronym}, so for example \rawtex{computation.ME.MMA} will reference the matrix entry (ME) note for {\sl Mathematica} (MMA).  Then \rawtex{acronymref\{computation\}\{ME.MMA\}} will be a link to this note.
+%
+\subsection*{Formatting Computation Notes}
+%
+The only special note about formatting the \LaTeX\ source, aside from what is said elsewhere, is the use of the \rawtex{computerfont} macro which is intended to wrap literal commands to the device in a distinctive font.
+
+
+%%  Page numbers, a no-no
+
+%%  Exercises, content and source tree organization
+
+\end{document}

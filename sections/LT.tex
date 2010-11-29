@@ -1,0 +1,1137 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section LT
+%%  Linear Transformations
+%%
+%%%%%%%%%%%DB
+%
+Early in \acronymref{chapter}{VS} we prefaced the definition of a vector space with the comment that it was ``one of the two most important definitions in the entire course.''  Here comes the other.  Any capsule summary of linear algebra would have to describe the subject as the interplay of linear transformations and vector spaces.  Here we go.
+%
+\subsect{LT}{Linear Transformations}
+%
+\begin{definition}{LT}{Linear Transformation}{linear transformation}
+A \define{linear transformation}, $\ltdefn{T}{U}{V}$, is a function that carries elements of the vector space $U$ (called the \define{domain}) to the vector space $V$ (called the \define{codomain}), and which has two additional properties
+%
+\begin{enumerate}
+\item $\lt{T}{\vect{u}_1+\vect{u}_2}=\lt{T}{\vect{u}_1}+\lt{T}{\vect{u}_2}$ for all $\vect{u}_1,\,\vect{u}_2\in U$
+\item $\lt{T}{\alpha\vect{u}}=\alpha\lt{T}{\vect{u}}$ for all $\vect{u}\in U$ and all $\alpha\in\complex{\null}$
+\end{enumerate}
+%
+\denote{LT}{Linear Transformation}{$\ltdefn{T}{U}{V}$}{linear transformation}
+\end{definition}
+%
+The two defining conditions in the definition of a linear transformation should ``feel linear,'' whatever that means.  Conversely, these two conditions could be taken as {\em exactly} what it means {\em to be} linear.  As every vector space property derives from vector addition and scalar multiplication, so too, every property of a linear transformation derives from these two defining properties.  While these conditions may be reminiscent of how we test subspaces, they really are quite different, so do not confuse the two.\par
+%
+Here are two diagrams that convey the essence of the two defining properties of a linear transformation.  In each case, begin in the upper left-hand corner, and follow the arrows around the rectangle to the lower-right hand corner, taking two different routes and doing the indicated operations labeled on the arrows.  There are two results there.  For a linear transformation these two expressions are always equal.
+%
+\diagram{DLTA}{Definition of Linear Transformation, Additive}
+\diagram{DLTM}{Definition of Linear Transformation, Multiplicative}
+%
+A couple of words about notation.  $T$ is the {\em name} of the linear transformation, and should be used when we want to discuss the function as a whole.  $\lt{T}{\vect{u}}$ is how we talk about the output of the function, it is a vector in the vector space $V$.  When we write $\lt{T}{\vect{x}+\vect{y}}=\lt{T}{\vect{x}}+\lt{T}{\vect{y}}$, the plus sign on the left is the operation of vector addition in the vector space $U$, since $\vect{x}$ and $\vect{y}$ are elements of $U$.  The plus sign on the right is the operation of vector addition in the vector space $V$, since $\lt{T}{\vect{x}}$ and $\lt{T}{\vect{y}}$ are elements of the vector space $V$.  These two instances of vector addition might be wildly different.\par
+%
+Let's examine several examples and begin to form a catalog of known linear transformations to work with.
+%
+\begin{example}{ALT}{A linear transformation}{linear transformation!checking}
+Define $\ltdefn{T}{\complex{3}}{\complex{2}}$ by describing the output of the function for a generic input with the formula
+%
+\begin{equation*}
+\lt{T}{\colvector{x_1\\x_2\\x_3}}=\colvector{2x_1+x_3\\-4x_2}
+\end{equation*}
+%
+and check the two defining properties.
+\begin{align*}
+\lt{T}{\vect{x}+\vect{y}}
+&=\lt{T}{\colvector{x_1\\x_2\\x_3}+\colvector{y_1\\y_2\\y_3}}\\
+&=\lt{T}{\colvector{x_1+y_1\\x_2+y_2\\x_3+y_3}}\\
+&=\colvector{2(x_1+y_1)+(x_3+y_3)\\-4(x_2+y_2)}\\
+&=\colvector{(2x_1+x_3)+(2y_1+y_3)\\-4x_2+(-4)y_2}\\
+&=\colvector{2x_1+x_3\\-4x_2}+\colvector{2y_1+y_3\\-4y_2}\\
+&=\lt{T}{\colvector{x_1\\x_2\\x_3}}+\lt{T}{\colvector{y_1\\y_2\\y_3}}\\
+&=\lt{T}{\vect{x}}+\lt{T}{\vect{y}}
+%
+\intertext{and}
+%
+\lt{T}{\alpha\vect{x}}
+&=\lt{T}{\alpha\colvector{x_1\\x_2\\x_3}}\\
+&=\lt{T}{\colvector{\alpha x_1\\\alpha x_2\\\alpha x_3}}\\
+&=\colvector{2(\alpha x_1)+(\alpha x_3)\\-4(\alpha x_2)}\\
+&=\colvector{\alpha(2x_1+x_3)\\\alpha(-4x_2)}\\
+&=\alpha\colvector{2x_1+x_3\\-4x_2}\\
+&=\alpha\lt{T}{\colvector{x_1\\x_2\\x_3}}\\
+&=\alpha\lt{T}{\vect{x}}\\
+\end{align*}
+%
+So by \acronymref{definition}{LT}, $T$ is a linear transformation.
+%
+\end{example}
+%
+It can be just as instructive to look at functions that are {\em not} linear transformations.  Since the defining conditions must be true for {\em all} vectors and scalars, it is enough to find just one situation where the properties fail.
+%
+\begin{example}{NLT}{Not a linear transformation}{linear transformation!not}
+%
+Define $\ltdefn{S}{\complex{3}}{\complex{3}}$ by
+%
+\begin{equation*}
+\lt{S}{\colvector{x_1\\x_2\\x_3}}=\colvector{4x_1+2x_2\\0\\x_1+3x_3-2}
+\end{equation*}
+%
+This function ``looks'' linear, but consider
+%
+\begin{align*}
+3\,\lt{S}{\colvector{1\\2\\3}}&=3\,\colvector{8\\0\\8}=\colvector{24\\0\\24}
+\intertext{while}
+\lt{S}{3\,\colvector{1\\2\\3}}&=\lt{S}{\colvector{3\\6\\9}}=\colvector{24\\0\\28}
+\end{align*}
+%
+So the second required property fails for the choice of $\alpha=3$ and $\vect{x}=\colvector{1\\2\\3}$ and by \acronymref{definition}{LT}, $S$ is not a linear transformation.  It is just about as easy to find an example where the first defining property fails (try it!).  Notice that it is the ``-2'' in the third component of the definition of $S$ that prevents the function from being a linear transformation.
+%
+\end{example}
+%
+%
+\begin{example}{LTPM}{Linear transformation, polynomials to matrices}{linear transformation!polynomials to matrices}
+Define a linear transformation $\ltdefn{T}{P_3}{M_{22}}$ by
+%
+\begin{equation*}
+\lt{T}{a+bx+cx^2+dx^3}=\begin{bmatrix}a+b&a-2c\\d&b-d\end{bmatrix}
+\end{equation*}
+%
+We verify the two defining conditions of a linear transformations.
+%
+\begin{align*}
+\lt{T}{\vect{x}+\vect{y}}&=
+\lt{T}{(a_1+b_1x+c_1x^2+d_1x^3)+(a_2+b_2x+c_2x^2+d_2x^3)}\\
+&=\lt{T}{(a_1+a_2)+(b_1+b_2)x+(c_1+c_2)x^2+(d_1+d_2)x^3}\\
+%
+&=\begin{bmatrix}
+(a_1+a_2)+(b_1+b_2)&(a_1+a_2)-2(c_1+c_2)\\
+d_1+d_2&(b_1+b_2)-(d_1+d_2)
+\end{bmatrix}\\
+%
+&=\begin{bmatrix}
+(a_1+b_1)+(a_2+b_2)&(a_1-2c_1)+(a_2-2c_2)\\
+d_1+d_2&(b_1-d_1)+(b_2-d_2)
+\end{bmatrix}\\
+%
+&=\begin{bmatrix}a_1+b_1&a_1-2c_1\\d_1&b_1-d_1\end{bmatrix}+
+     \begin{bmatrix}a_2+b_2&a_2-2c_2\\d_2&b_2-d_2\end{bmatrix}\\
+&=\lt{T}{a_1+b_1x+c_1x^2+d_1x^3}+\lt{T}{a_2+b_2x+c_2x^2+d_2x^3}\\
+&=\lt{T}{\vect{x}}+\lt{T}{\vect{y}}
+%
+\intertext{and}
+%
+\lt{T}{\alpha\vect{x}}&=\lt{T}{\alpha(a+bx+cx^2+dx^3)}\\
+&=\lt{T}{(\alpha a)+(\alpha b)x+(\alpha c)x^2+(\alpha d)x^3}\\
+&=\begin{bmatrix}
+(\alpha a)+(\alpha b)&(\alpha a)-2(\alpha c)\\
+\alpha d&(\alpha b)-(\alpha d)
+\end{bmatrix}\\
+%
+&=\begin{bmatrix}
+\alpha(a+b)&\alpha(a-2c)\\
+\alpha d&\alpha(b-d)
+\end{bmatrix}\\
+%
+&=\alpha\begin{bmatrix}a+b&a-2c\\d&b-d\end{bmatrix}\\
+&=\alpha\lt{T}{a+bx+cx^2+dx^3}\\
+&=\alpha\lt{T}{\vect{x}}
+\end{align*}
+%
+So by \acronymref{definition}{LT}, $T$ is a linear transformation.
+%
+\end{example}
+%
+%
+\begin{example}{LTPP}{Linear transformation, polynomials to polynomials}{linear transformation! polynomials to polynomials}
+Define a function $\ltdefn{S}{P_4}{P_5}$ by
+%
+\begin{equation*}
+S(p(x))=(x-2)p(x)
+\end{equation*}
+%
+Then
+%
+\begin{align*}
+\lt{S}{p(x)+q(x)}&=(x-2)(p(x)+q(x))=(x-2)p(x)+(x-2)q(x)=\lt{S}{p(x)}+\lt{S}{q(x)}\\
+\lt{S}{\alpha p(x)}&=(x-2)(\alpha p(x))=(x-2)\alpha p(x)=\alpha(x-2)p(x)=\alpha\lt{S}{p(x)}
+\end{align*}
+%
+So by \acronymref{definition}{LT}, $S$ is a linear transformation.
+%
+\end{example}
+%
+Linear transformations have many amazing properties, which we will investigate through the next few sections.  However, as a taste of things to come, here is a theorem we can prove now and put to use immediately.
+%
+\begin{theorem}{LTTZZ}{Linear Transformations Take Zero to Zero}{linear transformation!zero vector}
+Suppose $\ltdefn{T}{U}{V}$ is a linear transformation.  Then $\lt{T}{\zerovector}=\zerovector$.
+\end{theorem}
+%
+\begin{proof}
+The two zero vectors in the conclusion of the theorem are different.  The first is from $U$ while the second is from $V$.  We will subscript the zero vectors in this proof to highlight the distinction.  Think about your objects.  (This proof is contributed by \markshoemaker).
+%
+\begin{align*}
+\lt{T}{\zerovector_U}
+&=\lt{T}{0\zerovector_U}
+&&\text{\acronymref{theorem}{ZSSM} in $U$}\\
+%
+&=0\lt{T}{\zerovector_U}
+&&\text{\acronymref{definition}{LT}}\\
+%
+&=\zerovector_V
+&&\text{\acronymref{theorem}{ZSSM} in $V$}
+%
+\end{align*}
+%
+\end{proof}
+%
+Return to \acronymref{example}{NLT} and compute $\lt{S}{\colvector{0\\0\\0}}=\colvector{0\\0\\-2}$ to quickly see again that $S$ is not a linear transformation, while in \acronymref{example}{LTPM}  compute $\lt{S}{0+0x+0x^2+0x^3}=\begin{bmatrix}0&0\\0&0\end{bmatrix}$ as an example of \acronymref{theorem}{LTTZZ} at work.
+%
+\subsect{LTC}{Linear Transformation Cartoons}
+%
+Throughout this chapter, and \acronymref{chapter}{R}, we will include drawings of linear transformations.  We will call them ``cartoons,'' not because they are humorous, but because they will only expose a portion of the truth.  A Bugs Bunny cartoon might give us some insights on human nature, but the rules of physics and biology are routinely (and grossly) violated.  So it will be with our \define{linear transformation cartoons}.  Here is our first, followed by a guide to help you understand how these are meant to describe fundamental truths about linear transformations, while simultaneously violating other truths.
+%
+\diagram{GLT}{General Linear Transformation}
+%
+Here we picture a linear transformation $\ltdefn{T}{U}{V}$, where this information will be consistently displayed along the bottom edge.  The ovals are meant to represent the vector spaces, in this case $U$, the domain, on the left and $V$, the codomain, on the right.  Of course, vector spaces are typically infinite sets, so you'll have to imagine that characteristic of these sets.  A small dot inside of an oval will represent a vector within that vector space, sometimes with a name, sometimes not (in this case every vector has a name).  The sizes of the ovals are meant to be proportional to the dimensions of the vector spaces.  However, when we make no assumptions about the dimensions, we will draw the ovals as the same size, as we have done here (which is not meant to suggest that the dimensions have to be equal).\par
+%
+To convey that the linear transformation associates a certain input with a certain output, we will draw an arrow from the input to the output.  So, for example, in this cartoon we suggest that $\lt{T}{\vect{x}}=\vect{y}$.  Nothing in the definition of a linear transformation prevents two different inputs being sent to the same output and we see this in $\lt{T}{\vect{u}}=\vect{v}=\lt{T}{\vect{w}}$.  Similarly, an output may not have any input being sent its way, as illustrated by no arrow pointing at $\vect{t}$.  In this cartoon, we have captured the essence of our one general theorem about linear transformations, \acronymref{theorem}{LTTZZ}, $\lt{T}{\zerovector_U}=\zerovector_V$.  On occasion we might include this basic fact when it is relevant, at other times maybe not.  Note that the definition of a linear transformation requires that it be a function, so every element of the domain should be associated with some element of the codomain.  This will be reflected by never having an element of the domain without an arrow originating there.\par
+%
+These cartoons are of course no substitute for careful definitions and proofs, but they can be a handy way to think about the various properties we will be studying.
+%
+\subsect{MLT}{Matrices and Linear Transformations}
+%
+If you give me a matrix, then I can quickly build you a linear transformation.  Always.  First a motivating example and then the theorem.
+%
+\begin{example}{LTM}{Linear transformation from a matrix}{linear transformation!defined by a matrix}
+Let
+%
+\begin{equation*}
+A=
+\begin{bmatrix}
+3&-1&8&1\\
+2&0&5&-2\\
+1&1&3&-7
+\end{bmatrix}
+\end{equation*}
+%
+and define a function $\ltdefn{P}{\complex{4}}{\complex{3}}$ by
+%
+\begin{equation*}
+\lt{P}{\vect{x}}=A\vect{x}
+\end{equation*}
+%
+So we are using an old friend, the matrix-vector product (\acronymref{definition}{MVP}) as a way to convert a vector with 4 components into a vector with 3 components.  Applying \acronymref{definition}{MVP} allows us to write the defining formula for $P$ in a slightly different form,
+%
+\begin{equation*}
+\lt{P}{\vect{x}}=A\vect{x}=
+\begin{bmatrix}
+3&-1&8&1\\
+2&0&5&-2\\
+1&1&3&-7
+\end{bmatrix}
+\colvector{x_1\\x_2\\x_3\\x_4}
+=
+x_1\colvector{3\\2\\1}+
+x_2\colvector{-1\\0\\1}+
+x_3\colvector{8\\5\\3}+
+x_4\colvector{1\\-2\\-7}
+\end{equation*}
+%
+So we recognize the action of the function $P$ as using the components of the vector ($x_1,\,x_2,\,x_3,\,x_4$) as scalars to form the output of $P$ as a linear combination of the four columns of the matrix $A$, which are all members of $\complex{3}$, so the result is a vector in $\complex{3}$.  We can rearrange this expression further, using our definitions of operations in $\complex{3}$ (\acronymref{section}{VO}).
+%
+\begin{align*}
+\lt{P}{\vect{x}}
+&=A\vect{x}&&\text{Definition of $P$}\\
+%
+&=
+x_1\colvector{3\\2\\1}+
+x_2\colvector{-1\\0\\1}+
+x_3\colvector{8\\5\\3}+
+x_4\colvector{1\\-2\\-7}&&\text{\acronymref{definition}{MVP}}\\
+%
+&=
+\colvector{3x_1\\2x_1\\x_1}+
+\colvector{-x_2\\0\\x_2}+
+\colvector{8x_3\\5x_3\\3x_3}+
+\colvector{x_4\\-2x_4\\-7x_4}&&\text{\acronymref{definition}{CVSM}}\\
+%
+&=\colvector{3x_1-x_2+8x_3+x_4\\2x_1+5x_3-2x_4\\x_1+x_2+3x_3-7x_4}&&\text{\acronymref{definition}{CVA}}
+%
+\end{align*}
+%
+You might recognize this final expression as being similar in style to some previous examples (\acronymref{example}{ALT}) and some linear transformations defined in the archetypes (\acronymref{archetype}{M} through \acronymref{archetype}{R}).  But the expression that says the output of this linear transformation is a linear combination of the columns of $A$ is probably the most powerful way of thinking about examples of this type.\par
+%
+Almost forgot --- we should verify that $P$ is indeed a linear transformation.  This is easy with two matrix properties from \acronymref{section}{MM}.
+%
+\begin{align*}
+\lt{P}{\vect{x}+\vect{y}}
+&=A\left(\vect{x}+\vect{y}\right)&&\text{Definition of $P$}\\
+&=A\vect{x}+A\vect{y}&&\text{\acronymref{theorem}{MMDAA}}\\
+&=\lt{P}{\vect{x}}+\lt{P}{\vect{y}}&&\text{Definition of $P$}
+%
+\intertext{and}
+%
+\lt{P}{\alpha\vect{x}}
+&=A\left(\alpha\vect{x}\right)&&\text{Definition of $P$}\\
+&=\alpha\left(A\vect{x}\right)&&\text{\acronymref{theorem}{MMSMM}}\\
+&=\alpha\lt{P}{\vect{x}}&&\text{Definition of $P$}
+\end{align*}
+%
+So by \acronymref{definition}{LT}, $P$ is a linear transformation.
+%
+\end{example}
+%
+So the multiplication of a vector by a matrix ``transforms'' the input vector into an output vector, possibly of a different size, by performing a linear combination.  And this transformation happens in a ``linear'' fashion.  This ``functional'' view of the matrix-vector product is the most important shift you can make right now in how you think about linear algebra.  Here's the theorem, whose proof is very nearly an exact copy of the verification in the last example.
+%
+\begin{theorem}{MBLT}{Matrices Build Linear Transformations}{linear transformations!from matrices}
+Suppose that $A$ is an $m\times n$ matrix.  Define a function $\ltdefn{T}{\complex{n}}{\complex{m}}$ by $\lt{T}{\vect{x}}=A\vect{x}$.  Then $T$ is a linear transformation.
+\end{theorem}
+%
+\begin{proof}
+%
+%
+\begin{align*}
+\lt{T}{\vect{x}+\vect{y}}
+&=A\left(\vect{x}+\vect{y}\right)&&\text{Definition of $T$}\\
+&=A\vect{x}+A\vect{y}&&\text{\acronymref{theorem}{MMDAA}}\\
+&=\lt{T}{\vect{x}}+\lt{T}{\vect{y}}&&\text{Definition of $T$}
+%
+\intertext{and}
+%
+\lt{T}{\alpha\vect{x}}
+&=A\left(\alpha\vect{x}\right)&&\text{Definition of $T$}\\
+&=\alpha\left(A\vect{x}\right)&&\text{\acronymref{theorem}{MMSMM}}\\
+&=\alpha\lt{T}{\vect{x}}&&\text{Definition of $T$}
+\end{align*}
+%
+So by \acronymref{definition}{LT}, $T$ is a linear transformation.
+%
+\end{proof}
+%
+So \acronymref{theorem}{MBLT} gives us a rapid way to construct linear transformations.  Grab an $m\times n$ matrix $A$, define $\lt{T}{\vect{x}}=A\vect{x}$ and \acronymref{theorem}{MBLT} tells us that $T$ is a linear transformation from $\complex{n}$ to $\complex{m}$, without any further checking.\par
+%
+We can turn \acronymref{theorem}{MBLT} around.  You give me a linear transformation and I will give you a matrix.
+%
+\begin{example}{MFLT}{Matrix from a linear transformation}{linear transformation!matrix of}
+Define the function $\ltdefn{R}{\complex{3}}{\complex{4}}$ by
+%
+\begin{equation*}
+\lt{R}{\colvector{x_1\\x_2\\x_3}}=
+\colvector{2x_1-3x_2+4x_3\\x_1+x_2+x_3\\-x_1+5x_2-3x_3\\x_2-4x_3}
+\end{equation*}
+%
+You could verify that $R$ is a linear transformation by applying the definition, but we will instead massage the expression defining a typical output until we recognize the form of a known class of linear transformations.
+%
+\begin{align*}
+\lt{R}{\colvector{x_1\\x_2\\x_3}}&=
+\colvector{2x_1-3x_2+4x_3\\x_1+x_2+x_3\\-x_1+5x_2-3x_3\\x_2-4x_3}\\
+%
+&=
+\colvector{2x_1\\x_1\\-x_1\\0}+
+\colvector{-3x_2\\x_2\\5x_2\\x_2}+
+\colvector{4x_3\\x_3\\-3x_3\\-4x_3}&&\text{\acronymref{definition}{CVA}}\\
+%
+&=
+x_1\colvector{2\\1\\-1\\0}+
+x_2\colvector{-3\\1\\5\\1}+\
+x_3\colvector{4\\1\\-3\\-4}&&\text{\acronymref{definition}{CVSM}}\\
+%
+&=
+\begin{bmatrix}
+2&-3&4\\
+1&1&1\\
+-1&5&-3\\
+0&1&-4
+\end{bmatrix}
+\colvector{x_1\\x_2\\x_3}&&\text{\acronymref{definition}{MVP}}
+%
+\end{align*}
+%
+So if we define the matrix
+%
+\begin{equation*}
+B=
+\begin{bmatrix}
+2&-3&4\\
+1&1&1\\
+-1&5&-3\\
+0&1&-4
+\end{bmatrix}
+\end{equation*}
+%
+then $\lt{R}{\vect{x}}=B\vect{x}$.  By \acronymref{theorem}{MBLT}, we can easily recognize $R$ as a linear transformation since it has the form described in the hypothesis of the theorem.
+%
+\end{example}
+%
+\acronymref{example}{MFLT} was not accident.  Consider any one of the archetypes where both the domain and codomain are sets of column vectors (\acronymref{archetype}{M} through \acronymref{archetype}{R}) and you should be able to mimic the previous example.  Here's the theorem, which is notable since it is our first occasion to use the full power of the defining properties of a linear transformation when our hypothesis includes a linear transformation.
+%
+\begin{theorem}{MLTCV}{Matrix of a Linear Transformation, Column Vectors}{matrix!of a linear transformation}
+\index{linear transformation!matrix of}
+Suppose that $\ltdefn{T}{\complex{n}}{\complex{m}}$ is a linear transformation.  Then there is an $m\times n$ matrix $A$ such that $\lt{T}{\vect{x}}=A\vect{x}$.
+\end{theorem}
+%
+\begin{proof}
+The conclusion says a certain matrix exists.  What better way to prove something exists than to actually build it?  So our proof will be constructive (\acronymref{technique}{C}), and the procedure that we will use abstractly in the proof can be used concretely in specific examples.\par
+%
+Let $\vectorlist{e}{n}$ be the columns of the identity matrix of size $n$, $I_n$ (\acronymref{definition}{SUV}).  Evaluate the linear transformation $T$ with each of these standard unit vectors as an input, and record the result.  In other words, define $n$ vectors in $\complex{m}$, $\vect{A}_i$, $1\leq i\leq n$ by 
+%
+\begin{equation*}
+\vect{A}_i=\lt{T}{\vect{e}_i}
+\end{equation*}
+%
+Then package up these vectors as the columns of a matrix
+%
+\begin{equation*}
+A=\matrixcolumns{A}{n}
+\end{equation*}
+%
+Does $A$ have the desired properties?  First, $A$ is clearly an $m\times n$ matrix.  Then
+%
+\begin{align*}
+\lt{T}{\vect{x}}
+&=\lt{T}{I_n\vect{x}}
+&&\text{\acronymref{theorem}{MMIM}}\\
+%
+&=\lt{T}{\matrixcolumns{e}{n}\vect{x}}
+&&\text{\acronymref{definition}{SUV}}\\
+%
+&=\lt{T}{
+\vectorentry{\vect{x}}{1}\vect{e}_1+
+\vectorentry{\vect{x}}{2}\vect{e}_2+
+\vectorentry{\vect{x}}{3}\vect{e}_3+
+\cdots+
+\vectorentry{\vect{x}}{n}\vect{e}_n
+}
+&&\text{\acronymref{definition}{MVP}}\\
+%
+&=
+\lt{T}{\vectorentry{\vect{x}}{1}\vect{e}_1}+
+\lt{T}{\vectorentry{\vect{x}}{2}\vect{e}_2}+
+\lt{T}{\vectorentry{\vect{x}}{3}\vect{e}_3}+
+\cdots+
+\lt{T}{\vectorentry{\vect{x}}{n}\vect{e}_n}
+&&\text{\acronymref{definition}{LT}}\\
+%
+&=
+\vectorentry{\vect{x}}{1}\lt{T}{\vect{e}_1}+
+\vectorentry{\vect{x}}{2}\lt{T}{\vect{e}_2}+
+\vectorentry{\vect{x}}{3}\lt{T}{\vect{e}_3}+
+\cdots+
+\vectorentry{\vect{x}}{n}\lt{T}{\vect{e}_n}
+&&\text{\acronymref{definition}{LT}}\\
+%
+&=
+\vectorentry{\vect{x}}{1}{\vect{A}_1}+
+\vectorentry{\vect{x}}{2}{\vect{A}_2}+
+\vectorentry{\vect{x}}{3}{\vect{A}_3}+
+\cdots+
+\vectorentry{\vect{x}}{n}{\vect{A}_n}
+&&\text{Definition of $\vect{A}_i$}\\
+%
+&=A\vect{x}
+&&\text{\acronymref{definition}{MVP}}
+%
+\end{align*}
+%
+as desired.
+%
+\end{proof}
+%
+So if we were to restrict our study of linear transformations to those where the domain and codomain are both vector spaces of column vectors (\acronymref{definition}{VSCV}), every matrix leads to a linear transformation of this type (\acronymref{theorem}{MBLT}), while every such linear transformation leads to a matrix (\acronymref{theorem}{MLTCV}).  So matrices and linear transformations are fundamentally the same.  We call the matrix $A$ of \acronymref{theorem}{MLTCV} the \define{matrix representation} of $T$.\par
+%
+We have defined linear transformations for more general vector spaces than just $\complex{m}$, can we extend this correspondence between linear transformations and matrices to more general linear transformations (more general domains and codomains)?  Yes, and this is the main theme of \acronymref{chapter}{R}.  Stay tuned.  For now, let's illustrate \acronymref{theorem}{MLTCV} with an example.\par
+%
+\begin{example}{MOLT}{Matrix of a linear transformation}{linear transformation!matrix of}
+%
+Suppose $\ltdefn{S}{\complex{3}}{\complex{4}}$ is defined by
+%
+\begin{equation*}
+\lt{S}{\colvector{x_1\\x_2\\x_3}}=\colvector{3x_1-2x_2+5x_3\\x_1+x_2+x_3\\9x_1-2x_2+5x_3\\4x_2}
+\end{equation*}
+%
+Then
+%
+\begin{align*}
+\vect{C}_1&=\lt{S}{\vect{e_1}}=\lt{S}{\colvector{1\\0\\0}}=\colvector{3\\1\\9\\0}\\
+\vect{C}_2&=\lt{S}{\vect{e_2}}=\lt{S}{\colvector{0\\1\\0}}=\colvector{-2\\1\\-2\\4}\\
+\vect{C}_3&=\lt{S}{\vect{e_3}}=\lt{S}{\colvector{0\\0\\1}}=\colvector{5\\1\\5\\0}
+\end{align*}
+%
+so define
+%
+\begin{equation*}
+C=\left[C_1|C_2|C_3\right]=
+\begin{bmatrix}
+3&-2&5\\
+1&1&1\\
+9&-2&5\\
+0&4&0
+\end{bmatrix}
+\end{equation*}
+%
+and \acronymref{theorem}{MLTCV} guarantees that $\lt{S}{\vect{x}}=C\vect{x}$.\par
+%
+As an illuminating exercise, let $\vect{z}=\colvector{2\\-3\\3}$ and compute $\lt{S}{\vect{z}}$ two different ways.  First, return to the definition of $S$ and evaluate $\lt{S}{\vect{z}}$ directly.  Then do the matrix-vector product $C\vect{z}$.  In both cases you should obtain the vector $\lt{S}{\vect{z}}=\colvector{27\\2\\39\\-12}$.
+%
+\end{example}
+%
+\subsect{LTLC}{Linear Transformations and Linear Combinations}
+%
+It is the interaction between linear transformations and linear combinations that lies at the heart of many of the important theorems of linear algebra.  The next theorem distills the essence of this.  The proof is not deep, the result is hardly startling, but it will be referenced frequently.  We have already passed by one occasion to employ it, in the proof of \acronymref{theorem}{MLTCV}.  Paraphrasing, this theorem says that we can ``push'' linear transformations ``down into'' linear combinations, or ``pull'' linear transformations ``up out'' of linear combinations.  We'll have opportunities to both push and pull.
+%
+\begin{theorem}{LTLC}{Linear Transformations and Linear Combinations}{linear transformation!linear combination}
+\index{linear combination!linear transformation}
+Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation, $\vectorlist{u}{t}$ are vectors from $U$ and $\scalarlist{a}{t}$ are scalars from $\complex{\null}$.  Then
+%
+\begin{equation*}
+\lt{T}{\lincombo{a}{u}{t}}
+=
+a_1\lt{T}{\vect{u}_1}+
+a_2\lt{T}{\vect{u}_2}+
+a_3\lt{T}{\vect{u}_3}+\cdots+
+a_t\lt{T}{\vect{u}_t}
+\end{equation*}
+%
+\end{theorem}
+%
+\begin{proof}
+%
+\begin{align*}
+&\lt{T}{\lincombo{a}{u}{t}}\\
+&\quad\quad=
+\lt{T}{a_1\vect{u}_1}+
+\lt{T}{a_2\vect{u}_2}+
+\lt{T}{a_3\vect{u}_3}+\cdots+
+\lt{T}{a_t\vect{u}_t}&&\text{\acronymref{definition}{LT}}\\
+&\quad\quad=
+a_1\lt{T}{\vect{u}_1}+
+a_2\lt{T}{\vect{u}_2}+
+a_3\lt{T}{\vect{u}_3}+\cdots+
+a_t\lt{T}{\vect{u}_t}&&\text{\acronymref{definition}{LT}}
+\end{align*}
+%
+\end{proof}
+%
+Some authors, especially in more advanced texts, take the conclusion of \acronymref{theorem}{LTLC} as the defining condition of a linear transformation.  This has the appeal of being a single condition, rather than the two-part condition of \acronymref{definition}{LT}.  (See \acronymref{exercise}{LT.T20}).\par
+%
+Our next theorem says, informally, that it is enough to know how a linear transformation behaves for inputs from any basis of the domain, and {\em all} the other outputs are described by a linear combination of these few values.  Again, the statement of the theorem, and its proof, are not remarkable, but the insight that goes along with it is very fundamental.
+%
+\begin{theorem}{LTDB}{Linear Transformation Defined on a Basis}{linear transformation!defined on a basis}
+Suppose $B=\set{\vectorlist{u}{n}}$ is a basis for the vector space $U$ and $\vectorlist{v}{n}$ is a list of vectors from the vector space $V$ (which are not necessarily distinct).   Then there is a unique linear transformation, $\ltdefn{T}{U}{V}$, such that $\lt{T}{\vect{u}_i}=\vect{v}_i$, $1\leq i\leq n$.
+%
+\end{theorem}
+%
+\begin{proof}
+%
+To prove the existence of $T$, we construct a function and show that it is a linear transformation (\acronymref{technique}{C}).  Suppose $\vect{w}\in U$ is an arbitrary element of the domain.  Then by \acronymref{theorem}{VRRB} there are unique scalars $\scalarlist{a}{n}$ such that 
+%
+\begin{align*}
+\vect{w}&=\lincombo{a}{u}{n}
+%
+\intertext{Then {\em define}}
+%
+\lt{T}{\vect{w}}&=\lincombo{a}{v}{n}
+\end{align*}
+%
+It should be clear that $T$ behaves as required for $n$ inputs from $B$.  Since the scalars provided by \acronymref{theorem}{VRRB} are unique, there is no ambiguity in this definition, and $T$ qualifies as a function with domain $U$ and codomain $V$ (i.e.\ $T$ is well-defined).  But is $T$ a linear transformation as well?\par
+%
+Let $\vect{x}\in U$ be a second element of the domain, and suppose the scalars provided by \acronymref{theorem}{VRRB} (relative to $B$) are $\scalarlist{b}{n}$.  Then
+%
+\begin{align*}
+\lt{T}{\vect{w}+\vect{x}}&=
+\lt{T}{
+a_1\vect{u}_1+
+a_2\vect{u}_2+
+\cdots+
+a_n\vect{u}_n+
+b_1\vect{u}_1+
+b_2\vect{u}_2+
+\cdots+
+b_n\vect{u}_n
+}\\
+%
+&=
+\lt{T}{
+\left(a_1+b_1\right)\vect{u}_1+
+\left(a_2+b_2\right)\vect{u}_2+
+\cdots+
+\left(a_n+b_n\right)\vect{u}_n
+}
+&&\text{\acronymref{definition}{VS}}\\
+%
+&=
+\left(a_1+b_1\right)\vect{v}_1+
+\left(a_2+b_2\right)\vect{v}_2+
+\cdots+
+\left(a_n+b_n\right)\vect{v}_n
+&&\text{Definition of $T$}\\
+%
+&=
+a_1\vect{v}_1+
+a_2\vect{v}_2+
+\cdots+
+a_n\vect{v}_n+
+b_1\vect{v}_1+
+b_2\vect{v}_2+
+\cdots+
+b_n\vect{v}_n
+&&\text{\acronymref{definition}{VS}}\\
+%
+&=\lt{T}{\vect{w}}+\lt{T}{\vect{x}}
+%
+\end{align*}
+%
+Let $\alpha\in\complexes$ be any scalar.  Then
+%
+\begin{align*}
+\lt{T}{\alpha\vect{w}}&=
+\lt{T}{\alpha\left(\lincombo{a}{u}{n}\right)}\\
+%
+&=
+\lt{T}{\lincombo{\alpha a}{u}{n}}
+&&\text{\acronymref{definition}{VS}}\\
+%
+&=\lincombo{\alpha a}{v}{n}
+&&\text{Definition of $T$}\\
+%
+&=\alpha\left(\lincombo{a}{v}{n}\right)
+&&\text{\acronymref{definition}{VS}}\\
+%
+&=\alpha\lt{T}{\vect{w}}
+%
+\end{align*}
+%
+So by \acronymref{definition}{LT}, $T$ is a linear transformation.\par
+%
+Is $T$ unique (among all linear transformations that take the $\vect{u}_i$ to the $\vect{v}_i$)?  Applying \acronymref{technique}{U}, we posit the existence of a second linear transformation, $\ltdefn{S}{U}{V}$ such that $\lt{S}{\vect{u}_i}=\vect{v}_i$, $1\leq i\leq n$.  Again, let $\vect{w}\in U$ represent an arbitrary element of $U$ and let $\scalarlist{a}{n}$ be the scalars provided by \acronymref{theorem}{VRRB} (relative to $B$).  We have,
+%
+\begin{align*}
+\lt{T}{\vect{w}}&=
+\lt{T}{\lincombo{a}{u}{n}}
+&&\text{\acronymref{theorem}{VRRB}}\\
+%
+&=
+a_1\lt{T}{\vect{u}_1}+
+a_2\lt{T}{\vect{u}_2}+
+a_3\lt{T}{\vect{u}_3}+
+\cdots+
+a_n\lt{T}{\vect{u}_n}
+&&\text{\acronymref{theorem}{LTLC}}\\
+%
+&=
+a_1\vect{v}_1+
+a_2\vect{v}_2+
+a_3\vect{v}_3+
+\cdots+
+a_n\vect{v}_n
+&&\text{Definition of $T$}\\
+%
+&=
+a_1\lt{S}{\vect{u}_1}+
+a_2\lt{S}{\vect{u}_2}+
+a_3\lt{S}{\vect{u}_3}+
+\cdots+
+a_n\lt{S}{\vect{u}_n}
+&&\text{Definition of $S$}\\
+%
+&=
+\lt{S}{\lincombo{a}{u}{n}}
+&&\text{\acronymref{theorem}{LTLC}}\\
+&=
+\lt{S}{\vect{w}}
+&&\text{\acronymref{theorem}{VRRB}}
+%
+\end{align*}
+%
+So the output of $T$ and $S$ agree on every input, which means they are equal as functions, $T=S$.  So $T$ is unique.
+%
+\end{proof}
+%
+You might recall facts from analytic geometry, such as ``any two points determine a line'' and ``any three non-collinear points determine a parabola.''  \acronymref{theorem}{LTDB} has much of the same feel.  By specifying the $n$ outputs for inputs from a basis, an entire linear transformation is determined.  The analogy is not perfect, but the style of these facts are not very dissimilar from \acronymref{theorem}{LTDB}.\par
+%
+Notice that the statement of \acronymref{theorem}{LTDB} asserts the {\em existence} of a linear transformation with certain properties, while the proof shows us exactly how to define the desired linear transformation.  The next examples how to work with linear transformations that we find this way.
+%
+\begin{example}{LTDB1}{Linear transformation defined on a basis}{linear transformation!defined on a basis}
+Consider the linear transformation $\ltdefn{T}{\complex{3}}{\complex{2}}$ that is required to have the following three values,
+%
+\begin{align*}
+\lt{T}{\colvector{1\\0\\0}}=\colvector{2\\1}&&
+\lt{T}{\colvector{0\\1\\0}}=\colvector{-1\\4}&&
+\lt{T}{\colvector{0\\0\\1}}=\colvector{6\\0}
+\end{align*}
+%
+Because 
+%
+\begin{equation*}
+B=\set{
+\colvector{1\\0\\0},\,
+\colvector{0\\1\\0},\,
+\colvector{0\\0\\1}
+}
+\end{equation*}
+%
+is a basis for $\complex{3}$ (\acronymref{theorem}{SUVB}), \acronymref{theorem}{LTDB} says there is a unique linear transformation $T$ that behaves this way.  How do we compute other values of $T$?  Consider the input
+%
+\begin{equation*}
+\vect{w}=\colvector{2\\-3\\1}=(2)\colvector{1\\0\\0}+(-3)\colvector{0\\1\\0}+(1)\colvector{0\\0\\1}
+\end{equation*}
+%
+Then
+%
+\begin{equation*}
+\lt{T}{\vect{w}}=(2)\colvector{2\\1}+ (-3)\colvector{-1\\4}+ (1)\colvector{6\\0}=\colvector{13\\-10}
+\end{equation*}
+%
+Doing it again,
+%
+\begin{equation*}
+\vect{x}=\colvector{5\\2\\-3}=(5)\colvector{1\\0\\0}+(2)\colvector{0\\1\\0}+(-3)\colvector{0\\0\\1}
+\end{equation*}
+%
+so
+%
+\begin{equation*}
+\lt{T}{\vect{x}}=(5)\colvector{2\\1}+ (2)\colvector{-1\\4}+ (-3)\colvector{6\\0}=\colvector{-10\\13}
+\end{equation*}
+%
+Any other value of $T$ could be computed in a similar manner.  So rather than being given a {\em formula} for the outputs of $T$, the {\em requirement} that $T$ behave in a certain way for the inputs chosen from a basis of the domain, is as sufficient as a formula for computing any value of the function.  You might notice some parallels between this example and \acronymref{example}{MOLT} or \acronymref{theorem}{MLTCV}.
+%
+\end{example}
+%
+\begin{example}{LTDB2}{Linear transformation defined on a basis}{linear transformation!defined on a basis}
+Consider the linear transformation $\ltdefn{R}{\complex{3}}{\complex{2}}$ with the three values,
+%
+\begin{align*}
+\lt{R}{\colvector{1\\2\\1}}=\colvector{5\\-1}&&
+\lt{R}{\colvector{-1\\5\\1}}=\colvector{0\\4}&&
+\lt{R}{\colvector{3\\1\\4}}=\colvector{2\\3}
+\end{align*}
+%
+You can check that 
+%
+\begin{equation*}
+D=\set{
+\colvector{1\\2\\1},\,
+\colvector{-1\\5\\1},\,
+\colvector{3\\1\\4}
+}
+\end{equation*}
+%
+is a basis for $\complex{3}$ (make the vectors the columns of a square matrix and check that the matrix is nonsingular,  \acronymref{theorem}{CNMB}).  By \acronymref{theorem}{LTDB} we know there is a unique linear transformation $R$ with the three specified outputs.  However, we have to work just a bit harder to take an input vector and express it as a linear combination of the vectors in $D$.  For example, consider,
+%
+\begin{equation*}
+\vect{y}=\colvector{8\\-3\\5}
+\end{equation*}
+%
+Then we must first write $\vect{y}$ as a linear combination of the vectors in $D$ and solve for the unknown scalars, to arrive at
+%
+\begin{equation*}
+\vect{y}=\colvector{8\\-3\\5}= (3)\colvector{1\\2\\1}+ (-2)\colvector{-1\\5\\1}+ (1)\colvector{3\\1\\4}
+\end{equation*}
+%
+Then the proof of \acronymref{theorem}{LTDB} gives us
+%
+\begin{equation*}
+\lt{R}{\vect{y}}=(3)\colvector{5\\-1}+ (-2)\colvector{0\\4}+ (1)\colvector{2\\3}= \colvector{17\\-8}
+\end{equation*}
+%
+Any other value of $R$ could be computed in a similar manner.
+%
+\end{example}
+%
+Here is a third example of a linear transformation defined by its action on a basis, only with more abstract vector spaces involved.
+%
+\begin{example}{LTDB3}{Linear transformation defined on a basis}{linear transformation!defined on a basis}
+The set $W=\set{p(x)\in P_3\mid p(1)=0, p(3)=0}\subseteq P_3$ is a subspace of the vector space of polynomials $P_3$.  This subspace has $C=\set{3-4x+x^2,\,12-13x+x^3}$ as a basis (check this!).  Suppose we consider the linear transformation $\ltdefn{S}{P_3}{M_{22}}$ with values
+%
+\begin{align*}
+\lt{S}{3-4x+x^2}=\begin{bmatrix}1&-3\\2&0\end{bmatrix}&&
+\lt{S}{12-13x+x^3}=\begin{bmatrix}0&1\\1&0\end{bmatrix}
+\end{align*}
+%
+By \acronymref{theorem}{LTDB} we know there is a unique linear transformation with these two values.  To illustrate a sample computation of $S$, consider $q(x)=9-6x-5x^2+2x^3$.  Verify that $q(x)$ is an element of $W$ (does it have roots at $x=1$ and $x=3$?), then find the scalars needed to write it as a linear combination of the basis vectors in $C$.  Because
+%
+\begin{equation*}
+q(x)=9-6x-5x^2+2x^3=(-5)(3-4x+x^2)+(2)(12-13x+x^3)
+\end{equation*}
+%
+The proof of \acronymref{theorem}{LTDB} gives us
+%
+\begin{equation*}
+\lt{S}{q}=(-5)\begin{bmatrix}1&-3\\2&0\end{bmatrix}
++
+(2)\begin{bmatrix}0&1\\1&0\end{bmatrix}
+=
+\begin{bmatrix}-5&17\\-8&0\end{bmatrix}
+\end{equation*}
+%
+And all the other outputs of $S$ could be computed in the same manner.  Every output of $S$ will have a zero in the second row, second column.  Can you see why this is so?
+%
+\end{example}
+%
+Informally, we can describe \acronymref{theorem}{LTDB} by saying ``it is enough to know what a linear transformation does to a basis (of the domain).''
+%
+\subsect{PI}{Pre-Images}
+%
+The definition of a function requires that for each input in the domain there is {\em exactly} one output in the codomain.  However, the correspondence does not have to behave the other way around.  A member of the codomain might have many inputs from the domain that create it, or it may have none at all.  To formalize our discussion of this aspect of linear transformations, we define the pre-image.
+%
+\begin{definition}{PI}{Pre-Image}{pre-image}
+Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation.  For each $\vect{v}$, define the \define{pre-image} of $\vect{v}$ to be the subset of $U$ given by
+%
+\begin{equation*}
+\preimage{T}{\vect{v}}=\setparts{\vect{u}\in U}{\lt{T}{\vect{u}}=\vect{v}}
+\end{equation*}
+%
+\end{definition}
+%
+In other words, $\preimage{T}{\vect{v}}$ is the set of all those vectors in the domain $U$ that get ``sent'' to the vector $\vect{v}$.\par
+%
+% TODO:  All preimages form a partition of $U$, an equivalence relation is about.  Maybe to exercises.
+%
+%
+\begin{example}{SPIAS}{Sample pre-images, Archetype S}{pre-images}
+\acronymref{archetype}{S} is the linear transformation defined by
+%
+\begin{equation*}
+\archetypepart{S}{ltdefn}
+\end{equation*}
+%
+We could compute a pre-image for every element of the codomain $M_{22}$.  However, even in a free textbook, we do not have the room to do that, so we will compute just two.\par
+%
+Choose 
+%
+\begin{equation*}
+\vect{v}=
+\begin{bmatrix}
+2&1\\3&2
+\end{bmatrix}
+\in M_{22}
+\end{equation*}
+%
+for no particular reason.  What is $\preimage{T}{\vect{v}}$?  Suppose $\vect{u}=\colvector{u_1\\u_2\\u_3}\in\preimage{T}{\vect{v}}$.  The condition that $\lt{T}{\vect{u}}=\vect{v}$ becomes
+%
+\begin{equation*}
+\begin{bmatrix}
+2&1\\3&2
+\end{bmatrix}
+=\vect{v}
+=\lt{T}{\vect{u}}
+=\lt{T}{\colvector{u_1\\u_2\\u_3}}\\
+=\begin{bmatrix}
+u_1-u_2&2u_1+2u_2+u_3\\
+3u_1+u_2+u_3&-2u_1-6u_2-2u_3
+\end{bmatrix}
+\end{equation*}
+%
+Using matrix equality (\acronymref{definition}{ME}), we arrive at a system of four equations in the three unknowns $u_1,\,u_2,\,u_3$ with an augmented matrix that we can row-reduce in the hunt for solutions,
+%
+\begin{equation*}
+\begin{bmatrix}
+1 & -1 & 0 & 2\\
+2 & 2 & 1 & 1\\
+3 & 1 & 1 & 3\\
+-2 & -6 & -2 & 2
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+\leading{1} & 0 & \frac{1}{4} &  \frac{5}{4}\\ 
+0 & \leading{1} & \frac{1}{4} &  -\frac{3}{4}\\ 
+0 & 0 & 0 &  0\\ 
+0 & 0 & 0 &  0
+\end{bmatrix}
+\end{equation*}
+%
+We recognize this system as having infinitely many solutions described by the single free variable $u_3$.  Eventually obtaining the vector form of the solutions (\acronymref{theorem}{VFSLS}), we can describe the preimage precisely as,
+%
+\begin{align*}
+\preimage{T}{\vect{v}}&=\setparts{\vect{u}\in\complex{3}}{\lt{T}{\vect{u}}=\vect{v}}\\
+&=\setparts{\colvector{u_1\\u_2\\u_3}}{u_1=\frac{5}{4}-\frac{1}{4}u_3,\,u_2=-\frac{3}{4}-\frac{1}{4}u_3}\\
+&=\setparts{\colvector{\frac{5}{4}-\frac{1}{4}u_3\\-\frac{3}{4}-\frac{1}{4}u_3\\u_3}}{u_3\in\complex{3}}\\
+&=\setparts{\colvector{\frac{5}{4}\\-\frac{3}{4}\\0}+u_3\colvector{-\frac{1}{4}\\-\frac{1}{4}\\1}}{u_3\in\complex{3}}\\
+&=\colvector{\frac{5}{4}\\-\frac{3}{4}\\0}+\spn{\set{\colvector{-\frac{1}{4}\\-\frac{1}{4}\\1}}}
+\end{align*}
+%
+This last line is merely a suggestive way of describing the set on the previous line.  You might create three or four vectors in the preimage, and evaluate $T$ with each.  Was the result what you expected?  For a hint of things to come, you might try evaluating $T$ with just the lone vector in the spanning set above.  What was the result?  Now take a look back at \acronymref{theorem}{PSPHS}.  Hmmmm.\par
+%
+OK, let's compute another preimage, but with a different outcome this time.  
+Choose 
+%
+\begin{equation*}
+\vect{v}=
+\begin{bmatrix}
+1&1\\2&4
+\end{bmatrix}
+\in M_{22}
+\end{equation*}
+%
+What is $\preimage{T}{\vect{v}}$?  Suppose $\vect{u}=\colvector{u_1\\u_2\\u_3}\in\preimage{T}{\vect{v}}$.  That $\lt{T}{\vect{u}}=\vect{v}$ becomes
+%
+\begin{equation*}
+\begin{bmatrix}
+1&1\\2&4
+\end{bmatrix}
+=\vect{v}
+=\lt{T}{\vect{u}}
+=\lt{T}{\colvector{u_1\\u_2\\u_3}}\\
+=\begin{bmatrix}
+u_1-u_2&2u_1+2u_2+u_3\\
+3u_1+u_2+u_3&-2u_1-6u_2-2u_3
+\end{bmatrix}
+\end{equation*}
+%
+Using matrix equality (\acronymref{definition}{ME}), we arrive at a system of four equations in the three unknowns $u_1,\,u_2,\,u_3$ with an augmented matrix that we can row-reduce in the hunt for solutions,
+%
+\begin{equation*}
+\begin{bmatrix}
+1 & -1 & 0 & 1\\
+2 & 2 & 1 & 1\\
+3 & 1 & 1 & 2\\
+-2 & -6 & -2 & 4
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+\leading{1} & 0 & \frac{1}{4} &  0\\ 
+0 & \leading{1} & \frac{1}{4} &  0\\ 
+0 & 0 & 0 &  \leading{1}\\ 
+0 & 0 & 0 &  0
+\end{bmatrix}
+\end{equation*}
+%
+By \acronymref{theorem}{RCLS} we recognize this system as inconsistent.  So no vector $\vect{u}$ is a member of $\preimage{T}{\vect{v}}$ and so
+%
+\begin{equation*}
+\preimage{T}{\vect{v}}=\emptyset
+\end{equation*}
+%
+\end{example}
+%
+The preimage is just a set, it is almost never a subspace of $U$ (you might think about just when $\preimage{T}{\vect{v}}$ is a subspace, see \acronymref{exercise}{ILT.T10}).  We will describe its properties going forward, and it will be central to the main ideas of this chapter.
+%
+\subsect{NLTFO}{New Linear Transformations From Old}
+%
+We can combine linear transformations in natural ways to create new linear transformations.  So we will define these combinations and then prove that the results really are still linear transformations.  First the sum of two linear transformations.
+%
+\begin{definition}{LTA}{Linear Transformation Addition}{linear transformation!addition}
+Suppose that $\ltdefn{T}{U}{V}$ and $\ltdefn{S}{U}{V}$ are two linear transformations with the same domain and codomain.  Then their \define{sum} is the function $\ltdefn{T+S}{U}{V}$ whose outputs are defined by
+%
+\begin{equation*}
+\lt{(T+S)}{\vect{u}}=\lt{T}{\vect{u}}+\lt{S}{\vect{u}}
+\end{equation*}
+%
+\end{definition}
+%
+Notice that the first plus sign in the definition is the operation being defined, while the second one is the vector addition in $V$.  (Vector addition in $U$ will appear just now in the proof that $T+S$ is a linear transformation.)  \acronymref{definition}{LTA} only provides a function.  It would be nice to know that when the constituents ($T$, $S$) are linear transformations, then so too is $T+S$.
+%
+\begin{theorem}{SLTLT}{Sum of Linear Transformations is a Linear Transformation}{linear transformation!addition}
+Suppose that $\ltdefn{T}{U}{V}$ and $\ltdefn{S}{U}{V}$ are two linear transformations with the same domain and codomain.  Then $\ltdefn{T+S}{U}{V}$ is a linear transformation.
+\end{theorem}
+%
+\begin{proof}
+We simply check the defining properties of a linear transformation (\acronymref{definition}{LT}).  This is a good place to consistently ask yourself which objects are being combined with which operations.
+%
+\begin{align*}
+\lt{(T+S)}{\vect{x}+\vect{y}}&=
+\lt{T}{\vect{x}+\vect{y}}+\lt{S}{\vect{x}+\vect{y}}&&\text{\acronymref{definition}{LTA}}\\
+&=\lt{T}{\vect{x}}+\lt{T}{\vect{y}}+\lt{S}{\vect{x}}+\lt{S}{\vect{y}}&&\text{\acronymref{definition}{LT}}\\
+&=\lt{T}{\vect{x}}+\lt{S}{\vect{x}}+\lt{T}{\vect{y}}+\lt{S}{\vect{y}}&&\text{\acronymref{property}{C} in $V$}\\
+&=\lt{(T+S)}{\vect{x}}+\lt{(T+S)}{\vect{y}}&&\text{\acronymref{definition}{LTA}}\\
+%
+\intertext{and}
+%
+\lt{(T+S)}{\alpha\vect{x}}&=
+\lt{T}{\alpha\vect{x}}+\lt{S}{\alpha\vect{x}}&&\text{\acronymref{definition}{LTA}}\\
+&=\alpha\lt{T}{\vect{x}}+\alpha\lt{S}{\vect{x}}&&\text{\acronymref{definition}{LT}}\\
+&=\alpha\left(\lt{T}{\vect{x}}+\lt{S}{\vect{x}}\right)&&\text{\acronymref{property}{DVA} in $V$}\\
+&=\alpha\lt{(T+S)}{\vect{x}}&&\text{\acronymref{definition}{LTA}}\\
+\end{align*}
+%
+\end{proof}
+%
+\begin{example}{STLT}{Sum of two linear transformations}{linear transformation!sum}
+Suppose that $\ltdefn{T}{\complex{2}}{\complex{3}}$ and $\ltdefn{S}{\complex{2}}{\complex{3}}$ are defined by
+%
+\begin{align*}
+\lt{T}{\colvector{x_1\\x_2}}=\colvector{x_1+2x_2\\3x_1-4x_2\\5x_1+2x_2}
+&&
+\lt{S}{\colvector{x_1\\x_2}}=\colvector{4x_1-x_2\\x_1+3x_2\\-7x_1+5x_2}
+\end{align*}
+%
+Then by \acronymref{definition}{LTA}, we have
+%
+\begin{equation*}
+\lt{(T+S)}{\colvector{x_1\\x_2}}
+=
+\lt{T}{\colvector{x_1\\x_2}}+\lt{S}{\colvector{x_1\\x_2}}
+=
+\colvector{x_1+2x_2\\3x_1-4x_2\\5x_1+2x_2}+
+\colvector{4x_1-x_2\\x_1+3x_2\\-7x_1+5x_2}
+=
+\colvector{5x_1+x_2\\4x_1-x_2\\-2x_1+7x_2}
+\end{equation*}
+%
+and by \acronymref{theorem}{SLTLT} we know $T+S$ is also a linear transformation from $\complex{2}$ to $\complex{3}$.
+%
+\end{example}
+%
+\begin{definition}{LTSM}{Linear Transformation Scalar Multiplication}{linear transformation!scalar multiplication}
+Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation and $\alpha\in\complex{\null}$.  Then the \define{scalar multiple} is the function $\ltdefn{\alpha T}{U}{V}$ whose outputs are defined by
+%
+\begin{equation*}
+\lt{(\alpha T)}{\vect{u}}=\alpha\lt{T}{\vect{u}}
+\end{equation*}
+%
+\end{definition}
+%
+Given that $T$ is a linear transformation, it would be nice to know that $\alpha T$ is also a linear transformation.
+%
+\begin{theorem}{MLTLT}{Multiple of a Linear Transformation is a Linear Transformation}{linear transformation!addition}
+Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation and $\alpha\in\complex{\null}$.  Then $\ltdefn{(\alpha T)}{U}{V}$ is a linear transformation.
+\end{theorem}
+%
+\begin{proof}
+We simply check the defining properties of a linear transformation (\acronymref{definition}{LT}).  This is another good place to consistently ask yourself which objects are being combined with which operations.
+%
+\begin{align*}
+\lt{(\alpha T)}{\vect{x}+\vect{y}}&=
+\alpha\left(\lt{T}{\vect{x}+\vect{y}}\right)&&\text{\acronymref{definition}{LTSM}}\\
+&=\alpha\left(\lt{T}{\vect{x}}+\lt{T}{\vect{y}}\right)&&\text{\acronymref{definition}{LT}}\\
+&=\alpha\lt{T}{\vect{x}}+\alpha\lt{T}{\vect{y}}&&\text{\acronymref{property}{DVA} in $V$}\\
+&=\lt{(\alpha T)}{\vect{x}}+\lt{(\alpha T)}{\vect{y}}&&\text{\acronymref{definition}{LTSM}}\\
+%
+\intertext{and}
+%
+\lt{(\alpha T)}{\beta\vect{x}}&=
+\alpha\lt{T}{\beta\vect{x}}&&\text{\acronymref{definition}{LTSM}}\\
+&=\alpha\left(\beta\lt{T}{\vect{x}}\right)&&\text{\acronymref{definition}{LT}}\\
+&=\left(\alpha\beta\right)\lt{T}{\vect{x}}&&\text{\acronymref{property}{SMA} in $V$}\\
+&=\left(\beta\alpha\right)\lt{T}{\vect{x}}&&\text{Commutativity in $\complex{}$}\\
+&=\beta\left(\alpha\lt{T}{\vect{x}}\right)&&\text{\acronymref{property}{SMA} in $V$}\\
+&=\beta\left(\lt{(\alpha T)}{\vect{x}}\right)&&\text{\acronymref{definition}{LTSM}}\\
+%
+\end{align*}
+%
+\end{proof}
+%
+\begin{example}{SMLT}{Scalar multiple of a linear transformation}{linear transformation!scalar multiple}
+Suppose that $\ltdefn{T}{\complex{4}}{\complex{3}}$ is defined by
+%
+\begin{equation*}
+\lt{T}{\colvector{x_1\\x_2\\x_3\\x_4}}=
+\colvector{x_1+2x_2-x_3+2x_4\\x_1+5x_2-3x_3+x_4\\-2x_1+3x_2-4x_3+2x_4}
+\end{equation*}
+%
+For the sake of an example, choose $\alpha=2$, so by \acronymref{definition}{LTSM}, we have
+%
+\begin{equation*}
+\lt{\alpha T}{\colvector{x_1\\x_2\\x_3\\x_4}}
+=
+2\lt{T}{\colvector{x_1\\x_2\\x_3\\x_4}}
+=
+2\colvector{x_1+2x_2-x_3+2x_4\\x_1+5x_2-3x_3+x_4\\-2x_1+3x_2-4x_3+2x_4}
+=
+\colvector{2x_1+4x_2-2x_3+4x_4\\2x_1+10x_2-6x_3+2x_4\\-4x_1+6x_2-8x_3+4x_4}
+\end{equation*}
+%
+and by \acronymref{theorem}{MLTLT} we know $2T$ is also a linear transformation from $\complex{4}$ to $\complex{3}$.
+%
+\end{example}
+%
+Now, let's imagine we have two vector spaces, $U$ and $V$, and we collect every possible linear transformation from $U$ to $V$ into one big set, and call it $\vslt{U}{V}$.  \acronymref{definition}{LTA} and \acronymref{definition}{LTSM} tell us how we can ``add'' and ``scalar multiply'' two elements of $\vslt{U}{V}$.  \acronymref{theorem}{SLTLT} and \acronymref{theorem}{MLTLT} tell us that if we do these operations, then the resulting functions are linear transformations that are also in $\vslt{U}{V}$.   Hmmmm, sounds like a vector space to me!  A set of objects, an addition and a scalar multiplication.  Why not?
+%
+\begin{theorem}{VSLT}{Vector Space of Linear Transformations}{vector space!linear transformations}
+\index{linear transformation!vector space of}
+Suppose that $U$ and $V$ are vector spaces.  Then the set of all linear transformations from $U$ to $V$, $\vslt{U}{V}$ is a vector space when the operations are those given in \acronymref{definition}{LTA} and \acronymref{definition}{LTSM}.
+\end{theorem}
+%
+\begin{proof}
+\acronymref{theorem}{SLTLT} and \acronymref{theorem}{MLTLT} provide two of the ten properties in \acronymref{definition}{VS}.  However, we still need to verify the remaining eight properties.  By and large, the proofs are straightforward and rely on concocting the obvious object, or by reducing the question to the same vector space property in the vector space $V$.\par
+%
+The zero vector is of some interest, though. What linear transformation would we add to any other linear transformation, so as to keep the second one unchanged?  The answer is $\ltdefn{Z}{U}{V}$ defined by $\lt{Z}{\vect{u}}=\zerovector_V$ for every $\vect{u}\in U$.  Notice how we do not need to know any of the specifics about $U$ and $V$ to make this definition of $Z$.
+%
+\end{proof}
+%
+\begin{definition}{LTC}{Linear Transformation Composition}{linear transformation!composition}
+Suppose that $\ltdefn{T}{U}{V}$ and $\ltdefn{S}{V}{W}$ are linear transformations.  Then the \define{composition} of $S$ and $T$ is the function $\ltdefn{(\compose{S}{T})}{U}{W}$ whose outputs are defined by
+%
+\begin{equation*}
+\lt{(\compose{S}{T})}{\vect{u}}=\lt{S}{\lt{T}{\vect{u}}}
+\end{equation*}
+%
+\end{definition}
+%
+Given that $T$ and $S$ are linear transformations, it would be nice to know that $\compose{S}{T}$ is also a linear transformation.
+%
+\begin{theorem}{CLTLT}{Composition of Linear Transformations is a Linear Transformation}{linear transformation!composition}
+Suppose that $\ltdefn{T}{U}{V}$ and $\ltdefn{S}{V}{W}$ are linear transformations.  Then $\ltdefn{(\compose{S}{T})}{U}{W}$ is a linear transformation.
+\end{theorem}
+%
+\begin{proof}
+We simply check the defining properties of a linear transformation (\acronymref{definition}{LT}).  
+%
+\begin{align*}
+\lt{(\compose{S}{T})}{\vect{x}+\vect{y}}
+&=\lt{S}{\lt{T}{\vect{x}+\vect{y}}}&&\text{\acronymref{definition}{LTC}}\\
+&=\lt{S}{\lt{T}{\vect{x}}+\lt{T}{\vect{y}}}&&\text{\acronymref{definition}{LT} for $T$}\\
+&=\lt{S}{\lt{T}{\vect{x}}}+\lt{S}{\lt{T}{\vect{y}}}&&\text{\acronymref{definition}{LT} for $S$}\\
+&=\lt{(\compose{S}{T})}{\vect{x}}+\lt{(\compose{S}{T})}{\vect{y}}&&\text{\acronymref{definition}{LTC}}
+%
+\intertext{and}
+%
+\lt{(\compose{S}{T})}{\alpha\vect{x}}
+&=\lt{S}{\lt{T}{\alpha\vect{x}}}&&\text{\acronymref{definition}{LTC}}\\
+&=\lt{S}{\alpha\lt{T}{\vect{x}}}&&\text{\acronymref{definition}{LT} for $T$}\\
+&=\alpha\lt{S}{\lt{T}{\vect{x}}}&&\text{\acronymref{definition}{LT} for $S$}\\
+&=\alpha\lt{(\compose{S}{T})}{\vect{x}}&&\text{\acronymref{definition}{LTC}}
+%
+\end{align*}
+%
+\end{proof}
+%
+%
+\begin{example}{CTLT}{Composition of two linear transformations}{linear transformations!compositions}
+Suppose that $\ltdefn{T}{\complex{2}}{\complex{4}}$ and $\ltdefn{S}{\complex{4}}{\complex{3}}$ are defined by
+%
+\begin{align*}
+\lt{T}{\colvector{x_1\\x_2}}=\colvector{x_1+2x_2\\3x_1-4x_2\\5x_1+2x_2\\6x_1-3x_2}
+&&
+\lt{S}{\colvector{x_1\\x_2\\x_3\\x_4}}=
+\colvector{2x_1-x_2+x_3-x_4\\5x_1-3x_2+8x_3-2x_4\\-4x_1+3x_2-4x_3+5x_4}
+\end{align*}
+Then by \acronymref{definition}{LTC}
+%
+\begin{align*}
+\lt{(\compose{S}{T})}{\colvector{x_1\\x_2}}&=
+\lt{S}{\lt{T}{\colvector{x_1\\x_2}}}\\
+&=\lt{S}{\colvector{x_1+2x_2\\3x_1-4x_2\\5x_1+2x_2\\6x_1-3x_2}}\\
+&=\colvector{
+2(x_1+2x_2)-(3x_1-4x_2)+(5x_1+2x_2)-(6x_1-3x_2)\\
+5(x_1+2x_2)-3(3x_1-4x_2)+8(5x_1+2x_2)-2(6x_1-3x_2)\\
+-4(x_1+2x_2)+3(3x_1-4x_2)-4(5x_1+2x_2)+5(6x_1-3x_2)
+}\\
+&=\colvector{
+-2x_1+13x_2\\
+24x_1+44x_2\\
+15x_1-43x_2
+}
+\end{align*}
+%
+and by \acronymref{theorem}{CLTLT} $\compose{S}{T}$ is a linear transformation from $\complex{2}$ to $\complex{3}$.
+%
+\end{example}
+%
+Here is an interesting exercise that will presage an important result later.
+In \acronymref{example}{STLT} compute (via \acronymref{theorem}{MLTCV}) the matrix of  $T$, $S$ and $T+S$.  Do you see a relationship between these three matrices?\par
+%
+In \acronymref{example}{SMLT} compute (via \acronymref{theorem}{MLTCV}) the matrix of  $T$ and  $2T$.  Do you see a relationship between these two matrices?\par
+%
+Here's the tough one.  In \acronymref{example}{CTLT} compute (via \acronymref{theorem}{MLTCV}) the matrix of  $T$, $S$ and $\compose{S}{T}$.  Do you see a relationship between these three matrices???
+%
+%  End of  lt.tex

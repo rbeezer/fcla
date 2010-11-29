@@ -1,0 +1,116 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+A calculator will provide the eigenvalues $\lambda=2,\,2,\,1,\,0$, so we can reconstruct the characteristic polynomial as
+%
+\begin{equation*}
+\charpoly{A}{x}=(x-2)^2(x-1)x
+\end{equation*}
+%
+so the algebraic multiplicities of the eigenvalues are
+%
+\begin{align*}
+\algmult{A}{2}&=2&
+\algmult{A}{1}&=1&
+\algmult{A}{0}&=1
+\end{align*}
+%
+Now compute eigenspaces by hand, obtaining null spaces for each of the three eigenvalues by constructing the correct singular matrix (\acronymref{theorem}{EMNS}),
+%
+\begin{align*}
+A-2I_4&=
+\begin{bmatrix}
+ -1 & 9 & 9 & 24 \\
+ -3 & -29 & -29 & -68 \\
+ 1 & 11 & 11 & 26 \\
+ 1 & 7 & 7 & 16
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+ 1 & 0 & 0 & -\frac{3}{2} \\
+ 0 & 1 & 1 & \frac{5}{2} \\
+ 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+\eigenspace{A}{2}&=\nsp{A-2I_4}
+=\spn{\set{\colvector{\frac{3}{2}\\-\frac{5}{2}\\0\\1},\,\colvector{0\\-1\\1\\0}}}
+=\spn{\set{\colvector{3\\-5\\0\\2},\,\colvector{0\\-1\\1\\0}}}\\
+%
+A-1I_4&=
+\begin{bmatrix}
+0 & 9 & 9 & 24 \\
+ -3 & -28 & -29 & -68 \\
+ 1 & 11 & 12 & 26 \\
+ 1 & 7 & 7 & 17
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+ 1 & 0 & 0 & -\frac{5}{3} \\
+ 0 & 1 & 0 & \frac{13}{3} \\
+ 0 & 0 & 1 & -\frac{5}{3} \\
+ 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+\eigenspace{A}{1}&=\nsp{A-I_4}
+=\spn{\set{\colvector{\frac{5}{3}\\-\frac{13}{3}\\\frac{5}{3}\\1}}}
+=\spn{\set{\colvector{5\\-13\\5\\3}}}\\
+%
+A-0I_4&=
+\begin{bmatrix}
+ 1 & 9 & 9 & 24 \\
+ -3 & -27 & -29 & -68 \\
+ 1 & 11 & 13 & 26 \\
+ 1 & 7 & 7 & 18
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+ 1 & 0 & 0 & -3 \\
+ 0 & 1 & 0 & 5 \\
+ 0 & 0 & 1 & -2 \\
+ 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+\eigenspace{A}{0}&=\nsp{A-I_4}=\spn{\set{\colvector{3\\-5\\2\\1}}}
+%
+\end{align*}
+%
+From this we can compute the dimensions of the eigenspaces to obtain the geometric multiplicities,
+%
+\begin{align*}
+\geomult{A}{2}&=2&
+\geomult{A}{1}&=1&
+\geomult{A}{0}&=1
+\end{align*}
+%
+For each eigenvalue, the algebraic and geometric multiplicities are equal and so by \acronymref{theorem}{DMFE} we now know that $A$ is diagonalizable.  The construction in \acronymref{theorem}{DC} suggests we form a matrix whose columns are eigenvectors of $A$
+%
+\begin{equation*}
+S=
+\begin{bmatrix}
+ 3 & 0 & 5 & 3 \\
+ -5 & -1 & -13 & -5 \\
+ 0 & 1 & 5 & 2 \\
+ 2 & 0 & 3 & 1
+\end{bmatrix}
+\end{equation*}
+%
+Since $\detname{S}=-1\neq 0$, we know that $S$ is nonsingular (\acronymref{theorem}{SMZD}), so the columns of $S$ are a set of 4 linearly independent eigenvectors of $A$.  By the proof of \acronymref{theorem}{SMZD} we know
+%
+\begin{equation*}
+\similar{A}{S}=
+\begin{bmatrix}
+ 2 & 0 & 0 & 0 \\
+ 0 & 2 & 0 & 0 \\
+ 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+a diagonal matrix with the eigenvalues of $A$ along the diagonal, in the same order as the associated eigenvectors appear as columns of $S$.

@@ -1,0 +1,99 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+Choose bases $B$ and $C$ for the matrix representation,
+\begin{align*}
+B&=\set{1,\,x,\,x^2}
+&
+C&=\set{
+\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix},\,
+\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix},\,
+\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix},\,
+\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}
+}\\
+%
+\end{align*}
+%
+Input to $T$ the vectors of the basis $B$ and coordinatize the outputs relative to $C$,
+%
+\begin{align*}
+\vectrep{C}{\lt{T}{1}}&=
+\vectrep{C}{\begin{bmatrix}1 & 2 \\ -1 & 3\end{bmatrix}}
+=
+\vectrep{C}{
+1\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+
+2\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}+
+(-1)\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix}+
+3\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}
+}
+=
+\colvector{1\\2\\-1\\3}\\
+%
+\vectrep{C}{\lt{T}{x}}&=
+\vectrep{C}{\begin{bmatrix}2 & 2 \\ 1 & 2 \end{bmatrix}}
+=
+\vectrep{C}{
+2\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+
+2\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}+
+1\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix}+
+2\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}
+}
+=
+\colvector{2\\2\\1\\2}\\
+%
+\vectrep{C}{\lt{T}{x^2}}&=
+\vectrep{C}{\begin{bmatrix}-2 & 0 \\ -4 & 2\end{bmatrix}}
+=
+\vectrep{C}{
+(-2)\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+
+0\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}+
+(-4)\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix}+
+2\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}
+}
+=
+\colvector{-2\\0\\-4\\2}\\
+%
+\end{align*}
+%
+Applying \acronymref{definition}{MR} we have the matrix representation
+%
+\begin{equation*}
+\matrixrep{T}{B}{C}=
+\begin{bmatrix}
+ 1 & 2 & -2 \\
+ 2 & 2 & 0 \\
+ -1 & 1 & -4 \\
+ 3 & 2 & 2
+\end{bmatrix}
+\end{equation*}
+%
+The null space of the matrix representation is isomorphic (via $\vectrepname{B}$) to the kernel of the linear transformation (\acronymref{theorem}{KNSI}).  So we compute the null space of the matrix representation by first row-reducing the matrix to,
+%
+\begin{equation*}
+\begin{bmatrix}
+ \leading{1} & 0 & 2 \\
+ 0 & \leading{1} & -2 \\
+ 0 & 0 & 0 \\
+ 0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+Employing \acronymref{theorem}{BNS} we have 
+%
+\begin{equation*}
+\nsp{\matrixrep{T}{B}{C}}=\spn{\set{\colvector{-2\\2\\1}}}
+\end{equation*}
+%
+We only need to uncoordinatize this one basis vector to get a basis for $\krn{T}$,
+%
+\begin{equation*}
+\krn{T}
+=\spn{\set{\vectrepinv{B}{\colvector{-2\\2\\1}}}}
+=\spn{\set{-2+2x+x^2}}
+\end{equation*}

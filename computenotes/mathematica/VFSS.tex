@@ -1,0 +1,66 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+Suppose that $A$ is an $m\times n$ matrix and $\vect{b}\in\complex{m}$  is a column vector.  We might wish to find all of the solutions to the linear system $\linearsystem{A}{\vect{b}}$.  Mathematica's \computerfont{LinearSolve[A,~b]} will return at most one solution (\acronymref{computation}{LS.MMA}).  However, when the system is consistent, then this one solution reported is exactly the vector $\vect{c}$, described in the statement of \acronymref{theorem}{VFSLS}.\par
+%
+The vectors $\vect{u}_j$, $1\leq j\leq n-r$ of \acronymref{theorem}{VFSLS} are exactly the output of Mathematica's \computerfont{NullSpace[\,]} command, though Mathematica lists them in the opposite order from the order we have chosen.  These are the same vectors listed as $\vect{z}_j$, $1\leq j\leq n-r$ in \acronymref{theorem}{SSNS}.  With $\vect{c}$ produced from the \computerfont{LinearSolve[\,]} command, and the $\vect{u}_j$ coming from the \computerfont{NullSpace[\,]} command we can use Mathematica's symbolic manipulation commands to create an expression that describes all of the solutions.\par
+%
+Begin with the system $\linearsystem{A}{\vect{b}}$.  Row-reduce $A$ (\acronymref{computation}{RR.MMA}) and identify the free variables by determining the non-pivot columns.  Suppose, for the sake of argument, that we have the three free variables $x_3$, $x_7$ and $x_8$.  Then the following command will build an expression for an arbitrary solution:
+%
+\begin{align*}
+\text{\computerfont{LinearSolve[A,\,b]+\{x8,\,x7,\,x3\}.NullSpace[A]}}
+\end{align*}
+%
+%
+Be sure to include the ``dot'' right before the \computerfont{NullSpace[\,]} command --- it has the effect of creating a linear combination of the vectors in the null space, using scalars that are symbols reminiscent of the variables.\par
+%
+A concrete example should help here.  Suppose we want a solution set for the linear system with coefficient matrix $A$ and vector of constants $\vect{b}$,
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+ 1 & 2 & 3 & -5 & 1 & -1 & 2\\
+ 2 & 4 & 0 & 8 & -4 & 1 & -8\\
+ 3 & 6 & 4 & 0 & -2 & 5 & 7
+\end{bmatrix}
+&
+\vect{b}&=
+\colvector{8\\1\\-5}
+\end{align*}
+%
+If we were to apply \acronymref{theorem}{VFSLS}, we would extract the components of $\vect{c}$ and $\vect{u}_j$ from the row-reduced version of the augmented matrix of the system (obtained with Mathematica, \acronymref{computation}{RR.MMA}),
+%
+\begin{equation*}
+\begin{bmatrix}
+ \leading{1} & 2 & 0 & 4 & -2 & 0 & -5 & 2 \\
+ 0 & 0 & \leading{1} & -3 & 1 & 0 & 3 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & \leading{1} & 2 & -3
+\end{bmatrix}
+\end{equation*}
+%
+Instead, we will use this augmented matrix in reduced row-echelon form only to identify the free variables.  In this example, we locate the non-pivot columns and see that $x_2$, $x_4$, $x_5$ and $x_7$ are free.  If we have set $\computerfont{a}$ to the coefficient matrix and $\computerfont{b}$ to the vector of constants, then we execute the Mathematica command, 
+%
+\begin{align*}
+\text{\computerfont{LinearSolve[a, b]+\{x7, x5, x4, x2\}.NullSpace[a]}}
+\end{align*}
+%
+As output we obtain the column vector (list), 
+%
+\begin{align*}
+\colvector{
+   2-2\text{\computerfont{x2}}-4\text{\computerfont{x4}}+2\text{\computerfont{x5}}+5\text{\computerfont{x7}}\\
+   \text{\computerfont{x2}}\\
+   1+3\text{\computerfont{x4}}-\text{\computerfont{x5}}-3\text{\computerfont{x7}}\\
+   \text{\computerfont{x4}}\\
+   \text{\computerfont{x5}}\\
+   -3-2\text{\computerfont{x7}}\\
+   \text{\computerfont{x7}}
+}   
+\end{align*}
+%

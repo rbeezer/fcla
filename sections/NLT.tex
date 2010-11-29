@@ -1,0 +1,1019 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section NLT
+%%  Nilpotent Linear Transformations
+%%
+%%%%%%%%%%%
+%
+{\sc\large This section is in draft form}\\
+{\sc\large Nearly complete}
+\par\medskip
+%
+We have seen that some matrices are diagonalizable and some are not.  Some authors refer to a non-diagonalizable matrix as \define{defective}, but we will study them carefully anyway.  Examples of such matrices include \acronymref{example}{EMMS4}, \acronymref{example}{HMEM5}, and \acronymref{example}{CEMS6}.  Each of these matrices has at least one eigenvalue with geometric multiplicity strictly less than its algebraic multiplicity, and therefore \acronymref{theorem}{DMFE} tells us these matrices are not diagonalizable.\par
+%
+Given a square matrix $A$, it is likely similar to many, many other matrices.  Of all these possibilities, which is the best?  ``Best'' is a subjective term, but we might agree that a diagonal matrix is certainly a very nice choice.  Unfortunately, as we have seen, this will not always be possible.  What form of a matrix is ``next-best''?  Our goal, which will take us several sections to reach, is to show that every matrix is similar to a matrix that is ``nearly-diagonal'' (\acronymref{section}{JCF}). More precisely, every matrix is similar to a matrix with elements on the diagonal, and zeros and ones  on the diagonal just above the main diagonal (the ``super diagonal''), with zeros everywhere else.  In the language of equivalence relations (see \acronymref{theorem}{SER}), we are determining a systematic representative for each equivalence class.  Such a representative for a set of similar matrices is called a \define{canonical form}.\par
+%
+We have just discussed the determination of a canonical form as a question about matrices.  However, we know that every square matrix creates a natural linear transformation (\acronymref{theorem}{MBLT}) and every linear transformation with identical domain and codomain has a square matrix representation for each choice of a basis, with a change of basis creating a similarity transformation (\acronymref{theorem}{SCB}).  So we will state, and prove, theorems using the language of linear transformations on abstract vector spaces, while most of our examples will work with square matrices.  You can, and should, mentally translate between the two settings frequently and easily.\par
+%
+\subsect{NLT}{Nilpotent Linear Transformations}
+%
+We will discover that nilpotent linear transformations are the essential obstacle in a non-diagonalizable linear transformation.  So we will study them carefully first, both as an object of inherent mathematical interest, but also as the object at the heart of the argument that leads to a pleasing canonical form for any linear transformation.  Once we understand these linear transformations thoroughly, we will be able to easily analyze the structure of any linear transformation.\par
+%
+%
+\begin{definition}{NLT}{Nilpotent Linear Transformation}{nilpotent!linear transformation}
+Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation such that there is an integer $p>0$ such that $\lt{T^p}{\vect{v}}=\zerovector$ for every $\vect{v}\in V$.  The smallest $p$ for which this condition is met is called the $\define{index}$ of $T$.  
+\end{definition}
+%
+Of course, the linear transformation $T$ {\em defined} by $\lt{T}{\vect{v}}=\zerovector$ will qualify as nilpotent of index 1.  But are there others?
+%
+\begin{example}{NM64}{Nilpotent matrix, size 6, index 4}{nilpotent!matrix!size 6, index 4}
+Recall that our definitions and theorems are being stated for linear transformations on abstract vector spaces, while our examples will work with square matrices (and use the same terms interchangeably).  In this case, to demonstrate the existence of nontrivial nilpotent linear transformations, we desire a matrix such that some power of the matrix is the zero matrix.  Consider
+%
+\begin{align*}
+A
+&=
+\begin{bmatrix}
+ -3 & 3 & -2 & 5 & 0 & -5 \\
+ -3 & 5 & -3 & 4 & 3 & -9 \\
+ -3 & 4 & -2 & 6 & -4 & -3 \\
+ -3 & 3 & -2 & 5 & 0 & -5 \\
+ -3 & 3 & -2 & 4 & 2 & -6 \\
+ -2 & 3 & -2 & 2 & 4 & -7
+\end{bmatrix}
+%
+\intertext{and compute powers of $A$,}
+%
+A^2
+&=
+\begin{bmatrix}
+ 1 & -2 & 1 & 0 & -3 & 4 \\
+ 0 & -2 & 1 & 1 & -3 & 4 \\
+ 3 & 0 & 0 & -3 & 0 & 0 \\
+ 1 & -2 & 1 & 0 & -3 & 4 \\
+ 0 & -2 & 1 & 1 & -3 & 4 \\
+ -1 & -2 & 1 & 2 & -3 & 4
+\end{bmatrix}\\
+%
+A^3
+&=
+\begin{bmatrix}
+ 1 & 0 & 0 & -1 & 0 & 0 \\
+ 1 & 0 & 0 & -1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 1 & 0 & 0 & -1 & 0 & 0 \\
+ 1 & 0 & 0 & -1 & 0 & 0 \\
+ 1 & 0 & 0 & -1 & 0 & 0
+\end{bmatrix}\\
+%
+A^4
+&=
+\begin{bmatrix}
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+\end{align*}
+%
+Thus we can say that $A$ is nilpotent of index 4.\par
+%
+Because it will presage some upcoming theorems, we will record some extra information about the eigenvalues and eigenvectors of $A$ here.  $A$ has just one eigenvalue, $\lambda=0$, with algebraic multiplicity $6$ and geometric multiplicity $2$.  The eigenspace for this eigenvalue is
+%
+\begin{align*}
+\eigenspace{A}{0}
+&=
+\spn{
+\colvector{2 \\ 2 \\ 5 \\ 2 \\ 1 \\ 0},\,
+\colvector{-1 \\ -1 \\ -5 \\ -1 \\ 0 \\ 1}
+}
+%
+\end{align*}
+%
+If there were degrees of singularity, we might say this matrix was {\em very} singular, since zero is an eigenvalue with maximum algebraic multiplicity (\acronymref{theorem}{SMZE}, \acronymref{theorem}{ME}).  Notice too that $A$ is ``far'' from being diagonalizable (\acronymref{theorem}{DMFE}).
+%
+\end{example}
+%
+Another example.
+%
+\begin{example}{NM62}{Nilpotent matrix, size 6, index 2}{nilpotent!matrix!size 6, index 2}
+Consider the matrix
+%
+\begin{align*}
+B
+&=
+\begin{bmatrix}
+ -1 & 1 & -1 & 4 & -3 & -1 \\
+ 1 & 1 & -1 & 2 & -3 & -1 \\
+ -9 & 10 & -5 & 9 & 5 & -15 \\
+ -1 & 1 & -1 & 4 & -3 & -1 \\
+ 1 & -1 & 0 & 2 & -4 & 2 \\
+ 4 & -3 & 1 & -1 & -5 & 5
+\end{bmatrix}
+%
+\intertext{and compute the second power of $B$,}
+%
+B^2
+&=
+\begin{bmatrix}
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+\end{align*}
+%
+So $B$ is nilpotent of index 2.  Again, the only eigenvalue of $B$ is zero, with algebraic multiplicity $6$.  The geometric multiplicity of the eigenvalue is $3$, as seen in the eigenspace,
+%
+\begin{align*}
+\eigenspace{B}{0}
+&=
+\spn{
+\colvector{1 \\ 3 \\ 6 \\ 1 \\ 0 \\ 0},\,
+\colvector{0 \\ -4 \\ -7 \\ 0 \\ 1 \\ 0},\,
+\colvector{0 \\ 2 \\ 1 \\ 0 \\ 0 \\ 1}
+}
+%
+\end{align*}
+%
+Again, \acronymref{theorem}{DMFE} tells us that $B$ is far from being diagonalizable.
+%
+\end{example}
+%
+On a first encounter with the definition of a nilpotent matrix, you might wonder if such a thing was possible at all.  That a high power of a nonzero object could be zero is so very different from our experience with scalars
+%% TODO:  ref scalar product theorem
+that it seems very unnatural.  Hopefully the two previous examples were somewhat surprising.  But we have seen that matrix algebra does not always behave the way we expect (\acronymref{example}{MMNC}), and we also now recognize matrix products not just as arithmetic, but as function composition (\acronymref{theorem}{MRCLT}).  We will now turn to some examples of nilpotent matrices which might be more transparent.
+%
+\begin{definition}{JB}{Jordan Block}{Jordan block}
+Given the scalar $\lambda\in\complexes$, the Jordan block $\jordan{n}{\lambda}$ is the $n\times n$ matrix defined by
+%
+\begin{align*}
+\matrixentry{\jordan{n}{\lambda}}{ij}
+&=
+\begin{cases}
+\lambda & i=j\\
+1 & j=i+1\\
+0 & \text{otherwise}
+\end{cases}
+\end{align*}
+%
+\denote{JB}{Jordan Block}{$\jordan{n}{\lambda}$}{Jordan block}
+%
+\end{definition}
+%
+\begin{example}{JB4}{Jordan block, size 4}{Jordan block!size 4}
+A simple example of a Jordan block,
+%
+\begin{align*}
+\jordan{4}{5}&=
+\begin{bmatrix}
+5 & 1 & 0 & 0\\
+0 & 5 & 1 & 0\\
+0 & 0 & 5 & 1\\
+0 & 0 & 0 & 5
+\end{bmatrix}
+\end{align*}
+%
+\end{example}
+%
+We will return to general Jordan blocks later, but in this section we are just interested in Jordan blocks where $\lambda=0$.  Here's an example of why we are specializing in these matrices now.
+%
+\begin{example}{NJB5}{Nilpotent Jordan block, size 5}{Jordan block!nilpotent!size 5}
+Consider
+%
+\begin{align*}
+%
+\jordan{5}{0}&=
+\begin{bmatrix}
+0 & 1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+\intertext{and compute powers,}
+%
+\left(\jordan{5}{0}\right)^2&=
+\begin{bmatrix}
+ 0 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+\left(\jordan{5}{0}\right)^3&=
+\begin{bmatrix}
+ 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+\left(\jordan{5}{0}\right)^4&=
+\begin{bmatrix}
+ 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+\left(\jordan{5}{0}\right)^5&=
+\begin{bmatrix}
+ 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+\end{align*}
+%
+So $\jordan{5}{0}$ is nilpotent of index 5.  As before, we record some information about the eigenvalues and eigenvectors of this matrix.  The only eigenvalue is zero, with algebraic multiplicity 5, the maximum possible (\acronymref{theorem}{ME}).  The geometric multiplicity of this eigenvalue is just 1, the minimum possible (\acronymref{theorem}{ME}), as seen in the eigenspace, 
+%
+\begin{align*}
+\eigenspace{\jordan{5}{0}}{0}&=
+\spn{\colvector{1 \\ 0 \\ 0 \\ 0 \\ 0}}
+\end{align*}
+%
+There should not be any real surprises in this example.  We can watch the ones in the powers of $\jordan{5}{0}$ slowly march off to the upper-right hand corner of the powers.  In some vague way, the eigenvalues and eigenvectors of this matrix are equally extreme.
+%
+\end{example}
+%
+We can form combinations of Jordan blocks to build a variety of nilpotent matrices.  Simply place Jordan blocks on the diagonal of a matrix with zeros everywhere else, to create a \define{block diagonal} matrix.
+%
+\begin{example}{NM83}{Nilpotent matrix, size 8, index 3}{nilpotent matrix!size 8! index 3}
+Consider the matrix
+%
+\begin{align*}
+%
+C&=
+\begin{bmatrix}
+\jordan{3}{0} & \zeromatrix & \zeromatrix \\
+\zeromatrix & \jordan{3}{0} & \zeromatrix \\
+\zeromatrix & \zeromatrix & \jordan{2}{0}
+\end{bmatrix}
+=
+%
+\begin{bmatrix}
+ 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+\intertext{and compute powers,}
+%
+C^2&=
+\begin{bmatrix}
+ 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}\\
+%
+C^3&=
+\begin{bmatrix}
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}
+%
+\end{align*}
+%
+So $C$ is nilpotent of index 3.  You should notice how block diagonal matrices behave in products (much like diagonal matrices) and that it was the largest Jordan block that determined the index of this combination.  All eight eigenvalues are zero, and each of the three Jordan blocks contributes one eigenvector to a basis for the eigenspace, resulting in zero having a geometric multiplicity of 3.
+%
+\end{example}
+%
+It would appear that nilpotent matrices only have zero as an eigenvalue, so the algebraic multiplicity will be the maximum possible.  However, by creating block diagonal matrices with Jordan blocks on the diagonal you should be able to attain any desired geometric multiplicity for this lone eigenvalue.  Likewise, the size of the largest Jordan block employed will determine the index of the matrix. So nilpotent matrices with various combinations of index and geometric multiplicities are easy to manufacture.  The predictable properties of block diagonal matrices in matrix products and eigenvector computations, along with the next theorem, make this possible.  You might find \acronymref{example}{NJB5} a useful companion to this proof.
+%
+\begin{theorem}{NJB}{Nilpotent Jordan Blocks}{Jordan block!nilpotent}
+The Jordan block $\jordan{n}{0}$ is nilpotent of index $n$.
+\end{theorem}
+%
+\begin{proof}
+While not phrased as an if-then statement, the statement in the theorem is understood to mean that if we have a specific matrix ($\jordan{n}{0}$) then we need to establish it is nilpotent of a specified index.  The first column of $\jordan{n}{0}$ is the zero vector, and the remaining $n-1$ columns are the standard unit vectors $\vect{e}_i$, $1\leq i\leq n-1$ (\acronymref{definition}{SUV}), which are also the first $n-1$ columns of the size $n$ identity matrix $I_n$.  As shorthand, write $J=\jordan{n}{0}$.
+%
+\begin{align*}
+J&=
+\left[\zerovector\left|\vect{e}_1\right.\left|\vect{e}_2\right.\left|\vect{e}_3\right.\left|\dots\right.\left|\vect{e}_{n-1}\right.\right]
+\end{align*}
+%
+We will use the definition of matrix multiplication (\acronymref{definition}{MM}), together with a proof by induction (\acronymref{technique}{I}), to study the powers of $J$.    Our claim is that
+%
+\begin{align*}
+J^k&=
+\left[\zerovector\left|\zerovector\right.\left|\dots\right.\left|\zerovector\right.\left|\vect{e}_1\right.\left|\vect{e}_2\right.\left|\dots\right.\left|\vect{e}_{n-k}\right.\right]
+\end{align*}
+%
+for $1\leq k\leq n$.  For the base case, $k=1$, and the definition of $J^1=\jordan{n}{0}$ establishes the claim.  For the induction step, first note that $J\vect{e_1}=\zerovector$ and $J\vect{e}_i=\vect{e}_{i-1}$ for $2\leq i\leq n$.  Then, assuming the claim is true for $k$, we examine the $k+1$ case,
+%
+\begin{align*}
+J^{k+1}
+&=JJ^k\\
+&=J\left[\zerovector\left|\zerovector\right.\left|\dots\right.\left|\zerovector\right.\left|\vect{e}_1\right.\left|\vect{e}_2\right.\left|\dots\right.\left|\vect{e}_{n-k}\right.\right]
+&&\text{Induction Hypothesis}\\
+%
+&=\left[J\zerovector\left|J\zerovector\right.\left|\dots\right.\left|J\zerovector\right.\left|J\vect{e}_1\right.\left|J\vect{e}_2\right.\left|\dots\right.\left|J\vect{e}_{n-k}\right.\right]&&\text{\acronymref{definition}{MM}}\\
+%
+&=\left[\zerovector\left|\zerovector\right.\left|\dots\right.\left|\zerovector\right.\left|\zerovector\right.\left|\vect{e}_1\right.\left|\vect{e}_2\right.\left|\dots\right.\left|\vect{e}_{n-k-1}\right.\right]&&\text{\acronymref{definition}{MVP}}\\
+%
+&=\left[\zerovector\left|\zerovector\right.\left|\dots\right.\left|\zerovector\right.\left|\vect{e}_1\right.\left|\vect{e}_2\right.\left|\dots\right.\left|\vect{e}_{n-(k+1)}\right.\right]
+\end{align*}
+%
+This concludes the induction.  So $J^k$ has a nonzero entry (a one) in row $n-k$ and column $n$, for $1\leq k\leq n-1$, and is therefore a nonzero matrix.  However, $J^n=\left[\zerovector\left|\zerovector\right.\left|\dots\right.\left|\zerovector\right.\right]=\zeromatrix$.  By \acronymref{definition}{NLT}, $J$ is nilpotent of index $n$.
+%
+\end{proof}
+%
+\subsect{PNLT}{Properties of Nilpotent Linear Transformations}
+%
+In this subsection we collect some basic properties of nilpotent linear transformations.  After studying the examples in the previous section, some of these will be no surprise.
+%
+\begin{theorem}{ENLT}{Eigenvalues of Nilpotent Linear Transformations}{nilpotent!linear transformation!eigenvalues}
+Suppose that $\ltdefn{T}{V}{V}$ is a nilpotent linear transformation and $\lambda$ is an eigenvalue of $T$.  Then $\lambda=0$.
+\end{theorem}
+%
+\begin{proof}
+Let $\vect{x}$ be an eigenvector of $T$ for the eigenvalue $\lambda$, and suppose that $T$ is nilpotent with index $p$.  Then
+%
+\begin{align*}
+\zerovector
+&=\lt{T^p}{\vect{x}}&&\text{\acronymref{definition}{NLT}}\\
+&=\lambda^p\vect{x}&&\text{\acronymref{theorem}{EOMP}}
+\end{align*}
+%
+Because $\vect{x}$ is an eigenvector, it is nonzero, and therefore \acronymref{theorem}{SMEZV} tells us that $\lambda^p=0$ and so $\lambda=0$.
+%
+\end{proof}
+%
+Paraphrasing, all of the eigenvalues of a nilpotent linear transformation are zero.  So in particular, the characteristic polynomial of a nilpotent linear transformation, $T$, on a vector space of dimension $n$, is simply $\charpoly{T}{x}=x^n$.\par
+%
+%% TODO:  Later get the converse from JCF, Cayley-Hamilton, and reference it here.
+%
+The next theorem is not critical for what follows, but it will explain our interest in nilpotent linear transformations.  More specifically, it is the first step in backing up the assertion that nilpotent linear transformations are the essential obstacle in a non-diagonalizable linear transformation.  While it is not obvious from the statement of the theorem, it says that a nilpotent linear transformation is not diagonalizable, unless it is trivially so.
+%
+\begin{theorem}{DNLT}{Diagonalizable Nilpotent Linear Transformations}{nilpotent!linear transformation!diagonalizable}
+Suppose the linear transformation $\ltdefn{T}{V}{V}$ is nilpotent.   Then $T$ is diagonalizable if and only $T$ is the zero linear transformation.
+\end{theorem}
+%
+\begin{proof}
+We start with the easy direction.  Let $n=\dimension{V}$.\par
+%
+($\Leftarrow$)\quad The linear transformation $\ltdefn{Z}{V}{V}$ defined by $\lt{Z}{\vect{v}}=\zerovector$ for all $\vect{v}\in V$ is nilpotent of index $p=1$ and a matrix representation relative to any basis of $V$ is the $n\times n$ zero matrix, $\zeromatrix$.  Quite obviously, the zero matrix is a diagonal matrix (\acronymref{definition}{DIM}) and hence $Z$ is diagonalizable (\acronymref{definition}{DZM}).\par
+%
+($\Rightarrow$)\quad Assume now that $T$ is diagonalizable, so $\geomult{T}{\lambda}=\algmult{T}{\lambda}$ for every eigenvalue $\lambda$ (\acronymref{theorem}{DMFE}).  By \acronymref{theorem}{ENLT}, $T$ has only one eigenvalue (zero), which therefore must have algebraic multiplicity $n$  (\acronymref{theorem}{NEM}).  So the geometric multiplicity of zero will be $n$ as well, $\geomult{T}{0}=n$.\par
+%
+Let $B$ be a basis for the eigenspace $\eigenspace{T}{0}$.  Then $B$ is a linearly independent subset of $V$ of size $n$, and by \acronymref{theorem}{G} will be a basis for $V$.  For any $\vect{x}\in B$ we have
+%
+\begin{align*}
+\lt{T}{\vect{x}}
+&=0\vect{x}&&\text{\acronymref{definition}{EM}}\\
+&=\zerovector&&\text{\acronymref{theorem}{ZSSM}}
+\end{align*}
+%
+So $T$ is identically zero on a basis for $B$, and since the action of a linear transformation on a basis determines all of the values of the linear transformation (\acronymref{theorem}{LTDB}), it is easy to see that $\lt{T}{\vect{v}}=\zerovector$ for every $\vect{v}\in V$.
+%
+\end{proof}
+%
+So, other than one trivial case (the zero matrix), every nilpotent linear transformation is not diagonalizable.  It remains to see what is so ``essential'' about this broad class of non-diagonalizable linear transformations.  For this we now turn to a discussion of kernels of powers of nilpotent linear transformations, beginning with a result about general linear transformations that may not necessarily be nilpotent.
+%
+\begin{theorem}{KPLT}{Kernels of Powers of Linear Transformations}{linear transformation!kernels of powers}
+Suppose $\ltdefn{T}{V}{V}$ is a linear transformation, where $\dimension{V}=n$.  Then there is an integer $m$, $0\leq m\leq n$, such that
+%
+\begin{align*}
+\set{\zerovector}
+&=\krn{T^0}
+\subsetneq\krn{T^1}
+\subsetneq\krn{T^2}
+\subsetneq\cdots
+\subsetneq\krn{T^m}
+=\krn{T^{m+1}}
+=\krn{T^{m+2}}
+=\cdots
+\end{align*}
+%
+\end{theorem}
+%
+\begin{proof}
+There are several items to verify in the conclusion as stated.  First, we show that $\krn{T^k}\subseteq\krn{T^{k+1}}$ for any $k$.    Choose $\vect{z}\in\krn{T^k}$.  Then
+%
+\begin{align*}
+\lt{T^{k+1}}{\vect{z}}
+&=\lt{T}{\lt{T^k}{\vect{z}}}&&\text{\acronymref{definition}{LTC}}\\
+&=\lt{T}{\zerovector}&&\text{\acronymref{definition}{KLT}}\\
+&=\zerovector&&\text{\acronymref{theorem}{LTTZZ}}
+\end{align*}
+%
+So by \acronymref{definition}{KLT}, $\vect{z}\in\krn{T^{k+1}}$ and by \acronymref{definition}{SSET} we have $\krn{T^k}\subseteq\krn{T^{k+1}}$.\par
+%
+Second, we demonstrate the existence of a power $m$ where consecutive powers result in equal kernels.  A by-product will be the condition that $m$ can be chosen so that $m\leq n$.  To the contrary, suppose that 
+%
+\begin{align*}
+\set{\zerovector}
+&=\krn{T^0}
+\subsetneq\krn{T^1}
+\subsetneq\krn{T^2}
+\subsetneq\cdots
+\subsetneq\krn{T^{n-1}}
+\subsetneq\krn{T^n}
+\subsetneq\krn{T^{n+1}}
+\subsetneq\cdots
+\end{align*}
+%
+Since $\krn{T^k}\subsetneq\krn{T^{k+1}}$, \acronymref{theorem}{PSSD} implies that $\dimension{\krn{T^{k+1}}}\geq\dimension{\krn{T^k}}+1$.  Repeated application of this observation yields
+%
+\begin{align*}
+\dimension{\krn{T^{n+1}}}
+&\geq\dimension{\krn{T^n}}+1\\
+&\geq\dimension{\krn{T^{n-1}}}+2\\
+&\quad\quad\vdots\\
+&\geq\dimension{\krn{T^{0}}}+(n+1)\\
+&=\dimension{\set{\zerovector}}+n+1\\
+&=n+1
+\end{align*}
+%
+Thus, $\krn{T^{n+1}}$ has a basis of size at least $n+1$, which is a linearly independent set of size greater than $n$ in the vector space $V$ of dimension $n$.  This contradicts \acronymref{theorem}{G}.\par
+%
+This contradiction yields the existence of an integer $k$ such that $\krn{T^k}=\krn{T^{k+1}}$, so we can define $m$ to be smallest such integer with this property.  From the argument above about dimensions resulting from a strictly increasing chain of subspaces, it should be clear that $m\leq n$.\par
+%
+It remains to show that once two consecutive kernels are equal, then all of the remaining kernels are equal.  More formally, if $\krn{T^m}=\krn{T^{m+1}}$, then $\krn{T^m}=\krn{T^{m+j}}$ for all $j\geq 1$.  We will give a proof by induction on $j$ (\acronymref{technique}{I}).  The base case ($j=1$) is precisely our defining property for $m$.\par
+%
+In the induction step, we assume that $\krn{T^m}=\krn{T^{m+j}}$ and endeavor to show that $\krn{T^m}=\krn{T^{m+j+1}}$.  At the outset of this proof we established that  $\krn{T^m}\subseteq\krn{T^{m+j+1}}$.  So \acronymref{definition}{SE} requires only that we establish the subset inclusion in the opposite direction.  To wit, choose $\vect{z}\in\krn{T^{m+j+1}}$.  Then
+%
+\begin{align*}
+\zerovector
+&=\lt{T^{m+j+1}}{\vect{z}}&&\text{\acronymref{definition}{KLT}}\\
+&=\lt{T^{m+j}}{\lt{T}{\vect{z}}}&&\text{\acronymref{definition}{LTC}}\\
+&=\lt{T^{m}}{\lt{T}{\vect{z}}}&&\text{Induction Hypothesis}\\
+&=\lt{T^{m+1}}{\vect{z}}&&\text{\acronymref{definition}{LTC}}\\
+&=\lt{T^{m}}{\vect{z}}&&\text{Base Case}
+\end{align*}
+%
+So by \acronymref{definition}{KLT}, $\vect{z}\in\krn{T^{m}}$ as desired.
+%
+\end{proof}
+%
+We now specialize \acronymref{theorem}{KPLT} to the case of nilpotent linear transformations, which buys us just a bit more precision in the conclusion.
+%
+\begin{theorem}{KPNLT}{Kernels of Powers of Nilpotent Linear Transformations}{linear transformation!nilpotent!kernels of powers}
+Suppose $\ltdefn{T}{V}{V}$ is a nilpotent linear transformation with index $p$ and $\dimension{V}=n$.  Then $0\leq p\leq n$ and
+%
+\begin{align*}
+\set{\zerovector}
+&=\krn{T^0}
+\subsetneq\krn{T^1}
+\subsetneq\krn{T^2}
+\subsetneq\cdots
+\subsetneq\krn{T^{p}}
+=\krn{T^{p+1}}
+=\cdots
+=V
+\end{align*}
+%
+\end{theorem}
+%
+\begin{proof}
+Since $T^p=0$ it follows that $T^{p+j}=0$ for all $j\geq 0$ and thus $\krn{T^{p+j}}=V$ for $j\geq 0$.  So the value of $m$ guaranteed by \acronymref{theorem}{KPLT} is at most $p$.  The only remaining aspect of our conclusion that does not follow from \acronymref{theorem}{KPLT} is that $m=p$.  To see this we must show that $\krn{T^k}
+\subsetneq\krn{T^{k+1}}$ for $0\leq k\leq p-1$.  If $\krn{T^k}=\krn{T^{k+1}}$ for some $k<p$, then $\krn{T^k}=\krn{T^p}=V$.  This implies that $T^k=0$, violating the fact that $T$ has index $p$.  So the smallest value of $m$ is indeed $p$, and we learn that $p<n$.
+%
+\end{proof}
+%
+The structure of the kernels of powers of nilpotent linear transformations will be crucial to what follows.  But immediately we can see a practical benefit.  Suppose we are confronted with the question of whether or not an $n\times n$ matrix, $A$, is nilpotent or not.  If we don't quickly find a low power that equals the zero matrix, when do we stop trying higher and higher powers?  \acronymref{theorem}{KPNLT} gives us the answer: if we don't see a zero matrix by the time we finish computing $A^n$, then it is not going to ever happen.
+%
+We'll now take a look at one example of \acronymref{theorem}{KPNLT} in action.
+%
+\begin{example}{KPNLT}{Kernels of powers of a nilpotent linear transformation}{linear transformation!nilpotent!kernels}
+We will recycle the nilpotent matrix $A$ of index 4 from \acronymref{example}{NM64}.  We now know that would have only needed to look at the first 6 powers of $A$ if the matrix had not been nilpotent.  We list bases for the null spaces of the powers of $A$.  (Notice how we are using null spaces for matrices interchangeably with kernels of linear transformations, see \acronymref{theorem}{KNSI} for justification.)
+%
+\begin{align*}
+\nsp{A}
+&=
+\nsp{
+\begin{bmatrix}
+ -3 & 3 & -2 & 5 & 0 & -5 \\
+ -3 & 5 & -3 & 4 & 3 & -9 \\
+ -3 & 4 & -2 & 6 & -4 & -3 \\
+ -3 & 3 & -2 & 5 & 0 & -5 \\
+ -3 & 3 & -2 & 4 & 2 & -6 \\
+ -2 & 3 & -2 & 2 & 4 & -7
+\end{bmatrix}
+}
+=\spn{\set{
+\colvector{2 \\ 2 \\ 5 \\ 2 \\ 1 \\ 0},\,
+\colvector{-1 \\ -1 \\ -5 \\ -1 \\ 0 \\ 1}
+}}\\
+%
+\nsp{A^2}
+&=
+\nsp{
+\begin{bmatrix}
+ 1 & -2 & 1 & 0 & -3 & 4 \\
+ 0 & -2 & 1 & 1 & -3 & 4 \\
+ 3 & 0 & 0 & -3 & 0 & 0 \\
+ 1 & -2 & 1 & 0 & -3 & 4 \\
+ 0 & -2 & 1 & 1 & -3 & 4 \\
+ -1 & -2 & 1 & 2 & -3 & 4
+\end{bmatrix}
+}
+=\spn{\set{
+\colvector{0 \\ 1 \\ 2 \\ 0 \\ 0 \\ 0},\,
+\colvector{2 \\ 1 \\  0 \\ 2 \\ 0 \\ 0},\,
+\colvector{0 \\ -3 \\ 0 \\ 0 \\ 2 \\ 0},\,
+\colvector{0 \\ 2 \\ 0 \\ 0 \\ 0 \\ 1}
+}}\\
+%
+\nsp{A^3}
+&=
+\nsp{
+\begin{bmatrix}
+ 1 & 0 & 0 & -1 & 0 & 0 \\
+ 1 & 0 & 0 & -1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 1 & 0 & 0 & -1 & 0 & 0 \\
+ 1 & 0 & 0 & -1 & 0 & 0 \\
+ 1 & 0 & 0 & -1 & 0 & 0
+\end{bmatrix}
+}
+=\spn{\set{
+\colvector{0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0},\,
+\colvector{0 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0},\,
+\colvector{1 \\ 0 \\ 0 \\ 1 \\ 0 \\ 0},\,
+\colvector{0 \\ 0 \\ 0 \\ 0 \\ 1 \\ 0},\,
+\colvector{0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1}
+}}\\
+%
+\nsp{A^4}
+&=
+\nsp{
+\begin{bmatrix}
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}
+}
+=\spn{\set{
+\colvector{1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0},\,
+\colvector{0 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0},\,
+\colvector{0 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0},\,
+\colvector{0 \\ 0 \\ 0 \\ 1 \\ 0 \\ 0},\,
+\colvector{0 \\ 0 \\ 0 \\ 0 \\ 1 \\ 0},\,
+\colvector{0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1}
+}}\\
+%
+\end{align*}
+%
+With the exception of some convenience scaling of the basis vectors in $\nsp{A^2}$ these are exactly the basis vectors described in \acronymref{theorem}{BNS}.  We can see that the dimension of $\nsp{A}$ equals the geometric multiplicity of the zero eigenvalue.  Why is this not an accident?  We can see the dimensions of the kernels consistently increasing, and we can see that $\nsp{A^4}=\complex{6}$.  But  \acronymref{theorem}{KPNLT} says a little more.  Each successive kernel should be a superset of the previous one.  We ought to be able to begin with a basis of $\nsp{A}$ and extend it to a basis of $\nsp{A^2}$.  Then we should be able to extend a basis of  $\nsp{A^2}$ into a basis of $\nsp{A^3}$, all with repeated applications of \acronymref{theorem}{ELIS}.  Verify the following,
+%
+\begin{align*}
+\nsp{A}
+&=
+\spn{\set{
+\colvector{2 \\ 2 \\ 5 \\ 2 \\ 1 \\ 0},\,
+\colvector{-1 \\ -1 \\ -5 \\ -1 \\ 0 \\ 1}
+}}\\
+%
+\nsp{A^2}
+&=\spn{\set{
+\colvector{2 \\ 2 \\ 5 \\ 2 \\ 1 \\ 0},\,
+\colvector{-1 \\ -1 \\ -5 \\ -1 \\ 0 \\ 1},\,
+\colvector{0 \\ -3 \\ 0 \\ 0 \\ 2 \\ 0},\,
+\colvector{0 \\ 2 \\ 0 \\ 0 \\ 0 \\ 1}
+}}\\
+%
+\nsp{A^3}
+&=
+\spn{\set{
+\colvector{2 \\ 2 \\ 5 \\ 2 \\ 1 \\ 0},\,
+\colvector{-1 \\ -1 \\ -5 \\ -1 \\ 0 \\ 1},\,
+\colvector{0 \\ -3 \\ 0 \\ 0 \\ 2 \\ 0},\,
+\colvector{0 \\ 2 \\ 0 \\ 0 \\ 0 \\ 1},\,
+\colvector{0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1}
+}}\\
+%
+\nsp{A^4}
+&=
+\spn{\set{
+\colvector{2 \\ 2 \\ 5 \\ 2 \\ 1 \\ 0},\,
+\colvector{-1 \\ -1 \\ -5 \\ -1 \\ 0 \\ 1},\,
+\colvector{0 \\ -3 \\ 0 \\ 0 \\ 2 \\ 0},\,
+\colvector{0 \\ 2 \\ 0 \\ 0 \\ 0 \\ 1},\,
+\colvector{0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1},\,
+\colvector{0 \\ 0 \\ 0 \\ 1 \\ 0 \\ 0}
+}}\\
+%
+\end{align*}
+%
+Do not be concerned at the moment about how these bases were constructed since we are not describing the applications of \acronymref{theorem}{ELIS} here.  Do verify carefully for each alleged basis that, (1) it is a superset of the basis for the previous kernel, (2) the basis vectors really are members of the kernel of the right power of $A$, (3) the basis is a linearly independent set, (4) the size of the basis is equal to the size of the basis found previously for each kernel.  With these verifications, \acronymref{theorem}{G} will tell us that we have successfully demonstrated what \acronymref{theorem}{KPNLT} guarantees.
+%
+\end{example}
+%
+\subsect{CFNLT}{Canonical Form for Nilpotent Linear Transformations}
+%
+Our main purpose in this section is to find a basis so that a nilpotent linear transformation will have a pleasing, nearly-diagonal matrix representation.  Of course, we will not have a definition for ``pleasing,'' nor for ``nearly-diagonal.''  But the short answer is that our preferred matrix representation will be built up from Jordan blocks, $\jordan{n}{0}$.  Here's the theorem.  You will find \acronymref{example}{CFNLT} helpful as you study this proof, since it uses the same notation, and is large enough to (barely) illustrate the full generality of the theorem (see ).
+%
+\begin{theorem}{CFNLT}{Canonical Form for Nilpotent Linear Transformations}{canonical form!nilpotent linear transformation}
+Suppose that $\ltdefn{T}{V}{V}$ is a nilpotent linear transformation of index $p$.  Then there is a basis for $V$ so that the matrix representation, $\matrixrep{T}{B}{B}$, is block diagonal with each block being a Jordan block, $\jordan{n}{0}$.  The size of the largest block is the index $p$, and the total number of blocks is the nullity of $T$, $\nullity{T}$.
+\end{theorem}
+%
+\begin{proof}
+We will explicitly construct the desired basis, so the proof is constructive (\acronymref{technique}{C}), and can be used in practice.  As we begin, the basis vectors will not be in the proper order, but we will rearrange them at the end of the proof.  For convenience, define $n_i=\nullity{T^i}$, so for example, $n_0=0$, $n_1=\nullity{T}$ and $n_p=\nullity{T^p}=\dimension{V}$.  Define $s_i=n_i-n_{i-1}$, for $1\leq i\leq p$, so we can think of $s_i$ as ``how much bigger'' $\krn{T^i}$ is than $\krn{T^{i-1}}$.  In particular, \acronymref{theorem}{KPNLT} implies that $s_i>0$ for $1\leq i\leq p$.\par
+%
+We are going to build a set of vectors $\vect{z}_{i,j}$, $1\leq i\leq p$, $1\leq j\leq s_i$.  Each $\vect{z}_{i,j}$ will be an element of $\krn{T^i}$ and not an element of $\krn{T^{i-1}}$.  In total, we will obtain a linearly independent set of $\sum_{i=1}^{p}s_i=\sum_{i=1}^{p}n_i-n_{i-1}=n_p-n_0=\dimension{V}$ vectors that form a basis of $V$.  We construct this set in pieces, starting at the ``wrong'' end.  Our procedure will build a series of subspaces, $Z_i$, each lying in between  $\krn{T^{i-1}}$ and $\krn{T^i}$, having bases $\vect{z}_{i,j}$, $1\leq j\leq s_i$, and which together equal $V$ as a direct sum.  Now would be a good time to review the results on direct sums collected in \acronymref{subsection}{PD.DS}.   OK, here we go.\par
+%
+We build the subspace $Z_p$ first (this is what we meant by ``starting at the wrong end'').  $\krn{T^{p-1}}$ is a proper subspace of $\krn{T^p}=V$ (\acronymref{theorem}{KPNLT}).  \acronymref{theorem}{DSFOS} says that there is a subspace of $V$ that will pair with the subspace $\krn{T^{p-1}}$ to form a direct sum of $V$.  Call this subspace $Z_p$, and choose vectors $\vect{z}_{p,j}$, $1\leq j\leq s_p$ as a basis of $Z_p$, which we will denote as $B_p$.   Note that we have a fair amount of freedom in how to choose these first basis vectors.  Several observations will be useful in the next step.  First $V=\krn{T^{p-1}}\ds Z_p$.  The basis $B_p=\set{\vect{z}_{p,1},\,\vect{z}_{p,2},\,\vect{z}_{p,3},\,\dots,\,\vect{z}_{p,s_p}}$ is linearly independent.  For $1\leq j\leq s_p$, $\vect{z}_{p,j}\in\krn{T^p}=V$.  Since the two subspaces of a direct sum have no nonzero vectors in common (\acronymref{theorem}{DSZI}), for $1\leq j\leq s_p$, $\vect{z}_{p,j}\not\in\krn{T^{p-1}}$.  That was comparably easy.\par
+%
+If obtaining $Z_p$ was easy, getting $Z_{p-1}$ will be harder.  We will repeat the next step $p-1$ times, and so will do it carefully the first time.  Eventually, $Z_{p-1}$ will have dimension $s_{p-1}$.  However, the first $s_p$ vectors of a basis are straightforward.  Define $\vect{z}_{p-1,j}=\lt{T}{\vect{z}_{p,j}}$, $1\leq j\leq s_p$.  Notice that we have no choice in creating these vectors, they are a consequence of our choices for $\vect{z}_{p,j}$.  In retrospect (i.e.\ on a second reading of this proof), you will recognize  this as the key step in realizing a matrix representation of a nilpotent linear transformation with Jordan blocks.  We need to know that this set of vectors in linearly independent, so start with a relation of linear dependence (\acronymref{definition}{RLD}), and massage it, 
+%
+\begin{align*}
+\zerovector
+&=
+a_1\vect{z}_{p-1,1}+
+a_2\vect{z}_{p-1,2}+
+a_3\vect{z}_{p-1,3}+
+\cdots+
+a_{s_p}\vect{z}_{p-1,s_p}\\
+%
+&=
+a_1\lt{T}{\vect{z}_{p,1}}+
+a_2\lt{T}{\vect{z}_{p,2}}+
+a_3\lt{T}{\vect{z}_{p,3}}+
+\cdots+
+a_{s_p}\lt{T}{\vect{z}_{p,s_p}}\\
+%
+&=\lt{T}{
+a_1\vect{z}_{p,1}+
+a_2\vect{z}_{p,2}+
+a_3\vect{z}_{p,3}+
+\cdots+
+a_{s_p}\vect{z}_{p,s_p}
+}
+&&\text{\acronymref{theorem}{LTLC}}\\
+\end{align*}
+%
+Define 
+$\vect{x}=
+a_1\vect{z}_{p,1}+a_2\vect{z}_{p,2}+a_3\vect{z}_{p,3}+\cdots+a_{s_p}\vect{z}_{p,s_p}$.  
+The statement just above means that $\vect{x}\in\krn{T}\subseteq\krn{T^{p-1}}$  (\acronymref{definition}{KLT}, \acronymref{theorem}{KPNLT}).  As defined, $\vect{x}$ is a linear combination of the basis vectors $B_p$, and therefore $\vect{x}\in Z_p$.  Thus $\vect{x}\in\krn{T^{p-1}}\cap Z_p$ (\acronymref{definition}{SI}).  Because $V=\krn{T^{p-1}}\ds Z_p$, \acronymref{theorem}{DSZI} tells us that $\vect{x}=\zerovector$.  Now we recognize the definition of $\vect{x}$ as a relation of linear dependence on the linearly independent set $B_p$, and therefore $a_1=a_2=\cdots=a_{s_p}=0$ (\acronymref{definition}{LI}). This establishes the linear independence of $\vect{z}_{p-1,j}$, $1\leq j\leq s_p$ (\acronymref{definition}{LI}).\par
+%
+We also need to know where the vectors $\vect{z}_{p-1,j}$, $1\leq j\leq s_p$ live.  First we demonstrate that they are members of $\krn{T^{p-1}}$.
+%
+\begin{align*}
+\lt{T^{p-1}}{\vect{z}_{p-1,j}}
+&=\lt{T^{p-1}}{\lt{T}{\vect{z}_{p,j}}}\\
+&=\lt{T^{p}}{\vect{z}_{p,j}}\\
+&=\zerovector
+\end{align*}
+%
+So $\vect{z}_{p-1,j}\in\krn{T^{p-1}}$, $1\leq j\leq s_p$.  However, we now show that these vectors are not elements of $\krn{T^{p-2}}$.  Suppose to the contrary (\acronymref{technique}{CD}) that $\vect{z}_{p-1,j}\in\krn{T^{p-2}}$.  Then
+%
+\begin{align*}
+\zerovector
+&=\lt{T^{p-2}}{\vect{z}_{p-1,j}}\\
+&=\lt{T^{p-2}}{\lt{T}{\vect{z}_{p,j}}}\\
+&=\lt{T^{p-1}}{\vect{z}_{p,j}}\\
+\end{align*}
+%
+which contradicts the earlier statement that $\vect{z}_{p,j}\not\in\krn{T^{p-1}}$.  So $\vect{z}_{p-1,j}\not\in\krn{T^{p-2}}$, $1\leq j\leq s_p$.\par
+%
+Now choose a basis $C_{p-2}=\set{\vectorlist{u}{n_{p-2}}}$ for $\krn{T^{p-2}}$.  We want to extend this basis by adding in the $\vect{z}_{p-1,j}$ to span a subspace of $\krn{T^{p-1}}$.  But first we want to know that this set is linearly independent.  Let $a_k$, $1\leq k\leq n_{p-2}$ and $b_j$, $1\leq j\leq s_p$ be the scalars in a relation of linear dependence,
+%
+\begin{align*}
+\zerovector
+&=
+a_1\vect{u}_1+
+a_2\vect{u}_2+
+\cdots+
+a_{n_{p-2}}\vect{u}_{n_{p-2}}
++
+b_1\vect{z}_{p-1,1}+
+b_2\vect{z}_{p-1,2}+
+\cdots+
+b_{s_p}\vect{z}_{p-1,s_p}
+\end{align*}
+%
+Then,
+%
+\begin{align*}
+\zerovector
+&=\lt{T^{p-2}}{\zerovector}\\
+&=\lt{T^{p-2}}{
+a_1\vect{u}_1+
+a_2\vect{u}_2+
+\cdots+
+a_{n_{p-2}}\vect{u}_{n_{p-2}}
++
+b_1\vect{z}_{p-1,1}+
+b_2\vect{z}_{p-1,2}+
+\cdots+
+b_{s_p}\vect{z}_{p-1,s_p}
+}\\
+%
+&=
+a_1\lt{T^{p-2}}{\vect{u}_1}+
+a_2\lt{T^{p-2}}{\vect{u}_2}+
+\cdots+
+a_{n_{p-2}}\lt{T^{p-2}}{\vect{u}_{n_{p-2}}}
++\\
+&\quad\quad
+b_1\lt{T^{p-2}}{\vect{z}_{p-1,1}}+
+b_2\lt{T^{p-2}}{\vect{z}_{p-1,2}}+
+\cdots+
+b_{s_p}\lt{T^{p-2}}{\vect{z}_{p-1,s_p}}\\
+%
+&=
+a_1\zerovector+
+a_2\zerovector+
+\cdots+
+a_{n_{p-2}}\zerovector
++
+b_1\lt{T^{p-2}}{\vect{z}_{p-1,1}}+
+b_2\lt{T^{p-2}}{\vect{z}_{p-1,2}}+
+\cdots+
+b_{s_p}\lt{T^{p-2}}{\vect{z}_{p-1,s_p}}\\
+%
+&=
+b_1\lt{T^{p-2}}{\vect{z}_{p-1,1}}+
+b_2\lt{T^{p-2}}{\vect{z}_{p-1,2}}+
+\cdots+
+b_{s_p}\lt{T^{p-2}}{\vect{z}_{p-1,s_p}}\\
+%
+&=
+b_1\lt{T^{p-2}}{\lt{T}{\vect{z}_{p,1}}}+
+b_2\lt{T^{p-2}}{\lt{T}{\vect{z}_{p,2}}}+
+\cdots+
+b_{s_p}\lt{T^{p-2}}{\lt{T}{\vect{z}_{p,s_p}}}\\
+%
+&=
+b_1\lt{T^{p-1}}{\vect{z}_{p,1}}+
+b_2\lt{T^{p-1}}{\vect{z}_{p,2}}+
+\cdots+
+b_{s_p}\lt{T^{p-1}}{\vect{z}_{p,s_p}}\\
+%
+&=
+\lt{T^{p-1}}{
+b_1\vect{z}_{p,1}+
+b_2\vect{z}_{p,2}+
+\cdots+
+b_{s_p}\vect{z}_{p,s_p}
+}
+\end{align*}
+%
+Define 
+$\vect{y}=
+b_1\vect{z}_{p,1}+b_2\vect{z}_{p,2}+\cdots+b_{s_p}\vect{z}_{p,s_p}$.  
+The statement just above means that $\vect{y}\in\krn{T^{p-1}}$  (\acronymref{definition}{KLT}).  As defined, $\vect{y}$ is a linear combination of the basis vectors $B_p$, and therefore $\vect{y}\in Z_p$.  Thus $\vect{y}\in\krn{T^{p-1}}\cap Z_p$.  Because $V=\krn{T^{p-1}}\ds Z_p$, \acronymref{theorem}{DSZI} tells us that $\vect{y}=\zerovector$.  Now we recognize the definition of $\vect{y}$ as a relation of linear dependence on the linearly independent set $B_p$, and therefore $b_1=b_2=\cdots=b_{s_p}=0$ (\acronymref{definition}{LI}).  Return to the full relation of linear dependence with both sets of scalars (the $a_i$ and $b_j$).  Now that we know that $b_j=0$ for $1\leq j\leq s_p$, this relation of linear dependence simplifies to a relation of linear dependence on just the basis $C_{p-1}$.  Therefore, $a_i=0$, $1\leq a_i\leq n_{p-1}$ and we have the desired linear independence.\par
+%
+Define a new subspace of $\krn{T^{p-1}}$ as
+%
+\begin{align*}
+Q_{p-1}
+&=
+\spn{\set{
+\vectorlist{u}{n_{p-1}},\,
+\vect{z}_{p-1,1},\,\vect{z}_{p-1,2},\,\vect{z}_{p-1,3},\,\dots,\,\vect{z}_{p-1,s_p}
+}}
+\end{align*}
+%
+By \acronymref{theorem}{DSFOS} there exists a subspace of $\krn{T^{p-1}}$ which will pair with $Q_{p-1}$ to form a direct sum.  Call this subspace $R_{p-1}$, so by definition, $\krn{T^{p-1}}=Q_{p-1}\ds R_{p-1}$.  We are interested in the dimension of $R_{p-1}$.  Note first, that since the spanning set of $Q_{p-1}$ is linearly independent, $\dimension{Q_{p-1}}=n_{p-2}+s_p$.  Then
+%
+\begin{align*}
+\dimension{R_{p-1}}
+&=\dimension{\krn{T^{p-1}}}-\dimension{Q_{p-1}}&&\text{\acronymref{theorem}{DSD}}\\
+&=n_{p-1}-\left(n_{p-2}+s_p\right)\\
+&=\left(n_{p-1}-n_{p-2}\right)-s_p\\
+&=s_{p-1}-s_p
+\end{align*}
+%
+Notice that if $s_{p-1}=s_p$, then $R_{p-1}$ is trivial.   Now choose a basis of $R_{p-1}$, and denote these $s_{p-1}-s_p$ vectors as $\vect{z}_{p-1,s_p+1}$, $\vect{z}_{p-1,s_p+2}$, $\vect{z}_{p-1,s_p+3}$, \dots, $\vect{z}_{p-1,s_{p-1}}$.  This is another occassion to notice that we have some freedom in this choice.\par
+%
+We now have $\krn{T^{p-1}}=Q_{p-1}\ds R_{p-1}$, and we have bases for each of the two subspaces.  The union of these two bases will therefore be a linearly independent set in $\krn{T^{p-1}}$ with size 
+%
+\begin{align*}
+\left(n_{p-2}+s_p\right)+\left(s_{p-1}-s_p\right)
+&=n_{p-2}+s_{p-1}\\
+&=n_{p-2}+n_{p-1}-n_{p-2}\\
+&=n_{p-1}=\dimension{\krn{T^{p-1}}}
+\end{align*}
+%
+So, by \acronymref{theorem}{G}, the following set is a basis of $\krn{T^{p-1}}$,
+%
+\begin{align*}
+\set{
+\vectorlist{u}{n_{p-2}},\,
+\vect{z}_{p-1,1},\,\vect{z}_{p-1,2},\,\dots,\,\vect{z}_{p-1,s_p},\,
+\vect{z}_{p-1,s_p+1},\,\vect{z}_{p-1,s_p+2},\,\dots,\,\vect{z}_{p-1,s_{p-1}}
+}
+\end{align*}
+%
+We built up this basis in three parts, we will now split it in half.  Define the subspace $Z_{p-1}$ by
+%
+\begin{align*}
+Z_{p-1}
+&=\spn{B_{p-1}}=
+\spn{\set{
+\vect{z}_{p-1,1},\,\vect{z}_{p-1,2},\,\dots,\,\vect{z}_{p-1,s_{p-1}}
+}}
+\end{align*}
+%
+where we have implicitly denoted the basis as $B_{p-1}$.  Then \acronymref{theorem}{DSFB} allows us to split up the basis for $\krn{T^{p-1}}$ as $C_{p-1}\cup B_{p-1}$ and write
+%
+\begin{align*}
+\krn{T^{p-1}}=\krn{T^{p-2}}\ds Z_{p-1}
+\end{align*}
+%
+Whew!  This is a good place to recap what we have achieved.  The vectors $\vect{z}_{i,j}$ form bases for the subspaces $Z_i$ and right now
+%
+\begin{align*}
+V=\krn{T^{p-1}}\ds Z_{p}=\krn{T^{p-2}}\ds Z_{p-1}\ds Z_{p}
+\end{align*}
+%
+The key feature of this decomposition of $V$ is that the first $s_p$ vectors in the basis for $Z_{p-1}$ are outputs of the linear transformation $T$ using the basis vectors of $Z_p$ as inputs.\par
+%
+Now we want to further decompose $\krn{T^{p-2}}$ (into $\krn{T^{p-3}}$ and $Z_{p-2}$).  The procedure is the same as above, so we will only sketch the key steps.  Checking the details proceeds in the same manner as above.  Technically, we could have set up the preceding as the induction step in a proof by induction (\acronymref{technique}{I}), but this probably would make the proof harder to understand.\par
+%
+Hit each element of $B_{p-1}$ with $T$, to create vectors $\vect{z}_{p-2,j}$, $1\leq j\leq s_{p-1}$.  These vectors form a linearly independent set, and each is an element of $\krn{T^{p-2}}$, but not an element of $\krn{T^{p-3}}$.  Grab a basis $C_{p-3}$ of $\krn{T^{p-3}}$ and tack on the newly-created vectors $\vect{z}_{p-2,j}$, $1\leq j\leq s_{p-1}$.  This expanded set is linearly independent, and we can define a subspace $Q_{p-2}$ using it as a basis.  \acronymref{theorem}{DSFOS} gives us a subspace $R_{p-2}$ such that $\krn{T^{p-2}}=Q_{p-2}\ds R_{p-2}$.  Vectors $\vect{z}_{p-2,j}$, $s_{p-1}+1\leq j\leq s_{p-2}$ are chosen as a basis for $R_{p-2}$ once the relevant dimensions have been verified.  The union of $C_{p-3}$ and $\vect{z}_{p-2,j}$, $1\leq j\leq s_{p-2}$ then form a basis of $\krn{T^{p-2}}$, which can be split into two parts to yield the decomposition  
+%
+\begin{align*}
+\krn{T^{p-2}}=\krn{T^{p-3}}\ds Z_{p-2}
+\end{align*}
+%
+Here $Z_{p-2}$ is the subspace of $\krn{T^{p-2}}$ with basis $B_{p-2}=\setparts{\vect{z}_{p-2,j}}{1\leq j\leq s_{p-2}}$.  Finally,
+%
+\begin{align*}
+V=\krn{T^{p-1}}\ds Z_{p}=\krn{T^{p-2}}\ds Z_{p-1}\ds Z_{p}=\krn{T^{p-3}}\ds Z_{p-2}\ds Z_{p-1}\ds Z_{p}
+\end{align*}
+%
+Again, the key feature of this decomposition is that the first vectors in the basis of $Z_{p-2}$ are outputs of $T$ using vectors from the basis $Z_{p-1}$ as inputs (and in turn, some of these inputs are outputs of $T$ derived from inputs in $Z_p$).\par
+%
+Now assume we repeat this procedure until we decompose $\krn{T^{2}}$ into subspaces $\krn{T}$ and $Z_2$.  Finally, decompose $\krn{T}$ into subspaces $\krn{T^0}=\krn{I_n}=\set{\zerovector}$ and $Z_1$, so that we recognize the vectors $\vect{z}_{1,j}$, $1\leq j\leq s_1=n_1$ as elements of $\krn{T}$.  The set
+%
+\begin{align*}
+B
+&=B_1\cup B_2\cup B_3\cup\cdots\cup B_p
+=\setparts{\vect{z}_{i,j}}{1\leq i\leq p,\ 1\leq j\leq s_i}
+\end{align*}
+%
+is linearly independent by \acronymref{theorem}{DSLI} and has size 
+%
+\begin{align*}
+\sum_{i=1}^{p}s_i=\sum_{i=1}^{p}n_i-n_{i-1}=n_p-n_0=\dimension{V}
+\end{align*}
+%
+So by \acronymref{theorem}{G}, $B$ is a basis of $V$.  We desire a matrix representation of $T$ relative to $B$ (\acronymref{definition}{MR}), but first we will reorder the elements of $B$.  The following display lists the elements of $B$ in the desired order, when read across the rows left-to-right in the usual way.  Notice that we established the existence of these vectors column-by-column, and beginning on the right.
+%
+\begin{align*}
+&\vect{z}_{1,1}&&\vect{z}_{2,1}&&\vect{z}_{3,1}&&\cdots&&\vect{z}_{p,1}\\
+&\vect{z}_{1,2}&&\vect{z}_{2,2}&&\vect{z}_{3,2}&&\cdots&&\vect{z}_{p,2}\\
+&                       &&\vdots              &&                       &&\vdots&&\\
+&\vect{z}_{1,s_p}&&\vect{z}_{2,s_p}&&\vect{z}_{3,s_p}&&\cdots&&\vect{z}_{p,s_p}\\
+&\vect{z}_{1,s_p+1}&&\vect{z}_{2,s_p+1}&&\vect{z}_{3,s_p+1}&&\cdots&&\\
+&                       &&\vdots              &&                       &&\vdots&&\\
+&\vect{z}_{1,s_3}&&\vect{z}_{2,s_3}&&\vect{z}_{3,s_3}&&&&\\
+&                          &&\vdots&&&&&&\\
+&\vect{z}_{1,s_2}&&\vect{z}_{2,s_2}&&&&&&\\
+&                          &&\vdots&&&&&&\\
+&\vect{z}_{1,s_1}&&&&&&&&\\
+\end{align*}
+%
+It is difficult to layout this table with the notation we have been using, but it would not be especially useful to invent some notation to overcome the difficulty. (One approach would be to define something like the inverse of the nonincreasing function, $i\rightarrow s_i$.)  Do notice that there are $s_1=n_1$ rows and $p$ columns.  Column $i$ is the basis $B_i$.  The vectors in the first column are elements of $\krn{T}$.  Each row is the same length, or shorter, than the one above it.  If we apply $T$ to any vector in the table, other than those in the first column, the output is the preceding vector in the row.\par
+%
+Now contemplate the matrix representation of $T$ relative to $B$ as we read across the rows of the table above.  In the first row, $\lt{T}{\vect{z}_{1,1}}=\zerovector$, so the first column of the representation is the zero column.  Next, $\lt{T}{\vect{z}_{2,1}}=\vect{z}_{1,1}$, so the second column of the representation is a vector with a single one in the first entry, and zeros elsewhere.  Next, $\lt{T}{\vect{z}_{3,1}}=\vect{z}_{2,1}$, so column 3 of the representation is a zero, then a one, then all zeros.  Continuing in this vein, we obtain the first $p$ columns of the representation, which is the Jordan block $\jordan{p}{0}$ followed by rows of zeros.\par
+%
+When we apply $T$ to the basis vectors of the second row, what happens?  Applying $T$ to the first vector, the result is the zero vector, so the representation gets a zero column.  Applying $T$ to the second vector in the row, the output is simply the first vector in that row, making the next column of the representation all zeros plus a lone one, sitting just above the diagonal.  Continuing, we create a Jordan block, sitting on the diagonal of the matrix representation.  It is not possible in general to state the size of this block, but since the second row is no longer than the first, it cannot have size larger than $p$.\par
+%
+Since there are as many rows as the dimension of $\krn{T}$, the representation contains as many Jordan blocks as the nullity of $T$, $\nullity{T}$.  Each successive block is smaller than the preceding one, with the first, and largest, having size $p$.  The blocks are Jordan blocks since the basis vectors $\vect{z}_{i,j}$ were often defined as the result of applying $T$ to other elements of the basis already determined, and then we rearranged the basis into an order that placed outputs of $T$ just before their inputs, excepting the start of each row, which was an element of $\krn{T}$.
+%
+\end{proof}
+%
+The proof of \acronymref{theorem}{CFNLT} is constructive (\acronymref{technique}{C}), so we can use it to create bases of nilpotent linear transformations with pleasing matrix representations.  Recall that \acronymref{theorem}{DNLT} told us that nilpotent linear transformations are almost never diagonalizable, so this is progress.  As we have hinted before, with a nice representation of nilpotent matrices, it will not be difficult to build up representations of other non-diagonalizable matrices.  Here is the promised example which illustrates the previous theorem.  It is a useful companion to your study of the proof of \acronymref{theorem}{CFNLT}.
+%
+\begin{example}{CFNLT}{Canonical form for a nilpotent linear transformation}{canonical form!nilpotent linear transformation}
+The $6\times 6$ matrix, $A$, of \acronymref{example}{NM64} is nilpotent of index $p=4$.  If we define the linear transformation $\ltdefn{T}{\complex{6}}{\complex{6}}$ by $\lt{T}{\vect{x}}=A\vect{x}$, then $T$ is nilpotent of index $4$ and we can seek a basis of $\complex{6}$ that yields a matrix representation with Jordan blocks on the diagonal.  The nullity of $T$ is $2$, so from \acronymref{theorem}{CFNLT} we can expect the largest Jordan block to be $\jordan{4}{0}$, and there will be just two blocks.  This only leaves enough room for the second block to have size 2.\par
+%
+We will recycle the bases for the null spaces of the powers of $A$ from \acronymref{example}{KPNLT} rather than recomputing them here.  We will also use the same notation used in the proof of \acronymref{theorem}{CFNLT}.\par
+%
+To begin, $s_4=n_4-n_3=6-5=1$, so we need one vector of $\krn{T^4}=\complex{6}$, that is not in $\krn{T^3}$, to be a basis for $Z_4$.  We have a lot of latitude in this choice, and we have not described any sure-fire method for constructing a vector {\em outside} of a subspace.  Looking at the basis for $\krn{T^3}$ we see that if a vector is in this subspace, and has a nonzero value in the first entry, then it must also have a nonzero value in the fourth entry.  So the vector
+%
+\begin{align*}
+\vect{z}_{4,1}=\colvector{1\\0\\0\\0\\0\\0}
+\end{align*}
+%
+will not be an element of $\krn{T^3}$  (notice that many other choices could be made here, so our basis will not be unique).  This completes the determination of $Z_p=Z_4$.\par
+%
+Next, $s_3=n_3-n_2=5-4=1$, so we again need just a single basis vector for $Z_3$.  We start by evaluating $T$ with each basis vector of $Z_4$,
+%
+\begin{align*}
+\vect{z}_{3,1}&=\lt{T}{\vect{z}_{4,1}}=A\vect{z}_{4,1}=\colvector{-3\\-3\\-3\\-3\\-3\\-2}
+\end{align*}
+%
+Since $s_3=s_4$, the subspace $R_3$ is trivial, and there is nothing left to do, $\vect{z}_{3,1}$ is the lone basis vector of $Z_3$.\par
+%
+Now $s_2=n_2-n_1=4-2=2$, so the construction of $Z_2$ will not be as simple as the construction of $Z_3$.  We first apply $T$ to the basis vector of $Z_2$,
+%
+\begin{align*}
+\vect{z}_{2,1}&=\lt{T}{\vect{z}_{3,1}}=A\vect{z}_{3,1}=\colvector{1\\0\\3\\1\\0\\-1}
+\end{align*}
+%
+The two basis vectors of $\krn{T^1}$, together with $\vect{z}_{2,1}$, form a basis for $Q_2$.  Because $\dimension{\krn{T^2}}-\dimension{Q_2}=4-3=1$ we need only find a single basis vector for $R_2$.  This vector must be an element of $\krn{T^2}$, but not an element of $Q_2$.  Again, there is a variety of vectors that fit this description, and we have no precise algorithm for finding them.  Since they are plentiful, they are not too hard to find.  We add up the four basis vectors of $\krn{T^2}$, ensuring an element of $\krn{T^2}$.  Then we check to see if the vector is a linear combination of three vectors:  the two basis vectors of $\krn{T^1}$ and $\vect{z}_{2,1}$.  Having passed the tests, we have chosen
+%
+\begin{align*}
+\vect{z}_{2,2}&=\colvector{2\\1\\2\\2\\2\\1}
+\end{align*}
+%
+Thus, $Z_2=\spn{\set{\vect{z}_{2,1},\,\vect{z}_{2,2}}}$.\par
+%
+Lastly, $s_1=n_1-n_0=2-0=2$.  Since $s_2=s_1$, we again have a trivial $R_1$ and need only complete our basis by evaluating the basis vectors of $Z_2$ with $T$,
+%
+\begin{align*}
+\vect{z}_{1,1}&=\lt{T}{\vect{z}_{2,1}}=A\vect{z}_{2,1}=\colvector{1\\1\\0\\1\\1\\1}\\
+\vect{z}_{1,2}&=\lt{T}{\vect{z}_{2,2}}=A\vect{z}_{2,2}=\colvector{-2\\-2\\-5\\-2\\-1\\0}\\
+\end{align*}
+%
+Now we reorder these vectors as the desired basis,
+%
+\begin{align*}
+B
+&=
+\set{
+\vect{z}_{1,1},\,\vect{z}_{2,1},\,\vect{z}_{3,1},\,\vect{z}_{4,1},\,\vect{z}_{1,2},\,\vect{z}_{2,2}
+}
+\end{align*}
+%
+We now apply \acronymref{definition}{MR} to build a matrix representation of $T$ relative to $B$,
+%
+\begin{align*}
+\vectrep{B}{\lt{T}{\vect{z}_{1,1}}}
+&=\vectrep{B}{A\vect{z}_{1,1}}=\vectrep{B}{\zerovector}=\colvector{0\\0\\0\\0\\0\\0}\\
+%
+\vectrep{B}{\lt{T}{\vect{z}_{2,1}}}
+&=\vectrep{B}{A\vect{z}_{2,1}}=\vectrep{B}{\vect{z}_{1,1}}=\colvector{1\\0\\0\\0\\0\\0}\\
+%
+\vectrep{B}{\lt{T}{\vect{z}_{3,1}}}
+&=\vectrep{B}{A\vect{z}_{3,1}}=\vectrep{B}{\vect{z}_{2,1}}=\colvector{0\\1\\0\\0\\0\\0}\\
+%
+\vectrep{B}{\lt{T}{\vect{z}_{4,1}}}
+&=\vectrep{B}{A\vect{z}_{4,1}}=\vectrep{B}{\vect{z}_{3,1}}=\colvector{0\\0\\1\\0\\0\\0}\\
+%
+\vectrep{B}{\lt{T}{\vect{z}_{1,2}}}
+&=\vectrep{B}{A\vect{z}_{1,2}}=\vectrep{B}{\zerovector}=\colvector{0\\0\\0\\0\\0\\0}\\
+%
+\vectrep{B}{\lt{T}{\vect{z}_{2,2}}}
+&=\vectrep{B}{A\vect{z}_{2,2}}=\vectrep{B}{\vect{z}_{1,2}}=\colvector{0\\0\\0\\0\\1\\0}\\
+%
+\end{align*}
+%
+Installing these vectors as the columns of the matrix representation we have
+%
+\begin{align*}
+\matrixrep{T}{B}{B}&=
+\begin{bmatrix}
+ 0 & 1 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}
+\end{align*}
+%
+which is a block diagonal matrix with Jordan blocks $\jordan{4}{0}$ and $\jordan{2}{0}$.   If we constructed the matrix $S$ having the vectors of $B$ as columns, then \acronymref{theorem}{SCB} tells us that a similarity transformation with $S$ relates the original matrix representation of $T$ with the matrix representation consisting of Jordan blocks., i.e.\ $\similar{A}{S}=\matrixrep{T}{B}{B}$.
+%
+\end{example}
+%
+Notice that constructing interesting examples of matrix representations requires domains with dimensions bigger than just two or three.  Going forward we will see several more big examples.
+%
+%
+%  End  NLT.tex

@@ -1,0 +1,129 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section SAS
+%%  Sharing A Secret
+%%
+%%%%%%%%%%%
+%
+{\sc\large This Section is a Draft, Subject to Changes}\par\bigskip
+%
+In this section we will see how to use solutions to systems of equations to share a secret among a group of people.  We will be able to break a secret up into, say 10 pieces, so as to distribute the secret among 10 people.  But rather than requiring all 10 people to collaborate on restoring the secret, we can design the split so that any smaller group, of say just 4 of these people, can collaborate and restore the secret.  The numbers 10 and 4 here are arbitrary, we can choose them to be anything.\par
+%
+Suppose we have a secret, $S$.  This could be the combination to a lock, a password on an account, or a recipe for chocolate chip cookies.  If the secret is text, we will assume that the characters have been translated into integers (say with the ASCII code), and these numbers have been rolled up into one grand positive integer (perhaps by concatenating binary strings for the ASCII code numbers, and interpreting the longer string as one big base 2 integer).  So we will assume $S$ is some positive integer.\par
+%
+Suppose you wish to give parts of your secret to $n$ people, and you wish to require that any group of $m$ (or more) of these people should be able to combine their parts and recover the secret.  Perhaps you are President and CEO of a small company and only you know the password that authorizes large transfers of money among the company's bank accounts.  If you were to die or become incapacitated, it would perhaps hamper the company's ability to function if they couldn't quickly rearrange their assets, especially since they are also without a CEO.  So you might wish to give this secret to six of your trusted Vice-Presidents.  But you don't trust them that much and you certainly don't want any one of these people to be able to access the company's accounts all by themselves without anybody else in the company knowing about it.  Simultaneously, you know that in an emergency, it might not be possible to get all six Vice-Presidents together and maybe even one or two of them have met the same unfortunate fate you did.  So you would like any group of three Vice-Presidents to be able to combine their parts and recover $S$.  So you would choose $n=6$ and $m=3$.\par
+%
+We will describe the split, with no motivation.  The explanation of how the secret recovery is handled will explain our choices here.  Choose a large prime number, $p$, bigger than any possible secret.  For a single number in a combination lock, $p$ could be small.  For a one-page recipe, $p$ would need to be huge.  All of our subsequent arithmetic will be modulo $p$, so consult \acronymref{subsection}{F.FF} for a brief description of how we do linear algebra when our field is $\Z_p$.  Build a polynomial, $r(x)$, of degree $m-1$ as follows.  Set the constant term to $S$, and choose the other $m-1$ coefficients at random from $\Z_p$.  The quality of your random generator will ultimately affect the quality of how hidden your secret remains.\par
+%
+Compute the pairs $(i,\,r(i))$, $1\leq i\leq n$.  To person $i$, of the $n$ persons you will give a part of your secret, present the pair $(i,\,r(i))$, and instruct them to keep this secret, for all $1\leq i\leq n$.  They could perhaps encrypt their pairs with AES (Advanced Encryption Standard) using a password known only to them individually.  Or you could do this for each of them in advance and tell them the chose password orally, in private.  At any rate, each person gets a pair of integers, an input to the polynomial, and the output of evaluating the polynomial, and they keep this information secret.  They do not know the polynomial itself, and certainly not the constant term $S$, so the secret is still safe.\par
+%
+Now suppose that $m$ of these people get together, in the event you are unable to act, or perhaps without your permission.  Suppose they pool all of their pairs, or even just turn them over to one member of the group.  What do they now know collectively?  Suppose that
+%
+\begin{align*}
+r(x)=a_0+a_1x+a_2x^2+\cdots+a_{m-1}x^{m-1}
+\end{align*}
+%
+where, of course, $a_0=S$ is the secret.  A single pair, $(i,\,r(i))$, results in a linear equation whose unknowns are the $m$ coefficients of $r(x)$.  With $m$ pairs revealed, we now have $m$ equations in $m$ variables.  Furthermore, the coefficient matrix of this system is a Vandermonde matrix (\acronymref{definition}{VM}).  With our inputs to the polynomial all different (we used $1,\,2,\,3,\,\ldots,\,n$), the Vandermonde matrix is nonsingular (\acronymref{theorem}{NVM}).  Thus by \acronymref{theorem}{NMUS} there is a unique solution for the coefficients of $r(x)$.  We only desire the constant term --- the other coefficients (the randomly chosen ones) are of no interest, they were used to mask the secret as it was split into parts.\par
+%
+A few practical considerations.  If certain individuals in your group are more important, or more trustworthy, you can give them more than one part.  You could split a secret into 30 parts, giving 5 Vice-Presidents each 4 parts and give 10 department heads each 1 part.  Then you might require 12 parts to be present.  This way three Vice-Presidents could recover the secret, or 4 department heads could stand-in for a Vice-President.  Furthermore, the 10 department heads could not recover the secret without having at least one Vice-President present.\par
+%
+The inputs do not have to be consecutive integers, starting at 1.  Any set of {\em different} integers will suffice.  Why make it any easier for an attacker?  Mix it up and choose the inputs randomly as well, just keep them different.\par
+%
+Why do all this arithmetic over $\Z_p$?  If we worked with polynomials having real number coefficients, properties of polynomials as continuous functions might give an attacker the ability to compute the secret with a reasonable amount of computing time.  For example, the magnitude of the output is going to dominated by the term of $r(x)$ having degree $m-1$.  Suppose an attacker had a few of the pairs, but not a full set of $m$ of them.  Or even worse, suppose some group of fewer than $m$ of your trusted acquaintances were to conspire against you.  It might be possible to guess a limited range of values for the coefficient of the largest term.  With a limited range of values here, the next term might fall to a similar analysis.  And so on.  However, modular arithmetic is in some ways very unpredictable looking and as high powers ``wrap-around'' this sort of analysis will be frustrated.  And we know it is no harder to do linear algebra in $\Z_p$ than in $\complexes$.\par
+%
+OK, here's a non-trivial example.  
+%
+\begin{example}{SS6W}{Sharing a secret 6 ways}{secret sharing!6 ways}
+%
+Let's return to the CEO and his six Vice-Presidents.  Suppose the password for the company's accounts is a sequence of 5 two-digit numbers, which we will concatenate into a 10-digit number, in this case $S= 0603725962$.  For a prime $p$ we choose the 11-digit prime number $p=22801761379$.  From the requirement that $m=3$ Vice-Presidents are needed to recover the secret, we need a second-degree polynomial and so need two more coefficients, which we will construct at random between $1$ and $p$.  The resulting polynomial is 
+%
+\begin{align*}
+r(x)=603725962 + 22561982919 x + 8844088338 x^2
+\end{align*}
+%
+We will now build six pairs of inputs and outputs, where we will choose the inputs at random (not allowing duplicates) and we do all our arithmetic modulo $p$,
+%
+\begin{center}
+\begin{tabular}{lrr}
+VP&\multicolumn{1}{c}{$x$}&\multicolumn{1}{c}{$r(x)$}\\\hline
+ Finance                  & 20220406046 & 7205699654 \\
+ Human Resources   & 8862377358   & 17357568951 \\
+ Marketing               & 13747127957 & 18503158079 \\
+ Legal                      & 15835120319 & 14060705999 \\
+ Research                & 6530855859   & 5628836054 \\
+ Manufacturing         & 9222703664   & 2608052019
+\end{tabular}
+\end{center}
+%
+The two numbers of each row of the table are then given to the indicated Vice-President.  Done.  The secret has been split six ways, and any three VP's can jointly recover the secret.\par
+%
+Let's test the recovery process, especially since it contains the relevant linear algebra.  Suppose we write the unknown polynomial as $r(x)=a_0+a_1x +a_2x^2$ and the VP's for Finance, Marketing and Legal all get together to recover the secret.  The equations we arrive at are,
+%
+\begin{align*}
+&\text{Finance}
+&
+7205699654
+&=r(20220406046)\\ 
+&&&= a_0 + a_1(20220406046) + a_2(20220406046)^2\\ 
+&&&= a_0 + 20220406046 a_1 + 7793596215 a_2\\
+%
+&\text{Marketing}
+&
+18503158079
+&=r(13747127957)\\
+&&&= a_0 + a_1(13747127957) + a_2(13747127957)^2\\ 
+&&&= a_0 + 13747127957 a_1 +  18840301370 a_2\\
+%
+&\text{Legal}
+&
+14060705999
+&=r(15835120319)\\ 
+&&&= a_0 + a_1(15835120319) + a_2(15835120319)^2\\ 
+&&&= a_0 + 15835120319 a_1 +  8874412999 a_2
+%
+\end{align*}
+%
+So they have a linear system, $\linearsystem{A}{\vect{b}}$ with 
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+ 1 & 20220406046 & 7793596215 \\
+ 1 & 13747127957 & 18840301370 \\
+ 1 & 15835120319 & 8874412999
+\end{bmatrix}
+&
+\vect{b}&=
+\colvector{7205699654\\18503158079\\14060705999}
+\end{align*}
+%
+With a Vandermonde matrix as the coefficient matrix, they know there is a solution, and it is unique.  By \acronymref{theorem}{SNCM} (or through row-reducing the augmented matrix) they arrive at the solution,
+%
+\begin{align*}
+\inverse{A}\vect{b}
+&=
+\begin{bmatrix}
+ 5716900879 & 9234437646 & 7850422855 \\
+ 20952200747 & 16452595922 & 8198726089 \\
+ 17286943796 & 18018241597 & 10298337365
+\end{bmatrix}
+\colvector{7205699654\\18503158079\\14060705999}
+=
+\colvector{603725962\\22561982919\\8844088338}
+%
+\end{align*}
+%
+So the CEO's password is the secret $S=a_0=603725962=0603725962$ (as expected).
+%
+\end{example}
+%  
+%  End of  SAS.tex

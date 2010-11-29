@@ -1,0 +1,62 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+Let $A$ be the matrix whose columns are the vectors in $T$.  Then row-reduce $A$,
+%
+\begin{equation*}
+A\rref B=
+\begin{bmatrix}
+ \leading{1} & 0 & 0 & 2 \\
+ 0 & \leading{1} & 0 & -1 \\
+ 0 & 0 & \leading{1} & 1
+\end{bmatrix}
+\end{equation*}
+%
+From \acronymref{theorem}{BS} we can form $R$ by choosing the columns of $A$ that correspond to the pivot columns of $B$.  \acronymref{theorem}{BS} also guarantees that $R$ will be linearly independent.
+%
+\begin{equation*}
+R=\set{
+\colvector{1 \\ -1 \\ 2},\,
+\colvector{3 \\ 0 \\ 1},\,
+\colvector{4 \\ 2 \\ 3}
+}
+\end{equation*}
+%
+That was easy.  To find $S$ will require a bit more work.  From $B$ we can obtain a solution to $\homosystem{A}$, which by \acronymref{theorem}{SLSLC} will provide a nontrivial relation of linear dependence on the columns of $A$, which are the vectors in $T$.  To wit,  choose the free variable $x_4$ to be 1, then $x_1=-2$, $x_2=1$, $x_3=-1$, and so
+%
+\begin{equation*}
+(-2)\colvector{1 \\ -1 \\ 2}+
+(1)\colvector{3 \\ 0 \\ 1}+
+(-1)\colvector{4 \\ 2 \\ 3}+
+(1)\colvector{3 \\ 0 \\ 6}
+=
+\colvector{0\\0\\0}
+\end{equation*}
+%
+this equation can be rewritten with the second vector staying put, and the other three moving to the other side of the equality,
+%
+\begin{equation*}
+\colvector{3 \\ 0 \\ 1}
+=
+(2)\colvector{1 \\ -1 \\ 2}+
+(1)\colvector{4 \\ 2 \\ 3}+
+(-1)\colvector{3 \\ 0 \\ 6}
+\end{equation*}
+%
+We could have chosen other vectors to stay put, but may have then needed to divide by a nonzero scalar.   This equation is enough to conclude that the second vector in $T$ is ``surplus'' and can be replaced (see the careful argument in \acronymref{example}{RSC5}).  So set
+%
+\begin{equation*}
+S=\set{
+\colvector{1 \\ -1 \\ 2},\,
+\colvector{4 \\ 2 \\ 3},\,
+\colvector{3 \\ 0 \\ 6}
+}
+\end{equation*}
+%
+and then $\spn{S}=\spn{T}$.  $T$ is also a linearly independent set, which we can show directly.  Make a matrix $C$ whose columns are the vectors in $S$.  Row-reduce $B$ and you will obtain the identity matrix $I_3$.  By \acronymref{theorem}{LIVRN}, the set $S$ is linearly independent.

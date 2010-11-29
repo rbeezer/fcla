@@ -1,0 +1,178 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section VM
+%%  Vandemonde Matrix
+%%
+%%%%%%%%%%%
+%
+{\sc\large This Section is a Draft, Subject to Changes}\par\bigskip
+%
+Alexandre-Th\'{e}ophile Vandermonde was a French mathematician in the 1700's who was among the first to write about basic properties of the determinant (such as the effect of swapping two rows).  However, the determinant that bears his name (\acronymref{theorem}{DVM}) does not appear in any of his four published mathematical papers. 
+%
+\begin{definition}{VM}{Vandermonde Matrix}{Vandermonde matrix}
+An square matrix of size $n$, $A$, is a \define{Vandermonde matrix} if there are scalars, $\scalarlist{x}{n}$ such that $\matrixentry{A}{ij}=x_{i}^{j-1}$, $1\leq i\leq n$, $1\leq j\leq n$.
+\end{definition}
+%
+%
+\begin{example}{VM4}{Vandermonde matrix of size 4}{vandermonde matrix!size 4}
+%
+\begin{align*}
+A&=
+\begin{bmatrix}
+1 & 2 & 4 & 8\\
+1 & -3 & 9 & -27\\
+1 & 1 & 1 & 1\\
+1 & 4 & 16 & 64
+\end{bmatrix}
+\end{align*}
+%
+is a Vandermonde matrix since it meets the definition with $x_1=2$, $x_2=-3$, $x_3=1$, $x_4=4$.
+\end{example}
+%
+Vandermonde matrices are not very interesting as numerical matrices, but instead appear more often in proofs and applications where the scalars $x_i$ are carried as symbols.  Two such applications are in the sections on secret-sharing (\acronymref{section}{SAS}) and curve-fitting (\acronymref{section}{CF}).  Principally, we would like to know when Vandermonde matrices are nonsingular, and the most convenient way to check this is by determining when the determinant is nonzero (\acronymref{theorem}{SMZD}).  As a bonus, the determinant of a Vandermonde matrix has an especially pleasing formula.
+%
+\begin{theorem}{DVM}{Determinant of a Vandermonde Matrix}{vandermonde matrix!determinant}
+Suppose that $A$ is a Vandermonde matrix of size $n$ built with the scalars $\scalarlist{x}{n}$.  Then
+%
+\begin{align*}
+\detname{A}
+&=\prod_{1\leq i<j\leq n}\left(x_j-x_i\right)
+\end{align*}
+%
+\end{theorem}
+%
+\begin{proof}
+The proof is by induction  (\acronymref{technique}{I}) on $n$, the size of the matrix. An empty product for a $1\times 1$ matrix might make a good base case, but we'll start at $n=2$ instead.  For a $2\times 2$ Vandermonde matrix, we have 
+%
+\begin{align*}
+\detname{A}
+&=
+\begin{vmatrix}
+1&x_1\\1&x_2
+\end{vmatrix}
+=x_2-x_1
+=\prod_{1\leq i<j\leq 2}\left(x_j-x_i\right)
+\end{align*}
+%
+For the induction step we will perform row operations on $A$ to obtain the determinant of $A$ as multiple of the determinant of an $(n-1)\times(n-1)$ Vandermonde matrix.  the notation in this theorem tens to obscure your intuition about the changes effected by various row and column manipulations.  Construct a $4\times 4$ Vandermonde matrix with four symbols as the scalars ($x_1$, $x_2$, $x_2$, $x_4$, or perhaps $a$, $b$, $c$, $d$) and play along with the example as you study the proof.\par
+%
+First we convert most of the first column to zeros.  Subtract row $n$ from each of the other $n-1$ rows to form a matrix $B$.  By \acronymref{theorem}{DRCMA}, $B$ has the same determinant as $A$.  The entries of $B$, in the first $n-1$ rows, i.e.\ for $1\leq i\leq n-1$, $1\leq j\leq n-1$, are
+%
+\begin{align*}
+\matrixentry{B}{ij}
+&=x_{i}^{j-1}-x_{n}^{j-1}
+=\left(x_i-x_n\right)\sum_{k=0}^{j-2} x_{i}^{j-2-k}x_{n}^{k}
+\end{align*}
+%
+As the elements of row $i$, $1\leq i\leq n-1$, have the common factor $\left(x_i-x_n\right)$, we form the new matrix $C$ that differs from $B$ by the removal of this factor from each of the first $n-1$ rows.  This will change the determinant, as we will track carefully in a moment.  We also have a first column with zeros in each location, except row $n$, so we can use it for a column expansion computation of the determinant.  We now know,
+%
+\begin{align*}
+\detname{A}
+&=\detname{B}
+&&\text{\acronymref{theorem}{DRCMA}}\\
+%
+&=(x_1-x_n)(x_2-x_n)\cdots(x_{n-1}-x_n)\detname{C}
+&&\text{\acronymref{theorem}{DRCM}}\\
+%
+&=(x_1-x_n)(x_2-x_n)\cdots(x_{n-1}-x_n)(1)(-1)^{n+1}\detname{\submatrix{C}{n-1}{1}}
+&&\text{\acronymref{theorem}{DEC}}\\
+%
+&=(x_1-x_n)(x_2-x_n)\cdots(x_{n-1}-x_n)(-1)^{n-1}\detname{\submatrix{C}{n-1}{1}}\\
+%
+&=(x_n-x_1)(x_n-x_2)\cdots(x_n-x_{n-1})\detname{\submatrix{C}{n-1}{1}}
+%
+\end{align*}
+%
+For convenience, denote $D=\submatrix{C}{n-1}{1}$.  Entries of this matrix are similar to those of $B$, but the factors used to build $C$ are gone, and since the first column is gone, there is a slight re-indexing relative to the columns.  For $1\leq i\leq n-1$, $1\leq j\leq n-1$,
+%
+\begin{align*}
+\matrixentry{D}{ij}
+&=\sum_{k=0}^{j-1} x_{i}^{j-1-k}x_{n}^{k}
+\end{align*}
+%
+We will perform many column operations on the matrix $D$, always of the type where we multiply a column by a scalar and add the result to another column.  As such, \acronymref{theorem}{DRCM} insures that the determinant will remain constant.  We will work column by column, left to right, to convert $D$ into a Vandermonde matrix with scalars $\scalarlist{x}{n-1}$.  More precisely, we will build a sequence of matrices $D=D_1$, $D_2$, \dots, $D_{n-1}$, where each obtainable from the previous by a sequence of determinant-preserving column operations and the first $\ell$ columns of $D_\ell$ are the first $\ell$ columns of a Vandermonde matrix with scalars $\scalarlist{x}{n-1}$.  We could establish this claim by induction (\acronymref{technique}{I}) on $\ell$ if we were to expand the claim to specify the exact values of the final $n-1-\ell$ columns as well.  Since the claim is that matrices with certain properties exist, we will instead establish the claim by constructing the desired matrices one-by-one procedurally.  The extension to an inductive proof should be clear, but not especially illuminating.\par
+%
+Set $D_1=D$ to begin, and note that the entries of the first column of $D_1$ are, for $1\leq i\leq n-1$,
+%
+\begin{align*}
+\matrixentry{D_1}{i1}
+&=\sum_{k=0}^{1-1} x_{i}^{1-1-k}x_{n}^{k}
+=1=x_{i}^{1-1}
+\end{align*}
+%
+So the first column of $D_1$ has the properties we desire.  We will use this column of all 1's to remove the highest power of $x_n$ from each of the remaining columns and so build $D_2$.  Precisely, perform the $n-2$ column operations where column 1 is multiplied by $x_n^{j-1}$ and subtracted from column $j$, for $2\leq j\leq n-1$.  Call the result $D_2$, and examine its entries in columns $2$ through $n-1$.  For $1\leq i\leq n-1$, $2\leq j\leq n-1$,
+%
+\begin{align*}
+\matrixentry{D_2}{ij}
+&=-x_n^{j-1}\matrixentry{D_1}{i1}+\matrixentry{D_1}{ij}\\
+&=-x_n^{j-1}(1)+\sum_{k=0}^{j-1} x_{i}^{j-1-k}x_{n}^{k}\\
+&=-x_n^{j-1}+x_{i}^{j-1-(j-1)}x_{n}^{j-1}
+  +\sum_{k=0}^{j-2} x_{i}^{j-1-k}x_{n}^{k}\\
+&=\sum_{k=0}^{j-2} x_{i}^{j-1-k}x_{n}^{k}
+\end{align*}
+%
+In particular, we examine column 2 of $D_2$.  For $1\leq i\leq n-1$,
+%
+\begin{align*}
+\matrixentry{D_2}{i2}
+&=\sum_{k=0}^{2-2} x_{i}^{2-1-k}x_{n}^{k}
+=x_{i}^{1}
+=x_{i}^{2-1}
+\end{align*}
+%
+Now, form $D_3$.  Perform the $n-3$ column operations where column 2 of $D_2$ is multiplied by $x_n^{j-2}$ and subtracted from column $j$, for $3\leq j\leq n-1$.  The result is $D_3$, whose entries we now compute.  For $1\leq i\leq n-1$,
+%
+\begin{align*}
+\matrixentry{D_3}{ij}
+&=-x_n^{j-2}\matrixentry{D_2}{i2}+\matrixentry{D_2}{ij}\\
+&=-x_n^{j-2}x_{i}^{1}+\sum_{k=0}^{j-2} x_{i}^{j-1-k}x_{n}^{k}\\
+&=-x_n^{j-2}x_{i}^{1}+ x_{i}^{j-1-(j-2)}x_{n}^{j-2}
+  +\sum_{k=0}^{j-3} x_{i}^{j-1-k}x_{n}^{k}\\
+&=\sum_{k=0}^{j-3} x_{i}^{j-1-k}x_{n}^{k}
+\end{align*}
+%
+Specifically, we examine column 3 of $D_3$.  For $1\leq i\leq n-1$,
+%
+\begin{align*}
+\matrixentry{D_3}{i3}
+&=\sum_{k=0}^{3-3} x_{i}^{3-1-k}x_{n}^{k}
+=x_{i}^{2}
+=x_{i}^{3-1}
+\end{align*}
+%
+We could continue this procedure $n-4$ more times, eventually totaling $\frac{1}{2}\left(n^2-3n+2\right)$ column operations, and arriving at $D_{n-1}$, the Vandermonde matrix of size $n-1$ built from the scalars $\scalarlist{x}{n-1}$.  Informally, we chop off the last term of every sum, until a single term is left in a column, and it is of the right form for the Vandermonde matrix.  This desired column is then used in the next iteration to chop off some more final terms for columns to the right.  Now we can apply our induction hypothesis to the determinant of $D_{n-1}$ and arrive at an expression for $\det{A}$,
+%
+\begin{align*}
+\detname{A}
+&=\detname{C}\\
+&=\prod_{k=1}^{n-1}\left(x_n-x_k\right)\detname{D}\\
+&=\prod_{k=1}^{n-1}\left(x_n-x_k\right)\detname{D_{n-1}}\\
+&=\prod_{k=1}^{n-1}\left(x_n-x_k\right)\prod_{1\leq i<j\leq n-1}\left(x_j-x_i\right)\\
+&=\prod_{1\leq i<j\leq n}\left(x_j-x_i\right)
+\end{align*}
+%
+which is the desired result.
+\end{proof}
+%
+Before we had \acronymref{theorem}{DVM} we could see that if two of the scalar values were equal, then the Vandermonde matrix would have two equal rows and hence be singular (\acronymref{theorem}{DERC}, \acronymref{theorem}{SMZD}).  But with this expression for the determinant, we can establish the converse.
+%
+\begin{theorem}{NVM}{Nonsingular Vandermonde Matrix}{vandermonde matrix!nonsingular}
+A Vandermonde matrix of size $n$ with scalars $\scalarlist{x}{n}$ is nonsingular if and only if the scalars are all different.
+\end{theorem}
+%
+\begin{proof}
+%
+Let $A$ denote the Vandermonde matrix with scalars $\scalarlist{x}{n}$.  By \acronymref{theorem}{SMZD}, $A$ is nonsingular if and only if the determinant of $A$ is nonzero.  The determinant is given by \acronymref{theorem}{DVM}, and this product is nonzero if and only if each term of the product is nonzero.  This condition translates to $x_i-x_j\neq 0$ whenever $i\neq j$.  In other words, the matrix is nonsingular if and only if the scalars are all different.
+%
+\end{proof}
+%  
+%  End of  VM.tex

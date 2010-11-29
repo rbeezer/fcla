@@ -1,0 +1,172 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section MT
+%% 	Matrix Trace
+%%
+%%%%%%%%%%%
+
+This section contributed by \andyzimmer.\par\bigskip
+%
+The matrix trace is a function that sends square matrices to scalars.  In some ways it is reminiscent of the determinant.  And like the determinant, it has many useful and surprising properties.
+%
+\begin{definition}{T}{Trace}{trace}
+Suppose $A$ is a square matrix of size $n$.  Then the \define{trace} of $A$, $\trace{A}$, is the sum of the diagonal entries of $A$.  Symbolically, 
+%
+\begin{align*}
+\trace{A}
+&=\sum_{i=1}^n \matrixentry{A}{ii}
+\end{align*}
+\denote{T}{Trace}{$\trace{A}$}{trace}
+\end{definition}
+%
+The next three proofs make for excellent practice.  In some books they would be left as exercises for the reader as they are all ``trivial'' in the sense they do not rely on anything but the definition of the matrix trace.
+%
+\begin{theorem}{TL}{Trace is Linear}{trace!linearity} 
+Suppose $A$ and $B$ are square matrices of size $n$.  Then $\trace{A+B}=\trace{A}+\trace{B}$.  Furthermore, if $\alpha\in\complexes$, then $\trace{\alpha A}=\alpha\trace{A}$.
+\end{theorem}
+%
+\begin{proof}
+These properties are exactly those required for a linear transformation.  To prove these results we just manipulate sums,
+%
+\begin{align*}
+\trace{A+B}
+&=\sum_{k=1}^n \matrixentry{A+B}{ii}&&\text{\acronymref{definition}{T}}\\
+&=\sum_{i=1}^n \matrixentry{A}{ii}+\matrixentry{B}{ii}&&\text{\acronymref{definition}{MA}}\\
+&=\sum_{i=1}^n \matrixentry{A}{ii}+\sum_{i=1}^n \matrixentry{B}{ii}&&\text{\acronymref{property}{CACN}}\\
+&=\trace{A}+\trace{B}&&\text{\acronymref{definition}{T}}
+\end{align*}
+%
+The second part is as straightforward as the first,
+%
+\begin{align*}
+\trace{\alpha A}
+&=\sum_{i=1}^n \matrixentry{\alpha A}{ii}&&\text{\acronymref{definition}{T}}\\
+&=\sum_{i=1}^n \alpha \matrixentry{A}{ii}&&\text{\acronymref{definition}{MSM}}\\
+&=\alpha \sum_{i=1}^n \matrixentry{A}{ii}&&\text{\acronymref{property}{DCN}}\\
+&=\alpha\trace{A}&&\text{\acronymref{definition}{T}}
+\end{align*}
+%
+\end{proof}
+%
+\begin{theorem}{TSRM}{Trace is Symmetric with Respect to Multiplication}{trace!matrix multiplication}
+Suppose $A$ and $B$ are square matrices of size $n$.  Then $\trace{AB}=\trace{BA}$.
+\end{theorem} 
+%
+\begin{proof}
+%
+\begin{align*}
+\trace{AB}
+&=\sum_{k=1}^n \matrixentry{AB}{kk}&&\text{\acronymref{definition}{T}}\\
+&=\sum_{k=1}^n \sum_{\ell=1}^n \matrixentry{A}{k\ell}\matrixentry{B}{\ell k}&&\text{\acronymref{theorem}{EMP}}\\
+&=\sum_{\ell=1}^n \sum_{k=1}^n \matrixentry{A}{k\ell}\matrixentry{B}{\ell k}&&\text{\acronymref{property}{CACN}}\\
+&=\sum_{\ell=1}^n \sum_{k=1}^n \matrixentry{B}{\ell k}\matrixentry{A}{k\ell}&&\text{\acronymref{property}{CMCN}}\\
+&=\sum_{\ell=1}^{n} \matrixentry{BA}{\ell\ell}&&\text{\acronymref{theorem}{EMP}}\\
+&=\trace{BA}&&\text{\acronymref{definition}{T}}
+\end{align*}
+%
+\end{proof}
+%
+\begin{theorem}{TIST}{Trace is Invariant Under Similarity Transformations}{trace!similarity}
+Suppose $A$ and $S$ are square matrices of size $n$ and $S$ is invertible.  Then $\trace{\inverse{S}AS}=\trace{A}$.
+\end{theorem}
+%
+\begin{proof} Invariant means constant under some operation.  In this case the operation is a similarity transformation.  A lengthy exercise (but possibly a educational one) would be to prove this result without referencing \acronymref{theorem}{TSRM}.  But here we will,
+%
+\begin{align*}
+\trace{\inverse{S}AS}
+&=\trace{\left(\inverse{S}A\right)S}&&\text{\acronymref{theorem}{MMA}}\\
+&=\trace{S\left(\inverse{S}A\right)}&&\text{\acronymref{theorem}{TSRM}}\\
+&=\trace{\left(S\inverse{S}\right)A}&&\text{\acronymref{theorem}{MMA}}\\
+&=\trace{A}&&\text{\acronymref{definition}{MI}}
+\end{align*}
+%
+\end{proof}
+%
+Now we could define the trace of a linear transformation as the trace of any matrix representation of the transformation. Would this definition be well-defined?  That is, will two different representations of the same linear transformation always have the same trace? Why? (Think \acronymref{theorem}{SCB}.) We will now prove one of the most interesting and surprising results about the trace.
+%
+\begin{theorem}{TSE}{Trace is the Sum of the Eigenvalues}{trace!sum of eigenvalues}
+Suppose that $A$ is a square matrix of size $n$ with distinct eigenvalues $\scalarlist{\lambda}{k}$.  Then 
+%
+\begin{align*}
+\trace{A}
+&=\sum_{i=1}^{k}\algmult{A}{\lambda_i}\lambda_i
+\end{align*}
+%
+\end{theorem}
+%
+\begin{proof}
+It is amazing that the eigenvalues would have anything to do with the sum of the diagonal entries.  Our proof will rely on double counting.  We will demonstrate two different ways of counting the same thing therefore proving equality.  Our object of interest is the coefficient of $x^{n-1}$ in the characteristic polynomial of $A$ (\acronymref{definition}{CP}), which will be denoted $\alpha_{n-1}$.  From the proof of \acronymref{theorem}{NEM} we have,
+%
+\begin{align*}
+\charpoly{A}{x}
+&=(-1)^{n}
+(x-\lambda_1)^{\algmult{A}{\lambda_1}}
+(x-\lambda_2)^{\algmult{A}{\lambda_2}}
+(x-\lambda_3)^{\algmult{A}{\lambda_3}}
+\cdots
+(x-\lambda_k)^{\algmult{A}{\lambda_k}}
+\end{align*}
+%
+First we want to prove that $\alpha_{n-1}$ is equal to $(-1)^{n+1}\sum_{i=1}^{k}\algmult{A}{\lambda_i}\lambda_i$ and to do this we will use a straight forward counting argument. Induction can be used here as well (try it), but the intuitive approach is a much stronger technique. Let's imagine creating each term one by one from the extended product.  How do we do this? From each $(x-\lambda_i)$ we pick either a $x$ or a $\lambda_i$.  But we are only interested in the terms that result in $x$ to the power $n-1$.  As $\sum_{i=1}^k \algmult{A}{\lambda_i}=n$, we have $n$ factors of the form $(x-\lambda_i)$. Then to get terms with $x^{n-1}$ we need to pick $x$'s in every  $(x-\lambda_i)$, except one. Since we have $n$ linear factors there are $n$ ways to do this, namely each eigenvalue represented as many times as it's algebraic multiplicity.  Now we have to take into account the sign of each term. As we pick $n-1$ $x$'s and one $\lambda_i$ (which has a negative sign in the linear factor) we get a factor of $-1$.  Then we have to take into account the $(-1)^{n}$ in the characteristic polynomial. Thus $\alpha_{n-1}$ is the sum of these terms,
+%
+\begin{align*}
+\alpha_{n-1}=(-1)^{n+1}\sum_{i=1}^{k}\algmult{A}{\lambda_i}\lambda_i
+\end{align*}
+%
+Now we will now show that $\alpha_{n-1}$ is also equal to $(-1)^{n-1}\trace{A}$.  For this we will proceed by induction on the size of $A$.  If $A$ is a $1 \times 1$ square matrix then $\charpoly{A}{x}=\detname{A-xI_{n}}=\left(\matrixentry{A}{11}-x\right)$ and $(-1)^{1-1}\trace{A}=\matrixentry{A}{11}$.  With our base case in hand let's assume $A$ is a square matrix of size $n$.  By \acronymref{definition}{CP}
+%
+\begin{align*}
+\charpoly{A}{x}
+&=\detname{A-xI_{n}}\\
+&=
+\matrixentry{A-xI_{n}}{11}\detname{\submatrix{(A-xI_{n})}{1}{1}}-
+\matrixentry{A-xI_{n}}{12}\detname{\submatrix{(A-xI_{n})}{1}{2}}+\\
+&\quad\quad
+\matrixentry{A-xI_{n}}{13}\detname{\submatrix{(A-xI_n{n})}{1}{3}}-
+\cdots+(-1)^{n+1}\matrixentry{A-xI_{n}}{1n}\detname{\submatrix{(A-xI_{n})}{1}{n}}
+\end{align*}
+%
+First let's consider the maximum degree of $\matrixentry{A-xI_{n}}{1i}\detname{\submatrix{(A-xI_{n})}{1}{i}}$ when $i \neq 1$. For polynomials, the degree of $f$, denoted $d(f)$, is the highest power of $x$ in the expression $f(x)$. A well known result of this definition is: if $f(x)=g(x)h(x)$ then $d(f) = d(g)+d(h)$ (can you prove this?). Now $\matrixentry{A-xI_{n}}{1i}$ has degree zero when $i \neq 1$.  Furthermore $\submatrix{(A-xI_{n})}{1}{i}$ has $n-1$ rows, one of which has all of its entries of degree zero, since column $i$ is removed.  The other $n-2$ rows have one entry with degree one and the remainder of degree zero.  Then by \acronymref{exercise}{T.T30}, the maximum degree of $\matrixentry{A-xI_{n}}{1i}\detname{\submatrix{(A-xI_{n})}{1}{i}}$ is $n-2$.  So these terms will not affect the coefficient of $x^{n-1}$.  Now we are free to focus all of our attention on the term $\matrixentry{A-xI_{n}}{11}\detname{\submatrix{(A-xI_{n})}{1}{1}}$.  As $\submatrix{A}{1}{1}$ is a $(n-1) \times (n-1)$ matrix the induction hypothesis tells us that $\detname{\submatrix{(A-xI_{n})}{1}{1}}$ has a coefficient of $(-1)^{n-2}\trace{\submatrix{A}{1}{1}}$ for $x^{n-2}$. We also note that the proof of \acronymref{theorem}{NEM} tells us that the leading coefficient of $\detname{\submatrix{(A-xI_{n})}{1}{1}}$ is $(-1)^{n-1}$. Then,
+%
+\begin{align*}
+\matrixentry{A-xI_{n}}{11}&\detname{\submatrix{(A-xI_{n})}{1}{1}}
+&=\left(\matrixentry{A}{11}-x\right)\left((-1)^{n-1}x^{n-1}
++(-1)^{n-2}\trace{\submatrix{A}{1}{1}}x^{n-2}
++\ldots\right)
+\end{align*}
+%
+Expanding the product shows $\alpha_{n-1}$ (the coefficient of $x^{n-1}$) to be
+%
+\begin{align*}
+\alpha_{n-1}
+&=(-1)^{n-1}\matrixentry{A}{11}
++(-1)^{n-1}\trace{\submatrix{A}{1}{1}}\\
+&=(-1)^{n-1}\matrixentry{A}{11}
++(-1)^{n-1}\sum_{k=1}^{n-1} \matrixentry{\submatrix{A}{1}{1}}{kk}&&\text{\acronymref{definition}{T}}\\
+&=(-1)^{n-1}\Big(\matrixentry{A}{11}+\sum_{k=1}^{n-1} \matrixentry{\submatrix{A}{1}{1}}{kk}\Big)&&\text{\acronymref{property}{DCN}}\\
+&=(-1)^{n-1}\Big(\matrixentry{A}{11}+\sum_{k=2}^{n} \matrixentry{A}{kk}\Big)&&\text{\acronymref{definition}{SM}}\\
+&=(-1)^{n-1}\trace{A}&&\text{\acronymref{definition}{T}}
+\end{align*}
+%
+With two expressions for $\alpha_{n-1}$, we have our result,
+%
+\begin{align*}
+\trace{A}
+&=(-1)^{n+1}(-1)^{n-1}\trace{A}\\
+&=(-1)^{n+1}\alpha_{n-1}\\
+&=(-1)^{n+1}(-1)^{n+1}\sum_{i=1}^{k}\algmult{A}{\lambda_i}\lambda_i\\
+&=\sum_{i=1}^{k}\algmult{A}{\lambda_i}\lambda_i
+\end{align*}
+%
+\end{proof}
+%
+%  End of  T.tex

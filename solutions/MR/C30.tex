@@ -1,0 +1,66 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+These subspaces will be easiest to construct by analyzing a matrix representation of $S$.  Since we can use any matrix representation, we might as well use natural bases that allow us to construct the matrix representation quickly and easily,
+%
+\begin{align*}
+B&=\set{
+\begin{bmatrix}1&0\\0&0\end{bmatrix},\,
+\begin{bmatrix}0&1\\0&0\end{bmatrix},\,
+\begin{bmatrix}0&0\\1&0\end{bmatrix},\,
+\begin{bmatrix}0&0\\0&1\end{bmatrix}
+}
+&
+C&=\set{1,\,x,\,x^2}
+\end{align*}
+%
+then we can practically build the matrix representation on sight,
+%
+\begin{equation*}
+\matrixrep{S}{B}{C}=
+\begin{bmatrix}
+1 & 2 & 5 & -4\\
+3 & -1 & 8 & 2\\
+1 & 1 & 4 & -2
+\end{bmatrix}
+\end{equation*}
+%
+The first step is to find bases for the null space and column space of the matrix representation.  Row-reducing the matrix representation we find,
+%
+\begin{equation*}
+\begin{bmatrix}
+\leading{1} & 0 & 3 & 0\\
+0 & \leading{1} & 1 & -2\\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+So by \acronymref{theorem}{BNS} and \acronymref{theorem}{BCS}, we have
+%
+\begin{align*}
+\nsp{\matrixrep{S}{B}{C}}&=\spn{\set{\colvector{-3\\-1\\1\\0},\,\colvector{0\\2\\0\\1}}}
+&
+\csp{\matrixrep{S}{B}{C}}&=\spn{\set{\colvector{1\\3\\1},\,\colvector{2\\-1\\1}}}
+\end{align*}
+%
+Now, the proofs of \acronymref{theorem}{KNSI} and \acronymref{theorem}{RCSI} tell us that we can apply $\ltinverse{\vectrepname{B}}$ and $\vectrepinvname{C}$ (respectively) to ``un-coordinatize'' and get bases for the kernel and range of the linear transformation $S$ itself,
+%
+\begin{align*}
+\krn{S}&=\spn{\set{
+\begin{bmatrix}
+-3&-1\\1&0
+\end{bmatrix},\,
+\begin{bmatrix}
+0&2\\0&1
+\end{bmatrix}
+}}
+&
+\rng{S}&=\spn{\set{1+3x+x^2,\,2-x+x^2}}
+\end{align*}
+%

@@ -1,0 +1,64 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+We will proceed by induction. If $A$ is a square matrix of size 1, then clearly $d(\detname{A}) \leq md(A,1)$. Now assume $A$ is a square matrix of size $n$ then by \acronymref{theorem}{DER},
+%
+\begin{align*}
+\detname{A}&=
+(-1)^{2}\matrixentry{A}{1,1}\detname{\submatrix{A}{1}{1}}+
+(-1)^{3}\matrixentry{A}{1,2}\detname{\submatrix{A}{1}{2}}\\
+&\quad+
+(-1)^{4}\matrixentry{A}{1,3}\detname{\submatrix{A}{1}{3}}+
+\cdots+
+(-1)^{n+1}\matrixentry{A}{1,n}\detname{\submatrix{A}{1}{n}}
+\end{align*}
+%
+Let's consider the degree of term $j$, $(-1)^{1+j}\matrixentry{A}{1,j}\detname{\submatrix{A}{1}{j}}$. By definition of the function $md$, $d(\matrixentry{A}{1,j})\leq md(A,j)$. We use our induction hypothesis to examine the other part of the product which tells us that
+%
+\begin{align*}
+d\left(\detname{\submatrix{A}{1}{j}}\right) 
+&\leq md(\submatrix{A}{1}{j},1)+md(\submatrix{A}{1}{j},2)+\cdots+md(\submatrix{A}{1}{j},n-1) \\
+\end{align*}
+%
+Furthermore by definition of $\submatrix{A}{1}{j}$ (\acronymref{definition}{SM}) row $i$ of matrix $A$ contains all the entries of the corresponding row in $\submatrix{A}{1}{j}$ then,  
+%
+\begin{align*}
+md(\submatrix{A}{1}{j},1) &\leq md(A,1) \\
+md(\submatrix{A}{1}{j},2) &\leq md(A,2) \\
+&\vdots \\
+md(\submatrix{A}{1}{j},j-1) &\leq md(A,j-1) \\
+md(\submatrix{A}{1}{j},j) &\leq md(A,j+1) \\
+&\vdots \\
+md(\submatrix{A}{1}{j},n-1) &\leq md(A,n)
+\end{align*}
+%
+So,
+%
+\begin{align*}
+d\left(\detname{\submatrix{A}{1}{j}} \right)
+&\leq md(\submatrix{A}{1}{j},1)+md(\submatrix{A}{1}{j},2)+\cdots+md(\submatrix{A}{1}{j},n-1) \\
+&\leq md(A,1)+md(A,2)+\cdots+md(A,j-1)+md(A,j+1)+\cdots+md(A,n-1)
+\end{align*}
+%
+Then using the property that if $f(x)=g(x)h(x)$ then $d(f)=d(g)+d(h)$,
+%
+\begin{align*}
+d\left((-1)^{1+j}\matrixentry{A}{1,j}\detname{\submatrix{A}{1}{j}}\right)
+&=d\left(\matrixentry{A}{1,j}\right)+d\left(\detname{\submatrix{A}{1}{j}}\right) \\
+&\leq md(A,j)+md(A,1)+md(A,2)+\cdots+\\
+&\quad\quad md(A,j-1)+md(A,j+1)+\cdots+md(A,n)\\
+&=md(A,1)+md(A,2)+\cdots+md(A,n)
+\end{align*}
+%
+As $j$ is arbitrary the degree of all terms in the determinant are so bounded. Finally using the fact that if $f(x)=g(x)+h(x)$ then $d(f)\leq \text{max}\{d(h),d(g)\}$ we have
+%
+\begin{align*}
+d(\detname{A})\leq md(A,1)+md(A,2)+\cdots+md(A,n)
+\end{align*}
+%

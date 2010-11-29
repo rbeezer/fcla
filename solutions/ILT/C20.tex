@@ -1,0 +1,71 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+A linear transformation that is not injective will have a non-trivial kernel (\acronymref{theorem}{KILT}), and this is the key to finding the desired inputs.  We need one non-trivial element of the kernel, so suppose that $\vect{z}\in\complex{4}$ is an element of the kernel,
+%
+\begin{equation*}
+\colvector{0\\0\\0}
+=\zerovector
+=\lt{T}{\vect{z}}
+=\colvector{
+2z_1+z_2+z_3\\
+-z_1+3z_2+z_3-z_4\\
+3z_1+z_2+2z_3-2z_4
+}
+\end{equation*}
+%
+Vector equality \acronymref{definition}{CVE} leads to the homogeneous system of three equations in four variables,
+%
+\begin{align*}
+2z_1+z_2+z_3&=0\\
+-z_1+3z_2+z_3-z_4&=0\\
+3z_1+z_2+2z_3-2z_4&=0
+\end{align*}
+%
+The coefficient matrix of this system row-reduces as
+\begin{equation*}
+\begin{bmatrix}
+ 2 & 1 & 1 & 0 \\
+ -1 & 3 & 1 & -1 \\
+ 3 & 1 & 2 & -2
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+ \leading{1} & 0 & 0 & 1 \\
+ 0 & \leading{1} & 0 & 1 \\
+ 0 & 0 & \leading{1} & -3
+\end{bmatrix}
+\end{equation*}
+%
+From this we can find a solution (we only need one), that is an element of $\krn{T}$,
+%
+\begin{equation*}
+\vect{z}=\colvector{-1\\-1\\3\\1}
+\end{equation*}
+%
+Now, we choose a vector $\vect{x}$ at random and set $\vect{y}=\vect{x}+\vect{z}$,
+%
+\begin{align*}
+\vect{x}
+&=\colvector{2\\3\\4\\-2}
+&
+\vect{y}&=\vect{x}+\vect{z}=
+\colvector{2\\3\\4\\-2}+\colvector{-1\\-1\\3\\1}
+=\colvector{1\\2\\7\\-1}
+\end{align*}
+%
+and you can check that
+%
+\begin{equation*}
+\lt{T}{\vect{x}}
+=\colvector{11\\13\\21}
+=\lt{T}{\vect{y}}
+\end{equation*}
+%
+A quicker solution is to take two elements of the kernel (in this case, scalar multiples of $\vect{z}$) which both get sent to $\zerovector$ by $T$.  Quicker yet, take $\zerovector$ and $\vect{z}$ as $\vect{x}$ and $\vect{y}$, which also both get sent to $\zerovector$ by $T$.

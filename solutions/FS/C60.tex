@@ -1,0 +1,98 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+(a)\quad The definition of the column space is the span of the set of columns (\acronymref{definition}{CSM}).  So the desired set is just the four columns of $B$,
+%
+\begin{equation*}
+S=\set{
+\colvector{2\\1\\-1},\,
+\colvector{3\\1\\2},\,
+\colvector{1\\0\\3},\,
+\colvector{1\\1\\-4}
+}
+\end{equation*}
+%
+%
+(b)\quad  
+\acronymref{theorem}{BCS} suggests row-reducing the matrix and using the columns of $B$ that correspond to the pivot columns.  
+%
+\begin{equation*}
+B\rref
+\begin{bmatrix}
+\leading{1} & 0 & -1 & 2\\
+0 & \leading{1} & 1 & -1\\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+So the pivot columns are numbered by elements of $D=\set{1,\,2}$, so the requested set is
+%
+\begin{equation*}
+S=\set{
+\colvector{2\\1\\-1},\,
+\colvector{3\\1\\2}}
+\end{equation*}
+%
+(c)\quad 
+We can find this set by row-reducing the transpose of $B$, deleting the zero rows, and using the nonzero rows as column vectors in the set.  This is an application of \acronymref{theorem}{CSRST} followed by \acronymref{theorem}{BRS}.
+%
+\begin{equation*}
+\transpose{B}\rref
+\begin{bmatrix}
+\leading{1} & 0 & 3\\
+0 & \leading{1} & -7\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+So the requested set is
+%
+\begin{equation*}
+S=\set{
+\colvector{1\\0\\3},\,
+\colvector{0\\1\\-7}
+}
+\end{equation*}
+%
+(d)\quad 
+With the column space expressed as a null space, the vectors obtained via \acronymref{theorem}{BNS} will be of the desired shape.  So we first proceed with \acronymref{theorem}{FS} and create the extended echelon form,
+%
+\begin{equation*}
+\augmented{B}{I_3}=
+\begin{bmatrix}
+2 & 3 & 1 & 1 & 1 & 0 & 0\\
+1 & 1 & 0 & 1 & 0 & 1 & 0\\
+-1 & 2 & 3 & -4 & 0 & 0 & 1
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+\leading{1} & 0 & -1 & 2 & 0 & \frac{2}{3} & \frac{-1}{3}\\
+0 & \leading{1} & 1 & -1 & 0 & \frac{1}{3} & \frac{1}{3}\\
+0 & 0 & 0 & 0 & \leading{1} & \frac{-7}{3} & \frac{-1}{3}
+\end{bmatrix}
+\end{equation*}
+So, employing \acronymref{theorem}{FS}, we have $\csp{B}=\nsp{L}$, where 
+%
+\begin{equation*}
+L=
+\begin{bmatrix}
+\leading{1} & \frac{-7}{3} & \frac{-1}{3}
+\end{bmatrix}
+\end{equation*}
+%
+We can find the desired set of vectors from \acronymref{theorem}{BNS} as
+%
+\begin{equation*}
+S=\set{
+\colvector{\frac{7}{3}\\1\\0},\,
+\colvector{\frac{1}{3}\\0\\1}
+}
+\end{equation*}
+%

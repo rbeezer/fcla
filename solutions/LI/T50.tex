@@ -1,0 +1,66 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+Let $A=\matrixcolumns{A}{n}$.  $\linearsystem{A}{\vect{b}}$ is consistent, so we know the system has at least one solution (\acronymref{definition}{CS}).  We would like to show that there are no more than one solution to the system.  Employing \acronymref{technique}{U}, suppose that $\vect{x}$ and $\vect{y}$ are two solution vectors for $\linearsystem{A}{\vect{b}}$.  By \acronymref{theorem}{SLSLC} we know we can write,
+%
+\begin{align*}
+\vect{b}&=
+\vectorentry{\vect{x}}{1}A_1+
+\vectorentry{\vect{x}}{2}A_2+
+\vectorentry{\vect{x}}{3}A_3+
+\cdots+
+\vectorentry{\vect{x}}{n}A_n\\
+%
+\vect{b}&=
+\vectorentry{\vect{y}}{1}A_1+
+\vectorentry{\vect{y}}{2}A_2+
+\vectorentry{\vect{y}}{3}A_3+
+\cdots+
+\vectorentry{\vect{y}}{n}A_n
+\end{align*}
+%
+Then
+%
+\begin{align*}
+\zerovector
+&=\vect{b}-\vect{b}\\
+&=
+\left(
+\vectorentry{\vect{x}}{1}A_1+
+\vectorentry{\vect{x}}{2}A_2+
+\cdots+
+\vectorentry{\vect{x}}{n}A_n
+\right)
+-
+\left(
+\vectorentry{\vect{y}}{1}A_1+
+\vectorentry{\vect{y}}{2}A_2+
+\cdots+
+\vectorentry{\vect{y}}{n}A_n
+\right)\\
+&=
+\left(\vectorentry{\vect{x}}{1}-\vectorentry{\vect{y}}{1}\right)A_1+
+\left(\vectorentry{\vect{x}}{2}-\vectorentry{\vect{y}}{2}\right)A_2+
+\cdots+
+\left(\vectorentry{\vect{x}}{n}-\vectorentry{\vect{y}}{n}\right)A_n
+\end{align*}
+%
+This is a relation of linear dependence (\acronymref{definition}{RLDCV}) on a linearly independent set (the columns of $A$).  So the scalars {\em must} all be zero,
+%
+\begin{align*}
+\vectorentry{\vect{x}}{1}-\vectorentry{\vect{y}}{1}&=0
+&
+\vectorentry{\vect{x}}{2}-\vectorentry{\vect{y}}{2}&=0
+&
+\dots&
+&
+\vectorentry{\vect{x}}{n}-\vectorentry{\vect{y}}{n}&=0
+\end{align*}
+%
+Rearranging these equations yields the statement that $\vectorentry{\vect{x}}{i}=\vectorentry{\vect{y}}{i}$, for $1\leq i\leq n$.  However, this is exactly how we define vector equality (\acronymref{definition}{CVE}), so $\vect{x}=\vect{y}$ and the system has only one solution.

@@ -1,0 +1,91 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+Begin with a matrix representation of $R$, any matrix representation, but use the same basis for both instances of $S_{22}$.  We'll choose a basis that makes it easy to compute vector representations in $S_{22}$.
+%
+\begin{equation*}
+B=\set{
+\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix},\,
+\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix},\,
+\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}
+}
+\end{equation*}
+%
+Then the resulting matrix representation of $R$  (\acronymref{definition}{MR}) is
+%
+\begin{equation*}
+\matrixrep{R}{B}{B}=
+\begin{bmatrix}
+ -5 & 2 & -3 \\
+ -12 & 5 & -6 \\
+ 6 & -2 & 4
+\end{bmatrix}
+\end{equation*}
+%
+Now, compute the eigenvalues and eigenvectors of this matrix, with the goal of diagonalizing the matrix (\acronymref{theorem}{DC}),
+%
+\begin{align*}
+\lambda&=2
+&
+\eigenspace{\matrixrep{R}{B}{B}}{2}&=\spn{\set{\colvector{-1\\-2\\1}}}\\
+%
+\lambda&=1
+&
+\eigenspace{\matrixrep{R}{B}{B}}{1}&=\spn{\set{\colvector{-1\\0\\2},\,\colvector{1\\3\\0}}}\\
+\end{align*}
+%
+The three vectors that occur as basis elements for these eigenspaces will together form a linearly independent set (check this!).  So these column vectors may be employed in a matrix that will diagonalize the matrix representation.  If we ``un-coordinatize'' these three column vectors relative to the basis $B$, we will find three linearly independent elements of $S_{22}$ that are eigenvectors of the linear transformation $R$ (\acronymref{theorem}{EER}).  A matrix representation relative to this basis of eigenvectors will be diagonal, with the eigenvalues ($\lambda=2,\,1$) as the diagonal elements.  Here we go,
+%
+\begin{align*}
+\vectrepinv{B}{\colvector{-1\\-2\\1}}&=
+(-1)\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}+
+(-2)\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}+
+1\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}
+=
+\begin{bmatrix}
+-1 & -2 \\-2 & 1
+\end{bmatrix}\\
+%
+\vectrepinv{B}{\colvector{-1\\0\\2}}&=
+(-1)\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}+
+0\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}+
+2\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}
+=
+\begin{bmatrix}
+-1 & 0 \\ 0 & 2
+\end{bmatrix}\\
+%
+\vectrepinv{B}{\colvector{1\\3\\0}}&=
+1\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}+
+3\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}+
+0\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}
+=
+\begin{bmatrix}
+1 & 3 \\ 3 & 0
+\end{bmatrix}\\
+%
+\end{align*}
+%
+So the requested basis of $S_{22}$, yielding a diagonal matrix representation of $R$, is
+%
+\begin{equation*}
+\set{
+\begin{bmatrix}
+-1 & -2 \\-2 & 1
+\end{bmatrix}\,\
+%
+\begin{bmatrix}
+-1 & 0 \\ 0 & 2
+\end{bmatrix},\,
+%
+\begin{bmatrix}
+1 & 3 \\ 3 & 0
+\end{bmatrix}%
+}
+\end{equation*}

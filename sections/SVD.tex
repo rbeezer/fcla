@@ -1,0 +1,329 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section SVD
+%%  Singular Value Decomposition
+%%
+%%%%%%%%%%%
+%
+{\sc\large This Section is a Draft, Subject to Changes}\\
+{\sc\large Needs Numerical Examples}\par\bigskip
+%
+The singular value decomposition is one of the more useful ways to represent any matrix, even rectangular ones.  We can also view the singular values of a (rectangular) matrix as analogues of the eigenvalues of a square matrix.  Our definitions and theorems in this section rely heavily on the properties of the matrix-adjoint products ($\adjoint{A}A$ and $A\adjoint{A}$), which we first met in \acronymref{theorem}{CPSM}.  We start by examining some of the basic properties of these two matrices.  Now would be a good time to review the basic facts about positive semi-definite matrices in \acronymref{section}{PSM}.
+%
+\subsect{MAP}{Matrix-Adjoint Product}
+%
+%
+\begin{theorem}{EEMAP}{Eigenvalues and Eigenvectors of Matrix-Adjoint Product}{matrix-adjoint product!eigenvalues, eigenvectors}
+Suppose that $A$ is an $m\times n$ matrix and $\adjoint{A}A$ has rank $r$.  Let $\scalarlist{\lambda}{p}$ be the nonzero distinct eigenvalues of $\adjoint{A}A$ and let $\scalarlist{\rho}{q}$ be the nonzero distinct eigenvalues of $A\adjoint{A}$.  Then,
+%
+\begin{enumerate}
+\item $p=q$.
+\item The distinct nonzero eigenvalues can be ordered such that $\lambda_i=\rho_i$, $1\leq i\leq p$.
+\item Properly ordered, $\algmult{\adjoint{A}A}{\lambda_i}=\algmult{A\adjoint{A}}{\rho_i}$, $1\leq i\leq p$.
+\item The rank of $\adjoint{A}A$ is equal to the rank of $A\adjoint{A}$.
+\item There is an orthonormal basis, $\set{\vectorlist{x}{n}}$ of $\complex{n}$ composed of eigenvectors of $\adjoint{A}A$ and an orthonormal basis, $\set{\vectorlist{y}{m}}$ of $\complex{m}$ composed of eigenvectors of $A\adjoint{A}$ with the following properties.  Order the eigenvectors so that $\vect{x}_i$, $r+1\leq i\leq n$ are the eigenvectors of $\adjoint{A}A$ for the zero eigenvalue.  Let $\delta_i$, $1\leq i\leq r$ denote the nonzero eigenvalues of $\adjoint{A}A$.  Then $A\vect{x}_i=\sqrt{\delta_i}\vect{y_i}$, $1\leq i\leq r$ and $A\vect{x}_i=\zerovector$, $r+1\leq i\leq n$.  Finally, $\vect{y}_i$, $r+1\leq i\leq m$, are eigenvectors of $A\adjoint{A}$ for the zero eigenvalue.
+\end{enumerate}
+%
+\end{theorem}
+%
+\begin{proof}
+%
+Suppose that $\vect{x}\in\complex{n}$ is any eigenvector of $\adjoint{A}A$ for a nonzero eigenvalue $\lambda$.  We will show that $A\vect{x}$ is an eigenvector of $A\adjoint{A}$ for the same eigenvalue, $\lambda$.  First, we ascertain that $A\vect{x}$ is not the zero vector.
+%
+\begin{align*}
+\innerproduct{A\vect{x}}{A\vect{x}}
+&=\innerproduct{A\vect{x}}{\adjoint{\left(\adjoint{A}\right)}\vect{x}}&&\text{\acronymref{theorem}{AA}}\\
+%
+&=\innerproduct{\adjoint{A}A\vect{x}}{\vect{x}}&&\text{\acronymref{theorem}{AIP}}\\
+%
+&=\innerproduct{\lambda\vect{x}}{\vect{x}}&&\text{\acronymref{definition}{EEM}}\\
+%
+&=\lambda\innerproduct{\vect{x}}{\vect{x}}&&\text{\acronymref{theorem}{IPSM}}
+%
+\end{align*}
+%
+Since $\vect{x}$ is an eigenvector, $\vect{x}\neq\zerovector$, and by \acronymref{theorem}{PIP}, $\innerproduct{\vect{x}}{\vect{x}}\neq 0$.  As $\lambda$ was assumed to be nonzero, we see that $\innerproduct{A\vect{x}}{A\vect{x}}\neq 0$.  Again, \acronymref{theorem}{PIP} tells us that $A\vect{x}\neq\zerovector$.\par
+%
+Much of the sequel turns on the following simple computation.  If you ever wonder what all the fuss is about adjoints, Hermitian matrices, square roots, and singular values, return to this brief computation, as it holds the key.  There is much more to do in this proof, but after this it is mostly bookkeeping.  Here we go.  We check that $A\vect{x}$ functions as an eigenvector of $A\adjoint{A}$ for the eigenvalue $\lambda$,
+%
+\begin{align*}
+\left(A\adjoint{A}\right)A\vect{x}
+&=A\left(\adjoint{A}A\right)\vect{x}&&\text{\acronymref{theorem}{MMA}}\\
+&=A\lambda\vect{x}&&\text{\acronymref{definition}{EEM}}\\
+&=\lambda\left(A\vect{x}\right)&&\text{\acronymref{theorem}{MMSMM}}
+\end{align*}
+%
+That's it.  If $\vect{x}$ is an eigenvector of $\adjoint{A}A$ (for a {\em nonzero} eigenvalue), then $A\vect{x}$ is an eigenvector for $A\adjoint{A}$ for the same eigenvalue.  Let's see what this buys us.\par
+%
+$\adjoint{A}A$ and $A\adjoint{A}$ are Hermitian matrices (\acronymref{definition}{HM}), and hence are normal (\acronymref{definition}{NRML}).  This provides the existence of orthonormal bases of eigenvectors for each matrix by \acronymref{theorem}{OBNM}.  Also, since each matrix is diagonalizable (\acronymref{definition}{DZM}) by \acronymref{theorem}{OD} we can interchange algebraic and geometric multiplicities by \acronymref{theorem}{DMFE}.\par
+%
+Our first step is to establish that an eigenvalue $\lambda$ has the same geometric multiplicity for both $\adjoint{A}A$ and $A\adjoint{A}$.   Suppose $\set{\vectorlist{x}{s}}$ is an orthonormal basis of eigenvectors of $\adjoint{A}A$ for the eigenspace $\eigenspace{\adjoint{A}A}{\lambda}$.  Then for $1\leq i<j\leq s$, note
+%
+\begin{align*}
+\innerproduct{A\vect{x}_i}{A\vect{x}_j}
+&=\innerproduct{A\vect{x}_i}{\adjoint{\left(\adjoint{A}\right)}\vect{x}_j}
+&&\text{\acronymref{theorem}{AA}}\\
+%
+&=\innerproduct{\adjoint{A}A\vect{x}_i}{\vect{x}_j}
+&&\text{\acronymref{theorem}{AIP}}\\
+%
+&=\innerproduct{\lambda\vect{x}_i}{\vect{x}_j}
+&&\text{\acronymref{definition}{EEM}}\\
+%
+&=\lambda\innerproduct{\vect{x}_i}{\vect{x}_j}
+&&\text{\acronymref{theorem}{IPSM}}\\
+%
+&=\lambda(0)
+&&\text{\acronymref{definition}{ONS}}\\
+%
+&=0
+&&\text{\acronymref{property}{ZCN}}
+%
+\end{align*}
+%
+Then the set $E=\set{A\vect{x}_1,\,A\vect{x}_2,\,A\vect{x}_3,\,\dots,\,A\vect{x}_s}$ is an orthogonal set of nonzero eigenvectors of $A\adjoint{A}$ for the eigenvalue $\lambda$.  By \acronymref{theorem}{OSLI}, the set $E$ is linearly independent and so the geometric multiplicity of $\lambda$ as an eigenvalue of $A\adjoint{A}$ is $s$ or greater.  We have
+%
+\begin{align*}
+\algmult{\adjoint{A}A}{\lambda}
+&=\geomult{\adjoint{A}A}{\lambda}
+\leq\geomult{A\adjoint{A}}{\lambda}
+=\algmult{A\adjoint{A}}{\lambda}
+\end{align*}
+%
+This inequality applies to any matrix, so long as the eigenvalue is nonzero.  We now apply it to the matrix $\adjoint{A}$,
+%
+\begin{align*}
+\algmult{A\adjoint{A}}{\lambda}
+&=\algmult{\adjoint{\left(\adjoint{A}\right)}\adjoint{A}}{\lambda}
+\leq \algmult{\adjoint{A}\adjoint{\left(\adjoint{A}\right)}}{\lambda}
+=\algmult{\adjoint{A}A}{\lambda}
+\end{align*}
+%
+So for a nonzero eigenvalue, its algebraic multiplicities as an eigenvalue of $\adjoint{A}A$ and $A\adjoint{A}$ are equal.  This is enough to establish that $p=q$ and the eigenvalues can be ordered such that $\lambda_i=\rho_i$ for $1\leq i\leq p$.\par
+%
+For any matrix $B$, the null space is identical to the eigenspace of the zero eigenvalue, $\nsp{B}=\eigenspace{B}{0}$, and thus the nullity of the matrix is equal to the geometric multiplicity of the zero eigenvalue.  With this, we can examine the ranks of $\adjoint{A}A$ and $A\adjoint{A}$.
+%
+\begin{align*}
+\rank{\adjoint{A}A}
+&=n-\nullity{\adjoint{A}A}&&\text{\acronymref{theorem}{RPNC}}\\
+%
+&=\left(\algmult{\adjoint{A}A}{0} + \sum_{i=1}^{p}\algmult{\adjoint{A}A}{\lambda_i}\right)-\nullity{\adjoint{A}A}
+&&\text{\acronymref{theorem}{NEM}}\\
+%
+&=\left(\algmult{\adjoint{A}A}{0} + \sum_{i=1}^{p}\algmult{\adjoint{A}A}{\lambda_i}\right)-\geomult{\adjoint{A}A}{0}
+&&\text{\acronymref{definition}{GME}}\\
+%
+&=\left(\algmult{\adjoint{A}A}{0} + \sum_{i=1}^{p}\algmult{\adjoint{A}A}{\lambda_i}\right)-\algmult{\adjoint{A}A}{0}
+&&\text{\acronymref{theorem}{DMFE}}\\
+%
+&=\sum_{i=1}^{p}\algmult{\adjoint{A}A}{\lambda_i}\\
+%
+&=\sum_{i=1}^{p}\algmult{A\adjoint{A}}{\lambda_i}\\
+%
+&=\left(\algmult{A\adjoint{A}}{0} + \sum_{i=1}^{p}\algmult{A\adjoint{A}}{\lambda_i}\right)-\algmult{A\adjoint{A}}{0}\\
+%
+&=\left(\algmult{A\adjoint{A}}{0} + \sum_{i=1}^{p}\algmult{A\adjoint{A}}{\lambda_i}\right)-\geomult{A\adjoint{A}}{0}
+&&\text{\acronymref{theorem}{DMFE}}\\
+%
+&=\left(\algmult{A\adjoint{A}}{0} + \sum_{i=1}^{p}\algmult{A\adjoint{A}}{\lambda_i}\right)-\nullity{A\adjoint{A}}
+&&\text{\acronymref{definition}{GME}}\\
+%
+&=m-\nullity{A\adjoint{A}}&&\text{\acronymref{theorem}{NEM}}\\
+%
+&=\rank{A\adjoint{A}}&&\text{\acronymref{theorem}{RPNC}}
+%
+\end{align*}
+%
+When $A$ is rectangular, the square matrices $\adjoint{A}A$ and $A\adjoint{A}$ have different sizes.  With equal algebraic and geometric multiplicities for their common nonzero eigenvalues, the difference in their sizes is manifest in different algebraic multiplicities for the zero eigenvalue and different nullities.  Specifically,
+%
+\begin{align*}
+\nullity{\adjoint{A}A}&=n-r
+&
+\nullity{A\adjoint{A}}&=m-r
+\end{align*}
+%
+Suppose that $\vectorlist{x}{n}$ is an orthonormal basis of $\complex{n}$ composed of eigenvectors of $\adjoint{A}A$ and ordered so that $\vect{x}_i$, $r+1\leq i\leq n$ are eigenvectors of $A\adjoint{A}$ for the zero eigenvalue.  Denote the associated nonzero eigenvalues of $\adjoint{A}A$ for these eigenvectors by $\vect{\delta}_i$, $1\leq i\leq r$.   Then define 
+%
+\begin{align*}
+\vect{y}_i&=\frac{1}{\sqrt{\delta_i}}A\vect{x}_i
+&
+1&\leq i\leq r
+\end{align*}
+%
+Let $\vect{y}_{r+1},\,\vect{y}_{r+2},\,\vect{y}_{r+2},\,\dots,\,\vect{y}_{m}$ be an orthonormal basis for the eigenspace $\eigenspace{A\adjoint{A}}{0}$, whose existence is guaranteed by \acronymref{theorem}{GSP}.  As scalar multiples of demonstrated eigenvectors of $A\adjoint{A}$, $\vect{y}_i$, $1\leq i\leq r$ are also eigenvectors of $A\adjoint{A}$, and $\vect{y}_i$, $r+1\leq i\leq n$ have been chosen as eigenvectors of $A\adjoint{A}$.  These eigenvectors also have norm 1, as we now show.  For $1\leq i\leq r$,
+%
+\begin{align*}
+\norm{\vect{y}_i}&=
+\norm{\frac{1}{\sqrt{\delta_i}}A\vect{x}_i}\\
+%
+&=\sqrt{\innerproduct{\frac{1}{\sqrt{\delta_i}}A\vect{x}_i}{\frac{1}{\sqrt{\delta_i}}A\vect{x}_i}}
+&&\text{\acronymref{theorem}{IPN}}\\
+%
+&=\sqrt{\frac{1}{\sqrt{\delta_i}}\conjugate{\frac{1}{\sqrt{\delta_i}}}\innerproduct{A\vect{x}_i}{A\vect{x}_i}}
+&&\text{\acronymref{theorem}{IPSM}}\\
+%
+&=\sqrt{\frac{1}{\sqrt{\delta_i}}\frac{1}{\sqrt{\delta_i}}\innerproduct{A\vect{x}_i}{A\vect{x}_i}}
+&&\text{\acronymref{theorem}{HMRE}}\\
+%
+&=\frac{1}{\sqrt{\delta_i}}\sqrt{\innerproduct{A\vect{x}_i}{A\vect{x}_i}}\\
+%
+&=\frac{1}{\sqrt{\delta_i}}
+\sqrt{\innerproduct{A\vect{x}_i}{\adjoint{\left(\adjoint{A}\right)}\vect{x}_i}}
+&&\text{\acronymref{theorem}{AA}}\\
+%
+&=\frac{1}{\sqrt{\delta_i}}
+\sqrt{\innerproduct{\adjoint{A}A\vect{x}_i}{\vect{x}_i}}
+&&\text{\acronymref{theorem}{AIP}}\\
+%
+&=\frac{1}{\sqrt{\delta_i}}
+\sqrt{\innerproduct{\delta_i\vect{x}_i}{\vect{x}_i}}
+&&\text{\acronymref{definition}{EEM}}\\
+%
+&=\frac{1}{\sqrt{\delta_i}}
+\sqrt{\delta_i\innerproduct{\vect{x}_i}{\vect{x}_i}}
+&&\text{\acronymref{theorem}{IPSM}}\\
+%
+&=\frac{1}{\sqrt{\delta_i}}
+\sqrt{\delta_i(1)}&&\text{\acronymref{definition}{ONS}}\\
+%
+&=1
+%
+\end{align*}
+%
+For $r+1\leq i\leq n$, the $\vect{y}_i$ have been chosen to have norm 1.\par
+%
+Finally we check orthogonality.  Consider two eigenvectors $\vect{y}_i$ and $\vect{y}_j$ with $1\leq i<j\leq m$.  If these two vectors have different eigenvalues, then \acronymref{theorem}{HMOE} establishes that the two eigenvectors are orthogonal.  If the two eigenvectors have a zero eigenvalue, then they are orthogonal by the choice of the orthonormal basis of $\eigenspace{A\adjoint{A}}{0}$.
+If the two eigenvectors have identical, nonzero, eigenvalues, then
+%
+\begin{align*}
+\innerproduct{\vect{y}_i}{\vect{y}_j}
+&=
+\innerproduct{\frac{1}{\sqrt{\delta_i}}A\vect{x}_i}{\frac{1}{\sqrt{\delta_j}}A\vect{x}_j}\\
+%
+&=
+\frac{1}{\sqrt{\delta_i}}\conjugate{\frac{1}{\sqrt{\delta_j}}}
+\innerproduct{A\vect{x}_i}{A\vect{x}_j}&&
+\text{\acronymref{theorem}{IPSM}}\\
+%
+&=
+\frac{1}{\sqrt{\delta_i\delta_j}}
+\innerproduct{A\vect{x}_i}{A\vect{x}_j}&&
+\text{\acronymref{theorem}{HMRE}}\\
+%
+&=
+\frac{1}{\sqrt{\delta_i\delta_j}}
+\innerproduct{A\vect{x}_i}{\adjoint{\left(\adjoint{A}\right)}\vect{x}_j}&&\text{\acronymref{theorem}{AA}}\\
+%
+&=
+\frac{1}{\sqrt{\delta_i\delta_j}}
+\innerproduct{\adjoint{A}A\vect{x}_i}{\vect{x}_j}
+&&\text{\acronymref{theorem}{AIP}}\\
+%
+&=
+\frac{1}{\sqrt{\delta_i\delta_j}}
+\innerproduct{\delta_i\vect{x}_i}{\vect{x}_j}
+&&\text{\acronymref{definition}{EEM}}\\
+%
+&=
+\frac{\delta_i}{\sqrt{\delta_i\delta_j}}
+\innerproduct{\vect{x}_i}{\vect{x}_j}
+&&\text{\acronymref{theorem}{IPSM}}\\
+%
+&=
+\frac{\delta_i}{\sqrt{\delta_i\delta_j}}(0)
+&&\text{\acronymref{definition}{ONS}}\\
+%
+&=0
+%
+\end{align*}
+%
+So $\set{\vectorlist{y}{m}}$ is an orthonormal set of eigenvectors for $A\adjoint{A}$.  The critical relationship between these two orthonormal bases is present by design.  For $1\leq i\leq r$,
+%
+\begin{align*}
+A\vect{x}_i
+&=\sqrt{\delta_i}\frac{1}{\sqrt{\delta_i}}A\vect{x}_i
+=\sqrt{\delta_i}\vect{y}_i
+%
+\end{align*}
+%
+For $r+1\leq i\leq n$ we have
+%
+\begin{align*}
+\innerproduct{A\vect{x}_i}{A\vect{x}_i}
+&=\innerproduct{A\vect{x}_i}{\adjoint{\left(\adjoint{A}\right)}\vect{x}_i}
+&&\text{\acronymref{theorem}{AA}}\\
+%
+&=\innerproduct{\adjoint{A}A\vect{x}_i}{\vect{x}_i}
+&&\text{\acronymref{theorem}{AIP}}\\
+%
+&=\innerproduct{\zerovector}{\vect{x}_i}
+&&\text{\acronymref{definition}{EEM}}\\
+%
+&=0
+&&\text{\acronymref{definition}{IP}}
+%
+\end{align*}
+%
+So by \acronymref{theorem}{PIP}, $A\vect{x}_i=\zerovector$.
+%
+\end{proof}
+%
+\subsect{SVD}{Singular Value Decomposition}
+%
+The square roots of the eigenvalues of $\adjoint{A}A$ (or almost equivalently, $A\adjoint{A}$!) are known as the singular values of $A$.  Here is the definition.
+%
+\begin{definition}{SV}{Singular Values}{singular values}
+Suppose $A$ is an $m\times n$ matrix.  If the eigenvalues of $\adjoint{A}A$ are $\scalarlist{\delta}{n}$, then the \define{singular values} of $A$ are $\sqrt{\delta_1},\,\sqrt{\delta_2},\,\sqrt{\delta_3},\,\ldots,\,\sqrt{\delta_n}$.
+\end{definition}
+%
+\acronymref{theorem}{EEMAP} is a total setup for the singular value decomposition.  This remarkable theorem says that {\em any} matrix can be broken into a product of three matrices.  Two are square, and unitary.  In light of \acronymref{theorem}{UMPIP}, we can view these matrices as transforming vectors or coordinates in a rotational fashion.  The middle matrix of this decomposition is rectangular, but is as close to being diagonal as a rectangular matrix can be.  Viewed as a transformation, this matrix effects, reflections, contractions or expansions along axes --- it stretches vectors.  So any matrix, viewed as a transformation is the product of a rotation, a stretch and a rotation.\par
+%
+The singular value theorem can also be viewed as an application of our most general statement about matrix representations of linear transformations relative to different bases.  \acronymref{theorem}{MRCB} concerns linear transformations $\ltdefn{T}{U}{V}$ where $U$ and $V$ are possibly different vector spaces.  When $U$ and $V$ have different dimensions, the resulting matrix representation will be rectangular.  In \acronymref{section}{CB} we quickly specialized to the case where $U=V$ and the matrix representations are square with one of our most central results, \acronymref{theorem}{SCB}.  \acronymref{theorem}{SVD} is an application of the full generality of \acronymref{theorem}{MRCB} where the relevant bases are now orthonormal sets.
+%
+\begin{theorem}{SVD}{Singular Value Decomposition}{singular value decomposition}
+Suppose $A$ is an $m\times n$ matrix of rank $r$ with nonzero singular values $\scalarlist{s}{r}$.  Then $A=UD\adjoint{V}$ where $U$ is a unitary matrix of size $m$, $V$ is a unitary matrix of size $n$ and $D$ is an $m\times n$ matrix given by
+%
+\begin{align*}
+\matrixentry{D}{ij}&=
+\begin{cases}
+s_i&\text{if }1\leq i=j\leq r\\
+0&\text{otherwise}
+\end{cases}
+\end{align*}
+%
+\end{theorem}
+%
+\begin{proof}
+Let $\vectorlist{x}{n}$ and $\vectorlist{y}{m}$ be the orthonormal bases described by the conclusion of \acronymref{theorem}{EEMAP}.  Define $U$ to be the $m\times m$ matrix whose columns are $\vect{y}_i$, $1\leq i\leq m$, and define $V$ to be the $n\times n$ matrix whose columns are $\vect{x}_i$, $1\leq i\leq n$.  With orthonormal sets of columns, by \acronymref{theorem}{CUMOS} both $U$ and $V$ are unitary matrices.\par
+%
+Then for $1\leq i\leq m$, $1\leq j\leq n$,
+%
+\begin{align*}
+\matrixentry{AV}{ij}
+&=\vectorentry{A\vect{x}_j}{i}&&\text{\acronymref{definition}{MM}}\\
+&=\vectorentry{\sqrt{\delta_j}\vect{y}_j}{i}&&\text{\acronymref{theorem}{EEMAP}}\\
+&=\vectorentry{s_j\vect{y}_j}{i}&&\text{\acronymref{definition}{SV}}\\
+&=\vectorentry{\vect{y}_j}{i}s_j&&\text{\acronymref{definition}{CVSM}}\\
+&=\matrixentry{U}{ij}\matrixentry{D}{jj}\\
+&=\sum_{k=1}^{m}\matrixentry{U}{ik}\matrixentry{D}{kj}\\
+&=\matrixentry{UD}{ij}&&\text{\acronymref{theorem}{EMP}}
+\end{align*}
+%
+So by \acronymref{theorem}{ME}, $AV=UD$ and thus
+%
+\begin{align*}
+A&=AI_n=AV\adjoint{V}=UD\adjoint{V}
+\end{align*}
+%
+\end{proof}
+%  
+%  End of  SVD.tex

@@ -1,0 +1,36 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+\contributedby{\stevecanfield}\\
+A matrix in {\sl SAGE} can be made a few ways. The first is simply to define the matrix as an array of rows. {\sl SAGE} uses brackets ($\left\lbrack\right.$~,~$\left.\right\rbrack$) to delimit arrays.  So the input
+\begin{align*}
+\computerfont{a = matrix( [[1,2,3,4], [5,6,7,8],[9,10,11,12]] )}
+\end{align*}
+%
+would create a $3\times 4$ matrix named \computerfont{a} that is equal to
+%
+\begin{equation*}
+%
+\begin{bmatrix}
+1&2&3&4\\
+5&6&7&8\\
+9&10&11&12
+\end{bmatrix}
+%
+\end{equation*}
+%
+{\sl SAGE} will guess what type of matrix you are working with based on the inputs. If all the entries are integers, you will get back an integer matrix. If your matrix contains an entry in the \real{} or \complexes space, the matrix will be of those types. This can cause problems as integers cannot become fractions, which is an issue when calculating reduced row-echelon form. We therefore recommend using the following construction to make your matrices,
+%
+\begin{equation*}
+\computerfont{a = matrix( QQ, [[1,2,3,4], [5,6,7,8],[9,10,11,12]] )}
+\end{equation*}
+%
+This gives you a matrix over the rational numbers which will be sufficient for most of the course. If your matrix has entries that are complex numbers you would replace the \computerfont{QQ} with \computerfont{CC}.\\
+%
+To display a matrix named \computerfont{a}, type \computerfont{a}, and the output will be displayed with rows and columns. If you type \computerfont{latex(a)} you will get \LaTeX\ code to display the matrix.  Very handy.

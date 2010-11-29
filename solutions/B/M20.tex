@@ -1,0 +1,76 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+We need to establish the linear independence and spanning properties of the set
+%
+\begin{equation*}
+B=\setparts{B_{k\ell}}{1\leq k\leq m,\ 1\leq\ell\leq n}
+\end{equation*}
+%
+relative to the vector space $M_{mn}$.\par
+%
+This proof is more transparent if you write out individual matrices in the basis with lots of zeros and dots and a lone one.  But we don't have room for that here, so we will use summation notation.  Think carefully about each step, especially when the double summations seem to ``disappear.''  Begin with a relation of linear dependence, using double subscripts on the scalars to align with the basis elements.
+%
+\begin{equation*}
+\zeromatrix=\sum_{k=1}^{m}\sum_{\ell=1}^{n}\alpha_{k\ell}B_{k\ell}
+\end{equation*}
+%
+Now consider the entry in row $i$ and column $j$ for these equal matrices,
+%
+\begin{align*}
+0
+&=\matrixentry{\zeromatrix}{ij}&&\text{\acronymref{definition}{ZM}}\\
+%
+&=\matrixentry{\sum_{k=1}^{m}\sum_{\ell=1}^{n}\alpha_{k\ell}B_{k\ell}}{ij}
+&&\text{\acronymref{definition}{ME}}\\
+%
+&=\sum_{k=1}^{m}\sum_{\ell=1}^{n}\matrixentry{\alpha_{k\ell}B_{k\ell}}{ij}
+&&\text{\acronymref{definition}{MA}}\\
+%
+&=\sum_{k=1}^{m}\sum_{\ell=1}^{n}\alpha_{k\ell}\matrixentry{B_{k\ell}}{ij}
+&&\text{\acronymref{definition}{MSM}}\\
+%
+&=\alpha_{ij}\matrixentry{B_{ij}}{ij}&&
+\text{$\matrixentry{B_{k\ell}}{ij}=0$ when $(k,\ell)\neq(i,j)$}\\
+%
+&=\alpha_{ij}(1)&&\text{$\matrixentry{B_{ij}}{ij}=1$}\\
+%
+&=\alpha_{ij}
+\end{align*}
+%
+Since $i$ and $j$ were arbitrary, we find that each scalar is zero and so $B$ is linearly independent (\acronymref{definition}{LI}).\par
+%
+To establish the spanning property of $B$ we need only show that an arbitrary matrix $A$ can be written as a linear combination of the elements of $B$.  So suppose that $A$ is an arbitrary $m\times n$ matrix and consider the matrix $C$ defined as a linear combination of the elements of $B$ by 
+%
+\begin{equation*}
+C=\sum_{k=1}^{m}\sum_{\ell=1}^{n}\matrixentry{A}{k\ell}B_{k\ell}
+\end{equation*}
+%
+Then,
+%
+\begin{align*}
+\matrixentry{C}{ij}
+&=\matrixentry{\sum_{k=1}^{m}\sum_{\ell=1}^{n}\matrixentry{A}{k\ell}B_{k\ell}}{ij}
+&&\text{\acronymref{definition}{ME}}\\
+%
+&=\sum_{k=1}^{m}\sum_{\ell=1}^{n}\matrixentry{\matrixentry{A}{k\ell}B_{k\ell}}{ij}
+&&\text{\acronymref{definition}{MA}}\\
+%
+&=\sum_{k=1}^{m}\sum_{\ell=1}^{n}\matrixentry{A}{k\ell}\matrixentry{B_{k\ell}}{ij}
+&&\text{\acronymref{definition}{MSM}}\\
+%
+&=\matrixentry{A}{ij}\matrixentry{B_{ij}}{ij}
+&&\text{$\matrixentry{B_{k\ell}}{ij}=0$ when $(k,\ell)\neq(i,j)$}\\
+%
+&=\matrixentry{A}{ij}(1)&&\text{$\matrixentry{B_{ij}}{ij}=1$}\\
+%
+&=\matrixentry{A}{ij}
+\end{align*}
+%
+So by \acronymref{definition}{ME}, $A=C$, and therefore $A\in\spn{B}$.  By \acronymref{definition}{B}, the set $B$ is a basis of the vector space $M_{mn}$.

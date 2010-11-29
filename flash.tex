@@ -1,0 +1,301 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+\documentclass[10pt,letterpaper]{book}
+
+%%%%%%%%%%
+%%
+%%  Packages
+%%
+%%%%%%%%%%
+
+% ifthen
+%   Various options are controlled by
+%   the  ifthen  package
+%
+\usepackage{ifthen}
+
+% amsmath, amssymb  packages
+%   amsmath has lots of support for matrices and displayed equations
+%   so we use it heavily, see amsldoc.pdf for documentation
+%   see short-math-guide.pdf for guidance
+%   amssymb gets blackboardbold, proof symbols, etc.
+%
+\usepackage{amsmath,amssymb}
+
+% fcla-developer, fcla-math, archetypes
+%   custom stuff just for this book
+%   First controls formatting and references
+%   Second is for mathematical structures.
+%   Third enforces common look on archetype layouts
+%
+\usepackage{styles/fcla-math}
+
+%% Hyperref package makes URL's in notices live in PDFs
+\usepackage[pdftex]{hyperref}
+\hypersetup{breaklinks=true,colorlinks=false}
+\hypersetup{pdftitle=A First Course in Linear Algebra - Flashcard Supplement}
+\hypersetup{pdfauthor=Robert A. Beezer}
+\hypersetup{pdfkeywords=free linear algebra textbook flashcard}
+
+% Layout parameters
+%
+\newlength{\cardheight}\setlength{\cardheight}{4in}
+\newlength{\cardwidth}\setlength{\cardwidth}{6in}
+\newlength{\cardmargin}\setlength{\cardmargin}{0.1in}
+\newlength{\cardborder}\setlength{\cardborder}{2.5pt}
+\newlength{\cardsep}\setlength{\cardsep}{1.0in}
+
+% LaTeX box styles
+%
+\setlength{\fboxsep}{\cardmargin}
+\setlength{\fboxrule}{\cardborder}
+
+% LaTeX printable area, plus some vertical slop
+%
+\setlength{\textwidth}{\cardwidth}
+\setlength{\textheight}{2\cardheight}
+\addtolength{\textheight}{\cardsep}
+\addtolength{\textheight}{10pt}
+
+% Content region size
+%
+\newlength{\contentwidth}
+\setlength{\contentwidth}{\cardwidth}
+\addtolength{\contentwidth}{-2\cardmargin}
+\addtolength{\contentwidth}{-2\cardborder}
+\newlength{\contentheight}
+\setlength{\contentheight}{\cardheight}
+\addtolength{\contentheight}{-2\cardmargin}
+\addtolength{\contentheight}{-2\cardborder}
+
+% LaTeX page style
+\pagestyle{empty}
+\setlength{\parindent}{0in}
+
+% PDF Page size
+% Run a 0.25 inch margin around all sizes
+%
+\setlength{\pdfpagewidth}{\textwidth}
+\addtolength{\pdfpagewidth}{0.50in}
+\setlength{\evensidemargin}{-0.75in}
+\setlength{\oddsidemargin}{-0.75in}
+\setlength{\pdfpageheight}{\textheight}
+\addtolength{\pdfpageheight}{0.50in}
+\setlength{\topmargin}{-0.75in}
+\setlength{\headheight}{0.00in}
+\setlength{\headsep}{0.00in}
+
+%  Number cards sequentially
+%
+\newcounter{cardnumber}
+
+%  Read in standard contents list from fcla.tex
+%  Ignore \chap, \appdx, simplify \sect
+\newcommand{\sect}[2]{\input{flash/#1.tex}}
+\newcommand{\chap}[2]{\relax}
+\newcommand{\appdx}[2]{\relax}
+
+%  Some definitions reference other stuff, this just makes OK-looking text, not a link
+%  Notation info is just discarded
+%  Likewise for \property in vector space axioms
+%  \denote  occurs in some definitions, totally ignore it
+%
+\newcommand{\acronymref}[2]{\MakeUppercase#1 #2}
+\newcommand{\property}[3]{{\bf#1\quad#2}}
+\newcommand{\denote}[4]{\relax}
+
+% Redefine  theorem  and  definition  environments, basically simpler
+% Arguments:   #1 = acronym, #2 = title, #3 = index (ignored)
+\newenvironment{definition}[3]
+{{\bf Definition #1\quad#2}\hfill{\bf\arabic{cardnumber}}\par\vspace{\stretch{1}}}{}
+\newenvironment{theorem}[3]
+{{\bf Theorem #1\quad#2}\hfill{\bf\arabic{cardnumber}}\par\vspace{\stretch{1}}}{}
+
+
+%  \flashcard macro
+%
+%  Wrapper for theorems and definitions added by sed script
+%  Applies frame box around a parbox of "content" size
+%  Topline is Type, Acronym, Title, Series Number
+%  Base has copyright notice
+%  There is a spacer per card
+%  
+\newcommand{\flashcard}[1]{%
+\stepcounter{cardnumber}%
+\fbox{\parbox[t][\contentheight][s]{\contentwidth}
+{#1\par%
+\vspace{\stretch{10}}%  Push down to bottom edge
+\ \hspace{\stretch{1}}%  Push out right
+\copyright 2005, 2006\quad Robert A.\ Beezer}}%
+\vspace{\cardsep}      % Spacing between cards
+}
+
+% Customization
+%   Copies of this file are processed by scripts
+%   Lines here get replaced by sed under program control
+\newcommand{\FCLAversion}{DRAFT (\today)}
+%% version substitution %%
+
+\begin{document}
+%
+\begin{titlepage}
+\vspace*{\stretch{2}}
+\begin{center}
+{\fontsize{24}{24}\selectfont  Flash Cards}\\[12pt]
+{\large to accompany}
+\input{includes/title.tex}
+\end{center}
+\end{titlepage}
+\vspace*{\stretch{2}}
+\input{includes/supplement_notice.tex}
+\vspace*{\stretch{1}}
+\clearpage
+%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Appendix P Preliminaries
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\appdx{P}{Preliminaries}
+\sect{CNO}{Complex Number Operations}
+\sect{SET}{Sets}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter SLE  Systems of Linear Equations
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{SLE}{Systems of Linear Equations}
+%
+\sect{WILA}{What is Linear Algebra?}
+\sect{SSLE}{Solving Systems of Linear Equations}
+\sect{RREF}{Reduced Row-Echelon Form}
+\sect{TSS}{Types of Solution Sets}
+\sect{HSE}{Homogeneous Systems of Equations}
+\sect{NM}{Nonsingular Matrices}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter V  Vectors
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{V}{Vectors}
+%
+\sect{VO}{Vector Operations}
+\sect{LC}{Linear Combinations}
+\sect{SS}{Spanning Sets}
+\sect{LI}{Linear Independence}
+\sect{LDS}{Linear Dependence and Spans}
+\sect{O}{Orthogonality}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter M Matrices
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{M}{Matrices}
+%
+\sect{MO}{Matrix Operations}
+\sect{MM}{Matrix Multiplication}
+\sect{MISLE}{Matrix Inverses and Systems of Linear Equations}
+\sect{MINM}{Matrix Inverses and Nonsingular Matrices}
+\sect{CRS}{Column and Row Spaces}
+\sect{FS}{Four Subsets}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter VS Vector Spaces
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{VS}{Vector Spaces}
+%
+\sect{VS}{Vector Spaces}
+\sect{S}{Subspaces}
+\sect{LISS}{Linear Independence and Spanning Sets}
+\sect{B}{Bases}
+\sect{D}{Dimension}
+\sect{PD}{Properties of Dimension}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter D Determinants
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{D}{Determinants}
+%
+\sect{DM}{Determinant of a Matrix}
+\sect{PDM}{Properties of Determinants of Matrices}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter E  Eigenvalues
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{E}{Eigenvalues}
+%
+\sect{EE}{Eigenvalues and Eigenvectors}
+\sect{PEE}{Properties of Eigenvalues and Eigenvectors}
+\sect{SD}{Similarity and Diagonalization}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter LT Linear Transformations
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{LT}{Linear Transformations}
+%
+\sect{LT}{Linear Transformations}
+\sect{ILT}{Injective Linear Transformations}
+\sect{SLT}{Surjective Linear Transformations}
+\sect{IVLT}{Invertible Linear Transformations}
+%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%
+%%  Chapter R Representations
+%%
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%
+\chap{R}{Representations}
+%
+\sect{VR}{Vector Representations}
+\sect{MR}{Matrix Representations}
+\sect{CB}{Change of Basis}
+\sect{NLT}{Nilpotent Linear Transformations}
+\sect{IS}{Invariant Subspaces}
+\sect{JCF}{Jordan Canonical Form}
+%
+%
+\end{document}
+

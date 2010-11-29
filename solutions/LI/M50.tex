@@ -1,0 +1,37 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+We want to first find some relations of linear dependence on $\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4,\,\vect{v}_5}$ that will allow us to ``kick out'' some vectors, in the spirit of \acronymref{example}{SCAD}.  To find relations of linear dependence, we formulate a matrix $A$ whose columns are $\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4,\,\vect{v}_5$.  Then we consider the homogeneous system of equations $\homosystem{A}$ by row-reducing its coefficient matrix (remember that if we formulated the augmented matrix we would just add a column of zeros).  After row-reducing, we obtain
+%
+\begin{equation*}
+\begin{bmatrix}
+\leading{1} & 0 & 0 & 2 & -1\\
+0 & \leading{1} & 0 & 1 & -2\\
+0 & 0 & \leading{1} & 0 & 0
+\end{bmatrix}
+\end{equation*}
+%
+From this we that solutions can be obtained employing the free variables $x_4$ and $x_5$.  With appropriate choices we will be able to conclude that vectors $\vect{v}_4$ and $\vect{v}_5$ are unnecessary for creating 
+$W$ via a span.  By \acronymref{theorem}{SLSLC} the choice of free variables below lead to solutions and linear combinations, which are then rearranged.
+%
+\begin{align*}
+x_4=1, x_5=0&&\Rightarrow&&(-2)\vect{v}_1+(-1)\vect{v}_2+(0)\vect{v}_3+(1)\vect{v}_4+(0)\vect{v}_5=\zerovector&&\Rightarrow&&\vect{v}_4=2\vect{v}_1+\vect{v}_2\\
+%%
+x_4=0, x_5=1&&\Rightarrow&&(1)\vect{v}_1+(2)\vect{v}_2+(0)\vect{v}_3+(0)\vect{v}_4+(1)\vect{v}_5=\zerovector&&\Rightarrow&&\vect{v}_5=-\vect{v}_1-2\vect{v}_2\\
+\end{align*}
+%
+Since $\vect{v}_4$ and $\vect{v}_5$ can be expressed as linear combinations of $\vect{v}_1$ and $\vect{v}_2$  we can say that $\vect{v}_4$ and $\vect{v}_5$ are not needed for the linear combinations used to build $W$ (a claim that we could establish carefully with a pair of set equality arguments).  Thus 
+%
+\begin{equation*}
+W=\spn{\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3}}=\spn{\set{\colvector{2\\1\\1},\,\colvector{-1\\-1\\1},\,\colvector{1\\2\\3}}}
+\end{equation*}
+%
+That the $\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3}$ is linearly independent set can be established quickly with \acronymref{theorem}{LIVRN}.\par
+%
+There are other answers to this question, but notice that any nontrivial linear combination of $\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4,\,\vect{v}_5$ will have a zero coefficient on $\vect{v}_3$, so this vector can never be eliminated from the set used to build the span.\par

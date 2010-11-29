@@ -1,0 +1,720 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section SLT
+%%  Surjective Linear Transformations
+%%
+%%%%%%%%%%%
+%
+The companion to an injection is a surjection.  Surjective linear transformations are closely related to spanning sets and ranges.  So as you read this section reflect back on \acronymref{section}{ILT} and note the parallels and the contrasts.  In the next section, \acronymref{section}{IVLT}, we will combine the two properties.\par
+%
+As usual, we lead with a definition.
+%
+\begin{definition}{SLT}{Surjective Linear Transformation}{linear transformation!surjection}
+Suppose $\ltdefn{T}{U}{V}$ is a linear transformation.  Then $T$ is \define{surjective} if for every $\vect{v}\in V$ there exists a $\vect{u}\in U$ so that $\lt{T}{\vect{u}}=\vect{v}$.
+\end{definition}
+%
+Given an arbitrary function, it is possible for there to be an element of the codomain that is not an output of the function (think about the function $y=f(x)=x^2$ and the codomain element $y=-3$).  For a surjective function, this never happens.  If we choose any element of the codomain ($\vect{v}\in V$) then there must be an input from the domain ($\vect{u}\in U$) which will create the output when used to evaluate the linear transformation ($\lt{T}{\vect{u}}=\vect{v}$).  Some authors prefer the term \define{onto} where we use surjective, and we will sometimes refer to a surjective linear transformation as a \define{surjection}.
+%
+\subsect{ESLT}{Examples of Surjective Linear Transformations}
+%
+It is perhaps most instructive to examine a linear transformation that is not surjective first.
+%
+\begin{example}{NSAQ}{Not surjective, Archetype Q}{surjective!not}
+\acronymref{archetype}{Q} is the linear transformation
+%
+\begin{equation*}
+\archetypepart{Q}{ltdefn}
+\end{equation*}
+%
+We will demonstrate that 
+%
+\begin{equation*}
+\vect{v}=\colvector{-1\\2\\3\\-1\\4}
+\end{equation*}
+%
+is an unobtainable element of the codomain.  Suppose to the contrary that $\vect{u}$ is an element of the domain such that $\lt{T}{\vect{u}}=\vect{v}$.  Then
+%
+\begin{align*}
+\colvector{-1\\2\\3\\-1\\4}&=\vect{v}=\lt{T}{\vect{u}}
+=\lt{T}{\colvector{u_1\\u_2\\u_3\\u_4\\u_5}}\\
+&=\colvector{
+-2 u_1 + 3 u_2 + 3 u_3 - 6 u_4 + 3 u_5\\
+-16 u_1 + 9 u_2 + 12 u_3 - 28 u_4 + 28 u_5\\
+-19 u_1 + 7 u_2 + 14 u_3 - 32 u_4 + 37 u_5\\
+-21 u_1 + 9 u_2 + 15 u_3 - 35 u_4 + 39 u_5\\
+-9 u_1 + 5 u_2 + 7 u_3 - 16 u_4 + 16 u_5}\\
+&=
+\begin{bmatrix}
+-2&3&3&-6&3\\
+-16&9&12&-28&28\\
+-19&7&14&-32&37\\
+-21&9&15&-35&39\\
+-9&5&7&-16&16
+\end{bmatrix}
+\colvector{u_1\\u_2\\u_3\\u_4\\u_5}
+%
+\end{align*}
+%
+Now we recognize the appropriate input vector $\vect{u}$ as a solution to a linear system of equations.  Form the augmented matrix of the system, and row-reduce to
+%
+\begin{equation*}
+\begin{bmatrix}
+\leading{1} & 0 & 0 & 0 & -1 & 0\\
+0 & \leading{1} & 0 & 0 & -\frac{4}{3} & 0\\
+0 & 0 & \leading{1} & 0 & -\frac{1}{3} & 0\\
+0 & 0 & 0 & \leading{1} & -1 & 0\\
+0 & 0 & 0 & 0 & 0 & \leading{1}\\
+\end{bmatrix}
+\end{equation*}
+%
+With a leading 1 in the last column, \acronymref{theorem}{RCLS} tells us the system is inconsistent.  From the absence of any solutions we conclude that no such vector $\vect{u}$ exists, and by \acronymref{definition}{SLT}, $T$ is not surjective.\par
+%
+Again, do not concern yourself with how $\vect{v}$ was selected, as this will be explained shortly.  However, do understand {\em why} this vector provides enough evidence to conclude that $T$ is not surjective.
+%
+\end{example}
+%
+To show that a linear transformation is not surjective, it is enough to find a single element of the codomain that is never created by any input, as in \acronymref{example}{NSAQ}.  However, to show that a linear transformation is surjective we must establish that {\em every} element of the codomain occurs as an output of the linear transformation for some appropriate input.
+%
+\begin{example}{SAR}{Surjective, Archetype R}{surjective}
+\acronymref{archetype}{R} is the linear transformation
+%
+\begin{equation*}
+\archetypepart{R}{ltdefn}
+\end{equation*}
+%
+To establish that $R$ is surjective we must begin with a totally arbitrary element of the codomain, $\vect{v}$ and somehow find an input vector $\vect{u}$ such that $\lt{T}{\vect{u}}=\vect{v}$.  We desire,
+%
+\begin{align*}
+\lt{T}{\vect{u}}&=\vect{v}\\
+%
+\colvector{-65 u_1 + 128 u_2 + 10 u_3 - 262 u_4 + 40 u_5\\ 
+36 u_1 - 73 u_2 - u_3 + 151 u_4 - 16 u_5\\
+-44 u_1 + 88 u_2 + 5 u_3 - 180 u_4 + 24 u_5\\ 
+34 u_1 - 68 u_2 - 3 u_3 + 140 u_4 - 18 u_5\\
+12 u_1 - 24 u_2 - u_3 + 49 u_4 - 5 u_5}
+&=
+\colvector{v_1\\v_2\\v_3\\v_4\\v_5}\\
+%
+\begin{bmatrix}
+-65&128&10&-262&40\\
+36&-73&-1&151&-16\\
+-44&88&5&-180&24\\
+34&-68&-3&140&-18\\
+12&-24&-1&49&-5
+\end{bmatrix}
+\colvector{u_1\\u_2\\u_3\\u_4\\u_5}
+&=
+\colvector{v_1\\v_2\\v_3\\v_4\\v_5}
+%
+\end{align*}
+%
+We recognize this equation as a system of equations in the variables $u_i$, but our vector of constants contains symbols.  In general, we would have to row-reduce the augmented matrix by hand, due to the symbolic final column.  However, in this particular example, the $5\times 5$ coefficient matrix is nonsingular and so has an inverse (\acronymref{theorem}{NI}, \acronymref{definition}{MI}).
+%
+\begin{equation*}
+%
+\inverse{
+\begin{bmatrix}
+-65&128&10&-262&40\\
+36&-73&-1&151&-16\\
+-44&88&5&-180&24\\
+34&-68&-3&140&-18\\
+12&-24&-1&49&-5
+\end{bmatrix}
+}
+=
+\begin{bmatrix}
+-47 & 92 &  1 & -181 & -14 \\ 
+ 27 & -55 & \frac{7}{2} & \frac{221}{2} & 11\\
+-32 & 64  & -1 &  -126 &  -12\\ 
+ 25 &  -50 &  \frac{3}{2} & \frac{199}{2} & 9 \\ 
+ 9 & -18 & \frac{1}{2} & \frac{71}{2} & 4 
+\end{bmatrix}
+%
+\end{equation*}
+%
+so we find that
+%
+\begin{align*}
+%
+\colvector{u_1\\u_2\\u_3\\u_4\\u_5}
+&=
+\begin{bmatrix}
+-47 & 92 &  1 & -181 & -14 \\ 
+ 27 & -55 & \frac{7}{2} & \frac{221}{2} & 11\\
+-32 & 64  & -1 &  -126 &  -12\\ 
+ 25 &  -50 &  \frac{3}{2} & \frac{199}{2} & 9 \\ 
+ 9 & -18 & \frac{1}{2} & \frac{71}{2} & 4 
+\end{bmatrix}
+\colvector{v_1\\v_2\\v_3\\v_4\\v_5}\\
+%
+&=
+\colvector{-47 v_1 + 92 v_2 + v_3 - 181 v_4 - 14 v_5\\ 
+ 27 v_1 - 55 v_2 + \frac{7}{2} v_3 + \frac{221}{2} v_4  + 11 v_5\\
+-32 v_1 + 64  v_2 - v_3 - 126 v_4 - 12 v_5\\ 
+ 25 v_1 - 50 v_2 + \frac{3}{2} v_3 + \frac{199}{2} v_4 + 9 v_5\\ 
+ 9 v_1 - 18 v_2 + \frac{1}{2} v_3 + \frac{71}{2} v_4 + 4 v_5}
+\end{align*}
+%
+This establishes that if we are given {\em any} output vector $\vect{v}$, we can use its components in this final expression to formulate a vector $\vect{u}$ such that $\lt{T}{\vect{u}}=\vect{v}$.  So by \acronymref{definition}{SLT} we now know that $T$ is surjective.  You might try to verify this condition in its full generality (i.e.\ evaluate $T$ with this final expression and see if you get $\vect{v}$ as the result), or test it more specifically for some numerical vector $\vect{v}$ (see \acronymref{exercise}{SLT.C20}).  
+%
+\end{example}
+%
+Let's now examine a surjective linear transformation between abstract vector spaces.
+%
+\begin{example}{SAV}{Surjective, Archetype V}{surjective!polynomials to matrices}
+\acronymref{archetype}{V} is defined by
+%
+\begin{equation*}
+\archetypepart{V}{ltdefn}
+\end{equation*}
+%
+To establish that the linear transformation is surjective, begin by choosing an arbitrary output.  In this example, we need to choose an arbitrary $2\times 2$ matrix, say
+%
+\begin{equation*}
+\vect{v}=\begin{bmatrix}x&y\\z&w\end{bmatrix}
+\end{equation*}
+%
+and we would like to find an input polynomial 
+%
+\begin{equation*}
+\vect{u}=a+bx+cx^2+dx^3
+\end{equation*}
+%
+so that $\lt{T}{\vect{u}}=\vect{v}$.  So we have,
+%
+\begin{align*}
+\begin{bmatrix}x&y\\z&w\end{bmatrix}&=\vect{v}\\
+&=\lt{T}{\vect{u}}\\
+&=\lt{T}{a+bx+cx^2+dx^3}\\
+&=\begin{bmatrix}
+a+b & a-2c\\
+d & b-d
+\end{bmatrix}
+\end{align*}
+%
+Matrix equality leads us to the system of four equations in the four unknowns, $x,y,z,w$,
+%
+\begin{align*}
+a+b&=x\\
+a-2c&=y\\
+d&=z\\
+b-d&=w
+\end{align*}
+%
+which can be rewritten as a matrix equation,
+%
+\begin{equation*}
+\begin{bmatrix}
+1 & 1 & 0 & 0\\
+1 & 0 & -2 & 0 \\
+0 & 0 & 0 & 1\\
+0 & 1 & 0 & -1
+\end{bmatrix}
+\colvector{a\\b\\c\\d}
+=
+\colvector{x\\y\\z\\w}
+\end{equation*}
+%
+The coefficient matrix is nonsingular, hence it has an inverse,
+%
+\begin{equation*}
+\inverse{
+\begin{bmatrix}
+1 & 1 & 0 & 0\\
+1 & 0 & -2 & 0 \\
+0 & 0 & 0 & 1\\
+0 & 1 & 0 -1
+\end{bmatrix}
+}
+=
+\begin{bmatrix}
+1 & 0 & -1 & -1\\
+0 & 0 & 1 & 1\\
+\frac{1}{2} & -\frac{1}{2} & -\frac{1}{2} & -\frac{1}{2}\\
+0 & 0 & 1 & 0
+\end{bmatrix}
+\end{equation*}
+%
+so we have
+%
+\begin{align*}
+\colvector{a\\b\\c\\d}&=
+\begin{bmatrix}
+1 & 0 & -1 & -1\\
+0 & 0 & 1 & 1\\
+\frac{1}{2} & -\frac{1}{2} & -\frac{1}{2} & -\frac{1}{2}\\
+0 & 0 & 1 & 0
+\end{bmatrix}
+\colvector{x\\y\\z\\w}\\%
+&=
+\colvector{
+x-z-w\\
+z+w\\
+\frac{1}{2}(x-y-z-w)\\
+z
+}
+%
+\end{align*}
+%
+So the input polynomial $\vect{u}=(x-z-w)+(z+w)x+\frac{1}{2}(x-y-z-w)x^2+zx^3$ will yield the output matrix $\vect{v}$, no matter what form $\vect{v}$ takes.  This means by \acronymref{definition}{SLT} that $T$ is surjective.  All the same, let's do a concrete demonstration and evaluate $T$ with $\vect{u}$,
+%
+\begin{align*}
+\lt{T}{\vect{u}}&=\lt{T}{(x-z-w)+(z+w)x+\frac{1}{2}(x-y-z-w)x^2+zx^3}\\
+%
+&=
+\begin{bmatrix}
+(x-z-w)+(z+w) & (x-z-w) - 2(\frac{1}{2}(x-y-z-w))\\
+z & (z+w)-z
+\end{bmatrix}\\
+%
+&=
+\begin{bmatrix}
+x & y\\
+z & w
+\end{bmatrix}\\
+&=\vect{v}
+%
+\end{align*}
+%
+\end{example}
+%
+\subsect{RLT}{Range of a Linear Transformation}
+%
+For a linear transformation $\ltdefn{T}{U}{V}$, the range is a subset of the codomain $V$.  Informally, it is the set of all outputs that the transformation creates when fed every possible input from the domain.  It will have some natural connections with the column space of a matrix, so we will keep the same notation, and if you think about your objects, then there should be little confusion.  Here's the careful definition.
+%
+\begin{definition}{RLT}{Range of a Linear Transformation}{range!of a linear transformation}
+Suppose $\ltdefn{T}{U}{V}$ is a linear transformation.  Then the \define{range} of $T$ is the set
+%
+\begin{equation*}
+\rng{T}=\setparts{\lt{T}{\vect{u}}}{\vect{u}\in U}
+\end{equation*}
+%
+\denote{RLT}{Range of a Linear Transformation}{$\rng{T}$}{range}
+\end{definition}
+%
+\begin{example}{RAO}{Range, Archetype O}{range!linear transformation}
+\acronymref{archetype}{O} is the linear transformation
+%
+\begin{equation*}
+\archetypepart{O}{ltdefn}
+\end{equation*}
+%
+To determine the elements of $\complex{5}$ in $\rng{T}$, find those vectors $\vect{v}$ such that $\lt{T}{\vect{u}}=\vect{v}$ for some $\vect{u}\in\complex{3}$,
+%
+\begin{align*}
+\vect{v}&=\lt{T}{\vect{u}}\\
+&=\colvector{-u_1 + u_2 - 3 u_3\\
+-u_1 + 2 u_2 - 4 u_3\\
+u_1 + u_2 + u_3\\
+2 u_1 + 3 u_2 + u_3\\ 
+u_1 + 2 u_3
+}\\
+&=
+\colvector{-u_1\\-u_1\\u_1\\2 u_1\\ u_1}
++
+\colvector{u_2\\2u_2\\u_2\\3u_2\\ 0}
++
+\colvector{-3u_3\\-4u_3\\u_3\\u_3\\ 2 u_3}\\
+&=
+u_1\colvector{-1\\-1\\1\\2\\1}
++
+u_2\colvector{1\\2\\1\\3\\ 0}
++
+u_3\colvector{-3\\-4\\1\\1\\2}
+%
+\end{align*}
+%
+This says that every output of $T$ ($\vect{v}$) can be written as a linear combination of the three vectors
+%
+\begin{align*}
+\colvector{-1\\-1\\1\\2\\1}
+&&
+\colvector{1\\2\\1\\3\\ 0}
+&&
+\colvector{-3\\-4\\1\\1\\2}
+\end{align*}
+%
+using the scalars $u_1,\,u_2,\,u_3$.  Furthermore, since $\vect{u}$ can be any element of $\complex{3}$, every such linear combination is an output.  This means that 
+%
+\begin{equation*}
+\rng{T}=\spn{\set{
+\colvector{-1\\-1\\1\\2\\1},\,
+\colvector{1\\2\\1\\3\\ 0},\,
+\colvector{-3\\-4\\1\\1\\2}
+}}
+\end{equation*}
+%
+The three vectors in this spanning set for $\rng{T}$ form a linearly dependent set (check this!).  So we can find a more economical presentation by any of the various methods from \acronymref{section}{CRS} and \acronymref{section}{FS}.  We will place the vectors into a matrix as rows, row-reduce, toss out zero rows and appeal to \acronymref{theorem}{BRS}, so we can describe the range of $T$ with a basis,
+%
+\begin{equation*}
+\rng{T}=\spn{\archetypepart{O}{ltrangebasis}}
+\end{equation*}
+%
+\end{example}
+%
+We know that the span of a set of vectors is always a subspace (\acronymref{theorem}{SSS}), so the range computed in \acronymref{example}{RAO} is also a subspace.  This is no accident, the range of a linear transformation is {\em always} a subspace.
+%
+%
+\begin{theorem}{RLTS}{Range of a Linear Transformation is a Subspace}{range!subspace}
+Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation.  Then the range of $T$, $\rng{T}$, is a subspace of $V$.
+\end{theorem}
+%
+\begin{proof}
+We can apply the three-part test of \acronymref{theorem}{TSS}.  First, $\zerovector_U\in U$ and $\lt{T}{\zerovector_U}=\zerovector_V$ by \acronymref{theorem}{LTTZZ}, so $\zerovector_V\in\rng{T}$ and we know that the range is non-empty.\par
+%
+Suppose we assume that $\vect{x},\,\vect{y}\in\rng{T}$.  Is $\vect{x}+\vect{y}\in\rng{T}$?  If $\vect{x},\,\vect{y}\in\rng{T}$ then we know there are vectors $\vect{w},\,\vect{z}\in U$ such that $\lt{T}{\vect{w}}=\vect{x}$ and $\lt{T}{\vect{z}}=\vect{y}$.  Because $U$ is a vector space, additive closure (\acronymref{property}{AC}) implies that $\vect{w}+\vect{z}\in U$.  Then
+%
+\begin{align*}
+\lt{T}{\vect{w}+\vect{z}}&=\lt{T}{\vect{w}}+\lt{T}{\vect{z}}&&\text{\acronymref{definition}{LT}}\\
+&=\vect{x}+\vect{y}&&\text{Definition of $\vect{w}$ and $\vect{z}$}
+\end{align*}
+%
+So we have found an input, $\vect{w}+\vect{z}$, which when fed into $T$ creates $\vect{x}+\vect{y}$ as an output.  This qualifies $\vect{x}+\vect{y}$ for membership in $\rng{T}$.  So we have additive closure.\par
+%
+Suppose we assume that $\alpha\in\complex{\null}$ and $\vect{x}\in\rng{T}$.  Is $\alpha\vect{x}\in\rng{T}$?  If $\vect{x}\in\rng{T}$, then there is a vector $\vect{w}\in U$ such that $\lt{T}{\vect{w}}=\vect{x}$.  Because $U$ is a vector space, scalar closure implies that $\alpha\vect{w}\in U$.  Then
+%
+\begin{align*}
+\lt{T}{\alpha\vect{w}}&=\alpha\lt{T}{\vect{w}}&&\text{\acronymref{definition}{LT}}\\
+&=\alpha\vect{x}&&\text{Definition of $\vect{w}$}
+\end{align*}
+%
+So we have found an input ($\alpha\vect{w}$) which when fed into $T$ creates $\alpha\vect{x}$ as an output.  This qualifies $\alpha\vect{x}$ for membership in $\rng{T}$.  So we have scalar closure and \acronymref{theorem}{TSS} tells us that $\rng{T}$ is a subspace of $V$.\par
+%
+\end{proof}
+%
+Let's compute another range, now that we know in advance that it will be a subspace.
+%
+\begin{example}{FRAN}{Full range, Archetype N}{range!full}
+\acronymref{archetype}{N} is the linear transformation
+%
+\begin{equation*}
+\archetypepart{N}{ltdefn}
+\end{equation*}
+%
+To determine the elements of $\complex{3}$ in $\rng{T}$, find those vectors $\vect{v}$ such that $\lt{T}{\vect{u}}=\vect{v}$ for some $\vect{u}\in\complex{5}$,
+%
+\begin{align*}
+\vect{v}&=\lt{T}{\vect{u}}\\
+&=
+\colvector{
+2 u_1 + u_2 + 3 u_3 - 4 u_4 + 5 u_5\\
+u_1 - 2 u_2 + 3 u_3 - 9 u_4 + 3 u_5\\ 
+3 u_1 + 4 u_3 - 6 u_4 + 5 u_5}\\
+&=
+\colvector{2u_1\\u_1\\3u_1}+
+\colvector{u_2\\-2u_2\\0}+
+\colvector{3u_3\\3u_3\\4u_3}+
+\colvector{-4u_4\\-9u_4\\-6u_4}+
+\colvector{5u_5\\3u_5\\5u_5}\\
+&=
+u_1\colvector{2\\1\\3}+
+u_2\colvector{1\\-2\\0}+
+u_3\colvector{3\\3\\4}+
+u_4\colvector{-4\\-9\\-6}+
+u_5\colvector{5\\3\\5}\\
+%
+\end{align*}
+%
+This says that every output of $T$ ($\vect{v}$) can be written as a linear combination of the five vectors
+%
+\begin{align*}
+\colvector{2\\1\\3}&&
+\colvector{1\\-2\\0}&&
+\colvector{3\\3\\4}&&
+\colvector{-4\\-9\\-6}&&
+\colvector{5\\3\\5}
+\end{align*}
+%
+using the scalars $u_1,\,u_2,\,u_3,\,u_4,\,u_5$.  Furthermore, since $\vect{u}$ can be any element of $\complex{5}$, every such linear combination is an output.  This means that 
+%
+\begin{equation*}
+\rng{T}=\spn{\set{
+\colvector{2\\1\\3},\,
+\colvector{1\\-2\\0},\,
+\colvector{3\\3\\4},\,
+\colvector{-4\\-9\\-6},\,
+\colvector{5\\3\\5}
+}}
+\end{equation*}
+%
+The five vectors in this spanning set for $\rng{T}$ form a linearly dependent set (\acronymref{theorem}{MVSLD}).  So we can find a more economical presentation by any of the various methods from \acronymref{section}{CRS} and \acronymref{section}{FS}.  We will place the vectors into a matrix as rows, row-reduce, toss out zero rows and appeal to \acronymref{theorem}{BRS}, so we can describe the range of $T$ with a (nice) basis,
+%
+\begin{equation*}
+\rng{T}=\spn{\archetypepart{N}{ltrangebasis}}=\complex{3}
+\end{equation*}
+%
+\end{example}
+%
+In contrast to injective linear transformations having small (trivial) kernels (\acronymref{theorem}{KILT}), surjective linear transformations have large ranges, as indicated in the next theorem.
+%
+\begin{theorem}{RSLT}{Range of a Surjective Linear Transformation}{range!surjective linear transformation}
+Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation.  Then $T$ is surjective if and only if the range of $T$ equals the codomain, $\rng{T}=V$.
+\end{theorem}
+%
+\begin{proof}
+($\Rightarrow$) By \acronymref{definition}{RLT}, we know that $\rng{T}\subseteq V$.  To establish the reverse inclusion, assume $\vect{v}\in V$.  Then since $T$ is surjective (\acronymref{definition}{SLT}), there exists a vector $\vect{u}\in U$ so that $\lt{T}{\vect{u}}=\vect{v}$.  However, the existence of $\vect{u}$ gains $\vect{v}$ membership in $\rng{T}$, so $V\subseteq\rng{T}$.  Thus, $\rng{T}=V$.\par
+%
+($\Leftarrow$)  To establish that $T$ is surjective, choose $\vect{v}\in V$.  Since we are assuming that $\rng{T}=V$, $\vect{v}\in\rng{T}$.  This says there is a vector $\vect{u}\in U$ so that $\lt{T}{\vect{u}}=\vect{v}$, i.e.\ $T$ is surjective.
+%
+\end{proof}
+%
+\begin{example}{NSAQR}{Not surjective, Archetype Q, revisited}{surjective!not}
+We are now in a position to revisit our first example in this section, \acronymref{example}{NSAQ}.  In that example, we showed that \acronymref{archetype}{Q} is not surjective by constructing a vector in the codomain where no element of the domain could be used to evaluate the linear transformation to create the output, thus violating \acronymref{definition}{SLT}.  Just where did this vector come from?\par
+%
+The short answer is that the vector
+%
+\begin{equation*}
+\vect{v}=\colvector{-1\\2\\3\\-1\\4}
+\end{equation*}
+%
+was constructed to lie outside of the range of $T$.  How was this accomplished?  First, the range of $T$ is given by 
+%
+\begin{equation*}
+\rng{T}=\spn{\archetypepart{Q}{ltrangebasis}}
+\end{equation*}
+%
+Suppose an element of the range $\vect{v^*}$ has its first 4 components equal to $-1, 2, 3, -1$, in that order.  Then to be an element of $\rng{T}$, we would have
+%
+\begin{equation*}
+\vect{v^*}=(-1)\colvector{1\\0\\0\\0\\1}+(2)\colvector{0\\1\\0\\0\\-1}+(3)
+\colvector{0\\0\\1\\0\\-1}+(-1)\colvector{0\\0\\0\\1\\2}
+=\colvector{-1\\2\\3\\-1\\-8}
+\end{equation*}
+%
+So the only vector in the range with these first four components specified, must have $-8$ in the fifth component.  To set the fifth component to any other value (say, 4) will result in a vector ($\vect{v}$ in \acronymref{example}{NSAQ})  outside of the range.  Any attempt to find an input for $T$ that will produce $\vect{v}$ as an output will be doomed to failure.\par
+%
+Whenever the range of a linear transformation is not the whole codomain, we can employ this device and conclude that the linear transformation is not surjective.  
+This is another way of viewing \acronymref{theorem}{RSLT}.  For a surjective linear transformation, the range is all of the codomain and there is no choice for a vector $\vect{v}$ that lies in $V$, yet not in the range.  For every one of the archetypes that is not surjective, there is an example presented of exactly this form.
+%
+\end{example}
+%
+\begin{example}{NSAO}{Not surjective, Archetype O}{surjective!not, Archetype O}
+In \acronymref{example}{RAO} the range of \acronymref{archetype}{O} was determined to be
+%
+\begin{equation*}
+\rng{T}=\spn{\archetypepart{O}{ltrangebasis}}
+\end{equation*}
+%
+a subspace of dimension 2 in $\complex{5}$.  Since $\rng{T}\neq\complex{5}$, \acronymref{theorem}{RSLT} says $T$ is not surjective.
+%
+\end{example}
+%
+\begin{example}{SAN}{Surjective, Archetype N}{surjective!Archetype N}
+The range of \acronymref{archetype}{N} was computed in \acronymref{example}{FRAN} to be
+%
+\begin{equation*}
+\rng{T}=\spn{\archetypepart{N}{ltrangebasis}}
+\end{equation*}
+%
+Since the basis for this subspace is the set of standard unit vectors for $\complex{3}$ (\acronymref{theorem}{SUVB}), we have $\rng{T}=\complex{3}$ and by \acronymref{theorem}{RSLT}, $T$ is  surjective.
+%
+\end{example}
+%
+\subsect{SSSLT}{Spanning Sets and Surjective Linear Transformations}
+%
+Just as injective linear transformations are allied with linear independence (\acronymref{theorem}{ILTLI}, \acronymref{theorem}{ILTB}), surjective linear transformations are allied with spanning sets.
+%
+\begin{theorem}{SSRLT}{Spanning Set for Range of a Linear Transformation}{linear 
+transformation!spanning range}
+Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation and $S=\set{\vectorlist{u}{t}}$ spans $U$.  Then 
+%
+\begin{align*}
+R=\set{\lt{T}{\vect{u}_1},\,\lt{T}{\vect{u}_2},\,\lt{T}{\vect{u}_3},\,\ldots,\,\lt{T}{\vect{u}_t}}
+\end{align*}
+%
+spans $\rng{T}$.
+\end{theorem}
+%
+\begin{proof}
+We need to establish that $\rng{T}=\spn{R}$, a set equality.  First we establish that $\rng{T}\subseteq\spn{R}$.  To this end, choose $\vect{v}\in\rng{T}$.  Then there exists a vector $\vect{u}\in U$, such that $\lt{T}{\vect{u}}=\vect{v}$ (\acronymref{definition}{RLT}).  Because $S$ spans $U$ there are scalars, $\scalarlist{a}{t}$, such that
+%
+\begin{equation*}
+\vect{u}=\lincombo{a}{u}{t}
+\end{equation*}
+%
+Then
+%
+\begin{align*}
+\vect{v}
+&=\lt{T}{\vect{u}}&&\text{\acronymref{definition}{RLT}}\\
+&=\lt{T}{\lincombo{a}{u}{t}}&&\text{\acronymref{definition}{TSVS}}\\
+&=a_1\lt{T}{\vect{u}_1}+a_2\lt{T}{\vect{u}_2}+a_3\lt{T}{\vect{u}_3}+\ldots+a_t\lt{T}{\vect{u}_t}&&\text{\acronymref{theorem}{LTLC}}\\
+\end{align*}
+%
+which establishes that $\vect{v}\in\spn{R}$ (\acronymref{definition}{SS}).  So $\rng{T}\subseteq\spn{R}$.\par
+%
+To establish the opposite inclusion, choose an element of the span of $R$, say $\vect{v}\in\spn{R}$.  Then there are scalars $\scalarlist{b}{t}$ so that
+%
+\begin{align*}
+\vect{v}
+&=b_1\lt{T}{\vect{u}_1}+b_2\lt{T}{\vect{u}_2}+b_3\lt{T}{\vect{u}_3}+\cdots+b_t\lt{T}{\vect{u}_t}
+&&\text{\acronymref{definition}{SS}}\\
+&=\lt{T}{\lincombo{b}{\vect{u}}{t}}&&\text{\acronymref{theorem}{LTLC}}
+\end{align*}
+%
+This demonstrates that $\vect{v}$ is an output of the linear transformation $T$, so $\vect{v}\in\rng{T}$.  Therefore $\spn{R}\subseteq\rng{T}$, so we have the set equality $\rng{T}=\spn{R}$ (\acronymref{definition}{SE}).  In other words, $R$ spans $\rng{T}$ (\acronymref{definition}{TSVS}).
+%
+\end{proof}
+%
+\acronymref{theorem}{SSRLT} provides an easy way to begin the construction of a basis for the range of a linear transformation, since the construction of a spanning set requires simply evaluating the linear transformation on a spanning set of the domain.  In practice the best choice for a spanning set of the domain would be as small as possible, in other words, a basis.  The resulting spanning set for the codomain may not be linearly independent, so to find a basis for the range might require tossing out redundant vectors from the spanning set.  Here's an example.
+%
+\begin{example}{BRLT}{A basis for the range of a linear transformation}{linear transformation!basis of range}
+Define the linear transformation $\ltdefn{T}{M_{22}}{P_2}$ by
+%
+\begin{equation*}
+\lt{T}{ \begin{bmatrix} a&b\\c&d \end{bmatrix}}
+=\left(a+2b+8c+d\right)+\left(-3a+2b+5d\right)x+\left(a+b+5c\right)x^2
+\end{equation*}
+%
+A convenient spanning set for $M_{22}$ is the basis
+%
+\begin{equation*}
+S=\set{
+\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix},\,
+\begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix},\,
+\begin{bmatrix} 0 & 0 \\ 1 & 0 \end{bmatrix},\,
+\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}
+}
+\end{equation*}
+%
+So by \acronymref{theorem}{SSRLT}, a spanning set for $\rng{T}$ is 
+%
+\begin{align*}
+R
+&=\set{
+\lt{T}{\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}},\,
+\lt{T}{\begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}},\,
+\lt{T}{\begin{bmatrix} 0 & 0 \\ 1 & 0 \end{bmatrix}},\,
+\lt{T}{\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}}
+}\\
+%
+&=\set{1-3x+x^2,\,2+2x+x^2,\,8+5x^2,\,1+5x}
+%
+\end{align*}
+%
+The set $R$ is not linearly independent, so if we desire a basis for $\rng{T}$, we need to eliminate some redundant vectors.  Two particular relations of linear dependence on $R$ are 
+%
+\begin{align*}
+(-2)(1-3x+x^2)+(-3)(2+2x+x^2)+(8+5x^2)&=0+0x+0x^2=\zerovector\\
+(1-3x+x^2)+(-1)(2+2x+x^2)+(1+5x)&=0+0x+0x^2=\zerovector
+\end{align*}
+%
+These, individually, allow us to remove $8+5x^2$ and $1+5x$ from $R$ with out destroying the property that $R$ spans $\rng{T}$.  The two remaining vectors are linearly independent (check this!), so we can write
+%
+\begin{equation*}
+\rng{T}=\spn{\set{1-3x+x^2,\,2+2x+x^2}}
+\end{equation*}
+%
+and see that $\dimension{\rng{T}}=2$.
+%
+\end{example}
+%
+Elements of the range are precisely those elements of the codomain with non-empty preimages.
+%
+\begin{theorem}{RPI}{Range and Pre-Image}{range!pre-image}
+Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation.  Then
+%
+\begin{equation*}
+\vect{v}\in\rng{T}\text{ if and only if }\preimage{T}{\vect{v}}\neq\emptyset
+\end{equation*}
+%
+\end{theorem}
+%
+\begin{proof}
+($\Rightarrow$)  If $\vect{v}\in\rng{T}$, then there is a vector $\vect{u}\in U$ such that $\lt{T}{\vect{u}}=\vect{v}$.  This qualifies $\vect{u}$ for membership in $\preimage{T}{\vect{v}}$, and thus the preimage of $\vect{v}$ is not empty.\par
+%
+($\Leftarrow$)  Suppose the preimage of $\vect{v}$ is not empty, so we can choose a vector $\vect{u}\in U$ such that $\lt{T}{\vect{u}}=\vect{v}$.  Then $\vect{v}\in\rng{T}$.
+%
+\end{proof}
+%
+\begin{theorem}{SLTB}{Surjective Linear Transformations and Bases}{surjective linear transformation!bases}
+Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation and $B=\set{\vectorlist{u}{m}}$ is a basis of $U$.  Then $T$ is surjective if and only if $C=\set{\lt{T}{\vect{u}_1},\,\lt{T}{\vect{u}_2},\,\lt{T}{\vect{u}_3},\,\ldots,\,\lt{T}{\vect{u}_m}}$ is a spanning set for $V$.
+\end{theorem}
+%
+\begin{proof}
+%
+($\Rightarrow$)  Assume $T$ is surjective.  Since $B$ is a basis, we know $B$ is a spanning set of $U$ (\acronymref{definition}{B}).  Then \acronymref{theorem}{SSRLT} says that $C$ spans $\rng{T}$.  But the hypothesis that $T$ is surjective means $V=\rng{T}$ (\acronymref{theorem}{RSLT}), so $C$ spans $V$.\par
+%
+($\Leftarrow$)  Assume that $C$ spans $V$.  To establish that $T$ is surjective, we will show that every element of $V$ is an output of $T$ for some input (\acronymref{definition}{SLT}).  Suppose that $\vect{v}\in V$.  As an element of $V$, we can write $\vect{v}$ as a linear combination of the spanning set $C$.  So there are are scalars, $\scalarlist{b}{m}$, such that
+%
+\begin{equation*}
+\vect{v}=b_1\lt{T}{\vect{u}_1}+b_2\lt{T}{\vect{u}_2}+b_3\lt{T}{\vect{u}_3}+\cdots+b_m\lt{T}{\vect{u}_m}
+\end{equation*}
+%
+Now define the vector $\vect{u}\in U$ by
+%
+\begin{equation*}
+\vect{u}=\lincombo{b}{u}{m}
+\end{equation*}
+%
+Then
+%
+\begin{align*}
+\lt{T}{\vect{u}}&=\lt{T}{\lincombo{b}{u}{m}}\\
+&=b_1\lt{T}{\vect{u}_1}+b_2\lt{T}{\vect{u}_2}+b_3\lt{T}{\vect{u}_3}+\cdots+b_m\lt{T}{\vect{u}_m}&&\text{\acronymref{theorem}{LTLC}}\\
+&=\vect{v}
+\end{align*}
+%
+So, given any choice of a vector $\vect{v}\in V$, we can design an input $\vect{u}\in U$ to produce $\vect{v}$ as an output of $T$.  Thus, by \acronymref{definition}{SLT}, $T$ is surjective.
+%
+\end{proof}
+%
+\subsect{SLTD}{Surjective Linear Transformations and Dimension}
+%
+\begin{theorem}{SLTD}{Surjective Linear Transformations and Dimension}{surjective linear transformations!dimension}
+Suppose that $\ltdefn{T}{U}{V}$ is a surjective linear transformation.  Then $\dimension{U}\geq\dimension{V}$.
+\end{theorem}
+%
+\begin{proof}
+%
+Suppose to the contrary that $m=\dimension{U}<\dimension{V}=t$.  Let $B$ be  a basis of $U$, which will then contain $m$ vectors.  Apply $T$ to each element of $B$ to form a set $C$ that is a subset of $V$.  By \acronymref{theorem}{SLTB}, $C$ is spanning set of $V$ with $m$ or fewer vectors.  So we have a set of $m$ or fewer vectors that span $V$, a vector space of dimension $t$, with $m<t$.  However, this contradicts \acronymref{theorem}{G}, so our assumption is false and $\dimension{U}\geq\dimension{V}$.
+%
+\end{proof}
+%
+%
+\begin{example}{NSDAT}{Not surjective by dimension, Archetype T}{surjective!not, by dimension}
+The linear transformation in \acronymref{archetype}{T} is 
+%
+\begin{equation*}
+\archetypepart{T}{ltdefn}
+\end{equation*}
+%
+Since $\dimension{P_4}=5<6=\dimension{P_5}$, $T$ cannot be surjective for then it would violate \acronymref{theorem}{SLTD}.
+%
+\end{example}
+%
+Notice that the previous example made no use of the actual formula defining the function.  Merely a comparison of the dimensions of the domain and codomain are enough to conclude that the linear transformation is not surjective.  \acronymref{archetype}{O} and \acronymref{archetype}{P} are two more examples of linear transformations that have ``small'' domains and ``big'' codomains, resulting in an inability to create all possible outputs and thus they are non-surjective linear transformations.
+%
+\subsect{CSLT}{Composition of Surjective Linear Transformations}
+%
+In \acronymref{subsection}{LT.NLTFO} we saw how to combine linear transformations to build new linear transformations, specifically, how to build the composition of two linear transformations (\acronymref{definition}{LTC}).  It will be useful later to know that the composition of surjective linear transformations is again surjective, so we prove that here.
+%
+\begin{theorem}{CSLTS}{Composition of Surjective Linear Transformations is Surjective}{composition!surjective linear transformations}
+Suppose that $\ltdefn{T}{U}{V}$ and $\ltdefn{S}{V}{W}$ are surjective linear transformations.  Then $\ltdefn{(\compose{S}{T})}{U}{W}$ is a surjective linear transformation.
+\end{theorem}
+%
+\begin{proof}
+That the composition is a linear transformation was established in \acronymref{theorem}{CLTLT}, so we need only establish that the composition is surjective.  Applying \acronymref{definition}{SLT}, choose $\vect{w}\in W$.\par
+%
+Because $S$ is surjective, there must be a vector $\vect{v}\in V$, such that $\lt{S}{\vect{v}}=\vect{w}$.  With the existence of $\vect{v}$ established, that $T$ is surjective guarantees a vector $\vect{u}\in U$ such that $\lt{T}{\vect{u}}=\vect{v}$.  Now,
+%
+\begin{align*}
+\lt{\left(\compose{S}{T}\right)}{\vect{u}}&=\lt{S}{\lt{T}{\vect{u}}}&&\text{\acronymref{definition}{LTC}}\\
+&=\lt{S}{\vect{v}}&&\text{Definition of $\vect{u}$}\\
+&=\vect{w}&&\text{Definition of $\vect{v}$}
+\end{align*}
+%
+This establishes that any element of the codomain ($\vect{w}$) can be created by evaluating $\compose{S}{T}$ with the right input ($\vect{u}$).  Thus, by \acronymref{definition}{SLT}, $\compose{S}{T}$ is surjective.
+%
+\end{proof}
+%
+%  End of  slt.tex

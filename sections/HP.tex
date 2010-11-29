@@ -1,0 +1,373 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section HP
+%%  Hadamard Product
+%%
+%%%%%%%%%%%
+%
+%
+This section is contributed by \elizabethmillion.\par
+%
+You may have once thought that the natural definition for matrix multiplication would be entrywise multiplication, much in the same way that a young child might say, ``I writed my name.'' The mistake is understandable, but it still makes us cringe. Unlike poor grammar, however, entrywise matrix multiplication has reason to be studied; it has nice properties in matrix analysis and additionally plays a role with relative gain arrays in chemical engineering, covariance matrices in probability and serves as an inertia preserver for Hermitian matrices in physics. Here we will only explore the properties of the Hadamard product in matrix analysis.
+%
+\begin{definition}{HP}{Hadamard Product}{Hadamard product} 
+Let $A$ and $B$ be $m \times n$ matrices. The \define{Hadamard Product} of $A$ and $B$ is defined by $\matrixentry{\hadamard{A}{B}}{ij} = \matrixentry{A}{ij} \matrixentry{B}{ij}$ for all $1 \leq i \leq m$, $1 \leq j \leq n$.
+%
+\denote{HP}{Hadamard Product}{$\hadamard{A}{B}$}{Hadamard Product}
+\end{definition}
+%
+As we can see, the Hadamard product is simply ``entrywise multiplication''. Because of this, the Hadamard product inherits the same benefits (and restrictions) of multiplication in \complexes. Note also that both $A$ and $B$ need to be the same size, but not necessarily square. To avoid confusion, juxtaposition of matrices will imply the ``usual'' matrix multiplication, and we will use ``$\circ$'' for the Hadamard product. 
+%
+\begin{example}{HP}{Hadamard Product}{Hadamard product}
+%
+Consider
+%
+\begin{align*}
+A=
+\begin{bmatrix}
+1 & 0 & 6 \\
+3 & \pi & 5
+\end{bmatrix}
+&&
+B=
+\begin{bmatrix}
+3 & 13 & i \\
+\frac{1}{3} & 2 & 4
+\end{bmatrix}
+\end{align*}
+%
+Then
+%
+\begin{align*}
+\hadamard{A}{B}
+&=
+\begin{bmatrix}
+(1)(3) & (0)(13) & (6)(i) \\
+3(\frac{1}{3}) & (\pi)(2) & (5)(4)
+\end{bmatrix} \\
+%
+&=
+\begin{bmatrix}
+3 & 0 & 6 i \\
+1 & 2 \pi & 20
+\end{bmatrix}.
+\end{align*}
+%
+\end{example}
+%
+Now we will explore some basics properties of the Hadamard Product.
+%
+\begin{theorem}{HPC}{Hadamard Product is Commutative}{Hadamard product!commutativity} 
+If $A$ and $B$ are $m \times n$ matrices then $\hadamard{A}{B} = \hadamard{B}{A}$.
+\end{theorem}
+%
+\begin{proof}
+The proof follows directly from the fact that multiplication in $\complexes$ is commutative. Let $A$ and $B$ be $m \times n$ matrices. Then 
+%
+\begin{align*}
+\matrixentry{\hadamard{A}{B}}{ij} 
+&= \matrixentry{A}{ij}\matrixentry{B}{ij} 
+&& \text{\acronymref{definition}{HP}} \\
+%
+&= \matrixentry{B}{ij}\matrixentry{A}{ij} 
+&& \text{\acronymref{property}{CMCN}} \\
+%
+&= \matrixentry{\hadamard{B}{A}}{ij} 
+&& \text{\acronymref{definition}{HP}} 
+\end{align*}
+With equality of each entry of the matrices being equal we know by \acronymref{definition}{ME} that the two matrices are equal.
+\end{proof}
+%
+\begin{definition}{HID}{Hadamard Identity}{Hadamard identity}
+The \define{Hadamard identity} is the $m \times n$ matrix \hadamardidentity{mn} defined by $\matrixentry{\hadamardidentity{mn}}{ij} = 1$ for all $1 \leq i \leq m$, $1 \leq j \leq n$.
+%
+\denote{HID}{Hadamard Identity}{$\hadamardidentity{mn}$}{Hadamard Identity}
+\end{definition}
+%
+\begin{theorem}{HPHID}{Hadamard Product with the Hadamard Identity}{Hadamard product!identity} 
+Suppose $A$ is an $m \times n$ matrix. Then $\hadamard{A}{\hadamardidentity{mn}} = \hadamard{\hadamardidentity{mn}}{A} = A$.
+\end{theorem}
+\begin{proof}
+\begin{align*}
+\matrixentry{\hadamard{A}{\hadamardidentity{mn}}}{ij} 
+&= \matrixentry{\hadamard{\hadamardidentity{mn}}{A}}{ij} 
+&& \text{\acronymref{theorem}{HPC}} \\
+%
+&= \matrixentry{\hadamardidentity{mn}}{ij}\matrixentry{A}{ij} 
+&& \text{\acronymref{definition}{HP}} \\
+%
+&= (1) \matrixentry{A}{ij} 
+&& \text{\acronymref{definition}{HID}} \\
+%
+&= \matrixentry{A}{ij} 
+&& \text{\acronymref{property}{OCN}} 
+\end{align*}
+With equality of each entry of the matrices being equal we know by \acronymref{definition}{ME} that the two matrices are equal.
+\end{proof}
+%
+\begin{definition}{HI}{Hadamard Inverse}{Hadamard inverse}
+Let $A$ be an $m \times n$ matrix and suppose $\matrixentry{A}{ij} \not= 0$ for all $1 \leq i \leq m$, $1 \leq j \leq n$. Then the \define{Hadamard Inverse}, \hadamardinverse{A} , is given by $\matrixentry{\hadamardinverse{A}}{ij} = (\matrixentry{A}{ij})^{-1}$ for all $1 \leq i \leq m$, $1 \leq j \leq n$.
+%
+\denote{HI}{Hadamard Inverse}{$\hadamardinverse{A}$}{Hadamard Inverse}
+\end{definition}
+%
+\begin{theorem}{HPHI}{Hadamard Product with Hadamard Inverses}{Hadamard product!inverse} 
+Let $A$ be an $m \times n$ matrix such that  $\matrixentry{A}{ij} \not= 0$ for all $1 \leq i \leq m$, $1 \leq j \leq n$. Then $\hadamard{A}{\hadamardinverse{A}} = \hadamard{\hadamardinverse{A}}{A} = \hadamardidentity{mn}$.
+\end{theorem}
+%
+\begin{proof}
+\begin{align*}
+\matrixentry{\hadamard{A}{\hadamardinverse{A}}}{ij} 
+&= \matrixentry{\hadamard{\hadamardinverse{A}}{A}}{ij} 
+&& \text{\acronymref{theorem}{HPC}} \\
+%
+&= \matrixentry{\hadamardinverse{A}}{ij} \matrixentry{A}{ij} 
+&& \text{\acronymref{definition}{HP}} \\
+%
+&= (\matrixentry{A}{ij})^{-1} \matrixentry{A}{ij}
+&& \text{\acronymref{definition}{HI}, } \matrixentry{A}{ij} \not= 0  \\
+%
+&= 1 
+&& \text{\acronymref{property}{MICN}} \\
+%
+&= \matrixentry{\hadamardidentity{mn}}{ij}
+&& \text{\acronymref{definition}{HID}}
+\end{align*}
+With equality of each entry of the matrices being equal we know by \acronymref{definition}{ME} that the two matrices are equal.
+\end{proof}
+%
+Since matrices have a different inverse and identity under the Hadamard product, we have used special notation to distinguish them from what we have been using with ``normal'' matrix multiplication. That is, compare ``usual'' matrix inverse, \inverse{A}, with the Hadamard inverse \hadamardinverse{A}, and the ``usual'' matrix identity, $I_{n}$, with the Hadamard identity, \hadamardidentity{mn}.  
+%
+The Hadamard identity matrix and the Hadamard inverse are both more limiting than helpful, so we will not explore their use further. One last fun fact for those of you who may be familiar with group theory: the set of $m \times n$ matrices with nonzero entries form an abelian (commutative) group under the Hadamard product (prove this!).
+%
+\begin{theorem}{HPDAA}{Hadamard Product Distributes Across Addition}{Hadamard product!distributivity} 
+Suppose $A$, $B$ and $C$ are $m \times n$ matrices. Then $\hadamard{C}{(A + B)} = \hadamard{C}{A} + \hadamard{C}{B}$.
+\end{theorem}
+\begin{proof} 
+\begin{align*}
+\matrixentry{\hadamard{C}{(A + B)}}{ij} 
+&=  \matrixentry{C}{ij}\matrixentry{A + B}{ij} 
+&& \text{\acronymref{definition}{HP}} \\ 
+%
+&=  \matrixentry{C}{ij}(\matrixentry{A}{ij} + \matrixentry{B}{ij}) 
+&& \text{\acronymref{definition}{MA}} \\
+%
+&=  \matrixentry{C}{ij}\matrixentry{A}{ij} + \matrixentry{C}{ij}\matrixentry{B}{ij} 
+&& \text{\acronymref{property}{DCN}} \\
+%
+&=  \matrixentry{\hadamard{C}{A}}{ij} + \matrixentry{\hadamard{C}{B}}{ij} 
+&& \text{\acronymref{definition}{HP}} \\
+%
+&=  \matrixentry{\hadamard{C}{A} + \hadamard{C}{B}}{ij} 
+&& \text{\acronymref{definition}{MA}} 
+\end{align*}
+With equality of each entry of the matrices being equal we know by \acronymref{definition}{ME} that the two matrices are equal.
+\end{proof}
+%
+\begin{theorem}{HPSMM}{Hadamard Product and Scalar Matrix Multiplication}{Hadamard product!scalar matrix multiplication} 
+Suppose $\alpha \in \complexes$, and $A$ and $B$ are $m \times n$ matrices. Then $\alpha (\hadamard{A}{B}) = \hadamard{(\alpha A)}{B} = \hadamard{A}{(\alpha B)}$.
+\end{theorem}
+\begin{proof} 
+\begin{align*}
+\matrixentry{\alpha \hadamard{A}{B}}{ij} 
+&= \alpha \matrixentry{\hadamard{A}{B}}{ij}  
+&& \text{\acronymref{definition}{MSM}} \\
+%
+&=  \alpha \matrixentry{A}{ij}\matrixentry{B}{ij}  
+&& \text{\acronymref{definition}{HP}} \\
+%
+&=  \matrixentry{\alpha A}{ij}\matrixentry{B}{ij}  
+&& \text{\acronymref{definition}{MSM}} \\
+%
+&= \matrixentry{\hadamard{(\alpha A)}{B}}{ij}  
+&& \text{\acronymref{definition}{HP}} \\
+%
+&=  \alpha \matrixentry{A}{ij}\matrixentry{B}{ij}  
+&& \text{\acronymref{definition}{MSM}} \\
+%
+&=  \matrixentry{A}{ij} \alpha \matrixentry{B}{ij}  
+&& \text{\acronymref{property}{CMCN}} \\
+%
+&=  \matrixentry{A}{ij}\matrixentry{\alpha B}{ij}  
+&& \text{\acronymref{definition}{MSM}}\\
+%
+&=  \matrixentry{\hadamard{A}{(\alpha B)}}{ij}  
+&& \text{\acronymref{definition}{HP}}
+\end{align*}
+With equality of each entry of the matrices being equal we know by \acronymref{definition}{ME} that the two matrices are equal.
+\end{proof}
+%
+\subsect{DMHP}{Diagonal Matrices and the Hadamard Product}
+We can relate the Hadamard product with matrix multiplication by considering diagonal matrices, since $A \circ B = AB$ if and only if both $A$ and $B$ are diagonal (Citation!!!). For example, a simple calculation reveals that the Hadamard product relates the diagonal values of a diagonalizable matrix $A$ with its eigenvalues:
+%
+\begin{theorem}{DMHP}{Diagonalizable Matrices and the Hadamard Product}{Hadamard Product!Diagonalizable Matrices}
+Let $A$ be a diagonalizable matrix of size $n$ with eigenvalues \scalarlist{\lambda}{n}. Let $D$ be a diagonal matrix from the diagonalization of $A$, $A = SDS^{-1}$, and \vect{d} be a vector such that \matrixentry{D}{ii} $=$\vectorentry{\vect{d}}{i}$= \lambda_i$ for all $1 \leq i \leq n$. Then
+%
+\begin{align*}
+\matrixentry{A}{ii}
+&=
+\vectorentry{\hadamard{S}{\transpose{(\inverse{S})}} \vect{d}}{i}
+& \text{for all }1 \leq i \leq n.
+\end{align*}
+%
+That is,
+%
+\begin{equation*}
+\colvector{\matrixentry{A}{11}\\ \matrixentry{A}{22}\\ \matrixentry{A}{33}\\ \vdots \\ \matrixentry{A}{nn}}   % Is this an OK way to handle this vector?
+=
+\hadamard{S}{\transpose{(\inverse{S})}} \vectorcomponents{\lambda}{n} 
+\end{equation*}
+\end{theorem}
+%
+\begin{proof}
+\begin{align*}
+\vectorentry{\hadamard{S}{\transpose{(\inverse{S})}} \vect{d}}{i}
+&=
+\sum_{k=1}^n \matrixentry{\hadamard{S}{\transpose{(\inverse{S})}}}{ik} \vectorentry{\vect{d}}{k}
+&& \text{\acronymref{definition}{MVP}}\\
+%
+&=
+\sum_{k=1}^n \matrixentry{\hadamard{S}{\transpose{(\inverse{S})}}}{ik} \lambda_k
+&& \text{Definition of } \vect{d} \\
+%
+&=
+\sum_{k=1}^n \matrixentry{S}{ik}\matrixentry{\transpose{(\inverse{S})}}{ik} \lambda_k
+&& \text{\acronymref{definition}{HP}}\\
+%
+&=
+\sum_{k=1}^n \matrixentry{S}{ik}\matrixentry{\inverse{S}}{ki} \lambda_k
+&& \text{\acronymref{definition}{TM}}\\
+%
+&=
+\sum_{k=1}^n \matrixentry{S}{ik} \lambda_k \matrixentry{\inverse{S}}{ki}
+&& \text{\acronymref{property}{CMCN}} \\
+%
+&=
+\sum_{k=1}^n \matrixentry{S}{ik} \matrixentry{D}{kk} \matrixentry{\inverse{S}}{ki}
+&& \text{Definition of } D \\
+%
+&=
+\sum_{j=1}^n \sum_{k=1}^n \matrixentry{S}{ik} \matrixentry{D}{kj} \matrixentry{\inverse{S}}{ji}
+&& \matrixentry{D}{kj} = 0 \text{ for all } k \neq j \\
+%
+&=
+\sum_{j=1}^n \matrixentry{SD}{ij} \matrixentry{\inverse{S}}{ji}
+&& \text{\acronymref{theorem}{EMP}}\\
+%
+&=
+\matrixentry{SD\inverse{S}}{ii}
+&& \text{\acronymref{theorem}{EMP}}\\
+%
+&=
+\matrixentry{A}{ii}
+&& \text{\acronymref{definition}{ME}}
+\end{align*}
+With equality of each entry of the matrices being equal we know by \acronymref{definition}{ME} that the two matrices are equal.
+\end{proof}
+%
+We obtain a similar result when we look at the singular value decomposition of square matrices (see exercises). 
+%
+\begin{theorem}{DMMP}{Diagonal Matrices and Matrix Products}{Hadamard product!diagonal matrices}
+Suppose $A$, $B$ are $m \times n$ matrices, and $D$ and $E$ are diagonal matrices of size $m$ and $n$, respectively. Then,
+\begin{equation*}
+D(\hadamard{A}{B})E 
+= 
+\hadamard{(DAE)}{B} 
+= 
+\hadamard{(DA)}{(BE)}
+\end{equation*}
+\end{theorem}
+%
+\begin{proof}
+\begin{align*}
+\matrixentry{D(\hadamard{A}{B})E}{ij}
+&=
+\sum_{k=1}^m \matrixentry{D}{ik} \matrixentry{(\hadamard{A}{B})E}{kj} 
+&& \text{\acronymref{theorem}{EMP}}\\
+%
+&=
+\sum_{k=1}^m \sum_{l=1}^n \matrixentry{D}{ik} \matrixentry{\hadamard{A}{B}}{kl} \matrixentry{E}{lj} 
+&& \text{\acronymref{theorem}{EMP}}\\
+%
+&=
+\sum_{k=1}^m \sum_{l=1}^n \matrixentry{D}{ik} \matrixentry{A}{kl} \matrixentry{B}{kl} \matrixentry{E}{lj} 
+&& \text{\acronymref{definition}{HP}}\\
+%
+&=
+\sum_{k=1}^m \matrixentry{D}{ik} \matrixentry{A}{kj} \matrixentry{B}{kj} \matrixentry{E}{jj} 
+&& \matrixentry{E}{lj} = 0 \text{ for all } l \neq j \\
+%
+&=
+\matrixentry{D}{ii} \matrixentry{A}{ij} \matrixentry{B}{ij} \matrixentry{E}{jj} 
+&& \matrixentry{D}{ik} = 0 \text{ for all } i \neq k \\
+%
+&=
+\matrixentry{D}{ii} \matrixentry{A}{ij} \matrixentry{E}{jj} \matrixentry{B}{ij}
+&& \text{\acronymref{property}{CMCN}} \\
+%
+&=
+\matrixentry{D}{ii} (\sum_{l=1}^n \matrixentry{A}{il} \matrixentry{E}{lj}) \matrixentry{B}{ij}
+&& \matrixentry{E}{lj} = 0 \text{ for all } l \neq j \\
+%
+&=
+\matrixentry{D}{ii} \matrixentry{AE}{ij} \matrixentry{B}{ij}
+&& \text{\acronymref{theorem}{EMP}} \\
+%
+&=
+(\sum_{k=1}^m \matrixentry{D}{ik} \matrixentry{AE}{kj}) \matrixentry{B}{ij}
+&& \matrixentry{D}{ik} = 0 \text{ for all } i \neq k \\
+%
+&=
+\matrixentry{DAE}{ij} \matrixentry{B}{ij}
+&& \text{\acronymref{theorem}{EMP}} \\
+%
+&=
+\matrixentry{\hadamard{(DAE)}{B}}{ij}
+&& \text{\acronymref{definition}{HP}} 
+\end{align*}
+With equality of each entry of the matrices being equal we know by \acronymref{definition}{ME} that the two matrices are equal.
+
+Also, 
+\begin{align*}
+\matrixentry{\hadamard{(DAE)}{B}}{ij}
+&= 
+\matrixentry{DAE}{ij} \matrixentry{B}{ij}
+&& \text{\acronymref{definition}{HP}} \\
+%
+&= 
+(\sum_{k=1}^n \matrixentry{DA}{ik} \matrixentry{E}{kj}) \matrixentry{B}{ij}
+&& \text{\acronymref{theorem}{EMP}} \\
+%
+&=
+\matrixentry{DA}{ij} \matrixentry{E}{jj} \matrixentry{B}{ij}
+&& \matrixentry{E}{kj} = 0 \text{ for all } k \neq j \\
+%
+&=
+\matrixentry{DA}{ij} \matrixentry{B}{ij} \matrixentry{E}{jj}
+&& \text{\acronymref{property}{CMCN}} \\
+%
+&=
+\matrixentry{DA}{ij} (\sum_{k=1}^n \matrixentry{B}{ik} \matrixentry{E}{kj} )
+&& \matrixentry{E}{kj} = 0 \text{ for all } k \neq j \\
+%
+&=
+\matrixentry{DA}{ij} \matrixentry{BE}{ij}
+&& \text{\acronymref{theorem}{EMP}} \\
+%
+&=
+\matrixentry{\hadamard{(DA)}{(BE)}}{ij}
+&& \text{\acronymref{definition}{HP}} 
+\end{align*}
+With equality of each entry of the matrices being equal we know by \acronymref{definition}{ME} that the two matrices are equal.
+\end{proof}
+%
+% End of  hp.tex

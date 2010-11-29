@@ -1,0 +1,57 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+\contributedby{\stevecanfield\ and \robertbeezer}\\
+Row-reducing a matrix is a simple operation in SAGE.  However, because of Sage's flexibility with different types of numbers (integers, rationals, reals, complexes), we need to be a bit more careful.\par
+%
+If \computerfont{a} is a matrix entered in in SAGE (see \acronymref{computation}{ME.SAGE}) then \computerfont{a.echelon\_form()} will return a new matrix that is the reduced row-echelon form of \computerfont{a} (\acronymref{definition}{RREF}).\par
+%
+If your matrix has only integer entries (as is the case with many examples and exercises in this book), then row operations might introduce rational numbers (``fractions'').  So when you enter your matrix, you need to tell SAGE that rational numbers are allowable in its calculations.  This is the advice in \acronymref{computation}{R.SAGE} to use the ring \computerfont{QQ}.  As an illustration create
+%
+\begin{align*}
+\computerfont{a = matrix(QQ, [[1,2,3,4], [5,6,7,8],[9,10,11,12]] )}
+\end{align*}
+%
+and issue the command \computerfont{a.echelon\_form()}.  The result is
+%
+\begin{align*}
+\begin{bmatrix}
+1 & 0 & -1 & -2 \\
+0 & 1 & 2 & 3 \\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\end{align*}
+%
+However, if we adjust the entry by neglecting to specify \computerfont{QQ}, then SAGE assumes that we only want to work with integers, since every entry of the matrix is an integer.  So as an experiment, enter
+%
+\begin{align*}
+\computerfont{b = matrix([[1,2,3,4], [5,6,7,8],[9,10,11,12]] )}
+\end{align*}
+%
+and issue the command \computerfont{b.echelon\_form()}.  The result is
+%
+\begin{align*}
+\begin{bmatrix}
+1 & 2 & 3 & 4 \\
+0 & 4 & 8 & 12 \\
+0 & 0 & 0 & 0
+\end{bmatrix}
+\end{align*}
+%
+You can now clearly see Sage's reluctance to multiply row 2 by $\frac{1}{4}$.\par
+%
+The ring \computerfont{QQ} will of course suffice if your matrix has rational numbers for entries.  Decimal entries are another place to be careful.  If an entry of your matrix is the real number $2.17$, you are free to enter it as the rational number $\frac{217}{100}$ and keep the ring \computerfont{QQ} in the specification of your matrix.  If you want to consider your entries as real numbers, then you might as well just specify your ring as the complex numbers \computerfont{CC}.  This advice also applies if you have complex numbers as entries.\par
+%
+If you allow SAGE to work with real or complex numbers, then the problem of round-off error becomes relevant.  Computer arithmetic with real numbers is, of necessity, subject to minor inaccuracies and errors.  This becomes problematic when row-reducing a matrix.  If a zero entry is computed instead as an extremely small number, such as $1.287\times 10^{-18}$, then  an incorrect sequence of row operations will follow (with further incorrect results).  So if you use \computerfont{CC} be on the lookout for these kinds of potential pitfalls.\par
+%
+So, in summary, remember to always specify the ring you will be using for your matrices, and most matrices can be handled with a choice of \computerfont{QQ} or \computerfont{CC}.\par
+%
+When you need to do significant scientific computing with SAGE, there are extra facilities that will help you work with these subtleties.\par
+%
+Finally, you can also use a command of the form \computerfont{a.echelonize()} to replace \computerfont{a} with its reduced row-echelon form.

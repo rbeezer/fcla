@@ -1,0 +1,54 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+First, build a matrix representation of $S$ (\acronymref{definition}{MR}).  We are free to choose whatever bases we wish, so we should choose ones that are easy to work with, such as
+%
+\begin{align*}
+B&=\set{1,\,x}\\
+C&=\set{\begin{bmatrix}1 & 0\end{bmatrix},\,\begin{bmatrix}0 & 1\end{bmatrix}}
+\end{align*}
+%
+The resulting matrix representation is then
+%
+\begin{equation*}
+\matrixrep{T}{B}{C}=
+\begin{bmatrix}
+3 & 1\\
+2 & 1
+\end{bmatrix}
+\end{equation*}
+%
+this matrix is invertible, since it has a nonzero determinant, so by \acronymref{theorem}{IMR} the linear transformation $S$ is invertible.  We can use the matrix inverse and \acronymref{theorem}{IMR} to find a formula for the inverse linear transformation,
+%
+\begin{align*}
+\lt{\ltinverse{S}}{\begin{bmatrix}a&b\end{bmatrix}}
+&=\vectrepinv{B}{\matrixrep{\ltinverse{S}}{C}{B}\vectrep{C}{\begin{bmatrix}a&b\end{bmatrix}}}&&\text{\acronymref{theorem}{FTMR}}\\
+&=\vectrepinv{B}{\inverse{\left(\matrixrep{S}{B}{C}\right)}\vectrep{C}{\begin{bmatrix}a&b\end{bmatrix}}}&&\text{\acronymref{theorem}{IMR}}\\
+&=\vectrepinv{B}{\inverse{\left(\matrixrep{S}{B}{C}\right)}\colvector{a\\b}}&&\text{\acronymref{definition}{VR}}\\
+&=\vectrepinv{B}{
+\inverse{\left(
+\begin{bmatrix}
+3 & 1\\
+2 & 1
+\end{bmatrix}
+\right)}
+\colvector{a\\b}}\\
+&=\vectrepinv{B}{
+\begin{bmatrix}
+1 & -1\\
+-2 & 3
+\end{bmatrix}
+\colvector{a\\b}}&&\text{\acronymref{definition}{MI}}\\
+&=\vectrepinv{B}{
+\colvector{
+a-b\\
+-2a+3b
+}}&&\text{\acronymref{definition}{MVP}}\\
+&=(a-b)+(-2a+3b)x&&\text{\acronymref{definition}{VR}}
+\end{align*}

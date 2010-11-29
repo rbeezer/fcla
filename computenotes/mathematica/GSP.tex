@@ -1,0 +1,43 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+Mathematica has a built-in routine that will do the Gram-Schmidt procedure (\acronymref{theorem}{GSP}).  The input is a set of vectors, which must be linearly independent.  This is written as a list, containing lists that are the vectors.  Let \computerfont{a} be such a list of lists, containing the vectors $\vect{v}_i$, $1\leq i\leq p$ from the statement of the theorem.  You will need to first load the right Mathematica package --- execute \computerfont{<<LinearAlgebra`Orthogonalization`} to make this happen.  Then execute \computerfont{GramSchmidt[a]}.  The output will be another list of lists containing the vectors $\vect{u}_i$, $1\leq i\leq p$ from the statement of the theorem.  Mathematica will complain if you do not provide a linearly independent set as input (try it!).\par
+%
+An example.  Suppose our linearly independent set (check this!) is 
+%
+\begin{align*}
+S=\set{
+\colvector{-1 \\ 4 \\ 1 \\ 0 \\ 3},\,
+\colvector{0 \\ 3 \\ 0 \\ 3 \\ -3},\,
+\colvector{-1 \\ 2 \\ 0 \\ -1 \\ -2},\,
+\colvector{-1 \\ -2 \\ -3 \\ 1 \\ 4},\,
+\colvector{1 \\ 6 \\ -1 \\ 4 \\ 6}
+}
+\end{align*}
+%
+The output of the \computerfont{GramSchmidt[\,]} command will be the set,
+%
+\begin{align*}
+T=\set{
+\colvector{-\frac{1}{3 \sqrt{3}} \\ \frac{4}{3 \sqrt{3}} \\ \frac{1}{3 \sqrt{3}} \\ 0 \\ \frac{1}{\sqrt{3}}},\,
+%
+\colvector{ \frac{1}{12 \sqrt{15}} \\ \frac{23}{12 \sqrt{15}} \\ -\frac{1}{12 \sqrt{15}} \\ \frac{3 \sqrt{\frac{3}{5}}}{4} \\
+ -\frac{\sqrt{\frac{5}{3}}}{2}},\,
+ %
+\colvector{-\frac{37}{4 \sqrt{685}} \\ \frac{29}{4 \sqrt{685}} \\ -\frac{3}{4 \sqrt{685}} \\ -\frac{79}{4 \sqrt{685}} \\ -\frac{5 \sqrt{\frac{5}{137}}}{2}},\,
+%
+\colvector{-\frac{337}{2 \sqrt{120423}} \\ -\frac{37}{6 \sqrt{120423}} \\ -\frac{1763}{6 \sqrt{120423}} \\ \frac{337}{6 \sqrt{120423}} \\ \frac{50}{\sqrt{120423}}},\,
+%
+\colvector{ \frac{23}{\sqrt{879}} \\ \frac{26}{3 \sqrt{879}} \\ -\frac{44}{3 \sqrt{879}} \\ -\frac{23}{3 \sqrt{879}} \\ \frac{1}{\sqrt{879}}}
+}
+\end{align*}
+%
+Ugly, but true.   At this stage, you might just as well be encouraged to think of the Gram-Schmidt procedure as a computational black box, linearly independent set in, orthogonal span-preserving set out.\par
+%
+To check that the output set is orthogonal, we can easily check the orthogonality of individual pairs of vectors.  Suppose the output was set equal to \computerfont{b} (say via \computerfont{b=GramSchmidt[a]}).  We can extract the individual vectors of  \computerfont{c} as ``parts'' with syntax like \computerfont{c[[3]]}, which would return the third vector in the set.  When our vectors have only real number entries, we can accomplish an innerproduct with a ``dot.''  So, for example, you should discover that \computerfont{c[[3]].c[[5]]} will return zero.  Try it yourself with another pair of vectors.

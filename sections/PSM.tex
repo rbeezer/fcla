@@ -1,0 +1,157 @@
+%%%%(c)
+%%%%(c)  This file is a portion of the source for the textbook
+%%%%(c)
+%%%%(c)    A First Course in Linear Algebra
+%%%%(c)    Copyright 2004 by Robert A. Beezer
+%%%%(c)
+%%%%(c)  See the file COPYING.txt for copying conditions
+%%%%(c)
+%%%%(c)
+%%%%%%%%%%%
+%%
+%%  Section PSM
+%%  Positive Semi-Definite Matrices
+%%
+%%%%%%%%%%%
+%
+{\sc\large This Section is a Draft, Subject to Changes}\\
+{\sc\large Needs Numerical Examples}\par\bigskip
+%
+Positive semi-definite matrices (and their cousins, positive definite matrices) are square matrices which in many ways behave like non-negative (respectively, positive) real numbers.  Results given here are employed in the decompositions of \acronymref{section}{SVD}, \acronymref{section}{SR} and \acronymref{section}{PD}.
+%
+\subsect{PSM}{Positive Semi-Definite Matrices}
+%
+\begin{definition}{PSM}{Positive Semi-Definite Matrix}{positive semi-definite matrix}
+A square matrix $A$ of size $n$ is \define{positive semi-definite} if $A$ is Hermitian and for all $\vect{x}\in\complex{n}$, $\innerproduct{A\vect{x}}{\vect{x}}\geq 0$.
+\end{definition}
+%
+For a definition of \define{positive definite} replace the inequality in the definition with a strict inequality, and exclude the zero vector from the vectors $\vect{x}$ required to meet the condition.  Similar variations allow definitions of \define{negative definite} and \define{negative semi-definite}.
+%
+%  TODO:  Characterization with positive determinants?
+%  Example:  Build one as a quadratic form, massage to get factorization into positive stuff
+%
+Our first theorem in this section gives us an easy way to build positive semi-definite matrices.
+%
+\begin{theorem}{CPSM}{Creating Positive Semi-Definite Matrices}{positive semi-definite!creating}
+Suppose that $A$ is any $m\times n$ matrix.  Then the matrices $\adjoint{A}A$ and $A\adjoint{A}$ are positive semi-definite matrices.
+\end{theorem}
+%
+\begin{proof}
+We will give the proof for the first matrix, the proof for the second is entirely similar.  First we check that $\adjoint{A}A$ is Hermitian,
+%
+\begin{align*}
+\adjoint{\left(\adjoint{A}A\right)}
+&=\adjoint{A}\adjoint{\left(\adjoint{A}\right)}&&\text{\acronymref{theorem}{MMAD}}\\
+&=\adjoint{A}A&&\text{\acronymref{theorem}{AA}}
+\end{align*}
+%
+so by \acronymref{definition}{HM}, the matrix $\adjoint{A}A$ is Hermitian.  Second, for any $\vect{x}\in\complex{n}$,
+%
+\begin{align*}
+\innerproduct{\adjoint{A}A\vect{x}}{\vect{x}}
+&=\innerproduct{A\vect{x}}{\adjoint{\left(\adjoint{A}\right)}\vect{x}}
+&&\text{\acronymref{theorem}{AIP}}\\
+%
+&=\innerproduct{A\vect{x}}{A\vect{x}}
+&&\text{\acronymref{theorem}{AA}}\\
+%
+&\geq 0
+&&\text{\acronymref{theorem}{PIP}}
+%
+\end{align*}
+%
+which is the second criteria in the definition of a positive semi-definite matrix (\acronymref{definition}{PSM}).
+%
+\end{proof}
+%
+A statement very similar to the converse of this theorem is also true.  Any positive semi-definite matrix can be realized as the product of a square matrix, $B$, with its adjoint, $\adjoint{B}$.  (See \acronymref{exercise}{PSM.T20} after studying this entire section.)  The matrices $\adjoint{A}A$ and $A\adjoint{A}$ will be important later when we define singular values (\acronymref{section}{SVD}).\par
+%
+Positive semi-definite matrices can also be characterized by their eigenvalues, without any mention of inner products.  This next result further reinforces the notion that positive semi-definite matrices behave like non-negative real numbers.
+%
+\begin{theorem}{EPSM}{Eigenvalues of Positive Semi-definite Matrices}{positive semi-definite matrix!eigenvalues}
+Suppose that $A$ is a Hermitian matrix.  Then $A$ is positive semi-definite matrix if and only if whenever  $\lambda$ is an eigenvalue of $A$, then $\lambda\geq 0$.
+\end{theorem}
+%
+\begin{proof}
+%
+Notice first that since we are considering only Hermitian matrices in this theorem, it is always possible to compare eigenvalues with the real number zero, since eigenvalues of Hermitian matrices are all real numbers (\acronymref{theorem}{HMRE}).  Let $n$ denote the size of $A$.\par
+%
+($\Rightarrow$)\quad Let $\vect{x}\neq 0$ be an eigenvector of $A$ for $\lambda$.  Then by \acronymref{theorem}{PIP} we know $\innerproduct{\vect{x}}{\vect{x}}\neq 0$.  So
+%
+\begin{align*}
+\lambda
+&=\frac{1}{\innerproduct{\vect{x}}{\vect{x}}}\lambda\innerproduct{\vect{x}}{\vect{x}}
+&&\text{\acronymref{property}{MICN}}\\
+%
+&=\frac{1}{\innerproduct{\vect{x}}{\vect{x}}}\innerproduct{\lambda\vect{x}}{\vect{x}}
+&&\text{\acronymref{theorem}{IPSM}}\\
+%
+&=\frac{1}{\innerproduct{\vect{x}}{\vect{x}}}\innerproduct{A\vect{x}}{\vect{x}}
+&&\text{\acronymref{definition}{EEM}}
+%
+\end{align*}
+%
+By \acronymref{theorem}{PIP}, $\innerproduct{\vect{x}}{\vect{x}}>0$ and by \acronymref{definition}{PSM} we have $\innerproduct{A\vect{x}}{\vect{x}}\geq 0$.  With $\lambda$ expressed as the product of these two quantities, we have $\lambda\geq 0$.\par
+%
+($\Leftarrow$)\quad  Suppose now that $\scalarlist{\lambda}{n}$ are the (not necessarily distinct) eigenvalues of the Hermitian matrix $A$, each of which is non-negative.  Let $B=\set{\vectorlist{\vect{x}}{n}}$ be a set of associated eigenvectors for these eigenvalues.  Since a Hermitian matrix is normal (\acronymref{definition}{HM}, \acronymref{definition}{NM}), \acronymref{theorem}{OBNM} allows us to choose this set of eigenvectors to also be an orthonormal basis of $\complex{n}$.  Choose any $\vect{x}\in\complex{n}$ and let $\scalarlist{a}{n}$ be the scalars guaranteed by the spanning property of the basis $B$ such that
+%
+\begin{align*}
+\vect{x}&=\lincombo{a}{\vect{x}}{n}=\sum_{i=1}^{n}a_i\vect{x}_i
+\end{align*}
+%
+Since we have presumed $A$ is Hermitian, we need only check the other defining property,
+%
+\begin{align*}
+\innerproduct{A\vect{x}}{\vect{x}}
+&=
+\innerproduct{A\sum_{i=1}^{n}a_i\vect{x}_i}{\sum_{j=1}^{n}a_j\vect{x}_j}
+&&\text{\acronymref{definition}{TSVS}}\\
+%
+&=
+\innerproduct{\sum_{i=1}^{n}Aa_i\vect{x}_i}{\sum_{j=1}^{n}a_j\vect{x}_j}
+&&\text{\acronymref{theorem}{MMDAA}}\\
+%
+&=
+\innerproduct{\sum_{i=1}^{n}a_iA\vect{x}_i}{\sum_{j=1}^{n}a_j\vect{x}_j}
+&&\text{\acronymref{theorem}{MMSMM}}\\
+%
+&=
+\innerproduct{\sum_{i=1}^{n}a_i\lambda_i\vect{x}_i}{\sum_{j=1}^{n}a_j\vect{x}_j}
+&&\text{\acronymref{definition}{EEM}}\\
+%
+&=
+\sum_{i=1}^{n}\sum_{j=1}^{n}\innerproduct{a_i\lambda_i\vect{x}_i}{a_j\vect{x}_j}
+&&\text{\acronymref{theorem}{IPVA}}\\
+%
+&=
+\sum_{i=1}^{n}\sum_{j=1}^{n}a_i\lambda_i\conjugate{a_j}\innerproduct{\vect{x}_i}{\vect{x}_j}
+&&\text{\acronymref{theorem}{IPSM}}\\
+%
+&=
+\sum_{i=1}^{n}a_i\lambda_i\conjugate{a_i}\innerproduct{\vect{x}_i}{\vect{x}_i}+
+\sum_{i=1}^{n}\sum_{\substack{j=1\\j\neq i}}^{n}a_i\lambda_i\conjugate{a_j}\innerproduct{\vect{x}_i}{\vect{x}_j}
+&&\text{\acronymref{property}{CACN}}\\
+%
+&=
+\sum_{i=1}^{n}a_i\lambda_i\conjugate{a_i}(1)+
+\sum_{i=1}^{n}\sum_{\substack{j=1\\j\neq i}}^{n}a_i\lambda_i\conjugate{a_j}(0)
+&&\text{\acronymref{definition}{ONS}}\\
+%
+&=
+\sum_{i=1}^{n}a_i\lambda_i\conjugate{a_i}\\
+%
+&=
+\sum_{i=1}^{n}\lambda_i\modulus{a_i}^2
+&&\text{\acronymref{definition}{MCN}}
+%
+\end{align*}
+%
+With non-negative values for each eigenvalue $\lambda_i$, $1\leq i\leq n$, and each modulus squared, it should be clear that this sum is non-negative.  Which is exactly what is required by \acronymref{definition}{PSM} to establish that $A$ is positive semi-definite.
+%
+\end{proof}
+%
+As positive semi-definite matrices are defined to be Hermitian, they are then normal and subject to orthonormal diagonalization (\acronymref{theorem}{OD}).  Now consider the interpretation of orthonormal diagonalization as a rotation to principal axes, a stretch by a diagonal matrix and a rotation back (\acronymref{subsection}{OD.OD}).  For a positive semi-definite matrix, the diagonal matrix has diagonal entries that are the non-negative eigenvalues of the original positive semi-definite matrix.  So the ``stretching'' along each axis is never a reflection.
+%
+%% TODO:  Now easy to do positive determinant characterization on "proper" minors?
+%
+%  End  PSM.tex
