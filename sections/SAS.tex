@@ -40,11 +40,11 @@ The inputs do not have to be consecutive integers, starting at 1.  Any set of {\
 %
 Why do all this arithmetic over $\Z_p$?  If we worked with polynomials having real number coefficients, properties of polynomials as continuous functions might give an attacker the ability to compute the secret with a reasonable amount of computing time.  For example, the magnitude of the output is going to dominated by the term of $r(x)$ having degree $m-1$.  Suppose an attacker had a few of the pairs, but not a full set of $m$ of them.  Or even worse, suppose some group of fewer than $m$ of your trusted acquaintances were to conspire against you.  It might be possible to guess a limited range of values for the coefficient of the largest term.  With a limited range of values here, the next term might fall to a similar analysis.  And so on.  However, modular arithmetic is in some ways very unpredictable looking and as high powers ``wrap-around'' this sort of analysis will be frustrated.  And we know it is no harder to do linear algebra in $\Z_p$ than in $\complexes$.\par
 %
-OK, here's a non-trivial example.  
+OK, here's a non-trivial example.
 %
 \begin{example}{SS6W}{Sharing a secret 6 ways}{secret sharing!6 ways}
 %
-Let's return to the CEO and his six Vice-Presidents.  Suppose the password for the company's accounts is a sequence of 5 two-digit numbers, which we will concatenate into a 10-digit number, in this case $S= 0603725962$.  For a prime $p$ we choose the 11-digit prime number $p=22801761379$.  From the requirement that $m=3$ Vice-Presidents are needed to recover the secret, we need a second-degree polynomial and so need two more coefficients, which we will construct at random between $1$ and $p$.  The resulting polynomial is 
+Let's return to the CEO and his six Vice-Presidents.  Suppose the password for the company's accounts is a sequence of 5 two-digit numbers, which we will concatenate into a 10-digit number, in this case $S= 0603725962$.  For a prime $p$ we choose the 11-digit prime number $p=22801761379$.  From the requirement that $m=3$ Vice-Presidents are needed to recover the secret, we need a second-degree polynomial and so need two more coefficients, which we will construct at random between $1$ and $p$.  The resulting polynomial is
 %
 \begin{align*}
 r(x)=603725962 + 22561982919 x + 8844088338 x^2
@@ -72,27 +72,27 @@ Let's test the recovery process, especially since it contains the relevant linea
 &\text{Finance}
 &
 7205699654
-&=r(20220406046)\\ 
-&&&= a_0 + a_1(20220406046) + a_2(20220406046)^2\\ 
+&=r(20220406046)\\
+&&&= a_0 + a_1(20220406046) + a_2(20220406046)^2\\
 &&&= a_0 + 20220406046 a_1 + 7793596215 a_2\\
 %
 &\text{Marketing}
 &
 18503158079
 &=r(13747127957)\\
-&&&= a_0 + a_1(13747127957) + a_2(13747127957)^2\\ 
+&&&= a_0 + a_1(13747127957) + a_2(13747127957)^2\\
 &&&= a_0 + 13747127957 a_1 +  18840301370 a_2\\
 %
 &\text{Legal}
 &
 14060705999
-&=r(15835120319)\\ 
-&&&= a_0 + a_1(15835120319) + a_2(15835120319)^2\\ 
+&=r(15835120319)\\
+&&&= a_0 + a_1(15835120319) + a_2(15835120319)^2\\
 &&&= a_0 + 15835120319 a_1 +  8874412999 a_2
 %
 \end{align*}
 %
-So they have a linear system, $\linearsystem{A}{\vect{b}}$ with 
+So they have a linear system, $\linearsystem{A}{\vect{b}}$ with
 %
 \begin{align*}
 A&=
@@ -125,5 +125,5 @@ With a Vandermonde matrix as the coefficient matrix, they know there is a soluti
 So the CEO's password is the secret $S=a_0=603725962=0603725962$ (as expected).
 %
 \end{example}
-%  
+%
 %  End of  SAS.tex

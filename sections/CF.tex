@@ -32,7 +32,7 @@ y_i&=p(x_i)=a_0+a_1x_i+a_2x_i^2+\cdots+a_nx_i^n
 1\leq i\leq n+1&
 \end{align*}
 %
-This is a system of $n+1$ linear equations in the $n+1$ variables $a_0,\,a_1,\,a_2,\,\ldots,\,a_n$.  The vector of constants in this system is the vector containing the $y$-coordinates of the points.   More importantly, the coefficient matrix is a Vandermonde matrix (\acronymref{definition}{VM}) built from the $x$-coordinates $\scalarlist{x}{n+1}$.  Since we have required that these scalars all be different, \acronymref{theorem}{NVM} tells us that the coefficient matrix is nonsingular and 
+This is a system of $n+1$ linear equations in the $n+1$ variables $a_0,\,a_1,\,a_2,\,\ldots,\,a_n$.  The vector of constants in this system is the vector containing the $y$-coordinates of the points.   More importantly, the coefficient matrix is a Vandermonde matrix (\acronymref{definition}{VM}) built from the $x$-coordinates $\scalarlist{x}{n+1}$.  Since we have required that these scalars all be different, \acronymref{theorem}{NVM} tells us that the coefficient matrix is nonsingular and
 \acronymref{theorem}{NMUS} says the solution for the coefficients of the polynomial exists, and is unique.  As a practical matter, \acronymref{theorem}{SNCM} provides an expression for the solution.
 %
 \end{proof}
@@ -97,7 +97,7 @@ where the scalars $\scalarlist{a}{n}$ are not known to us, but are instead desir
 %
 However, more likely $m>n$ (the more data we collect, the greater our confidence in the results) and the resulting system is inconsistent.  It may be that our model is only an approximate understanding of the relationship between the $x_i$ and $y$, or our measurements are not completely accurate.  Still we would like to understand the situation we are studying, and would like some best answer for $\scalarlist{a}{n}$.\par
 %
-Let $\vect{y}$ denote the vector with $\vectorentry{\vect{y}}{i}=y_i$, $1\leq i\leq m$, let $\vect{a}$ denote the vector with $\vectorentry{\vect{a}}{j}=a_j$, $1\leq j\leq n$, and let $X$ denote the $m\times n$ matrix with $\matrixentry{X}{ij}=x_{ij}$, $1\leq i\leq m$, $1\leq j\leq n$.  Then the model equation, evaluated with each run of the experiment, translates to $X\vect{a}=\vect{y}$.  With the presumption that this system has no solution, we can try to minimize the difference between the two side of the equation $\vect{y}-X\vect{a}$.  As a vector, it is hard to imagine what the minimum might be, so we instead minimize the square of its norm 
+Let $\vect{y}$ denote the vector with $\vectorentry{\vect{y}}{i}=y_i$, $1\leq i\leq m$, let $\vect{a}$ denote the vector with $\vectorentry{\vect{a}}{j}=a_j$, $1\leq j\leq n$, and let $X$ denote the $m\times n$ matrix with $\matrixentry{X}{ij}=x_{ij}$, $1\leq i\leq m$, $1\leq j\leq n$.  Then the model equation, evaluated with each run of the experiment, translates to $X\vect{a}=\vect{y}$.  With the presumption that this system has no solution, we can try to minimize the difference between the two side of the equation $\vect{y}-X\vect{a}$.  As a vector, it is hard to imagine what the minimum might be, so we instead minimize the square of its norm
 %
 \begin{align*}
 S=\transpose{\left(\vect{y}-X\vect{a}\right)}\left(\vect{y}-X\vect{a}\right)
@@ -111,7 +111,7 @@ Given the equation $X\vect{a}=\vect{y}$, where $X$ is an $m\times n$ matrix of r
 %
 %
 \begin{theorem}{LSMR}{Least Squares Minimizes Residuals}{least squares!minimizes residuals}
-Suppose that $X$ is an $m\times n$ matrix of rank $n$.  The least squares solution of $X\vect{a}=\vect{y}$, $\vect{a}^\prime=\inverse{\left(\transpose{X}X\right)}\transpose{X}\vect{y}$, minimizes the expression 
+Suppose that $X$ is an $m\times n$ matrix of rank $n$.  The least squares solution of $X\vect{a}=\vect{y}$, $\vect{a}^\prime=\inverse{\left(\transpose{X}X\right)}\transpose{X}\vect{y}$, minimizes the expression
 %
 \begin{align*}
 S=\transpose{\left(\vect{y}-X\vect{a}\right)}\left(\vect{y}-X\vect{a}\right)
@@ -155,10 +155,10 @@ The first partial derivatives will allow us to find critical points, while secon
 &=\frac{\partial}{\partial a_\ell} 2\sum_{i=1}^m
 -\matrixentry{X}{ij}\vectorentry{\vect{y}-X\vect{a}}{i}\\
 %
-&=-2\sum_{i=1}^m \frac{\partial}{\partial a_\ell} 
+&=-2\sum_{i=1}^m \frac{\partial}{\partial a_\ell}
 \matrixentry{X}{ij}\vectorentry{\vect{y}-X\vect{a}}{i}\\
 %
-&=-2\sum_{i=1}^m\matrixentry{X}{ij} \frac{\partial}{\partial a_\ell} 
+&=-2\sum_{i=1}^m\matrixentry{X}{ij} \frac{\partial}{\partial a_\ell}
 \left(\vectorentry{\vect{y}}{i}-\sum_{k=1}^n\matrixentry{X}{ik}\vectorentry{\vect{a}}{k}\right)\\
 %
 &=-2\sum_{i=1}^m\matrixentry{X}{ij}\left(-\matrixentry{X}{i\ell}\right)\\
@@ -171,7 +171,7 @@ The first partial derivatives will allow us to find critical points, while secon
 %
 \end{align*}
 %
-For $1\leq j\leq n$, set $\frac{\partial}{\partial a_j}S=0$.  This results in the $n$ scalar equations 
+For $1\leq j\leq n$, set $\frac{\partial}{\partial a_j}S=0$.  This results in the $n$ scalar equations
 %
 \begin{align*}
 \transpose{\left(\vect{X}_j\right)}X\vect{a}
@@ -202,5 +202,5 @@ Is this lone critical point really a minimum?  The matrix of second partial deri
 %%  Linearlizing equations
 %%  Generalized inverse?
 
-%  
+%
 %  End of  CF.tex
