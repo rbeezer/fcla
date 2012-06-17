@@ -383,11 +383,11 @@ Suppose that $B=\set{\vectorlist{v}{p}}$ is an orthonormal basis of the subspace
 %
 \begin{equation*}
 \vect{w}=
-\innerproduct{\vect{w}}{\vect{v}_1}\vect{v}_1+
-\innerproduct{\vect{w}}{\vect{v}_2}\vect{v}_2+
-\innerproduct{\vect{w}}{\vect{v}_3}\vect{v}_3+
+\innerproduct{\vect{v}_1}{\vect{w}}\vect{v}_1+
+\innerproduct{\vect{v}_2}{\vect{w}}\vect{v}_2+
+\innerproduct{\vect{v}_3}{\vect{w}}\vect{v}_3+
 \cdots+
-\innerproduct{\vect{w}}{\vect{v}_p}\vect{v}_p
+\innerproduct{\vect{v}_p}{\vect{w}}\vect{v}_p
 \end{equation*}
 %
 \end{theorem}
@@ -404,21 +404,21 @@ So begin the proof by writing $\vect{w}$ as a linear combination of the vectors 
 and compute,
 %
 \begin{align*}
-\innerproduct{\vect{w}}{\vect{v}_i}
-&=\innerproduct{\sum_{k=1}^{p}a_k\vect{v}_k}{\vect{v}_i}
+\innerproduct{\vect{v}_i}{\vect{w}}
+&=\innerproduct{\vect{v}_i}{\sum_{k=1}^{p}a_k\vect{v}_k}
 &&\text{\acronymref{theorem}{VRRB}}\\
 %
-&=\sum_{k=1}^{p}\innerproduct{a_k\vect{v}_k}{\vect{v}_i}
+&=\sum_{k=1}^{p}\innerproduct{\vect{v}_i}{a_k\vect{v}_k}
 &&\text{\acronymref{theorem}{IPVA}}\\
 %
-&=\sum_{k=1}^{p}a_k\innerproduct{\vect{v}_k}{\vect{v}_i}
+&=\sum_{k=1}^{p}a_k\innerproduct{\vect{v}_i}{\vect{v}_k}
 &&\text{\acronymref{theorem}{IPSM}}\\
 %
 &=a_i\innerproduct{\vect{v}_i}{\vect{v}_i}+
-\sum_{\substack{i=1\\k\neq i}}^{p}a_k\innerproduct{\vect{v}_k}{\vect{v}_i}
+\sum_{\substack{k=1\\k\neq i}}^{p}a_k\innerproduct{\vect{v}_i}{\vect{v}_k}
 &&\text{\acronymref{property}{C}}\\
 %
-&=a_i(1)+\sum_{\substack{i=1\\k\neq i}}^{p}a_k(0)
+&=a_i(1)+\sum_{\substack{k=1\\k\neq i}}^{p}a_k(0)
 &&\text{\acronymref{definition}{ONS}}\\
 %
 &=a_i
@@ -580,32 +580,29 @@ Now
 %
 \begin{align*}
 \adjoint{A}A\vect{y}
-&=\sum_{i=1}^{n}\innerproduct{\adjoint{A}A\vect{y}}{\vect{x}_i}\vect{x}_i
+&=\sum_{i=1}^{n}\innerproduct{\vect{x}_i}{\adjoint{A}A\vect{y}}\vect{x}_i
 &&\text{\acronymref{theorem}{COB}}\\
 %
-&=\sum_{i=1}^{n}\innerproduct{\adjoint{A}A\sum_{j=1}^{n}a_j\vect{x}_j}{\vect{x}_i}\vect{x}_i
+&=\sum_{i=1}^{n}\innerproduct{\vect{x}_i}{\adjoint{A}A\sum_{j=1}^{n}a_j\vect{x}_j}\vect{x}_i
 &&\text{\acronymref{definition}{TSVS}}\\
 %
-&=\sum_{i=1}^{n}\innerproduct{\sum_{j=1}^{n}\adjoint{A}Aa_j\vect{x}_j}{\vect{x}_i}\vect{x}_i
+&=\sum_{i=1}^{n}\innerproduct{\vect{x}_i}{\sum_{j=1}^{n}\adjoint{A}Aa_j\vect{x}_j}\vect{x}_i
 &&\text{\acronymref{theorem}{MMDAA}}\\
 %
-&=\sum_{i=1}^{n}\innerproduct{\sum_{j=1}^{n}a_j\adjoint{A}A\vect{x}_j}{\vect{x}_i}\vect{x}_i
+&=\sum_{i=1}^{n}\innerproduct{\vect{x}_i}{\sum_{j=1}^{n}a_j\adjoint{A}A\vect{x}_j}\vect{x}_i
 &&\text{\acronymref{theorem}{MMSMM}}\\
 %
-&=\sum_{i=1}^{n}\sum_{j=1}^{n}\innerproduct{a_j\adjoint{A}A\vect{x}_j}{\vect{x}_i}\vect{x}_i
+&=\sum_{i=1}^{n}\sum_{j=1}^{n}\innerproduct{\vect{x}_i}{a_j\adjoint{A}A\vect{x}_j}\vect{x}_i
 &&\text{\acronymref{theorem}{IPVA}}\\
 %
-&=\sum_{i=1}^{n}\sum_{j=1}^{n}a_j\innerproduct{\adjoint{A}A\vect{x}_j}{\vect{x}_i}\vect{x}_i
+&=\sum_{i=1}^{n}\sum_{j=1}^{n}a_j\innerproduct{\vect{x}_i}{\adjoint{A}A\vect{x}_j}\vect{x}_i
 &&\text{\acronymref{theorem}{IPSM}}\\
 %
-&=\sum_{i=1}^{n}\sum_{j=1}^{n}a_j\innerproduct{A\vect{x}_j}{\adjoint{\left(\adjoint{A}\right)}\vect{x}_i}\vect{x}_i
+&=\sum_{i=1}^{n}\sum_{j=1}^{n}a_j\innerproduct{A\vect{x}_i}{A\vect{x}_j}\vect{x}_i
 &&\text{\acronymref{theorem}{AIP}}\\
 %
-&=\sum_{i=1}^{n}\sum_{j=1}^{n}a_j\innerproduct{A\vect{x}_j}{A\vect{x}_i}\vect{x}_i
-&&\text{\acronymref{theorem}{AA}}\\
-%
 &=
-\sum_{i=1}^{n}\sum_{\substack{j=1\\j\neq i}}^{n}a_j\innerproduct{A\vect{x}_j}{A\vect{x}_i}\vect{x}_i
+\sum_{i=1}^{n}\sum_{\substack{j=1\\j\neq i}}^{n}a_j\innerproduct{A\vect{x}_i}{A\vect{x}_j}\vect{x}_i
 +
 \sum_{\ell=1}^{n}a_\ell\innerproduct{A\vect{x}_\ell}{A\vect{x}_\ell}\vect{x}_\ell
 &&\text{\acronymref{property}{C}}\\
