@@ -631,14 +631,16 @@ So the matrices $(AB)D$ and $A(BD)$ are equal, entry-by-entry, and by the defini
 %
 \end{proof}
 %
-The statement of our next theorem is technically inaccurate.  If we upgrade the vectors $\vect{u},\,\vect{v}$ to matrices with a single column, then the expression $\transpose{\vect{u}}\conjugate{\vect{v}}$ is a $1\times 1$ matrix, though we will treat this small matrix as if it was simply the scalar quantity in its lone entry.  When we apply \acronymref{theorem}{MMIP} there should not be any confusion.
+The statement of our next theorem is technically inaccurate.  If we upgrade the vectors $\vect{u},\,\vect{v}$ to matrices with a single column, then the expression $\transpose{\vect{u}}\conjugate{\vect{v}}$ is a $1\times 1$ matrix, though we will treat this small matrix as if it was simply the scalar quantity in its lone entry.  When we apply \acronymref{theorem}{MMIP} there should not be any confusion.  Notice that if we treat a column vector as a matrix with a single column, then we can also construct the adjoint of a vector, though will we will not make this a common practice.
 %
 \begin{theorem}{MMIP}{Matrix Multiplication and Inner Products}{matrix multiplication!inner product}
 If we consider the vectors $\vect{u},\,\vect{v}\in\complex{m}$ as $m\times 1$ matrices then
 %
-\begin{equation*}
-\innerproduct{\vect{u}}{\vect{v}}=\transpose{\vect{u}}\conjugate{\vect{v}}
-\end{equation*}
+\begin{align*}
+\innerproduct{\vect{u}}{\vect{v}}
+&=\transpose{\conjugate{\vect{u}}}\vect{v}
+&=\adjoint{\vect{u}}\vect{v}
+\end{align*}
 %
 \end{theorem}
 %
@@ -647,23 +649,23 @@ If we consider the vectors $\vect{u},\,\vect{v}\in\complex{m}$ as $m\times 1$ ma
 \begin{align*}
 \innerproduct{\vect{u}}{\vect{v}}
 %
-&=\sum_{k=1}^{m}\vectorentry{\vect{u}}{k}\conjugate{\vectorentry{\vect{v}}{k}}
+&=\sum_{k=1}^{m}\conjugate{\vectorentry{\vect{u}}{k}}\vectorentry{\vect{v}}{k}
 &&\text{\acronymref{definition}{IP}}\\
 %
-&=\sum_{k=1}^{m}\matrixentry{\vect{u}}{k1}\conjugate{\matrixentry{\vect{v}}{k1}}
+&=\sum_{k=1}^{m}\conjugate{\matrixentry{\vect{u}}{k1}}\matrixentry{\vect{v}}{k1}
 &&\text{Column vectors as matrices}\\
 %
-&=\sum_{k=1}^{m}\matrixentry{\transpose{\vect{u}}}{1k}\conjugate{\matrixentry{\vect{v}}{k1}}
+&=\sum_{k=1}^{m}\matrixentry{\conjugate{\vect{u}}}{k1}\matrixentry{\vect{v}}{k1}
+&&\text{\acronymref{definition}{CCM}}\\
+%
+&=\sum_{k=1}^{m}\matrixentry{\transpose{\conjugate{\vect{u}}}}{1k}\matrixentry{\vect{v}}{k1}
 &&\text{\acronymref{definition}{TM}}\\
 %
-&=\sum_{k=1}^{m}\matrixentry{\transpose{\vect{u}}}{1k}\matrixentry{\conjugate{\vect{v}}}{k1}
-&&\text{\acronymref{definition}{CCCV}}\\
-%
-&=\matrixentry{\transpose{\vect{u}}\conjugate{\vect{v}}}{11}
+&=\matrixentry{\transpose{\conjugate{\vect{u}}}\vect{v}}{11}
 &&\text{\acronymref{theorem}{EMP}}\\
 \end{align*}
 %
-To finish we just blur the distinction between a $1\times 1$ matrix ($\transpose{\vect{u}}\conjugate{\vect{v}}$) and its lone entry.
+To finish we just blur the distinction between a $1\times 1$ matrix ($\transpose{\conjugate{\vect{u}}}\vect{v}$) and its lone entry.
 %
 \end{proof}
 %
@@ -771,13 +773,16 @@ Suppose that $A$ is an $m\times n$ matrix and $\vect{x}\in\complex{n}$, $\vect{y
 %
 \begin{align*}
 \innerproduct{A\vect{x}}{\vect{y}}
-&=\transpose{\left(A\vect{x}\right)}\conjugate{\vect{y}}&&\text{\acronymref{theorem}{MMIP}}\\
-&=\transpose{\vect{x}}\transpose{A}\conjugate{\vect{y}}&&\text{\acronymref{theorem}{MMT}}\\
-&=\transpose{\vect{x}}\transpose{\left(\conjugate{\conjugate{A}}\right)}\conjugate{\vect{y}}&&\text{\acronymref{theorem}{CCM}}\\
-&=\transpose{\vect{x}}\conjugate{\left(\transpose{\left(\conjugate{A}\right)}\right)}\conjugate{\vect{y}}&&\text{\acronymref{theorem}{MCT}}\\
-&=\transpose{\vect{x}}\conjugate{\left(\adjoint{A}\right)}\conjugate{\vect{y}}&&\text{\acronymref{definition}{A}}\\
-&=\transpose{\vect{x}}\conjugate{\left(\adjoint{A}\vect{y}\right)}&&\text{\acronymref{theorem}{MMCC}}\\
-&=\innerproduct{\vect{x}}{\adjoint{A}\vect{y}}&&\text{\acronymref{theorem}{MMIP}}
+&=\transpose{\left(\conjugate{A\vect{x}}\right)}\vect{y}
+&&\text{\acronymref{theorem}{MMIP}}\\
+&=\transpose{\left(\conjugate{A}\,\conjugate{\vect{x}}\right)}\vect{y}
+&&\text{\acronymref{theorem}{MMCC}}\\
+&=\transpose{\conjugate{\vect{x}}}\transpose{\conjugate{A}}\vect{y}
+&&\text{\acronymref{theorem}{MMT}}\\
+&=\transpose{\conjugate{\vect{x}}}\left(\adjoint{A}\vect{y}\right)
+&&\text{\acronymref{definition}{A}}\\
+&=\innerproduct{\vect{x}}{\adjoint{A}\vect{y}}
+&&\text{\acronymref{theorem}{MMIP}}
 \end{align*}
 %
 \end{proof}
