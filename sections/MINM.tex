@@ -262,7 +262,7 @@ The proof revolves around recognizing that a typical entry of the product $\adjo
 &=\sum_{k=1}^{n}\matrixentry{\adjoint{A}}{ik}\matrixentry{A}{kj}
 &&\text{\acronymref{theorem}{EMP}}\\
 %
-&=\sum_{k=1}^{n}\matrixentry{\transpose{\left(\conjugate{A}\right)}}{ik}\matrixentry{A}{kj}
+&=\sum_{k=1}^{n}\matrixentry{\transpose{\conjugate{A}}}{ik}\matrixentry{A}{kj}
 &&\text{\acronymref{theorem}{EMP}}\\
 %
 &=\sum_{k=1}^{n}\matrixentry{\,\conjugate{A}\,}{ki}\matrixentry{A}{kj}
@@ -271,12 +271,9 @@ The proof revolves around recognizing that a typical entry of the product $\adjo
 &=\sum_{k=1}^{n}\conjugate{\matrixentry{A}{ki}}\matrixentry{A}{kj}
 &&\text{\acronymref{definition}{CCM}}\\
 %
-&=\sum_{k=1}^{n}\matrixentry{A}{kj}\conjugate{\matrixentry{A}{ki}}
-&&\text{\acronymref{property}{CMCN}}\\
+&=\sum_{k=1}^{n}\conjugate{\vectorentry{\vect{A}_i}{k}}\vectorentry{\vect{A}_j}{k}\\
 %
-&=\sum_{k=1}^{n}\vectorentry{\vect{A}_j}{k}\conjugate{\vectorentry{\vect{A}_i}{k}}\\
-%
-&=\innerproduct{\vect{A}_j}{\vect{A}_i}
+&=\innerproduct{\vect{A}_i}{\vect{A}_j}
 &&\text{\acronymref{definition}{IP}}
 %
 \end{align*}
@@ -285,7 +282,7 @@ We now employ this equality in a chain of equivalences,
 %
 \begin{align*}
 &\text{$S=\set{\vectorlist{A}{n}}$ is an orthonormal set}\\
-&\iff \innerproduct{\vect{A}_j}{\vect{A}_i}=
+&\iff \innerproduct{\vect{A}_i}{\vect{A}_j}=
 \begin{cases}
 0 &\text{if $i\neq j$}\\
 1 & \text{if $i=j$}
@@ -381,38 +378,26 @@ Suppose that $U$ is a unitary matrix of size $n$ and $\vect{u}$ and $\vect{v}$ a
 %
 \begin{align*}
 \innerproduct{U\vect{u}}{U\vect{v}}
-&=\transpose{(U\vect{u})}\conjugate{U\vect{v}}
+&=\transpose{\left(\conjugate{U\vect{u}}\right)}U\vect{v}
 &&\text{\acronymref{theorem}{MMIP}}\\
 %
-&=\transpose{\vect{u}}\transpose{U}\conjugate{U\vect{v}}
+&=\transpose{\left(\conjugate{U}\conjugate{\vect{u}}\right)}U\vect{v}
+&&\text{\acronymref{theorem}{MMCC}}\\
+%
+&=\transpose{\conjugate{\vect{u}}}\transpose{\conjugate{U}}U\vect{v}
 &&\text{\acronymref{theorem}{MMT}}\\
 %
-&=\transpose{\vect{u}}\transpose{U}\conjugate{U}\conjugate{\vect{v}}
-&&\text{\acronymref{theorem}{MMCC}}\\
-%
-&=\transpose{\vect{u}}\transpose{\left(\conjugate{\conjugate{U}}\right)}\conjugate{U}\conjugate{\vect{v}}
-&&\text{\acronymref{theorem}{CCT}}\\
-%
-&=\transpose{\vect{u}}\conjugate{\transpose{\left(\conjugate{U}\right)}}\conjugate{U}\conjugate{\vect{v}}
-&&\text{\acronymref{theorem}{MCT}}\\
-%
-&=\transpose{\vect{u}}\conjugate{\transpose{\left(\conjugate{U}\right)}U}\conjugate{\vect{v}}
-&&\text{\acronymref{theorem}{MMCC}}\\
-%
-&=\transpose{\vect{u}}\conjugate{\adjoint{U}U}\conjugate{\vect{v}}
+&=\transpose{\conjugate{\vect{u}}}\adjoint{U}U\vect{v}
 &&\text{\acronymref{definition}{A}}\\
 %
-&=\transpose{\vect{u}}\conjugate{I_n}\conjugate{\vect{v}}
+&=\transpose{\conjugate{\vect{u}}}I_n\vect{v}
 &&\text{\acronymref{definition}{UM}}\\
 %
-&=\transpose{\vect{u}}I_n\conjugate{\vect{v}}
-&&\text{\acronymref{definition}{IM}}\\
-%
-&=\transpose{\vect{u}}\conjugate{\vect{v}}
+&=\transpose{\conjugate{\vect{u}}}\vect{v}
 &&\text{\acronymref{theorem}{MMIM}}\\
 %
 &=\innerproduct{\vect{u}}{\vect{v}}
-&&\text{\acronymref{theorem}{MMIP}}\\
+&&\text{\acronymref{theorem}{MMIP}}
 %
 \end{align*}
 %
