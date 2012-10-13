@@ -14,15 +14,22 @@
 %%
 %%%%%%%%%%%
 %
-We begin with a familiar example, performed in a novel way.
+\begin{introduction}
+\begin{para}The inverse of a square matrix, and solutions to linear systems with square coefficient matrices, are intimately connected.\end{para}
+\end{introduction}
+%
+\begin{subsect}{SI}{Solutions and Inverses}
+%
+\begin{para}We begin with a familiar example, performed in a novel way.\end{para}
 %
 \begin{example}{SABMI}{Solutions to Archetype B with a matrix inverse}{Archetype B!solutions via inverse}
 %
-\acronymref{archetype}{B} is the system of $m=3$ linear equations in $n=3$ variables,
+\begin{para}\acronymref{archetype}{B} is the system of $m=3$ linear equations in $n=3$ variables,
 %
 \archetypepart{B}{definition}
+\end{para}
 %
-By \acronymref{theorem}{SLEMM} we can represent this system of equations as
+\begin{para}By \acronymref{theorem}{SLEMM} we can represent this system of equations as
 %
 \begin{equation*}
 A\vect{x}=\vect{b}
@@ -33,12 +40,12 @@ where
 \begin{align*}
 A=\archetypepart{B}{purematrix}&&\vect{x}=\colvector{x_1\\x_2\\x_3}&&\vect{b}=\colvector{-33\\24\\5}
 \end{align*}
+\end{para}
 %
-Now, entirely unmotivated, we define the $3\times 3$ matrix $B$,
+\begin{para}Now, entirely unmotivated, we define the $3\times 3$ matrix $B$,
 %
 \begin{equation*}
-B=\archetypepart{B}{matrixinverse}
-\end{equation*}
+B=\archetypepart{B}{matrixinverse}\end{equation*}
 %
 and note the remarkable fact that
 %
@@ -50,8 +57,9 @@ BA=\archetypepart{B}{matrixinverse}\archetypepart{B}{purematrix}=
 0 & 0 & 1
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-Now apply this computation to the problem of solving the system of equations,
+\begin{para}Now apply this computation to the problem of solving the system of equations,
 %
 \begin{align*}
 \vect{x}
@@ -60,62 +68,67 @@ Now apply this computation to the problem of solving the system of equations,
 &=B(A\vect{x})&&\text{\acronymref{theorem}{MMA}}\\
 &=B\vect{b}&&\text{Substitution}\\
 \end{align*}
+\end{para}
 %
-So we have
+\begin{para}So we have
 %
 \begin{equation*}
 \vect{x}=B\vect{b}=
 \archetypepart{B}{matrixinverse}\colvector{-33\\24\\5}=
 \colvector{-3\\5\\2}
-\end{equation*}
+\end{equation*}\end{para}
 %
-So with the help and assistance of $B$ we have been able to determine a solution to the system represented by $A\vect{x}=\vect{b}$ through judicious use of matrix multiplication.  We know by \acronymref{theorem}{NMUS} that since the coefficient matrix in this example is nonsingular, there would be a unique solution, no matter what the choice of $\vect{b}$.  The derivation above amplifies this result, since we were {\em forced} to conclude that $\vect{x}=B\vect{b}$ and the solution couldn't be anything else.  You should notice that this argument would hold for any particular value of $\vect{b}$.
+\begin{para}So with the help and assistance of $B$ we have been able to determine a solution to the system represented by $A\vect{x}=\vect{b}$ through judicious use of matrix multiplication.  We know by \acronymref{theorem}{NMUS} that since the coefficient matrix in this example is nonsingular, there would be a unique solution, no matter what the choice of $\vect{b}$.  The derivation above amplifies this result, since we were {\em forced} to conclude that $\vect{x}=B\vect{b}$ and the solution couldn't be anything else.  You should notice that this argument would hold for any particular value of $\vect{b}$.\end{para}
+%
 \end{example}
 %
-The matrix $B$ of the previous example is called the inverse of $A$.  When $A$ and $B$ are combined via matrix multiplication, the result is the identity matrix, which can be inserted ``in front'' of  $\vect{x}$ as the first step in finding the solution.  This is entirely analogous to how we might solve a single linear equation like $3x=12$.
+\begin{para}The matrix $B$ of the previous example is called the inverse of $A$.  When $A$ and $B$ are combined via matrix multiplication, the result is the identity matrix, which can be inserted ``in front'' of  $\vect{x}$ as the first step in finding the solution.  This is entirely analogous to how we might solve a single linear equation like $3x=12$.
 %
 \begin{equation*}
 x=1x=\left(\frac{1}{3}\left(3\right)\right)x=\frac{1}{3}\left(3x\right)=\frac{1}{3}\left(12\right)=4
 \end{equation*}
+\end{para}
 %
-Here we have obtained a solution by employing the ``multiplicative inverse'' of $3$, $3^{-1}=\frac{1}{3}$.  This works fine for any scalar multiple of $x$, except for zero, since zero does not have a multiplicative inverse.  Consider separately the two linear equations,
+\begin{para}Here we have obtained a solution by employing the ``multiplicative inverse'' of $3$, $3^{-1}=\frac{1}{3}$.  This works fine for any scalar multiple of $x$, except for zero, since zero does not have a multiplicative inverse.  Consider separately the two linear equations,
 %
 \begin{align*}
 0x&=12
 &
 0x&=0
 \end{align*}
+\end{para}
 %
-The first has no solutions, while the second has infinitely many solutions.  For matrices, it is all just a little more complicated.  Some matrices have inverses, some do not.  And when a matrix does have an inverse, just how would we compute it?  In other words, just where did that matrix $B$ in the last example come from?  Are there other matrices that might have worked just as well?
+\begin{para}The first has no solutions, while the second has infinitely many solutions.  For matrices, it is all just a little more complicated.  Some matrices have inverses, some do not.  And when a matrix does have an inverse, just how would we compute it?  In other words, just where did that matrix $B$ in the last example come from?  Are there other matrices that might have worked just as well?\end{para}
 %
-\subsect{IM}{Inverse of a Matrix}
+\end{subsect}
+%
+\begin{subsect}{IM}{Inverse of a Matrix}
 %
 \begin{definition}{MI}{Matrix Inverse}{matrix!inverse}
 \index{inverse!of a matrix}
-Suppose $A$ and $B$ are square matrices of size $n$ such that $AB=I_n$ and $BA=I_n$.  Then $A$ is \define{invertible} and $B$ is the \define{inverse} of $A$.  In this situation, we write $B=\inverse{A}$.
+\begin{para}Suppose $A$ and $B$ are square matrices of size $n$ such that $AB=I_n$ and $BA=I_n$.  Then $A$ is \define{invertible} and $B$ is the \define{inverse} of $A$.  In this situation, we write $B=\inverse{A}$.\end{para}
 \denote{MI}{Matrix Inverse}{$\inverse{A}$}{inverse}
 \end{definition}
 %
-Notice that if $B$ is the inverse of $A$, then we can just as easily say $A$ is the inverse of $B$, or $A$ and $B$ are inverses of each other.\par
+\begin{para}Notice that if $B$ is the inverse of $A$, then we can just as easily say $A$ is the inverse of $B$, or $A$ and $B$ are inverses of each other.\end{para}
 %
-Not every square matrix has an inverse.  In \acronymref{example}{SABMI} the matrix $B$ is the inverse of the coefficient matrix of \acronymref{archetype}{B}.  To see this it only remains to check that $AB=I_3$.  What about \acronymref{archetype}{A}?  It is an example of a square matrix without an inverse.
+\begin{para}Not every square matrix has an inverse.  In \acronymref{example}{SABMI} the matrix $B$ is the inverse of the coefficient matrix of \acronymref{archetype}{B}.  To see this it only remains to check that $AB=I_3$.  What about \acronymref{archetype}{A}?  It is an example of a square matrix without an inverse.\end{para}
 %
 \begin{example}{MWIAA}{A matrix without an inverse, Archetype A}{Archetype B!not invertible}
-Consider the coefficient matrix from \acronymref{archetype}{A},
+\begin{para}Consider the coefficient matrix from \acronymref{archetype}{A},
 %
 \begin{equation*}
-A=\archetypepart{A}{purematrix}
-\end{equation*}
+A=\archetypepart{A}{purematrix}\end{equation*}\end{para}
 %
-Suppose that $A$ is invertible and does have an inverse, say $B$.  Choose the vector of constants
+\begin{para}Suppose that $A$ is invertible and does have an inverse, say $B$.  Choose the vector of constants
 %
 \begin{equation*}
 \vect{b}=\colvector{1\\3\\2}
 \end{equation*}
 %
-and consider the system of equations $\linearsystem{A}{\vect{b}}$.  Just as in \acronymref{example}{SABMI}, this vector equation would have the unique solution $\vect{x}=B\vect{b}$.\par
+and consider the system of equations $\linearsystem{A}{\vect{b}}$.  Just as in \acronymref{example}{SABMI}, this vector equation would have the unique solution $\vect{x}=B\vect{b}$.\end{para}
 %
-However, the system $\linearsystem{A}{\vect{b}}$ is inconsistent.  Form the augmented matrix $\augmented{A}{\vect{b}}$ and row-reduce to
+\begin{para}However, the system $\linearsystem{A}{\vect{b}}$ is inconsistent.  Form the augmented matrix $\augmented{A}{\vect{b}}$ and row-reduce to
 %
 \begin{equation*}
 \begin{bmatrix}
@@ -125,18 +138,18 @@ However, the system $\linearsystem{A}{\vect{b}}$ is inconsistent.  Form the augm
 \end{bmatrix}
 \end{equation*}
 %
-which allows to recognize the inconsistency by \acronymref{theorem}{RCLS}.\par
+which allows us to recognize the inconsistency by \acronymref{theorem}{RCLS}.\end{para}
 %
-So the assumption of $A$'s inverse leads to a logical inconsistency (the system can't be both consistent and inconsistent), so our assumption is false.  $A$ is not invertible.\par
+\begin{para}So the assumption of $A$'s inverse leads to a logical inconsistency (the system can't be both consistent and inconsistent), so our assumption is false.  $A$ is not invertible.\end{para}
 %
-It's possible this example is less than satisfying.  Just where did that particular choice of the vector $\vect{b}$ come from anyway?  Stay tuned for an application of the future \acronymref{theorem}{CSCS} in \acronymref{example}{CSAA}.
+\begin{para}It's possible this example is less than satisfying.  Just where did that particular choice of the vector $\vect{b}$ come from anyway?  Stay tuned for an application of the future \acronymref{theorem}{CSCS} in \acronymref{example}{CSAA}.\end{para}
 %
 \end{example}
 %
-Let's look at one more matrix inverse before we embark on a more systematic study.
+\begin{para}Let's look at one more matrix inverse before we embark on a more systematic study.\end{para}
 %
 \begin{example}{MI}{Matrix inverse}{inverse}
-Consider the matrices,
+\begin{para}Consider the matrices,
 %
 \begin{align*}
 A&=
@@ -157,8 +170,9 @@ B&=
  1 & -1 & -2 & 0 & 1
 \end{bmatrix}
 \end{align*}
+\end{para}
 %
-Then
+\begin{para}Then
 %
 \begin{align*}
 AB
@@ -215,18 +229,21 @@ BA
 \end{align*}
 %
 so by \acronymref{definition}{MI}, we can say that $A$ is invertible and write $B=\inverse{A}$.
+\end{para}
 %
 \end{example}
 %
-We will now concern ourselves less with whether or not an inverse of a matrix exists, but instead with how you can find one when it does exist.  In \acronymref{section}{MINM} we will have some theorems that allow us to more quickly and easily determine just when a matrix is invertible.
+\begin{para}We will now concern ourselves less with whether or not an inverse of a matrix exists, but instead with how you can find one when it does exist.  In \acronymref{section}{MINM} we will have some theorems that allow us to more quickly and easily determine just when a matrix is invertible.\end{para}
 %
-\subsect{CIM}{Computing the Inverse of a Matrix}
+\end{subsect}
 %
-We've seen that the matrices from \acronymref{archetype}{B} and \acronymref{archetype}{K} both have inverses, but these inverse matrices have just dropped from the sky.  How would we compute an inverse?  And just when is a matrix invertible, and when is it not?  Writing a putative inverse with $n^2$ unknowns and solving the resultant $n^2$ equations is one approach.  Applying this approach to $2\times 2$ matrices can get us somewhere, so just for fun, let's do it.
+\begin{subsect}{CIM}{Computing the Inverse of a Matrix}
+%
+\begin{para}We've seen that the matrices from \acronymref{archetype}{B} and \acronymref{archetype}{K} both have inverses, but these inverse matrices have just dropped from the sky.  How would we compute an inverse?  And just when is a matrix invertible, and when is it not?  Writing a putative inverse with $n^2$ unknowns and solving the resultant $n^2$ equations is one approach.  Applying this approach to $2\times 2$ matrices can get us somewhere, so just for fun, let's do it.\end{para}
 %
 \begin{theorem}{TTMI}{Two-by-Two Matrix Inverse}{matrix inverse!size 2 matrices}
 %
-Suppose
+\begin{para}Suppose
 %
 \begin{equation*}
 A=
@@ -235,8 +252,9 @@ a&b\\
 c&d
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-Then $A$ is invertible if and only if $ad-bc\neq 0$.  When $A$ is invertible, then
+\begin{para}Then $A$ is invertible if and only if $ad-bc\neq 0$.  When $A$ is invertible, then
 %
 \begin{equation*}
 \inverse{A}=\frac{1}{ad-bc}
@@ -245,12 +263,13 @@ d&-b\\
 -c&a
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
 \end{theorem}
 %
 \begin{proof}
 %
-($\Leftarrow$) Assume that $ad-bc\neq 0$.  We will use the definition of the inverse of a matrix to establish that $A$ has inverse (\acronymref{definition}{MI}).  Note that if $ad-bc\neq 0$ then the displayed formula for $\inverse{A}$ is legitimate since we are not dividing by zero).  Using this proposed formula for the inverse of $A$, we compute
+\begin{para}($\Leftarrow$) Assume that $ad-bc\neq 0$.  We will use the definition of the inverse of a matrix to establish that $A$ has inverse (\acronymref{definition}{MI}).  Note that if $ad-bc\neq 0$ then the displayed formula for $\inverse{A}$ is legitimate since we are not dividing by zero).  Using this proposed formula for the inverse of $A$, we compute
 %
 \begin{align*}
 A\inverse{A}
@@ -279,10 +298,11 @@ A\inverse{A}
 =
 \begin{bmatrix}1&0\\0&1\end{bmatrix}
 \end{align*}
+\end{para}
 %
-By \acronymref{definition}{MI} this is sufficient to establish that $A$ is invertible, and that the expression for $\inverse{A}$ is correct.\par
+\begin{para}By \acronymref{definition}{MI} this is sufficient to establish that $A$ is invertible, and that the expression for $\inverse{A}$ is correct.\end{para}
 %
-($\Rightarrow$)\quad Assume that $A$ is invertible, and proceed with a proof by contradiction (\acronymref{technique}{CD}), by assuming also that $ad-bc=0$.  This translates to $ad=bc$.  Let
+\begin{para}($\Rightarrow$)\quad Assume that $A$ is invertible, and proceed with a proof by contradiction (\acronymref{technique}{CD}), by assuming also that $ad-bc=0$.  This translates to $ad=bc$.  Let
 %
 \begin{equation*}
 B=
@@ -292,7 +312,9 @@ g&h
 \end{bmatrix}
 \end{equation*}
 %
-be a putative inverse of $A$.  This means that
+be a putative inverse of $A$.\end{para}
+%
+\begin{para}This means that
 %
 \begin{equation*}
 I_2=AB=
@@ -311,8 +333,9 @@ ae+bg & af+bh\\
 ce+dg & cf+dh
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-Working on the matrices on two ends of this equation, we will multiply the top row by $c$ and the bottom row by $a$.
+\begin{para}Working on the matrices on two ends of this equation, we will multiply the top row by $c$ and the bottom row by $a$.
 %
 \begin{equation*}
 \begin{bmatrix}
@@ -325,8 +348,9 @@ ace+bcg & acf+bch\\
 ace+adg & acf+adh
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-We are assuming that $ad=bc$, so we can replace two occurrences of $ad$ by $bc$ in the bottom row of the right matrix.
+\begin{para}We are assuming that $ad=bc$, so we can replace two occurrences of $ad$ by $bc$ in the bottom row of the right matrix.
 %
 \begin{equation*}
 \begin{bmatrix}
@@ -339,10 +363,11 @@ ace+bcg & acf+bch\\
 ace+bcg & acf+bch
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-The matrix on the right now has two rows that are identical, and therefore the same must be true of the matrix on the left.    Identical rows for the matrix on the left implies that $a=0$ and $c=0$.\par
+\begin{para}The matrix on the right now has two rows that are identical, and therefore the same must be true of the matrix on the left.    Identical rows for the matrix on the left implies that $a=0$ and $c=0$.\end{para}
 %
-With this information, the product $AB$ becomes
+\begin{para}With this information, the product $AB$ becomes
 %
 \begin{equation*}
 \begin{bmatrix}
@@ -362,17 +387,18 @@ bg & bh\\
 dg & dh
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-So $bg=dh=1$ and thus $b,g,d,h$ are all nonzero.  But then $bh$ and $dg$ (the ``other corners'') must also be nonzero, so this is (finally) a contradiction.   So our assumption was false and we see that $ad-bc\neq 0$ whenever $A$ has an inverse.
+\begin{para}So $bg=dh=1$ and thus $b,g,d,h$ are all nonzero.  But then $bh$ and $dg$ (the ``other corners'') must also be nonzero, so this is (finally) a contradiction.   So our assumption was false and we see that $ad-bc\neq 0$ whenever $A$ has an inverse.\end{para}
 %
 \end{proof}
 %
-There are several ways one could try to prove this theorem, but there is a continual temptation to divide by one of the eight entries involved ($a$ through $f$), but we can never be sure if these numbers are zero or not.  This could lead to an analysis by cases, which is messy, messy, messy.  Note how the above proof never divides, but always multiplies, and how zero/nonzero considerations are handled.  Pay attention to the expression $ad-bc$, as we will see it again in a while (\acronymref{chapter}{D}).\par
+\begin{para}There are several ways one could try to prove this theorem, but there is a continual temptation to divide by one of the eight entries involved ($a$ through $f$), but we can never be sure if these numbers are zero or not.  This could lead to an analysis by cases, which is messy, messy, messy.  Note how the above proof never divides, but always multiplies, and how zero/nonzero considerations are handled.  Pay attention to the expression $ad-bc$, as we will see it again in a while (\acronymref{chapter}{D}).\end{para}
 %
-This theorem is cute, and it is nice to have a formula for the inverse, and a condition that tells us when we can use it.  However, this approach becomes impractical for larger matrices, even though it is possible to demonstrate that, in theory, there is a general formula.  (Think for a minute about extending this result to just $3\times 3$ matrices.  For starters, we need 18 letters!)  Instead, we will work column-by-column.  Let's first work an example that will motivate the main theorem and remove some of the previous mystery.
+\begin{para}This theorem is cute, and it is nice to have a formula for the inverse, and a condition that tells us when we can use it.  However, this approach becomes impractical for larger matrices, even though it is possible to demonstrate that, in theory, there is a general formula.  (Think for a minute about extending this result to just $3\times 3$ matrices.  For starters, we need 18 letters!)  Instead, we will work column-by-column.  Let's first work an example that will motivate the main theorem and remove some of the previous mystery.\end{para}
 %
 \begin{example}{CMI}{Computing a matrix inverse}{inverse}
-Consider the matrix defined in \acronymref{example}{MI} as,
+\begin{para}Consider the matrix defined in \acronymref{example}{MI} as,
 %
 \begin{equation*}
 A=
@@ -384,8 +410,9 @@ A=
  -1 & -3 & -1 & -3 & 1
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-For its inverse, we desire a matrix $B$ so that $AB=I_5$.  Emphasizing the structure of the columns and employing the definition of matrix multiplication \acronymref{definition}{MM},
+\begin{para}For its inverse, we desire a matrix $B$ so that $AB=I_5$.  Emphasizing the structure of the columns and employing the definition of matrix multiplication \acronymref{definition}{MM},
 %
 \begin{align*}
 AB&=I_5\\
@@ -394,8 +421,9 @@ A[\vect{B}_1|\vect{B}_2|\vect{B}_3|\vect{B}_4|\vect{B}_5]
 [A\vect{B}_1|A\vect{B}_2|A\vect{B}_3|A\vect{B}_4|A\vect{B}_5]
 &=[\vect{e}_1|\vect{e}_2|\vect{e}_3|\vect{e}_4|\vect{e}_5].
 \end{align*}
+\end{para}
 %
-Equating the matrices column-by-column we have
+\begin{para}Equating the matrices column-by-column we have
 %
 \begin{align*}
 A\vect{B}_1=\vect{e}_1&&
@@ -404,12 +432,13 @@ A\vect{B}_3=\vect{e}_3&&
 A\vect{B}_4=\vect{e}_4&&
 A\vect{B}_5=\vect{e}_5.
 \end{align*}
+\end{para}
 %
-Since the matrix $B$ is what we are trying to compute, we can view each column, $\vect{B}_i$, as a column vector of unknowns.  Then we have five systems of equations to solve, each with 5 equations in 5 variables.  Notice that all 5 of these systems have the same coefficient matrix.  We'll now solve each system in turn,
-%
-\begin{align*}
+\begin{para}Since the matrix $B$ is what we are trying to compute, we can view each column, $\vect{B}_i$, as a column vector of unknowns.  Then we have five systems of equations to solve, each with 5 equations in 5 variables.  Notice that all 5 of these systems have the same coefficient matrix.  We'll now solve each system in turn,
 %
 % Keep silly blank line to not confuse translators
+% and make a non-null firtst grouping
+\begin{align*}
 \ &
 \intertext{Row-reduce the augmented matrix of the linear system $\linearsystem{A}{\vect{e}_1}$,}
 \begin{bmatrix}
@@ -549,20 +578,21 @@ B=
  1 & -1 & -2 & 0 & 1
 \end{bmatrix}
 \end{align*}
+\end{para}
 %
-By this method, we know that $AB=I_5$.  Check that $BA=I_5$, and then we will know that we have the inverse of $A$.
+\begin{para}By this method, we know that $AB=I_5$.  Check that $BA=I_5$, and then we will know that we have the inverse of $A$.\end{para}
 \end{example}
 %
-Notice how the five systems of equations in the preceding example were all solved by {\em exactly} the same sequence of row operations.  Wouldn't it be nice to avoid this obvious duplication of effort?  Our main theorem for this section follows, and it mimics this previous example, while also avoiding all the overhead.
+\begin{para}Notice how the five systems of equations in the preceding example were all solved by {\em exactly} the same sequence of row operations.  Wouldn't it be nice to avoid this obvious duplication of effort?  Our main theorem for this section follows, and it mimics this previous example, while also avoiding all the overhead.\end{para}
 %
 \begin{theorem}{CINM}{Computing the Inverse of a Nonsingular Matrix}{matrix inverse!computation}
-Suppose $A$ is a nonsingular square matrix of size $n$.  Create the $n\times 2n$ matrix $M$ by placing the $n\times n$ identity matrix $I_n$ to the right of the matrix $A$.  Let $N$ be a matrix that is row-equivalent to $M$ and in reduced row-echelon form.  Finally,  let $J$ be the matrix formed from the final $n$ columns of $N$. Then $AJ=I_n$.
+\begin{para}Suppose $A$ is a nonsingular square matrix of size $n$.  Create the $n\times 2n$ matrix $M$ by placing the $n\times n$ identity matrix $I_n$ to the right of the matrix $A$.  Let $N$ be a matrix that is row-equivalent to $M$ and in reduced row-echelon form.  Finally,  let $J$ be the matrix formed from the final $n$ columns of $N$. Then $AJ=I_n$.\end{para}
 \end{theorem}
 %
 \begin{proof}
-$A$ is nonsingular, so by \acronymref{theorem}{NMRRI} there is a sequence of row operations that will convert $A$ into $I_n$.  It is this same sequence of row operations that will convert $M$ into $N$, since having the identity matrix in the first $n$ columns of $N$ is sufficient to guarantee that $N$ is in reduced row-echelon form.\par
+\begin{para}$A$ is nonsingular, so by \acronymref{theorem}{NMRRI} there is a sequence of row operations that will convert $A$ into $I_n$.  It is this same sequence of row operations that will convert $M$ into $N$, since having the identity matrix in the first $n$ columns of $N$ is sufficient to guarantee that $N$ is in reduced row-echelon form.\end{para}
 %
-If we consider the systems of linear equations, $\linearsystem{A}{\vect{e}_i}$, $1\leq i\leq n$, we see that the aforementioned sequence of row operations will also bring the augmented matrix of each of these systems into reduced row-echelon form.  Furthermore, the unique solution to $\linearsystem{A}{\vect{e}_i}$ appears in column $n+1$ of the row-reduced augmented matrix of the system and is identical to column $n+i$ of $N$.  Let $\vectorlist{N}{2n}$ denote the columns of $N$.  So we find,
+\begin{para}If we consider the systems of linear equations, $\linearsystem{A}{\vect{e}_i}$, $1\leq i\leq n$, we see that the aforementioned sequence of row operations will also bring the augmented matrix of each of these systems into reduced row-echelon form.  Furthermore, the unique solution to $\linearsystem{A}{\vect{e}_i}$ appears in column $n+1$ of the row-reduced augmented matrix of the system and is identical to column $n+i$ of $N$.  Let $\vectorlist{N}{2n}$ denote the columns of $N$.  So we find,
 %
 \begin{align*}
 AJ=&A[\vect{N}_{n+1}|\vect{N}_{n+2}|\vect{N}_{n+3}|\ldots|\vect{N}_{n+n}]\\
@@ -571,20 +601,20 @@ AJ=&A[\vect{N}_{n+1}|\vect{N}_{n+2}|\vect{N}_{n+3}|\ldots|\vect{N}_{n+n}]\\
 =&I_n&&\text{\acronymref{definition}{IM}}
 \end{align*}
 %
-as desired.
+as desired.\end{para}
 %
 \end{proof}
 %
-We have to be just a bit careful here about both what this theorem says and what it doesn't say.  If $A$ is a nonsingular matrix, then we are guaranteed a matrix $B$ such that $AB=I_n$, and the proof gives us a process for constructing $B$.   However, the definition of the inverse of a matrix (\acronymref{definition}{MI}) requires that $BA=I_n$ also.  So at this juncture we must compute the matrix product in the ``opposite'' order before we claim $B$ as the inverse of $A$.  However, we'll soon see that this is {\em always} the case, in \acronymref{theorem}{OSIS}, so the title of this theorem is not inaccurate.\par
+\begin{para}We have to be just a bit careful here about both what this theorem says and what it doesn't say.  If $A$ is a nonsingular matrix, then we are guaranteed a matrix $B$ such that $AB=I_n$, and the proof gives us a process for constructing $B$.   However, the definition of the inverse of a matrix (\acronymref{definition}{MI}) requires that $BA=I_n$ also.  So at this juncture we must compute the matrix product in the ``opposite'' order before we claim $B$ as the inverse of $A$.  However, we'll soon see that this is {\em always} the case, in \acronymref{theorem}{OSIS}, so the title of this theorem is not inaccurate.\end{para}
 %
-What if $A$ is singular?  At this point we only know that \acronymref{theorem}{CINM} cannot be applied.  The question of $A$'s inverse is still open.  (But see \acronymref{theorem}{NI} in the next section.)
+\begin{para}What if $A$ is singular?  At this point we only know that \acronymref{theorem}{CINM} cannot be applied.  The question of $A$'s inverse is still open.  (But see \acronymref{theorem}{NI} in the next section.)\end{para}
 %
-We'll finish by computing the inverse for the coefficient matrix of \acronymref{archetype}{B}, the one we just pulled from a hat in \acronymref{example}{SABMI}.  There are more examples in the Archetypes (\acronymref{appendix}{A}) to practice with, though notice that it is silly to ask for the inverse of a rectangular matrix (the sizes aren't right) and not every square matrix has an inverse (remember \acronymref{example}{MWIAA}?).
+\begin{para}We'll finish by computing the inverse for the coefficient matrix of \acronymref{archetype}{B}, the one we just pulled from a hat in \acronymref{example}{SABMI}.  There are more examples in the Archetypes (\acronymref{appendix}{A}) to practice with, though notice that it is silly to ask for the inverse of a rectangular matrix (the sizes aren't right) and not every square matrix has an inverse (remember \acronymref{example}{MWIAA}?).\end{para}
 %
 \begin{example}{CMIAB}{Computing a matrix inverse, Archetype B}{Archetype B!inverse}
 \index{matrix inverse!Archetype B}
 %
-\acronymref{archetype}{B} has a coefficient matrix given as
+\begin{para}\acronymref{archetype}{B} has a coefficient matrix given as
 %
 \begin{align*}
 B=&\archetypepart{B}{purematrix}\\
@@ -612,22 +642,24 @@ N=&
 \inverse{B}=&\archetypepart{B}{matrixinverse}
 \end{align*}
 %
-once we check that $\inverse{B}B=I_3$ (the product in the opposite order is a consequence of the theorem).
+once we check that $\inverse{B}B=I_3$ (the product in the opposite order is a consequence of the theorem).\end{para}
 %
 \end{example}
 %
 \sageadvice{MISLE}{Matrix Inverse, Systems of Equations}{matrix inverse, system of equations}
 %
-\subsect{PMI}{Properties of Matrix Inverses}
+\end{subsect}
 %
-The inverse of a matrix enjoys some nice properties.  We collect a few here.  First, a matrix can have but one inverse.
+\begin{subsect}{PMI}{Properties of Matrix Inverses}
+%
+\begin{para}The inverse of a matrix enjoys some nice properties.  We collect a few here.  First, a matrix can have but one inverse.\end{para}
 %
 \begin{theorem}{MIU}{Matrix Inverse is Unique}{matrix inverse!uniqueness}
-Suppose the square matrix $A$ has an inverse.  Then $\inverse{A}$ is unique.
+\begin{para}Suppose the square matrix $A$ has an inverse.  Then $\inverse{A}$ is unique.\end{para}
 \end{theorem}
 %
 \begin{proof}
-As described in \acronymref{technique}{U}, we will assume that $A$ has two inverses.  The hypothesis tells there is at least one.  Suppose then that $B$ and $C$ are both inverses for $A$, so we know by \acronymref{definition}{MI} that $AB=BA=I_n$ and $AC=CA=I_n$.  Then we have,
+\begin{para}As described in \acronymref{technique}{U}, we will assume that $A$ has two inverses.  The hypothesis tells there is at least one.  Suppose then that $B$ and $C$ are both inverses for $A$, so we know by \acronymref{definition}{MI} that $AB=BA=I_n$ and $AC=CA=I_n$.  Then we have,
 %
 \begin{align*}
 B
@@ -637,21 +669,23 @@ B
 &=I_nC&&\text{\acronymref{definition}{MI}}\\
 &=C&&\text{\acronymref{theorem}{MMIM}}\\
 \end{align*}
+\end{para}
 %
-So we conclude that $B$ and $C$ are the same, and cannot be different.  So any matrix that acts like {\em an} inverse, must be {\em the} inverse.
+\begin{para}So we conclude that $B$ and $C$ are the same, and cannot be different.  So any matrix that acts like {\em an} inverse, must be {\em the} inverse.\end{para}
+%
 \end{proof}
 %
-When most of us dress in the morning, we put on our socks first, followed by our shoes.  In the evening we must then first remove our shoes, followed by our socks.  Try to connect the conclusion of the following theorem with this everyday example.
+\begin{para}When most of us dress in the morning, we put on our socks first, followed by our shoes.  In the evening we must then first remove our shoes, followed by our socks.  Try to connect the conclusion of the following theorem with this everyday example.\end{para}
 %
 \begin{theorem}{SS}{Socks and Shoes}{matrix inverse!product}
 \index{socks}\index{shoes}
-Suppose $A$ and $B$ are invertible matrices of size $n$.  Then $AB$ is an invertible matrix and $\inverse{(AB)}=\inverse{B}\inverse{A}$.
+\begin{para}Suppose $A$ and $B$ are invertible matrices of size $n$.  Then $AB$ is an invertible matrix and $\inverse{(AB)}=\inverse{B}\inverse{A}$.\end{para}
 \end{theorem}
 %
 \begin{proof}
-At the risk of carrying our everyday analogies too far, the proof of this theorem is quite easy when we compare it to the workings of a dating service.  We have a statement about the inverse of the matrix $AB$, which for all we know right now might not even exist.  Suppose $AB$ was to sign up for a dating service with two requirements for a compatible date.  Upon multiplication on the left, and on the right, the result should be the identity matrix.  In other words, $AB$'s ideal date would be its inverse.\par
+\begin{para}At the risk of carrying our everyday analogies too far, the proof of this theorem is quite easy when we compare it to the workings of a dating service.  We have a statement about the inverse of the matrix $AB$, which for all we know right now might not even exist.  Suppose $AB$ was to sign up for a dating service with two requirements for a compatible date.  Upon multiplication on the left, and on the right, the result should be the identity matrix.  In other words, $AB$'s ideal date would be its inverse.\end{para}
 %
-Now along comes the matrix $\inverse{B}\inverse{A}$ (which we know exists because our hypothesis says both $A$ and $B$ are invertible and we can form the product of these two matrices), also looking for a date.  Let's see if $\inverse{B}\inverse{A}$ is a good match for $AB$.  First they meet at a non-committal neutral location, say a coffee shop, for quiet conversation:
+\begin{para}Now along comes the matrix $\inverse{B}\inverse{A}$ (which we know exists because our hypothesis says both $A$ and $B$ are invertible and we can form the product of these two matrices), also looking for a date.  Let's see if $\inverse{B}\inverse{A}$ is a good match for $AB$.  First they meet at a non-committal neutral location, say a coffee shop, for quiet conversation:
 %
 \begin{align*}
 (\inverse{B}\inverse{A})(AB)
@@ -668,18 +702,19 @@ Now along comes the matrix $\inverse{B}\inverse{A}$ (which we know exists becaus
 &=A\inverse{A}&&\text{\acronymref{theorem}{MMIM}}\\
 &=I_n&&\text{\acronymref{definition}{MI}}
 \end{align*}
+\end{para}
 %
-So the matrix $\inverse{B}\inverse{A}$ has met all of the requirements to be $AB$'s inverse (date) and with the ensuing marriage proposal we can announce that $\inverse{(AB)}=\inverse{B}\inverse{A}$.
+\begin{para}So the matrix $\inverse{B}\inverse{A}$ has met all of the requirements to be $AB$'s inverse (date) and with the ensuing marriage proposal we can announce that $\inverse{(AB)}=\inverse{B}\inverse{A}$.\end{para}
 %
 \end{proof}
 %
 \begin{theorem}{MIMI}{Matrix Inverse of a Matrix Inverse}{matrix inverse!of a matrix inverse}
 \index{transpose!matrix inverse}
-Suppose $A$ is an invertible matrix.  Then $\inverse{A}$ is invertible and $\inverse{(\inverse{A})}=A$.
+\begin{para}Suppose $A$ is an invertible matrix.  Then $\inverse{A}$ is invertible and $\inverse{(\inverse{A})}=A$.\end{para}
 \end{theorem}
 %
 \begin{proof}
-As with the proof of \acronymref{theorem}{SS}, we examine if $A$ is a suitable inverse for $\inverse{A}$ (by definition, the opposite is true).
+\begin{para}As with the proof of \acronymref{theorem}{SS}, we examine if $A$ is a suitable inverse for $\inverse{A}$ (by definition, the opposite is true).
 %
 \begin{align*}
 A\inverse{A}&=I_n&&\text{\acronymref{definition}{MI}}
@@ -688,18 +723,19 @@ A\inverse{A}&=I_n&&\text{\acronymref{definition}{MI}}
 %
 \inverse{A}A&=I_n&&\text{\acronymref{definition}{MI}}
 \end{align*}
+\end{para}
 %
-The matrix $A$ has met all the requirements to be the inverse of $\inverse{A}$, and so is invertible and we can write $A=\inverse{(\inverse{A})}$.
+\begin{para}The matrix $A$ has met all the requirements to be the inverse of $\inverse{A}$, and so is invertible and we can write $A=\inverse{(\inverse{A})}$.\end{para}
 %
 \end{proof}
 %
 \begin{theorem}{MIT}{Matrix Inverse of a Transpose}{matrix inverse!transpose}
 \index{transpose!matrix inverse}
-Suppose $A$ is an invertible matrix.  Then $\transpose{A}$ is invertible and $\inverse{(\transpose{A})}=\transpose{(\inverse{A})}$.
+\begin{para}Suppose $A$ is an invertible matrix.  Then $\transpose{A}$ is invertible and $\inverse{(\transpose{A})}=\transpose{(\inverse{A})}$.\end{para}
 \end{theorem}
 %
 \begin{proof}
-As with the proof of \acronymref{theorem}{SS}, we see if $\transpose{(\inverse{A})}$ is a suitable inverse for $\transpose{A}$. Apply \acronymref{theorem}{MMT} to see that
+\begin{para}As with the proof of \acronymref{theorem}{SS}, we see if $\transpose{(\inverse{A})}$ is a suitable inverse for $\transpose{A}$. Apply \acronymref{theorem}{MMT} to see that
 %
 \begin{align*}
 \transpose{(\inverse{A})}\transpose{A}
@@ -714,18 +750,19 @@ As with the proof of \acronymref{theorem}{SS}, we see if $\transpose{(\inverse{A
 &=\transpose{I_n}&&\text{\acronymref{definition}{MI}}\\
 &=I_n&&\text{\acronymref{definition}{SYM}}
 \end{align*}
+\end{para}
 %
-The matrix $\transpose{(\inverse{A})}$ has met all the requirements to be the inverse of $\transpose{A}$, and so is invertible and we can write $\inverse{(\transpose{A})}=\transpose{(\inverse{A})}$.
+\begin{para}The matrix $\transpose{(\inverse{A})}$ has met all the requirements to be the inverse of $\transpose{A}$, and so is invertible and we can write $\inverse{(\transpose{A})}=\transpose{(\inverse{A})}$.\end{para}
 %
 \end{proof}
 %
 \begin{theorem}{MISM}{Matrix Inverse of a Scalar Multiple}{matrix inverse!scalar multiple}
 \index{scalar multiple!matrix inverse}
-Suppose $A$ is an invertible matrix and $\alpha$ is a nonzero scalar.  Then $\inverse{\left(\alpha A\right)}=\frac{1}{\alpha}\inverse{A}$ and $\alpha A$ is invertible.
+\begin{para}Suppose $A$ is an invertible matrix and $\alpha$ is a nonzero scalar.  Then $\inverse{\left(\alpha A\right)}=\frac{1}{\alpha}\inverse{A}$ and $\alpha A$ is invertible.\end{para}
 \end{theorem}
 %
 \begin{proof}
-As with the proof of \acronymref{theorem}{SS}, we see if $\frac{1}{\alpha}\inverse{A}$ is a suitable inverse for $\alpha A$.
+\begin{para}As with the proof of \acronymref{theorem}{SS}, we see if $\frac{1}{\alpha}\inverse{A}$ is a suitable inverse for $\alpha A$.
 %
 \begin{align*}
 \left(\frac{1}{\alpha}\inverse{A}\right)\left(\alpha A\right)
@@ -740,12 +777,15 @@ As with the proof of \acronymref{theorem}{SS}, we see if $\frac{1}{\alpha}\inver
 &=1I_n&&\text{Scalar multiplicative inverses}\\
 &=I_n&&\text{\acronymref{property}{OM}}
 \end{align*}
+\end{para}
 %
-The matrix $\frac{1}{\alpha}\inverse{A}$ has met all the requirements to be the inverse of $\alpha A$, so we can write $\inverse{\left(\alpha A\right)}=\frac{1}{\alpha}\inverse{A}$.
+\begin{para}The matrix $\frac{1}{\alpha}\inverse{A}$ has met all the requirements to be the inverse of $\alpha A$, so we can write $\inverse{\left(\alpha A\right)}=\frac{1}{\alpha}\inverse{A}$.\end{para}
 %
 \end{proof}
 %
-Notice that there are some likely theorems that are missing here.  For example, it would be tempting to think that $\inverse{(A+B)}=\inverse{A}+\inverse{B}$, but this is false.  Can you find a counterexample? (See \acronymref{exercise}{MISLE.T10}.)
+\begin{para}Notice that there are some likely theorems that are missing here.  For example, it would be tempting to think that $\inverse{(A+B)}=\inverse{A}+\inverse{B}$, but this is false.  Can you find a counterexample? (See \acronymref{exercise}{MISLE.T10}.)\end{para}
+%
+\end{subsect}
 %
 %  End  misle.tex
 
