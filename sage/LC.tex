@@ -1,0 +1,47 @@
+We can redo \acronymref{example}{TLC} with Sage.  First we build the relevant vectors and then do the computation.
+%
+\begin{sageexample}
+sage: u1 = vector(QQ,  [ 2, 4, -3,  1,  2, 9])
+sage: u2 = vector(QQ,  [ 6, 3,  0, -2,  1, 4])
+sage: u3 = vector(QQ,  [-5, 2,  1,  1, -3, 0])
+sage: u4 = vector(QQ,  [ 3, 2, -5,  7,  1, 3])
+sage: 1*u1 + (-4)*u2 + 2*u3 +(-1)*u4
+(-35, -6, 4, 4, -9, -10)
+\end{sageexample}
+%
+With a linear combination combining many vectors, we sometimes will use more compact ways of forming a linear combination.  So we will redo the second linear combination of $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4$ using a list comprehension and the \verb?sum()? function.
+%
+\begin{sageexample}
+sage: vectors = [u1, u2, u3, u4]
+sage: scalars = [3, 0, 5, -1]
+sage: multiples = [scalars[i]*vectors[i] for i in range(4)]
+sage: multiples
+[(6, 12, -9, 3, 6, 27), (0, 0, 0, 0, 0, 0),
+ (-25, 10, 5, 5, -15, 0), (-3, -2, 5, -7, -1, -3)]
+\end{sageexample}
+%
+We have constructed two lists and used a list comprehension to just form the scalar multiple of each vector as part of the list \verb?multiples?.  Now we use the \verb?sum()? function to add them all together.
+%
+\begin{sageexample}
+sage: sum(multiples)
+(-22, 20, 1, 1, -10, 24)
+\end{sageexample}
+%
+We can improve on this in two ways.  First, we can determine the number of elements in any list with the \verb?len()? function.  So we do not have to count up that we have 4 vectors (not that it is very hard to count!).  Second, we can combine this all into one line, once we have defined the list of vectors and the list of scalars.
+%
+\begin{sageexample}
+sage: sum([scalars[i]*vectors[i] for i in range(len(vectors))])
+(-22, 20, 1, 1, -10, 24)
+\end{sageexample}
+%
+The corresponding expression in mathematical notation, after a change of names and with counting starting from 1, would roughly be:
+%
+\begin{align*}
+\sum_{i=1}^4 a_i\vect{u}_i
+\end{align*}
+%
+Using \verb?sum()? and a list comprehension might be overkill in this example, but we will find it very useful in just a minute.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

@@ -1,0 +1,47 @@
+We can easily illustrate \acronymref{theorem}{SLSLC} with Sage.  We will use \acronymref{archetype}{F} as an example.
+%
+\begin{sageexample}
+sage: coeff = matrix(QQ, [[33, -16,  10,-2],
+...                       [99, -47,  27,-7],
+...                       [78, -36,  17,-6],
+...                       [-9,   2,   3, 4]])
+sage: const = vector(QQ, [-27, -77, -52, 5])
+\end{sageexample}
+%
+A solution to this system is $x_1=1,\,x_2=2,\,x_3=-2,\,x_4=4$.  So we will use these four values as scalars in a linear combination of the columns of the coefficient matrix.  However, we do not have to type in the columns individually, we can have Sage extract them all for us into a list with the matrix method \verb?.columns()?.
+%
+\begin{sageexample}
+sage: cols = coeff.columns()
+sage: cols
+[(33, 99, 78, -9), (-16, -47, -36, 2),
+ (10, 27, 17, 3), (-2, -7, -6, 4)]
+\end{sageexample}
+%
+With our scalars also in a list, we can compute the linear combination of the columns, like we did in \acronymref{sage}{LC}.
+%
+\begin{sageexample}
+sage: soln = [1, 2, -2, 4]
+sage: sum([soln[i]*cols[i] for i in range(len(cols))])
+(-27, -77, -52, 5)
+\end{sageexample}
+%
+So we see that the solution gives us scalars that yield the vector of constants as a linear combination of the columns of the coefficient matrix.  Exactly as predicted by \acronymref{theorem}{SLSLC}.  We can duplicate this observation with just one line:
+%
+\begin{sageexample}
+sage: const == sum([soln[i]*cols[i] for i in range(len(cols))])
+True
+\end{sageexample}
+%
+In a similar fashion we can test other potential solutions.  With theory we will develop later, we will be able to determine that \acronymref{archetype}{F} has only one solution.  Since \acronymref{theorem}{SLSLC} is an equivalence (\acronymref{technique}{E}), any other choice for the scalars should not create the vector of constants as a linear combination.
+%
+\begin{sageexample}
+sage: alt_soln = [-3, 2, 4, 1]
+sage: const == sum([alt_soln[i]*cols[i] for i in range(len(cols))])
+False
+\end{sageexample}
+%
+Now would be a good time to find another system of equations, perhaps one with infinitely many solutions, and practice the techniques above.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

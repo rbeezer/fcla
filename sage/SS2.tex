@@ -1,0 +1,35 @@
+We can now resolve a bit of the mystery around Sage's \verb?.solve_right()? method.  Recall from \acronymref{sage}{SS1} that if a linear system has solutions, Sage only provides one solution, even in the case when there are infinitely many solutions.  In our previous discussion, we used the system from \acronymref{example}{ISSI}.
+%
+\begin{sageexample}
+sage: coeff = matrix(QQ, [[ 1,  4,  0, -1,  0,   7, -9],
+...                       [ 2,  8, -1,  3,  9, -13,  7],
+...                       [ 0,  0,  2, -3, -4,  12, -8],
+...                       [-1, -4,  2,  4,  8, -31, 37]])
+sage: const = vector(QQ, [3, 9, 1, 4])
+sage: coeff.solve_right(const)
+(4, 0, 2, 1, 0, 0, 0)
+\end{sageexample}
+%
+The vector $\vect{c}$ described in the statement of \acronymref{theorem}{VFSLS} is precisely the solution returned from Sage's \verb?.solve_right()? method.  This is the solution where we choose the $\alpha_i$, $1\leq i\leq n-r$ to all be zero, in other words, each free variable is set to zero (how convenient!).  Free variables correspond to columns of the row-reduced augmented matrix that are \emph{not} pivot columns.  So we can profitably employ the \verb?.nonpivots()? matrix method.  Lets put this all together.
+%
+\begin{sageexample}
+sage: aug = coeff.augment(const)
+sage: reduced = aug.rref()
+sage: reduced
+[ 1  4  0  0  2  1 -3  4]
+[ 0  0  1  0  1 -3  5  2]
+[ 0  0  0  1  2 -6  6  1]
+[ 0  0  0  0  0  0  0  0]
+sage: aug.nonpivots()
+(1, 4, 5, 6, 7)
+\end{sageexample}
+%
+Since the eighth column (numbered 7) of the reduced row-echelon form is not a pivot column, we know by \acronymref{theorem}{RCLS} that the system is consistent.  We can use the indices of the remaining non-pivot columns to place zeros into the vector $\vect{c}$ in those locations.  The remaining entries of $\vect{c}$ are the entries of the reduced row-echelon form in the last column, inserted in that order.  Boom!\par
+%
+So we have three ways to get to the same solution: (a) row-reduce the augmented matrix and set the free variables all to zero, (b) row-reduce the augmented matrix and use the formula from \acronymref{theorem}{VFSLS} to construct $\vect{c}$, and (c) use Sage's \verb?.solve_right()? method.\par
+%
+One mystery left to resolve.  How can we get Sage to give us infinitely many solutions in the case of systems with an infinite solution set?  This is best handled in the next section, \acronymref{section}{SS}, specifically in \acronymref{sage}{SS3}.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

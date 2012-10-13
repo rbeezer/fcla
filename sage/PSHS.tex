@@ -1,0 +1,54 @@
+Again, Sage is useful for illustrating a theorem, in this case \acronymref{theorem}{PSPHS}.  We will illustrate both ``directions'' of this equivalence with the system from \acronymref{example}{ISSI}.
+%
+\begin{sageexample}
+sage: coeff = matrix(QQ,[[ 1,  4,  0, -1,  0,   7, -9],
+...                      [ 2,  8, -1,  3,  9, -13,  7],
+...                      [ 0,  0,  2, -3, -4,  12, -8],
+...                      [-1, -4,  2,  4,  8, -31, 37]])
+sage: n = coeff.ncols()
+sage: const = vector(QQ, [3, 9, 1, 4])
+\end{sageexample}
+%
+First we will build solutions to this system.  \acronymref{theorem}{PSPHS} says we need a particular solution, i.e.\ one solution to the system, $\vect{w}$.  We can get this from Sage's \verb?.solve_right()? matrix method.  Then for \emph{any} vector $\vect{z}$ from the null space of the coefficient matrix, the new vector $\vect{y}=\vect{w}+\vect{z}$ should be a solution.  We walk through this construction in the next few cells, where we have employed a specific element of the null space, \verb?z?, along with a check that it is really in the null space.
+%
+\begin{sageexample}
+sage: w = coeff.solve_right(const)
+sage: nsp = coeff.right_kernel(basis='pivot')
+sage: z = vector(QQ, [42, 0, 84, 28, -50, -47, -35])
+sage: z in nsp
+True
+sage: y = w + z
+sage: y
+(46, 0, 86, 29, -50, -47, -35)
+sage: const == sum([y[i]*coeff.column(i) for i in range(n)])
+True
+\end{sageexample}
+%
+You can create solutions repeatedly via the creation of random elements of the null space.  Be sure you have executed the cells above, so that \verb?coeff?, \verb?n?, \verb?const?, \verb?nsp? and \verb?w? are all defined.  Try executing the cell below repeatedly to test infinitely many solutions to the system.  You can use the subsequent compute cell to peek at any of the solutions you create.
+%
+\begin{sageexample}
+sage: z = nsp.random_element()
+sage: y = w + z
+sage: const == sum([y[i]*coeff.column(i) for i in range(n)])
+True
+sage: y     # random
+(-11/2, 0, 45/2, 34, 0, 7/2, -2)
+\end{sageexample}
+%
+For the other direction, we present (and verify) two solutions to the linear system of equations.  The condition that $\vect{y}=\vect{w}+\vect{z}$ can be rewritten as $\vect{y}-\vect{w}=\vect{z}$, where $\vect{z}$ is in the null space of the coefficient matrix.  which of our two solutions is the ``particular'' solution and which is ``some other'' solution?  It does not matter, it is all sematics at this point.  What is important is that their \emph{difference} is an element of the null space (in either order).  So we define the solutions, along with checks that they are really solutions, then examine their difference.
+%
+\begin{sageexample}
+sage: soln1 = vector(QQ,[4, 0, -96, 29, 46, 76, 56])
+sage: const == sum([soln1[i]*coeff.column(i) for i in range(n)])
+True
+sage: soln2 = vector(QQ,[-108, -84, 86, 589, 240, 283, 105])
+sage: const == sum([soln2[i]*coeff.column(i) for i in range(n)])
+True
+sage: (soln1 - soln2) in nsp
+True
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+
