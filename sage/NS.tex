@@ -1,0 +1,87 @@
+Sage will compute a null space for us.  Which is rather remarkable, as it is an infinite set!  Again, this is a powerful command, and there is lots of associated theory, so we will not understand everything about it right away, and it also has a radically different name in Sage.  But we will find it useful immediately.  Lets reprise \acronymref{example}{NSEAI}.  The relevant command to build the null space of a matrix is \verb?.right_kernel()?, where again, we will rely exclusively on the ``right'' version.  Also, to match our work in the text, and make the results more recognizable, we will consistently us the keyword option \verb?basis='pivot'?, which we will be able to explain once we have more theory (\acronymref{sage}{SSNS}, \acronymref{sage}{SUTH0}).  Note too, that this is a place where it is critical that matrices are defined to use the rationals as their number system (\verb?QQ?).
+%
+\begin{sageexample}
+sage: I = matrix(QQ, [[ 1,  4,  0, -1,  0,   7, -9],
+...                   [ 2,  8, -1,  3,  9, -13,  7],
+...                   [ 0,  0,  2, -3, -4,  12, -8],
+...                   [-1, -4,  2,  4,  8, -31, 37]])
+sage: nsp = I.right_kernel(basis='pivot')
+sage: nsp
+Vector space of degree 7 and dimension 4 over Rational Field
+User basis matrix:
+[-4  1  0  0  0  0  0]
+[-2  0 -1 -2  1  0  0]
+[-1  0  3  6  0  1  0]
+[ 3  0 -5 -6  0  0  1]
+\end{sageexample}
+%
+As we said, \verb?nsp? contains a lot of unfamiliar information.  Ignore most of it for now.  But as a set, we can test membership in \verb?nsp?.
+%
+\begin{sageexample}
+sage: x = vector(QQ, [3, 0, -5, -6, 0, 0, 1])
+sage: x in nsp
+True
+\end{sageexample}
+%
+\begin{sageexample}
+sage: y = vector(QQ, [-4, 1, -3, -2, 1, 1, 1])
+sage: y in nsp
+True
+\end{sageexample}
+%
+\begin{sageexample}
+sage: z = vector(QQ, [1, 0, 0, 0, 0, 0, 2])
+sage: z in nsp
+False
+\end{sageexample}
+%
+We did a bad thing above, as Sage likes to use \verb?I? for the imaginary number $i=\sqrt{-1}$ and we just clobbered that.  We won't do it again.
+%
+\verb?nsp? is an infinite set.  Since we know the null space is defined as solution to a system of equations, and the work above shows it has at least two elements, we are not surprised to discover that the set is infinite (\acronymref{theorem}{PSSLS}).
+%
+\begin{sageexample}
+sage: nsp.is_finite()
+False
+\end{sageexample}
+%
+If we want an element of the null space to experiment with, we can get a ``random'' element easily.  Evaluate the following compute cell repeatedly to get a feel for the variety of the different output.  You will see a different result each time, and the result supplied in your downloaded worksheet is very unlikely to be a result you will ever see again.  The bit of text, \verb!# random!, is technically a ``comment'', but we are using it as a signal to our automatic testing of the Sage examples that this example should be skipped.  You \emph{do not} need to use this device in your own work, though you may use the comment syntax if you wish.
+%
+\begin{sageexample}
+sage: z = nsp.random_element()
+sage: z                       # random
+(21/5, 1, -102/5, -204/5, -3/5, -7, 0)
+sage: z in nsp
+True
+\end{sageexample}
+%
+Sometimes, just sometimes, the null space is finite, and we can list its elements.  This is from \acronymref{example}{CNS2}.
+%
+\begin{sageexample}
+sage: C = matrix(QQ, [[-4, 6, 1],
+...                   [-1, 4, 1],
+...                   [ 5, 6, 7],
+...                   [ 4, 7, 1]])
+sage: Cnsp = C.right_kernel(basis='pivot')
+sage: Cnsp.is_finite()
+True
+\end{sageexample}
+%
+\begin{sageexample}
+sage: Cnsp.list()
+[(0, 0, 0)]
+\end{sageexample}
+%
+Notice that we get back a list (which mathematically is really a set), and it has one element, the three-entry zero vector.\par
+%
+There is more to learn about exploring the null space with Sage's \verb?.right_kernel()? so we will see more of this matrix method.  In the meantime, if you are done experimenting with the matrix \verb?I? we can restore the variable \verb?I? back to being the imaginary number $i = \sqrt{-1}$ with the Sage \verb?restore()? command.
+%
+\begin{sageexample}
+sage: restore()
+sage: I^2
+-1
+\end{sageexample}
+%
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
