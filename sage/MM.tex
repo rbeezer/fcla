@@ -1,0 +1,31 @@
+Matrix multiplication is very natural in Sage, and is just as easy as multiplying two numbers.  We illustrate \acronymref{theorem}{EMP} by using it to compute the entry in the first row and third column.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[3, -1, 2,  5],
+...                   [9,  1, 2, -4]])
+sage: B = matrix(QQ, [[1,  6, 1],
+...                   [0, -1, 2],
+...                   [5,  2, 3],
+...                   [1,  1, 1]])
+sage: A*B
+[18 28 12]
+[15 53 13]
+sage: sum([A[0,k]*B[k,2] for k in range(A.ncols())])
+12
+\end{sageexample}
+%
+Note in the final statement, we could replace \verb?A.ncols()? by \verb?B.nrows()? since these two quantities must be identical.  You can experiment with the last statement by editing it to compute any of the five other entries of the matrix product.\par
+%
+Square matrices can be multiplied in either order, but the result will almost always be different.  Execute repeatedly the following products of two random $4\times 4$ matrices, with a check on the equality of the two products in either order.  It is possible, but highly unlikely, that the two products will be equal.  So if this compute cell ever produces \verb?True? it will be a minor miracle.
+%
+\begin{sageexample}
+sage: A = random_matrix(QQ,4,4)
+sage: B = random_matrix(QQ,4,4)
+sage: A*B == B*A       # random, sort of
+False
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+

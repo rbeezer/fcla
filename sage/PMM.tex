@@ -1,0 +1,32 @@
+As before, we can use Sage to demonstrate theorems.  With randomly-generated matrices, these verifications might be even more believable.  Some of the above results should feel fairly routine, but some are perhaps contrary to intuition.  For example, \acronymref{theorem}{MMT} might at first glance seem surprising due to the requirement that the order of the product is reversed.  Here is how we would investigate this theorem in Sage.  The following compute cell should \emph{always} return \verb?True?.  Repeated experimental evidence does not make a proof, but certainly gives us confidence.
+%
+\begin{sageexample}
+sage: A = random_matrix(QQ, 3, 7)
+sage: B = random_matrix(QQ, 7, 5)
+sage: (A*B).transpose() == B.transpose()*A.transpose()
+True
+\end{sageexample}
+%
+By now, you can probably guess the matrix method for checking if a matrix is Hermitian.
+%
+\begin{sageexample}
+sage: A = matrix(QQbar, [[     45, -5-12*I, -1-15*I, -56-8*I],
+...                      [-5+12*I,      42,    32*I, -14-8*I],
+...                      [-1+15*I,   -32*I,      57,    12+I],
+...                      [-56+8*I, -14+8*I,    12-I,      93]])
+sage: A.is_hermitian()
+True
+\end{sageexample}
+%
+We can illustrate the most fundamental property of a Hermitian matrix.  The vectors \verb?x? and \verb?y? below are random, but according to \acronymref{theorem}{HMIP} the final command should produce \verb?True? for any possible values of these two vectors.   (You would be right to think that using random vectors over \verb?QQbar? would be a better idea, but at this writing, these vectors are not as ``random'' as one would like, and are insufficient to perform an accurate test here.)
+%
+\begin{sageexample}
+sage: x = random_vector(QQ, 4) + QQbar(I)*random_vector(QQ, 4)
+sage: y = random_vector(QQ, 4) + QQbar(I)*random_vector(QQ, 4)
+sage: (A*x).hermitian_inner_product(y) == x.hermitian_inner_product(A*y)
+True
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
