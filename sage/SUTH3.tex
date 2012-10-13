@@ -1,0 +1,47 @@
+We have seen that Sage is able to add two linear transformations, or multiply a single linear transformation by a scalar.  Under the hood, this is accomplished by simply adding matrix representations, or multiplying a matrix by a scalar, according to \acronymref{theorem}{MRSLT} and \acronymref{theorem}{MRMLT} (respectively).  \acronymref{theorem}{MRCLT} says linear transformation composition is matrix representation multiplication.  Is it still a mystery why we use the symbol \verb?*? for linear transformation composition in Sage?\par
+%
+We could do several examples here, but you should now be able to construct them yourselves.  We will do just one, linear transformation composition is matrix representation multiplication.
+%
+\begin{sageexample}
+sage: x1, x2, x3, x4 = var('x1, x2, x3, x4')
+sage: outputs = [-5*x1 - 2*x2 +   x3,
+...               4*x1 - 3*x2 - 3*x3,
+...               4*x1 - 6*x2 - 4*x3,
+...               5*x1 + 3*x2       ]
+sage: T_symbolic(x1, x2, x3) = outputs
+sage: outputs = [-3*x1 - x2 + x3 + 2*x4,
+...               7*x1 + x2 + x3 -   x4]
+sage: S_symbolic(x1, x2, x3, x4) = outputs
+
+sage: b0 = vector(QQ, [-1, -2,  2])
+sage: b1 = vector(QQ, [ 1,  1,  0])
+sage: b2 = vector(QQ, [ 0,  3, -5])
+sage: U = (QQ^3).subspace_with_basis([b0, b1, b2])
+
+sage: c0 = vector(QQ, [ 0,  0,  2,  1])
+sage: c1 = vector(QQ, [ 2, -3, -1, -6])
+sage: c2 = vector(QQ, [-2,  3,  2,  7])
+sage: c3 = vector(QQ, [ 1, -2, -4, -6])
+sage: V = (QQ^4).subspace_with_basis([c0, c1, c2, c3])
+
+sage: d0 = vector(QQ, [3, 4])
+sage: d1 = vector(QQ, [2, 3])
+sage: W = (QQ^2).subspace_with_basis([d0, d1])
+
+sage: T = linear_transformation(U, V, T_symbolic)
+sage: S = linear_transformation(V, W, S_symbolic)
+
+sage: (S*T).matrix('right')
+[-321  218  297]
+[ 456 -310 -422]
+sage: S.matrix(side='right')*T.matrix(side='right')
+[-321  218  297]
+[ 456 -310 -422]
+\end{sageexample}
+%
+Extra credit: what changes do you need to make if you dropped the \verb?side='right'? option on these three matrix representations?
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+

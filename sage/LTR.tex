@@ -1,0 +1,94 @@
+\acronymref{theorem}{KNSI} and \acronymref{theorem}{RCSI} have two of the most subtle proofs we have seen so far.  The conclusion that two vector spaces are isomorphic is established by actually constructing an isomorphism between the vector spaces.  To build the isomorphism, we begin with a familar object, a vector representation linear transformation, but the hard work is showing that we can ``restrict'' the domain and codomain of this function and still arrive at a legitimate (bijective) linear transformation.  In an effort to make the proofs more concrete, we will walk through a nontrivial example for \acronymref{theorem}{KNSI}, and you might try to do the same for \acronymref{theorem}{RCSI}.  (An understanding of this subsection is not needed for the remainder --- its second purpose is to demonstrate some of the powerful tools Sage provides.)\par
+%
+Here are the pieces.  We build a linear transformation with two different representations, one with respect to standard bases, the other with respect to less-obvious bases.
+%
+\begin{sageexample}
+sage: x1, x2, x3, x4, x5 = var('x1, x2, x3, x4, x5')
+sage: outputs = [ x1 - x2 - 5*x3 +   x4 +   x5,
+...               x1      - 2*x3 -   x4 -   x5,
+...                  - x2 - 3*x3 + 2*x4 + 2*x5,
+...              -x1 + x2 + 5*x3 -   x4 -   x5]
+sage: T_symbolic(x1, x2, x3, x4, x5) = outputs
+
+sage: b0 = vector(QQ, [-1,  6,  5,  5,  1])
+sage: b1 = vector(QQ, [-1,  5,  4,  4,  1])
+sage: b2 = vector(QQ, [-2,  4,  3,  2,  5])
+sage: b3 = vector(QQ, [ 1, -1,  0,  1, -5])
+sage: b4 = vector(QQ, [ 3, -7, -6, -5, -4])
+sage: U = (QQ^5).subspace_with_basis([b0, b1, b2, b3, b4])
+
+sage: c0 = vector(QQ, [1, 1, 1, -3])
+sage: c1 = vector(QQ, [-2, 3, -6, -7])
+sage: c2 = vector(QQ, [0, -1, 1, 2])
+sage: c3 = vector(QQ, [-1, 3, -4, -7])
+sage: V = (QQ^4).subspace_with_basis([c0, c1, c2, c3])
+
+sage: T_plain = linear_transformation(QQ^5, QQ^4, T_symbolic)
+sage: T_fancy = linear_transformation(   U,    V, T_symbolic)
+\end{sageexample}
+%
+Now we compute the kernel of the linear transformation using the ``plain'' version, and the null space of a matrix representation coming from the ``fancy'' version.
+%
+\begin{sageexample}
+sage: K = T_plain.kernel()
+sage: K
+Vector space of degree 5 and dimension 3 over Rational Field
+Basis matrix:
+[   1    0  2/7    0  3/7]
+[   0    1 -1/7    0  2/7]
+[   0    0    0    1   -1]
+sage: MK = T_fancy.matrix(side='right').right_kernel()
+sage: MK
+Vector space of degree 5 and dimension 3 over Rational Field
+Basis matrix:
+[      1       0       0 -97/203 164/203]
+[      0       1       0  -10/29   19/29]
+[      0       0       1 129/203 100/203]
+\end{sageexample}
+%
+So quite obviously, the kernel of the linear transformation is quite different looking from the null space of the matrix representation.  Though it is no accident that they have the same dimension.  Now we build the necessary vector representation, and use two Sage commands to ``restrict'' the function to a smaller domain (the kernel of the linear transformation) and a smaller codomain (the null space of the matrix representation relative to nonstandard bases).
+%
+\begin{sageexample}
+sage: rhoB = linear_transformation(U, QQ^5, (QQ^5).basis())
+sage: rho_restrict = rhoB.restrict_domain(K).restrict_codomain(MK)
+sage: rho_restrict
+Vector space morphism represented by the matrix:
+[ 33/7 -37/7 -11/7]
+[-13/7  22/7 -12/7]
+[   -4     5     6]
+Domain: Vector space of degree 5 and dimension 3 over Rational Field
+Basis matrix:
+[   1    0  2/7    0  3/7]
+[   0    1 -1/7    0  2/7]
+[   0    0    0    1   -1]
+Codomain: Vector space of degree 5 and dimension 3 over Rational Field
+Basis matrix:
+[      1       0       0 -97/203 164/203]
+[      0       1       0  -10/29   19/29]
+[      0       0       1 129/203 100/203]
+\end{sageexample}
+%
+The first success is that the restriction was even created.  Sage would recognize if the original linear transformation ever carried an input from the restricted domain to an output that was not contained in the proposed codomain, and would have raised an error in that event.  Phew!  Guaranteeing this success was the first big step in the proof of \acronymref{theorem}{KNSI}.  Notice that the matrix representation of the restriction is a $3\times 3$ matrix, since the restriction runs between a domain and codomain that each have dimension 3.  These two vector spaces (the domain and codomain of the restriction) have dimension 3 but still contain vectors with 5 entries in their un-coordinatized versions.\par
+%
+The next two steps of the proof show that the restriction is injective (easy in the proof) and surjective (hard in the proof).  In Sage, here is the second success,
+%
+\begin{sageexample}
+sage: rho_restrict.is_injective()
+True
+sage: rho_restrict.is_surjective()
+True
+\end{sageexample}
+%
+Verified as a bijection, \verb?rho_restrict? qualifies as an isomorphism between the linear transformation kernel, \verb?K?, and the matrix representation null space, \verb?MK?.  Only an example, but still very nice.  Your turn --- can you create a verfication of \acronymref{theorem}{RCSI} (for this example, or some other nontrivial example you might create yourself)?
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+
+
+
+
+
+
+
+
