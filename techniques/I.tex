@@ -7,32 +7,30 @@
 %%%%(c)  See the file COPYING.txt for copying conditions
 %%%%(c)
 %%%%(c)
-``Induction'' or ``mathematical induction'' is a framework for proving statements that are indexed by integers.  In other words, suppose you have a statement to prove that is really multiple statements, one for $n=1$, another for $n=2$, a third for $n=3$, and so on.  If there is enough similarity between the statements, then you can use a script (the framework) to prove them all at once.\par
+\begin{para}``Induction'' or ``mathematical induction'' is a framework for proving statements that are indexed by integers.  In other words, suppose you have a statement to prove that is really multiple statements, one for $n=1$, another for $n=2$, a third for $n=3$, and so on.  If there is enough similarity between the statements, then you can use a script (the framework) to prove them all at once.\end{para}
 %
-For example, consider the theorem\par\medskip
+\begin{para}For example, consider the theorem: $1+2+3+\dots+n=\displaystyle\frac{n(n+1)}{2}$ for $n\geq 1$.\end{para}
 %
-{\bf Theorem}  $1+2+3+\dots+n=\displaystyle\frac{n(n+1)}{2}$ for $n\geq 1$.\par\medskip
+\begin{para}This is shorthand for the many statements $1=\frac{1(1+1)}{2}$, $1+2=\frac{2(2+1)}{2}$, $1+2+3=\frac{3(3+1)}{2}$, $1+2+3+4=\frac{4(4+1)}{2}$, and so on.  Forever.  You can do the calculations in each of these statements and verify that all four are true.  We might not be surprised to learn that the fifth statement is true as well (go ahead and check).  However, do we think the theorem is true for $n=872$?  Or $n=1,234,529$?\end{para}
 %
-This is shorthand for the many statements $1=\frac{1(1+1)}{2}$, $1+2=\frac{2(2+1)}{2}$, $1+2+3=\frac{3(3+1)}{2}$, $1+2+3+4=\frac{4(4+1)}{2}$, and so on.  Forever.  You can do the calculations in each of these statements and verify that all four are true.  We might not be surprised to learn that the fifth statement is true as well (go ahead and check).  However, do we think the theorem is true for $n=872$?  Or $n=1,234,529$?\par
+\begin{para}To see that these questions are not so ridiculous, consider the following example from Rotman's {\sl Journey into Mathematics}.  The statement ``$n^{2}-n+41$ is prime'' is true for integers  $1\leq n\leq 40$ (check a few).  However, when we check $n=41$ we find $41^2-41+41=41^2$, which is not prime.\end{para}
 %
-To see that these questions are not so ridiculous, consider the following example from Rotman's {\sl Journey into Mathematics}.  The statement ``$n^{2}-n+41$ is prime'' is true for integers  $1\leq n\leq 40$ (check a few).  However, when we check $n=41$ we find $41^2-41+41=41^2$, which is not prime.\par
-%
-So how do we prove infinitely many statements all at once?  More formally, lets denote our statements as $P(n)$.  Then, if we can prove the two assertions
+\begin{para}So how do we prove infinitely many statements all at once?  More formally, lets denote our statements as $P(n)$.  Then, if we can prove the two assertions
 %
 \begin{enumerate}
 \item $P(1)$ is true.
 \item If $P(k)$ is true, then $P(k+1)$ is true.
 \end{enumerate}
 %
-then it follows that $P(n)$ is true for all $n\geq 1$.  To understand this, I liken the process to climbing an infinitely long ladder with equally spaced rungs.  Confronted with such a ladder, suppose I tell you that you are able to step up onto the first rung, and if you are on any particular rung, then you are capable of stepping up to the next rung.  It follows that you can climb the ladder as far up as you wish.  The first formal assertion above is akin to stepping onto the first rung, and the second formal assertion is akin to assuming that if you are on any one rung then you can always reach the next rung.\par
+then it follows that $P(n)$ is true for all $n\geq 1$.  To understand this, I liken the process to climbing an infinitely long ladder with equally spaced rungs.  Confronted with such a ladder, suppose I tell you that you are able to step up onto the first rung, and if you are on any particular rung, then you are capable of stepping up to the next rung.  It follows that you can climb the ladder as far up as you wish.  The first formal assertion above is akin to stepping onto the first rung, and the second formal assertion is akin to assuming that if you are on any one rung then you can always reach the next rung.\end{para}
 %
-In practice, establishing that $P(1)$ is true is called the ``base case'' and in most cases is straightforward.  Establishing that $P(k)\Rightarrow P(k+1)$ is referred to as the ``induction step,'' or in this book (and elsewhere) we will typically refer to the assumption of $P(k)$ as the ``induction hypothesis.''  This is perhaps the most mysterious part of a proof by induction, since it looks like you are assuming ($P(k)$) what you are trying to prove ($P(n)$).  Sometimes it is even worse, since as you get more comfortable with induction, we often don't bother to use a different letter ($k$) for the index ($n$) in the induction step.  Notice that the second formal assertion never says that $P(k)$ is true, it simply says that {\em if} $P(k)$ were true, what might logically follow.  We can establish statements like ``If I lived on the moon, then I could pole-vault over a bar 12 meters high.''  This may be a true statement, but it does not say we live on the moon, and indeed we may never live there.\par
+\begin{para}In practice, establishing that $P(1)$ is true is called the ``base case'' and in most cases is straightforward.  Establishing that $P(k)\Rightarrow P(k+1)$ is referred to as the ``induction step,'' or in this book (and elsewhere) we will typically refer to the assumption of $P(k)$ as the ``induction hypothesis.''  This is perhaps the most mysterious part of a proof by induction, since it looks like you are assuming ($P(k)$) what you are trying to prove ($P(n)$).  Sometimes it is even worse, since as you get more comfortable with induction, we often don't bother to use a different letter ($k$) for the index ($n$) in the induction step.  Notice that the second formal assertion never says that $P(k)$ is true, it simply says that {\em if} $P(k)$ were true, what might logically follow.  We can establish statements like ``If I lived on the moon, then I could pole-vault over a bar 12 meters high.''  This may be a true statement, but it does not say we live on the moon, and indeed we may never live there.\end{para}
 %
-Enough generalities.  Let's work an example and prove the theorem above about sums of integers.  Formally, our statement is $P(n):\ 1+2+3+\dots+n=\displaystyle\frac{n(n+1)}{2}$.\par\medskip
+\begin{para}Enough generalities.  Let's work an example and prove the theorem above about sums of integers.  Formally, our statement is $P(n):\ 1+2+3+\dots+n=\displaystyle\frac{n(n+1)}{2}$.\end{para}
 %
-{\bf Proof}:  Base Case.  $P(1)$ is the statement $1=\frac{1(1+1)}{2}$, which we see simplifies to the true statement $1=1$.\par
+\begin{para}Proof:  Base Case.  $P(1)$ is the statement $1=\frac{1(1+1)}{2}$, which we see simplifies to the true statement $1=1$.\end{para}
 %
-Induction Step:  We will assume $P(k)$ is true, and will try to prove $P(k+1)$.  Given what we want to accomplish, it is natural to begin by examining the sum of the first $k+1$ integers.
+\begin{para}Induction Step:  We will assume $P(k)$ is true, and will try to prove $P(k+1)$.  Given what we want to accomplish, it is natural to begin by examining the sum of the first $k+1$ integers.
 %
 \begin{align*}
 1+2+3+\dots+(k+1)
@@ -51,18 +49,26 @@ Induction Step:  We will assume $P(k)$ is true, and will try to prove $P(k+1)$. 
 %
 \end{align*}
 %
-We then recognize the two ends of this chain of equalities as $P(k+1)$.  So, by mathematical induction, the theorem is true for all $n$.\par\medskip
+We then recognize the two ends of this chain of equalities as $P(k+1)$.  So, by mathematical induction, the theorem is true for all $n$.\end{para}
 %
-How do you recognize when to use induction?  The first clue is a statement that is really many statements, one for each integer.  The second clue would be that you begin a more standard proof and you find yourself using words like ``and so on'' (as above!) or lots of ellipses (dots) to establish patterns that you are convinced continue on and on forever.  However, there are many minor instances where induction might be warranted but we don't bother.\par
+\begin{para}How do you recognize when to use induction?  The first clue is a statement that is really many statements, one for each integer.  The second clue would be that you begin a more standard proof and you find yourself using words like ``and so on'' (as above!) or lots of ellipses (dots) to establish patterns that you are convinced continue on and on forever.  However, there are many minor instances where induction might be warranted but we don't bother.\end{para}
 %
-Induction is important enough, and used often enough, that it appears in various variations.  The base case sometimes begins with $n=0$, or perhaps an integer greater than $n$.  Some formulate the induction step as $P(k-1)\Rightarrow P(k)$.  There is also a ``strong form'' of induction where we assume all of $P(1)$, $P(2)$, $P(3)$, \dots $P(k)$ as a hypothesis for showing the conclusion $P(k+1)$.\\
+\begin{para}Induction is important enough, and used often enough, that it appears in various variations.  The base case sometimes begins with $n=0$, or perhaps an integer greater than $n$.  Some formulate the induction step as $P(k-1)\Rightarrow P(k)$.  There is also a ``strong form'' of induction where we assume all of $P(1)$, $P(2)$, $P(3)$, \dots $P(k)$ as a hypothesis for showing the conclusion $P(k+1)$.\end{para}
 %
-You can find examples of induction in the proofs of 
-\acronymref{theorem}{GSP},  % Gram-Schmidt
-\acronymref{theorem}{DER},     % Determinant expansions
-\acronymref{theorem}{DT},       % Determinant of transpose
-\acronymref{theorem}{DIM},      % Determinant of identity matrix
-\acronymref{theorem}{EOMP},   % Eigenvalues of matrix products
-\acronymref{theorem}{DCP},      % Degree of characteristic polynomial
+% Gram-Schmidt
+% Determinant expansions
+% Determinant of transpose
+% Determinant of identity matrix
+% Eigenvalues of matrix products
+% Degree of characteristic polynomial
+% Kernels of nilpotent lin trans become equal
+%
+\begin{para}You can find examples of induction in the proofs of 
+\acronymref{theorem}{GSP},  
+\acronymref{theorem}{DER},     
+\acronymref{theorem}{DT},       
+\acronymref{theorem}{DIM},      
+\acronymref{theorem}{EOMP},   
+\acronymref{theorem}{DCP},      
 and
-\acronymref{theorem}{KPLT}.      % Kernels of nilpotent lin trans become equal
+\acronymref{theorem}{KPLT}.\end{para}      
