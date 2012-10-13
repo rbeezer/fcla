@@ -1,0 +1,35 @@
+The theorems in this section about the dimensions of various subspaces associated with matrices can be tested easily in Sage.  For a large arbitrary matrix, we first we verify \acronymref{theorem}{RMRT}, followed by the four conclusions of \acronymref{theorem}{DFS}.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [
+...       [ 1, -2,  3,  2,  0,  2,  2, -1,  3,  8,  0,  7],
+...       [-1,  2, -2, -1,  3, -3,  5, -2, -6, -7,  6, -2],
+...       [ 0,  0,  1,  1,  0,  0,  1, -3, -2,  0,  3,  8],
+...       [-1, -1,  0, -1, -1,  0, -6, -2, -5, -6,  5,  1],
+...       [ 1, -3,  2,  1, -4,  4, -6,  2,  7,  7, -5,  2],
+...       [-2,  2, -2, -2,  3, -3,  6, -1, -8, -8,  7, -7],
+...       [ 0, -3,  2,  0, -3,  3, -7,  1,  2,  3, -1,  0],
+...       [ 0, -1,  2,  1,  2,  0,  4, -3, -3,  2,  6,  6],
+...       [-1,  1,  0, -1,  2, -1,  6, -2, -6, -3,  8,  0],
+...       [ 0, -4,  4,  0, -2,  4, -4, -2, -2,  4,  8,  6]
+...                  ])
+sage: m = A.nrows()
+sage: n = A.ncols()
+sage: r = A.rank()
+sage: m, n, r
+(10, 12, 7)
+sage: A.transpose().rank() == r
+True
+sage: A.right_kernel().dimension() == n - r
+True
+sage: A.column_space().dimension() == r
+True
+sage: A.row_space().dimension() == r
+True
+sage: A.left_kernel().dimension() == m - r
+True
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

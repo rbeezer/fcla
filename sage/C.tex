@@ -1,0 +1,82 @@
+For vector spaces of column vectors, Sage can quickly determine the coordinates of a vector relative to a basis, as guaranteed by \acronymref{theorem}{VRRB}.  We illustrate some new Sage commands with a simple example and then apply them to orthonormal bases.  The vectors \verb?v1? and \verb?v2? are linearly independent and thus span a subspace with a basis of size 2.  We first create this subspace and let Sage determine the basis, then we illustrate a new vector space method, \verb?.subspace_with_basis()?, that allows us to specify the basis.  (This method is very similar to \verb?.span_of_basis()?, except it preserves a subspace relationship with the original vector space.)  Notice how the description of the vector space makes it clear that \verb?W? has a user-specified basis.  Notice too that the actual subspace created is the same in both cases.
+%
+\begin{sageexample}
+sage: V = QQ^3
+sage: v1 = vector(QQ,[ 2, 1, 3])
+sage: v2 = vector(QQ,[-1, 1, 4])
+sage: U=V.span([v1,v2])
+sage: U
+Vector space of degree 3 and dimension 2 over Rational Field
+Basis matrix:
+[   1    0 -1/3]
+[   0    1 11/3]
+sage: W = V.subspace_with_basis([v1, v2])
+sage: W
+Vector space of degree 3 and dimension 2 over Rational Field
+User basis matrix:
+[ 2  1  3]
+[-1  1  4]
+sage: U == W
+True
+\end{sageexample}
+%
+Now we manufacture a third vector in the subspace, and request a coordinatization in each vector space, which has the effect of using a different basis in each case.  The vector space method \verb?.coordinate_vector(v)? computes a vector whose entries express \verb?v? as a linear combination of basis vectors.
+
+Verify for yourself in each case below that the components of the vector returned really give a linear combination of the basis vectors that equals \verb?v3?.
+%
+\begin{sageexample}
+sage: v3 = 4*v1 + v2; v3
+(7, 5, 16)
+sage: U.coordinate_vector(v3)
+(7, 5)
+sage: W.coordinate_vector(v3)
+(4, 1)
+\end{sageexample}
+%
+Now we can construct a more complicated example using an orthonormal basis, specifically the one from \acronymref{example}{CROB4}, but we will compute over \verb?QQbar?, the field of algebraic numbers.  We form the four vectors of the orthonormal basis, install them as the basis of a vector space and then ask for the coordinates.  Sage treats the square roots in the scalars as ``symbolic'' expressions, so we need to explicitly coerce them into \verb?QQbar? before computing the scalar multiples.
+%
+\begin{sageexample}
+sage: V = QQbar^4
+sage: x1 = vector(QQbar, [    1+I,       1,      1-I,       I])
+sage: x2 = vector(QQbar, [  1+5*I,   6+5*I,     -7-I,   1-6*I])
+sage: x3 = vector(QQbar, [-7+34*I, -8-23*I, -10+22*I, 30+13*I])
+sage: x4 = vector(QQbar, [ -2-4*I,     6+I,    4+3*I,     6-I])
+sage: v1 = QQbar(1/sqrt(6))   * x1
+sage: v2 = QQbar(1/sqrt(174)) * x2
+sage: v3 = QQbar(1/sqrt(3451))* x3
+sage: v4 = QQbar(1/sqrt(119)) * x4
+sage: W = V.subspace_with_basis([v1, v2, v3, v4])
+sage: w = vector(QQbar, [2, -3, 1, 4])
+sage: c = W.coordinate_vector(w); c
+(0.?e-14           - 2.04124145231932?*I,
+-1.44038628279992? + 2.27429413073671?*I,
+ 2.04271964894459? - 3.59178204939423?*I,
+ 0.55001909821693? + 1.10003819643386?*I)
+\end{sageexample}
+%
+Is this right?  Our exact coordinates in the text are printed differently, but we can check that they are the same numbers:
+%
+\begin{sageexample}
+sage: c[0] == 1/sqrt(6)*(-5*I)
+True
+sage: c[1] == 1/sqrt(174)*(-19+30*I)
+True
+sage: c[2] == 1/sqrt(3451)*(120-211*I)
+True
+sage: c[3] == 1/sqrt(119)*(6+12*I)
+True
+\end{sageexample}
+%
+With an orthonormal basis, we can illustrate \acronymref{theorem}{CUMOS} by making the four vectors the columns of $4\times 4$ matrix and verifying the result is a unitary matrix.
+%
+\begin{sageexample}
+sage: U = column_matrix([v1, v2, v3, v4])
+sage: U.is_unitary()
+True
+\end{sageexample}
+%
+We will see coordinate vectors again, in a more formal setting, in \acronymref{sage}{VR}.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

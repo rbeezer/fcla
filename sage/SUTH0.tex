@@ -1,0 +1,34 @@
+Or perhaps, ``under the bonnet'' if you learned your English in the Commonwealth.  This is the first in a series that aims to explain how our knowledge of linear algebra \emph{theory} helps us understand the design, construction and informed use of Sage.\par
+%
+How does Sage determine if two vector spaces are equal?  Especially since these are infinite sets?  One approach would be to take a spanning set for the first vector space (maybe a minimal spanning set), and ask if each element of the spanning set is an element of the second vector space.  If so, the first vector space is a subset of the second.  Then we could turn it around, and determine if the second vector space is a subset of the first.  By \acronymref{definition}{SE}, the two vector spaces would be equal if both subset tests succeeded.\par
+%
+However, each time we would test if an element of a spanning set lives in a second vector space, we would need to solve a linear system.  So for two large vector spaces, this could take a noticeable amount of time.  There is a better way, made possible by exploiting two important theorems.\par
+%
+For every vector space, Sage creates a basis that uniquely identifies the vector space.  We could call this a ``canonical basis.''  By \acronymref{theorem}{REMRS} we can span the row space of matrix by the rows of any row-equivalent matrix.  So if we begin with a vector space described by any basis (or any spanning set, for that matter), we can make a matrix with these rows as vectors, and the vector space is now the row space of the matrix.  Of all the possible row-equivalent matrices, which would you pick?  Of course, the reduced row-echelon version is useful, and here it is critical to realize this version is unique (\acronymref{theorem}{RREFU}).\par
+%
+So for every vector space, Sage takes a spanning set, makes its vectors the rows of a matrix, row-reduces the matrix and tosses out the zero rows.  The result is what Sage calls an ``echelonized basis.''  Now, two vector spaces are equal if, and only if, they have equal ``echelonized basis matrices.''  It takes some computation to form the echelonized basis, but once built, the comparison of two echelonized bases can proceed very quickly by perhaps just comparing entries of the echelonized basis matrices.\par
+%
+You might create a vector space with a basis you prefer (a ``user basis''), but Sage always has an echelonized basis at hand.  If you do not specify some alternate basis, this is the basis Sage will create and provide for you.  We can now continue a discussion we began back in \acronymref{sage}{SSNS}.  We have consistently used the \verb?basis='pivot'? keyword when we construct null spaces.  This is because we initially prefer to see the basis described in \acronymref{theorem}{BNS}, rather than Sage's default basis, the echelonized version.  But the echelonized version is always present and available.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[14, -42, -2, -44, -42, 100, -18],
+...                   [-40, 120, -6, 129, 135, -304, 28],
+...                   [11, -33, 0, -35, -35, 81, -11],
+...                   [-21, 63, -4, 68, 72, -161, 13],
+...                   [-4, 12, -1, 13, 14, -31, 2]])
+sage: K = A.right_kernel(basis='pivot')
+sage: K.basis_matrix()
+[ 3  1  0  0  0  0  0]
+[ 0  0  1 -1  1  0  0]
+[-1  0 -1  2  0  1  0]
+[ 1  0 -2  0  0  0  1]
+sage: K.echelonized_basis_matrix()
+[ 1  0  0  0 -4 -2 -1]
+[ 0  1  0  0 12  6  3]
+[ 0  0  1  0 -2 -1 -1]
+[ 0  0  0  1 -3 -1 -1]
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
