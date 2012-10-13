@@ -420,6 +420,8 @@ E&=
 \begin{proof}
 \begin{para}Suppose that $A$ has $m$ rows and $n$ columns.  We will describe a process for converting $A$ into $B$ via row operations.  This procedure is known as \define{Gauss-Jordan elimination}.  Tracing through this procedure will be easier if you recognize that $i$ refers to a row that is being converted, $j$ refers to a column that is being converted, and $r$ keeps track of the number of nonzero rows.  Here we go.\end{para}
 %
+% Set labels by hand, once extra item is removed from auto-generated list
+%
 \begin{para}\begin{enumerate}
 %
 \item\label{rref:initialize}
@@ -466,25 +468,26 @@ We claim that as we begin Step~\ref{rref:columnloop}, the first $j$ columns of t
 %
 \end{proof}
 %
-\begin{para}The procedure given in the proof of \acronymref{theorem}{REMEF} can be more precisely described using a pseudo-code version of a computer program, as follows:
+\begin{para}The procedure given in the proof of \acronymref{theorem}{REMEF} can be more precisely described using a pseudo-code version of a computer program.  Single-letter variables, like \texttt{m, n, i, j, r} have the same meanings as above. \texttt{:=} is assignment of the value on the right to the variable on the left, \texttt{A[i,j]} is the equivalent of the matrix entry $\matrixentry{A}{ij}$, while \texttt{==} is an equality test and \texttt{!=} is a ``not equals'' test.
 %
-%  \codeindent{} Indents pseudo-code properly
+%  new latex environment, unsupported as of XML cutover
 %
-\begin{quote}
-\codeindent{1}  input $m$, $n$ and $A$\\
-\codeindent{1}  $r\leftarrow 0$\\
-\codeindent{1}  for $j\leftarrow 1$ to $n$\\
-\codeindent{2}     $i\leftarrow r+1$\\
-\codeindent{2}     while $i\leq m$ and $\matrixentry{A}{ij}=0$\\
-\codeindent{3}         $i \leftarrow i+1$\\
-\codeindent{2}     if $i\neq m+1$\\
-\codeindent{3}         $r\leftarrow r+1$\\
-\codeindent{3}         swap rows $i$ and $r$ of $A$ (row op 1)\\
-\codeindent{3}         scale entry in row $r$, column $j$ of $A$ to a leading 1 (row op 2)\\
-\codeindent{3}         for $k\leftarrow 1\text{ to }m$, $k\neq r$\\
-\codeindent{4}            zero out entry in row $k$, column $j$ of $A$ (row op 3 using row $r$)\\
-\codeindent{1}  output $r$ and $A$
-\end{quote}\end{para}
+\begin{programlisting}
+input m, n and A
+r := 0
+for j := 1 to n
+   i := r+1
+   while i <= m and A[i,j] = 0
+       i := i+1
+   if i != m+1
+       r := r+1
+       swap rows i and r of A (row op 1)
+       scale entry in row r, column j of A to a leading 1 (row op 2)
+       for k := 1 to m, k != r
+          zero out entry in row k, column j of A (row op 3 using row r)
+output r and A
+\end{programlisting}
+\end{para}
 %
 \begin{para}Notice that as a practical matter the ``and'' used in the conditional statement of the while statement should be of the ``short-circuit'' variety so that the array access that follows is not out-of-bounds.\end{para}
 %
