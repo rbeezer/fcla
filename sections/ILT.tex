@@ -14,28 +14,34 @@
 %%
 %%%%%%%%%%%
 %
-Some linear transformations possess one, or both, of two key properties, which go by the names injective and surjective.  We will see that they are closely related to ideas like linear independence and spanning, and subspaces like the null space and the column space.  In this section we will define an injective linear transformation and analyze the resulting consequences.  The next section will do the same for the surjective property.  In the final section of this chapter we will see what happens when we have the two properties simultaneously.\par
+\begin{introduction}
+\begin{para}Some linear transformations possess one, or both, of two key properties, which go by the names injective and surjective.  We will see that they are closely related to ideas like linear independence and spanning, and subspaces like the null space and the column space.  In this section we will define an injective linear transformation and analyze the resulting consequences.  The next section will do the same for the surjective property.  In the final section of this chapter we will see what happens when we have the two properties simultaneously.\end{para}
+\end{introduction}
 %
-As usual, we lead with a definition.
+\begin{subsect}{ILT}{Injective Linear Transformations}
+%
+\begin{para}As usual, we lead with a definition.\end{para}
 %
 \begin{definition}{ILT}{Injective Linear Transformation}{linear transformation!injection}
-Suppose $\ltdefn{T}{U}{V}$ is a linear transformation.  Then $T$ is \define{injective} if whenever $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$, then $\vect{x}=\vect{y}$.
+\begin{para}Suppose $\ltdefn{T}{U}{V}$ is a linear transformation.  Then $T$ is \define{injective} if whenever $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$, then $\vect{x}=\vect{y}$.\end{para}
 \end{definition}
 %
-Given an arbitrary function, it is possible for two different inputs to yield the same output (think about the function $f(x)=x^2$ and the inputs $x=3$ and $x=-3$).  For an injective function, this never happens.  If we have equal outputs ($\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$) then we must have achieved those equal outputs by employing equal inputs ($\vect{x}=\vect{y}$).  Some authors prefer the term \define{one-to-one} where we use injective, and we will sometimes refer to an injective linear transformation as an \define{injection}.
+\begin{para}Given an arbitrary function, it is possible for two different inputs to yield the same output (think about the function $f(x)=x^2$ and the inputs $x=3$ and $x=-3$).  For an injective function, this never happens.  If we have equal outputs ($\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$) then we must have achieved those equal outputs by employing equal inputs ($\vect{x}=\vect{y}$).  Some authors prefer the term \define{one-to-one} where we use injective, and we will sometimes refer to an injective linear transformation as an \define{injection}.\end{para}
 %
-\subsect{EILT}{Examples of Injective Linear Transformations}
+\end{subsect}
 %
-It is perhaps most instructive to examine a linear transformation that is not injective first.
+\begin{subsect}{EILT}{Examples of Injective Linear Transformations}
+%
+\begin{para}It is perhaps most instructive to examine a linear transformation that is not injective first.\end{para}
 %
 \begin{example}{NIAQ}{Not injective, Archetype Q}{injective!not}
-\acronymref{archetype}{Q} is the linear transformation
+\begin{para}\acronymref{archetype}{Q} is the linear transformation
 %
 \begin{equation*}
-\archetypepart{Q}{ltdefn}
-\end{equation*}
+\archetypepart{Q}{ltdefn}\end{equation*}
+\end{para}
 %
-Notice that for
+\begin{para}Notice that for
 %
 \begin{align*}
 \vect{x}&=\colvector{1\\3\\-1\\2\\4}&
@@ -46,25 +52,27 @@ Notice that for
 \lt{T}{\colvector{1\\3\\-1\\2\\4}}&=\colvector{4\\55\\72\\77\\31}&
 \lt{T}{\colvector{4\\7\\0\\5\\7}}&=\colvector{4\\55\\72\\77\\31}
 \end{align*}
+\end{para}
 %
-So we have two vectors from the domain, $\vect{x}\neq\vect{y}$, yet $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$, in violation of \acronymref{definition}{ILT}.  This is another example where you should not concern yourself with how $\vect{x}$ and $\vect{y}$ were selected, as this will be explained shortly.  However, do understand {\em why} these two vectors provide enough evidence to conclude that $T$ is not injective.
+\begin{para}So we have two vectors from the domain, $\vect{x}\neq\vect{y}$, yet $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$, in violation of \acronymref{definition}{ILT}.  This is another example where you should not concern yourself with how $\vect{x}$ and $\vect{y}$ were selected, as this will be explained shortly.  However, do understand {\em why} these two vectors provide enough evidence to conclude that $T$ is not injective.\end{para}
 %
 \end{example}
 %
-Here's a cartoon of a non-injective linear transformation.  Notice that the central feature of this cartoon is that $\lt{T}{\vect{u}}=\vect{v}=\lt{T}{\vect{w}}$.  Even though this happens again with some unnamed vectors, it only takes one occurrence to destroy the possibility of injectivity.  Note also that the two vectors displayed in the bottom of $V$ have no bearing, either way, on the injectivity of $T$.
+\begin{para}Here's a cartoon of a non-injective linear transformation.  Notice that the central feature of this cartoon is that $\lt{T}{\vect{u}}=\vect{v}=\lt{T}{\vect{w}}$.  Even though this happens again with some unnamed vectors, it only takes one occurrence to destroy the possibility of injectivity.  Note also that the two vectors displayed in the bottom of $V$ have no bearing, either way, on the injectivity of $T$.
 %
 \diagram{NILT}{Non-Injective Linear Transformation}
+\end{para}
 %
-To show that a linear transformation is not injective, it is enough to find a single pair of inputs that get sent to the identical output, as in \acronymref{example}{NIAQ}.  However, to show that a linear transformation is injective we must establish that this coincidence of outputs {\em never} occurs.  Here is an example that shows how to establish this.
+\begin{para}To show that a linear transformation is not injective, it is enough to find a single pair of inputs that get sent to the identical output, as in \acronymref{example}{NIAQ}.  However, to show that a linear transformation is injective we must establish that this coincidence of outputs {\em never} occurs.  Here is an example that shows how to establish this.\end{para}
 %
 \begin{example}{IAR}{Injective, Archetype R}{injective}
-\acronymref{archetype}{R} is the linear transformation
+\begin{para}\acronymref{archetype}{R} is the linear transformation
 %
 \begin{equation*}
-\archetypepart{R}{ltdefn}
-\end{equation*}
+\archetypepart{R}{ltdefn}\end{equation*}
+\end{para}
 %
-To establish that $R$ is injective we must begin with the assumption that $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$ and somehow arrive from this at the conclusion that $\vect{x}=\vect{y}$.  Here we go,
+\begin{para}To establish that $R$ is injective we must begin with the assumption that $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$ and somehow arrive from this at the conclusion that $\vect{x}=\vect{y}$.  Here we go,
 %
 \begin{gather*}
 \lt{T}{\vect{x}}=\lt{T}{\vect{y}}\\
@@ -116,8 +124,9 @@ To establish that $R$ is injective we must begin with the assumption that $\lt{T
 =
 \colvector{0\\0\\0\\0\\0}
 \end{gather*}
+\end{para}
 %
-Now we recognize that we have a homogeneous system of 5 equations in 5 variables (the terms $x_i-y_i$ are the variables), so we row-reduce the coefficient matrix to
+\begin{para}Now we recognize that we have a homogeneous system of 5 equations in 5 variables (the terms $x_i-y_i$ are the variables), so we row-reduce the coefficient matrix to
 %
 \begin{equation*}
 \begin{bmatrix}
@@ -128,37 +137,41 @@ Now we recognize that we have a homogeneous system of 5 equations in 5 variables
 0&0&0&0&\leading{1}
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-So the only solution is the trivial solution
+\begin{para}So the only solution is the trivial solution
 %
 \begin{align*}
 x_1-y_1&=0&x_2-y_2&=0&x_3-y_3&=0&x_4-y_4&=0&x_5-y_5&=0
 \end{align*}
 %
-and we conclude that indeed $\vect{x}=\vect{y}$.  By \acronymref{definition}{ILT}, $T$ is injective.
+and we conclude that indeed $\vect{x}=\vect{y}$.  By \acronymref{definition}{ILT}, $T$ is injective.\end{para}
 %
 \end{example}
 %
-Here's the cartoon for an injective linear transformation.  It is meant to suggest that we never have two inputs associated with a single output.  Again, the two lonely vectors at the bottom of $V$ have no bearing either way on the injectivity of $T$.
+\begin{para}Here's the cartoon for an injective linear transformation.  It is meant to suggest that we never have two inputs associated with a single output.  Again, the two lonely vectors at the bottom of $V$ have no bearing either way on the injectivity of $T$.%
 %
 \diagram{ILT}{Injective Linear Transformation}
 %
-Let's now examine an injective linear transformation between abstract vector spaces.
+\end{para}
+%
+\begin{para}Let's now examine an injective linear transformation between abstract vector spaces.\end{para}
 %
 \begin{example}{IAV}{Injective, Archetype V}{injective!polynomials to matrices}
-\acronymref{archetype}{V} is defined by
+\begin{para}\acronymref{archetype}{V} is defined by
 %
 \begin{equation*}
-\archetypepart{V}{ltdefn}
-\end{equation*}
+\archetypepart{V}{ltdefn}\end{equation*}
+\end{para}
 %
-To establish that the linear transformation is injective, begin by supposing that two polynomial inputs yield the same output matrix,
+\begin{para}To establish that the linear transformation is injective, begin by supposing that two polynomial inputs yield the same output matrix,
 %
 \begin{equation*}
 \lt{T}{a_1+b_1x+c_1x^2+d_1x^3}=\lt{T}{a_2+b_2x+c_2x^2+d_2x^3}
 \end{equation*}
+\end{para}
 %
-Then
+\begin{para}Then
 %
 \begin{align*}
 \zeromatrix
@@ -174,9 +187,9 @@ Then
 (d_1-d_2) & (b_1-b_2)-(d_1-d_2)
 \end{bmatrix}&&\text{Definition of $T$}
 %
-\end{align*}
+\end{align*}\end{para}
 %
-This single matrix equality translates to the homogeneous system of equations in the variables $a_i-b_i$,
+\begin{para}This single matrix equality translates to the homogeneous system of equations in the variables $a_i-b_i$,
 %
 \begin{align*}
 (a_1-a_2)+(b_1-b_2)&=0\\
@@ -184,8 +197,9 @@ This single matrix equality translates to the homogeneous system of equations in
 (d_1-d_2)&=0\\
 (b_1-b_2)-(d_1-d_2)&=0
 \end{align*}
+\end{para}
 %
-This system of equations can be rewritten as the matrix equation
+\begin{para}This system of equations can be rewritten as the matrix equation
 %
 \begin{equation*}
 \begin{bmatrix}
@@ -193,8 +207,9 @@ This system of equations can be rewritten as the matrix equation
 \end{bmatrix}
 \colvector{(a_1-a_2)\\(b_1-b_2)\\(c_1-c_2)\\(d_1-d_2)}=\colvector{0\\0\\0\\0}
 \end{equation*}
+\end{para}
 %
-Since the coefficient matrix is nonsingular (check this) the only solution is trivial, i.e.
+\begin{para}Since the coefficient matrix is nonsingular (check this) the only solution is trivial, i.e.
 %
 \begin{align*}
 %
@@ -207,33 +222,37 @@ a_1&=a_2&b_1&=b_2&c_1&=c_2&d_1&=d_2
 \end{align*}
 %
 so the two inputs must be equal polynomials.  By \acronymref{definition}{ILT}, $T$ is injective.
+\end{para}
 %
 \end{example}
 %
-\subsect{KLT}{Kernel of a Linear Transformation}
+\end{subsect}
 %
-For a linear transformation $\ltdefn{T}{U}{V}$, the kernel is a subset of the domain $U$.  Informally, it is the set of all inputs that the transformation sends to the zero vector of the codomain.  It will have some natural connections with the null space of a matrix, so we will keep the same notation, and if you think about your objects, then there should be little confusion.  Here's the careful definition.
+\begin{subsect}{KLT}{Kernel of a Linear Transformation}
+%
+\begin{para}For a linear transformation $\ltdefn{T}{U}{V}$, the kernel is a subset of the domain $U$.  Informally, it is the set of all inputs that the transformation sends to the zero vector of the codomain.  It will have some natural connections with the null space of a matrix, so we will keep the same notation, and if you think about your objects, then there should be little confusion.  Here's the careful definition.\end{para}
 %
 \begin{definition}{KLT}{Kernel of a Linear Transformation}{kernel!of a linear transformation}
-Suppose $\ltdefn{T}{U}{V}$ is a linear transformation.  Then the \define{kernel} of $T$ is the set
+\begin{para}Suppose $\ltdefn{T}{U}{V}$ is a linear transformation.  Then the \define{kernel} of $T$ is the set
 %
 \begin{equation*}
 \krn{T}=\setparts{\vect{u}\in U}{\lt{T}{\vect{u}}=\zerovector}
 \end{equation*}
+\end{para}
 %
 \denote{KLT}{Kernel of a Linear Transformation}{$\krn{T}$}{kernel}
 \end{definition}
 %
-Notice that the kernel of $T$ is just the preimage of $\zerovector$, $\preimage{T}{\zerovector}$ (\acronymref{definition}{PI}).  Here's an example.
+\begin{para}Notice that the kernel of $T$ is just the preimage of $\zerovector$, $\preimage{T}{\zerovector}$ (\acronymref{definition}{PI}).  Here's an example.\end{para}
 %
 \begin{example}{NKAO}{Nontrivial kernel, Archetype O}{kernel!linear transformation}
-\acronymref{archetype}{O} is the linear transformation
+\begin{para}\acronymref{archetype}{O} is the linear transformation
 %
 \begin{equation*}
-\archetypepart{O}{ltdefn}
-\end{equation*}
+\archetypepart{O}{ltdefn}\end{equation*}
+\end{para}
 %
-To determine the elements of $\complex{3}$ in $\krn{T}$, find those vectors $\vect{u}$ such that $\lt{T}{\vect{u}}=\zerovector$, that is,
+\begin{para}To determine the elements of $\complex{3}$ in $\krn{T}$, find those vectors $\vect{u}$ such that $\lt{T}{\vect{u}}=\zerovector$, that is,
 %
 \begin{align*}
 \lt{T}{\vect{u}}&=\zerovector\\
@@ -247,8 +266,9 @@ u_1 + 2 u_3
 \colvector{0\\0\\0\\0\\0}
 %
 \end{align*}
+\end{para}
 %
-Vector equality (\acronymref{definition}{CVE}) leads us to a homogeneous system of 5 equations in the variables $u_i$,
+\begin{para}Vector equality (\acronymref{definition}{CVE}) leads us to a homogeneous system of 5 equations in the variables $u_i$,
 %
 \begin{align*}
 -u_1 + u_2 - 3 u_3&=0\\
@@ -257,8 +277,9 @@ u_1 + u_2 + u_3&=0\\
 2 u_1 + 3 u_2 + u_3&=0\\
 u_1 + 2 u_3&=0
 \end{align*}
+\end{para}
 %
-Row-reducing the coefficient matrix gives
+\begin{para}Row-reducing the coefficient matrix gives
 %
 \begin{equation*}
 \begin{bmatrix}
@@ -269,57 +290,58 @@ Row-reducing the coefficient matrix gives
 0 & 0 & 0
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-The kernel of $T$ is the set of solutions to this homogeneous system of equations, which by \acronymref{theorem}{BNS} can be expressed as
+\begin{para}The kernel of $T$ is the set of solutions to this homogeneous system of equations, which by \acronymref{theorem}{BNS} can be expressed as
 %
 \begin{equation*}
-\krn{T}=\spn{\archetypepart{O}{ltnullspacebasis}}
-\end{equation*}
+\krn{T}=\spn{\archetypepart{O}{ltnullspacebasis}}\end{equation*}
+\end{para}
 %
 \end{example}
 %
-We know that the span of a set of vectors is always a subspace (\acronymref{theorem}{SSS}), so the kernel computed in \acronymref{example}{NKAO} is also a subspace.  This is no accident, the kernel of a linear transformation is {\em always} a subspace.
+\begin{para}We know that the span of a set of vectors is always a subspace (\acronymref{theorem}{SSS}), so the kernel computed in \acronymref{example}{NKAO} is also a subspace.  This is no accident, the kernel of a linear transformation is {\em always} a subspace.\end{para}
 %
 \begin{theorem}{KLTS}{Kernel of a Linear Transformation is a Subspace}{kernel!subspace}
-Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation.  Then the kernel of $T$, $\krn{T}$, is a subspace of $U$.
+\begin{para}Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation.  Then the kernel of $T$, $\krn{T}$, is a subspace of $U$.\end{para}
 \end{theorem}
 %
 \begin{proof}
-We can apply the three-part test of \acronymref{theorem}{TSS}.  First $\lt{T}{\zerovector_U}=\zerovector_V$ by \acronymref{theorem}{LTTZZ}, so $\zerovector_U\in\krn{T}$ and we know that the kernel is non-empty.\par
+\begin{para}We can apply the three-part test of \acronymref{theorem}{TSS}.  First $\lt{T}{\zerovector_U}=\zerovector_V$ by \acronymref{theorem}{LTTZZ}, so $\zerovector_U\in\krn{T}$ and we know that the kernel is non-empty.\end{para}
 %
-Suppose we assume that $\vect{x},\,\vect{y}\in\krn{T}$.  Is $\vect{x}+\vect{y}\in\krn{T}$?
+\begin{para}Suppose we assume that $\vect{x},\,\vect{y}\in\krn{T}$.  Is $\vect{x}+\vect{y}\in\krn{T}$?
 %
 \begin{align*}
 \lt{T}{\vect{x}+\vect{y}}&=\lt{T}{\vect{x}}+\lt{T}{\vect{y}}&&\text{\acronymref{definition}{LT}}\\
 &=\zerovector+\zerovector&&\vect{x},\,\vect{y}\in\krn{T}\\
 &=\zerovector&&\text{\acronymref{property}{Z}}
-\end{align*}
+\end{align*}\end{para}
 %
-This qualifies $\vect{x}+\vect{y}$ for membership in $\krn{T}$.  So we have additive closure.\par
+\begin{para}This qualifies $\vect{x}+\vect{y}$ for membership in $\krn{T}$.  So we have additive closure.\end{para}
 %
-Suppose we assume that $\alpha\in\complex{\null}$ and $\vect{x}\in\krn{T}$.  Is $\alpha\vect{x}\in\krn{T}$?
+\begin{para}Suppose we assume that $\alpha\in\complex{\null}$ and $\vect{x}\in\krn{T}$.  Is $\alpha\vect{x}\in\krn{T}$?
 %
 \begin{align*}
 \lt{T}{\alpha\vect{x}}&=\alpha\lt{T}{\vect{x}}&&\text{\acronymref{definition}{LT}}\\
 &=\alpha\zerovector&&\vect{x}\in\krn{T}\\
 &=\zerovector&&\text{\acronymref{theorem}{ZVSM}}
 \end{align*}
+\end{para}
 %
-This qualifies $\alpha\vect{x}$ for membership in $\krn{T}$.  So we have scalar closure and \acronymref{theorem}{TSS} tells us that $\krn{T}$ is a subspace of $U$.\par
+\begin{para}This qualifies $\alpha\vect{x}$ for membership in $\krn{T}$.  So we have scalar closure and \acronymref{theorem}{TSS} tells us that $\krn{T}$ is a subspace of $U$.\end{para}
 %
 \end{proof}
 %
-Let's compute another kernel, now that we know in advance that it will be a subspace.
-%
+\begin{para}Let's compute another kernel, now that we know in advance that it will be a subspace.\end{para}
 %
 \begin{example}{TKAP}{Trivial kernel, Archetype P}{kernel!trivial}
-\acronymref{archetype}{P} is the linear transformation
+\begin{para}\acronymref{archetype}{P} is the linear transformation
 %
 \begin{equation*}
-\archetypepart{P}{ltdefn}
-\end{equation*}
+\archetypepart{P}{ltdefn}\end{equation*}
+\end{para}
 %
-To determine the elements of $\complex{3}$ in $\krn{T}$, find those vectors $\vect{u}$ such that $\lt{T}{\vect{u}}=\zerovector$, that is,
+\begin{para}To determine the elements of $\complex{3}$ in $\krn{T}$, find those vectors $\vect{u}$ such that $\lt{T}{\vect{u}}=\zerovector$, that is,
 %
 \begin{align*}
 \lt{T}{\vect{u}}&=\zerovector\\
@@ -334,8 +356,9 @@ u_1 + u_2 + 3 u_3\\
 \colvector{0\\0\\0\\0\\0}
 %
 \end{align*}
+\end{para}
 %
-Vector equality (\acronymref{definition}{CVE}) leads us to a homogeneous system of 5 equations in the variables $u_i$,
+\begin{para}Vector equality (\acronymref{definition}{CVE}) leads us to a homogeneous system of 5 equations in the variables $u_i$,
 %
 \begin{align*}
 -u_1 + u_2 + u_3&=0\\
@@ -344,8 +367,9 @@ u_1 + u_2 + 3 u_3&=0\\
 2 u_1 + 3 u_2 + u_3&=0\\
 -2 u_1 + u_2 + 3 u_3&=0
 \end{align*}
+\end{para}
 %
-Row-reducing the coefficient matrix gives
+\begin{para}Row-reducing the coefficient matrix gives
 %
 \begin{equation*}
 \begin{bmatrix}
@@ -356,12 +380,13 @@ Row-reducing the coefficient matrix gives
 0 & 0 & 0
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-The kernel of $T$ is the set of solutions to this homogeneous system of equations, which is simply the trivial solution $\vect{u}=\zerovector$, so
+\begin{para}The kernel of $T$ is the set of solutions to this homogeneous system of equations, which is simply the trivial solution $\vect{u}=\zerovector$, so
 %
 \begin{equation*}
-\krn{T}=\set{\zerovector}=\spn{\archetypepart{P}{ltnullspacebasis}}
-\end{equation*}
+\krn{T}=\set{\zerovector}=\spn{\archetypepart{P}{ltnullspacebasis}}\end{equation*}
+\end{para}
 %
 \end{example}
 %
@@ -369,22 +394,23 @@ The kernel of $T$ is the set of solutions to this homogeneous system of equation
 % Example:  null spaces on Archetype S-W, one of consequence, one trivial?
 %  Cannibal?
 %
-Our next theorem says that if a preimage is a non-empty set then we can construct it by picking any one element and adding on elements of the kernel.
+\begin{para}Our next theorem says that if a preimage is a non-empty set then we can construct it by picking any one element and adding on elements of the kernel.\end{para}
 %
 \begin{theorem}{KPI}{Kernel and Pre-Image}{pre-image!kernel}
 \index{kernel!pre-image}
-Suppose $\ltdefn{T}{U}{V}$ is a linear transformation and $\vect{v}\in V$.  If the preimage $\preimage{T}{\vect{v}}$ is non-empty, and $\vect{u}\in\preimage{T}{\vect{v}}$  then
+\begin{para}Suppose $\ltdefn{T}{U}{V}$ is a linear transformation and $\vect{v}\in V$.  If the preimage $\preimage{T}{\vect{v}}$ is non-empty, and $\vect{u}\in\preimage{T}{\vect{v}}$  then
 %
 \begin{equation*}
 \preimage{T}{\vect{v}}=
 \setparts{\vect{u}+\vect{z}}{\vect{z}\in\krn{T}}
 =\vect{u}+\krn{T}
 \end{equation*}
+\end{para}
 %
 \end{theorem}
 %
 \begin{proof}
-Let $M=\setparts{\vect{u}+\vect{z}}{\vect{z}\in\krn{T}}$.  First, we show that $M\subseteq\preimage{T}{\vect{v}}$.  Suppose that $\vect{w}\in M$, so $\vect{w}$ has the form $\vect{w}=\vect{u}+\vect{z}$, where $\vect{z}\in\krn{T}$.  Then
+\begin{para}Let $M=\setparts{\vect{u}+\vect{z}}{\vect{z}\in\krn{T}}$.  First, we show that $M\subseteq\preimage{T}{\vect{v}}$.  Suppose that $\vect{w}\in M$, so $\vect{w}$ has the form $\vect{w}=\vect{u}+\vect{z}$, where $\vect{z}\in\krn{T}$.  Then
 %
 \begin{align*}
 \lt{T}{\vect{w}}&=\lt{T}{\vect{u}+\vect{z}}\\
@@ -393,30 +419,31 @@ Let $M=\setparts{\vect{u}+\vect{z}}{\vect{z}\in\krn{T}}$.  First, we show that $
 &=\vect{v}&&\text{\acronymref{property}{Z}}
 \end{align*}
 %
-which qualifies $\vect{w}$ for membership in the preimage of $\vect{v}$, $\vect{w}\in\preimage{T}{\vect{v}}$.\par
+which qualifies $\vect{w}$ for membership in the preimage of $\vect{v}$, $\vect{w}\in\preimage{T}{\vect{v}}$.\end{para}
 %
-For the opposite inclusion, suppose $\vect{x}\in\preimage{T}{\vect{v}}$.  Then,
+\begin{para}For the opposite inclusion, suppose $\vect{x}\in\preimage{T}{\vect{v}}$.  Then,
 %
 \begin{align*}
 \lt{T}{\vect{x}-\vect{u}}&=\lt{T}{\vect{x}}-\lt{T}{\vect{u}}&&\text{\acronymref{definition}{LT}}\\
 &=\vect{v}-\vect{v}&&\vect{x},\,\vect{u}\in\preimage{T}{\vect{v}}\\
 &=\zerovector
 \end{align*}
+\end{para}
 %
-This qualifies $\vect{x}-\vect{u}$ for membership in the kernel of $T$, $\krn{T}$.  So there is a vector $\vect{z}\in\krn{T}$ such that $\vect{x}-\vect{u}=\vect{z}$.  Rearranging this equation gives $\vect{x}=\vect{u}+\vect{z}$ and so $\vect{x}\in M$.  So $\preimage{T}{\vect{v}}\subseteq M$ and we see that $M=\preimage{T}{\vect{v}}$, as desired.
+\begin{para}This qualifies $\vect{x}-\vect{u}$ for membership in the kernel of $T$, $\krn{T}$.  So there is a vector $\vect{z}\in\krn{T}$ such that $\vect{x}-\vect{u}=\vect{z}$.  Rearranging this equation gives $\vect{x}=\vect{u}+\vect{z}$ and so $\vect{x}\in M$.  So $\preimage{T}{\vect{v}}\subseteq M$ and we see that $M=\preimage{T}{\vect{v}}$, as desired.\end{para}
 %
 \end{proof}
 %
-This theorem, and its proof, should remind you very much of \acronymref{theorem}{PSPHS}.  Additionally, you might go back and review \acronymref{example}{SPIAS}.  Can you tell now which is the only preimage to be a subspace?\par
+\begin{para}This theorem, and its proof, should remind you very much of \acronymref{theorem}{PSPHS}.  Additionally, you might go back and review \acronymref{example}{SPIAS}.  Can you tell now which is the only preimage to be a subspace?\end{para}
 %
-The next theorem is one we will cite frequently, as it characterizes injections by the size of the kernel.
+\begin{para}The next theorem is one we will cite frequently, as it characterizes injections by the size of the kernel.\end{para}
 %
 \begin{theorem}{KILT}{Kernel of an Injective Linear Transformation}{kernel!injective linear transformation}
-Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation.  Then $T$ is injective if and only if the kernel of $T$ is trivial, $\krn{T}=\set{\zerovector}$.
+\begin{para}Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation.  Then $T$ is injective if and only if the kernel of $T$ is trivial, $\krn{T}=\set{\zerovector}$.\end{para}
 \end{theorem}
 %
 \begin{proof}
-($\Rightarrow$) We assume $T$ is injective and we need to establish that two sets are equal (\acronymref{definition}{SE}).  Since the kernel is a subspace (\acronymref{theorem}{KLTS}), $\set{\zerovector}\subseteq\krn{T}$.  To establish the opposite inclusion, suppose $\vect{x}\in\krn{T}$.
+\begin{para}($\Rightarrow$) We assume $T$ is injective and we need to establish that two sets are equal (\acronymref{definition}{SE}).  Since the kernel is a subspace (\acronymref{theorem}{KLTS}), $\set{\zerovector}\subseteq\krn{T}$.  To establish the opposite inclusion, suppose $\vect{x}\in\krn{T}$.
 %
 \begin{align*}
 \lt{T}{\vect{x}}
@@ -426,10 +453,11 @@ Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation.  Then $T$ is injecti
 &&\text{\acronymref{theorem}{LTTZZ}}
 %
 \end{align*}
+\end{para}
 %
-We can apply \acronymref{definition}{ILT} to conclude that $\vect{x}=\zerovector$.  Therefore $\krn{T}\subseteq\set{\zerovector}$ and by \acronymref{definition}{SE}, $\krn{T}=\set{\zerovector}$.\par
+\begin{para}We can apply \acronymref{definition}{ILT} to conclude that $\vect{x}=\zerovector$.  Therefore $\krn{T}\subseteq\set{\zerovector}$ and by \acronymref{definition}{SE}, $\krn{T}=\set{\zerovector}$.\end{para}
 %
-($\Leftarrow$)  To establish that $T$ is injective, appeal to \acronymref{definition}{ILT} and begin with the assumption that $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$.  Then
+\begin{para}($\Leftarrow$)  To establish that $T$ is injective, appeal to \acronymref{definition}{ILT} and begin with the assumption that $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$.  Then
 %
 \begin{align*}
 \lt{T}{\vect{x}-\vect{y}}
@@ -440,8 +468,9 @@ We can apply \acronymref{definition}{ILT} to conclude that $\vect{x}=\zerovector
 &&\text{Hypothesis}
 %
 \end{align*}
+\end{para}
 %
-So $\vect{x}-\vect{y}\in\krn{T}$ by \acronymref{definition}{KLT} and with the hypothesis that the kernel is trivial we conclude that $\vect{x}-\vect{y}=\zerovector$.  Then
+\begin{para}So $\vect{x}-\vect{y}\in\krn{T}$ by \acronymref{definition}{KLT} and with the hypothesis that the kernel is trivial we conclude that $\vect{x}-\vect{y}=\zerovector$.  Then
 %
 \begin{align*}
 \vect{y}
@@ -450,14 +479,14 @@ So $\vect{x}-\vect{y}\in\krn{T}$ by \acronymref{definition}{KLT} and with the hy
 =\vect{x}
 \end{align*}
 %
-thus establishing that $T$ is injective by \acronymref{definition}{ILT}.
+thus establishing that $T$ is injective by \acronymref{definition}{ILT}.\end{para}
 %
 \end{proof}
 %
 \begin{example}{NIAQR}{Not injective, Archetype Q, revisited}{injective!not}
-We are now in a position to revisit our first example in this section, \acronymref{example}{NIAQ}.  In that example, we showed that \acronymref{archetype}{Q} is not injective by constructing two vectors, which when used to evaluate the linear transformation provided the same output, thus violating \acronymref{definition}{ILT}.  Just where did those two vectors come from?\par
+\begin{para}We are now in a position to revisit our first example in this section, \acronymref{example}{NIAQ}.  In that example, we showed that \acronymref{archetype}{Q} is not injective by constructing two vectors, which when used to evaluate the linear transformation provided the same output, thus violating \acronymref{definition}{ILT}.  Just where did those two vectors come from?\end{para}
 %
-The key is the vector
+\begin{para}The key is the vector
 %
 \begin{equation*}
 \vect{z}=\colvector{3\\4\\1\\3\\3}
@@ -471,40 +500,41 @@ which you can check is an element of $\krn{T}$ for \acronymref{archetype}{Q}.  C
 &=\lt{T}{\vect{x}}+\zerovector&&\vect{z}\in\krn{T}\\
 &=\lt{T}{\vect{x}}&&\text{\acronymref{property}{Z}}
 \end{align*}
+\end{para}
 %
-Whenever the kernel of a linear transformation is non-trivial, we can employ this device and conclude that the linear transformation is not injective.  This is another way of viewing \acronymref{theorem}{KILT}.  For an injective linear transformation, the kernel is trivial and our only choice for $\vect{z}$ is the zero vector, which will not help us create two {\em different} inputs for $T$ that yield identical outputs.  For every one of the archetypes that is not injective, there is an example presented of exactly this form.
+\begin{para}Whenever the kernel of a linear transformation is non-trivial, we can employ this device and conclude that the linear transformation is not injective.  This is another way of viewing \acronymref{theorem}{KILT}.  For an injective linear transformation, the kernel is trivial and our only choice for $\vect{z}$ is the zero vector, which will not help us create two {\em different} inputs for $T$ that yield identical outputs.  For every one of the archetypes that is not injective, there is an example presented of exactly this form.\end{para}
 %
 \end{example}
 %
 \begin{example}{NIAO}{Not injective, Archetype O}{injective!not}
-In \acronymref{example}{NKAO} the kernel of \acronymref{archetype}{O} was determined to be
+\begin{para}In \acronymref{example}{NKAO} the kernel of \acronymref{archetype}{O} was determined to be
 %
 \begin{equation*}
-\spn{\archetypepart{O}{ltnullspacebasis}}
-\end{equation*}
+\spn{\archetypepart{O}{ltnullspacebasis}}\end{equation*}
 %
-a subspace of $\complex{3}$ with dimension 1.  Since the kernel is not trivial, \acronymref{theorem}{KILT} tells us that $T$ is not injective.
+a subspace of $\complex{3}$ with dimension 1.  Since the kernel is not trivial, \acronymref{theorem}{KILT} tells us that $T$ is not injective.\end{para}
 %
 \end{example}
 %
 \begin{example}{IAP}{Injective, Archetype P}{injective}
-In \acronymref{example}{TKAP} it was shown that the linear transformation in \acronymref{archetype}{P} has a trivial kernel.  So by \acronymref{theorem}{KILT}, $T$ is injective.
-%
+\begin{para}In \acronymref{example}{TKAP} it was shown that the linear transformation in \acronymref{archetype}{P} has a trivial kernel.  So by \acronymref{theorem}{KILT}, $T$ is injective.\end{para}
 \end{example}
 %
 \sageadvice{ILT}{Injective Linear Transformations}{linear transformation!injective}
 %
-\subsect{ILTLI}{Injective Linear Transformations and Linear Independence}
+\end{subsect}
 %
-There is a connection between injective linear transformations and linearly independent sets that we will make precise in the next two theorems.  However, more informally, we can get a feel for this connection when we think about how each property is defined.  A set of vectors is linearly independent if the {\bf only} relation of linear dependence is the trivial one.  A linear transformation is injective if the {\bf only} way two input vectors can produce the same output is in the trivial way, when both input vectors are equal.
+\begin{subsect}{ILTLI}{Injective Linear Transformations and Linear Independence}
+%
+\begin{para}There is a connection between injective linear transformations and linearly independent sets that we will make precise in the next two theorems.  However, more informally, we can get a feel for this connection when we think about how each property is defined.  A set of vectors is linearly independent if the {\bf only} relation of linear dependence is the trivial one.  A linear transformation is injective if the {\bf only} way two input vectors can produce the same output is in the trivial way, when both input vectors are equal.\end{para}
 %
 \begin{theorem}{ILTLI}{Injective Linear Transformations and Linear Independence}{linear independence!injective linear transformation}
-Suppose that $\ltdefn{T}{U}{V}$ is an injective linear transformation and $S=\set{\vectorlist{u}{t}}$ is a linearly independent subset of $U$.  Then $R=\set{\lt{T}{\vect{u}_1},\,\lt{T}{\vect{u}_2},\,\lt{T}{\vect{u}_3},\,\ldots,\,\lt{T}{\vect{u}_t}}$ is a linearly independent subset of $V$.
+\begin{para}Suppose that $\ltdefn{T}{U}{V}$ is an injective linear transformation and $S=\set{\vectorlist{u}{t}}$ is a linearly independent subset of $U$.  Then $R=\set{\lt{T}{\vect{u}_1},\,\lt{T}{\vect{u}_2},\,\lt{T}{\vect{u}_3},\,\ldots,\,\lt{T}{\vect{u}_t}}$ is a linearly independent subset of $V$.\end{para}
 \end{theorem}
 %
 \begin{proof}
 %
-Begin with a relation of linear dependence on $R$ (\acronymref{definition}{RLD}, \acronymref{definition}{LI}),
+\begin{para}Begin with a relation of linear dependence on $R$ (\acronymref{definition}{RLD}, \acronymref{definition}{LI}),
 %
 \begin{align*}
 a_1\lt{T}{\vect{u}_1}+a_2\lt{T}{\vect{u}_2}+a_3\lt{T}{\vect{u}_3}+\ldots+a_t\lt{T}{\vect{u}_t}&=\zerovector\\
@@ -513,34 +543,34 @@ a_1\lt{T}{\vect{u}_1}+a_2\lt{T}{\vect{u}_2}+a_3\lt{T}{\vect{u}_3}+\ldots+a_t\lt{
 \lincombo{a}{u}{t}&\in\set{\zerovector}&&\text{\acronymref{theorem}{KILT}}\\
 \lincombo{a}{u}{t}&=\zerovector&&\text{\acronymref{definition}{SET}}\\
 \end{align*}
+\end{para}
 %
-Since this is a relation of linear dependence on the linearly independent set $S$, we can conclude that
+\begin{para}Since this is a relation of linear dependence on the linearly independent set $S$, we can conclude that
 %
 \begin{align*}
 a_1&=0&a_2&=0&a_3&=0&\ldots&&a_t&=0
 \end{align*}
 %
-and this establishes that $R$ is a linearly independent set.
+and this establishes that $R$ is a linearly independent set.\end{para}
 %
 \end{proof}
 %
-
-%
 \begin{theorem}{ILTB}{Injective Linear Transformations and Bases}{injective linear transformation!bases}
-Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation and $B=\set{\vectorlist{u}{m}}$ is a basis of $U$.  Then $T$ is injective if and only if $C=\set{\lt{T}{\vect{u}_1},\,\lt{T}{\vect{u}_2},\,\lt{T}{\vect{u}_3},\,\ldots,\,\lt{T}{\vect{u}_m}}$ is a linearly independent subset of $V$.
+\begin{para}Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation and $B=\set{\vectorlist{u}{m}}$ is a basis of $U$.  Then $T$ is injective if and only if $C=\set{\lt{T}{\vect{u}_1},\,\lt{T}{\vect{u}_2},\,\lt{T}{\vect{u}_3},\,\ldots,\,\lt{T}{\vect{u}_m}}$ is a linearly independent subset of $V$.\end{para}
 \end{theorem}
 %
 \begin{proof}
 %
-($\Rightarrow$)  Assume $T$ is injective.  Since $B$ is a basis, we know $B$ is linearly independent (\acronymref{definition}{B}).  Then \acronymref{theorem}{ILTLI} says that $C$ is a linearly independent subset of $V$.\par
+\begin{para}($\Rightarrow$)  Assume $T$ is injective.  Since $B$ is a basis, we know $B$ is linearly independent (\acronymref{definition}{B}).  Then \acronymref{theorem}{ILTLI} says that $C$ is a linearly independent subset of $V$.\end{para}
 %
-($\Leftarrow$)  Assume that $C$ is linearly independent.  To establish that $T$ is injective, we will show that the kernel of $T$ is trivial (\acronymref{theorem}{KILT}).  Suppose that $\vect{u}\in\krn{T}$.  As an element of $U$, we can write $\vect{u}$ as a linear combination of the basis vectors in $B$ (uniquely).  So there are are scalars, $\scalarlist{a}{m}$, such that
+\begin{para}($\Leftarrow$)  Assume that $C$ is linearly independent.  To establish that $T$ is injective, we will show that the kernel of $T$ is trivial (\acronymref{theorem}{KILT}).  Suppose that $\vect{u}\in\krn{T}$.  As an element of $U$, we can write $\vect{u}$ as a linear combination of the basis vectors in $B$ (uniquely).  So there are are scalars, $\scalarlist{a}{m}$, such that
 %
 \begin{equation*}
 \vect{u}=\lincombo{a}{u}{m}
 \end{equation*}
+\end{para}
 %
-Then,
+\begin{para}Then,
 %
 \begin{align*}
 \zerovector
@@ -554,8 +584,9 @@ Then,
 &&\text{\acronymref{theorem}{LTLC}}
 %
 \end{align*}
+\end{para}
 %
-This is a relation of linear dependence (\acronymref{definition}{RLD}) on the linearly independent set $C$, so the scalars are all zero:  $a_1=a_2=a_3=\cdots=a_m=0$.  Then
+\begin{para}This is a relation of linear dependence (\acronymref{definition}{RLD}) on the linearly independent set $C$, so the scalars are all zero:  $a_1=a_2=a_3=\cdots=a_m=0$.  Then
 %
 \begin{align*}
 \vect{u}&=\lincombo{a}{u}{m}\\
@@ -563,46 +594,51 @@ This is a relation of linear dependence (\acronymref{definition}{RLD}) on the li
 &=\zerovector+\zerovector+\zerovector+\cdots+\zerovector&&\text{\acronymref{theorem}{ZSSM}}\\
 &=\zerovector&&\text{\acronymref{property}{Z}}
 \end{align*}
+\end{para}
 %
-Since $\vect{u}$ was chosen as an arbitrary vector from $\krn{T}$, we have $\krn{T}=\set{\zerovector}$ and \acronymref{theorem}{KILT} tells us that $T$ is injective.
+\begin{para}Since $\vect{u}$ was chosen as an arbitrary vector from $\krn{T}$, we have $\krn{T}=\set{\zerovector}$ and \acronymref{theorem}{KILT} tells us that $T$ is injective.\end{para}
 %
 \end{proof}
 %
-\subsect{ILTD}{Injective Linear Transformations and Dimension}
+\end{subsect}
+%
+\begin{subsect}{ILTD}{Injective Linear Transformations and Dimension}
 %
 \begin{theorem}{ILTD}{Injective Linear Transformations and Dimension}{injective linear transformations!dimension}
-Suppose that $\ltdefn{T}{U}{V}$ is an injective linear transformation.  Then $\dimension{U}\leq\dimension{V}$.
+\begin{para}Suppose that $\ltdefn{T}{U}{V}$ is an injective linear transformation.  Then $\dimension{U}\leq\dimension{V}$.\end{para}
 \end{theorem}
 %
 \begin{proof}
 %
-Suppose to the contrary that $m=\dimension{U}>\dimension{V}=t$.  Let $B$ be  a basis of $U$, which will then contain $m$ vectors.  Apply $T$ to each element of $B$ to form a set $C$ that is a subset of $V$.  By \acronymref{theorem}{ILTB}, $C$ is linearly independent and therefore must contain $m$ distinct vectors.  So we have found a set of $m$ linearly independent vectors in $V$, a vector space of dimension $t$, with $m>t$.  However, this contradicts \acronymref{theorem}{G}, so our assumption is false and $\dimension{U}\leq\dimension{V}$.
+\begin{para}Suppose to the contrary that $m=\dimension{U}>\dimension{V}=t$.  Let $B$ be  a basis of $U$, which will then contain $m$ vectors.  Apply $T$ to each element of $B$ to form a set $C$ that is a subset of $V$.  By \acronymref{theorem}{ILTB}, $C$ is linearly independent and therefore must contain $m$ distinct vectors.  So we have found a set of $m$ linearly independent vectors in $V$, a vector space of dimension $t$, with $m>t$.  However, this contradicts \acronymref{theorem}{G}, so our assumption is false and $\dimension{U}\leq\dimension{V}$.\end{para}
 %
 \end{proof}
 %
 \begin{example}{NIDAU}{Not injective by dimension, Archetype U}{injective!not, by dimension}
-The linear transformation in \acronymref{archetype}{U} is
+\begin{para}The linear transformation in \acronymref{archetype}{U} is
 %
 \begin{equation*}
-\archetypepart{U}{ltdefn}
-\end{equation*}
+\archetypepart{U}{ltdefn}\end{equation*}
+\end{para}
 %
-Since $\dimension{M_{23}}=6>4=\dimension{\complex{4}}$, $T$ cannot be injective for then $T$ would violate \acronymref{theorem}{ILTD}.
+\begin{para}Since $\dimension{M_{23}}=6>4=\dimension{\complex{4}}$, $T$ cannot be injective for then $T$ would violate \acronymref{theorem}{ILTD}.\end{para}
 %
 \end{example}
 %
-Notice that the previous example made no use of the actual formula defining the function.  Merely a comparison of the dimensions of the domain and codomain are enough to conclude that the linear transformation is not injective.  \acronymref{archetype}{M} and \acronymref{archetype}{N} are two more examples of linear transformations that have ``big'' domains and ``small'' codomains, resulting in ``collisions'' of outputs and thus are non-injective linear transformations.
+\begin{para}Notice that the previous example made no use of the actual formula defining the function.  Merely a comparison of the dimensions of the domain and codomain are enough to conclude that the linear transformation is not injective.  \acronymref{archetype}{M} and \acronymref{archetype}{N} are two more examples of linear transformations that have ``big'' domains and ``small'' codomains, resulting in ``collisions'' of outputs and thus are non-injective linear transformations.\end{para}
 %
-\subsect{CILT}{Composition of Injective Linear Transformations}
+\end{subsect}
 %
-In \acronymref{subsection}{LT.NLTFO} we saw how to combine linear transformations to build new linear transformations, specifically, how to build the composition of two linear transformations (\acronymref{definition}{LTC}).  It will be useful later to know that the composition of injective linear transformations is again injective, so we prove that here.
+\begin{subsect}{CILT}{Composition of Injective Linear Transformations}
+%
+\begin{para}In \acronymref{subsection}{LT.NLTFO} we saw how to combine linear transformations to build new linear transformations, specifically, how to build the composition of two linear transformations (\acronymref{definition}{LTC}).  It will be useful later to know that the composition of injective linear transformations is again injective, so we prove that here.\end{para}
 %
 \begin{theorem}{CILTI}{Composition of Injective Linear Transformations is Injective}{composition!injective linear transformations}
-Suppose that $\ltdefn{T}{U}{V}$ and $\ltdefn{S}{V}{W}$ are injective linear transformations.  Then $\ltdefn{(\compose{S}{T})}{U}{W}$ is an injective linear transformation.
+\begin{para}Suppose that $\ltdefn{T}{U}{V}$ and $\ltdefn{S}{V}{W}$ are injective linear transformations.  Then $\ltdefn{(\compose{S}{T})}{U}{W}$ is an injective linear transformation.\end{para}
 \end{theorem}
 %
 \begin{proof}
-That the composition is a linear transformation was established in \acronymref{theorem}{CLTLT}, so we need only establish that the composition is injective.  Applying \acronymref{definition}{ILT}, choose $\vect{x}$, $\vect{y}$ from $U$.  Then if $\lt{\left(\compose{S}{T}\right)}{\vect{x}}=\lt{\left(\compose{S}{T}\right)}{\vect{y}}$,
+\begin{para}That the composition is a linear transformation was established in \acronymref{theorem}{CLTLT}, so we need only establish that the composition is injective.  Applying \acronymref{definition}{ILT}, choose $\vect{x}$, $\vect{y}$ from $U$.  Then if $\lt{\left(\compose{S}{T}\right)}{\vect{x}}=\lt{\left(\compose{S}{T}\right)}{\vect{y}}$,
 %
 \begin{align*}
 %
@@ -615,9 +651,12 @@ That the composition is a linear transformation was established in \acronymref{t
 &\Rightarrow&\vect{x}&=\vect{y}
 &&\text{\acronymref{definition}{ILT} for $T$}
 \end{align*}
+\end{para}
 %
 \end{proof}
 %
 \sageadvice{CILT}{Composition of Injective Linear Transformations}{linear transformation!composition}
+%
+\end{subsect}
 %
 %  End of  ilt.tex
