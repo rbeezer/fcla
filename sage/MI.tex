@@ -1,0 +1,54 @@
+Now we know that invertibility is equivalent to nonsingularity, and that the procedure outlined in \acronymref{theorem}{CINM} will always yield an inverse for a nonsingular matrix.  But rather than using that procedure, Sage implements a \verb?.inverse()? method.  In the following, we compute the inverse of a $3\times 3$ matrix, and then purposely convert it to a singular matrix by replacing the last column by a linear combination of the first two.
+%
+\begin{sageexample}
+sage: A = matrix(QQ,[[ 3,  7, -6],
+...                  [ 2,  5, -5],
+...                  [-3, -8,  8]])
+sage: A.is_singular()
+False
+sage: Ainv = A.inverse(); Ainv
+[ 0  8  5]
+[ 1 -6 -3]
+[ 1 -3 -1]
+sage: A*Ainv
+[1 0 0]
+[0 1 0]
+[0 0 1]
+sage: col_0 = A.column(0)
+sage: col_1 = A.column(1)
+sage: C = column_matrix([col_0, col_1, 2*col_0 - 4*col_1])
+sage: C.is_singular()
+True
+sage: C.inverse()
+Traceback (most recent call last):
+...
+ZeroDivisionError: input matrix must be nonsingular
+\end{sageexample}
+%
+Notice how the failure to invert \verb?C? is explained by the matrix being singular.\par
+%
+Systems with nonsingular coefficient matrices can be solved easily with the matrix inverse.  We will recycle \verb?A? as a coefficient matrix, so be sure to execute the code above.
+%
+\begin{sageexample}
+sage: const = vector(QQ, [2, -1, 4])
+sage: A.solve_right(const)
+(12, -4, 1)
+sage: A.inverse()*const
+(12, -4, 1)
+sage: A.solve_right(const) == A.inverse()*const
+True
+\end{sageexample}
+%
+If you find it more convenient, you can use the same notation as the text for a matrix inverse.
+%
+\begin{sageexample}
+sage: A^-1
+[ 0  8  5]
+[ 1 -6 -3]
+[ 1 -3 -1]
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+
