@@ -14,21 +14,23 @@
 %%
 %%%%%%%%%%%
 %
-After solving a few systems of equations, you will recognize that it doesn't matter so much {\em what} we call our variables, as opposed to what numbers act as their coefficients.  A system in the variables $x_1,\,x_2,\,x_3$  would behave the same if we changed the names of the variables to $a,\,b,\,c$ and kept all the constants the same and in the same places.  In this section, we will isolate the key bits of information about a system of equations into something called a matrix, and then use this matrix to systematically solve the equations.  Along the way we will obtain one of our most important and useful computational tools.
+\begin{introduction}
+\begin{para}After solving a few systems of equations, you will recognize that it doesn't matter so much {\em what} we call our variables, as opposed to what numbers act as their coefficients.  A system in the variables $x_1,\,x_2,\,x_3$  would behave the same if we changed the names of the variables to $a,\,b,\,c$ and kept all the constants the same and in the same places.  In this section, we will isolate the key bits of information about a system of equations into something called a matrix, and then use this matrix to systematically solve the equations.  Along the way we will obtain one of our most important and useful computational tools.\end{para}
+\end{introduction}
 %
-\subsect{MVNSE}{Matrix and Vector Notation for Systems of Equations}
+\begin{subsect}{MVNSE}{Matrix and Vector Notation for Systems of Equations}
 %
 \begin{definition}{M}{Matrix}{matrix}
-An $m\times n$ \define{matrix} is a rectangular layout of numbers from $\complex{\null}$ having $m$ rows and $n$ columns.  We will use upper-case Latin letters from the start of the alphabet ($A,\,B,\,C,\dotsc$) to denote matrices and squared-off brackets to delimit the layout.  Many use large parentheses instead of brackets --- the distinction is not important.  Rows of a matrix will be referenced starting at the top and working down (i.e.\ row 1 is at the top) and columns will be referenced starting from the left (i.e.\ column 1 is at the left).  For a matrix $A$, the notation $\matrixentry{A}{ij}$ will refer to the complex number in row $i$ and column $j$ of $A$.
+\begin{para}An $m\times n$ \define{matrix} is a rectangular layout of numbers from $\complex{\null}$ having $m$ rows and $n$ columns.  We will use upper-case Latin letters from the start of the alphabet ($A,\,B,\,C,\dotsc$) to denote matrices and squared-off brackets to delimit the layout.  Many use large parentheses instead of brackets --- the distinction is not important.  Rows of a matrix will be referenced starting at the top and working down (i.e.\ row 1 is at the top) and columns will be referenced starting from the left (i.e.\ column 1 is at the left).  For a matrix $A$, the notation $\matrixentry{A}{ij}$ will refer to the complex number in row $i$ and column $j$ of $A$.\end{para}
 \denote{M}{Matrix}{$A$}{matrix}
 \denote{MC}{Matrix Components}{$\matrixentry{A}{ij}$}{matrix components}
 \end{definition}
 %
-Be careful with this notation for individual entries, since it is easy to think that $\matrixentry{A}{ij}$ refers to the {\em whole} matrix.  It does not.  It is just a {\em number}, but is a convenient way to talk about the individual entries simultaneously.  This notation will get a heavy workout once we get to \acronymref{chapter}{M}.
+\begin{para}Be careful with this notation for individual entries, since it is easy to think that $\matrixentry{A}{ij}$ refers to the {\em whole} matrix.  It does not.  It is just a {\em number}, but is a convenient way to talk about the individual entries simultaneously.  This notation will get a heavy workout once we get to \acronymref{chapter}{M}.\end{para}
 %
 \begin{example}{AM}{A matrix}{matrix}
 %
-\begin{equation*}
+\begin{para}\begin{equation*}
 B=\begin{bmatrix}
 -1&2&5&3\\
 1&0&-6&1\\
@@ -36,38 +38,38 @@ B=\begin{bmatrix}
 \end{bmatrix}
 \end{equation*}
 %
-is a matrix with $m=3$ rows and $n=4$ columns.  We can say that $\matrixentry{B}{2,3}=-6$ while $\matrixentry{B}{3,4}=-2$.
+is a matrix with $m=3$ rows and $n=4$ columns.  We can say that $\matrixentry{B}{2,3}=-6$ while $\matrixentry{B}{3,4}=-2$.\end{para}
 %
 \end{example}
 %
 \sageadvice{M}{Matrices}{matrix creation}
 %
-When we do equation operations on system of equations, the names of the variables really aren't very important.  $x_1$, $x_2$, $x_3$, or $a$, $b$, $c$, or $x$, $y$, $z$, it really doesn't matter.  In this subsection we will describe some notation that will make it easier to describe linear systems, solve the systems and describe the solution sets.  Here is a list of definitions, laden with notation.\par
+\begin{para}When we do equation operations on system of equations, the names of the variables really aren't very important.  $x_1$, $x_2$, $x_3$, or $a$, $b$, $c$, or $x$, $y$, $z$, it really doesn't matter.  In this subsection we will describe some notation that will make it easier to describe linear systems, solve the systems and describe the solution sets.  Here is a list of definitions, laden with notation.\end{para}
 %
 \begin{definition}{CV}{Column Vector}{vector!column}
-A \define{column vector} of \define{size} $m$ is an ordered list of $m$ numbers, which is written in order vertically, starting at the top and proceeding to the bottom.  At times, we will refer to a column vector as simply a \define{vector}.  Column vectors will be written in bold, usually with lower case Latin letter from the end of the alphabet such as $\vect{u}$, $\vect{v}$, $\vect{w}$, $\vect{x}$, $\vect{y}$, $\vect{z}$.  Some books like to write vectors with arrows, such as $\vec{u}$.  Writing by hand, some like to put arrows on top of the symbol, or a tilde underneath the symbol, as in $\underset{\sim}{\textstyle u}$.  To refer to the \define{entry} or \define{component} that is number $i$ in the list that is the vector $\vect{v}$ we write $\vectorentry{\vect{v}}{i}$.
+\begin{para}A \define{column vector} of \define{size} $m$ is an ordered list of $m$ numbers, which is written in order vertically, starting at the top and proceeding to the bottom.  At times, we will refer to a column vector as simply a \define{vector}.  Column vectors will be written in bold, usually with lower case Latin letter from the end of the alphabet such as $\vect{u}$, $\vect{v}$, $\vect{w}$, $\vect{x}$, $\vect{y}$, $\vect{z}$.  Some books like to write vectors with arrows, such as $\vec{u}$.  Writing by hand, some like to put arrows on top of the symbol, or a tilde underneath the symbol, as in $\underset{\sim}{\textstyle u}$.  To refer to the \define{entry} or \define{component} that is number $i$ in the list that is the vector $\vect{v}$ we write $\vectorentry{\vect{v}}{i}$.\end{para}
 \denote{CV}{Column Vector}{$\vect{v}$}{vector}
 \denote{CVC}{Column Vector Components}{$\vectorentry{\vect{v}}{i}$}{vector component}
 \end{definition}
 %
-Be careful with this notation.  While the symbols $\vectorentry{\vect{v}}{i}$ might look somewhat substantial, as an object this represents just one component of a vector, which is just a single complex number.
+\begin{para}Be careful with this notation.  While the symbols $\vectorentry{\vect{v}}{i}$ might look somewhat substantial, as an object this represents just one component of a vector, which is just a single complex number.\end{para}
 %
 \begin{definition}{ZCV}{Zero Column Vector}{zero column vector}
-The \define{zero vector} of size $m$ is the column vector of size $m$ where each entry is the number zero,
+\begin{para}The \define{zero vector} of size $m$ is the column vector of size $m$ where each entry is the number zero,
 %
 \begin{align*}
 \zerovector=
 \colvector{0\\0\\0\\\vdots\\0}
 \end{align*}
 %
-or defined much more compactly, $\vectorentry{\zerovector}{i}=0$ for $1\leq i\leq m$.
+or defined much more compactly, $\vectorentry{\zerovector}{i}=0$ for $1\leq i\leq m$.\end{para}
 \denote{ZCV}{Zero Column Vector}{$\zerovector$}{zero column vector}
 \end{definition}
 %
 \sageadvice{V}{Vectors}{vector creation}
 %
 \begin{definition}{CM}{Coefficient Matrix}{coefficient matrix}
-For a system of linear equations,
+\begin{para}For a system of linear equations,
 \begin{align*}
 a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&=b_1\\
 a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&=b_2\\
@@ -86,10 +88,11 @@ a_{31}&a_{32}&a_{33}&\dots&a_{3n}\\
 a_{m1}&a_{m2}&a_{m3}&\dots&a_{mn}\\
 \end{bmatrix}
 \end{equation*}
+\end{para}
 \end{definition}
 %
 \begin{definition}{VOC}{Vector of Constants}{vector!of constants}
-For a system of linear equations,
+\begin{para}For a system of linear equations,
 \begin{align*}
 a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&=b_1\\
 a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&=b_2\\
@@ -108,10 +111,11 @@ b_3\\
 b_m\\
 \end{bmatrix}
 \end{equation*}
+\end{para}
 \end{definition}
 %
 \begin{definition}{SOLV}{Solution Vector}{solution vector}
-For a system of linear equations,
+\begin{para}For a system of linear equations,
 \begin{align*}
 a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&=b_1\\
 a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&=b_2\\
@@ -130,17 +134,18 @@ x_3\\
 x_n\\
 \end{bmatrix}
 \end{equation*}
+\end{para}
 \end{definition}
 %
-The solution vector may do double-duty on occasion.  It might refer to a list of variable quantities at one point, and subsequently refer to values of those variables that actually form a particular solution to that system.
+\begin{para}The solution vector may do double-duty on occasion.  It might refer to a list of variable quantities at one point, and subsequently refer to values of those variables that actually form a particular solution to that system.\end{para}
 %
 \begin{definition}{MRLS}{Matrix Representation of a Linear System}{linear system!matrix representation}
-If $A$ is the coefficient matrix of a system of linear equations and $\vect{b}$ is the vector of constants, then we will write $\linearsystem{A}{\vect{b}}$ as a shorthand expression for the  system of linear equations, which we will refer to as the \define{matrix representation} of the linear system.
+\begin{para}If $A$ is the coefficient matrix of a system of linear equations and $\vect{b}$ is the vector of constants, then we will write $\linearsystem{A}{\vect{b}}$ as a shorthand expression for the  system of linear equations, which we will refer to as the \define{matrix representation} of the linear system.\end{para}
 \denote{MRLS}{Matrix Representation of a Linear System}{$\linearsystem{A}{\vect{b}}$}{linear system!matrix representation}
 \end{definition}
 %
 \begin{example}{NSLE}{Notation for systems of linear equations}{linear systems!notation}
-The system of linear equations
+\begin{para}The system of linear equations
 %
 \begin{align*}
 2x_1+4x_2-3x_3+5x_4+x_5&=9\\
@@ -165,34 +170,36 @@ and vector of constants
 \vect{b}=\colvector{9\\0\\-3}
 \end{equation*}
 %
-and so will be referenced as $\linearsystem{A}{\vect{b}}$.
+and so will be referenced as $\linearsystem{A}{\vect{b}}$.\end{para}
 %
 \end{example}
 %
 \begin{definition}{AM}{Augmented Matrix}{matrix!augmented}
-Suppose we have a system of $m$ equations in $n$ variables, with coefficient matrix $A$ and vector of constants $\vect{b}$.  Then the \define{augmented matrix} of the system of equations is the $m\times(n+1)$ matrix whose first $n$ columns are the columns of $A$ and whose last column (number $n+1$) is the column vector $\vect{b}$.  This matrix will be written as $\augmented{A}{\vect{b}}$.
+\begin{para}Suppose we have a system of $m$ equations in $n$ variables, with coefficient matrix $A$ and vector of constants $\vect{b}$.  Then the \define{augmented matrix} of the system of equations is the $m\times(n+1)$ matrix whose first $n$ columns are the columns of $A$ and whose last column (number $n+1$) is the column vector $\vect{b}$.  This matrix will be written as $\augmented{A}{\vect{b}}$.\end{para}
 \denote{AM}{Augmented Matrix}{$\augmented{A}{\vect{b}}$}{augmented matrix}
 \end{definition}
 %
-The augmented matrix {\em represents} all the important information in the system of equations, since the names of the variables have been ignored, and the only connection with the variables is the location of their coefficients in the matrix.  It is important to realize that the augmented matrix is just that, a matrix, and {\em not} a system of equations.  In particular, the augmented matrix does not have any ``solutions,'' though it will be useful for finding solutions to the system of equations that it is associated with.  (Think about your objects, and review \acronymref{technique}{L}.)  However, notice that an augmented matrix always belongs to some system of equations, and vice versa, so it is tempting to try and blur the distinction between the two.  Here's a quick example.
+\begin{para}The augmented matrix {\em represents} all the important information in the system of equations, since the names of the variables have been ignored, and the only connection with the variables is the location of their coefficients in the matrix.  It is important to realize that the augmented matrix is just that, a matrix, and {\em not} a system of equations.  In particular, the augmented matrix does not have any ``solutions,'' though it will be useful for finding solutions to the system of equations that it is associated with.  (Think about your objects, and review \acronymref{technique}{L}.)  However, notice that an augmented matrix always belongs to some system of equations, and vice versa, so it is tempting to try and blur the distinction between the two.  Here's a quick example.\end{para}
 %
 \begin{example}{AMAA}{Augmented matrix for Archetype A}{archetype A!augmented matrix}
-\acronymref{archetype}{A} is the following system of 3 equations in 3 variables.
+\begin{para}\acronymref{archetype}{A} is the following system of 3 equations in 3 variables.
 \archetypepart{A}{definition}
 Here is its augmented matrix.
 \begin{align*}
-\archetypepart{A}{augmented}
-\end{align*}
+\archetypepart{A}{augmented}\end{align*}
+\end{para}
 \end{example}
 %
 \sageadvice{AM}{Augmented Matrix}{augmented matrix}
 %
-\subsect{RO}{Row Operations}
+\end{subsect}
 %
-An augmented matrix for a system of equations will save us the tedium of continually writing down the names of the variables as we solve the system.  It will also release us from any dependence on the actual names of the variables.  We have seen how certain operations we can perform on equations (\acronymref{definition}{EO}) will preserve their solutions (\acronymref{theorem}{EOPSS}).  The next two definitions and the following theorem carry over these ideas to augmented matrices.
+\begin{subsect}{RO}{Row Operations}
+%
+\begin{para}An augmented matrix for a system of equations will save us the tedium of continually writing down the names of the variables as we solve the system.  It will also release us from any dependence on the actual names of the variables.  We have seen how certain operations we can perform on equations (\acronymref{definition}{EO}) will preserve their solutions (\acronymref{theorem}{EOPSS}).  The next two definitions and the following theorem carry over these ideas to augmented matrices.\end{para}
 %
 \begin{definition}{RO}{Row Operations}{row operations}
-The following three operations will transform an $m\times n$ matrix into a different matrix of the same size, and each is known as a \define{row operation}.
+\begin{para}The following three operations will transform an $m\times n$ matrix into a different matrix of the same size, and each is known as a \define{row operation}.
 %
 \begin{enumerate}
 \item Swap the locations of two rows.
@@ -204,16 +211,16 @@ We will use a symbolic shorthand to describe these row operations:
 \item $\rowopswap{i}{j}$:\quad Swap the location of rows $i$ and $j$.
 \item $\rowopmult{\alpha}{i}$:\quad Multiply row $i$ by the nonzero scalar $\alpha$.
 \item $\rowopadd{\alpha}{i}{j}$:\quad Multiply row $i$ by the scalar $\alpha$ and add to row $j$.
-\end{enumerate}
+\end{enumerate}\end{para}
 \denote{RO}{Row Operations}{$\rowopswap{i}{j}$, $\rowopmult{\alpha}{i}$, $\rowopadd{\alpha}{i}{j}$}{row operations}
 \end{definition}
 %
 \begin{definition}{REM}{Row-Equivalent Matrices}{row-equivalent matrices}
-Two matrices, $A$ and $B$, are \define{row-equivalent} if one can be obtained from the other by a sequence of row operations.
+\begin{para}Two matrices, $A$ and $B$, are \define{row-equivalent} if one can be obtained from the other by a sequence of row operations.\end{para}
 \end{definition}
 %
 \begin{example}{TREM}{Two row-equivalent matrices}{row-equivalent matrices}
-The matrices
+\begin{para}The matrices
 \begin{align*}
 A=\begin{bmatrix}
 2&-1&3&4\\
@@ -250,25 +257,25 @@ are row-equivalent as can be seen from
 2&-1&3&4
 \end{bmatrix}
 \end{align*}
-We can also say that any pair of these three matrices are row-equivalent.
+We can also say that any pair of these three matrices are row-equivalent.\end{para}
 \end{example}
 %
-Notice that each of the three row operations is reversible (\acronymref{exercise}{RREF.T10}), so we do not have to be careful about the distinction between ``$A$ is row-equivalent to $B$'' and ``$B$ is row-equivalent to $A$.'' (\acronymref{exercise}{RREF.T11})
+\begin{para}Notice that each of the three row operations is reversible (\acronymref{exercise}{RREF.T10}), so we do not have to be careful about the distinction between ``$A$ is row-equivalent to $B$'' and ``$B$ is row-equivalent to $A$.'' (\acronymref{exercise}{RREF.T11})\end{para}
 %
-The preceding definitions are designed to make the following theorem possible.  It says that row-equivalent matrices represent systems of linear equations that have identical solution sets.
+\begin{para}The preceding definitions are designed to make the following theorem possible.  It says that row-equivalent matrices represent systems of linear equations that have identical solution sets.\end{para}
 %
 \begin{theorem}{REMES}{Row-Equivalent Matrices represent Equivalent Systems}{row-equivalent matrices}
-Suppose that $A$ and $B$ are row-equivalent augmented matrices.  Then the systems of linear equations that they represent are equivalent systems.
+\begin{para}Suppose that $A$ and $B$ are row-equivalent augmented matrices.  Then the systems of linear equations that they represent are equivalent systems.\end{para}
 \end{theorem}
 %
 \begin{proof}
-If we perform a single row operation on an augmented matrix, it will have the same effect as if we did the analogous equation operation on the corresponding system of equations.  By exactly the same methods as we used in the proof of \acronymref{theorem}{EOPSS} we can see that each of these row operations will preserve the set of solutions for the corresponding system of equations.
+\begin{para}If we perform a single row operation on an augmented matrix, it will have the same effect as if we did the analogous equation operation on the corresponding system of equations.  By exactly the same methods as we used in the proof of \acronymref{theorem}{EOPSS} we can see that each of these row operations will preserve the set of solutions for the corresponding system of equations.\end{para}
 \end{proof}
 %
-So at this point, our strategy is to begin with a system of equations, represent it by an augmented matrix, perform row operations (which will preserve solutions for the corresponding systems) to get a ``simpler'' augmented matrix, convert back to a ``simpler''  system of equations and then solve that system, knowing that its solutions are those of the original system.  Here's a rehash of \acronymref{example}{US} as an exercise in using our new tools.
+\begin{para}So at this point, our strategy is to begin with a system of equations, represent it by an augmented matrix, perform row operations (which will preserve solutions for the corresponding systems) to get a ``simpler'' augmented matrix, convert back to a ``simpler''  system of equations and then solve that system, knowing that its solutions are those of the original system.  Here's a rehash of \acronymref{example}{US} as an exercise in using our new tools.\end{para}
 %
 \begin{example}{USR}{Three equations, one solution, reprised}{unique solution, $3\times 3$}
-We solve the following system using augmented matrices and row operations.  This is the same system of equations solved in \acronymref{example}{US} using equation operations.
+\begin{para}We solve the following system using augmented matrices and row operations.  This is the same system of equations solved in \acronymref{example}{US} using equation operations.
 \begin{align*}
 x_1+2x_2+2x_3&=4\\
 x_1+3x_2+3x_3&=5\\
@@ -315,9 +322,9 @@ and apply row operations,
 0&1& 1&1\\
 0&0&1&4
 \end{bmatrix}
-\end{align*}
+\end{align*}\end{para}
 %
-So the matrix
+\begin{para}So the matrix
 %
 \begin{equation*}
 B=\begin{bmatrix}
@@ -333,36 +340,43 @@ and by \acronymref{theorem}{REMES} the system of equations below has the same so
 x_1+2x_2+2x_3&=4\\
 x_2+ x_3&=1\\
 x_3&=4
-\end{align*}
-Solving this ``simpler'' system is straightforward and is identical to the process in \acronymref{example}{US}.
+\end{align*}\end{para}
+%
+\begin{para}Solving this ``simpler'' system is straightforward and is identical to the process in \acronymref{example}{US}.\end{para}
 \end{example}
 %
 \sageadvice{RO}{Row Operations}{row operations}
 %
-\subsect{RREF}{Reduced Row-Echelon Form}
+\end{subsect}
 %
-The preceding example amply illustrates the definitions and theorems we have seen so far.  But it still leaves two questions unanswered.  Exactly what is this ``simpler'' form for a matrix, and just how do we get it?  Here's the answer to the first question, a definition of reduced row-echelon form.
+\begin{subsect}{RREF}{Reduced Row-Echelon Form}
+%
+\begin{para}The preceding example amply illustrates the definitions and theorems we have seen so far.  But it still leaves two questions unanswered.  Exactly what is this ``simpler'' form for a matrix, and just how do we get it?  Here's the answer to the first question, a definition of reduced row-echelon form.\end{para}
 %
 \begin{definition}{RREF}{Reduced Row-Echelon Form}{reduced row-echelon form}
-A matrix is in \define{reduced row-echelon form} if it meets all of the following conditions:
+\begin{para}A matrix is in \define{reduced row-echelon form} if it meets all of the following conditions:
 \begin{enumerate}
 \item If there is a row where every entry is zero, then this row lies below any other row that contains a nonzero entry.
 \item The leftmost nonzero entry of a row is equal to 1.
 \item The leftmost nonzero entry of a row is the only nonzero entry in its column.
 \item Consider any two different leftmost nonzero entries, one located in row $i$, column $j$ and the other located in row $s$, column $t$.  If $s>i$, then $t>j$.
 \end{enumerate}
-A row of only zero entries will be called a \define{zero row} and the leftmost nonzero entry of a nonzero row will be called a \define{leading 1}.  The number of nonzero rows will be denoted by $r$.\par
+A row of only zero entries will be called a \define{zero row} and the leftmost nonzero entry of a nonzero row will be called a \define{leading 1}.  The number of nonzero rows will be denoted by $r$.\end{para}
 %
-A column containing a leading 1 will be called a \define{pivot column}.  The set of column indices for all of the pivot columns will be denoted by $D=\set{d_1,\,d_2,\,d_3,\,\ldots,\,d_r}$ where $d_1<d_2<d_3<\cdots<d_r$, while the columns that are not pivot columns will be denoted as $F=\set{f_1,\,f_2,\,f_3,\,\ldots,\,f_{n-r}}$ where $f_1<f_2<f_3<\cdots<f_{n-r}$.
+\begin{para}A column containing a leading 1 will be called a \define{pivot column}.  The set of column indices for all of the pivot columns will be denoted by $D=\set{d_1,\,d_2,\,d_3,\,\ldots,\,d_r}$ where
+$d_1<d_2<d_3<\cdots<d_r$,
+while the columns that are not pivot columns will be denoted as $F=\set{f_1,\,f_2,\,f_3,\,\ldots,\,f_{n-r}}$ where
+$f_1<f_2<f_3<\cdots<f_{n-r}$.
+\end{para}
 \denote{RREFA}{Reduced Row-Echelon Form Analysis}{$r$, $D$, $F$}{reduced row-echelon form!analysis}
 \end{definition}
 %
-The principal feature of reduced row-echelon form is the pattern of leading 1's guaranteed by conditions (2) and (4), reminiscent of a flight of geese, or steps in a staircase, or water cascading down a mountain stream.\par
+\begin{para}The principal feature of reduced row-echelon form is the pattern of leading 1's guaranteed by conditions (2) and (4), reminiscent of a flight of geese, or steps in a staircase, or water cascading down a mountain stream.\end{para}
 %
-There are a number of new terms and notation introduced in this definition, which should make you suspect that this is an important definition.  Given all there is to digest here, we will mostly save the use of $D$ and $F$ until \acronymref{section}{TSS}.  However, one important point to make here is that all of these terms and notation apply to a matrix.  Sometimes we will employ these terms and sets for an augmented matrix, and other times it might be a coefficient matrix.  So always give some thought to exactly which type of matrix you are analyzing.
+\begin{para}There are a number of new terms and notation introduced in this definition, which should make you suspect that this is an important definition.  Given all there is to digest here, we will mostly save the use of $D$ and $F$ until \acronymref{section}{TSS}.  However, one important point to make here is that all of these terms and notation apply to a matrix.  Sometimes we will employ these terms and sets for an augmented matrix, and other times it might be a coefficient matrix.  So always give some thought to exactly which type of matrix you are analyzing.\end{para}
 %
 \begin{example}{RREF}{A matrix in reduced row-echelon form}{reduced row-echelon form}
-The matrix $C$ is in reduced row-echelon form.
+\begin{para}The matrix $C$ is in reduced row-echelon form.
 \begin{align*}
 C&=
 \begin{bmatrix}
@@ -373,11 +387,11 @@ C&=
 0&0&0&0&0&0&0&0
 \end{bmatrix}
 \end{align*}
-This matrix has two zero rows and three leading 1's.   So $r=3$.  Columns 1, 5, and 6 are pivot columns, so $D=\set{1,\,5,\,6}$ and then $F=\set{2,\,3,\,4,\,7,\,8}$.
+This matrix has two zero rows and three leading 1's.   So $r=3$.  Columns 1, 5, and 6 are pivot columns, so $D=\set{1,\,5,\,6}$ and then $F=\set{2,\,3,\,4,\,7,\,8}$.\end{para}
 \end{example}
 %
 \begin{example}{NRREF}{A matrix not in reduced row-echelon form}{reduced row-echelon form}
-The matrix $E$ is not in reduced row-echelon form, as it fails each of the four requirements once.
+\begin{para}The matrix $E$ is not in reduced row-echelon form, as it fails each of the four requirements once.
 \begin{align*}
 E&=
 \begin{bmatrix}
@@ -388,23 +402,23 @@ E&=
 0&0&0&0&0&0&1&7&3\\
 0&0&0&0&0&0&0&0&0
 \end{bmatrix}
-\end{align*}
+\end{align*}\end{para}
 \end{example}
 %
-Our next theorem has a ``constructive'' proof.  Learn about the meaning of this term in \acronymref{technique}{C}.
+\begin{para}Our next theorem has a ``constructive'' proof.  Learn about the meaning of this term in \acronymref{technique}{C}.\end{para}
 %
 \begin{theorem}{REMEF}{Row-Equivalent Matrix in Echelon Form}{row-reduced matrices}
-Suppose $A$ is a matrix.  Then there is a matrix $B$ so that
+\begin{para}Suppose $A$ is a matrix.  Then there is a matrix $B$ so that
 \begin{enumerate}
 \item $A$ and $B$ are row-equivalent.
 \item $B$ is in reduced row-echelon form.
-\end{enumerate}
+\end{enumerate}\end{para}
 \end{theorem}
 %
 \begin{proof}
-Suppose that $A$ has $m$ rows and $n$ columns.  We will describe a process for converting $A$ into $B$ via row operations.  This procedure is known as \define{Gauss--Jordan elimination}.  Tracing through this procedure will be easier if you recognize that $i$ refers to a row that is being converted, $j$ refers to a column that is being converted, and $r$ keeps track of the number of nonzero rows.  Here we go.\par
+\begin{para}Suppose that $A$ has $m$ rows and $n$ columns.  We will describe a process for converting $A$ into $B$ via row operations.  This procedure is known as \define{Gauss-Jordan elimination}.  Tracing through this procedure will be easier if you recognize that $i$ refers to a row that is being converted, $j$ refers to a column that is being converted, and $r$ keeps track of the number of nonzero rows.  Here we go.\end{para}
 %
-\begin{enumerate}
+\begin{para}\begin{enumerate}
 %
 \item\label{rref:initialize}
 Set $j=0$ and $r=0$.
@@ -435,22 +449,22 @@ Use the third row operation with row $r$ to convert every other entry of column 
 \item\label{rref:columnloopreturn}
 Go to Step~\ref{rref:columnloop}.
 %
-\end{enumerate}
+\end{enumerate}\end{para}
 %
-The result of this procedure is that the matrix $A$ is converted to a matrix in reduced row-echelon form, which we will refer to as $B$.  We need to now prove this claim by showing that the converted matrix has the requisite properties of \acronymref{definition}{RREF}.  First, the matrix is only converted through row operations (Step~\ref{rref:swap}, Step~\ref{rref:normalize}, Step~\ref{rref:zeroout}), so $A$ and $B$ are row-equivalent (\acronymref{definition}{REM}).\par
+\begin{para}The result of this procedure is that the matrix $A$ is converted to a matrix in reduced row-echelon form, which we will refer to as $B$.  We need to now prove this claim by showing that the converted matrix has the requisite properties of \acronymref{definition}{RREF}.  First, the matrix is only converted through row operations (Step~\ref{rref:swap}, Step~\ref{rref:normalize}, Step~\ref{rref:zeroout}), so $A$ and $B$ are row-equivalent (\acronymref{definition}{REM}).\end{para}
 %
-It is a bit more work to be certain that $B$ is in reduced row-echelon form.
-We claim that as we begin Step~\ref{rref:columnloop}, the first $j$ columns of the matrix are in reduced row-echelon form with $r$ nonzero rows.   Certainly this is true at the start when $j=0$, since the matrix has no columns and so vacuously meets the conditions of \acronymref{definition}{RREF} with $r=0$ nonzero rows.\par
+\begin{para}It is a bit more work to be certain that $B$ is in reduced row-echelon form.
+We claim that as we begin Step~\ref{rref:columnloop}, the first $j$ columns of the matrix are in reduced row-echelon form with $r$ nonzero rows.   Certainly this is true at the start when $j=0$, since the matrix has no columns and so vacuously meets the conditions of \acronymref{definition}{RREF} with $r=0$ nonzero rows.\end{para}
 %
-In Step~\ref{rref:columnloop} we increase $j$ by 1 and begin to work with the next column.  There are two possible outcomes for Step~\ref{rref:locate}.  Suppose that every entry of column $j$ in rows $r+1$ through $m$ is zero.  Then with no changes we recognize that the first $j$ columns of the matrix has its first $r$ rows still in reduced-row echelon form, with the final $m-r$ rows still all zero.\par
+\begin{para}In Step~\ref{rref:columnloop} we increase $j$ by 1 and begin to work with the next column.  There are two possible outcomes for Step~\ref{rref:locate}.  Suppose that every entry of column $j$ in rows $r+1$ through $m$ is zero.  Then with no changes we recognize that the first $j$ columns of the matrix has its first $r$ rows still in reduced-row echelon form, with the final $m-r$ rows still all zero.\end{para}
 %
-Suppose instead that the entry in row $i$ of column $j$ is nonzero.  Notice that since $r+1\leq i\leq m$, we know the first $j-1$ entries of this row are all zero.  Now, in Step~\ref{rref:incrementrank} we increase $r$ by 1, and then embark on building a new nonzero row.  In Step~\ref{rref:swap} we swap row $r$ and row $i$.  In the first $j$ columns, the first $r-1$ rows remain in reduced row-echelon form after the swap.  In Step~\ref{rref:normalize} we multiply row $r$ by a nonzero scalar, creating a 1 in the entry in column $j$ of row $i$, and not changing any other rows.  This new leading 1 is the first nonzero entry in its row, and is located to the right of all the leading 1's in the preceding $r-1$ rows.  With Step~\ref{rref:zeroout} we insure that every entry in the column with this new leading 1 is now zero, as required for reduced row-echelon form.  Also, rows $r+1$ through $m$ are now all zeros in the first $j$ columns, so we now only have one new nonzero row, consistent with our increase of $r$ by one.  Furthermore, since the first $j-1$ entries of row $r$ are zero, the employment of the third row operation does not destroy any of the necessary features of rows $1$ through $r-1$ and rows $r+1$ through $m$, in columns $1$ through $j-1$.\par
+\begin{para}Suppose instead that the entry in row $i$ of column $j$ is nonzero.  Notice that since $r+1\leq i\leq m$, we know the first $j-1$ entries of this row are all zero.  Now, in Step~\ref{rref:incrementrank} we increase $r$ by 1, and then embark on building a new nonzero row.  In Step~\ref{rref:swap} we swap row $r$ and row $i$.  In the first $j$ columns, the first $r-1$ rows remain in reduced row-echelon form after the swap.  In Step~\ref{rref:normalize} we multiply row $r$ by a nonzero scalar, creating a 1 in the entry in column $j$ of row $i$, and not changing any other rows.  This new leading 1 is the first nonzero entry in its row, and is located to the right of all the leading 1's in the preceding $r-1$ rows.  With Step~\ref{rref:zeroout} we insure that every entry in the column with this new leading 1 is now zero, as required for reduced row-echelon form.  Also, rows $r+1$ through $m$ are now all zeros in the first $j$ columns, so we now only have one new nonzero row, consistent with our increase of $r$ by one.  Furthermore, since the first $j-1$ entries of row $r$ are zero, the employment of the third row operation does not destroy any of the necessary features of rows $1$ through $r-1$ and rows $r+1$ through $m$, in columns $1$ through $j-1$.\end{para}
 %
-So at this stage, the first $j$ columns of the matrix are in reduced row-echelon form.  When Step~\ref{rref:columnloop} finally increases $j$ to $n+1$, then the procedure is completed and the full $n$ columns of the matrix are in reduced row-echelon form, with the value of $r$ correctly recording the number of nonzero rows.
+\begin{para}So at this stage, the first $j$ columns of the matrix are in reduced row-echelon form.  When Step~\ref{rref:columnloop} finally increases $j$ to $n+1$, then the procedure is completed and the full $n$ columns of the matrix are in reduced row-echelon form, with the value of $r$ correctly recording the number of nonzero rows.\end{para}
 %
 \end{proof}
 %
-The procedure given in the proof of \acronymref{theorem}{REMEF} can be more precisely described using a pseudo-code version of a computer program, as follows:
+\begin{para}The procedure given in the proof of \acronymref{theorem}{REMEF} can be more precisely described using a pseudo-code version of a computer program, as follows:
 %
 %  \codeindent{} Indents pseudo-code properly
 %
@@ -468,39 +482,40 @@ The procedure given in the proof of \acronymref{theorem}{REMEF} can be more prec
 \codeindent{3}         for $k\leftarrow 1\text{ to }m$, $k\neq r$\\
 \codeindent{4}            zero out entry in row $k$, column $j$ of $A$ (row op 3 using row $r$)\\
 \codeindent{1}  output $r$ and $A$
-\end{quote}
+\end{quote}\end{para}
 %
-Notice that as a practical matter the ``and'' used in the conditional statement of the while statement should be of the ``short-circuit'' variety so that the array access that follows is not out-of-bounds.\par
+\begin{para}Notice that as a practical matter the ``and'' used in the conditional statement of the while statement should be of the ``short-circuit'' variety so that the array access that follows is not out-of-bounds.\end{para}
 %
-So now we can put it all together.  Begin with a system of linear equations (\acronymref{definition}{SLE}), and represent the system by its augmented matrix (\acronymref{definition}{AM}).  Use row operations (\acronymref{definition}{RO}) to convert this matrix into reduced row-echelon form (\acronymref{definition}{RREF}), using the procedure outlined in the proof of \acronymref{theorem}{REMEF}.  \acronymref{theorem}{REMEF} also tells us we can always accomplish this, and that the result is row-equivalent (\acronymref{definition}{REM}) to the original augmented matrix.  Since the matrix in reduced-row echelon form has the same solution set, we can analyze the row-reduced version instead of the original matrix, viewing it as the augmented matrix of a different system of equations.  The beauty of augmented matrices in reduced row-echelon form is that the solution sets to their corresponding systems can be easily determined, as we will see in the next few examples and in the next section.\par
+\begin{para}So now we can put it all together.  Begin with a system of linear equations (\acronymref{definition}{SLE}), and represent the system by its augmented matrix (\acronymref{definition}{AM}).  Use row operations (\acronymref{definition}{RO}) to convert this matrix into reduced row-echelon form (\acronymref{definition}{RREF}), using the procedure outlined in the proof of \acronymref{theorem}{REMEF}.  \acronymref{theorem}{REMEF} also tells us we can always accomplish this, and that the result is row-equivalent (\acronymref{definition}{REM}) to the original augmented matrix.  Since the matrix in reduced-row echelon form has the same solution set, we can analyze the row-reduced version instead of the original matrix, viewing it as the augmented matrix of a different system of equations.  The beauty of augmented matrices in reduced row-echelon form is that the solution sets to their corresponding systems can be easily determined, as we will see in the next few examples and in the next section.\end{para}
 %
-We will see through the course that almost every interesting property of a matrix can be discerned by looking at a row-equivalent matrix in reduced row-echelon form.  For this reason it is important to know that the matrix $B$ guaranteed to exist by \acronymref{theorem}{REMEF} is also unique.\par
+\begin{para}We will see through the course that almost every interesting property of a matrix can be discerned by looking at a row-equivalent matrix in reduced row-echelon form.  For this reason it is important to know that the matrix $B$ guaranteed to exist by \acronymref{theorem}{REMEF} is also unique.\end{para}
 %
-Two proof techniques are applicable to the proof. First, head out and read two proof techniques:  \acronymref{technique}{CD} and \acronymref{technique}{U}.
+\begin{para}Two proof techniques are applicable to the proof. First, head out and read two proof techniques:  \acronymref{technique}{CD} and \acronymref{technique}{U}.\end{para}
 %
 \begin{theorem}{RREFU}{Reduced Row-Echelon Form is Unique}{reduced row-echelon form!unique}
-Suppose that $A$ is an $m\times n$ matrix and that $B$ and $C$ are $m\times n$ matrices that are row-equivalent to $A$ and in reduced row-echelon form.  Then $B=C$.
+\begin{para}Suppose that $A$ is an $m\times n$ matrix and that $B$ and $C$ are $m\times n$ matrices that are row-equivalent to $A$ and in reduced row-echelon form.  Then $B=C$.\end{para}
 \end{theorem}
 %
 \begin{proof}
-We need to begin with no assumptions about any relationships between $B$ and $C$, other than they are both in reduced row-echelon form, and they are both row-equivalent to $A$.\par
+\begin{para}We need to begin with no assumptions about any relationships between $B$ and $C$, other than they are both in reduced row-echelon form, and they are both row-equivalent to $A$.\end{para}
 %
-If $B$ and $C$ are both row-equivalent to $A$, then they are row-equivalent to each other.  Repeated row operations on a matrix combine the rows with each other using operations that are linear, and are identical in each column.  A key observation for this proof is that each individual row of $B$ is linearly related to the rows of $C$.  This relationship is different for each row of $B$, but once we fix a row, the relationship is the same across columns.  More precisely, there are scalars $\delta_{ik}$, $1\leq i,k\leq m$ such that for any $1\leq i\leq m$, $1\leq j\leq n$,
+\begin{para}If $B$ and $C$ are both row-equivalent to $A$, then they are row-equivalent to each other.  Repeated row operations on a matrix combine the rows with each other using operations that are linear, and are identical in each column.  A key observation for this proof is that each individual row of $B$ is linearly related to the rows of $C$.  This relationship is different for each row of $B$, but once we fix a row, the relationship is the same across columns.  More precisely, there are scalars $\delta_{ik}$, $1\leq i,k\leq m$ such that for any $1\leq i\leq m$, $1\leq j\leq n$,
 %
 \begin{align*}
 \matrixentry{B}{ij}
 &=\sum_{k=1}^{m}\delta_{ik}\matrixentry{C}{kj}
-\end{align*}
+\end{align*}\end{para}
 %
-You should read this as saying that an entry of row $i$ of $B$ (in column $j$) is a linear function of the entries of all the rows of $C$ that are also in column $j$, and the scalars ($\delta_{ik}$) depend on which row of $B$ we are considering (the $i$ subscript on $\delta_{ik}$), but are the same for every column (no dependence on $j$ in $\delta_{ik}$).  This idea may be complicated now, but will feel more familiar once we discuss ``linear combinations'' (\acronymref{definition}{LCCV}) and moreso when we discuss ``row spaces'' (\acronymref{definition}{RSM}).  For now, spend some time carefully working \acronymref{exercise}{RREF.M40}, which is designed to illustrate the origins of this expression.  This completes our exploitation of the row-equivalence of $B$ and $C$.\par
+\begin{para}You should read this as saying that an entry of row $i$ of $B$ (in column $j$) is a linear function of the entries of all the rows of $C$ that are also in column $j$, and the scalars ($\delta_{ik}$) depend on which row of $B$ we are considering (the $i$ subscript on $\delta_{ik}$), but are the same for every column (no dependence on $j$ in $\delta_{ik}$).  This idea may be complicated now, but will feel more familiar once we discuss ``linear combinations'' (\acronymref{definition}{LCCV}) and moreso when we discuss ``row spaces'' (\acronymref{definition}{RSM}).  For now, spend some time carefully working \acronymref{exercise}{RREF.M40}, which is designed to illustrate the origins of this expression.  This completes our exploitation of the row-equivalence of $B$ and $C$.\end{para}
 %
-We now repeatedly exploit the fact that $B$ and $C$ are in reduced row-echelon form.  Recall that a pivot column is all zeros, except a single one.  More carefully, if $R$ is a matrix in reduced row-echelon form, and $d_\ell$ is the index of a pivot column, then $\matrixentry{R}{kd_\ell}=1$ precisely when $k=\ell$ and is otherwise zero.  Notice also that any entry of $R$ that is both below the entry in row $\ell$ {\em and} to the left of column $d_\ell$ is also zero (with below and left understood to include equality).  In other words, look at examples of matrices in reduced row-echelon form and choose a leading 1 (with a box around it).  The rest of the column is also zeros, and the lower left ``quadrant'' of the matrix that begins here is totally zeros.\par
+\begin{para}We now repeatedly exploit the fact that $B$ and $C$ are in reduced row-echelon form.  Recall that a pivot column is all zeros, except a single one.  More carefully, if $R$ is a matrix in reduced row-echelon form, and $d_\ell$ is the index of a pivot column, then $\matrixentry{R}{kd_\ell}=1$ precisely when $k=\ell$ and is otherwise zero.  Notice also that any entry of $R$ that is both below the entry in row $\ell$ {\em and} to the left of column $d_\ell$ is also zero (with below and left understood to include equality).  In other words, look at examples of matrices in reduced row-echelon form and choose a leading 1 (with a box around it).  The rest of the column is also zeros, and the lower left ``quadrant'' of the matrix that begins here is totally zeros.\end{para}
 %
-Assuming no relationship about the form of $B$ and $C$, let $B$ have $r$ nonzero rows and denote the pivot columns as $D=\set{\scalarlist{d}{r}}$.  For $C$ let $r^\prime$ denote the number of nonzero rows and denote the pivot columns
+\begin{para}Assuming no relationship about the form of $B$ and $C$, let $B$ have $r$ nonzero rows and denote the pivot columns as $D=\set{\scalarlist{d}{r}}$.  For $C$ let $r^\prime$ denote the number of nonzero rows and denote the pivot columns
 as
 % Extra thin space in set is triple brace protection for Sage worksheets
-$D^\prime=\set{\,\scalarlist{d^\prime}{r^\prime}}$ (\acronymref{notation}{RREFA}).  There are four steps in the proof, and the first three are about showing that $B$ and $C$ have the same number of pivot columns, in the same places.  In other words, the ``primed'' symbols are a necessary fiction.\par
+$D^\prime=\set{\,\scalarlist{d^\prime}{r^\prime}}$ (\acronymref{notation}{RREFA}).  There are four steps in the proof, and the first three are about showing that $B$ and $C$ have the same number of pivot columns, in the same places.  In other words, the ``primed'' symbols are a necessary fiction.\end{para}
 %
+\begin{para}
 First Step.  Suppose that $d_1<d^\prime_1$.  Then
 %
 \begin{align*}
@@ -516,8 +531,9 @@ First Step.  Suppose that $d_1<d^\prime_1$.  Then
 &=0
 \end{align*}
 %
-The entries of $C$ are all zero since they are left and below of the leading 1 in row 1 and column $d^\prime_1$ of $C$.  This is a contradiction, so we know that $d_1\geq d^\prime_1$.  By an entirely similar argument, reversing the roles of $B$ and $C$, we could conclude that $d_1\leq d^\prime_1$.  Together this means that $d_1=d^\prime_1$.\par
+The entries of $C$ are all zero since they are left and below of the leading 1 in row 1 and column $d^\prime_1$ of $C$.  This is a contradiction, so we know that $d_1\geq d^\prime_1$.  By an entirely similar argument, reversing the roles of $B$ and $C$, we could conclude that $d_1\leq d^\prime_1$.  Together this means that $d_1=d^\prime_1$.\end{para}
 %
+\begin{para}
 Second Step.  Suppose that we have determined that $d_1=d^\prime_1$, $d_2=d^\prime_2$, $d_3=d^\prime_3$, \dots, $d_p=d^\prime_p$.  Let's now show that $d_{p+1}=d^\prime_{p+1}$.  Working towards a contradiction, suppose that $d_{p+1}<d^\prime_{p+1}$.  For $1\leq\ell\leq p$,
 %
 \begin{align*}
@@ -571,8 +587,9 @@ Now,
 \end{align*}
 %
 This contradiction shows that
-$d_{p+1}\geq d^\prime_{p+1}$.  By an entirely similar argument, we could conclude that $d_{p+1}\leq d^\prime_{p+1}$, and therefore $d_{p+1}=d^\prime_{p+1}$.\par
+$d_{p+1}\geq d^\prime_{p+1}$.  By an entirely similar argument, we could conclude that $d_{p+1}\leq d^\prime_{p+1}$, and therefore $d_{p+1}=d^\prime_{p+1}$.\end{para}
 %
+\begin{para}
 Third Step.  Now we establish that $r=r^\prime$.  Suppose that $r^\prime<r$.  By the arguments above, we know that $d_1=d^\prime_1$, $d_2=d^\prime_2$, $d_3=d^\prime_3$, \dots, $d_{r^\prime}=d^\prime_{r^\prime}$.   For $1\leq\ell\leq r^\prime<r$,
 %
 \begin{align*}
@@ -639,8 +656,9 @@ Now examine the entries of row $r$ of $B$,
 &=0
 \end{align*}
 %
-So row $r$ is a totally zero row, contradicting that this should be the bottommost nonzero row of $B$.  So $r^\prime\geq r$.  By an entirely similar argument, reversing the roles of $B$ and $C$, we would conclude that $r^\prime\leq r$ and therefore $r=r^\prime$.  Thus, combining the first three steps we can say that $D=D^\prime$.  In other words, $B$ and $C$ have the same pivot columns, in the same locations.\par
+So row $r$ is a totally zero row, contradicting that this should be the bottommost nonzero row of $B$.  So $r^\prime\geq r$.  By an entirely similar argument, reversing the roles of $B$ and $C$, we would conclude that $r^\prime\leq r$ and therefore $r=r^\prime$.  Thus, combining the first three steps we can say that $D=D^\prime$.  In other words, $B$ and $C$ have the same pivot columns, in the same locations.\end{para}
 %
+\begin{para}
 Fourth Step.  In this final step, we will not argue by contradiction.  Our intent is to determine the values of the $\delta_{ij}$.  Notice that we can use the values of the $d_i$ interchangeably for $B$ and $C$.  Here we go,
 %
 \begin{align*}
@@ -712,19 +730,18 @@ Finally, having determined the values of the $\delta_{ij}$, we can show that $B=
 %
 \end{align*}
 %
-So $B$ and $C$ have equal values in every entry, and so are the same matrix.
+So $B$ and $C$ have equal values in every entry, and so are the same matrix.\end{para}
 %
 \end{proof}
 %
-We will now run through some examples of using these definitions and theorems to solve some systems of equations.  From now on, when we have a matrix in reduced row-echelon form, we will mark the leading 1's with a small box.  In your work, you can box 'em, circle 'em or write 'em in a different color --- just identify 'em somehow.  This device will prove very useful later and is a \emph{very good habit} to start developing right now.
+\begin{para}We will now run through some examples of using these definitions and theorems to solve some systems of equations.  From now on, when we have a matrix in reduced row-echelon form, we will mark the leading 1's with a small box.  In your work, you can box 'em, circle 'em or write 'em in a different color --- just identify 'em somehow.  This device will prove very useful later and is a \emph{very good habit} to start developing right now.\end{para}
 %
 \begin{example}{SAB}{Solutions for Archetype B}{archetype B!solutions}
-Let's find the solutions to the following system of equations,
+\begin{para}Let's find the solutions to the following system of equations,
 \archetypepart{B}{definition}
 First, form the augmented matrix,
 \begin{align*}
-\archetypepart{B}{augmented}
-\end{align*}
+\archetypepart{B}{augmented}\end{align*}
 and work to reduced row-echelon form, first with $j=1$,
 \begin{align*}
 \xrightarrow{\rowopswap{1}{3}}
@@ -786,27 +803,27 @@ and work to reduced row-echelon form, first with $j=1$,
 %
 \xrightarrow{\rowopadd{-4}{3}{1}}
 &
-\archetypepart{B}{augmentedreduced}
-\end{align*}
+\archetypepart{B}{augmentedreduced}\end{align*}
+\end{para}
 %
-This is now the augmented matrix of a very simple system of equations, namely $x_1=-3$, $x_2=5$, $x_3=2$, which has an obvious solution.  Furthermore, we can see that this is the {\em only} solution to this system, so we have determined the entire solution set,
+\begin{para}This is now the augmented matrix of a very simple system of equations, namely $x_1=-3$, $x_2=5$, $x_3=2$, which has an obvious solution.  Furthermore, we can see that this is the {\em only} solution to this system, so we have determined the entire solution set,
 %
 \begin{align*}
 S&=\set{\colvector{-3\\5\\2}}
-\end{align*}
+\end{align*}\end{para}
 %
-You might compare this example with the procedure we used in \acronymref{example}{US}.
+\begin{para}You might compare this example with the procedure we used in \acronymref{example}{US}.\end{para}
 \end{example}
 %
-Archetypes A and B are meant to contrast each other in many respects.  So let's solve Archetype A now.
+\begin{para}Archetypes A and B are meant to contrast each other in many respects.  So let's solve Archetype A now.\end{para}
 %
 \begin{example}{SAA}{Solutions for Archetype A}{solution set!Archetype A}
-Let's find the solutions to the following system of equations,
-\archetypepart{A}{definition}
-First, form the augmented matrix,
+\begin{para}Let's find the solutions to the following system of equations,
+\archetypepart{A}{definition}\end{para}
+%
+\begin{para}First, form the augmented matrix,
 \begin{align*}
-\archetypepart{A}{augmented}
-\end{align*}
+\archetypepart{A}{augmented}\end{align*}
 and work to reduced row-echelon form, first with $j=1$,
 \begin{align*}
 \xrightarrow{\rowopadd{-2}{1}{2}}
@@ -849,37 +866,38 @@ and work to reduced row-echelon form, first with $j=1$,
 0 & 0 & 0 & 0
 \end{bmatrix}
 %
-\end{align*}
+\end{align*}\end{para}
 %
-The system of equations represented by this augmented matrix needs to be considered a bit differently than that for Archetype B.  First, the last row of the matrix is the equation $0=0$, which is {\em always} true, so it imposes no restrictions on our possible solutions and therefore we can safely ignore it as we analyze the other two equations.  These equations are,
+\begin{para}The system of equations represented by this augmented matrix needs to be considered a bit differently than that for Archetype B.  First, the last row of the matrix is the equation $0=0$, which is {\em always} true, so it imposes no restrictions on our possible solutions and therefore we can safely ignore it as we analyze the other two equations.  These equations are,
 %
 \begin{align*}
 x_1+x_3&=3\\
 x_2-x_3&=2.
-\end{align*}
+\end{align*}\end{para}
 %
-While this system is fairly easy to solve, it also appears to have a multitude of solutions.  For example, choose $x_3=1$ and see that then $x_1=2$ and $x_2=3$ will together form a solution.  Or choose $x_3=0$, and then discover that $x_1=3$ and $x_2=2$ lead to a solution.  Try it yourself: pick {\em any} value of $x_3$ you please, and figure out what $x_1$ and $x_2$ should be to make the first and second equations (respectively) true.  We'll wait while you do that.  Because of this behavior, we say that $x_3$ is a ``free'' or ``independent'' variable.  But why do we vary $x_3$ and not some other variable?  For now, notice that the third column of the augmented matrix does not have any leading 1's in its column.  With this idea, we can rearrange the two equations, solving each for the variable that corresponds to the leading 1 in that row.
+\begin{para}While this system is fairly easy to solve, it also appears to have a multitude of solutions.  For example, choose $x_3=1$ and see that then $x_1=2$ and $x_2=3$ will together form a solution.  Or choose $x_3=0$, and then discover that $x_1=3$ and $x_2=2$ lead to a solution.  Try it yourself: pick {\em any} value of $x_3$ you please, and figure out what $x_1$ and $x_2$ should be to make the first and second equations (respectively) true.  We'll wait while you do that.  Because of this behavior, we say that $x_3$ is a ``free'' or ``independent'' variable.  But why do we vary $x_3$ and not some other variable?  For now, notice that the third column of the augmented matrix does not have any leading 1's in its column.  With this idea, we can rearrange the two equations, solving each for the variable that corresponds to the leading 1 in that row.
 %
 \begin{align*}
 x_1&=3-x_3\\
 x_2&=2+x_3
 \end{align*}
+\end{para}
 %
-To write the set of solution vectors in set notation, we have
+\begin{para}To write the set of solution vectors in set notation, we have
 \begin{align*}
 S&=\setparts{\colvector{3-x_3\\2+x_3\\x_3}}{x_3\in\complex{\null}}
-\end{align*}
+\end{align*}\end{para}
 %
-We'll learn more in the next section about systems with infinitely many solutions and how to express their solution sets.  Right now, you might look back at  \acronymref{example}{IS}.
+\begin{para}We'll learn more in the next section about systems with infinitely many solutions and how to express their solution sets.  Right now, you might look back at  \acronymref{example}{IS}.\end{para}
 \end{example}
 %
 \begin{example}{SAE}{Solutions for Archetype E}{solution set!archetype E}
-Let's find the solutions to the following system of equations,
-\archetypepart{E}{definition}
-First, form the augmented matrix,
+\begin{para}Let's find the solutions to the following system of equations,
+\archetypepart{E}{definition}\end{para}
+%
+\begin{para}First, form the augmented matrix,
 \begin{align*}
-\archetypepart{E}{augmented}
-\end{align*}
+\archetypepart{E}{augmented}\end{align*}
 and work to reduced row-echelon form, first with $j=1$,
 %
 \begin{align*}
@@ -949,27 +967,27 @@ and work to reduced row-echelon form, first with $j=1$,
 \end{bmatrix}
 %
 \xrightarrow{\rowopadd{-2}{3}{2}}
-\archetypepart{E}{augmentedreduced}
+\archetypepart{E}{augmentedreduced}\end{align*}
+\end{para}
 %
-\end{align*}
+\begin{para}Let's analyze the equations in the system represented by this augmented matrix.  The third equation will read $0=1$.  This is patently false, all the time.  No choice of values for our variables will ever make it true.  We're done.  Since we cannot even make the last equation true, we have no hope of making all of the equations simultaneously true.  So this system has no solutions, and its solution set is the empty set, $\emptyset=\set{\ }$ (\acronymref{definition}{ES}).\end{para}
 %
-Let's analyze the equations in the system represented by this augmented matrix.  The third equation will read $0=1$.  This is patently false, all the time.  No choice of values for our variables will ever make it true.  We're done.  Since we cannot even make the last equation true, we have no hope of making all of the equations simultaneously true.  So this system has no solutions, and its solution set is the empty set, $\emptyset=\set{\ }$ (\acronymref{definition}{ES}).\par
-%
-Notice that we could have reached this conclusion sooner.  After performing the row operation
-$\rowopadd{-7}{2}{3}$, we can see that the third equation reads $0=-5$, a false statement.  Since the system represented by this matrix has no solutions, none of the systems represented has any solutions.  However, for this example, we have chosen to bring the matrix fully  to reduced row-echelon form for the practice.
+\begin{para}Notice that we could have reached this conclusion sooner.  After performing the row operation
+$\rowopadd{-7}{2}{3}$, we can see that the third equation reads $0=-5$, a false statement.  Since the system represented by this matrix has no solutions, none of the systems represented has any solutions.  However, for this example, we have chosen to bring the matrix fully  to reduced row-echelon form for the practice.\end{para}
 \end{example}
 %
-These three examples
+\begin{para}These three examples
 (\acronymref{example}{SAB}, \acronymref{example}{SAA}, \acronymref{example}{SAE})
-illustrate the full range of possibilities for a system of linear equations --- no solutions, one solution, or infinitely many solutions.  In the next section we'll examine these three scenarios more closely.\par
-%
+illustrate the full range of possibilities for a system of linear equations --- no solutions, one solution, or infinitely many solutions.  In the next section we'll examine these three scenarios more closely.\end{para}
 %
 \begin{definition}{RR}{Row-Reducing}{row-reduce!the verb}
-To \define{row-reduce} the matrix $A$ means to apply row operations to $A$ and arrive at a row-equivalent matrix $B$ in reduced row-echelon form.
+\begin{para}To \define{row-reduce} the matrix $A$ means to apply row operations to $A$ and arrive at a row-equivalent matrix $B$ in reduced row-echelon form.\end{para}
 \end{definition}
 %
-So the term \define{row-reduce} is used as a verb.   \acronymref{theorem}{REMEF} tells us that this process will always be successful and \acronymref{theorem}{RREFU} tells us that the result will be unambiguous.  Typically, the analysis of $A$ will proceed by analyzing $B$ and applying theorems whose hypotheses include the row-equivalence of $A$ and $B$.\par
+\begin{para}So the term \define{row-reduce} is used as a verb.   \acronymref{theorem}{REMEF} tells us that this process will always be successful and \acronymref{theorem}{RREFU} tells us that the result will be unambiguous.  Typically, the analysis of $A$ will proceed by analyzing $B$ and applying theorems whose hypotheses include the row-equivalence of $A$ and $B$.\end{para}
 %
 \sageadvice{RREF}{Reduced Row-Echelon Form}{reduced row-echelon form}
+%
+\end{subsect}
 %
 %  End  rref.tex
