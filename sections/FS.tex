@@ -954,6 +954,34 @@ L&=
 \begin{para}With \acronymref{theorem}{CSRST} and \acronymref{definition}{RSM}, we can compute column spaces with theorems about row spaces, and we can compute row spaces with theorems about row spaces, but in each case we must transpose the matrix first.  At this point you may be overwhelmed by all the possibilities for computing column and row spaces.  \acronymref{diagram}{CSRST} is meant to help.  For both the column space and row space, it suggests four techniques.  One is to appeal to the definition, another yields a span of a linearly independent set, and a third uses \acronymref{theorem}{FS}.  A fourth suggests transposing the matrix and the dashed line implies that then the companion set of techniques can be applied.  This can lead to a bit of silliness, since if you were to follow the dashed lines {\em twice} you would transpose the matrix twice, and by \acronymref{theorem}{TT} would accomplish nothing productive.
 %
 \diagram{CSRST}{Column Space and Row Space Techniques}
+\begin{graphics}{CSRST}{Column Space and Row Space Techniques}
+\node (CA)  at (0em, 13em) [shape=rectangle] {$\csp{A}$};
+\node (CSM) at (6em, 16em) [shape=rectangle, anchor=west] {Definition CSM};
+\node (BCS) at (6em, 14em) [shape=rectangle, anchor=west] {Theorem BCS};
+\node (FSL) at (6em, 12em) [shape=rectangle, anchor=west] {Theorem FS, $\nsp{L}$};
+\node (CSR) at (6em, 10em) [shape=rectangle, anchor=west] {Theorem CSRST, $\csp{\transpose{A}}$};
+
+\node (RA)  at (0em,  3em) [shape=rectangle] {$\rsp{A}$};
+\node (RST) at (6em,  6em) [shape=rectangle, anchor=west] {Definition RSM, $\csp{\transpose{A}}$};
+\node (FSC) at (6em,  4em) [shape=rectangle, anchor=west] {Theorem FS, $\rsp{C}$};
+\node (BRS) at (6em,  2em) [shape=rectangle, anchor=west] {Theorem BRS};
+\node (RSM) at (6em,  0em) [shape=rectangle, anchor=west] {Theorem RSM};
+
+\draw[->,thick] (CA) to  (CSM.west);
+\draw[->,thick] (CA) to  (BCS.west);
+\draw[->,thick] (CA) to  (FSL.west);
+\draw[->,thick] (CA) to  (CSR.west);
+
+\draw[->,thick] (RA) to  (RST.west);
+\draw[->,thick] (RA) to  (FSC.west);
+\draw[->,thick] (RA) to  (BRS.west);
+\draw[->,thick] (RA) to  (RSM.west);
+
+\draw[->,densely dashed,thick]
+(RST.east) .. controls ([xshift=9em,yshift=3em]RST.east) and ([yshift=-1em]RST.west) ..  (CA.south);
+\draw[->,densely dashed,thick]
+(CSR.east) .. controls ([xshift=6.5em,yshift=-3em]CSR.east) and ([yshift=5em]RST.west) ..  (RA.north);
+\end{graphics}
 %
 \end{para}
 %

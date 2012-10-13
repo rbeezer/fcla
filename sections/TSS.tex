@@ -308,6 +308,26 @@ corresponding to columns of $B$ without a leading 1, excepting the final column,
 \begin{para}Here is a diagram that consolidates several of our theorems from this section, and which is of practical use when you analyze systems of equations.
 %
 \diagram{DTSLS}{Decision Tree for Solving Linear Systems}
+\begin{graphics}{DTSLS}{Decision Tree for Solving Linear Systems}
+\matrix (m) [matrix of math nodes, row sep=4em,
+column sep=0em, text height=1.5ex, text depth=0.25ex]
+{ & & \text{Theorem RCLS} & \\
+& \text{Consistent}& &\text{Inconsistent}\\
+& \text{Theorem FVCS}& & \\
+\text{Infinite Solutions}& & \text{Unique Solution}& \\
+};
+
+\path[->]
+(m-1-3) edge[thick] node[left,xshift=-1em, yshift=0.5em]
+{$\begin{aligned}&\text{no leading }1\text{ in}\\&\text{column }n+1\end{aligned}$} (m-2-2)
+(m-1-3) edge[thick] node[right,xshift=1em, yshift=0.5em]
+{$\begin{aligned}&\text{a leading }1\text{ in}\\&\text{column }n+1\end{aligned}$} (m-2-4)
+%
+(m-2-2) edge[thick]                      (m-3-2)
+(m-3-2) edge[thick] node[left, xshift=-1em] {$r < n$} (m-4-1)
+(m-3-2) edge[thick] node[right, xshift=1em] {$r = n$} (m-4-3)
+;
+\end{graphics}
 \end{para}
 %
 \begin{para}We have one more theorem to round out our set of tools for determining solution sets to systems of linear equations.\end{para}

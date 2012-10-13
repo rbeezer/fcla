@@ -39,6 +39,30 @@
 \diagram{DLTA}{Definition of Linear Transformation, Additive}
 \diagram{DLTM}{Definition of Linear Transformation, Multiplicative}
 %
+\begin{graphics}{DLTA}{Definition of Linear Transformation, Additive}
+\matrix (m) [matrix of math nodes, row sep=5em, column sep=10em, text height=1.5ex, text depth=0.25ex]
+{ \vect{u}_1,\,\vect{u}_2 & T(\vect{u}_1),\,T(\vect{u}_2) \\
+\vect{u}_1+\vect{u}_2 & T(\vect{u}_1+\vect{u}_2)=T(\vect{u}_1)+T(\vect{u}_2)\\};
+
+\path[->]
+(m-1-1) edge[thick] node[auto] {$T$} (m-1-2)
+(m-1-2) edge[thick] node[auto] {$+$} (m-2-2)
+(m-1-1) edge[thick] node[auto] {$+$} (m-2-1)
+(m-2-1) edge[thick] node[auto] {$T$} (m-2-2);
+\end{graphics}
+%
+\begin{graphics}{DLTM}{Definition of Linear Transformation, Multiplicative}
+\matrix (m) [matrix of math nodes, row sep=5em, column sep=10em, text height=1.5ex, text depth=0.25ex]
+{ \vect{u} & \lt{T}{\vect{u}} \\
+\alpha\vect{u} & \lt{T}{\alpha\vect{u}}=\alpha\lt{T}{\vect{u}}\\};
+
+\path[->]
+(m-1-1) edge[thick] node[auto] {$T$}      (m-1-2)
+(m-1-2) edge[thick] node[auto] {$\alpha$} (m-2-2)
+(m-1-1) edge[thick] node[auto] {$\alpha$} (m-2-1)
+(m-2-1) edge[thick] node[auto] {$T$}      (m-2-2);
+\end{graphics}
+
 \end{para}
 %
 \begin{para}A couple of words about notation.  $T$ is the {\em name} of the linear transformation, and should be used when we want to discuss the function as a whole.  $\lt{T}{\vect{u}}$ is how we talk about the output of the function, it is a vector in the vector space $V$.  When we write $\lt{T}{\vect{x}+\vect{y}}=\lt{T}{\vect{x}}+\lt{T}{\vect{y}}$, the plus sign on the left is the operation of vector addition in the vector space $U$, since $\vect{x}$ and $\vect{y}$ are elements of $U$.  The plus sign on the right is the operation of vector addition in the vector space $V$, since $\lt{T}{\vect{x}}$ and $\lt{T}{\vect{y}}$ are elements of the vector space $V$.  These two instances of vector addition might be wildly different.\end{para}
@@ -218,6 +242,33 @@ as an example of \acronymref{theorem}{LTTZZ} at work.\end{para}
 \begin{para}Throughout this chapter, and \acronymref{chapter}{R}, we will include drawings of linear transformations.  We will call them ``cartoons,'' not because they are humorous, but because they will only expose a portion of the truth.  A Bugs Bunny cartoon might give us some insights on human nature, but the rules of physics and biology are routinely (and grossly) violated.  So it will be with our \define{linear transformation cartoons}.  Here is our first, followed by a guide to help you understand how these are meant to describe fundamental truths about linear transformations, while simultaneously violating other truths.
 %
 \diagram{GLT}{General Linear Transformation}
+\begin{graphics}{GLT}{General Linear Transformation}
+\tikzset{ltvect/.style={shape=circle, minimum size=0.30em, inner sep=0pt, draw, fill=black}}
+\tikzset{ltedge/.style={->, bend left=20, thick, shorten <=0.1em, shorten >=0.1em}}
+% base generic picture, equal ovals
+% vertical axes at x = 5, x = 20  space is [x=10 to x=15]
+% 
+\draw ( 5em, 8em) circle [x radius=5em, y radius=8em, thick];
+\draw (20em, 8em) circle [x radius=5em, y radius=8em, thick];
+\node (U) at ( 5em, -1em) {$U$};
+\node (V) at (20em, -1em) {$V$};
+\draw[->, thick, draw] (U) to node[auto] {$T$} (V);
+% inputs
+\node (w)     [ltvect, label=left:$\vect{w}$]      at (5em, 13em) {};
+\node (u)     [ltvect, label=left:$\vect{u}$]      at (5em, 11em) {};
+\node (zeroU) [ltvect, label=left:$\zerovector_U$] at (5em,  8em) {};
+\node (x)     [ltvect, label=left:$\vect{x}$]      at (5em,  5em) {};
+% outputs
+\node (v)     [ltvect, label=right:$\vect{v}$]      at (20em, 12em) {};
+\node (zeroV) [ltvect, label=right:$\zerovector_V$] at (20em,  8em) {};
+\node (y)     [ltvect, label=right:$\vect{y}$]      at (20em,  5em) {};
+\node (t)     [ltvect, label=right:$\vect{t}$]      at (20em,  3em) {};
+% associations
+\draw[ltedge] (u)     to (v);
+\draw[ltedge] (w)     to (v);
+\draw[ltedge] (zeroU) to (zeroV);
+\draw[ltedge] (x)     to (y);
+\end{graphics}
 \end{para}
 %
 \begin{para}Here we picture a linear transformation $\ltdefn{T}{U}{V}$, where this information will be consistently displayed along the bottom edge.  The ovals are meant to represent the vector spaces, in this case $U$, the domain, on the left and $V$, the codomain, on the right.  Of course, vector spaces are typically infinite sets, so you'll have to imagine that characteristic of these sets.  A small dot inside of an oval will represent a vector within that vector space, sometimes with a name, sometimes not (in this case every vector has a name).  The sizes of the ovals are meant to be proportional to the dimensions of the vector spaces.  However, when we make no assumptions about the dimensions, we will draw the ovals as the same size, as we have done here (which is not meant to suggest that the dimensions have to be equal).\end{para}

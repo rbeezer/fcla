@@ -362,11 +362,33 @@ a_n\lt{T}{\vect{u}_n}
 %
 \diagram{FTMR}{Fundamental Theorem of Matrix Representations}
 %
+\begin{graphics}{FTMR}{Fundamental Theorem of Matrix Representations}
+\matrix (m) [matrix of math nodes, row sep=5em, column sep=10em, text height=1.5ex, text depth=0.25ex]
+{ \vect{u} & \lt{T}{\vect{u}} \\
+\vectrep{B}{\vect{u}} & \matrixrep{T}{B}{C}\,\vectrep{B}{\vect{u}}=\vectrep{C}{\lt{T}{\vect{u}}}\\};
+\path[->]
+(m-1-1) edge[thick] node[auto] {$T$}                   (m-1-2)
+(m-1-2) edge[thick] node[auto] {$\vectrepname{C}$}     (m-2-2)
+(m-1-1) edge[thick] node[auto] {$\vectrepname{B}$}     (m-2-1)
+(m-2-1) edge[thick] node[auto] {$\matrixrep{T}{B}{C}$} (m-2-2);
+\end{graphics}
+%
 \end{para}
 %
 \begin{para}The alternative conclusion of this result might be even more striking.  It says that to effect a linear transformation ($T$) of a vector ($\vect{u}$), coordinatize the input (with $\vectrepname{B}$), do a matrix-vector product (with $\matrixrep{T}{B}{C}$), and un-coordinatize the result (with $\vectrepinvname{C}$).  So, absent some bookkeeping about vector representations, a linear transformation {\em is} a matrix.  To adjust the diagram, we ``reverse'' the arrow on the right, which means inverting the vector representation $\vectrepname{C}$ on $V$.  Now we can go directly across the top of the diagram, computing the linear transformation between the abstract vector spaces.  Or, we can around the other three sides, using vector representation, a matrix-vector product, followed by un-coordinatization.
 %
 \diagram{FTMRA}{Fundamental Theorem of Matrix Representations (Alternate)}
+%
+\begin{graphics}{FTMRA}{Fundamental Theorem of Matrix Representations (Alternate)}
+\matrix (m) [matrix of math nodes, row sep=5em, column sep=10em, text height=1.5ex, text depth=0.25ex]
+{\vect{u} & \lt{T}{\vect{u}}=\vectrepinv{C}{\matrixrep{T}{B}{C}\,\vectrep{B}{\vect{u}}}\\
+\vectrep{B}{\vect{u}} & \matrixrep{T}{B}{C}\,\vectrep{B}{\vect{u}}\\};
+\path[->]
+(m-1-1) edge[thick] node[auto] {$T$}                   (m-1-2)
+(m-2-2) edge[thick] node[auto] {$\vectrepinvname{C}$}  (m-1-2) % reversed direction
+(m-1-1) edge[thick] node[auto] {$\vectrepname{B}$}     (m-2-1)
+(m-2-1) edge[thick] node[auto] {$\matrixrep{T}{B}{C}$} (m-2-2);
+\end{graphics}
 %
 \end{para}
 %
@@ -808,6 +830,16 @@ D&=\set{
 %
 \diagram{MRCLT}{Matrix Representation and Composition of Linear Transformations}
 %
+\begin{graphics}{MRCLT}{Matrix Representation and Composition of Linear Transformations}
+\matrix (m) [matrix of math nodes, row sep=5em, column sep=10em, text height=1.5ex, text depth=0.25ex]
+{ S, T & \matrixrep{S}{C}{D},\ \matrixrep{T}{B}{C} \\
+\compose{S}{T} & \matrixrep{\compose{S}{T}}{B}{D}=\matrixrep{S}{C}{D}\,\matrixrep{T}{B}{C}\\};
+\path[->]
+(m-1-1) edge[thick] node[auto]  {Definition MR}  (m-1-2)
+(m-1-2) edge[thick] node[right] {Definition MM}  (m-2-2)
+(m-1-1) edge[thick] node[left]  {Definition LTC} (m-2-1)
+(m-2-1) edge[thick] node[auto]  {Definition MR}  (m-2-2);
+\end{graphics}
 \end{para}
 %
 \begin{para}One of our goals in the first part of this book is to make the definition of matrix multiplication (\acronymref{definition}{MVP}, \acronymref{definition}{MM}) seem as natural as possible.  However, many of us are brought up with an entry-by-entry description of matrix multiplication (\acronymref{theorem}{EMP}) as the {\em definition} of matrix multiplication, and then theorems about columns of matrices and linear combinations follow from that definition.  With this unmotivated definition, the realization that matrix multiplication is function composition is quite remarkable.  It is an interesting exercise to begin with the question, ``What is the matrix representation of the composition of two linear transformations?'' and then, without using any theorems about matrix multiplication, finally arrive at the entry-by-entry description of matrix multiplication.  Try it yourself (\acronymref{exercise}{MR.T80}).\end{para}
