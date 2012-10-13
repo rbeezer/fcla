@@ -1,0 +1,40 @@
+Sage has built-in commands that will solve a linear system of equations, given a coefficient matrix and a vector of constants.  We need to learn some more theory before we can entirely understand this command, but we can begin to explore its use.  For now, consider these methods experimental and do not let it replace row-reducing augmented matrices.\par
+%
+The matrix method \verb?A.solve_right(b)? will provide information about solutions to the linear system of equations with coefficient matrix \verb?A? and vector of constants \verb?b?.  The reason for the ``right'' (and the corresponding command named with ``left'') will have to wait for \acronymref{sage}{MVP}.  For now, it is generally correct in this course to use the ``right'' variant of any Sage linear algebra command that has both ``left'' and ``right'' variants.\par
+%
+Lets apply the \verb?.solve_right()? command to a system with no solutions, in particular \acronymref{archetype}{E}.  We have already seen in \acronymref{sage}{RCLS} that this system is inconsistent.
+%
+\begin{sageexample}
+sage: coeff = matrix(QQ, [[ 2, 1,  7, -7],
+...                       [-3, 4, -5, -6],
+...                       [ 1, 1,  4, -5]])
+sage: const = vector(QQ, [2, 3, 2])
+sage: coeff.solve_right(const)
+Traceback (most recent call last):
+...
+ValueError: matrix equation has no solutions
+\end{sageexample}
+%
+This is our first discussion of Sage error messages, though undoubtedly you have seen several already!  First, here we only show the first and last lines of the message since typically it contains a lot of information specific to whichever computer you may be using.  but we always begin with the last line as the most important indication of what has happened.  Here the ``problem'' is quite evident: we get an ``error'' message telling us that the \texttt{matrix equation has no solutions}.  We can debate whether or not this is really an error, but that is the design decision taken in Sage --- we just need to be aware of it, the \verb?.solve_right()? is really only valuable when there is a solution.\par
+%
+Generally, when deciphering Sage error message, you want to start at the bottom of the ``traceback'' and read up through the various routines that have been called.  Execute the block above and you may see references to matrix methods such as \verb?._solve_right_general()? and then \verb?.solve_right()?.  With time and practice, these mysterious messages will become more and more helpful, so spend some time reading them in tandem with locating the real source of any problems you encounter.\par
+%
+What does \verb?.solve_right()? do with a system that does have solutions?  Lets take a look at \acronymref{example}{ISSI} again, as we did in \acronymref{sage}{FDV}.
+%
+\begin{sageexample}
+sage: coeff = matrix(QQ, [[ 1,  4,  0, -1,  0,   7, -9],
+...                       [ 2,  8, -1,  3,  9, -13,  7],
+...                       [ 0,  0,  2, -3, -4,  12, -8],
+...                       [-1, -4,  2,  4,  8, -31, 37]])
+sage: const = vector(QQ, [3, 9, 1, 4])
+sage: coeff.solve_right(const)
+(4, 0, 2, 1, 0, 0, 0)
+\end{sageexample}
+%
+This vector with 7 entries is indeed a solution to the system of equations (check this!).  But from \acronymref{example}{ISSI} we know this system has \emph{infinitely} many solutions.  Why does Sage give us just one solution?  Of the infinitely many solutions, why this one?  How can a finite computer \emph{ever} present us with infinitely many solutions?  Do we have the time to read through an infinite list of solutions?  Is there a ``best'' solution?  This behavior should prompt these questions, and maybe more.\par
+%
+In order to totally understand the behavior of the \verb?.solve_right()? command, we need to understand more of the theory of linear algebra.  In good time.  So for now, \verb?.solve_right()? is a curiosity we will fully understand soon --- specifically in \acronymref{sage}{SS2} and \acronymref{sage}{SS3}.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
