@@ -1,0 +1,113 @@
+It is possible in Sage to add linear transformations (\acronymref{definition}{LTA}), multiply them by scalars (\acronymref{definition}{LTSM}) and compose (\acronymref{definition}{LTC}) them.  Then \acronymref{theorem}{SLTLT} \acronymref{theorem}{MLTLT}, and \acronymref{theorem}{CLTLT} (respectively) tell us the results are again linear transformations.  Here are some examples:
+%
+\begin{sageexample}
+sage: U = QQ^4
+sage: V = QQ^2
+sage: A = matrix(QQ, 2, 4, [[-1, 3, 4,  5],
+...                         [ 2, 0, 3, -1]])
+sage: T = linear_transformation(U, V, A, side='right')
+sage: B = matrix(QQ, 2, 4, [[-7, 4, -2,  0],
+...                         [ 1, 1,  8, -3]])
+sage: S = linear_transformation(U, V, B, side='right')
+sage: P = S + T
+sage: P
+Vector space morphism represented by the matrix:
+[-8  3]
+[ 7  1]
+[ 2 11]
+[ 5 -4]
+Domain: Vector space of dimension 4 over Rational Field
+Codomain: Vector space of dimension 2 over Rational Field
+sage: Q = S*5
+sage: Q
+Vector space morphism represented by the matrix:
+[-35   5]
+[ 20   5]
+[-10  40]
+[  0 -15]
+Domain: Vector space of dimension 4 over Rational Field
+Codomain: Vector space of dimension 2 over Rational Field
+\end{sageexample}
+%
+Perhaps the only surprise in all this is the necessity of writing scalar multiplication on the right of the linear transformation (rather on the left, as we do in the text).  We will recycle the linear transformation \verb?T? from above and redefine \verb?S? to form an example of composition.
+%
+\begin{sageexample}
+sage: W = QQ^3
+sage: C = matrix(QQ, [[ 4, -2],
+...                   [-1,  3],
+...                   [-3,  2]])
+sage: S = linear_transformation(V, W, C, side='right')
+sage: R = S*T
+sage: R
+Vector space morphism represented by the matrix:
+[ -8   7   7]
+[ 12  -3  -9]
+[ 10   5  -6]
+[ 22  -8 -17]
+Domain: Vector space of dimension 4 over Rational Field
+Codomain: Vector space of dimension 3 over Rational Field
+\end{sageexample}
+%
+We use the star symbol (\verb?*?) to indicate composition of linear transformations.  Notice that the order of the two linear transformations we compose is important, and Sage's order agrees with the text.  The order does not have to agree, and there are good arguments to have it reversed, so be careful if you read about composition elsewhere.\par
+%
+This is a good place to expand on \acronymref{theorem}{VSLT}, which says that with definitions of addition and scalar multiplication of linear transformations we then arrive at a vector space.  A vector space full of linear transformations.  Objects in Sage have ``parents'' --- vectors have vector spaces for parents, fractions of integers have the rationals as parents.  What is the parent of a linear transformation?  Let's see, by investigating the parent of \verb?S? just defined above.
+%
+\begin{sageexample}
+sage: P = S.parent()
+sage: P
+Set of Morphisms (Linear Transformations) from
+Vector space of dimension 2 over Rational Field to
+Vector space of dimension 3 over Rational Field
+\end{sageexample}
+%
+``Morphism'' is a general term for a function that ``preserves structure'' or ``respects operations.''  In Sage a collection of morphisms is referenced as a ``homset'' or a ``homspace.''  In this example, we have a homset that is the vector space of linear transformations that go from a dimension 2 vector space over the rationals to a dimension 3 vector space over the rationals.  What can we do with it?  A few things, but not everything you might imagine.  It does have a basis, containing a few very simple linear transformations:
+%
+\begin{sageexample}
+sage: P.basis()
+(Vector space morphism represented by the matrix:
+[1 0 0]
+[0 0 0]
+Domain: Vector space of dimension 2 over Rational Field
+Codomain: Vector space of dimension 3 over Rational Field,
+Vector space morphism represented by the matrix:
+[0 1 0]
+[0 0 0]
+Domain: Vector space of dimension 2 over Rational Field
+Codomain: Vector space of dimension 3 over Rational Field,
+Vector space morphism represented by the matrix:
+[0 0 1]
+[0 0 0]
+Domain: Vector space of dimension 2 over Rational Field
+Codomain: Vector space of dimension 3 over Rational Field,
+Vector space morphism represented by the matrix:
+[0 0 0]
+[1 0 0]
+Domain: Vector space of dimension 2 over Rational Field
+Codomain: Vector space of dimension 3 over Rational Field,
+Vector space morphism represented by the matrix:
+[0 0 0]
+[0 1 0]
+Domain: Vector space of dimension 2 over Rational Field
+Codomain: Vector space of dimension 3 over Rational Field,
+Vector space morphism represented by the matrix:
+[0 0 0]
+[0 0 1]
+Domain: Vector space of dimension 2 over Rational Field
+Codomain: Vector space of dimension 3 over Rational Field)
+\end{sageexample}
+%
+You can create a set of linear transformations with the \verb?Hom()? function, simply by giving the domain and codomain.
+%
+\begin{sageexample}
+sage: H = Hom(QQ^6, QQ^9)
+sage: H
+Set of Morphisms (Linear Transformations) from
+Vector space of dimension 6 over Rational Field to
+Vector space of dimension 9 over Rational Field
+\end{sageexample}
+%
+An understanding of Sage's homsets is not critical to understanding the use of Sage during the remainder of this course.  But such an understanding can be very useful in understanding some of Sage's more advanced and powerful features.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

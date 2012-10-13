@@ -1,0 +1,73 @@
+A second way to build a linear transformation is to use a matrix, as motivated by \acronymref{theorem}{MBLT}.  But there is one caveat.  We have seen that Sage has a preference for rows, so when defining a linear transformation with a product of a matrix and a vector, \emph{Sage forms a linear combination of the rows of the matrix with the scalars of the vector}.  This is expressed by writing the vector on the left of the matrix, where if we were to interpret the vector as a 1-row matrix, then the definition of matrix multiplication would do the right thing.\par
+%
+Remember throughout, a linear transformation has very little to with the mechanism by which we define it.  Whether or not we use matrix multiplication with vectors on the left (Sage internally) or matrix multiplication with vectors on the right (your text), what matters is the \emph{function} that results.  One concession to the ``vector on the right'' approach is that we can tell Sage that we mean for the matrix to define the linear transformation by multiplication with the vector on the right.  Here is our running example again --- with some explanation following.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[-1, 0, 2],
+...                   [ 1, 3, 7],
+...                   [ 1, 1, 1],
+...                   [ 2, 3, 5]])
+sage: T = linear_transformation(QQ^3, QQ^4, A, side='right')
+sage: T
+Vector space morphism represented by the matrix:
+[-1  1  1  2]
+[ 0  3  1  3]
+[ 2  7  1  5]
+Domain: Vector space of dimension 3 over Rational Field
+Codomain: Vector space of dimension 4 over Rational Field
+\end{sageexample}
+%
+The way \verb?T? prints reflects the way Sage carries \verb?T? internally.  But notice that we defined \verb?T? in a way that is consistent with the text, via the use of the optional \verb?side='right'? keyword.  If you rework examples from the text, or use Sage to assist with exercises, be sure to remember this option.  In particular, when the matrix is square it might be easy to miss that you have forgetten this option.  Note too that Sage uses a more general term for a linear transformation, ``vector space morphism.''  Just mentally translate from Sage-speak to the terms we use here in the text.\par
+%
+If the standard way that Sage prints a linear transformation is too confusing, you can get all the relevant information with a handful of commands.
+%
+\begin{sageexample}
+sage: T.matrix(side='right')
+[-1  0  2]
+[ 1  3  7]
+[ 1  1  1]
+[ 2  3  5]
+sage: T.domain()
+Vector space of dimension 3 over Rational Field
+sage: T.codomain()
+Vector space of dimension 4 over Rational Field
+\end{sageexample}
+%
+So we can build a linear transformation in Sage from a matrix, as promised by \acronymref{theorem}{MBLT}.  Furthermore, \acronymref{theorem}{MLTCV} says there is a matrix associated with every linear transformation.  This matrix is provided in Sage by the \verb?.matrix()? method, where we use the option \verb?side='right'? to be consistent with the text.  Here is \acronymref{example}{MOLT} reprised, where we define the linear transformation via a Sage symbolic function and then recover the matrix of the linear transformation.
+%
+\begin{sageexample}
+sage: x1, x2, x3 = var('x1, x2, x3')
+sage: outputs = [3*x1 - 2*x2 + 5*x3,
+...                x1 +   x2 +   x3,
+...              9*x1 - 2*x2 + 5*x3,
+...                     4*x2       ]
+sage: S_symbolic(x1, x2, x3) = outputs
+sage: S = linear_transformation(QQ^3, QQ^4, S_symbolic)
+sage: C = S.matrix(side='right'); C
+[ 3 -2  5]
+[ 1  1  1]
+[ 9 -2  5]
+[ 0  4  0]
+sage: x = vector(QQ, [2, -3, 3])
+sage: S(x) == C*x
+True
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

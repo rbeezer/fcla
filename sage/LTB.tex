@@ -1,0 +1,82 @@
+A third way to create a linear transformation in Sage is to provide a list of images for a basis, as motivated by \acronymref{theorem}{LTDB}.  The default is to use the standard basis as the inputs (\acronymref{definition}{SUV}).
+We will, once again, create our running example.
+%
+\begin{sageexample}
+sage: U = QQ^3
+sage: V = QQ^4
+sage: v1 = vector(QQ, [-1, 1, 1, 2])
+sage: v2 = vector(QQ, [ 0, 3, 1, 3])
+sage: v3 = vector(QQ, [ 2, 7, 1, 5])
+sage: T = linear_transformation(U, V, [v1, v2, v3])
+sage: T
+Vector space morphism represented by the matrix:
+[-1  1  1  2]
+[ 0  3  1  3]
+[ 2  7  1  5]
+Domain: Vector space of dimension 3 over Rational Field
+Codomain: Vector space of dimension 4 over Rational Field
+\end{sageexample}
+%
+Notice that there is no requirement that the list of images (in Sage or in \acronymref{theorem}{LTDB}) to be a basis.  They do not even have to be different.  They could all be the zero vector (try it).\par
+%
+If we want to use an alternate basis for the domain, it is possible, but there are two caveats.  The first caveat is that we must be sure to provide a basis for the domain, Sage will give an error if we the proposed basis is not linearly independent and we are responsible for providing the right number of vectors (which should be easy).\par
+%
+We have seen that vector spaces can have alternate bases, which prints as a ``user basis.''  Here will provide the domain with an alternate basis.  The relevant command will create a subspace, but for now, we need to provide a big enough set to create the entire domain.  It is possible to use fewer linearly independent vectors, and create a proper subspace, but then we will not be able to use this proper subspace to build the linear transformation we want.
+%
+\begin{sageexample}
+sage: u1 = vector(QQ, [ 1,  3, -4])
+sage: u2 = vector(QQ, [-1, -2,  3])
+sage: u3 = vector(QQ, [ 1,  1, -3])
+sage: U = (QQ^3).subspace_with_basis([u1, u2, u3])
+sage: U == QQ^3
+True
+sage: U.basis_matrix()
+[ 1  3 -4]
+[-1 -2  3]
+[ 1  1 -3]
+sage: U.echelonized_basis_matrix()
+[1 0 0]
+[0 1 0]
+[0 0 1]
+\end{sageexample}
+%
+We can use this alternate version of \verb?U? to create a linear transformation from specified images.  Superfically there is nothing real special about our choices for \verb?v1, v2, v3?.
+%
+\begin{sageexample}
+sage: V = QQ^4
+sage: v1 = vector(QQ, [-9, -18,  0, -9])
+sage: v2 = vector(QQ, [ 7,  14,  0,  7])
+sage: v3 = vector(QQ, [-7, -17, -1, -10])
+\end{sageexample}
+%
+Now we create the linear transformation.  Here is the second caveat:  the matrix of the linear transformation is no longer that provided by \acronymref{theorem}{MLTCV}.  It may be obvious where the matrix comes from, but a full understanding of its interpretation will have to wait until \acronymref{section}{MR}.
+%
+\begin{sageexample}
+sage: S = linear_transformation(U, V, [v1, v2, v3])
+sage: S.matrix(side='right')
+[ -9   7  -7]
+[-18  14 -17]
+[  0   0  -1]
+[ -9   7 -10]
+\end{sageexample}
+%
+We suggested our choices for \verb?v1, v2, v3? were ``random.''  Not so --- the linear transformation \verb?S? just created is equal to the linear transformation \verb?T? above.  If you have run all the input in this subsection, in order, then you should be able to compare the \emph{functions} \verb?S? and \verb?T?.  The next command should \emph{always} produce \verb?True?.
+%
+\begin{sageexample}
+sage: u = random_vector(QQ, 3)
+sage: T(u) == S(u)
+True
+\end{sageexample}
+%
+Notice that \verb?T == S? may not do what you expect here.  Instead, the linear transformation method \verb?.is_equal_function()? will perform a conclusive check of equalit of two linear transformations as functions.
+%
+\begin{sageexample}
+sage: T.is_equal_function(S)
+True
+\end{sageexample}
+%
+Can you reproduce this example?  In other words, define some linear transformation, any way you like.  Then give the domain an alternate basis and concoct the correct images to create a second linear transformation (by the method of this subsection) which is equal to the first.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

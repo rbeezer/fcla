@@ -1,0 +1,49 @@
+There are several ways to create a linear transformation in Sage, and many natural operations on these objects are possible.  As previously, rather than use the complex numbers as our number system, we will instead use the rational numbers, since Sage can model them exactly.  We will also use the following transformation repeatedly for examples, when no special properties are required:
+%
+\begin{align*}
+&\ltdefn{T}{\complex{3}}{\complex{2}}\\
+&\lt{T}{\colvector{x_1\\x_2\\x_3}}=\colvector{-x_1 + 2x_3\\x_1 + 3x_2 + 7x_3\\x_1 + x_2 + x_3\\2x_1 + 3x_2 + 5x_3}
+\end{align*}
+%
+To create this linear transformation in Sage, we first create a ``symbolic'' function, which requires that we also first define some symbolic variables which are \verb?x1?, \verb?x2? and \verb?x3? in this case.  (You can bypass the intermediate variable \verb?outputs? in your own work.  We will use it consistently to allow us to spread the definition across several lines without the Sage preparser getting in the way.  In other words, it is safe to combine the the two lines below and not use \verb?outputs?.)
+%
+\begin{sageexample}
+sage: x1, x2, x3 = var('x1, x2, x3')
+sage: outputs = [ -x1        + 2*x3,
+...                x1 + 3*x2 + 7*x3,
+...                x1 +   x2 +   x3,
+...              2*x1 + 3*x2 + 5*x3]
+sage: T_symbolic(x1, x2, x3) = outputs
+\end{sageexample}
+%
+You can experiment with \verb?T_symbolic?, evaluating it at triples of rational numbers, and perhaps doing things like calculating its partial derivatives.  We will use it as input to the \verb?linear_transformation()? constructor.  We just need to specify carefully the domain and codomain, now as vector spaces over the rationals rather than the complex numbers.
+%
+\begin{sageexample}
+sage: T = linear_transformation(QQ^3, QQ^4, T_symbolic)
+\end{sageexample}
+%
+You can now, of course, experiment with \verb?T? via tab-completion, but we will explain the various properties of a Sage linear transformations as we work through this chapter.  Even some seemingly simple operations, such as printing \verb?T? will require some explanation.  But for starters, we can evaluate \verb?T?.
+%
+\begin{sageexample}
+sage: u = vector(QQ, [3, -1, 2])
+sage: w = T(u)
+sage: w
+(1, 14, 4, 13)
+sage: w.parent()
+Vector space of dimension 4 over Rational Field
+\end{sageexample}
+%
+Here is a small verification of \acronymref{theorem}{LTTZZ}.
+%
+\begin{sageexample}
+sage: zero_in = zero_vector(QQ, 3)
+sage: zero_out = zero_vector(QQ, 4)
+sage: T(zero_in) == zero_out
+True
+\end{sageexample}
+%
+Note that Sage will recognize some symbolic functions as not being linear transformations (in other words, inconsistent with \acronymref{definition}{LT}), but this detection is fairly easy to fool.  We will see some safer ways to create a linear transformation shortly.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
