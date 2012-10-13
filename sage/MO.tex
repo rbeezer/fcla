@@ -1,0 +1,102 @@
+Every operation in this section is implemented in Sage.  The only real subtlety is determining if certain matrices are symmetric, which we will discuss below.  In linear algebra, the term ``adjoint'' has two unrelated meanings, so you need to be careful when you see this term.  In particular, in Sage it is used to mean something different.  So our version of the adjoint is implemented as the matrix method \verb?.conjugage_transpose()?.  Here are some straightforward examples.
+%
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[-1, 2, 4],
+...                   [ 0, 3, 1]])
+sage: A
+[-1  2  4]
+[ 0  3  1]
+sage: A.transpose()
+[-1  0]
+[ 2  3]
+[ 4  1]
+sage: A.is_symmetric()
+False
+sage: B = matrix(QQ, [[ 1, 2, -1],
+...                   [ 2, 3,  4],
+...                   [-1, 4, -6]])
+sage: B.is_symmetric()
+True
+sage: C = matrix(QQbar, [[  2-I, 3+4*I],
+...                      [5+2*I,     6]])
+sage: C.conjugate()
+[2 + 1*I 3 - 4*I]
+[5 - 2*I       6]
+sage: C.conjugate_transpose()
+[2 + 1*I 5 - 2*I]
+[3 - 4*I       6]
+\end{sageexample}
+%
+With these constructions, we can test, or demonstrate, some of the theorems above.  Of course, this does not make the theorems true, but is satisfying nonetheless.  This can be an effective technique when you are learning new Sage commands or new linear algebra --- if your computations are not consistent with theorems, then your understanding of the linear algebra may be flawed, or your understanding of Sage may be flawed, or Sage may have a bug!  Note in the following how we use comparison (\verb?==?) between matrices as an implementation of matrix equality (\acronymref{definition}{ME}).
+%
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[ 1, -1, 3],
+...                   [-3,  2, 0]])
+sage: B = matrix(QQ, [[5, -2,  7],
+...                   [1,  3, -2]])
+sage: C = matrix(QQbar, [[2+3*I, 1 - 6*I], [3, 5+2*I]])
+sage: A.transpose().transpose() == A
+True
+sage: (A+B).transpose() == A.transpose() + B.transpose()
+True
+sage: (2*C).conjugate() == 2*C.conjugate()
+True
+sage: a = QQbar(3 + 4*I)
+sage: acon = a.conjugate()
+sage: (a*C).conjugate_transpose() == acon*C.conjugate_transpose()
+True
+\end{sageexample}
+%
+The opposite is true --- you can use theorems to convert, or express, Sage code into alternative, but mathematically equivalent forms.\par
+%
+Here is the subtlety.  With approximate numbers, such as in \verb?RDF? and \verb?CDF?, it can be tricky to decide if two numbers are equal, or if a very small number is zero or not.  In these situations Sage allows us to specify a ``tolerance'' --- the largest number that can be effectively considered zero.  Consider the following:
+%
+\begin{sageexample}
+sage: A = matrix(CDF, [[1.0, 0.0], [0.0, 1.0]])
+sage: A
+[1.0   0]
+[  0 1.0]
+sage: A.is_symmetric()
+True
+sage: A[0,1] = 0.000000000002
+sage: A
+[  1.0 2e-12]
+[    0   1.0]
+sage: A.is_symmetric()
+False
+sage: A[0,1] = 0.000000000001
+sage: A
+[  1.0 1e-12]
+[    0   1.0]
+sage: A.is_symmetric()
+True
+\end{sageexample}
+%
+Clearly the last result is not correct.  This is because $0.000000000001 = 1.0\times 10^{-12}$ is ``small enough'' to be confused as equal to the zero in the other corner of the matrix.  However, Sage will let us set our own idea of when two numbers are equal, by setting a tolerance on the difference between two numbers that will allow them to be considered equal.  The default tolerance is set at $1.0\times 10^{-12}$.  Here we use Sage's syntax for scientific notation to specify the tolerance.
+%
+\begin{sageexample}
+sage: A = matrix(CDF, [[1.0, 0.0], [0.0, 1.0]])
+sage: A.is_symmetric()
+True
+sage: A[0,1] = 0.000000000001
+sage: A.is_symmetric()
+True
+sage: A.is_symmetric(tol=1.0e-13)
+False
+\end{sageexample}
+%
+This is not a course in numerical linear algebra, even if that is a fascinating field of study.  To concentrate on the main ideas of introductory linear algebra, whenever possible we will concentrate on number systems like the rational numbers or algebraic numbers where we can rely on exact results.  If you are ever unsure if a number system is exact or not, just ask.
+%
+\begin{sageexample}
+sage: QQ.is_exact()
+True
+sage: RDF.is_exact()
+False
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+
