@@ -1,0 +1,79 @@
+The situation in Sage for surjective linear transformations is similar to that for injective linear transformations.  One distinction --- what your text calls the range of a linear transformation is called the image of a transformation, obtained with the \verb?.image()? method.  Sage's term is more commonly used, so you are likey to see it again.  As before, two examples, first up is \acronymref{example}{RAO}.
+%
+\begin{sageexample}
+sage: U = QQ^3
+sage: V = QQ^5
+sage: x1, x2, x3 = var('x1, x2, x3')
+sage: outputs = [ -x1 +   x2 - 3*x3,
+...               -x1 + 2*x2 - 4*x3,
+...                x1 +   x2 +   x3,
+...              2*x1 + 3*x2 +   x3,
+...                x1        + 2*x3]
+sage: T_symbolic(x1, x2, x3) = outputs
+sage: T = linear_transformation(U, V, T_symbolic)
+sage: T.is_surjective()
+False
+sage: T.image()
+Vector space of degree 5 and dimension 2 over Rational Field
+Basis matrix:
+[ 1  0 -3 -7 -2]
+[ 0  1  2  5  1]
+\end{sageexample}
+%
+Besides showing the relevant commands in action, this demonstrates one half of \acronymref{theorem}{RSLT}.  Now a reprise of \acronymref{example}{FRAN}.
+%
+\begin{sageexample}
+sage: U = QQ^5
+sage: V = QQ^3
+sage: x1, x2, x3, x4, x5 = var('x1, x2, x3, x4, x5')
+sage: outputs = [2*x1 +   x2 + 3*x3 - 4*x4 + 5*x5,
+...                x1 - 2*x2 + 3*x3 - 9*x4 + 3*x5,
+...              3*x1        + 4*x3 - 6*x4 + 5*x5]
+sage: S_symbolic(x1, x2, x3, x4, x5) = outputs
+sage: S = linear_transformation(U, V, S_symbolic)
+sage: S.is_surjective()
+True
+sage: S.image()
+Vector space of degree 3 and dimension 3 over Rational Field
+Basis matrix:
+[1 0 0]
+[0 1 0]
+[0 0 1]
+sage: S.image() == V
+True
+\end{sageexample}
+%
+Previously, we have chosen elements of the codomain which have non-empty or empty preimages.  We can now explain how to do this predictably.  \acronymref{theorem}{RPI} explains that elements of the codomain with non-empty pre-images are precisely elements of the image.  Consider the non-surjective linear transformation \verb?T? from above.
+%
+\begin{sageexample}
+sage: TI = T.image()
+sage: B = TI.basis()
+sage: B
+[
+(1, 0, -3, -7, -2),
+(0, 1, 2, 5, 1)
+]
+sage: b0 = B[0]
+sage: b1 = B[1]
+\end{sageexample}
+%
+Now any linear combination of the basis vectors \verb?b0? and \verb?b1? must be an element of the image.  Moreover, the first two slots of the resulting vector will equal the two scalars we choose to create the linear combination.  But most importantly, see that the three remaining slots will be uniquely determined by these two choices.  This means there is exactly one vector in the image with these values in the first two slots.  So if we construct a new vector with these two values in the first two slots, and make any part of the last three slots even slightly different, we will form a vector that cannot be in the image, and will thus have a preimage that is an empty set.  Whew, that is probably worth reading carefully several times, perhaps in conjunction with the example following.
+%
+\begin{sageexample}
+sage: in_image = 4*b0 + (-5)*b1
+sage: in_image
+(4, -5, -22, -53, -13)
+sage: T.preimage_representative(in_image)
+(-13, -9, 0)
+sage: outside_image = 4*b0 + (-5)*b1 + vector(QQ, [0, 0, 0, 0, 1])
+sage: outside_image
+(4, -5, -22, -53, -12)
+sage: T.preimage_representative(outside_image)
+Traceback (most recent call last):
+...
+ValueError: element is not in the image
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
