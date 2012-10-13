@@ -1,0 +1,28 @@
+It is straightforward to create an identity matrix in Sage.  Just specify the number system and the number of rows (which will equal the number of columns, so you do not specify that since it would be redundant).  The number system can be left out, but the result will have entries from the integers (\verb?ZZ?), which in this course is unlikely to be what you really want.
+%
+\begin{sageexample}
+sage: id5 = identity_matrix(QQ, 5)
+sage: id5
+[1 0 0 0 0]
+[0 1 0 0 0]
+[0 0 1 0 0]
+[0 0 0 1 0]
+[0 0 0 0 1]
+sage: id4 = identity_matrix(4)
+sage: id4.base_ring()
+Integer Ring
+\end{sageexample}
+%
+Notice that we do not use the now-familiar dot notation to \emph{create} an identity matrix.  What would we use the dot notation on anyway?  For these reasons we call the \verb?identity_matrix()? function a \define{constructor}, since it builds something from scratch, in this case a very particular type of matrix.
+%
+We mentioned above that an identity matrix is in reduced row-echelon form.  What happens if we try to row-reduce a matrix that is already in reduced row-echelon form?  By the uniqueness of the result, there should be no change.  The following code illustrates this.  Notice that \verb?=? is used to \emph{assign} an object to a new name, while \verb?==? is used to \emph{test equality} of two objects.  I frequently make the mistake of forgetting the second equal sign when I mean to test equality.
+%
+\begin{sageexample}
+sage: id50 = identity_matrix(QQ, 50)
+sage: id50 == id50.rref()
+True
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

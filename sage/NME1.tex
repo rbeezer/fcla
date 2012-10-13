@@ -1,0 +1,43 @@
+Sage will create random matrices and vectors, sometimes with various properties.  These can be very useful for quick experiments, and they are also useful for \emph{illustrating} that theorems hold for any object satisfying the hypotheses of the theorem.  But this will never replace a proof.\par
+%
+We will illustrate \acronymref{theorem}{NME1} using Sage.  We will use a variant of the \verb?random_matrix()? constructor that uses the \verb?algorithm='unimodular'? keyword.  We will have to wait for \acronymref{chapter}{D} before we can give a full explanation, but for now, understand that this command will \emph{always} create a square matrix that is nonsingular.  Also realize that there are square nonsingular matrices which will never be the output of this command.  In other words, this command creates elements of just a subset of all possible nonsingular matrices.\par
+%
+So we are using random matrices below to illustrate properties predicted by \acronymref{theorem}{NME1}.  Execute the first command to create a random nonsingular matrix, and notice that we only have to mark the output of \verb?A? as random for our automated testing process.  After a few runs, notice that you can also edit the value of \verb?n? to create matrices of different sizes.  With a matrix \verb?A? defined, run the next three cells, which by \acronymref{theorem}{NME1} each always produce \verb?True? as their output, \emph{no matter what value} \verb?A? \emph{has}, so long as \verb"A" is nonsingular.  Read the code and try to determine exactly how they correspond to the parts of the theorem (some commentary along these lines follows).
+%
+\begin{sageexample}
+sage: n = 6
+sage: A = random_matrix(QQ, n, algorithm='unimodular')
+sage: A               # random
+[   1   -4    8   14    8   55]
+[   4  -15   29   50   30  203]
+[  -4   17  -34  -59  -35 -235]
+[  -1    3   -8  -16   -5  -48]
+[  -5   16  -33  -66  -16 -195]
+[   1   -2    2    7   -2   10]
+\end{sageexample}
+%
+\begin{sageexample}
+sage: A.rref() == identity_matrix(QQ, n)
+True
+\end{sageexample}
+%
+\begin{sageexample}
+sage: nsp = A.right_kernel(basis='pivot')
+sage: nsp.list() == [zero_vector(QQ, n)]
+True
+\end{sageexample}
+%
+\begin{sageexample}
+sage: b = random_vector(QQ, n)
+sage: aug = A.augment(b)
+sage: aug.pivots() == tuple(range(n))
+True
+\end{sageexample}
+%
+The only portion of these commands that may be unfamilar is the last one.  The command \verb?range(n)? is incredibly useful, as it will create a list of the integers from \verb?0? up to, \emph{but not including}, \verb?n?.  (We saw this command briefly in \acronymref{sage}{FDV}.)  So, for example, \texttt{range(3) == [0,1,2]} is \verb?True?.  Pivots are returned as a ``tuple'' which is very much like a list, except we cannot change the contents.  We can see the difference by the way the tuple prints with parentheses (\verb?(,)?) rather than brackets (\verb?[,]?).  We can convert a list to a tuple with the \verb?tuple()? command, in order to make the comparison succeed.\par
+%
+How do we tell if the reduced row-echelon form of the augmented matrix of a system of equations represents a system with a unique solution?  First, the system must be consistent, which by \acronymref{theorem}{RCLS} means the last column is not a pivot column.  Then with a consistent system we need to insure there are no free variables.  This happens if and only if the remaining columns are all pivot columns, according to \acronymref{theorem}{FVCS}, thus the test used in the last compute cell.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
