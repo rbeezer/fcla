@@ -1,0 +1,63 @@
+Not to be outdone, and not suprisingly, Sage can compute a row space with the matrix method \verb?.row_space()?.  Indeed, given Sage's penchant for treating vectors as rows, much of Sage's infrastructure for vector spaces ultimately relies on \acronymref{theorem}{REMRS}.  More on that in \acronymref{sage}{SUTH0}.  For now, we reprise \acronymref{example}{IAS} as an illustration.
+%
+\begin{sageexample}
+sage: v1 = vector(QQ, [1,  2,  1,  6,   6])
+sage: v2 = vector(QQ, [3, -1,  2, -1,   6])
+sage: v3 = vector(QQ, [1, -1,  0, -1,  -2])
+sage: v4 = vector(QQ, [-3, 2, -3,  6, -10])
+sage: X = (QQ^5).span([v1, v2, v3, v4])
+sage: A = matrix([v1, v2, v3, v4])
+sage: rsA = A.row_space()
+sage: X == rsA
+True
+sage: B = A.rref()
+sage: rsB = B.row_space()
+sage: X == rsB
+True
+sage: X
+Vector space of degree 5 and dimension 3 over Rational Field
+Basis matrix:
+[ 1  0  0  2 -1]
+[ 0  1  0  3  1]
+[ 0  0  1 -2  5]
+sage: X.basis()
+[
+(1, 0, 0, 2, -1),
+(0, 1, 0, 3, 1),
+(0, 0, 1, -2, 5)
+]
+sage: B
+[ 1  0  0  2 -1]
+[ 0  1  0  3  1]
+[ 0  0  1 -2  5]
+[ 0  0  0  0  0]
+\end{sageexample}
+%
+We begin with the same four vectors in \acronymref{example}{IAS} and create their span, the vector space \verb?X?.  The matrix \verb?A? has these four vectors as rows and \verb?B? is the reduced row-echelon form of \verb?A?.  Then the row spaces of \verb?A? and \verb?B? are equal to the vector space \verb?X? (and each other).  The way Sage describes this vector space is with a matrix whose rows \emph{are the non-zero rows of the reduced row-echelon form of the matrix} \verb?A?.  This is \acronymref{theorem}{BRS} in action where we go with Sage's penchant for rows and ignore the text's penchant for columns.\par
+%
+We can illustrate a few other results about row spaces with Sage.  Discussion follows.
+%
+\begin{sageexample}
+sage: A = matrix(QQ,[[1,  1, 0, -1,  1,  1, 0],
+...                  [4,  5, 1, -6,  1,  6, 1],
+...                  [5,  5, 1, -5,  4,  5, 2],
+...                  [3, -1, 0,  5, 11, -5, 4]])
+sage: A.row_space() == A.transpose().column_space()
+True
+sage: B = matrix(QQ,[[ 7,  9, 2, -11,   1, 11,  2],
+...                  [-4, -3, 1,   2,  -7, -2,  1],
+...                  [16,  8, 2,   0,  30,  0, 12],
+...                  [ 2, 10, 2, -18, -16, 18, -4]])
+sage: B.column_space() == B.transpose().row_space()
+True
+sage: A.rref() == B.rref()
+True
+sage: A.row_space() == B.row_space()
+True
+\end{sageexample}
+%
+We use the matrix \verb?A? to illustrate \acronymref{definition}{RSM}, and the matrix \verb?B? to illustrate \acronymref{theorem}{CSRST}.  \verb?A? and \verb?B? were designed to have the same reduced row-echelon form, and hence be row-equivalent, so this is not a consequence of any theorem or previous computation.  However, then \acronymref{theorem}{REMRS} guarantees that the row spaces of \verb?A? and \verb?B? are equal.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

@@ -1,0 +1,97 @@
+It might be worthwhile for Sage to create a column space using actual columns of the matrix as a spanning set.  But we can do it ourselves fairly easily.  A discussion follows the example.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[-1, -1, 0,  1,  0,  1, -2, -3, 0],
+...                   [-1,  0, 0,  5, -2,  6, -6,  3, 5],
+...                   [ 0,  0, 1, -6, -1,  0, -5,  0, 5],
+...                   [ 2,  2, 1, -8, -2,  0, -4,  8, 8],
+...                   [ 2,  2, 0, -2, -1,  0,  1,  8, 3],
+...                   [ 2,  1, 0, -6, -1, -1, -1,  6, 4]])
+sage: A.rref()
+[ 1  0  0 -5  0 -2  0  1  1]
+[ 0  1  0  4  0  1  2  2 -1]
+[ 0  0  1 -6  0 -2 -2 -2  2]
+[ 0  0  0  0  1 -2  3 -2 -3]
+[ 0  0  0  0  0  0  0  0  0]
+[ 0  0  0  0  0  0  0  0  0]
+sage: B = A.matrix_from_columns(A.pivots())
+sage: A.column_space() == B.column_space()
+True
+sage: B.rref()
+[1 0 0 0]
+[0 1 0 0]
+[0 0 1 0]
+[0 0 0 1]
+[0 0 0 0]
+[0 0 0 0]
+sage: cs = (QQ^6).span_of_basis(B.columns())
+sage: cs
+Vector space of degree 6 and dimension 4 over Rational Field
+User basis matrix:
+[-1 -1  0  2  2  2]
+[-1  0  0  2  2  1]
+[ 0  0  1  1  0  0]
+[ 0 -2 -1 -2 -1 -1]
+sage: cs.basis()
+[
+(-1, -1, 0, 2, 2, 2),
+(-1, 0, 0, 2, 2, 1),
+(0, 0, 1, 1, 0, 0),
+(0, -2, -1, -2, -1, -1)
+]
+sage: cs.echelonized_basis()
+[
+(1, 0, 0, 0, 0, 5),
+(0, 1, 0, 0, 0, -1),
+(0, 0, 1, 0, -1, -3),
+(0, 0, 0, 1, 1, 3)
+]
+sage: cs == A.column_space()
+True
+sage: cs2 = (QQ^6).span_of_basis([A.column(i) for i in A.pivots()])
+sage: cs2 == A.column_space()
+True
+\end{sageexample}
+%
+We see that \verb?A? has four pivot columns, numbered \verb?0,1,2,4?.  The matrix \verb?B? is just a convenience to hold the pivot columns of \verb?A?.  However, the column spaces of \verb?A? and \verb?B? should be equal, as Sage verifies.  Also \verb?B? will row-reduce to the same 0-1 pivot columns of the reduced row-echelon form of the full matrix \verb?A?.  So it is no accident that the reduced row-echelon form of \verb?B? is a full identity matrix, followed by sufficiently many zero rows to give the matrix the correct size.\par
+%
+The vector space method \verb?.span_of_basis()? is new to us.  It creates a span of a set of vectors, as before, but we now are responsible for supplying a linearly independent set of vectors.  Which we have done.  We know this because \acronymref{theorem}{BCS} guarantees the set we provided is linearly independent (and spans the column space), while Sage would have given us an error if we had provided a linearly dependent set.  In return, Sage will carry this linearly independent spanning set along with the vector space, something Sage calls a ``user basis.''\par
+%
+Notice how \verb?cs? has two linearly independent spanning sets now.  Our set of ``original columns'' is obtained via the standard vector space method \verb?.basis()? and we can obtain a linearly independent spanning set that looks more familiar with the vector space method \verb?.echelonized_basis()?.  For a vector space created with a simple \verb?.span()? construction these two commands would yield identical results --- it is only when we supply a linearly idependent spanning set with the \verb?.span_of_basis()? method that a ``user basis'' becomes relevant.
+%
+Finally, we check that \verb?cs? is indeed the column space of \verb?A? (we knew it would be) and then we provide a one-line, totally general construction of the column space using original columns.
+%
+This is an opportunity to make an interesting observation, which could be used to substantiate several theorems.  When we take the original columns that we recognize as pivot columns, and use them alone to form a matrix, this new matrix \emph{will always} row-reduce to an identity matrix followed by zero rows.  This is basically a consequence of reduced row-echelon form.  Evaluate the compute cell below repeatedly.  The number of columns could in theory change, though this is unlikely since the columns of a random matrix are unlikely to be linearly dependent.  In any event, the form of the result will always be an identity matrix followed by some zero rows.
+%
+\begin{sageexample}
+sage: F = random_matrix(QQ, 5, 3)
+sage: F.matrix_from_columns(F.pivots()).rref()   # random
+[1 0 0]
+[0 1 0]
+[0 0 1]
+[0 0 0]
+[0 0 0]
+\end{sageexample}
+%
+With more columns than rows, we know by \acronymref{theorem}{MVSLD} that we will have a reduced number of pivot columns.  Here, we will almost always see an identity matrix as the result, though we could get a smaller identity matrix followed by zero rows.
+%
+\begin{sageexample}
+sage: F = random_matrix(QQ, 3, 5)
+sage: F.matrix_from_columns(F.pivots()).rref()   # random
+[1 0 0]
+[0 1 0]
+[0 0 1]
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+
+
+
+
+
+
+
+
+

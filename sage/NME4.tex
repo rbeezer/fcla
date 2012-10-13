@@ -1,0 +1,30 @@
+\acronymref{archetype}{A} and \acronymref{archetype}{B} have square coefficient matrices that illustrate the dichotomy of singular and nonsingular matrices.  Here we illustrate the latest addition to our series of equivalences, \acronymref{theorem}{CSNM}.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[1, -1, 2],
+...                   [2,  1, 1],
+...                   [1,  1, 0]])
+sage: B = matrix(QQ, [[-7, -6, -12],
+...                   [ 5,  5,   7],
+...                   [ 1,  0,   4]])
+sage: A.is_singular()
+True
+sage: A.column_space() == QQ^3
+False
+sage: B.is_singular()
+False
+sage: B.column_space() == QQ^3
+True
+\end{sageexample}
+%
+We can even write \acronymref{theorem}{CSNM} as a one-line Sage statement that will return \verb?True? for \emph{any} square matrix.  Run the following repeatedly and it should always return \verb?True?.  We have kept the size of the matrix relatively small to be sure that some of the random matrices produced are singular.
+%
+\begin{sageexample}
+sage: A = random_matrix(QQ, 4, 4)
+sage: A.is_singular() == (not A.column_space() == QQ^4)
+True
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

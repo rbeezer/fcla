@@ -1,0 +1,48 @@
+We could compute the column space of a matrix with a span of the set of columns of the matrix, much as we did back in \acronymref{sage}{CSS} when we were checking consistency of linear systems using spans of the set of columns of a coeffiicent matrix.  However, Sage provides a convenient matrix method to construct this same span: \verb?.column_space()?.  Here is a check.
+%
+\begin{sageexample}
+sage: D = matrix(QQ, [[ 2, -1, -4],
+...                   [ 5,  2, -1],
+...                   [-3,  1,  5]])
+sage: cs = D.column_space(); cs
+Vector space of degree 3 and dimension 2 over Rational Field
+Basis matrix:
+[    1     0 -11/9]
+[    0     1  -1/9]
+sage: cs_span = (QQ^3).span(D.columns())
+sage: cs == cs_span
+True
+\end{sageexample}
+%
+In \acronymref{sage}{CSS} we discussed solutions to systems of equations and the membership of the vector of constants in the span of the columns of the coefficient matrix.  This discussion turned on \acronymref{theorem}{SLSLC}.  We can now be slightly more efficient with \acronymref{theorem}{CSCS}, while still using the same ideas.  We recycle the computations from \acronymref{example}{CSMCS} that use \acronymref{archetype}{D} and \acronymref{archetype}{E}.
+%
+\begin{sageexample}
+sage: coeff = matrix(QQ, [[ 2, 1,  7, -7],
+...                       [-3, 4, -5, -6],
+...                       [ 1, 1,  4, -5]])
+sage: constD = vector(QQ, [8, -12, 4])
+sage: constE = vector(QQ, [2, 3, 2])
+sage: cs = coeff.column_space()
+sage: coeff.solve_right(constD)
+(4, 0, 0, 0)
+sage: constD in cs
+True
+sage: coeff.solve_right(constE)
+Traceback (most recent call last):
+...
+ValueError: matrix equation has no solutions
+sage: constE in cs
+False
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+
+
+
+
+
+
+
+
