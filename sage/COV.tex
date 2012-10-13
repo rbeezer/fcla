@@ -1,0 +1,62 @@
+We will redo \acronymref{example}{COV}, though somewhat tersely, just producing the justification for each time we toss a vector (a specific relation of linear dependence), and then verifying that the resulting spans, each with one fewer vector, still produce the original span.  We also introduce the \verb?.remove()? method for lists.  Ready?  Here we go.
+%
+\begin{sageexample}
+sage: V = QQ^4
+sage: v1 = vector(QQ,  [ 1,   2,  0,  -1])
+sage: v2 = vector(QQ,  [ 4,   8,  0,  -4])
+sage: v3 = vector(QQ,  [ 0,  -1,  2,   2])
+sage: v4 = vector(QQ,  [-1,   3, -3,   4])
+sage: v5 = vector(QQ,  [ 0,   9, -4,   8])
+sage: v6 = vector(QQ,  [ 7, -13, 12, -31])
+sage: v7 = vector(QQ,  [-9,   7, -8,  37])
+sage: S = [v1, v2, v3, v4, v5, v6, v7]
+sage: W = V.span(S)
+sage: D = V.linear_dependence(S, zeros='right')
+sage: D
+[
+(-4, 1, 0, 0, 0, 0, 0),
+(-2, 0, -1, -2, 1, 0, 0),
+(-1, 0, 3, 6, 0, 1, 0),
+(3, 0, -5, -6, 0, 0, 1)
+]
+sage: D[0]
+(-4, 1, 0, 0, 0, 0, 0)
+sage: S.remove(v2)
+sage: W == V.span(S)
+True
+sage: D[1]
+(-2, 0, -1, -2, 1, 0, 0)
+sage: S.remove(v5)
+sage: W == V.span(S)
+True
+sage: D[2]
+(-1, 0, 3, 6, 0, 1, 0)
+sage: S.remove(v6)
+sage: W == V.span(S)
+True
+sage: D[3]
+(3, 0, -5, -6, 0, 0, 1)
+sage: S.remove(v7)
+sage: W == V.span(S)
+True
+sage: S
+[(1, 2, 0, -1), (0, -1, 2, 2), (-1, 3, -3, 4)]
+sage: S == [v1, v3, v4]
+True
+\end{sageexample}
+%
+Notice that \verb?S? begins with all seven original vectors, and slowly gets whittled down to just the list \verb?[v1, v3, v4]?.  If you experiment with the above commands, be sure to return to the start and work your way through in order, or the results will not be right.\par
+%
+As a bonus, notice that the set of relations of linear dependence provided by Sage, \verb?D?, is itself a linearly independent set (but within a very different vector space).  Is that too weird?
+%
+\begin{sageexample}
+sage: U = QQ^7
+sage: U.linear_dependence(D) == []
+True
+\end{sageexample}
+%
+Now, can you answer the extra credit question from \acronymref{example}{COV} using Sage?
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

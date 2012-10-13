@@ -1,0 +1,25 @@
+\acronymref{theorem}{BS} allows us to construct a reduced spanning set for a span.  As with the theorem, employing Sage we begin by constructing a matrix with the vectors of the spanning set as columns.  Here is a do-over of \acronymref{example}{RSC4}, illustrating the use of \acronymref{theorem}{BS} in Sage.
+%
+\begin{sageexample}
+sage: V = QQ^4
+sage: v1 = vector(QQ, [1,1,2,1])
+sage: v2 = vector(QQ, [2,2,4,2])
+sage: v3 = vector(QQ, [2,0,-1,1])
+sage: v4 = vector(QQ, [7,1,-1,4])
+sage: v5 = vector(QQ, [0,2,5,1])
+sage: S = [v1, v2, v3, v4, v5]
+sage: A = column_matrix(S)
+sage: T = [A.column(p) for p in A.pivots()]
+sage: T
+[(1, 1, 2, 1), (2, 0, -1, 1)]
+sage: V.linear_dependence(T) == []
+True
+sage: V.span(S) == V.span(T)
+True
+\end{sageexample}
+%
+Notice how we compute \verb?T? with the single line that mirrors the construction of the set $T=\set{\vect{v}_{d_1},\,\vect{v}_{d_2},\,\vect{v}_{d_3},\,\ldots\,\vect{v}_{d_r}}$ in the statement of \acronymref{theorem}{BS}.  Again, the row-reducing is hidden in the use of the \verb?.pivot()? matrix method, which necessarily must compute the reduced row-echelon form.  The final two compute cells verify both conclusions of the theorem.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
