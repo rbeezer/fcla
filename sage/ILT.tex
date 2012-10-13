@@ -1,0 +1,81 @@
+By now, you have probably already figured out how to determine if a linear transformation is injective, and what its kernel is.  You may also now begin to understand why Sage calls the null space of a matrix a kernel.  Here are two examples, first a reprise of \acronymref{example}{NKAO}.
+%
+\begin{sageexample}
+sage: U = QQ^3
+sage: V = QQ^5
+sage: x1, x2, x3 = var('x1, x2, x3')
+sage: outputs = [ -x1 +   x2 - 3*x3,
+...               -x1 + 2*x2 - 4*x3,
+...                x1 +   x2 +   x3,
+...              2*x1 + 3*x2 +   x3,
+...                x1        + 2*x3]
+sage: T_symbolic(x1, x2, x3) = outputs
+sage: T = linear_transformation(U, V, T_symbolic)
+sage: T.is_injective()
+False
+sage: T.kernel()
+Vector space of degree 3 and dimension 1 over Rational Field
+Basis matrix:
+[   1 -1/2 -1/2]
+\end{sageexample}
+%
+So we have a concrete demonstration of one half of \acronymref{theorem}{KILT}.  Here is the second example, a do-over for \acronymref{example}{TKAP}, but renamed as S.
+%
+\begin{sageexample}
+sage: U = QQ^3
+sage: V = QQ^5
+sage: x1, x2, x3 = var('x1, x2, x3')
+sage: outputs = [  -x1 +   x2 +   x3,
+...                -x1 + 2*x2 + 2*x3,
+...                 x1 +   x2 + 3*x3,
+...               2*x1 + 3*x2 +   x3,
+...              -2*x1 +   x2 + 3*x3]
+sage: S_symbolic(x1, x2, x3) = outputs
+sage: S = linear_transformation(U, V, S_symbolic)
+sage: S.is_injective()
+True
+sage: S.kernel()
+Vector space of degree 3 and dimension 0 over Rational Field
+Basis matrix:
+[]
+sage: S.kernel() == U.subspace([])
+True
+\end{sageexample}
+%
+And so we have a concrete demonstration of the other half of \acronymref{theorem}{KILT}.\par
+%
+Now that we have \acronymref{theorem}{KPI}, we can return to our discussion from \acronymref{sage}{PI}.  The \verb?.preimage_representative()? method of a linear transformation will give us a \emph{single} element of the pre-image, with no other guarantee about the nature of that element.  That is fine, since this is all \acronymref{theorem}{KPI} requires (in addition to the kernel).  Remember that not every element of the codomain may have a non-empty pre-image (as indicated in the hypotheses of \acronymref{theorem}{KPI}).  Here is an example using \verb?T? from above, with a choice of a codomain element that has a non-empty pre-image.
+%
+\begin{sageexample}
+sage: TK = T.kernel()
+sage: v = vector(QQ, [2, 3, 0, 1, -1])
+sage: u = T.preimage_representative(v)
+sage: u
+(-1, 1, 0)
+\end{sageexample}
+%
+Now the following will create random elements of the preimage of \verb?v?, which can be verified by the test always returning \verb?True?.  Use the compute cell just below if you are curious what \verb?p? looks like.
+%
+\begin{sageexample}
+sage: p = u + TK.random_element()
+sage: T(p) == v
+True
+sage: p                 # random
+(-13/10, 23/20, 3/20)
+\end{sageexample}
+%
+As suggested, some choices of \verb?v? can lead to empty pre-images, in which case \acronymref{theorem}{KPI} does not even apply.
+%
+\begin{sageexample}
+sage: v = vector(QQ, [4, 6, 3, 1, -2])
+sage: u = T.preimage_representative(v)
+Traceback (most recent call last):
+...
+ValueError: element is not in the image
+\end{sageexample}
+%
+The situation is less interesting for an injective linear transformation.  Still, pre-images may be empty, but when they are non-empty, they are just singletons (a single element) since the kernel is empty.  So a repeat of the above example, with \verb?S? rather than \verb?T?, would not be very informative.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
