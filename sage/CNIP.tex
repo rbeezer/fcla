@@ -1,0 +1,78 @@
+Conjugates, of complex numbers and of vectors, are straightforward, in \verb?QQbar? or in \verb?CDF?.
+%
+\begin{sageexample}
+sage: alpha = QQbar(2 + 3*I)
+sage: alpha.conjugate()
+2 - 3*I
+sage: beta = CDF(2+3*I)
+sage: beta.conjugate()
+2.0 - 3.0*I
+sage: v = vector(QQbar, [5-3*I, 2+6*I])
+sage: v.conjugate()
+(5 + 3*I, 2 - 6*I)
+sage: w = vector(CDF, [5-3*I, 2+6*I])
+sage: w.conjugate()
+(5.0 + 3.0*I, 2.0 - 6.0*I)
+\end{sageexample}
+%
+The term ``inner product'' means slightly different things to different people.  For some, it is the ``dot product'' that you may have seen in a calculus or physics course.  Our inner product could be called the ``Hermitian inner product'' to emphasize the use of vectors over the complex numbers and conjugating some of the entries.  So Sage has a \verb?.dot_product()?, \verb?.inner_product()?, and \verb?.hermitian_inner_product()? --- we want to use the last one.\par
+%
+Furthermore, Sage defines the Hermitian inner product by conjugating entries from the \emph{first} vector, rather than the \emph{second} vector as defined in the text.  This is not as big a problem as it might seem.  First, \acronymref{theorem}{IPAC}, tells us that we can counteract a difference in order by just taking the conjugate, so you can translate between Sage and the text by taking conjugates of results achieved from a Hermitian inner product.  Second, we will mostly be interested in when a Hermitian inner product is zero, which is its own conjugate, so no adjustment is required.  Third, most theorems are true as stated with either definition, although there are exceptions, like \acronymref{theorem}{IPSM}.\par
+%
+From now on, when we mention an inner product in the context of using Sage, we will mean \verb?.hermitian_inner_product()?.  We will redo the first part of \acronymref{example}{CSIP}.  Notice that the syntax is a bit asymmetric.
+%
+\begin{sageexample}
+sage: u = vector(QQbar, [2+3*I,  5+2*I, -3+I])
+sage: v = vector(QQbar, [1+2*I, -4+5*I,  5*I])
+sage: u.hermitian_inner_product(v)
+3 + 19*I
+\end{sageexample}
+%
+Again, notice that the result is the conjugate of what we have in the text.\par
+%
+Norms are as easy as conjugates.  Easier maybe.  It might be useful to realize that Sage uses entirely distinct code to compute an exact norm over \verb?QQbar? versus an approximate norm over \verb?CDF?, though that is totally transparent as you issue commands.  Here is \acronymref{example}{CNSV} reprised.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+
+%
+\begin{sageexample}
+sage: entries = [3+2*I, 1-6*I, 2+4*I, 2+I]
+sage: u = vector(QQbar, entries)
+sage: u.norm()
+8.66025403784439?
+sage: u = vector(CDF, entries)
+sage: u.norm()
+8.66025403784
+sage: numerical_approx(5*sqrt(3), digits = 30)
+8.66025403784438646763723170753
+\end{sageexample}
+%
+We have three different numerical approximations, the latter 30-digit number being an approximation to the answer in the text.  But there is no inconsistency between them.  The first, an algebraic number, is represented internally as $5*a$ where $a$ is a root of the polynomial equation $x^2-3=0$, in other words it is $5\sqrt{3}$.  The \verb?CDF? value prints with a few digits less than what is carried internally.  Notice that our different definitions of the inner product make no difference in the computation of a norm.\par
+%
+One warning now that we are working with complex numbers.  It is easy to ``clobber'' the symbol \verb?I? used for the imaginary number $i$.  In other words, Sage will allow you to assign it to something else, rendering it useless.  An identity matrix is a likely reassignment.  If you run the next compute cell, be sure to evaluate the compute cell afterward to restore \verb?I? to its usual role.
+%
+\begin{sageexample}
+sage: alpha = QQbar(5 - 6*I)
+sage: I = identity_matrix(2)
+sage: beta = QQbar(2+5*I)
+Traceback (most recent call last):
+...
+TypeError: Illegal initializer for algebraic number
+\end{sageexample}
+%
+\begin{sageexample}
+sage: restore()
+sage: I^2
+-1
+\end{sageexample}
+%
+We will finish with a verification of \acronymref{theorem}{IPN}.  To test equality it is best if we work with entries from \verb?QQbar?.
+%
+\begin{sageexample}
+sage: v = vector(QQbar, [2-3*I, 9+5*I, 6+2*I, 4-7*I])
+sage: v.hermitian_inner_product(v) == v.norm()^2
+True
+\end{sageexample}
+%

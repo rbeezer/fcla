@@ -1,0 +1,98 @@
+It is easy enough to check a pair of vectors for orthogonality (is the inner product zero?).  To check that a set is orthogonal, we just need to do this repeatedly. This is a redo of \acronymref{example}{AOS}.
+%
+\begin{sageexample}
+sage: x1 = vector(QQbar, [    1+I,       1,      1-I,       I])
+sage: x2 = vector(QQbar, [  1+5*I,   6+5*I,     -7-I,   1-6*I])
+sage: x3 = vector(QQbar, [-7+34*I, -8-23*I, -10+22*I, 30+13*I])
+sage: x4 = vector(QQbar, [ -2-4*I,     6+I,    4+3*I,     6-I])
+sage: S = [x1, x2, x3, x4]
+sage: ips = [S[i].hermitian_inner_product(S[j])
+...                     for i in range(3) for j in range(i+1,3)]
+sage: all([ip == 0 for ip in ips])
+True
+\end{sageexample}
+%
+Notice how the list comprehension computes each pair just once, and never checks the inner product of a vector with itself.  If we wanted to check that a set is orthonormal, the ``normal'' part is less involved.  We will check the set above, even though we can clearly see that the four vectors are not even close to being unit vectors.  Be sure to run the above definitions of \verb?S? before running the next compute cell.
+%
+\begin{sageexample}
+sage: ips = [S[i].hermitian_inner_product(S[i]) for i in range(3)]
+sage: all([ip == 1 for ip in ips])
+False
+\end{sageexample}
+%
+Applying the Gram-Schmidt procedure to a set of vectors is the type of computation that a program like Sage is perfect for.  Gram-Schmidt is implemented as a method for matrices, where we interpret the rows of the matrix as the vectors in the original set.  The result is two matrices, where the first has rows that are the orthogonal vectors.  The second matrix has rows that provide linear combinations of the orthogonal vectors that equal the original vectors.  The original vectors do not need to form a linearly independent set, and when the set is linearly dependent, then zero vectors produced are not part of the returned set.\par
+%
+Over \verb?CDF? the set is automatically orthonormal, and since a different algorithm is used (to help control the imprecisions), the results will look different than what would result from \acronymref{theorem}{GSP}.  We will illustrate with the vectors from \acronymref{example}{GSTV}.
+%
+\begin{sageexample}
+sage: v1 = vector(CDF, [ 1, 1+I,   1])
+sage: v2 = vector(CDF, [-I,   1, 1+I])
+sage: v3 = vector(CDF, [ 0,   I,   I])
+sage: A = matrix([v1,v2,v3])
+sage: G, M = A.gram_schmidt()
+sage: G.round(5)
+[                -0.5         -0.5 - 0.5*I                 -0.5]
+[ 0.30151 + 0.45227*I -0.15076 + 0.15076*I -0.30151 - 0.75378*I]
+[   0.6396 + 0.2132*I   -0.2132 - 0.6396*I    0.2132 + 0.2132*I]
+\end{sageexample}
+%
+We formed the matrix A with the three vectors as rows, and of the two outputs we are interested in the first one, whose rows form the orthonormal set.  We round the numbers to 5 digits, just to make the result fit nicely on your screen.  Let's do it again, now exactly over \verb?QQbar?.  We will output the entries of the matix as list, working across rows first, so it fits nicely.
+%
+\begin{sageexample}
+sage: v1 = vector(QQbar, [ 1, 1+I,   1])
+sage: v2 = vector(QQbar, [-I,   1, 1+I])
+sage: v3 = vector(QQbar, [ 0,   I,   I])
+sage: A = matrix([v1,v2,v3])
+sage: G, M = A.gram_schmidt(orthonormal=True)
+sage: Sequence(G.list(), cr=True)
+[
+0.50000000000000000?,
+0.50000000000000000? + 0.50000000000000000?*I,
+0.50000000000000000?,
+-0.3015113445777636? - 0.4522670168666454?*I,
+0.1507556722888818? - 0.1507556722888818?*I,
+0.3015113445777636? + 0.7537783614444091?*I,
+-0.6396021490668313? - 0.2132007163556105?*I,
+0.2132007163556105? + 0.6396021490668313?*I,
+-0.2132007163556105? - 0.2132007163556105?*I
+]
+\end{sageexample}
+%
+Notice that we asked for orthonormal output, so the rows of \verb?G? are the vectors $\set{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3}$ in \acronymref{example}{ONTV}.  Exactly.  We can restrict ourselves to \verb?QQ? and forego the ``normality'' to obtain just the orthogonal set $\set{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3}$ of \acronymref{example}{GSTV}.
+%
+\begin{sageexample}
+sage: v1 = vector(QQbar, [ 1, 1+I,   1])
+sage: v2 = vector(QQbar, [-I,   1, 1+I])
+sage: v3 = vector(QQbar, [ 0,   I,   I])
+sage: A = matrix([v1, v2, v3])
+sage: G, M = A.gram_schmidt(orthonormal=False)
+sage: Sequence(G.list(), cr=True)
+[
+1,
+I + 1,
+1,
+-0.50000000000000000? - 0.75000000000000000?*I,
+0.25000000000000000? - 0.25000000000000000?*I,
+0.50000000000000000? + 1.2500000000000000?*I,
+-0.2727272727272728? - 0.0909090909090909?*I,
+0.0909090909090909? + 0.2727272727272728?*I,
+-0.0909090909090909? - 0.0909090909090909?*I
+]
+\end{sageexample}
+%
+Notice that it is an error to ask for an orthonormal set over \verb?QQ? since you cannot expect to take square roots of rationals and stick with rationals.
+%
+\begin{sageexample}
+sage: v1 = vector(QQ, [1, 1])
+sage: v2 = vector(QQ, [2, 3])
+sage: A = matrix([v1,v2])
+sage: G, M = A.gram_schmidt(orthonormal=True)
+Traceback (most recent call last):
+...
+TypeError: QR decomposition unable to compute square roots in Rational Field
+\end{sageexample}
+%
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
