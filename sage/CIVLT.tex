@@ -1,0 +1,49 @@
+\acronymref{theorem}{ILTIS} gives us a straightforward condition equivalence for an invertible linear transformation, but of course, it is even easier in Sage.
+%
+\begin{sageexample}
+sage: U = QQ^4
+sage: V = QQ^4
+sage: x1, x2, x3, x4 = var('x1, x2, x3, x4')
+sage: outputs = [   x1 + 2*x2 - 5*x3 - 7*x4,
+...                        x2 - 3*x3 - 5*x4,
+...                 x1 + 2*x2 - 4*x3 - 6*x4,
+...              -2*x1 - 2*x2 + 7*x3 + 8*x4 ]
+sage: T_symbolic(x1, x2, x3, x4) = outputs
+sage: T = linear_transformation(U, V, T_symbolic)
+sage: T.is_invertible()
+True
+\end{sageexample}
+%
+As easy as that is, it is still instructive to walk through an example similar to \acronymref{example}{CIVLT} using Sage, as a further illustration of the second half of the proof of \acronymref{theorem}{ILTIS}.  Since T is bijective, every element of the codomain has a non-empty pre-image, and since T is injective, the pre-image of each element is a single element.  Keep these facts in mind and convince yourself that the procedure below would never raise an error, and always has a unique result.\par
+%
+We first compute the pre-image of each element of a basis of the codomain.
+%
+\begin{sageexample}
+sage: preimages = [T.preimage_representative(v) for v in V.basis()]
+sage: preimages
+[(-8, 7, -6, 5), (2, -3, 2, -2), (5, -3, 4, -3), (-2, 2, -1, 1)]
+\end{sageexample}
+%
+Then we define a new linear transformation, from \verb?V? to \verb?U?, which turns it around and uses the preimages as a set of images defining the new linear transformation.  Explain to yourself how we know that \verb?preimages? is a basis for \verb?U?, and why this will create a bijection.
+%
+\begin{sageexample}
+sage: S = linear_transformation(V, U, preimages)
+sage: S
+Vector space morphism represented by the matrix:
+[-8  7 -6  5]
+[ 2 -3  2 -2]
+[ 5 -3  4 -3]
+[-2  2 -1  1]
+Domain: Vector space of dimension 4 over Rational Field
+Codomain: Vector space of dimension 4 over Rational Field
+sage: S.is_equal_function(T.inverse())
+True
+\end{sageexample}
+%
+While this is a simple two-step procedure (form preimages, construct linear transformation), realize that this is \emph{not} the process that Sage uses internally.\par
+%
+Notice that the essence of this construction is that when we work with a bijective linear transformation, the method \verb?.preimage_representative()? behaves as a function (we mean the precise mathematical definition here) --- it is always defined and always produces just one well-defined output.  Here the \verb?linear_transformation()? constructor is extending it to a linear function based on its action on a (finite) basis of the domain.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

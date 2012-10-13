@@ -1,0 +1,54 @@
+Of course, Sage can compute the inverse of a linear transformation.  However, not every linear transformation has an inverse, and we will see shortly how to determine this.  For now, take this example as just an illustration of the basics (both mathematically and for Sage).
+%
+\begin{sageexample}
+sage: U = QQ^4
+sage: V = QQ^4
+sage: x1, x2, x3, x4 = var('x1, x2, x3, x4')
+sage: outputs = [   x1 + 2*x2 - 5*x3 - 7*x4,
+...                        x2 - 3*x3 - 5*x4,
+...                 x1 + 2*x2 - 4*x3 - 6*x4,
+...              -2*x1 - 2*x2 + 7*x3 + 8*x4 ]
+sage: T_symbolic(x1, x2, x3, x4) = outputs
+sage: T = linear_transformation(U, V, T_symbolic)
+sage: S = T.inverse()
+sage: S
+Vector space morphism represented by the matrix:
+[-8  7 -6  5]
+[ 2 -3  2 -2]
+[ 5 -3  4 -3]
+[-2  2 -1  1]
+Domain: Vector space of dimension 4 over Rational Field
+Codomain: Vector space of dimension 4 over Rational Field
+\end{sageexample}
+%
+We can build the composition of \verb?T? and its inverse, \verb?S?, in both orders.  We will optimistically name these as identity linear transformations, as predicted by \acronymref{definition}{IVLT}.  Run the cells to define the compositions, then run the compute cells with the random vectors repeatedly --- they should always return \verb?True?.
+%
+\begin{sageexample}
+sage: IU = S*T
+sage: IV = T*S
+\end{sageexample}
+%
+\begin{sageexample}
+sage: u = random_vector(QQ, 4)
+sage: IU(u) == u      # random
+True
+\end{sageexample}
+%
+\begin{sageexample}
+sage: v = random_vector(QQ, 4)
+sage: IV(v) == v      # random
+True
+\end{sageexample}
+%
+We can also check that the compositions are the same as the identity linear transformation itself.  We will do one, you can try the other.
+%
+\begin{sageexample}
+sage: id = linear_transformation(U, U, identity_matrix(QQ, 4))
+sage: IU.is_equal_function(id)
+True
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+

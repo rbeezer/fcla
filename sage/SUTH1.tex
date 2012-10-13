@@ -1,0 +1,69 @@
+We can parallel the above discussion about systems of linear equations and linear transformations using Sage.  We begin with a matrix that we will use as a coefficient matrix for systems of equations, and then use the same matrix to define the associated linear transformation (acting on vectors placed to the right of the matrix).
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[-1, 0, 2],
+...                   [ 1, 3, 7],
+...                   [ 1, 1, 1],
+...                   [ 2, 3, 5]])
+sage: T = linear_transformation(QQ^3, QQ^4, A, side='right')
+\end{sageexample}
+%
+We solve a linear system using the coefficient matrix, and compute an element of the pre-image of the linear transformation.
+%
+\begin{sageexample}
+sage: v = vector(QQ, [1, 2, 0, 1])
+sage: A.solve_right(v)
+(-1, 1, 0)
+sage: T.preimage_representative(v)
+(-1, 1, 0)
+\end{sageexample}
+%
+We compute a null space of the coefficient matrix and a kernel of the linear transformation, so as to understand the full solution set or the full preimage set.
+%
+\begin{sageexample}
+sage: A.right_kernel()
+Vector space of degree 3 and dimension 1 over Rational Field
+Basis matrix:
+[   1 -3/2  1/2]
+sage: T.kernel()
+Vector space of degree 3 and dimension 1 over Rational Field
+Basis matrix:
+[   1 -3/2  1/2]
+\end{sageexample}
+%
+We compute a column space of the coefficient matrix and an image (range) of the linear transformation to help us build an inconsistent system.
+%
+\begin{sageexample}
+sage: A.column_space()
+Vector space of degree 4 and dimension 2 over Rational Field
+Basis matrix:
+[   1    0 -2/3   -1]
+[   0    1  1/3    1]
+sage: T.image()
+Vector space of degree 4 and dimension 2 over Rational Field
+Basis matrix:
+[   1    0 -2/3   -1]
+[   0    1  1/3    1]
+\end{sageexample}
+%
+A vector that creates a system with no solution is a vector that has an empty pre-image.
+%
+\begin{sageexample}
+sage: v = vector(QQ, [1, 2, 1, 1])
+sage: A.solve_right(v)
+Traceback (most recent call last):
+...
+ValueError: matrix equation has no solutions
+sage: T.preimage_representative(v)
+Traceback (most recent call last):
+...
+ValueError: element is not in the image
+\end{sageexample}
+%
+Note that we could redo the above, replacing uses of ``right'' by ``left'' and uses of ``column'' by ``row.''  The output would not change.\par
+%
+We suggest in the text that one could develop the theory of linear transformations from scratch, and then obtain many of our initial results about systems of equations and matrices as a consequence.  In Sage it is the reverse.  Sage implements many advanced concepts from various areas of mathematics by translating fundamental computations into the language of linear algebra.  In turn, many of Sage's linear algebra routines ultimately depend on very fast algorithms for basic operations on matrices, such as computing an echelon form, a null space, or a span.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

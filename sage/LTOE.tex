@@ -1,0 +1,45 @@
+We should mention that the notation \verb?T^-1? will yield an inverse of a linear transformation in Sage.
+%
+\begin{sageexample}
+sage: U = QQ^4
+sage: V = QQ^4
+sage: x1, x2, x3, x4 = var('x1, x2, x3, x4')
+sage: outputs = [   x1 + 2*x2 - 5*x3 - 7*x4,
+...                        x2 - 3*x3 - 5*x4,
+...                 x1 + 2*x2 - 4*x3 - 6*x4,
+...              -2*x1 - 2*x2 + 7*x3 + 8*x4]
+sage: T_symbolic(x1, x2, x3, x4) = outputs
+sage: T = linear_transformation(U, V, T_symbolic)
+sage: T^-1
+Vector space morphism represented by the matrix:
+[-8  7 -6  5]
+[ 2 -3  2 -2]
+[ 5 -3  4 -3]
+[-2  2 -1  1]
+Domain: Vector space of dimension 4 over Rational Field
+Codomain: Vector space of dimension 4 over Rational Field
+\end{sageexample}
+%
+Also, the rank and nullity are what you might expect.  Recall that for a matrix Sage provides a left nullity and a right nullity.  There is no such distinction for linear transformations.  We verify \acronymref{theorem}{RPNDD} as an example.
+%
+\begin{sageexample}
+sage: U = QQ^3
+sage: V = QQ^4
+sage: x1, x2, x3 = var('x1, x2, x3')
+sage: outputs = [ -x1        + 2*x3,
+...                x1 + 3*x2 + 7*x3,
+...                x1 +   x2 +   x3,
+...              2*x1 + 3*x2 + 5*x3]
+sage: R_symbolic(x1, x2, x3) = outputs
+sage: R = linear_transformation(QQ^3, QQ^4, R_symbolic)
+sage: R.rank()
+2
+sage: R.nullity()
+1
+sage: R.rank() + R.nullity() == U.dimension()
+True
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
