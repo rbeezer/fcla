@@ -14,22 +14,24 @@
 %%
 %%%%%%%%%%%
 %
-We have seen in \acronymref{section}{MR} that a linear transformation can be represented by a matrix, once we pick bases for the domain and codomain.  How does the matrix representation change if we choose different bases?  Which bases lead to especially nice representations?  From the infinite possibilities, what is the best possible representation?  This section will begin to answer these questions.  But first we need to define eigenvalues for linear transformations and the change-of-basis matrix.
+\begin{introduction}
+\begin{para}We have seen in \acronymref{section}{MR} that a linear transformation can be represented by a matrix, once we pick bases for the domain and codomain.  How does the matrix representation change if we choose different bases?  Which bases lead to especially nice representations?  From the infinite possibilities, what is the best possible representation?  This section will begin to answer these questions.  But first we need to define eigenvalues for linear transformations and the change-of-basis matrix.\end{para}
+\end{introduction}
 %
-\subsect{EELT}{Eigenvalues and Eigenvectors of Linear Transformations}
+\begin{subsect}{EELT}{Eigenvalues and Eigenvectors of Linear Transformations}
 %
-We now define the notion of an eigenvalue and eigenvector of a linear transformation.  It should not be too surprising, especially if you remind yourself of the close relationship between matrices and linear transformations.
+\begin{para}We now define the notion of an eigenvalue and eigenvector of a linear transformation.  It should not be too surprising, especially if you remind yourself of the close relationship between matrices and linear transformations.\end{para}
 %
 \begin{definition}{EELT}{Eigenvalue and Eigenvector of a Linear Transformation}{eigenvalue!linear transformation}
 \index{eigenvector!linear transformation}
-Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation.  Then a nonzero vector $\vect{v}\in V$ is an \define{eigenvector} of $T$ for the \define{eigenvalue} $\lambda$ if $\lt{T}{\vect{v}}=\lambda\vect{v}$.
+\begin{para}Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation.  Then a nonzero vector $\vect{v}\in V$ is an \define{eigenvector} of $T$ for the \define{eigenvalue} $\lambda$ if $\lt{T}{\vect{v}}=\lambda\vect{v}$.\end{para}
 \end{definition}
 %
-We will see shortly the best method for computing the eigenvalues and eigenvectors of a linear transformation, but for now, here are some examples to verify that such things really do exist.\par
+\begin{para}We will see shortly the best method for computing the eigenvalues and eigenvectors of a linear transformation, but for now, here are some examples to verify that such things really do exist.\end{para}
 %
 %
 \begin{example}{ELTBM}{Eigenvectors of linear transformation between matrices}{eigenvectors!linear transformation}
-Consider the linear transformation $\ltdefn{T}{M_{22}}{M_{22}}$ defined by
+\begin{para}Consider the linear transformation $\ltdefn{T}{M_{22}}{M_{22}}$ defined by
 %
 \begin{equation*}
 \lt{T}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}
@@ -73,8 +75,9 @@ and the vectors
 \end{bmatrix}
 %
 \end{align*}
+\end{para}
 %
-Then compute
+\begin{para}Then compute
 %
 \begin{align*}
 \lt{T}{\vect{x}_1}
@@ -118,16 +121,17 @@ Then compute
 (-2)\vect{x}_4\\
 %
 \end{align*}
+\end{para}
 %
-So $\vect{x}_1$, $\vect{x}_2$, $\vect{x}_3$, $\vect{x}_4$ are eigenvectors of $T$ with eigenvalues (respectively) $\lambda_1=2$, $\lambda_2=2$, $\lambda_3=-1$, $\lambda_4=-2$.
+\begin{para}So $\vect{x}_1$, $\vect{x}_2$, $\vect{x}_3$, $\vect{x}_4$ are eigenvectors of $T$ with eigenvalues (respectively) $\lambda_1=2$, $\lambda_2=2$, $\lambda_3=-1$, $\lambda_4=-2$.\end{para}
 %
 \end{example}
 %
-Here's another.
+\begin{para}Here's another.\end{para}
 %
 \begin{example}{ELTBP}{Eigenvectors of linear transformation between polynomials}{eigenvectors!linear transformation}
 %
-Consider the linear transformation $\ltdefn{R}{P_2}{P_2}$ defined by
+\begin{para}Consider the linear transformation $\ltdefn{R}{P_2}{P_2}$ defined by
 %
 \begin{equation*}
 \lt{R}{a+bx+cx^2}=
@@ -151,8 +155,9 @@ and the vectors
 &
 %
 \end{align*}
+\end{para}
 %
-Then compute
+\begin{para}Then compute
 %
 \begin{align*}
 \lt{R}{\vect{w}_1}
@@ -177,21 +182,24 @@ Then compute
 =(-1)\vect{w}_3\\
 %
 \end{align*}
+\end{para}
 %
-So $\vect{w}_1$, $\vect{w}_2$, $\vect{w}_3$ are eigenvectors of $R$ with eigenvalues (respectively) $\lambda_1=3$, $\lambda_2=0$, $\lambda_3=-1$.  Notice how the eigenvalue $\lambda_2=0$ indicates that the eigenvector $\vect{w}_2$ is a non-trivial element of the kernel of $R$, and therefore $R$ is not injective (\acronymref{exercise}{CB.T15}).
+\begin{para}So $\vect{w}_1$, $\vect{w}_2$, $\vect{w}_3$ are eigenvectors of $R$ with eigenvalues (respectively) $\lambda_1=3$, $\lambda_2=0$, $\lambda_3=-1$.  Notice how the eigenvalue $\lambda_2=0$ indicates that the eigenvector $\vect{w}_2$ is a non-trivial element of the kernel of $R$, and therefore $R$ is not injective (\acronymref{exercise}{CB.T15}).\end{para}
 %
 \end{example}
 %
-Of course, these examples are meant only to illustrate the definition of eigenvectors and eigenvalues for linear transformations, and therefore beg the question, ``How would I {\em find} eigenvectors?''  We'll have an answer before we finish this section.  We need one more construction first.\par
+\begin{para}Of course, these examples are meant only to illustrate the definition of eigenvectors and eigenvalues for linear transformations, and therefore beg the question, ``How would I {\em find} eigenvectors?''  We'll have an answer before we finish this section.  We need one more construction first.\end{para}
 %
 \sageadvice{ENDO}{Endomorphisms}{endomorphisms}
 %
-\subsect{CBM}{Change-of-Basis Matrix}
+\end{subsect}
 %
-Given a vector space, we know we can usually find many different bases for the vector space, some nice, some nasty.  If we choose a single vector from this vector space, we can build many different representations of the vector by constructing the representations relative to different bases.  How are these different representations related to each other?  A change-of-basis matrix answers this question.
+\begin{subsect}{CBM}{Change-of-Basis Matrix}
+%
+\begin{para}Given a vector space, we know we can usually find many different bases for the vector space, some nice, some nasty.  If we choose a single vector from this vector space, we can build many different representations of the vector by constructing the representations relative to different bases.  How are these different representations related to each other?  A change-of-basis matrix answers this question.\end{para}
 %
 \begin{definition}{CBM}{Change-of-Basis Matrix}{change-of-basis matrix}
-Suppose that $V$ is a vector space, and $\ltdefn{I_V}{V}{V}$ is the identity linear transformation on $V$.  Let $B=\set{\vectorlist{v}{n}}$ and $C$ be two bases of $V$.  Then the \define{change-of-basis matrix} from $B$ to $C$ is the matrix representation of $I_V$ relative to $B$ and $C$,
+\begin{para}Suppose that $V$ is a vector space, and $\ltdefn{I_V}{V}{V}$ is the identity linear transformation on $V$.  Let $B=\set{\vectorlist{v}{n}}$ and $C$ be two bases of $V$.  Then the \define{change-of-basis matrix} from $B$ to $C$ is the matrix representation of $I_V$ relative to $B$ and $C$,
 %
 \begin{align*}
 \cbm{B}{C}&=\matrixrep{I_V}{B}{C}\\
@@ -204,22 +212,25 @@ Suppose that $V$ is a vector space, and $\ltdefn{I_V}{V}{V}$ is the identity lin
 \left|\vectrep{C}{\vect{v}_n}\right.
 \right\rbrack
 \end{align*}
+\end{para}
 %
 \end{definition}
 %
-Notice that this definition is primarily about a single vector space ($V$) and two bases of $V$ ($B$, $C$).  The linear transformation ($I_V$) is necessary but not critical.  As you might expect, this matrix has something to do with changing bases.  Here is the theorem that gives the matrix its name (not the other way around).
+\begin{para}Notice that this definition is primarily about a single vector space ($V$) and two bases of $V$ ($B$, $C$).  The linear transformation ($I_V$) is necessary but not critical.  As you might expect, this matrix has something to do with changing bases.  Here is the theorem that gives the matrix its name (not the other way around).\end{para}
 %
 \begin{theorem}{CB}{Change-of-Basis}{change-of-basis}
-Suppose that $\vect{v}$ is a vector in the vector space $V$ and $B$ and $C$ are bases of $V$.  Then
+\begin{para}Suppose that $\vect{v}$ is a vector in the vector space $V$ and $B$ and $C$ are bases of $V$.  Then
 %
 \begin{equation*}
 \vectrep{C}{\vect{v}}=\cbm{B}{C}\vectrep{B}{\vect{v}}
 \end{equation*}
+\end{para}
 %
 \end{theorem}
 %
 \begin{proof}
 %
+\begin{para}
 \begin{align*}
 \vectrep{C}{\vect{v}}
 &=\vectrep{C}{\lt{I_V}{\vect{v}}}
@@ -232,26 +243,28 @@ Suppose that $\vect{v}$ is a vector in the vector space $V$ and $B$ and $C$ are 
 &&\text{\acronymref{definition}{CBM}}
 %
 \end{align*}
+\end{para}
 %
 \end{proof}
 %
-So the change-of-basis matrix can be used with matrix multiplication to convert a vector representation of a vector ($\vect{v}$) relative to one basis ($\vectrep{B}{\vect{v}}$) to a representation of the same vector relative to a second basis ($\vectrep{C}{\vect{v}}$).
+\begin{para}So the change-of-basis matrix can be used with matrix multiplication to convert a vector representation of a vector ($\vect{v}$) relative to one basis ($\vectrep{B}{\vect{v}}$) to a representation of the same vector relative to a second basis ($\vectrep{C}{\vect{v}}$).\end{para}
 %
 %
 \begin{theorem}{ICBM}{Inverse of Change-of-Basis Matrix}{change-of-basis matrix!inverse}
-Suppose that $V$ is a vector space, and $B$ and $C$ are bases of $V$.
+\begin{para}Suppose that $V$ is a vector space, and $B$ and $C$ are bases of $V$.
 Then the change-of-basis matrix $\cbm{B}{C}$ is nonsingular and
 %
 \begin{equation*}
 \inverse{\cbm{B}{C}}=\cbm{C}{B}
 \end{equation*}
+\end{para}
 %
 \end{theorem}
 %
 \begin{proof}
-The linear transformation $\ltdefn{I_V}{V}{V}$ is invertible, and its inverse is itself, $I_V$ (check this!). So by \acronymref{theorem}{IMR}, the matrix $\matrixrep{I_V}{B}{C}=\cbm{B}{C}$ is invertible.  \acronymref{theorem}{NI} says an invertible matrix is nonsingular.\par
+\begin{para}The linear transformation $\ltdefn{I_V}{V}{V}$ is invertible, and its inverse is itself, $I_V$ (check this!). So by \acronymref{theorem}{IMR}, the matrix $\matrixrep{I_V}{B}{C}=\cbm{B}{C}$ is invertible.  \acronymref{theorem}{NI} says an invertible matrix is nonsingular.\end{para}
 %
-Then
+\begin{para}Then
 %
 \begin{align*}
 \inverse{\cbm{B}{C}}
@@ -260,20 +273,21 @@ Then
 &=\matrixrep{I_V}{C}{B}&&\text{\acronymref{definition}{IDLT}}\\
 &=\cbm{C}{B}&&\text{\acronymref{definition}{CBM}}\\
 \end{align*}
+\end{para}
 %
 \end{proof}
 %
-%
 \begin{example}{CBP}{Change of basis with polynomials}{change of basis!between polynomials}
-The vector space $P_4$ (\acronymref{example}{VSP}) has two nice bases (\acronymref{example}{BP}),
+\begin{para}The vector space $P_4$ (\acronymref{example}{VSP}) has two nice bases (\acronymref{example}{BP}),
 %
 \begin{align*}
 B&=\set{1,x,x^2,x^3,x^4}
 &
 C&=\set{1,1+x,1+x+x^2,1+x+x^2+x^3,1+x+x^2+x^3+x^4}
 \end{align*}
+\end{para}
 %
-To build the change-of-basis matrix between $B$ and $C$, we must first build a vector representation of each vector in $B$ relative to $C$,
+\begin{para}To build the change-of-basis matrix between $B$ and $C$, we must first build a vector representation of each vector in $B$ relative to $C$,
 %
 \begin{align*}
 \vectrep{C}{1}
@@ -297,8 +311,9 @@ To build the change-of-basis matrix between $B$ and $C$, we must first build a v
 =\colvector{0\\0\\0\\-1\\1}
 %
 \end{align*}
+\end{para}
 %
-Then we package up these vectors as the columns of a matrix,
+\begin{para}Then we package up these vectors as the columns of a matrix,
 %
 \begin{equation*}
 \cbm{B}{C}=
@@ -310,8 +325,9 @@ Then we package up these vectors as the columns of a matrix,
 0 & 0 & 0 & 0 & 1\\
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-Now, to illustrate \acronymref{theorem}{CB}, consider the vector $\vect{u}=5-3x+2x^2+8x^3-3x^4$.  We can build the representation of $\vect{u}$ relative to $B$ easily,
+\begin{para}Now, to illustrate \acronymref{theorem}{CB}, consider the vector $\vect{u}=5-3x+2x^2+8x^3-3x^4$.  We can build the representation of $\vect{u}$ relative to $B$ easily,
 %
 \begin{equation*}
 %
@@ -320,8 +336,9 @@ Now, to illustrate \acronymref{theorem}{CB}, consider the vector $\vect{u}=5-3x+
 \colvector{5\\-3\\2\\8\\-3}
 %
 \end{equation*}
+\end{para}
 %
-Applying \acronymref{theorem}{CB}, we obtain a second representation of $\vect{u}$, but now relative to $C$,
+\begin{para}Applying \acronymref{theorem}{CB}, we obtain a second representation of $\vect{u}$, but now relative to $C$,
 %
 \begin{align*}
 \vectrep{C}{\vect{u}}
@@ -340,8 +357,9 @@ Applying \acronymref{theorem}{CB}, we obtain a second representation of $\vect{u
 &=\colvector{8\\-5\\-6\\11\\-3}&&\text{\acronymref{definition}{MVP}}
 %
 \end{align*}
+\end{para}
 %
-We can check our work by unraveling this second representation,
+\begin{para}We can check our work by unraveling this second representation,
 %
 \begin{align*}
 \vect{u}
@@ -358,8 +376,9 @@ We can check our work by unraveling this second representation,
 &=5-3x+2x^2+8x^3-3x^4
 %
 \end{align*}
+\end{para}
 %
-The change-of-basis matrix from $C$ to $B$ is actually easier to build.  Grab each vector in the basis $C$ and form its representation relative to $B$
+\begin{para}The change-of-basis matrix from $C$ to $B$ is actually easier to build.  Grab each vector in the basis $C$ and form its representation relative to $B$
 %
 \begin{align*}
 \vectrep{B}{1}
@@ -383,7 +402,9 @@ The change-of-basis matrix from $C$ to $B$ is actually easier to build.  Grab ea
 &=\colvector{1\\1\\1\\1\\1}\\
 %
 \end{align*}
-Then we package up these vectors as the columns of a matrix,
+\end{para}
+%
+\begin{para}Then we package up these vectors as the columns of a matrix,
 %
 \begin{equation*}
 \cbm{C}{B}=
@@ -395,8 +416,9 @@ Then we package up these vectors as the columns of a matrix,
 0 & 0 & 0 & 0 & 1\\
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-We formed two representations of the vector $\vect{u}$ above, so we can again provide a check on our computations by converting from the representation of $\vect{u}$ relative to $C$ to the representation of $\vect{u}$ relative to $B$,
+\begin{para}We formed two representations of the vector $\vect{u}$ above, so we can again provide a check on our computations by converting from the representation of $\vect{u}$ relative to $C$ to the representation of $\vect{u}$ relative to $B$,
 %
 \begin{align*}
 \vectrep{B}{\vect{u}}
@@ -415,8 +437,9 @@ We formed two representations of the vector $\vect{u}$ above, so we can again pr
 &=\colvector{5\\-3\\2\\8\\-3}&&\text{\acronymref{definition}{MVP}}\\
 %
 \end{align*}
+\end{para}
 %
-One more computation that is either a check on our work, or an illustration of a theorem.  The two change-of-basis matrices, $\cbm{B}{C}$ and $\cbm{C}{B}$, should be inverses of each other, according to \acronymref{theorem}{ICBM}.  Here we go,
+\begin{para}One more computation that is either a check on our work, or an illustration of a theorem.  The two change-of-basis matrices, $\cbm{B}{C}$ and $\cbm{C}{B}$, should be inverses of each other, according to \acronymref{theorem}{ICBM}.  Here we go,
 %
 \begin{equation*}
 \cbm{B}{C}\cbm{C}{B}=
@@ -445,15 +468,16 @@ One more computation that is either a check on our work, or an illustration of a
 \end{bmatrix}
 %
 \end{equation*}
+\end{para}
 %
 \end{example}
 %
-The computations of the previous example are not meant to present any labor-saving devices, but instead are meant to illustrate the {\em utility} of the change-of-basis matrix.  However, you might have noticed that $\cbm{C}{B}$ was easier to compute than $\cbm{B}{C}$.  If you needed $\cbm{B}{C}$, then you could first compute $\cbm{C}{B}$ and then compute its inverse, which by \acronymref{theorem}{ICBM}, would equal $\cbm{B}{C}$.\par
+\begin{para}The computations of the previous example are not meant to present any labor-saving devices, but instead are meant to illustrate the {\em utility} of the change-of-basis matrix.  However, you might have noticed that $\cbm{C}{B}$ was easier to compute than $\cbm{B}{C}$.  If you needed $\cbm{B}{C}$, then you could first compute $\cbm{C}{B}$ and then compute its inverse, which by \acronymref{theorem}{ICBM}, would equal $\cbm{B}{C}$.\end{para}
 %
-Here's another illustrative example.  We have been concentrating on working with abstract vector spaces, but all of our theorems and techniques apply just as well to $\complex{m}$, the vector space of column vectors.  We only need to use more complicated bases than the standard unit vectors (\acronymref{theorem}{SUVB}) to make things interesting.\par
+\begin{para}Here's another illustrative example.  We have been concentrating on working with abstract vector spaces, but all of our theorems and techniques apply just as well to $\complex{m}$, the vector space of column vectors.  We only need to use more complicated bases than the standard unit vectors (\acronymref{theorem}{SUVB}) to make things interesting.\end{para}
 %
 \begin{example}{CBCV}{Change of basis with column vectors}{change-of-basis!between column vectors}
-For the vector space $\complex{4}$ we have the two bases,
+\begin{para}For the vector space $\complex{4}$ we have the two bases,
 %
 \begin{align*}
 B&=\set{
@@ -470,8 +494,9 @@ C&=\set{
 \colvector{3 \\ -7 \\ 3 \\ -6}
 }
 \end{align*}
+\end{para}
 %
-The change-of-basis matrix from $B$ to $C$ requires writing each vector of $B$ as a linear combination the vectors in $C$,
+\begin{para}The change-of-basis matrix from $B$ to $C$ requires writing each vector of $B$ as a linear combination the vectors in $C$,
 %
 \begin{align*}
 \vectrep{C}{\colvector{1 \\ -2 \\ 1 \\ -2}}
@@ -511,8 +536,9 @@ The change-of-basis matrix from $B$ to $C$ requires writing each vector of $B$ a
 =\colvector{2\\-2\\4\\3}\\
 %
 \end{align*}
+\end{para}
 %
-Then we package these vectors up as the change-of-basis matrix,
+\begin{para}Then we package these vectors up as the change-of-basis matrix,
 %
 \begin{equation*}
 \cbm{B}{C}=
@@ -523,62 +549,69 @@ Then we package these vectors up as the change-of-basis matrix,
  -1 & 0 & -2 & 3
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
- Now consider a single (arbitrary) vector $\vect{y}=\colvector{2\\6\\-3\\4}$.  First, build the vector representation of $\vect{y}$ relative to $B$.  This will require writing $\vect{y}$ as a linear combination of the vectors in $B$,
- %
- \begin{align*}
- \vectrep{B}{\vect{y}}
- &=\vectrep{B}{\colvector{2\\6\\-3\\4}}\\
- &=\vectrep{B}{
- (-21)\colvector{1 \\ -2 \\ 1 \\ -2}+
- (6)\colvector{-1 \\ 3 \\ 1 \\ 1}+
- (11)\colvector{2 \\ -3 \\ 3 \\ -4}+
- (-7)\colvector{-1 \\ 3 \\ 3 \\ 0}
- }
- &=\colvector{-21\\6\\11\\-7}
- %
- \end{align*}
- %
- Now, applying \acronymref{theorem}{CB} we can convert the representation of $\vect{y}$ relative to $B$ into a representation relative to $C$,
- %
- \begin{align*}
- \vectrep{C}{\vect{y}}
- &=\cbm{B}{C}\vectrep{B}{\vect{y}}&&\text{\acronymref{theorem}{CB}}\\
- %
- &=
+\begin{para}Now consider a single (arbitrary) vector $\vect{y}=\colvector{2\\6\\-3\\4}$.  First, build the vector representation of $\vect{y}$ relative to $B$.  This will require writing $\vect{y}$ as a linear combination of the vectors in $B$,
+%
+\begin{align*}
+\vectrep{B}{\vect{y}}
+&=\vectrep{B}{\colvector{2\\6\\-3\\4}}\\
+&=\vectrep{B}{
+(-21)\colvector{1 \\ -2 \\ 1 \\ -2}+
+(6)\colvector{-1 \\ 3 \\ 1 \\ 1}+
+(11)\colvector{2 \\ -3 \\ 3 \\ -4}+
+(-7)\colvector{-1 \\ 3 \\ 3 \\ 0}
+}
+&=\colvector{-21\\6\\11\\-7}
+%
+\end{align*}
+\end{para}
+%
+\begin{para}Now, applying \acronymref{theorem}{CB} we can convert the representation of $\vect{y}$ relative to $B$ into a representation relative to $C$,
+%
+\begin{align*}
+\vectrep{C}{\vect{y}}
+&=\cbm{B}{C}\vectrep{B}{\vect{y}}&&\text{\acronymref{theorem}{CB}}\\
+%
+&=
 \begin{bmatrix}
- 1 & 2 & 1 & 2 \\
- -2 & -3 & -3 & -2 \\
- 1 & 3 & 1 & 4 \\
- -1 & 0 & -2 & 3
+1 & 2 & 1 & 2 \\
+-2 & -3 & -3 & -2 \\
+1 & 3 & 1 & 4 \\
+-1 & 0 & -2 & 3
 \end{bmatrix}
 \colvector{-21\\6\\11\\-7}\\
 %
 &=\colvector{-12\\5\\-20\\-22}&&\text{\acronymref{definition}{MVP}}
 %
 \end{align*}
+\end{para}
 %
-We could continue further with this example, perhaps by computing the representation of $\vect{y}$ relative to the basis $C$ directly as a check on our work (\acronymref{exercise}{CB.C20}).  Or we could choose another vector to play the role of $\vect{y}$ and compute two different representations of this vector relative to the two bases $B$ and $C$.\par
+\begin{para}We could continue further with this example, perhaps by computing the representation of $\vect{y}$ relative to the basis $C$ directly as a check on our work (\acronymref{exercise}{CB.C20}).  Or we could choose another vector to play the role of $\vect{y}$ and compute two different representations of this vector relative to the two bases $B$ and $C$.\end{para}
 %
 \end{example}
 %
 \sageadvice{CBM}{Change-of-Basis Matrix}{change-of-basis matrix}
 %
-\subsect{MRS}{Matrix Representations and Similarity}
+\end{subsect}
 %
-Here is the main theorem of this section.  It looks a bit involved at first glance, but the proof should make you realize it is not all that complicated.  In any event, we are more interested in a special case.
+\begin{subsect}{MRS}{Matrix Representations and Similarity}
+%
+\begin{para}Here is the main theorem of this section.  It looks a bit involved at first glance, but the proof should make you realize it is not all that complicated.  In any event, we are more interested in a special case.\end{para}
 %
 \begin{theorem}{MRCB}{Matrix Representation and Change of Basis}{change-of-basis!matrix representation}
-Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation, $B$ and $C$ are bases for $U$, and $D$ and $E$ are bases for $V$.  Then
+\begin{para}Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation, $B$ and $C$ are bases for $U$, and $D$ and $E$ are bases for $V$.  Then
 %
 \begin{equation*}
 \matrixrep{T}{B}{D}=\cbm{E}{D}\matrixrep{T}{C}{E}\cbm{B}{C}
 \end{equation*}
+\end{para}
 %
 \end{theorem}
 %
 \begin{proof}
 %
+\begin{para}
 \begin{align*}
 \cbm{E}{D}\matrixrep{T}{C}{E}\cbm{B}{C}
 &=\matrixrep{I_V}{E}{D}\matrixrep{T}{C}{E}\matrixrep{I_U}{B}{C}&&\text{\acronymref{definition}{CBM}}\\
@@ -587,22 +620,24 @@ Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation, $B$ and $C$ are base
 &=\matrixrep{\compose{I_V}{T}}{B}{D}&&\text{\acronymref{theorem}{MRCLT}}\\
 &=\matrixrep{T}{B}{D}&&\text{\acronymref{definition}{IDLT}}
 \end{align*}
+\end{para}
 %
 \end{proof}
 %
-We will be most interested in a special case of this theorem (\acronymref{theorem}{SCB}), but here's an example that illustrates the full generality of \acronymref{theorem}{MRCB}.
+\begin{para}We will be most interested in a special case of this theorem (\acronymref{theorem}{SCB}), but here's an example that illustrates the full generality of \acronymref{theorem}{MRCB}.\end{para}
 %
 \begin{example}{MRCM}{Matrix representations and change-of-basis matrices}{matrix representations!converting with change-of-basis}
 %
-Begin with two vector spaces, $S_2$, the subspace of $M_{22}$ containing all $2\times 2$ symmetric matrices, and $P_3$ (\acronymref{example}{VSP}), the vector space of all polynomials of degree 3 or less.  Then define the linear transformation $\ltdefn{Q}{S_2}{P_3}$ by
+\begin{para}Begin with two vector spaces, $S_2$, the subspace of $M_{22}$ containing all $2\times 2$ symmetric matrices, and $P_3$ (\acronymref{example}{VSP}), the vector space of all polynomials of degree 3 or less.  Then define the linear transformation $\ltdefn{Q}{S_2}{P_3}$ by
 %
 \begin{equation*}
 \lt{Q}{\begin{bmatrix}a&b\\b&c\end{bmatrix}}
 =
 (5a-2b+6c)+(3a-b+2c)x+(a+3b-c)x^2+(-4a+2b+c)x^3
 \end{equation*}
+\end{para}
 %
-Here are two bases for each vector space, one nice, one nasty.  First for $S_2$,
+\begin{para}Here are two bases for each vector space, one nice, one nasty.  First for $S_2$,
 %
 \begin{align*}
 B&=
@@ -633,8 +668,9 @@ D&=\set{
 E&=\set{1,\,x,\,x^2,\,x^3}
 %
 \end{align*}
+\end{para}
 %
-We'll begin with a matrix representation of $Q$ relative to $C$ and $E$.  We first find vector representations of the elements of $C$ relative to $E$,
+\begin{para}We'll begin with a matrix representation of $Q$ relative to $C$ and $E$.  We first find vector representations of the elements of $C$ relative to $E$,
 %
 \begin{align*}
 \vectrep{E}{\lt{Q}{\begin{bmatrix}1&0\\0&0\end{bmatrix}}}
@@ -647,8 +683,9 @@ We'll begin with a matrix representation of $Q$ relative to $C$ and $E$.  We fir
 &=\vectrep{E}{6+2x-x^2+x^3}=\colvector{6\\2\\-1\\1}\\
 %
 \end{align*}
+\end{para}
 %
-So
+\begin{para}So
 %
 \begin{align*}
 \matrixrep{Q}{C}{E}
@@ -660,8 +697,9 @@ So
 -4 & 2 & 1
 \end{bmatrix}
 \end{align*}
+\end{para}
 %
-Now we construct two change-of-basis matrices.  First, $\cbm{B}{C}$ requires vector representations of the elements of $B$, relative to $C$.  Since $C$ is a nice basis, this is straightforward,
+\begin{para}Now we construct two change-of-basis matrices.  First, $\cbm{B}{C}$ requires vector representations of the elements of $B$, relative to $C$.  Since $C$ is a nice basis, this is straightforward,
 %
 \begin{align*}
 \vectrep{C}{\begin{bmatrix}5&-3\\-3&-2\end{bmatrix}}
@@ -689,8 +727,9 @@ Now we construct two change-of-basis matrices.  First, $\cbm{B}{C}$ requires vec
 =\colvector{1\\2\\4}
 %
 \end{align*}
+\end{para}
 %
-So
+\begin{para}So
 %
 \begin{align*}
 \cbm{B}{C}&=
@@ -700,8 +739,9 @@ So
 -2 & 0 & 4
 \end{bmatrix}
 \end{align*}
+\end{para}
 %
-The other change-of-basis matrix we'll compute is $\cbm{E}{D}$.  However, since
+\begin{para}The other change-of-basis matrix we'll compute is $\cbm{E}{D}$.  However, since
 $E$ is a nice basis (and $D$ is not) we'll turn it around and instead compute $\cbm{D}{E}$ and apply \acronymref{theorem}{ICBM} to use an inverse to compute $\cbm{E}{D}$.
 %
 \begin{align*}
@@ -722,8 +762,9 @@ $E$ is a nice basis (and $D$ is not) we'll turn it around and instead compute $\
 =\colvector{0\\0\\-1\\1}
 %
 \end{align*}
+\end{para}
 %
-So, we can package these column vectors up as a matrix to obtain $\cbm{D}{E}$ and then,
+\begin{para}So, we can package these column vectors up as a matrix to obtain $\cbm{D}{E}$ and then,
 %
 \begin{align*}
 \cbm{E}{D}
@@ -748,8 +789,9 @@ So, we can package these column vectors up as a matrix to obtain $\cbm{D}{E}$ an
 \end{bmatrix}
 %
 \end{align*}
+\end{para}
 %
-We are now in a position to apply \acronymref{theorem}{MRCB}.  The matrix representation of $Q$ relative to $B$ and $D$ can be obtained as follows,
+\begin{para}We are now in a position to apply \acronymref{theorem}{MRCB}.  The matrix representation of $Q$ relative to $B$ and $D$ can be obtained as follows,
 %
 \begin{align*}
 \matrixrep{Q}{B}{D}
@@ -801,37 +843,41 @@ We are now in a position to apply \acronymref{theorem}{MRCB}.  The matrix repres
 \end{bmatrix}
 %
 \end{align*}
+\end{para}
 %
-Now check our work by computing $\matrixrep{Q}{B}{D}$ directly (\acronymref{exercise}{CB.C21}).
+\begin{para}Now check our work by computing $\matrixrep{Q}{B}{D}$ directly (\acronymref{exercise}{CB.C21}).\end{para}
 %
 \end{example}
 %
-Here is a special case of the previous theorem, where we choose $U$ and $V$ to be the same vector space, so the matrix representations and the change-of-basis matrices are all square of the same size.
+\begin{para}Here is a special case of the previous theorem, where we choose $U$ and $V$ to be the same vector space, so the matrix representations and the change-of-basis matrices are all square of the same size.\end{para}
 %
 \begin{theorem}{SCB}{Similarity and Change of Basis}{change-of-basis!similarity}
-Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation and $B$ and $C$ are bases of $V$.  Then%
+\begin{para}Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation and $B$ and $C$ are bases of $V$.  Then
+%
 \begin{equation*}
 \matrixrep{T}{B}{B}=\inverse{\cbm{B}{C}}\matrixrep{T}{C}{C}\cbm{B}{C}
 \end{equation*}
+\end{para}
 %
 \end{theorem}
 %
 \begin{proof}
-In the conclusion of \acronymref{theorem}{MRCB}, replace $D$ by $B$, and replace $E$ by $C$,
+\begin{para}In the conclusion of \acronymref{theorem}{MRCB}, replace $D$ by $B$, and replace $E$ by $C$,
 %
 \begin{align*}
 \matrixrep{T}{B}{B}
 &=\cbm{C}{B}\matrixrep{T}{C}{C}\cbm{B}{C}&&\text{\acronymref{theorem}{MRCB}}\\
 &=\inverse{\cbm{B}{C}}\matrixrep{T}{C}{C}\cbm{B}{C}&&\text{\acronymref{theorem}{ICBM}}
 \end{align*}
+\end{para}
 %
 \end{proof}
 %
-This is the third surprise of this chapter.  \acronymref{theorem}{SCB} considers the special case where a linear transformation has the same vector space for the domain and codomain ($V$).  We build a matrix representation of $T$ using the basis $B$ simultaneously for both the domain and codomain ($\matrixrep{T}{B}{B}$), and then we build a second matrix representation of $T$, now using the basis $C$ for both the domain and codomain ($\matrixrep{T}{C}{C}$).  Then these two representations are related via a similarity transformation (\acronymref{definition}{SIM}) using a change-of-basis matrix ($\cbm{B}{C}$)!\par
+\begin{para}This is the third surprise of this chapter.  \acronymref{theorem}{SCB} considers the special case where a linear transformation has the same vector space for the domain and codomain ($V$).  We build a matrix representation of $T$ using the basis $B$ simultaneously for both the domain and codomain ($\matrixrep{T}{B}{B}$), and then we build a second matrix representation of $T$, now using the basis $C$ for both the domain and codomain ($\matrixrep{T}{C}{C}$).  Then these two representations are related via a similarity transformation (\acronymref{definition}{SIM}) using a change-of-basis matrix ($\cbm{B}{C}$)!\end{para}
 %
 %
 \begin{example}{MRBE}{Matrix representation with basis of eigenvectors}{matrix representation!basis of eigenvectors}
-We return to the linear transformation $\ltdefn{T}{M_{22}}{M_{22}}$ of \acronymref{example}{ELTBM} defined by
+\begin{para}We return to the linear transformation $\ltdefn{T}{M_{22}}{M_{22}}$ of \acronymref{example}{ELTBM} defined by
 %
 \begin{equation*}
 \lt{T}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}
@@ -846,8 +892,9 @@ We return to the linear transformation $\ltdefn{T}{M_{22}}{M_{22}}$ of \acronymr
 -41a+25b+16c-23d
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-In \acronymref{example}{ELTBM} we showcased four eigenvectors of $T$.  We will now put these four vectors in a set,
+\begin{para}In \acronymref{example}{ELTBM} we showcased four eigenvectors of $T$.  We will now put these four vectors in a set,
 %
 \begin{equation*}
 B=\set{\vect{x}_1,\,\vect{x}_2,\,\vect{x}_3,\,\vect{x}_4}
@@ -869,8 +916,9 @@ B=\set{\vect{x}_1,\,\vect{x}_2,\,\vect{x}_3,\,\vect{x}_4}
 \end{bmatrix}
 }
 \end{equation*}
+\end{para}
 %
-Check that $B$ is a basis of $M_{22}$ by first establishing the linear independence of $B$ and then employing \acronymref{theorem}{G} to get the spanning property easily.  Here is a second set of $2\times 2$ matrices, which also forms a basis of $M_{22}$ (\acronymref{example}{BM}),
+\begin{para}Check that $B$ is a basis of $M_{22}$ by first establishing the linear independence of $B$ and then employing \acronymref{theorem}{G} to get the spanning property easily.  Here is a second set of $2\times 2$ matrices, which also forms a basis of $M_{22}$ (\acronymref{example}{BM}),
 %
 \begin{equation*}
 C=\set{\vect{y}_1,\,\vect{y}_2,\,\vect{y}_3,\,\vect{y}_4}
@@ -892,8 +940,9 @@ C=\set{\vect{y}_1,\,\vect{y}_2,\,\vect{y}_3,\,\vect{y}_4}
 \end{bmatrix}
 }
 \end{equation*}
+\end{para}
 %
-We can build two matrix representations of $T$, one relative to $B$ and one relative to $C$.  Each is easy, but for wildly different reasons.  In our computation of the matrix representation relative to $B$ we borrow some of our work in \acronymref{example}{ELTBM}.  Here are the representations, then the explanation.
+\begin{para}We can build two matrix representations of $T$, one relative to $B$ and one relative to $C$.  Each is easy, but for wildly different reasons.  In our computation of the matrix representation relative to $B$ we borrow some of our work in \acronymref{example}{ELTBM}.  Here are the representations, then the explanation.
 %
 \begin{align*}
 \vectrep{B}{\lt{T}{\vect{x}_1}}
@@ -921,8 +970,9 @@ We can build two matrix representations of $T$, one relative to $B$ and one rela
 =\colvector{0\\0\\0\\-2}
 %
 \end{align*}
+\end{para}
 %
-So the resulting representation is
+\begin{para}So the resulting representation is
 %
 \begin{align*}
 \matrixrep{T}{B}{B}
@@ -933,11 +983,11 @@ So the resulting representation is
 0 & 0 & -1 & 0\\
 0 & 0 & 0 & -2\\
 \end{bmatrix}
-\end{align*}
+\end{align*}\end{para}
 %
-Very pretty.
+\begin{para}Very pretty.\end{para}
 %
-Now for the matrix representation relative to $C$ first compute,
+\begin{para}Now for the matrix representation relative to $C$ first compute,
 %
 \begin{align*}
 \vectrep{C}{\lt{T}{\vect{y}_1}}
@@ -981,8 +1031,9 @@ Now for the matrix representation relative to $C$ first compute,
 =\colvector{-11\\-33\\-10\\-23}\\
 %
 \end{align*}
+\end{para}
 %
-So the resulting representation is
+\begin{para}So the resulting representation is
 %
 \begin{align*}
 \matrixrep{T}{C}{C}
@@ -994,10 +1045,11 @@ So the resulting representation is
  -41 & 25 & 16 & -23
 \end{bmatrix}
 \end{align*}
+\end{para}
 %
-Not quite as pretty.
+\begin{para}Not quite as pretty.\end{para}
 %
-The purpose of this example is to illustrate \acronymref{theorem}{SCB}.  This theorem says that the two matrix representations, $\matrixrep{T}{B}{B}$ and $\matrixrep{T}{C}{C}$, of the one linear transformation, $T$, are related by a similarity transformation using the change-of-basis matrix $\cbm{B}{C}$.  Lets compute this change-of-basis matrix.  Notice that since $C$ is such a nice basis, this is fairly straightforward,
+\begin{para}The purpose of this example is to illustrate \acronymref{theorem}{SCB}.  This theorem says that the two matrix representations, $\matrixrep{T}{B}{B}$ and $\matrixrep{T}{C}{C}$, of the one linear transformation, $T$, are related by a similarity transformation using the change-of-basis matrix $\cbm{B}{C}$.  Lets compute this change-of-basis matrix.  Notice that since $C$ is such a nice basis, this is fairly straightforward,
 %
 \begin{align*}
 \vectrep{C}{\vect{x}_1}
@@ -1041,8 +1093,9 @@ The purpose of this example is to illustrate \acronymref{theorem}{SCB}.  This th
 =\colvector{2\\6\\1\\4}
 %
 \end{align*}
+\end{para}
 %
-So we have,
+\begin{para}So we have,
 %
 \begin{equation*}
 \cbm{B}{C}
@@ -1054,8 +1107,9 @@ So we have,
  1 & 0 & 3 & 4
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-Now, according to \acronymref{theorem}{SCB} we can write,
+\begin{para}Now, according to \acronymref{theorem}{SCB} we can write,
 %
 \begin{align*}
 \matrixrep{T}{B}{B}&=\inverse{\cbm{B}{C}}\matrixrep{T}{C}{C}\cbm{B}{C}\\
@@ -1090,21 +1144,22 @@ Now, according to \acronymref{theorem}{SCB} we can write,
 \end{bmatrix}
 %
 \end{align*}
+\end{para}
 %
-This should look and feel exactly like the process for diagonalizing a matrix, as was described in \acronymref{section}{SD}.  And it is.
+\begin{para}This should look and feel exactly like the process for diagonalizing a matrix, as was described in \acronymref{section}{SD}.  And it is.\end{para}
 %
 \end{example}
 %
 \sageadvice{MRCB}{Matrix Representation and Change-of-Basis}{matrix representation!change-of-basis}
 %
-We can now return to the question of computing an eigenvalue or eigenvector of a linear transformation.  For a linear transformation of the form $\ltdefn{T}{V}{V}$, we know that representations relative to different bases are similar matrices.  We also know that similar matrices have equal characteristic polynomials by \acronymref{theorem}{SMEE}.   We will now show that eigenvalues of a linear transformation $T$ are precisely the eigenvalues of {\em any} matrix representation of $T$.  Since the choice of a different matrix representation leads to a similar matrix, there will be no ``new'' eigenvalues obtained from this second representation.  Similarly, the change-of-basis matrix can be used to show that eigenvectors obtained from one matrix representation will be precisely those obtained from any other representation.  So we can determine the eigenvalues and eigenvectors of a linear transformation by forming one matrix representation, using {\em any} basis we please, and analyzing the matrix in the manner of \acronymref{chapter}{E}.
+\begin{para}We can now return to the question of computing an eigenvalue or eigenvector of a linear transformation.  For a linear transformation of the form $\ltdefn{T}{V}{V}$, we know that representations relative to different bases are similar matrices.  We also know that similar matrices have equal characteristic polynomials by \acronymref{theorem}{SMEE}.   We will now show that eigenvalues of a linear transformation $T$ are precisely the eigenvalues of {\em any} matrix representation of $T$.  Since the choice of a different matrix representation leads to a similar matrix, there will be no ``new'' eigenvalues obtained from this second representation.  Similarly, the change-of-basis matrix can be used to show that eigenvectors obtained from one matrix representation will be precisely those obtained from any other representation.  So we can determine the eigenvalues and eigenvectors of a linear transformation by forming one matrix representation, using {\em any} basis we please, and analyzing the matrix in the manner of \acronymref{chapter}{E}.\end{para}
 %
 \begin{theorem}{EER}{Eigenvalues, Eigenvectors, Representations}{eigenvalues, eigenvectors!vector, matrix representations}
-Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation and $B$ is a basis of $V$.  Then $\vect{v}\in V$ is an eigenvector of $T$ for the eigenvalue $\lambda$ if and only if $\vectrep{B}{\vect{v}}$ is an eigenvector of $\matrixrep{T}{B}{B}$ for the eigenvalue $\lambda$.
+\begin{para}Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation and $B$ is a basis of $V$.  Then $\vect{v}\in V$ is an eigenvector of $T$ for the eigenvalue $\lambda$ if and only if $\vectrep{B}{\vect{v}}$ is an eigenvector of $\matrixrep{T}{B}{B}$ for the eigenvalue $\lambda$.\end{para}
 \end{theorem}
 %
 \begin{proof}
-($\Rightarrow$) Assume that $\vect{v}\in V$ is an eigenvector of $T$ for the eigenvalue $\lambda$.  Then
+\begin{para}($\Rightarrow$) Assume that $\vect{v}\in V$ is an eigenvector of $T$ for the eigenvalue $\lambda$.  Then
 %
 \begin{align*}
 \matrixrep{T}{B}{B}\vectrep{B}{\vect{v}}
@@ -1113,9 +1168,9 @@ Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation and $B$ is a basis of
 &=\lambda\vectrep{B}{\vect{v}}&&\text{\acronymref{theorem}{VRLT}}
 \end{align*}
 %
-which by \acronymref{definition}{EEM} says that $\vectrep{B}{\vect{v}}$ is an eigenvector of the matrix $\matrixrep{T}{B}{B}$ for the eigenvalue $\lambda$.\par
+which by \acronymref{definition}{EEM} says that $\vectrep{B}{\vect{v}}$ is an eigenvector of the matrix $\matrixrep{T}{B}{B}$ for the eigenvalue $\lambda$.\end{para}
 %
-($\Leftarrow$)  Assume that $\vectrep{B}{\vect{v}}$ is an eigenvector of $\matrixrep{T}{B}{B}$ for the eigenvalue $\lambda$.  Then
+\begin{para}($\Leftarrow$)  Assume that $\vectrep{B}{\vect{v}}$ is an eigenvector of $\matrixrep{T}{B}{B}$ for the eigenvalue $\lambda$.  Then
 %
 \begin{align*}
 \lt{T}{\vect{v}}
@@ -1126,24 +1181,26 @@ which by \acronymref{definition}{EEM} says that $\vectrep{B}{\vect{v}}$ is an ei
 &=\lambda\vect{v}&&\text{\acronymref{definition}{IVLT}}
 \end{align*}
 %
-which by \acronymref{definition}{EELT} says $\vect{v}$ is an eigenvector of $T$ for the eigenvalue $\lambda$.
+which by \acronymref{definition}{EELT} says $\vect{v}$ is an eigenvector of $T$ for the eigenvalue $\lambda$.\end{para}
 %
 \end{proof}
 %
-\subsect{CELT}{Computing Eigenvectors of Linear Transformations}
+\end{subsect}
 %
-Knowing that the eigenvalues of a linear transformation are the eigenvalues of any representation, no matter what the choice of the basis $B$ might be, we could now unambiguously define items such as the characteristic polynomial of a linear transformation, rather than a matrix.  We'll say that again --- eigenvalues, eigenvectors, and characteristic polynomials are intrinsic properties of a linear transformation, independent of the choice of a basis used to construct a matrix representation.\par
+\begin{subsect}{CELT}{Computing Eigenvectors of Linear Transformations}
 %
-As a practical matter, how does one compute the eigenvalues and eigenvectors of a linear transformation of the form $\ltdefn{T}{V}{V}$?  Choose a nice basis $B$ for $V$, one where the vector representations of the values of the linear transformations necessary for the matrix representation are easy to compute.  Construct the matrix representation relative to this basis, and find the eigenvalues and eigenvectors of this matrix using the techniques of \acronymref{chapter}{E}.  The resulting eigenvalues of the matrix are precisely the eigenvalues of the linear transformation.  The eigenvectors of the matrix are column vectors that need to be converted to vectors in $V$ through application of $\ltinverse{\vectrepname{B}}$.\par
+\begin{para}Knowing that the eigenvalues of a linear transformation are the eigenvalues of any representation, no matter what the choice of the basis $B$ might be, we could now unambiguously define items such as the characteristic polynomial of a linear transformation, rather than a matrix.  We'll say that again --- eigenvalues, eigenvectors, and characteristic polynomials are intrinsic properties of a linear transformation, independent of the choice of a basis used to construct a matrix representation.\end{para}
 %
-Now consider the case where the matrix representation of a linear transformation is diagonalizable.  The $n$ linearly independent eigenvectors that must exist for the matrix (\acronymref{theorem}{DC}) can be converted (via $\ltinverse{\vectrepname{B}}$) into eigenvectors of the linear transformation.  A matrix representation of the linear transformation relative to a basis of eigenvectors will be a diagonal matrix --- an especially nice representation!  Though we did not know it at the time, the diagonalizations of \acronymref{section}{SD} were really finding especially pleasing matrix representations of linear transformations.\par
+\begin{para}As a practical matter, how does one compute the eigenvalues and eigenvectors of a linear transformation of the form $\ltdefn{T}{V}{V}$?  Choose a nice basis $B$ for $V$, one where the vector representations of the values of the linear transformations necessary for the matrix representation are easy to compute.  Construct the matrix representation relative to this basis, and find the eigenvalues and eigenvectors of this matrix using the techniques of \acronymref{chapter}{E}.  The resulting eigenvalues of the matrix are precisely the eigenvalues of the linear transformation.  The eigenvectors of the matrix are column vectors that need to be converted to vectors in $V$ through application of $\ltinverse{\vectrepname{B}}$.\end{para}
 %
-Here are some examples.
+\begin{para}Now consider the case where the matrix representation of a linear transformation is diagonalizable.  The $n$ linearly independent eigenvectors that must exist for the matrix (\acronymref{theorem}{DC}) can be converted (via $\ltinverse{\vectrepname{B}}$) into eigenvectors of the linear transformation.  A matrix representation of the linear transformation relative to a basis of eigenvectors will be a diagonal matrix --- an especially nice representation!  Though we did not know it at the time, the diagonalizations of \acronymref{section}{SD} were really finding especially pleasing matrix representations of linear transformations.\end{para}
+%
+\begin{para}Here are some examples.\end{para}
 %
 %
 \begin{example}{ELTT}{Eigenvectors of a linear transformation, twice}{eigenvectors!of a linear transformation}
 %
-Consider the linear transformation $\ltdefn{S}{M_{22}}{M_{22}}$ defined by
+\begin{para}Consider the linear transformation $\ltdefn{S}{M_{22}}{M_{22}}$ defined by
 %
 \begin{equation*}
 \lt{S}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}=
@@ -1152,8 +1209,9 @@ Consider the linear transformation $\ltdefn{S}{M_{22}}{M_{22}}$ defined by
 18a + 21b + 19c + 3d &  -6a - 7b - 7c - 3d
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-To find the eigenvalues and eigenvectors of $S$ we will build a matrix representation and analyze the matrix.  Since \acronymref{theorem}{EER} places no restriction on the choice of the basis $B$, we may as well use a basis that is easy to work with.  So set
+\begin{para}To find the eigenvalues and eigenvectors of $S$ we will build a matrix representation and analyze the matrix.  Since \acronymref{theorem}{EER} places no restriction on the choice of the basis $B$, we may as well use a basis that is easy to work with.  So set
 %
 \begin{equation*}
 B=\set{\vect{x}_1,\,\vect{x}_2,\,\vect{x}_3,\,\vect{x}_4}
@@ -1175,8 +1233,9 @@ B=\set{\vect{x}_1,\,\vect{x}_2,\,\vect{x}_3,\,\vect{x}_4}
 \end{bmatrix}
 }
 \end{equation*}
+\end{para}
 %
-Then to build the matrix representation of $S$ relative to $B$ compute,
+\begin{para}Then to build the matrix representation of $S$ relative to $B$ compute,
 %
 \begin{align*}
 %
@@ -1201,8 +1260,9 @@ Then to build the matrix representation of $S$ relative to $B$ compute,
 \colvector{-3\\1\\3\\-3}
 %
 \end{align*}
+\end{para}
 %
-So by \acronymref{definition}{MR} we have
+\begin{para}So by \acronymref{definition}{MR} we have
 %
 \begin{equation*}
 M=\matrixrep{S}{B}{B}=
@@ -1213,14 +1273,16 @@ M=\matrixrep{S}{B}{B}=
  -6 & -7 & -7 & -3
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-Now compute eigenvalues and eigenvectors of the matrix representation of $M$ with the techniques of \acronymref{section}{EE}.  First the characteristic polynomial,
+\begin{para}Now compute eigenvalues and eigenvectors of the matrix representation of $M$ with the techniques of \acronymref{section}{EE}.  First the characteristic polynomial,
 %
 \begin{equation*}
 \charpoly{M}{x}=\detname{M-xI_4}=x^4-x^3-10 x^2+4 x+24=(x-3) (x-2) (x+2)^2
 \end{equation*}
+\end{para}
 %
-We could now make statements about the eigenvalues of $M$, but in light of \acronymref{theorem}{EER} we can refer to the eigenvalues of $S$ and mildly abuse (or extend) our notation for multiplicities to write
+\begin{para}We could now make statements about the eigenvalues of $M$, but in light of \acronymref{theorem}{EER} we can refer to the eigenvalues of $S$ and mildly abuse (or extend) our notation for multiplicities to write
 %
 \begin{align*}
 \algmult{S}{3}&=1
@@ -1229,8 +1291,9 @@ We could now make statements about the eigenvalues of $M$, but in light of \acro
 &
 \algmult{S}{-2}&=2
 \end{align*}
+\end{para}
 %
-Now compute the eigenvectors of $M$,
+\begin{para}Now compute the eigenvectors of $M$,
 %
 \begin{align*}
 \lambda&=3&M-3I_4&=
@@ -1288,8 +1351,9 @@ Now compute the eigenvectors of $M$,
 &&\eigenspace{M}{-2}&=\nsp{M-(-2)I_4}
 =\spn{\set{\colvector{0\\-1\\1\\0},\,\colvector{1\\-1\\0\\1}}}
 \end{align*}
+\end{para}
 %
-According to \acronymref{theorem}{EER} the eigenvectors just listed as basis vectors for the eigenspaces of $M$ are vector representations (relative to $B$) of eigenvectors for $S$.  So the application if the inverse function $\vectrepinvname{B}$ will convert these column vectors into elements of the vector space $M_{22}$ ($2\times 2$ matrices) that are eigenvectors of $S$.  Since $\vectrepname{B}$ is an isomorphism (\acronymref{theorem}{VRILT}), so is $\vectrepinvname{B}$.  Applying the inverse function will then preserve linear independence and spanning properties, so with a sweeping application of the \miscref{principle}{Coordinatization Principle} and some extensions of our previous notation for eigenspaces and geometric multiplicities, we can write,
+\begin{para}According to \acronymref{theorem}{EER} the eigenvectors just listed as basis vectors for the eigenspaces of $M$ are vector representations (relative to $B$) of eigenvectors for $S$.  So the application if the inverse function $\vectrepinvname{B}$ will convert these column vectors into elements of the vector space $M_{22}$ ($2\times 2$ matrices) that are eigenvectors of $S$.  Since $\vectrepname{B}$ is an isomorphism (\acronymref{theorem}{VRILT}), so is $\vectrepinvname{B}$.  Applying the inverse function will then preserve linear independence and spanning properties, so with a sweeping application of the \miscref{principle}{Coordinatization Principle} and some extensions of our previous notation for eigenspaces and geometric multiplicities, we can write,
 %
 \begin{align*}
 \vectrepinv{B}{\colvector{-1\\3\\-3\\1}}
@@ -1313,8 +1377,9 @@ According to \acronymref{theorem}{EER} the eigenvectors just listed as basis vec
 \begin{bmatrix}1 & -1\\0 & 1\end{bmatrix}\\
 %
 \end{align*}
+\end{para}
 %
-So
+\begin{para}So
 %
 \begin{align*}
 \eigenspace{S}{3}&=
@@ -1337,8 +1402,9 @@ with geometric multiplicities given by
 &
 \geomult{S}{-2}&=2
 \end{align*}
+\end{para}
 %
-Suppose we now decided to build another matrix representation of $S$, only now relative to a linearly independent set of eigenvectors of $S$, such as
+\begin{para}Suppose we now decided to build another matrix representation of $S$, only now relative to a linearly independent set of eigenvectors of $S$, such as
 %
 \begin{equation*}
 C=
@@ -1349,8 +1415,9 @@ C=
 \begin{bmatrix}1 & -1\\0 & 1\end{bmatrix}
 }
 \end{equation*}
+\end{para}
 %
-At this point you should have computed enough matrix representations to predict that the result of representing $S$ relative to $C$ will be a diagonal matrix.  Computing this representation is an example of how \acronymref{theorem}{SCB} generalizes the diagonalizations from \acronymref{section}{SD}.  For the record, here is the diagonal representation,
+\begin{para}At this point you should have computed enough matrix representations to predict that the result of representing $S$ relative to $C$ will be a diagonal matrix.  Computing this representation is an example of how \acronymref{theorem}{SCB} generalizes the diagonalizations from \acronymref{section}{SD}.  For the record, here is the diagonal representation,
 %
 \begin{equation*}
 \matrixrep{S}{C}{C}
@@ -1362,8 +1429,9 @@ At this point you should have computed enough matrix representations to predict 
  0 & 0 & 0 & -2
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-Our interest in this example is not necessarily building nice representations, but instead we want to demonstrate how eigenvalues and eigenvectors are an intrinsic property of a linear transformation, independent of any particular representation.  To this end, we will repeat the foregoing, but replace $B$ by another basis.  We will make this basis different, but not extremely so,
+\begin{para}Our interest in this example is not necessarily building nice representations, but instead we want to demonstrate how eigenvalues and eigenvectors are an intrinsic property of a linear transformation, independent of any particular representation.  To this end, we will repeat the foregoing, but replace $B$ by another basis.  We will make this basis different, but not extremely so,
 %
 \begin{equation*}
 D=\set{\vect{y}_1,\,\vect{y}_2,\,\vect{y}_3,\,\vect{y}_4}
@@ -1385,8 +1453,9 @@ D=\set{\vect{y}_1,\,\vect{y}_2,\,\vect{y}_3,\,\vect{y}_4}
 \end{bmatrix}
 }
 \end{equation*}
+\end{para}
 %
-Then to build the matrix representation of $S$ relative to $D$ compute,
+\begin{para}Then to build the matrix representation of $S$ relative to $D$ compute,
 %
 \begin{align*}
 %
@@ -1411,8 +1480,9 @@ Then to build the matrix representation of $S$ relative to $D$ compute,
 \colvector{36\\-102\\84\\-23}\\
 %
 \end{align*}
+\end{para}
 %
-So by \acronymref{definition}{MR} we have
+\begin{para}So by \acronymref{definition}{MR} we have
 %
 \begin{equation*}
 N=\matrixrep{S}{D}{D}=
@@ -1423,14 +1493,16 @@ N=\matrixrep{S}{D}{D}=
  -6 & -13 & -20 & -23
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-Now compute eigenvalues and eigenvectors of the matrix representation of $N$ with the techniques of \acronymref{section}{EE}.  First the characteristic polynomial,
+\begin{para}Now compute eigenvalues and eigenvectors of the matrix representation of $N$ with the techniques of \acronymref{section}{EE}.  First the characteristic polynomial,
 %
 \begin{equation*}
 \charpoly{N}{x}=\detname{N-xI_4}=x^4-x^3-10 x^2+4 x+24=(x-3) (x-2) (x+2)^2
 \end{equation*}
+\end{para}
 %
-Of course this is not news.  We now know that $M=\matrixrep{S}{B}{B}$ and $N=\matrixrep{S}{D}{D}$ are similar matrices (\acronymref{theorem}{SCB}).  But \acronymref{theorem}{SMEE} told us long ago that similar matrices have identical characteristic polynomials.  Now compute eigenvectors for the matrix representation,  which will be different than what we found for $M$,
+\begin{para}Of course this is not news.  We now know that $M=\matrixrep{S}{B}{B}$ and $N=\matrixrep{S}{D}{D}$ are similar matrices (\acronymref{theorem}{SCB}).  But \acronymref{theorem}{SMEE} told us long ago that similar matrices have identical characteristic polynomials.  Now compute eigenvectors for the matrix representation,  which will be different than what we found for $M$,
 %
 \begin{align*}
 \lambda&=3&N-3I_4&=
@@ -1488,8 +1560,9 @@ Of course this is not news.  We now know that $M=\matrixrep{S}{B}{B}$ and $N=\ma
 &&\eigenspace{N}{-2}&=\nsp{N-(-2)I_4}
 =\spn{\set{\colvector{1\\-2\\1\\0},\,\colvector{3\\-3\\0\\1}}}
 \end{align*}
+\end{para}
 %
-Employing \acronymref{theorem}{EER} we can apply $\vectrepinvname{D}$ to each of the basis vectors of the eigenspaces of $N$ to obtain eigenvectors for $S$ that also form bases for eigenspaces of $S$,
+\begin{para}Employing \acronymref{theorem}{EER} we can apply $\vectrepinvname{D}$ to each of the basis vectors of the eigenspaces of $N$ to obtain eigenvectors for $S$ that also form bases for eigenspaces of $S$,
 %
 \begin{align*}
 \vectrepinv{D}{\colvector{-4\\6\\-4\\1}}
@@ -1513,8 +1586,9 @@ Employing \acronymref{theorem}{EER} we can apply $\vectrepinvname{D}$ to each of
 \begin{bmatrix}1 & -2\\1 & 1\end{bmatrix}\\
 %
 \end{align*}
+\end{para}
 %
-The eigenspaces for the eigenvalues of algebraic multiplicity 1 are exactly as before,
+\begin{para}The eigenspaces for the eigenvalues of algebraic multiplicity 1 are exactly as before,
 %
 \begin{align*}
 \eigenspace{S}{3}&=
@@ -1523,8 +1597,9 @@ The eigenspaces for the eigenvalues of algebraic multiplicity 1 are exactly as b
 \eigenspace{S}{2}&=
 \spn{\set{\begin{bmatrix}-2 & 4\\-3 & 1\end{bmatrix}}}
 \end{align*}
+\end{para}
 %
-However, the eigenspace for $\lambda=-2$ would at first glance appear to be different.  Here are the two eigenspaces for $\lambda=-2$, first the eigenspace obtained from $M=\matrixrep{S}{B}{B}$, then followed by the eigenspace obtained from $M=\matrixrep{S}{D}{D}$.
+\begin{para}However, the eigenspace for $\lambda=-2$ would at first glance appear to be different.  Here are the two eigenspaces for $\lambda=-2$, first the eigenspace obtained from $M=\matrixrep{S}{B}{B}$, then followed by the eigenspace obtained from $M=\matrixrep{S}{D}{D}$.
 %
 \begin{align*}
 %
@@ -1535,8 +1610,9 @@ However, the eigenspace for $\lambda=-2$ would at first glance appear to be diff
 \spn{\set{\begin{bmatrix}0 & -1\\1 & 0\end{bmatrix},\,\begin{bmatrix}1 & -2\\1 & 1\end{bmatrix}}}
 %
 \end{align*}
+\end{para}
 %
-Subspaces generally have many bases, and that is the situation here.  With a careful proof of set equality, you can show that these two eigenspaces are equal sets.  The key observation to make such a proof go is that
+\begin{para}Subspaces generally have many bases, and that is the situation here.  With a careful proof of set equality, you can show that these two eigenspaces are equal sets.  The key observation to make such a proof go is that
 %
 \begin{equation*}
 \begin{bmatrix}1 & -2\\1 & 1\end{bmatrix}
@@ -1544,16 +1620,16 @@ Subspaces generally have many bases, and that is the situation here.  With a car
 \begin{bmatrix}0 & -1\\1 & 0\end{bmatrix}+\begin{bmatrix}1 & -1\\0 & 1\end{bmatrix}
 \end{equation*}
 %
-which will establish that the second set is a subset of the first.  With equal dimensions, \acronymref{theorem}{EDYES} will finish the task.
+which will establish that the second set is a subset of the first.  With equal dimensions, \acronymref{theorem}{EDYES} will finish the task.\end{para}
 %
-So the eigenvalues of a linear transformation are independent of the matrix representation employed to compute them!
+\begin{para}So the eigenvalues of a linear transformation are independent of the matrix representation employed to compute them!\end{para}
 %
 \end{example}
 %
-Another example, this time a bit larger and with complex eigenvalues.
+\begin{para}Another example, this time a bit larger and with complex eigenvalues.\end{para}
 %
 \begin{example}{CELT}{Complex eigenvectors of a linear transformation}{eigenvalues!complex, of a linear transformation}
-Consider the linear transformation $\ltdefn{Q}{P_4}{P_4}$ defined by
+\begin{para}Consider the linear transformation $\ltdefn{Q}{P_4}{P_4}$ defined by
 %
 \begin{align*}
 &\lt{Q}{a+bx+cx^2+dx^3+ex^4}\\
@@ -1561,14 +1637,16 @@ Consider the linear transformation $\ltdefn{Q}{P_4}{P_4}$ defined by
 &\quad\quad (-69a-29b+21c-7e)x^2+(159a+73b-44c-13d+2e)x^3+\\
 &\quad\quad (-195a-87b+55c+10d-13e)x^4
 \end{align*}
+\end{para}
 %
-Choose a simple basis to compute with, say
+\begin{para}Choose a simple basis to compute with, say
 %
 \begin{equation*}
 B=\set{1,\,x,\,x^2,\,x^3,\,x^4}
 \end{equation*}
+\end{para}
 %
-Then it should be apparent that the matrix representation of $Q$ relative to $B$ is
+\begin{para}Then it should be apparent that the matrix representation of $Q$ relative to $B$ is
 %
 \begin{equation*}
 M=\matrixrep{Q}{B}{B}=
@@ -1580,8 +1658,9 @@ M=\matrixrep{Q}{B}{B}=
  -195 & -87 & 55 & 10 & -13
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-Compute the characteristic polynomial, eigenvalues and eigenvectors according to the techniques of \acronymref{section}{EE},
+\begin{para}Compute the characteristic polynomial, eigenvalues and eigenvectors according to the techniques of \acronymref{section}{EE},
 %
 \begin{align*}
 \charpoly{Q}{x}
@@ -1697,8 +1776,9 @@ M-(3-2i)I_5&=
 =\spn{\set{\colvector{\frac{3}{4}+\frac{i}{4} \\ -\frac{7}{4}-\frac{i}{4} \\  \frac{1}{2}+\frac{i}{2}  \\  -\frac{7}{4}-\frac{i}{4} \\ 1}}}
 =\spn{\set{\colvector{3+i\\-7-i\\2+2i\\-7-i\\4}}}
 \end{align*}
+\end{para}
 %
-It is straightforward to convert each of these basis vectors for eigenspaces of $M$ back to elements of $P_4$ by applying the isomorphism $\vectrepinvname{B}$,
+\begin{para}It is straightforward to convert each of these basis vectors for eigenspaces of $M$ back to elements of $P_4$ by applying the isomorphism $\vectrepinvname{B}$,
 %
 \begin{align*}
 \vectrepinv{B}{\colvector{-1\\5\\4\\2\\0}}&=-1+5x+4x^2+2x^3\\
@@ -1712,8 +1792,9 @@ It is straightforward to convert each of these basis vectors for eigenspaces of 
 \vectrepinv{B}{\colvector{3+i\\-7-i\\2+2i\\-7-i\\4}}&=(3+i)+(-7-i)x+(2+2i)x^2+(-7-i)x^3+4x^4\\
 %
 \end{align*}
+\end{para}
 %
-So we apply \acronymref{theorem}{EER} and the \miscref{principle}{Coordinatization Principle} to get the eigenspaces for $Q$,
+\begin{para}So we apply \acronymref{theorem}{EER} and the \miscref{principle}{Coordinatization Principle} to get the eigenspaces for $Q$,
 %
 \begin{align*}
 %
@@ -1739,11 +1820,14 @@ with geometric multiplicities
 &
 \geomult{Q}{3-2i}&=1
 \end{align*}
+\end{para}
 %
 \end{example}
 %
 \sageadvice{CELT}{Designing Matrix Representations}{matrix representation!designing}
 %
 \sageadvice{SUTH4}{Sage Under The Hood, Round 4}{sage under the hood!round 4}
+%
+\end{subsect}
 %
 %  End of  cb.tex
