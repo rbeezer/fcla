@@ -1,0 +1,71 @@
+Sage can very nearly reproduce the reduced row-echelon form we obtained from the augmented matrix with variables present in the final column.  The first line below is a bit of advanced Sage.  It creates a number system \verb?R? mixing the rational numbers with the variables \verb?b1? through \verb?b6?.  It is not important to know the details of this construction right now.  \verb?B? is the reduced row-echelon form of \verb?A?, as computed by Sage, where we have displayed the last column separately so it will all fit.  You will notice that \verb?B? is different than what we used in \acronymref{example}{CSANS}, where all the differences are in the final column.\par
+%
+However, we can perform row operations on the final two rows of \verb?B? to bring Sage's result in line with what we used above for the final two entries of the last column, which are the most critical.  Notice that since the final two rows are almost all zeros, any sequence of row operations on just these two rows will preserve the zeros (and we need only display the final column to keep track of our progress).
+%
+\begin{sageexample}
+sage: R.<b1,b2,b3,b4,b5,b6> = QQ[]
+sage: A = matrix(R, [[ 10,  0,  3,   8,   7, b1],
+...                  [-16, -1, -4, -10, -13, b2],
+...                  [ -6,  1, -3,  -6,  -6, b3],
+...                  [  0,  2, -2,  -3,  -2, b4],
+...                  [  3,  0,  1,   2,   3, b5],
+...                  [ -1, -1,  1,   1,   0, b6]])
+sage: A
+[ 10   0   3   8   7  b1]
+[-16  -1  -4 -10 -13  b2]
+[ -6   1  -3  -6  -6  b3]
+[  0   2  -2  -3  -2  b4]
+[  3   0   1   2   3  b5]
+[ -1  -1   1   1   0  b6]
+sage: B = copy(A.echelon_form())
+sage: B[0:6,0:5]
+[ 1  0  0  0  2]
+[ 0  1  0  0 -3]
+[ 0  0  1  0  1]
+[ 0  0  0  1 -2]
+[ 0  0  0  0  0]
+[ 0  0  0  0  0]
+sage: B[0:6,5]
+[ -1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+[                3*b2 - 8*b3 + 6*b4]
+[ -3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+[                 b1 + b2 - b3 + b4]
+[     1/4*b1 + 1/4*b2 + 1/4*b3 + b5]
+[1/4*b1 - 3/4*b2 + 9/4*b3 - b4 + b6]
+
+sage: B.rescale_row(4, 4); B[0:6, 5]
+[ -1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+[                3*b2 - 8*b3 + 6*b4]
+[ -3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+[                 b1 + b2 - b3 + b4]
+[               b1 + b2 + b3 + 4*b5]
+[1/4*b1 - 3/4*b2 + 9/4*b3 - b4 + b6]
+sage: B.add_multiple_of_row(5, 4, -1/4); B[0:6, 5]
+[-1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+[               3*b2 - 8*b3 + 6*b4]
+[-3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+[                b1 + b2 - b3 + b4]
+[              b1 + b2 + b3 + 4*b5]
+[        -b2 + 2*b3 - b4 - b5 + b6]
+sage: B.rescale_row(5, -1); B[0:6, 5]
+[-1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+[               3*b2 - 8*b3 + 6*b4]
+[-3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+[                b1 + b2 - b3 + b4]
+[              b1 + b2 + b3 + 4*b5]
+[         b2 - 2*b3 + b4 + b5 - b6]
+sage: B.add_multiple_of_row(4, 5,-1); B[0:6, 5]
+[-1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+[               3*b2 - 8*b3 + 6*b4]
+[-3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+[                b1 + b2 - b3 + b4]
+[       b1 + 3*b3 - b4 + 3*b5 + b6]
+[         b2 - 2*b3 + b4 + b5 - b6]
+\end{sageexample}
+%
+Notice that the last two entries of the final column now have just a single \verb?b1? and a single \verb?B2?. We could continue to perform more row operations by hand, using the last two rows to progressively eliminate \verb?b1? and \verb?b2? from the other four expressions of the last column.  Since the two last rows have zeros in their first five entries, only the entries in the final column would change.  You will see that much of this section is about how to automate these final calculations.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+

@@ -1,0 +1,96 @@
+Sage will compute the extended echelon form, an improvement over what we did ``by hand'' in \acronymref{sage}{MISLE}.  And the output can be requested as a ``subdivided'' matrix so that we can easily work with the pieces $C$ and $L$.  Pieces of subdivided matrices can be extracted with indices entirely similar to how we index the actual entries of a matrix.  We'll redo \acronymref{example}{FS2} as an illustration of \acronymref{theorem}{FS} and \acronymref{theorem}{PEEF}.
+%
+\begin{sageexample}
+sage: A = matrix(QQ,[[ 10,  0,  3,   8,   7],
+...                  [-16, -1, -4, -10, -13],
+...                  [ -6,  1, -3,  -6,  -6],
+...                  [  0,  2, -2,  -3,  -2],
+...                  [  3,  0,  1,   2,   3],
+...                  [ -1, -1,  1,   1,   0]])
+sage: N = A.extended_echelon_form(subdivide=True); N
+[ 1  0  0  0  2| 0  0  1 -1  2 -1]
+[ 0  1  0  0 -3| 0  0 -2  3 -3  3]
+[ 0  0  1  0  1| 0  0  1  1  3  3]
+[ 0  0  0  1 -2| 0  0 -2  1 -4  0]
+[--------------+-----------------]
+[ 0  0  0  0  0| 1  0  3 -1  3  1]
+[ 0  0  0  0  0| 0  1 -2  1  1 -1]
+sage: C = N.subdivision(0,0); C
+[ 1  0  0  0  2]
+[ 0  1  0  0 -3]
+[ 0  0  1  0  1]
+[ 0  0  0  1 -2]
+sage: L = N.subdivision(1,1); L
+[ 1  0  3 -1  3  1]
+[ 0  1 -2  1  1 -1]
+sage: K = N.subdivision(0,1); K
+[ 0  0  1 -1  2 -1]
+[ 0  0 -2  3 -3  3]
+[ 0  0  1  1  3  3]
+[ 0  0 -2  1 -4  0]
+sage: C.rref() == C
+True
+sage: L.rref() == L
+True
+sage: A.right_kernel() == C.right_kernel()
+True
+sage: A.row_space() == C.row_space()
+True
+sage: A.column_space() == L.right_kernel()
+True
+sage: A.left_kernel() == L.row_space()
+True
+sage: J = N.matrix_from_columns(range(5, 11)); J
+[ 0  0  1 -1  2 -1]
+[ 0  0 -2  3 -3  3]
+[ 0  0  1  1  3  3]
+[ 0  0 -2  1 -4  0]
+[ 1  0  3 -1  3  1]
+[ 0  1 -2  1  1 -1]
+sage: J.is_singular()
+False
+sage: J*A
+[ 1  0  0  0  2]
+[ 0  1  0  0 -3]
+[ 0  0  1  0  1]
+[ 0  0  0  1 -2]
+[ 0  0  0  0  0]
+[ 0  0  0  0  0]
+sage: J*A == A.rref()
+True
+\end{sageexample}
+%
+Notice how we can employ the uniqueness of reduced row-echelon form (\acronymref{theorem}{RREFU}) to verify that \verb?C? and \verb?L? are in reduced row-echelon form.  Realize too, that subdivided output is an optional behavior of the \verb?.extended_echelon_form()? method and must be requested with \verb?subdivide=True?.\par
+%
+Additionally, it is the uniquely determined matrix \verb?J? that provides us with a standard version of the final column of the row-reduced augmented matrix using variables in the vector of constants, as first shown back in \acronymref{example}{CSANS} and verified here with variables defined as in \acronymref{sage}{RRSM}.  (The vector method \verb?.column()? converts a vector into a 1-column matrix, used here to format the matrix-vector product nicely.)
+%
+\begin{sageexample}
+sage: R.<b1,b2,b3,b4,b5,b6> = QQ[]
+sage: const = vector(R, [b1, b2, b3, b4, b5, b6])
+sage: (J*const).column()
+[       b3 - b4 + 2*b5 - b6]
+[-2*b3 + 3*b4 - 3*b5 + 3*b6]
+[     b3 + b4 + 3*b5 + 3*b6]
+[         -2*b3 + b4 - 4*b5]
+[b1 + 3*b3 - b4 + 3*b5 + b6]
+[  b2 - 2*b3 + b4 + b5 - b6]
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
