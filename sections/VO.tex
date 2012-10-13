@@ -14,49 +14,57 @@
 %%
 %%%%%%%%%%%
 %
-In this section we define some new operations involving vectors, and collect some basic properties of these operations.  Begin by recalling our definition of a column vector as an ordered list of complex numbers, written vertically (\acronymref{definition}{CV}).  The collection of all possible vectors of a fixed size is a commonly used set, so we start with its definition.
+\begin{introduction}
+\begin{para}In this section we define some new operations involving vectors, and collect some basic properties of these operations.  Begin by recalling our definition of a column vector as an ordered list of complex numbers, written vertically (\acronymref{definition}{CV}).  The collection of all possible vectors of a fixed size is a commonly used set, so we start with its definition.\end{para}
+\end{introduction}
+%
+\begin{subsect}{CV}{Column Vectors}
 %
 \begin{definition}{VSCV}{Vector Space of Column Vectors}{vector space!column vectors}
-The vector space $\complex{m}$ is the set of all column vectors (\acronymref{definition}{CV}) of size $m$ with entries from the set of complex numbers, $\complex{\null}$.
+\begin{para}The vector space $\complex{m}$ is the set of all column vectors (\acronymref{definition}{CV}) of size $m$ with entries from the set of complex numbers, $\complex{\null}$.\end{para}
 \denote{VSCV}{Vector Space of Column Vectors}{$\complex{m}$}{vector space of column vectors}
 \end{definition}
 %
-When a set similar to this is defined using only column vectors where all the entries are from the real numbers, it is written as ${\mathbb R}^m$ and is known as \define{Euclidean $m$-space}.\par
+\begin{para}When a set similar to this is defined using only column vectors where all the entries are from the real numbers, it is written as ${\mathbb R}^m$ and is known as \define{Euclidean $m$-space}.\end{para}
 %
-The term ``vector'' is used in a variety of different ways.  We have defined it as an ordered list written vertically.  It could simply be an ordered list of numbers, and written as $\left(2,\,3,\,-1,\,6\right)$.  Or it could be interpreted as a point in $m$ dimensions, such as $\left(3,\,4,\,-2\right)$ representing a point in three dimensions relative to $x$, $y$ and $z$ axes.  With an interpretation as a point, we can construct an arrow from the origin to the point which is consistent with the notion that a vector has direction and magnitude.\par
+\begin{para}The term ``vector'' is used in a variety of different ways.  We have defined it as an ordered list written vertically.  It could simply be an ordered list of numbers, and written as $\left(2,\,3,\,-1,\,6\right)$.  Or it could be interpreted as a point in $m$ dimensions, such as $\left(3,\,4,\,-2\right)$ representing a point in three dimensions relative to $x$, $y$ and $z$ axes.  With an interpretation as a point, we can construct an arrow from the origin to the point which is consistent with the notion that a vector has direction and magnitude.\end{para}
 %
-All of these ideas can be shown to be related and equivalent, so keep that in mind as you connect the ideas of this course with ideas from other disciplines.  For now, we'll stick with the idea that a vector is just a list of numbers, in some particular order.
+\begin{para}All of these ideas can be shown to be related and equivalent, so keep that in mind as you connect the ideas of this course with ideas from other disciplines.  For now, we'll stick with the idea that a vector is just a list of numbers, in some particular order.\end{para}
 %
 \sageadvice{VSCV}{Vector Spaces of Column Vectors}{vector spaces!column vectors}
 %
-\subsect{VEASM}{Vector Equality, Addition, Scalar Multiplication}
+\end{subsect}
 %
-We start our study of this set by first defining what it means for two vectors to be the same.
+\begin{subsect}{VEASM}{Vector Equality, Addition, Scalar Multiplication}
+%
+\begin{para}We start our study of this set by first defining what it means for two vectors to be the same.\end{para}
 %
 \begin{definition}{CVE}{Column Vector Equality}{vector!equality}
-Suppose that $\vect{u},\,\vect{v}\in\complex{m}$.  Then $\vect{u}$ and $\vect{v}$ are \define{equal}, written $\vect{u}=\vect{v}$ if
+\begin{para}Suppose that $\vect{u},\,\vect{v}\in\complex{m}$.  Then $\vect{u}$ and $\vect{v}$ are \define{equal}, written $\vect{u}=\vect{v}$ if
 %
 \begin{align*}
 \vectorentry{\vect{u}}{i}&=\vectorentry{\vect{v}}{i}
 &&1\leq i\leq m
-\end{align*}
+\end{align*}\end{para}
 %
 \denote{CVE}{Column Vector Equality}{$\vect{u}=\vect{v}$}{vector!equality}
 \end{definition}
 %
-Now this may seem like a silly (or even stupid) thing to say so carefully.  Of course two vectors are equal if they are equal for each corresponding entry!  Well, this is not as silly as it appears.  We will see a few occasions later where the obvious definition is {\em not} the right one.  And besides, in doing mathematics we need to be very careful about making all the necessary definitions and making them unambiguous.  And we've done that here. \par
+\begin{para}Now this may seem like a silly (or even stupid) thing to say so carefully.  Of course two vectors are equal if they are equal for each corresponding entry!  Well, this is not as silly as it appears.  We will see a few occasions later where the obvious definition is {\em not} the right one.  And besides, in doing mathematics we need to be very careful about making all the necessary definitions and making them unambiguous.  And we've done that here.\end{para}
 %
-Notice now that the symbol `=' is now doing triple-duty.  We know from our earlier education what it means for two numbers (real or complex) to be equal, and we take this for granted.  In \acronymref{definition}{SE} we defined what it meant for two sets to be equal.  Now we have defined what it means for two vectors to be equal, and that definition builds on our definition for when two numbers are equal when we use the condition $u_i=v_i$ for all $1\leq i\leq m$.  So think carefully about your objects when you see an equal sign and think about just which notion of equality you have encountered.  This will be especially important when you are asked to construct proofs whose conclusion states that two objects are equal.\par
+\begin{para}Notice now that the symbol `=' is now doing triple-duty.  We know from our earlier education what it means for two numbers (real or complex) to be equal, and we take this for granted.  In \acronymref{definition}{SE} we defined what it meant for two sets to be equal.  Now we have defined what it means for two vectors to be equal, and that definition builds on our definition for when two numbers are equal when we use the condition $u_i=v_i$ for all $1\leq i\leq m$.  So think carefully about your objects when you see an equal sign and think about just which notion of equality you have encountered.  This will be especially important when you are asked to construct proofs whose conclusion states that two objects are equal.\end{para}
 %
-OK, let's do an example of vector equality that begins to hint at the utility of this definition.
+\begin{para}OK, let's do an example of vector equality that begins to hint at the utility of this definition.\end{para}
 %
 \begin{example}{VESE}{Vector equality for a system of equations}{system of equations!vector equality}
 \index{Archetype B!vector equality}
-Consider the system of linear equations in \acronymref{archetype}{B},
+\begin{para}Consider the system of linear equations in \acronymref{archetype}{B},
 %
 \archetypepart{B}{definition}
 %
-Note the use of three equals signs --- each indicates an equality of numbers (the linear expressions are numbers when we evaluate them with fixed values of the variable quantities).  Now write the vector equality,
+\end{para}
+%
+\begin{para}Note the use of three equals signs --- each indicates an equality of numbers (the linear expressions are numbers when we evaluate them with fixed values of the variable quantities).  Now write the vector equality,
 %
 \begin{equation*}
 \colvector{-7x_1 -6 x_2 - 12x_3\\ 5x_1  + 5x_2 + 7x_3\\ x_1 +4x_3}
@@ -64,27 +72,27 @@ Note the use of three equals signs --- each indicates an equality of numbers (th
 \colvector{-33\\24\\5}.
 \end{equation*}
 %
-By \acronymref{definition}{CVE}, this {\em single} equality (of two column vectors) translates into {\em three} simultaneous equalities of numbers that form the system of equations.  So with this new notion of vector equality we can become less reliant on referring to {\em systems} of {\em simultaneous} equations.  There's more to vector equality than just this, but this is a good example for starters and we will develop it further.
+By \acronymref{definition}{CVE}, this {\em single} equality (of two column vectors) translates into {\em three} simultaneous equalities of numbers that form the system of equations.  So with this new notion of vector equality we can become less reliant on referring to {\em systems} of {\em simultaneous} equations.  There's more to vector equality than just this, but this is a good example for starters and we will develop it further.\end{para}
 \end{example}
 %
-We will now define two operations on the set $\complex{m}$.  By this we mean well-defined procedures that somehow convert vectors into other vectors.  Here are two of the most basic definitions of the entire course.
+\begin{para}We will now define two operations on the set $\complex{m}$.  By this we mean well-defined procedures that somehow convert vectors into other vectors.  Here are two of the most basic definitions of the entire course.\end{para}
 %
 \begin{definition}{CVA}{Column Vector Addition}{vector!addition}
-Suppose that $\vect{u},\,\vect{v}\in\complex{m}$. The \define{sum} of $\vect{u}$ and $\vect{v}$ is the vector $\vect{u}+\vect{v}$ defined by
+\begin{para}Suppose that $\vect{u},\,\vect{v}\in\complex{m}$. The \define{sum} of $\vect{u}$ and $\vect{v}$ is the vector $\vect{u}+\vect{v}$ defined by
 %
 \begin{align*}
 \vectorentry{\vect{u}+\vect{v}}{i}
 &=\vectorentry{\vect{u}}{i}+\vectorentry{\vect{v}}{i}
 &&1\leq i\leq m
-\end{align*}
+\end{align*}\end{para}
 %
 \denote{CVA}{Column Vector Addition}{$\vect{u}+\vect{v}$}{column vector addition}
 \end{definition}
 %
-So vector addition takes two vectors of the same size and combines them (in a natural way!) to create a new vector of the same size.  Notice that this definition is required, even if we agree that this is the obvious, right, natural or correct way to do it.  Notice too that the symbol `+' is being recycled.  We all know how to add {\em numbers}, but now we have the same symbol extended to double-duty and we use it to indicate how to add two new objects, vectors.  And this definition of our new meaning is built on our previous meaning of addition via the expressions $u_i+v_i$.  Think about your objects, especially when doing proofs.  Vector addition is easy, here's an example from $\complex{4}$.
+\begin{para}So vector addition takes two vectors of the same size and combines them (in a natural way!) to create a new vector of the same size.  Notice that this definition is required, even if we agree that this is the obvious, right, natural or correct way to do it.  Notice too that the symbol `+' is being recycled.  We all know how to add {\em numbers}, but now we have the same symbol extended to double-duty and we use it to indicate how to add two new objects, vectors.  And this definition of our new meaning is built on our previous meaning of addition via the expressions $u_i+v_i$.  Think about your objects, especially when doing proofs.  Vector addition is easy, here's an example from $\complex{4}$.\end{para}
 %
 \begin{example}{VA}{Addition of two vectors in $\complex{4}$}{vector addition}
-If
+\begin{para}If
 %
 \begin{align*}
 \vect{u}=\colvector{2\\-3\\4\\2}&&\vect{v}=\colvector{-1\\5\\2\\-7}
@@ -98,31 +106,33 @@ then
 \colvector{2+(-1)\\-3+5\\4+2\\2+(-7)}=
 \colvector{1\\2\\6\\-5}.
 \end{equation*}
+\end{para}
 %
 \end{example}
 %
-Our second operation takes two objects of different types, specifically a number and a vector, and combines them to create another vector.  In this context we call a number a \define{scalar} in order to emphasize that it is not a vector.
+\begin{para}Our second operation takes two objects of different types, specifically a number and a vector, and combines them to create another vector.  In this context we call a number a \define{scalar} in order to emphasize that it is not a vector.\end{para}
 %
 \begin{definition}{CVSM}{Column Vector Scalar Multiplication}{vector!scalar multiplication}
-Suppose $\vect{u}\in\complex{m}$ and $\alpha\in\complex{\null}$, then the \define{scalar multiple} of $\vect{u}$ by $\alpha$ is the vector $\alpha\vect{u}$ defined by
+\begin{para}Suppose $\vect{u}\in\complex{m}$ and $\alpha\in\complex{\null}$, then the \define{scalar multiple} of $\vect{u}$ by $\alpha$ is the vector $\alpha\vect{u}$ defined by
 %
 \begin{align*}
 \vectorentry{\alpha\vect{u}}{i}
 &=\alpha\vectorentry{\vect{u}}{i}
 &&1\leq i\leq m
 \end{align*}
+\end{para}
 %
 \denote{CVSM}{Column Vector Scalar Multiplication}{$\alpha\vect{u}$}{column vector scalar multiplication}
 \end{definition}
 %
-Notice that we are doing a kind of multiplication here, but we are {\em defining} a new type, perhaps in what appears to be a natural way.  We use juxtaposition (smashing two symbols together side-by-side) to denote this operation rather than using a symbol like we did with vector addition.  So this can be another source of confusion.  When two symbols are next to each other, are we doing regular old multiplication, the kind we've done for years, or are we doing scalar vector multiplication, the operation we just defined?  Think about your objects --- if the first object is a scalar, and the second is a vector, then it {\em must} be that we are doing our new operation, and the {\em result} of this operation will be another vector.\par
+\begin{para}Notice that we are doing a kind of multiplication here, but we are {\em defining} a new type, perhaps in what appears to be a natural way.  We use juxtaposition (smashing two symbols together side-by-side) to denote this operation rather than using a symbol like we did with vector addition.  So this can be another source of confusion.  When two symbols are next to each other, are we doing regular old multiplication, the kind we've done for years, or are we doing scalar vector multiplication, the operation we just defined?  Think about your objects --- if the first object is a scalar, and the second is a vector, then it {\em must} be that we are doing our new operation, and the {\em result} of this operation will be another vector.\end{para}
 %
-Notice how consistency in notation can be an aid here.  If we write scalars as lower case Greek letters from the start of the alphabet (such as $\alpha$, $\beta$, \dots) and write vectors in bold Latin letters from the end of the alphabet ($\vect{u}$, $\vect{v}$, \dots), then we have some hints about what type of objects we are working with.  This can be a blessing {\em and} a curse, since when we go read another book about linear algebra, or read an application in another discipline (physics, economics, \dots) the types of notation employed may be very different and hence unfamiliar.\par
+\begin{para}Notice how consistency in notation can be an aid here.  If we write scalars as lower case Greek letters from the start of the alphabet (such as $\alpha$, $\beta$, \dots) and write vectors in bold Latin letters from the end of the alphabet ($\vect{u}$, $\vect{v}$, \dots), then we have some hints about what type of objects we are working with.  This can be a blessing {\em and} a curse, since when we go read another book about linear algebra, or read an application in another discipline (physics, economics, \dots) the types of notation employed may be very different and hence unfamiliar.\end{para}
 %
-Again, computationally, vector scalar multiplication is very easy.
+\begin{para}Again, computationally, vector scalar multiplication is very easy.\end{para}
 %
 \begin{example}{CVSM}{Scalar multiplication in $\complex{5}$}{vector scalar multiplication}
-If
+\begin{para}If
 %
 \begin{equation*}
 \vect{u}=\colvector{3\\1\\-2\\4\\-1}
@@ -136,17 +146,20 @@ and $\alpha=6$, then
 \colvector{6(3)\\6(1)\\6(-2)\\6(4)\\6(-1)}=
 \colvector{18\\6\\-12\\24\\-6}.
 \end{equation*}
+\end{para}
 %
 \end{example}
 %
 \sageadvice{VO}{Vector Operations}{vector operations}
 %
-\subsect{VSP}{Vector Space Properties}
+\end{subsect}
 %
-With definitions of vector addition and scalar multiplication we can state, and prove, several properties of each operation, and some properties that involve their interplay.  We now collect ten of them here for later reference.
+\begin{subsect}{VSP}{Vector Space Properties}
+%
+\begin{para}With definitions of vector addition and scalar multiplication we can state, and prove, several properties of each operation, and some properties that involve their interplay.  We now collect ten of them here for later reference.\end{para}
 %
 \begin{theorem}{VSPCV}{Vector Space Properties of Column Vectors}{vector space properties!column vectors}
-Suppose that $\complex{m}$ is the set of column vectors of size $m$ (\acronymref{definition}{VSCV}) with addition and scalar multiplication as defined in \acronymref{definition}{CVA} and \acronymref{definition}{CVSM}.  Then
+\begin{para}Suppose that $\complex{m}$ is the set of column vectors of size $m$ (\acronymref{definition}{VSCV}) with addition and scalar multiplication as defined in \acronymref{definition}{CVA} and \acronymref{definition}{CVSM}.  Then
 %
 \begin{propertylist}
 %
@@ -182,10 +195,14 @@ $(\alpha+\beta)\vect{u}=\alpha\vect{u}+\beta\vect{u}$.\end{property}
 If $\vect{u}\in\complex{m}$, then $1\vect{u}=\vect{u}$.\end{property}
 %
 \end{propertylist}
+\end{para}
 \end{theorem}
 %
 \begin{proof}
-While some of these properties seem very obvious, they all require proof.  However, the proofs are not very interesting, and border on tedious. We'll prove one version of distributivity very carefully, and you can test your proof-building skills on some of the others.  We need to establish an equality, so we will do so by beginning with one side of the equality, apply various definitions and theorems (listed to the right of each step) to massage the expression from the left into the expression on the right.   Here we go with a proof of \acronymref{property}{DSAC}.   For $1\leq i\leq m$,
+\begin{para}
+While some of these properties seem very obvious, they all require proof.  However, the proofs are not very interesting, and border on tedious. We'll prove one version of distributivity very carefully, and you can test your proof-building skills on some of the others.  We need to establish an equality, so we will do so by beginning with one side of the equality, apply various definitions and theorems (listed to the right of each step) to massage the expression from the left into the expression on the right.   Here we go with a proof of \acronymref{property}{DSAC}.\end{para}
+%
+\begin{para}For $1\leq i\leq m$,
 %
 \begin{align*}
 \vectorentry{(\alpha+\beta)\vect{u}}{i}
@@ -202,14 +219,15 @@ While some of these properties seem very obvious, they all require proof.  Howev
 &&\text{\acronymref{definition}{CVA}}\\
 %
 \end{align*}
+\end{para}
 %
-Since the individual components of the vectors $(\alpha+\beta)\vect{u}$ and $\alpha\vect{u}+\beta\vect{u}$ are equal for {\em all} $i$, $1\leq i\leq m$, \acronymref{definition}{CVE} tells us the vectors are equal.
+\begin{para}Since the individual components of the vectors $(\alpha+\beta)\vect{u}$ and $\alpha\vect{u}+\beta\vect{u}$ are equal for {\em all} $i$, $1\leq i\leq m$, \acronymref{definition}{CVE} tells us the vectors are equal.\end{para}
 %
 \end{proof}
 %
-Many of the conclusions of our theorems can be characterized as ``identities,''  especially when we are establishing basic properties of operations such as those in this section.  Most of the properties listed in \acronymref{theorem}{VSPCV} are examples.  So some advice about the style we use for proving identities is appropriate right now.  Have a look at \acronymref{technique}{PI}.\par
+\begin{para}Many of the conclusions of our theorems can be characterized as ``identities,''  especially when we are establishing basic properties of operations such as those in this section.  Most of the properties listed in \acronymref{theorem}{VSPCV} are examples.  So some advice about the style we use for proving identities is appropriate right now.  Have a look at \acronymref{technique}{PI}.\end{para}
 %
-Be careful with the notion of the vector $\vect{-u}$.  This is a vector that we add to $\vect{u}$ so that the result is the particular vector $\zerovector$.  This is basically a property of vector addition.  It happens that we can compute $\vect{-u}$ using the {\em other} operation, scalar multiplication.  We can prove this directly by writing that
+\begin{para}Be careful with the notion of the vector $\vect{-u}$.  This is a vector that we add to $\vect{u}$ so that the result is the particular vector $\zerovector$.  This is basically a property of vector addition.  It happens that we can compute $\vect{-u}$ using the {\em other} operation, scalar multiplication.  We can prove this directly by writing that
 %
 \begin{equation*}
 \vectorentry{\vect{-u}}{i}
@@ -218,16 +236,18 @@ Be careful with the notion of the vector $\vect{-u}$.  This is a vector that we 
 =\vectorentry{(-1)\vect{u}}{i}
 \end{equation*}
 %
-We will see later how to derive this property as a {\em consequence} of several of the ten properties listed in \acronymref{theorem}{VSPCV}.\par
+We will see later how to derive this property as a {\em consequence} of several of the ten properties listed in \acronymref{theorem}{VSPCV}.
+\end{para}
 %
-Similarly, we will often write something you would immediately recognize as ``vector subtraction.''  This could be placed on a firm theoretical foundation --- as you can do yourself with \acronymref{exercise}{VO.T30}.\par
+\begin{para}Similarly, we will often write something you would immediately recognize as ``vector subtraction.''  This could be placed on a firm theoretical foundation --- as you can do yourself with \acronymref{exercise}{VO.T30}.\end{para}
 %
-A final note.  \acronymref{property}{AAC} implies that we do not have to be careful about how we ``parenthesize'' the addition of vectors.  In other words, there is nothing to be gained by writing
+\begin{para}A final note.  \acronymref{property}{AAC} implies that we do not have to be careful about how we ``parenthesize'' the addition of vectors.  In other words, there is nothing to be gained by writing
 $\left(\vect{u}+\vect{v}\right)+\left(\vect{w}+\left(\vect{x}+\vect{y}\right)\right)$
 rather than
-$\vect{u}+\vect{v}+\vect{w}+\vect{x}+\vect{y}$, since we get the same result no matter which order we choose to perform the four additions.  So we won't be careful about using parentheses this way.
+$\vect{u}+\vect{v}+\vect{w}+\vect{x}+\vect{y}$, since we get the same result no matter which order we choose to perform the four additions.  So we won't be careful about using parentheses this way.\end{para}
 %
 \sageadvice{ANC}{A Note on Coercion}{coercion}
 %
+\end{subsect}
 %  End  vo.tex
 
