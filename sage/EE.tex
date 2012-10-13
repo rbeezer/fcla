@@ -1,0 +1,31 @@
+Sage can compute eigenvalues and eigenvectors of matrices.  We will see shortly that there are subtleties involved with using these routines, but here is a quick example to begin with.  These two commands should be enough to get you started with most of the early examples in this section.  See the end of the section for more comprehensive advice.\par
+%
+For a square matrix, the methods \verb!.eigenvalues()! and \verb!.eigenvectors_right()! will produce what you expect, though the format of the eigenvector output requires some explanation.  Here is \acronymref{example}{SEE} from the start of this chapter.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[ 204,   98, -26, -10],
+...                   [-280, -134,  36,  14],
+...                   [ 716,  348, -90, -36],
+...                   [-472, -232,  60,  28]])
+sage: A.eigenvalues()
+[4, 0, 2, 2]
+sage: A.eigenvectors_right()
+[(4, [
+(1, -1, 2, 5)
+], 1), (0, [
+(1, -4/3, 10/3, -4/3)
+], 1), (2, [
+(1, 0, 7, 2),
+(0, 1, 3, 2)
+], 2)]
+\end{sageexample}
+%
+The three eigenvalues we know are included in the output of \verb!eigenvalues()!, though for some reason the eigenvalue $\lambda=2$ shows up twice.\par
+%
+The output of the \verb!eigenvectors_right()! method is a list of triples.  Each triple begins with an eigenvalue.  This is followed by a list of eigenvectors for that eigenvalue.  Notice the first eigenvector is identical to the one we described in \acronymref{example}{SEE}.  The eigenvector for $\lambda=0$ is different, but is just a scalar multiple of the one from \acronymref{example}{SEE}.  For $\lambda=2$, we now get two eigenvectors, and neither looks like either of the ones from \acronymref{example}{SEE}.  (Hint: try writing the eigenvectors from the example as linear combinations of the two in the Sage output.)  An explanation of the the third part of each triple (an integer) will have to wait, though it can be optionally surpressed if desired.\par
+%
+One cautionary note:  The word \verb!lambda! has a special purpose in Sage, so do not try to use this as a name for your eigenvalues.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

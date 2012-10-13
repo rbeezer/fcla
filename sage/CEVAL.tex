@@ -1,0 +1,76 @@
+We can now give a more careful explantion about eigenvalues in Sage.  Sage will compute the characteristic polynomial of a matrix, with amazing ease (in other words, quite quickly, even for large matrices).  The two matrix methods \verb!.charpoly()! and \verb!.characteristic_polynomial()! do exactly the same thing.  We will use the longer name just to be more readable, you may prefer the shorter.\par
+%
+We now can appreciate a very fundamental obstacle to determining the eigenvalues of a matrix, which is a theme that will run through any advanced study of linear algebra.  Study this example carefully before reading the discussion that follows.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[-24,   6,  0,  -1,  31,   7],
+...                   [ -9,  -2, -8, -17,  24, -29],
+...                   [  4, -10,  1,   1, -12, -36],
+...                   [-19,  11, -1,  -4,  33,  29],
+...                   [-11,   6,  2,   3,  14,  21],
+...                   [  5,  -1,  2,   5, -11,   4]])
+sage: A.characteristic_polynomial()
+x^6 + 11*x^5 + 15*x^4 - 84*x^3 - 157*x^2 + 124*x + 246
+sage: A.characteristic_polynomial().factor()
+(x + 3) * (x^2 - 2) * (x^3 + 8*x^2 - 7*x - 41)
+sage: B = A.change_ring(QQbar)
+sage: B.characteristic_polynomial()
+x^6 + 11*x^5 + 15*x^4 - 84*x^3 - 157*x^2 + 124*x + 246
+sage: B.characteristic_polynomial().factor()
+(x - 2.356181157637288?) * (x - 1.414213562373095?) *
+(x + 1.414213562373095?) * (x + 2.110260216209409?) *
+(x + 3) * (x + 8.24592094142788?)
+\end{sageexample}
+%
+We know by \acronymref{theorem}{EMRCP} that to compute eigenvalues, we need the roots of the characteristic polynomial, and from basic algebra, we know these correspond to linear factors.  However, with our matrix defined with entries from \verb!QQ!, the factorization of the characteristic polynomial does not ``leave'' that number system, only factoring ``far enough'' to retain factors with rational coefficients.  The solutions to $x^2 - 2 = 0$ are somewhat obvious ($\pm\sqrt{2}\approx\pm 1.414213$), but the roots of the cubic factor are more obscure.\par
+%
+But then we have \verb!QQbar! to the rescue.  Since this number system contains the roots of every possible polynomial with integer coefficients, we can totally factor any characteristic polynomial that results from a matrix with entries from \verb!QQbar!.  A common situation will be to begin with a matrix having rational entries, yet the matrix has a characteristic polynomial with roots that are complex numbers.\par
+%
+We can demonstrate this behavior with the \verb!extend! keyword option, which tells Sage whether or not to expand the number system to contain the eigenvalues.
+%
+\begin{sageexample}
+sage: A.eigenvalues(extend=False)
+[-3]
+sage: A.eigenvalues(extend=True)
+[-3, -1.414213562373095?, 1.414213562373095?,
+ -8.24592094142788?, -2.110260216209409?, 2.356181157637288?]
+\end{sageexample}
+%
+For matrices with entries from \verb!QQ!, the default behavior is to extend to \verb!QQbar! when necessary.  But for other number systems, you may need to explicitly use the \verb!extend=True! option.\par
+%
+From a factorization of the characteristic polynomial, we can see the algebraic multiplicity of each eigenvalue as the second entry of the each pair returned in the list.  We demonstrate with \acronymref{example}{SEE}, extending to \verb!QQbar!, which is not strictly necessary for this simple matrix.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[204, 98, -26, -10],
+...                   [-280, -134, 36, 14],
+...                   [716, 348, -90, -36],
+...                   [-472, -232, 60, 28]])
+sage: A.characteristic_polynomial().roots(QQbar)
+[(0, 1), (2, 2), (4, 1)]
+\end{sageexample}
+%
+One more example, which illustrates the behavior when we use floating-point approximations as entries (in other words, we use \verb!CDF! as our number system).  This is \acronymref{example}{EMMS4}, both as an exact matrix with entries from \verb!QQbar! and as an approximate matrix with entries from \verb!CDF!.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[-2,  1, -2, -4],
+...                   [12,  1,  4,  9],
+...                   [ 6,  5, -2, -4],
+...                   [ 3, -4,  5, 10]])
+sage: A.eigenvalues()
+[1, 2, 2, 2]
+sage: B = A.change_ring(CDF)
+sage: B.eigenvalues()
+[1.99998924414 - 1.50843558717e-05*I,
+ 2.00001844133 - 1.77259686257e-06*I,
+ 1.99999231453 + 1.68569527354e-05*I,
+ 1.0]
+\end{sageexample}
+%
+So, we see $\lambda=2$ as an eigenvalue with algebraic multiplicity 3, while the numerical results contain three complex numbers, each very, very close to 2.  The approximate nature of these eigenvalues may be disturbing (or alarming).  However, their computation, as floating-point numbers, can be incredibly fast with sophisticated algorithms allowing the analysis of huge matrices with millions of entries.  And perhaps your original matrix includes data from an experiment, and is not even exact in the first place.  Designing and analyzing algorithms to perform these computations quickly and accurately is part of the field known as numerical linear algebra.\par
+%
+One cautionary note: Sage uses a definition of the characteristic polynomial slightly different than ours, namely $\detname{xI_n-A}$.  This has the advantage that the $x^n$ term always has a positive one as the leading coefficient.  For even values of $n$ the two definitions create the identical polynomial, and for odd values of $n$, the two polynomials differ only be a multiple of $-1$.  The reason this is not very critical is that \acronymref{theorem}{EMRCP} is true in either case, and this is a principal use of the characteristic polynomial.  Our definition is more amenable to computations by hand.\par
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+

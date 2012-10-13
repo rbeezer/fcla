@@ -1,0 +1,46 @@
+It is quite easy to determine if two matrices are similar, using the matrix method \verb!.is_similar()!.  However, computationally this can be a very difficult proposition, so support in Sage is incomplete now, though it will always return a result for matrices with rational entries.  Here are examples where the two matrices, are and are not, similar.  Notice that the keyword option \verb!transformation=True! will cause a pair to be returned, such that if the matrices are indeed similar, the matrix effecting the similarity transformation will be in the second slot of the pair.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[ 25,   2,  -8,  -1,  11,  26,  35],
+...                   [ 28,   2, -15,   2,   6,  34,  31],
+...                   [  1, -17, -25,  28, -44,  26, -23],
+...                   [ 36,  -2, -24,  10,  -1,  50,  39],
+...                   [  0,  -7, -13,  14, -21,  14, -11],
+...                   [-22, -17, -16,  27, -51,   1, -53],
+...                   [  -1, 10,  17, -18,  28, -18,  15]])
+sage: B = matrix(QQ, [[-89, -16, -55, -23, -104, -48, -67],
+...                   [-15,   1, -20, -21,  -20, -60, -26],
+...                   [ 48,   6,  37,  25,   59,  64,  46],
+...                   [-96, -16, -49, -16, -114, -23, -67],
+...                   [ 56,  10,  33,  13,   67,  29,  37],
+...                   [ 10,   2,   2,  -2,   12,  -9,   4],
+...                   [ 28,   6,  13,   1,   32,  -4,  16]])
+sage: is_sim, trans = A.is_similar(B, transformation=True)
+sage: is_sim
+True
+\end{sageexample}
+%
+Since we knew in advance these two matrices are similar, we requested the transformation matrix, so the output is a pair.  The similarity matrix is a bit of a mess, so we will let you output \verb?trans? with the next command rather than including it here.
+%
+\begin{sageverbatim}
+sage: trans
+\end{sageverbatim}
+%
+The matrix \verb!C! is not similar to \verb!A! (and hence not similar to \verb!B! by \acronymref{theorem}{SER}), so we illustrate the return value when we do not request the similarity matrix (since it does not even exist).
+%
+\begin{sageexample}
+sage: C = matrix(QQ, [[ 16, -26,  19,  -56,  26,   8, -49],
+...                   [ 20, -43,  36, -102,  52,  23, -65],
+...                   [-18,  29, -21,   62, -30,  -9,  56],
+...                   [-17,  31, -27,   73, -37, -16,  49],
+...                   [ 18, -36,  30,  -82,  43,  18, -54],
+...                   [-32,  62, -56,  146, -77, -35,  88],
+...                   [ 11, -19,  17,  -44,  23,  10, -29]])
+sage: C.is_similar(A)
+False
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+

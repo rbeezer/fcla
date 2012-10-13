@@ -1,0 +1,88 @@
+There are three ways to get eigenvectors in Sage.  For each eigenvalue, the method \verb!.eigenvectors_right()! will return a list of eigenvectors that is a basis for the associated eigenspace.  The method \verb!.eigenspaces_right()! will return an eigenspace (in other words, a vector space, rather than a list of vectors) for each eigenvalue.  There are also \verb!eigenmatrix! methods which we will describe at the end of the chapter in \acronymref{sage}{MD}.\par
+%
+The matrix method \verb!.eigenvectors_right()! (or equivalently the matrix method \verb!.right_eigenvectors()!) produces a list of triples, one triple per eigenvalue.  Each triple has an eigenvalue, a list, and then the algebraic multiplicity of the eigenvalue.  The list contains vectors forming a basis for the eigenspace.  Notice that the length of the list of eigenvectors will be the geometric multiplicity (and there is no easier way to get this information).\par
+%
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[-5,  1, 7, -15],
+...                   [-2,  0, 5,  -7],
+...                   [ 1, -5, 7,  -3],
+...                   [ 4, -7, 3,   4]])
+sage: A.eigenvectors_right()
+[(3, [
+(1, 0, -1, -1),
+(0, 1, 2, 1)
+], 2),
+(-2*I, [(1, 0.3513513513513514? + 0.10810810810810811?*I,
+0.02702702702702703? + 0.1621621621621622?*I,
+-0.2972972972972973? + 0.2162162162162163?*I)], 1),
+(2*I, [(1, 0.3513513513513514? - 0.10810810810810811?*I,
+0.02702702702702703? - 0.1621621621621622?*I,
+-0.2972972972972973? - 0.2162162162162163?*I)], 1)]
+\end{sageexample}
+%
+Note that this is a good place to practice burrowing down into Sage output that is full of lists (and lists of lists).  See if you can extract just the second eigenvector for $\lambda=3$ using a single statement.  Or perhaps try obtaining the geometric multiplicity of $\lambda=-2i$.  Notice, too, that Sage has automatically upgraded to \verb!QQbar! to get the complex eigenvalues.\par
+%
+The matrix method \verb!.eigenspaces_right()! (equal to \verb!.right_eigenspaces()!) produces a list of pairs, one pair per eigenvalue.  Each pair has an eigenvalue, followed by the eigenvalue's eigenspace.  Notice that the basis matrix of the eigenspace may not have the same eigenvectors you might get from other methods.  Similar to the \verb!eigenvectors! method, the dimension of the eigenspace will yield the geometric multiplicity (and there is no easier way to get this information).   If you need the algebraic multiplicities, you can supply the keyword option \verb!algebraic_multiplicity=True! to get back triples with the algebraic multiplicity in the third entry of the triple.  We will recycle the example above, and not demonstrate the algebraic multiplicity option.  (We have formatted the one-row  basis matrices over \verb?QQbar? across several lines.)
+%
+\begin{sageexample}
+sage: A.eigenspaces_right()
+[
+(3, Vector space of degree 4 and dimension 2 over Rational Field
+User basis matrix:
+[ 1  0 -1 -1]
+[ 0  1  2  1]),
+(-2*I, Vector space of degree 4 and dimension 1 over Algebraic Field
+User basis matrix:
+[                                           1
+ 0.3513513513513514?  + 0.10810810810810811?*I
+ 0.02702702702702703? +  0.1621621621621622?*I
+ -0.2972972972972973? +  0.2162162162162163?*I]),
+(2*I, Vector space of degree 4 and dimension 1 over Algebraic Field
+User basis matrix:
+[                                           1
+ 0.3513513513513514?  - 0.10810810810810811?*I
+ 0.02702702702702703? -  0.1621621621621622?*I
+-0.2972972972972973?  -  0.2162162162162163?*I])
+]
+\end{sageexample}
+%
+Notice how the output includes a subspace of dimension two over the rationals, and two subspaces of dimension one over the algebraic numbers.\par
+%
+The upcoming \acronymref{subsection}{EE.ECEE} has many examples, which mostly reflect techniques that might be possible to verify by hand.  Here is the same matrix as above, analyzed in a similar way.  Practicing the examples in this subsection, either directly with the higher-level Sage commands, and/or with more primitive commands (as below) would be an extremely  good exercise at this point.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[-5,  1, 7, -15],
+...                   [-2,  0, 5, -7],
+...                   [ 1, -5, 7, -3],
+...                   [ 4, -7, 3, 4]])
+sage: # eigenvalues
+sage: A.characteristic_polynomial()
+x^4 - 6*x^3 + 13*x^2 - 24*x + 36
+sage: A.characteristic_polynomial().factor()
+(x - 3)^2 * (x^2 + 4)
+sage: A.characteristic_polynomial().roots(QQbar)
+[(3, 2), (-2*I, 1), (2*I, 1)]
+sage: # eigenspaces, rational
+sage: (A-3*identity_matrix(4)).right_kernel(basis='pivot')
+Vector space of degree 4 and dimension 2 over Rational Field
+User basis matrix:
+[ 1  1  1  0]
+[-2 -1  0  1]
+sage: # eigenspaces, complex
+sage: B = A.change_ring(QQbar)
+sage: (B-(2*I)*identity_matrix(4)).right_kernel(basis='pivot')
+Vector space of degree 4 and dimension 1 over Algebraic Field
+User basis matrix:
+[8/5*I - 11/5  4/5*I - 3/5  2/5*I + 1/5            1]
+sage: (B-(-2*I)*identity_matrix(4)).right_kernel(basis='pivot')
+Vector space of degree 4 and dimension 1 over Algebraic Field
+User basis matrix:
+[-8/5*I - 11/5  -4/5*I - 3/5  -2/5*I + 1/5             1]
+\end{sageexample}
+%
+Notice how we changed the number system to the algebraic numbers before working with the complex eigenvalues.  Also, we are using the \verb!basis='pivot'! keyword option so that bases for the eigenspaces look more like the bases described in \acronymref{theorem}{BNS}.\par
+%
+By now, it should be clear why we keep using the ``right'' variants of these methods.  Eigenvectors can be defined ``on the right'', $A\vect{x}=\lambda\vect{x}$ as we have done, or ``on the left,''  $\vect{x}A=\lambda\vect{x}$.  So use the ``right'' versions of the eigenvalue and eigenvector commands to stay consistent with the text.  Recognize, too, that eigenspaces may be computed with different bases than those given in the text (typically like those for null spaces with the \verb!basis='echelon'! option).\par
+%
+Why doesn't the \verb?.eigenvalues()? method come in left and right versions?  The upcoming \acronymref{theorem}{ETM} can be used to show that the two versions would have identical output, so there is no need.
