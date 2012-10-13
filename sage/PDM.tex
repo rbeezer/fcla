@@ -1,0 +1,85 @@
+There are many properties of determinants detailed in this section.  You have the tools in Sage to explore all of them.  We will illustrate with just two.  One is not particularly deep, but we personally find the interplay between matrix multiplication and the determinant nothing short of amazing, so we will not pass up the chance to verify \acronymref{theorem}{DRMM}.  Add some checks of other properties yourself.\par
+%
+We copy the sixth row of the matrix \verb?C? to the fourth row, so by \acronymref{theorem}{DERC}, the determinant is zero.
+%
+\begin{sageexample}
+sage: C = matrix(QQ, [[-3,  4,  0,  1,  2,  0,  5,  0],
+...                   [ 4,  0, -4,  7,  0,  5,  0,  5],
+...                   [ 7,  4,  2,  2,  4,  0, -2,  8],
+...                   [ 5, -4,  8,  2,  6, -1, -4, -4],
+...                   [ 8,  0,  7,  4,  7,  5,  2, -3],
+...                   [ 6,  5,  3,  7,  4,  2,  4, -3],
+...                   [ 1,  6, -4, -4,  3,  8,  5, -2],
+...                   [ 2,  4, -2,  8,  2,  5,  2,  2]])
+sage: C[3] = C[5]
+sage: C
+[-3  4  0  1  2  0  5  0]
+[ 4  0 -4  7  0  5  0  5]
+[ 7  4  2  2  4  0 -2  8]
+[ 6  5  3  7  4  2  4 -3]
+[ 8  0  7  4  7  5  2 -3]
+[ 6  5  3  7  4  2  4 -3]
+[ 1  6 -4 -4  3  8  5 -2]
+[ 2  4 -2  8  2  5  2  2]
+sage: C.determinant()
+0
+\end{sageexample}
+%
+Now, a demonstration of \acronymref{theorem}{DRMM}.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[-4,  7, -2,  6,  8,  0, -4,  6],
+...                   [ 1,  6,  5,  8,  2,  3,  1, -1],
+...                   [ 5,  0,  7, -3,  7, -3,  6, -3],
+...                   [-4,  5,  8,  3,  6,  8, -1, -1],
+...                   [ 0,  0, -3, -3,  4,  4,  2,  5],
+...                   [-3, -2, -3,  8,  8, -3, -1,  1],
+...                   [-4,  0,  2,  4,  4,  4,  7,  2],
+...                   [ 3,  3, -4,  5, -2,  3, -1,  5]])
+sage: B = matrix(QQ, [[ 1,  2, -4,  8, -1,  2, -1, -3],
+...                   [ 3,  3, -2, -4, -3,  8,  1,  6],
+...                   [ 1,  8,  4,  0,  4, -2,  0,  8],
+...                   [ 6,  8,  1, -1, -4, -3, -2,  5],
+...                   [ 0,  5,  1,  4, -3,  2, -3, -2],
+...                   [ 2,  4,  0,  7,  8, -1,  5,  8],
+...                   [ 7,  1,  1, -1, -1,  7, -2,  6],
+...                   [ 2,  3,  4,  7,  3,  4,  7, -2]])
+sage: C = A*B; C
+[ 35  99  28  12 -51  46  25  16]
+[ 83 144  11  -3 -17  20 -11 141]
+[ 24  62   6  23 -25  52 -68  30]
+[ 44 153  42  19  53   0  20 169]
+[ 11   5  11  80  33  53  45 -13]
+[ 25  58  23  -5 -79 -24 -45 -35]
+[ 83  89  47  15  15  37   4 110]
+[ 47  39 -12  56  -2  29  48  14]
+sage: Adet = A.determinant(); Adet
+9350730
+sage: Bdet = B.determinant(); Bdet
+6516260
+sage: Cdet = C.determinant(); Cdet
+60931787869800
+sage: Adet*Bdet == Cdet
+True
+\end{sageexample}
+%
+Earlier, in \acronymref{sage}{NME1} we used the \verb?random_matrix()? constructor with the \verb?algorithm='unimodular'? keyword to create a nonsingular matrix.  We can now reveal that in this context, ``unimodular'' means ``with determinant 1.''  So such a matrix will always be nonsingular by \acronymref{theorem}{SMZD}.  But more can be said.  It is not obvious at all, and \acronymref{solution}{PDM.SOL.M20} has just a partial explanation, but the inverse of a unimodular matrix with all integer entries will have an inverse with all integer entries.\par
+%
+With a fraction-free inverse many ``textbook'' exercises can be constructed through the use of unimodular matrices.  Experiment for yourself below.  An \verb?upper_bound? keyword can be used to control the size of the entries of the matrix, though this will have little control over the inverse.
+%
+\begin{sageexample}
+sage: A = random_matrix(QQ, 5, algorithm='unimodular')
+sage: A, A.inverse()                          # random
+(
+[  -9  -32 -118  273   78]  [-186   30   22  -18  375]
+[   2    9   31  -69  -21]  [  52   -8   -8    3 -105]
+[   4   15   54 -120  -39]  [-147   25   19  -12  297]
+[  -3  -11  -38   84   28]  [ -47    8    6   -4   95]
+[  -5  -18  -66  152   44], [ -58   10    7   -5  117]
+)
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+

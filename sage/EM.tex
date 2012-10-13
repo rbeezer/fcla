@@ -1,0 +1,63 @@
+Each of the three types of elementary matrices can be constructed easily, with syntax similar to methods for performing row operations on matrices.  Here we have three $4\times 4$ elementary matrices, in order: $\elemswap{1}{3}$, $\elemmult{7}{2}$, $\elemadd{9}{2}{4}$.  Notice the change in numbering on the rows, and the order of the parameters.
+%
+\begin{sageexample}
+sage: A = elementary_matrix(QQ, 4, row1=0, row2=2); A
+[0 0 1 0]
+[0 1 0 0]
+[1 0 0 0]
+[0 0 0 1]
+sage: A = elementary_matrix(QQ, 4, row1=1, scale=7); A
+[1 0 0 0]
+[0 7 0 0]
+[0 0 1 0]
+[0 0 0 1]
+sage: A = elementary_matrix(QQ, 4, row1=3, row2=1, scale=9); A
+[1 0 0 0]
+[0 1 0 0]
+[0 0 1 0]
+[0 9 0 1]
+\end{sageexample}
+%
+Notice that \verb?row1? is always the row that is being changed.  The keywords can be removed, but the \verb?scale? keyword must be used to create the second type of elementary matrix, to avoid confusion with the first type.\par
+%
+We can illustrate some of the results of this section with two examples.  First, we convert a matrix into a second matrix which is row-equivalent, and then accomplish the same thing with matrix multiplication and a product of elementary matrices.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[6, -2, 3, -2],
+...                   [3,  3, 1,  8],
+...                   [4,  0, 5,  4]])
+sage: B = copy(A)
+sage: B.swap_rows(0,2)
+sage: E1 = elementary_matrix(QQ, 3, row1=0, row2=2)
+sage: B.rescale_row(1, 5)
+sage: E2 = elementary_matrix(QQ, 3, row1=1, scale=5)
+sage: B.add_multiple_of_row(1, 0, -3)
+sage: E3 = elementary_matrix(QQ, 3, row1=1, row2=0, scale=-3)
+sage: B
+[  4   0   5   4]
+[  3  15 -10  28]
+[  6  -2   3  -2]
+sage: E3*E2*E1*A
+[  4   0   5   4]
+[  3  15 -10  28]
+[  6  -2   3  -2]
+sage: B == E3*E2*E1*A
+True
+sage: R = E3*E2*E1
+sage: R.is_singular()
+False
+sage: R
+[ 0  0  1]
+[ 0  5 -3]
+[ 1  0  0]
+\end{sageexample}
+%
+The matrix \verb?R?, the product of three elementary matrices, can be construed as the collective effect of the three row operations employed.  With more row operations, \verb?R? might look even less like an identity matrix.  As the product of nonsingular matrices (\acronymref{theorem}{EMN}), \verb?R? is nonsingular (\acronymref{theorem}{NPNT}).\par
+%
+The matrix \verb?B? above is not in reduced row-echelon form (it was just row-equivalent to \verb?A?).  What if we were to begin with a matrix and track all of the row operations required to bring the matrix to reduced row-echelon form?  As above, we could form the associated elementary matrices and form their product, creating a single matrix \verb?R? that captures all of the row operations.\par
+%
+It turns out we have already done this.  Extended echelon form is the subject of \acronymref{theorem}{PEEF}, whose second conclusion says that $B=JA$, where $A$ is the original matrix, and $B$ is the row-equivalent matrix in reduced row-echelon form.  Then $J$ is a square nonsingular matrix that is the product of the sequence of elementary matrices associated with the sequence of row operations converting $A$ into $B$.  There may be many, many different sequences of row operations that convert $A$ to $B$, but the requirement that extended echelon form be in reduced row-echelon form guarantees that $J$ is unique.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
