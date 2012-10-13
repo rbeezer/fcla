@@ -1,0 +1,42 @@
+We can use the Sage tools we already have, along with \acronymref{theorem}{LIVRN}, to determine if sets are linearly independent.  There is just one hitch --- Sage has a preference for placing vectors into matrices as \emph{rows}, rather than as columns.  When printing vectors on the screen, writing them \emph{across} the screen makes good sense, and there are more mathematical reasons for this choice.  But we have chosen to present introductory linear algebra with an emphasis on the \emph{columns} of matrices --- again, for good mathematical reasons.  Fortunately, Sage allows us to build matrices from columns as well as rows.\par
+%
+Let's redo \acronymref{example}{LDHS}, the determination that a set of three vectors is linearly dependent.  We will enter the vectors, construct a matrix with the vectors as \emph{columns} via the \verb!column_matrix()! constructor, and analyze.  Here we go.
+%
+\begin{sageexample}
+sage: v1 = vector(QQ, [2, -1,  3,  4, 2])
+sage: v2 = vector(QQ, [6,  2, -1,  3, 4])
+sage: v3 = vector(QQ, [4,  3, -4, -1, 2])
+sage: A = column_matrix([v1, v2, v3])
+sage: A
+[ 2  6  4]
+[-1  2  3]
+[ 3 -1 -4]
+[ 4  3 -1]
+[ 2  4  2]
+sage: A.ncols() == len(A.pivots())
+False
+\end{sageexample}
+%
+Notice that we never explicitly row-reduce \verb?A?, though this computation must happen behind the scenees when we compute the list of pivot columns.  We do not really care \emph{where} the pivots are (the actual list), but rather we want to know \emph{how many} there are, thus we ask about the \emph{length} of the list with the function \verb?len()?.  Once we construct the matrix, the analysis is quick.  With $n\neq r$, \acronymref{theorem}{LIVRN} tells us the set is linearly dependent.\par
+%
+Reprising \acronymref{example}{LIS} with Sage would be good practice at this point.  Here's an empty compute cell to use.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+While it is extremely important to understand the approach outlined above, Sage has a convenient tool for working with linear independence. \verb?.linear_dependence()?  is a method for vector spaces, which we feed in a list of vectors.  The output is again a list of vectors, each one containing the scalars that yield a non-trivial relation of linear dependence on the input vectors.  We will give this method a workout in the next section, but for now we are interested in the case of a linearly independent set.  In this instance, the method will return nothing (an empty list, really).  Not even the all-zero vector is produced, since it is not interesting and definitely is not surprising.\par
+%
+Again, we will not say anymore about the output of this method until the next section, and do not let its use replace a good conceptual understanding of this section.  We will redo \acronymref{example}{LDHS} again, you try \acronymref{example}{LIS} again.  If you are playing along, be sure \verb?v1, v2, v3? are defined from the code above.
+%
+\begin{sageexample}
+sage: L = [v1, v2, v3]
+sage: V = QQ^5
+sage: V.linear_dependence(L) == []
+False
+\end{sageexample}
+%
+The only comment to make here is that we need to create the vector space \verb?QQ^5? since \verb?.linear_dependence()? is a method of vector spaces.  \acronymref{example}{LIS} should proceed similarly, though being a linearly independent set, the comparison with the empty list should yield \verb?True?.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
