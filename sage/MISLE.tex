@@ -1,0 +1,54 @@
+We can use the computational method described in this section in hopes of finding a matrix inverse, as \acronymref{theorem}{CINMN} gets us halfway there.  We will continue with the matrix from \acronymref{example}{MI}.  First we check that the matrix is nonsingular so we can apply the theorem, then we get ``half'' an inverse, and verify that it also behaves as a ``full'' inverse by meeting the fuill definition of a matrix inverse (\acronymref{definition}{MI}).
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[ 1,  2,  1,  2,  1],
+...                   [-2, -3,  0, -5, -1],
+...                   [ 1,  1,  0,  2,  1],
+...                   [-2, -3, -1, -3, -2],
+...                   [-1, -3, -1, -3,  1]])
+sage: A.is_singular()
+False
+sage: I5 = identity_matrix(5)
+sage: M = A.augment(I5); M
+[ 1  2  1  2  1  1  0  0  0  0]
+[-2 -3  0 -5 -1  0  1  0  0  0]
+[ 1  1  0  2  1  0  0  1  0  0]
+[-2 -3 -1 -3 -2  0  0  0  1  0]
+[-1 -3 -1 -3  1  0  0  0  0  1]
+sage: N = M.rref(); N
+[ 1  0  0  0  0 -3  3  6 -1 -2]
+[ 0  1  0  0  0  0 -2 -5 -1  1]
+[ 0  0  1  0  0  1  2  4  1 -1]
+[ 0  0  0  1  0  1  0  1  1  0]
+[ 0  0  0  0  1  1 -1 -2  0  1]
+sage: J = N.matrix_from_columns(range(5,10)); J
+[-3  3  6 -1 -2]
+[ 0 -2 -5 -1  1]
+[ 1  2  4  1 -1]
+[ 1  0  1  1  0]
+[ 1 -1 -2  0  1]
+sage: A*J == I5
+True
+sage: J*A == I5
+True
+\end{sageexample}
+%
+Note that the matrix \verb?J? is constructed by taking the last 5 columns of \verb?N? (numbered 5 through 9) and using them in the \verb?matrix_from_columns()? matrix method.  What happens if you apply the procedure above to a singular matrix?  That would be an instructive experiment to conduct.\par
+%
+With an inverse of a coefficient matrix in hand, we can easily solve systems of equations, in the style of \acronymref{example}{SABMI}.  We will recycle the matrices \verb?A? and its inverse, \verb?J?, from above, so be sure to run those compute cells first if you are playing along.  We consider a system with \verb?A? as a coefficient matrix and solve a linear system twice, once the old way and once the new way.  Recall that with a nonsingular coefficient matrix, the solution will be unique for any choice of \verb?const?, so you can experiment by changing the vector of constants and re-executing the code.
+%
+\begin{sageexample}
+sage: const = vector(QQ, [3, -4, 2, 1, 1])
+sage: A.solve_right(const)
+(-12, -2, 3, 6, 4)
+sage: J*const
+(-12, -2, 3, 6, 4)
+sage: A.solve_right(const) == J*const
+True
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+
+
