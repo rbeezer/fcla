@@ -1,0 +1,40 @@
+Sage has a matrix method, \verb?.augment()?, that will join two matrices, side-by-side provided they both have the same number of rows.  The same method will allow you to augment a matrix with a column vector, as described in \acronymref{definition}{AM}, provided the number of entries in the vector matches the number of rows for the matrix.  Here we reprise the construction in \acronymref{example}{AMAA}.  We will now format our matrices as input across several lines, a practice you may use in your own worksheets, or not.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, 3, 3, [[1, -1, 2],
+...                         [2,  1, 1],
+...                         [1,  1, 0]])
+sage: b = vector(QQ, [1, 8, 5])
+sage: M = A.augment(b)
+sage: M
+[ 1 -1  2  1]
+[ 2  1  1  8]
+[ 1  1  0  5]
+\end{sageexample}
+%
+Notice that the matrix method \verb?.augment()? needs some input, in the above case, the vector \verb?b?.  This will explain the need for the parentheses on the end of the ``dot'' commands, even if the particular command does not expect input.\par
+%
+Some methods allow optional input, typically using keywords.  Matrices can track subdivisions, making breaks between rows and/or columns.  When augmenting, you can ask for the subdivision to be included.  Evalute the compute cell above if you have not already, so that \verb?A? and \verb?b? are defined, and then evaluate:
+%
+\begin{sageexample}
+sage: M = A.augment(b, subdivide=True)
+sage: M
+[ 1 -1  2| 1]
+[ 2  1  1| 8]
+[ 1  1  0| 5]
+\end{sageexample}
+%
+As a partial demonstration of manipulating subdivisions of matrices we can reset the subdivisions of \verb?M? with the \verb?.subdivide()? method.  We provide a list of rows to subdivide \emph{before}, then a list of columns to subdivide \emph{before}, where we remember that counting begins at zero.
+%
+\begin{sageexample}
+sage: M.subdivide([1,2],[1])
+sage: M
+[ 1|-1  2  1]
+[--+--------]
+[ 2| 1  1  8]
+[--+--------]
+[ 1| 1  0  5]
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}

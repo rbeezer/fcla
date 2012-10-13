@@ -1,0 +1,78 @@
+%
+Matrices are fundamental objects in linear algebra and in Sage, so there are a variety of ways to construct a matrix in Sage.  Generally, you need to specify what types of entries the matrix contains (more on that in a minute), the number of rows and columns, and the entries themselves.  First, let's dissect an example:
+\par
+%
+\begin{sageexample}
+sage: A = matrix(QQ, 2, 3, [[1, 2, 3], [4, 5, 6]])
+sage: A
+[1 2 3]
+[4 5 6]
+\end{sageexample}
+%
+\verb?QQ? is the set of all rational numbers (fractions with an integer numerator and denominator), \verb?2? is the number of rows, \verb?3? is the number of columns.  Sage understands a list of items as delimited by brackets (\verb?[,]?) and the items in the list can again be lists themselves.  So \verb?[[1, 2, 3], [4, 5, 6]]? is a list of lists, and in this context the inner lists are rows of the matrix.\par
+%
+There are various shortcuts you can employ when creating a matrix.  For example, Sage is able to infer the size of the matrix from the lists of entries.
+%
+\begin{sageexample}
+sage: B = matrix(QQ, [[1, 2, 3], [4, 5, 6]])
+sage: B
+[1 2 3]
+[4 5 6]
+\end{sageexample}
+%
+Or you can specify how many rows the matrix will have and provide one big grand list of entries, which will get chopped up, row by row, if you prefer.
+%
+\begin{sageexample}
+sage: C = matrix(QQ, 2, [1, 2, 3, 4, 5, 6])
+sage: C
+[1 2 3]
+[4 5 6]
+\end{sageexample}
+%
+It is possible to also skip specifying the type of numbers used for entries of a matrix, however this is fraught with peril, as Sage will make an informed guess about your intent.  Is this what you want?  Consider when you enter the single character ``2'' into a computer program like Sage.  Is this the integer $2$, the rational number $\frac{2}{1}$, the real number $2.00000$, the complex number $2 + 0i$, or the polynomial $p(x)=2$?  In context, us humans can usually figure it out, but a literal-minded computer is not so smart.  It happens that the operations we can perform, and how they behave, are influenced by the type of the entries in a matrix.  So it is important to get this right and our advice is to be explicit and be in the habit of always specifying the type of the entries of a matrix you create.\par
+%
+Mathematical objects in Sage often come from sets of similar objects.  This set is called the ``parent'' of the element.  We can use this to learn how Sage deduces the type of entries in a matrix.  Execute the following three compute cells in the Sage notebook, and notice how the three matrices are constructed to have entries from the integers, the rationals and the reals.
+%
+\begin{sageexample}
+sage: A = matrix(2, 3, [[1, 2, 3], [4, 5, 6]])
+sage: A.parent()
+Full MatrixSpace of 2 by 3 dense matrices over Integer Ring
+\end{sageexample}
+%
+\begin{sageexample}
+sage: B = matrix(2, 3, [[1, 2/3, 3], [4, 5, 6]])
+sage: B.parent()
+Full MatrixSpace of 2 by 3 dense matrices over Rational Field
+\end{sageexample}
+%
+\begin{sageexample}
+sage: C = matrix(2, 3, [[1, sin(2.2), 3], [4, 5, 6]])
+sage: C.parent()
+Full MatrixSpace of 2 by 3 dense matrices over
+Real Field with 53 bits of precision
+\end{sageexample}
+%
+Sage knows a wide variety of sets of numbers.  These are known as ``rings'' or ``fields'' (see \acronymref{section}{F}), but we will call them ``number systems'' here.  Examples include: \verb?ZZ? is the integers, \verb?QQ? is the rationals, \verb?RR? is the real numbers with reasonable precision, and \verb?CC? is the complex numbers with reasonable precision.  We will present the theory of linear algebra over the complex numbers.  However, in any computer system, there will always be complications surrounding the inability of digital arithmetic to accurately represent all complex numbers.  In contrast, Sage can represent rational numbers exactly as the quotient of two (perhaps very large) integers.  So our Sage examples will begin by using \verb?QQ? as our number system and we can concentrate on understanding the key concepts.\par
+%
+Once we have constructed a matrix, we can learn a lot about it (such as its parent).  Sage is largely object-oriented, which means many commands apply to an object by using the ``dot'' notation.  \verb?A.parent()? is an example of this syntax, while the constructor \verb?matrix([[1, 2, 3], [4, 5, 6]])? is an exception.  Here are a few examples, followed by some explanation:
+%
+\begin{sageexample}
+sage: A = matrix(QQ, 2, 3, [[1,2,3],[4,5,6]])
+sage: A.nrows(), A.ncols()
+(2, 3)
+sage: A.base_ring()
+Rational Field
+sage: A[1,1]
+5
+sage: A[1,2]
+6
+\end{sageexample}
+%
+The number of rows and the number of columns should be apparent, \verb?.base_ring()? gives the number system for the entries, as included in the information provided by \verb?.parent()?.\par
+%
+Computer scientists and computer languages prefer to begin counting from zero, while mathematicians and written mathematics prefer to begin counting at one.  Sage and this text are no exception.  It takes some getting used to, but the reasons for counting from zero in computer programs soon becomes very obvious.  Counting from one in mathematics is historical, and unlikely to change anytime soon.  So above, the two rows of \verb?A? are numbered 0 and 1, while the columns are numbered 0, 1 and 2.  So \verb?A[1,2]? refers to the entry of \verb?A? in the second row and the third column, i.e.\ \verb?6?.\par
+%
+There is much more to say about how Sage works with matrices, but this is already a lot to digest.  Use the space below to create some matrices (different ways) and examine them and their properties (size, entries, number system, parent).
+%
+\begin{sageverbatim}
+\end{sageverbatim}

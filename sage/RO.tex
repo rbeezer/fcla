@@ -1,0 +1,81 @@
+Sage will perform individual row operations on a matrix.  This can get a bit tedious, but it is better than doing the computations (wrong, perhaps) by hand, and it can be useful when building up more complicated procedures for a matrix.
+\par
+%
+For each row operation, there are two similar methods.  One changes the matrix ``in-place'' while the other creates a new matrix that is a modified version of the original.  This is an important distinction that you should understand for every new Sage command you learn that might change a matrix or vector.
+\par
+%
+Consider the first row operation, which swaps two rows.  There are two matrix methods to do this, a ``with'' version that will create a new, changed matrix, which you will likely want to save, and a plain version that will change the matrix it operates on ``in-place.''.  The \verb?copy()? function, which is a general-purpose command, is a way to make a copy of a matrix before you make changes to it.  Study the example below carefully, and then read the explanation following. (Remember that counting begins with zero.)
+%
+\begin{sageexample}
+sage: A = matrix(QQ,2,3,[1,2,3,4,5,6])
+sage: B = A
+sage: C = copy(A)
+sage: D = A.with_swapped_rows(0,1)
+sage: D[0,0] = -1
+sage: A.swap_rows(0,1)
+sage: A[1,2] = -6
+sage: A
+[ 4  5  6]
+[ 1  2 -6]
+sage: B
+[ 4  5  6]
+[ 1  2 -6]
+sage: C
+[1 2 3]
+[4 5 6]
+sage: D
+[-1  5  6]
+[ 1  2  3]
+\end{sageexample}
+%
+Here is how each of these four matrices comes into existence.
+\begin{enumerate}
+\item \verb?A? is our original matrix, created from a list of entries.
+\item \verb?B? is not a new copy of \verb?A?, it is just a new name for referencing the exact same matrix internally.
+\item \verb?C? is a brand new matrix, stored internally separate from \verb?A?, but with identical contents.
+\item \verb?D? is also a new matrix, which is created by swapping the rows of \verb?A?
+\end{enumerate}
+%
+And here is how each matrix is affected by the commands.
+%
+\begin{enumerate}
+\item \verb?A? is changed twice ``in-place''.  First, its rows are swapped rows a ``plain'' matrix method.  Then its entry in the lower-right corner is set to \verb?-6?.
+\item \verb?B? is just another name for \verb?A?.  So whatever changes are made to \verb?A? will be evident when we ask for the matrix by the name \verb?B?.  And vice-versa.
+\item \verb?C? is a copy of the original \verb?A? and does not change, since no subsequent commands act on \verb?C?.
+\item \verb?D? is a new copy of \verb?A?, created by swapping the rows of \verb?A?.  Once created from \verb?A?, it has a life of its own, as illustrated by the change in its entry in the upper-left corner to \verb?-1?.
+\end{enumerate}
+%
+An interesting experiment is to rearrange some of the lines above (or add new ones) and predict the result.\par
+%
+Just as with the first row operation, swapping rows, Sage supports the other two row operations with natural sounding commands, with both ``in-place'' versions and new-matrix versions.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, 3, 4, [[1,  2,  3,  4],
+...                         [5,  6,  7,  8],
+...                         [9, 10, 11, 12]])
+sage: B = copy(A)
+sage: A.rescale_row(1, 1/2)
+sage: A
+[  1   2   3   4]
+[5/2   3 7/2   4]
+[  9  10  11  12]
+sage: A.add_multiple_of_row(2, 0, 10)
+sage: A
+[  1   2   3   4]
+[5/2   3 7/2   4]
+[ 19  30  41  52]
+sage: B.with_rescaled_row(1, 1/2)
+[  1   2   3   4]
+[5/2   3 7/2   4]
+[  9  10  11  12]
+sage: C = B.with_added_multiple_of_row(2, 0, 10)
+sage: C
+[ 1  2  3  4]
+[ 5  6  7  8]
+[19 30 41 52]
+\end{sageexample}
+%
+Notice that the order of the arguments might feel a bit odd, compared to how we write and think about row operations.  Also note how the ``with'' versions leave a trail of matrices for each step while the plain versions just keep changing \verb?A?.
+%
+\begin{sageverbatim}
+\end{sageverbatim}

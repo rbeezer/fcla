@@ -1,0 +1,20 @@
+There has been a lot of information about using Sage with vectors and matrices in this section.  But we can now construct the coefficient matrix of a system of equations and the vector of constants.  From these pieces we can easily construct the augmented matrix, which we could subject to a series of row operations.  Computers are suppose to make routine tasks easy so we can concentrate on bigger ideas.  No exception here, Sage can bring a matrix (augmented or not) to reduced row echelon form with no problem.  Let's redo \acronymref{example}{SAB} with Sage.
+%
+\begin{sageexample}
+sage: coeff = matrix(QQ, [[-7, -6, -12],
+...                       [5,   5,   7],
+...                       [1,   0,   4]])
+sage: const = vector(QQ, [-33, 24, 5])
+sage: aug = coeff.augment(const)
+sage: aug.rref()
+[ 1  0  0 -3]
+[ 0  1  0  5]
+[ 0  0  1  2]
+\end{sageexample}
+%
+And the solution $x_1=-3$, $x_2=5$, $x_3=2$ is now obvious.  Beautiful.\par
+%
+You may notice that Sage has some commands with the word ``echelon'' in them.  For now, these should be avoided like the plague, as there are some subtleties in how they work.  The matrix method \verb?.rref()? will be sufficient for our purposes for a long, long time --- so stick with it.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
