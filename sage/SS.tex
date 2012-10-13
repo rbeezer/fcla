@@ -1,0 +1,145 @@
+A strength of Sage is the ability to create infinite sets, such as the span of a set of vectors, from finite descriptions.  In other words, we can take a finite set with just a handful of vectors and Sage will create the set that is the span of these vectors, which is an infinite set.  Here we will show you how to do this, and show how you can use the results.  The key command is the vector space method \verb?.span()?.\par
+%
+\begin{sageexample}
+sage: V = QQ^4
+sage: v1 = vector(QQ, [1,1,2,-1])
+sage: v2 = vector(QQ, [2,3,5,-4])
+sage: W = V.span([v1, v2])
+sage: W
+Vector space of degree 4 and dimension 2 over Rational Field
+Basis matrix:
+[ 1  0  1  1]
+[ 0  1  1 -2]
+sage: x = 2*v1 + (-3)*v2
+sage: x
+(-4, -7, -11, 10)
+sage: x in W
+True
+sage: y = vector(QQ, [3, -1, 2, 2])
+sage: y in W
+False
+sage: u = vector(QQ, [3, -1, 2, 5])
+sage: u in W
+True
+sage: W <= V
+True
+\end{sageexample}
+%
+Most of the above should be fairly self-explanatory, but a few comments are in order.  The span, \verb?W?, is created in the first compute cell with the \verb?.span()? method, which accepts a list of vectors and needs to be employed as a method of a vector space.  The information about \verb?W? printed when we just input the span itself may be somewhat confusing, and as before, we need to learn some more theory to totally understand it all.  For now you can see the number system (\verb?Rational Field?) and the number of entries in each vector (\verb?degree 4?).  The \verb?dimension? may be more complicated than you first suspect.\par
+%
+Sets are all about membership, and we see that we can easily check membership in a span.  We know the vector \verb?x? will be in the span \verb?W? since we built it as a linear combination of \verb?v1? and \verb?v2?.  The vectors \verb?y? and \verb?u? are a bit more mysterious, but Sage can answer the membership question easily for both.\par
+%
+The last compute cell is something new.  The symbol \verb?<=? is meant here to be the ``subset of'' relation, i.e.\ a slight abuse of the mathematical symbol $\subseteq$, and then we are not surprised to learn that \verb?W? really is a subset of \verb?V?.\par
+%
+It is important to realize that the span is a \emph{construction} that begins with a finite set, yet creates an infinite set.  With a loop (the \verb?for? command) and the \verb?.random_element()? vector space method we can create \emph{many}, but not all, of the elements of a span.  In the examples below, you can edit the total number of random vectors produced, and you may need to click through to another file of output if you ask for more than about 100 vectors.\par
+%
+Each example is designed to illustrate some aspect of the behavior of the span command and to provoke some questions.  So put on your mathematician's hat, evaluate the compute cells to create some sample elements, and then \emph{study} the output carefully looking for patterns and maybe even conjecture some explanations for the behavior.  The puzzle gets just a bit harder for each new example.  (We use the \texttt{Sequence()} command to get nicely-formatted line-by-line output of the list, and notice that we are only providing a portion of the output here.  You will want to evalaute the computation of \texttt{vecs} and then evaluate the next cell in the Sage notebook for maximum effect.)
+%
+\begin{sageexample}
+sage: V = QQ^4
+sage: W = V.span([ vector(QQ, [0, 1, 0, 1]),
+...                vector(QQ, [1, 0, 1, 0]) ])
+sage: vecs = [(i, W.random_element()) for i in range(100)]
+\end{sageexample}
+%
+\begin{sageexample}
+sage: Sequence(vecs, cr=True)          # random
+[
+(0, (1/5, 16, 1/5, 16)),
+(1, (-3, 0, -3, 0)),
+(2, (1/11, 0, 1/11, 0)),
+...
+(97, (-2, -1/2, -2, -1/2)),
+(98, (1/13, -3, 1/13, -3)),
+(99, (0, 1, 0, 1))
+]
+\end{sageexample}
+%
+\begin{sageexample}
+sage: V = QQ^4
+sage: W = V.span([ vector(QQ, [0, 1, 1, 0]),
+...                vector(QQ, [0, 0, 1, 1]) ])
+sage: vecs = [(i, W.random_element()) for i in range(100)]
+\end{sageexample}
+%
+\begin{sageexample}
+sage: Sequence(vecs, cr=True)          # random
+[
+(0, (0, 1/9, 2, 17/9)),
+(1, (0, -1/8, 3/2, 13/8)),
+(2, (0, 1/2, -1, -3/2)),
+...
+(97, (0, 4/7, 24, 164/7)),
+(98, (0, -5/2, 0, 5/2)),
+(99, (0, 13/2, 1, -11/2))
+]
+\end{sageexample}
+%
+\begin{sageexample}
+sage: V = QQ^4
+sage: W = V.span([ vector(QQ, [2, 1, 2, 1]),
+...                vector(QQ, [4, 2, 4, 2]) ])
+sage: vecs = [(i, W.random_element()) for i in range(100)]
+\end{sageexample}
+%
+\begin{sageexample}
+sage: Sequence(vecs, cr=True)          # random
+[
+(0, (1, 1/2, 1, 1/2)),
+(1, (-1, -1/2, -1, -1/2)),
+(2, (-1/7, -1/14, -1/7, -1/14)),
+...
+(97, (1/3, 1/6, 1/3, 1/6)),
+(98, (0, 0, 0, 0)),
+(99, (-11, -11/2, -11, -11/2))
+]
+\end{sageexample}
+%
+\begin{sageexample}
+sage: V = QQ^4
+sage: W = V.span([ vector(QQ, [1, 0, 0, 0]),
+...                vector(QQ, [0, 1 ,0, 0]),
+...                vector(QQ, [0, 0, 1, 0]),
+...                vector(QQ, [0, 0, 0, 1]) ])
+sage: vecs = [(i, W.random_element()) for i in range(100)]
+\end{sageexample}
+%
+\begin{sageexample}
+sage: Sequence(vecs, cr=True)          # random
+[
+(0, (-7/4, -2, -1, 63)),
+(1, (6, -2, -1/2, -28)),
+(2, (5, -2, -2, -1)),
+...
+(97, (1, -1/2, -2, -1)),
+(98, (-1/12, -4, 2, 1)),
+(99, (2/3, 0, -4, -1))
+]
+\end{sageexample}
+%
+\begin{sageexample}
+sage: V = QQ^4
+sage: W = V.span([ vector(QQ, [1, 2,  3, 4]),
+...                vector(QQ, [0,-1, -1, 0]),
+...                vector(QQ, [1, 1,  2, 4]) ])
+sage: vecs = [(i, W.random_element()) for i in range(100)]
+\end{sageexample}
+%
+\begin{sageexample}
+sage: Sequence(vecs, cr=True)          # random
+[
+(0, (-1, 3, 2, -4)),
+(1, (-1/27, -1, -28/27, -4/27)),
+(2, (-7/11, -1, -18/11, -28/11)),
+...
+(97, (1/3, -1/7, 4/21, 4/3)),
+(98, (-1, -14, -15, -4)),
+(99, (0, -2/7, -2/7, 0))
+]
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+
+

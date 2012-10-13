@@ -1,0 +1,32 @@
+With the notion of a span, we can expand our techniques for checking the consistency of a linear system.  \acronymref{theorem}{SLSLC} tells us a system is consistent if and only if the vector of constants is a linear combination of the columns of the coefficient matrix.  This is because \acronymref{theorem}{SLSLC} says that any solution to the system will provide a linear combination of the columns of the coefficient that equals the vector of constants.  So consistency of a system is equivalent to the membership of the vector of constants in the span of the columns of the coefficient matrix.  Read that last sentence again carefully.  We will see this idea again, but more formally, in \acronymref{theorem}{CSCS}.\par
+%
+We will reprise \acronymref{sage}{SLC}, which is based on \acronymref{archetype}{F}.  We again make use of the matrix method \texttt{.columns()} to get all of the columns into a list at once.\par
+%
+\begin{sageexample}
+sage: coeff = matrix(QQ, [[33, -16, 10, -2],
+...                       [99, -47, 27, -7],
+...                       [78, -36, 17, -6],
+...                       [-9,   2,  3,  4]])
+sage: column_list = coeff.columns()
+sage: column_list
+[(33, 99, 78, -9), (-16, -47, -36, 2),
+(10, 27, 17, 3), (-2, -7, -6, 4)]
+sage: span = (QQ^4).span(column_list)
+sage: const = vector(QQ, [-27, -77, -52, 5])
+sage: const in span
+True
+\end{sageexample}
+%
+You could try to find an example of a vector of constants which would create an inconsistent system with this coefficient matrix.  But there is no such thing.  Here's why --- the null space of \verb?coeff? is trivial, just the zero vector.
+%
+\begin{sageexample}
+sage: nsp = coeff.right_kernel(basis='pivot')
+sage: nsp.list()
+[(0, 0, 0, 0)]
+\end{sageexample}
+%
+The system is consistent, as we have shown, so we can apply \acronymref{theorem}{PSPHS}. We can read \acronymref{theorem}{PSPHS} as saying \emph{any} two different solutions of the system will differ by an element of the null space, and the only possibility for this null space vector is just the zero vector.  In other words, any two solutions \emph{cannot} be different.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

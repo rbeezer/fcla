@@ -1,0 +1,59 @@
+We have seen that we can create a null space in Sage with the \verb?.right_kernel()? method for matrices.  We use the optional argument \verb?basis='pivot'?, so we get exactly the spanning set $\set{\vectorlist{z}{n-r}}$ described in \acronymref{theorem}{SSNS}.  This optional argument will overide Sage's default spanning set, whose purpose we will explain fully in \acronymref{sage}{SUTH0}.  Here's \acronymref{example}{SSNS} again, along with a few extras we will comment on afterwards.
+%
+\begin{sageexample}
+sage: A = matrix(QQ, [[ 1,  3,  3, -1, -5],
+...                   [ 2,  5,  7,  1,  1],
+...                   [ 1,  1,  5,  1,  5],
+...                   [-1, -4, -2,  0,  4]])
+sage: nsp = A.right_kernel(basis='pivot')
+sage: N = nsp.basis()
+sage: N
+[
+(-6, 1, 1, 0, 0),
+(-4, 2, 0, -3, 1)
+]
+sage: z1 = N[0]
+sage: z2 = N[1]
+sage: z = 4*z1 +(-3)*z2
+sage: z
+(-12, -2, 4, 9, -3)
+sage: z in nsp
+True
+sage: sum([z[i]*A.column(i) for i in range(A.ncols())])
+(0, 0, 0, 0)
+\end{sageexample}
+%
+We built the null space as \verb?nsp?, and then asked for its \verb?.basis()?.  For now, a ``basis'' will give us a spanning set, and with more theory we will understand it better.  This is a set of vectors that form a spanning set for the null space, and with the \verb?basis='pivot'? argument we have asked for the spanning set in the format described in \acronymref{theorem}{SSNS}.  The spanning set \verb?N? is a list of vectors, which we have extracted and named as \verb?z1? and \verb?z2?.  The linear combination of these two vectors, named \verb?z?, will also be in the null space since \verb?N? is a spanning set for \verb?nsp?.  As verification, we have have used the five entries of \verb?z? in a linear combination of the columns of \verb?A?, yielding the zero vector (with four entries) as we expect.\par
+%
+We can also just ask Sage if \verb?z? is in \verb?nsp?:
+%
+\begin{sageexample}
+sage: z in nsp
+True
+\end{sageexample}
+%
+Now is an appropriate time to comment on how Sage displays a null space when we just ask about it alone.  Just as with a span, the number system and the number of entries are easy to see.  Again, \verb?dimension? should wait for a bit.  But you will notice now that the \verb?Basis matrix? has been replaced by \verb?User basis matrix?.  This is a consequence of our request for something other than the default basis (the \verb?'pivot'? basis).  As part of its standard information about a null space, or a span, Sage spits out the basis matrix.  This is a matrix, whose \emph{rows} are vectors in a spanning set.  This matrix can be requested by itself, using the method \verb?.basis_matrix()?.  It is important to notice that this is very different than the output of \verb?.basis()? which is a list of vectors.  The two objects print very similarly, but even this is different --- compare the organization of the brackets and parentheses.  Finally the last command should print true for \emph{any} span or null space Sage creates.  If you rerun the commands below, be sure the null space \verb?nsp? is defined from the code just above.
+%
+\begin{sageexample}
+sage: nsp
+Vector space of degree 5 and dimension 2 over Rational Field
+User basis matrix:
+[-6  1  1  0  0]
+[-4  2  0 -3  1]
+sage: nsp.basis_matrix()
+[-6  1  1  0  0]
+[-4  2  0 -3  1]
+sage: nsp.basis()
+[
+(-6, 1, 1, 0, 0),
+(-4, 2, 0, -3, 1)
+]
+sage: nsp.basis() == nsp.basis_matrix().rows()
+True
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+
+
