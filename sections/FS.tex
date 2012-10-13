@@ -14,17 +14,19 @@
 %%
 %%%%%%%%%%%
 %
-There are four natural subsets associated with a matrix.  We have met three already: the null space, the column space and the row space.  In this section we will introduce a fourth, the left null space.  The objective of this section is to describe one procedure that will allow us to find linearly independent sets that span each of these four sets of column vectors.  Along the way, we will make a connection with the inverse of a matrix, so \acronymref{theorem}{FS} will tie together most all of this chapter (and the entire course so far).\par
+\begin{introduction}
+\begin{para}There are four natural subsets associated with a matrix.  We have met three already: the null space, the column space and the row space.  In this section we will introduce a fourth, the left null space.  The objective of this section is to describe one procedure that will allow us to find linearly independent sets that span each of these four sets of column vectors.  Along the way, we will make a connection with the inverse of a matrix, so \acronymref{theorem}{FS} will tie together most all of this chapter (and the entire course so far).\end{para}
+\end{introduction}
 %
-\subsect{LNS}{Left Null Space}
+\begin{subsect}{LNS}{Left Null Space}
 %
 %
 \begin{definition}{LNS}{Left Null Space}{left null space}
-Suppose $A$ is an $m\times n$ matrix.  Then the \define{left null space} is defined as $\lns{A}=\nsp{\transpose{A}}\subseteq\complex{m}$.
+\begin{para}Suppose $A$ is an $m\times n$ matrix.  Then the \define{left null space} is defined as $\lns{A}=\nsp{\transpose{A}}\subseteq\complex{m}$.\end{para}
 \denote{LNS}{Left Null Space}{$\lns{A}$}{left null space}
 \end{definition}
 %
-The left null space will not feature prominently in the sequel, but we can explain its name and connect it to row operations.   Suppose $\vect{y}\in\lns{A}$.  Then by \acronymref{definition}{LNS}, $\transpose{A}\vect{y}=\zerovector$.  We can then write
+\begin{para}The left null space will not feature prominently in the sequel, but we can explain its name and connect it to row operations.   Suppose $\vect{y}\in\lns{A}$.  Then by \acronymref{definition}{LNS}, $\transpose{A}\vect{y}=\zerovector$.  We can then write
 %
 \begin{align*}
 \transpose{\zerovector}
@@ -38,11 +40,12 @@ The left null space will not feature prominently in the sequel, but we can expla
 &&\text{\acronymref{theorem}{TT}}
 %
 \end{align*}
+\end{para}
 %
-The product $\transpose{\vect{y}}A$ can be viewed as the components of $\vect{y}$ acting as the scalars in a linear combination of the {\em rows} of $A$.  And the result is a ``row vector'', $\transpose{\zerovector}$ that is totally zeros.  When we apply a sequence of row operations to a matrix, each row of the resulting matrix is some linear combination of the rows.  These observations tell us that the vectors in the left null space are scalars that record a sequence of row operations that result in a row of zeros in the row-reduced version of the matrix.  We will see this idea more explicitly in the course of proving \acronymref{theorem}{FS}.
+\begin{para}The product $\transpose{\vect{y}}A$ can be viewed as the components of $\vect{y}$ acting as the scalars in a linear combination of the {\em rows} of $A$.  And the result is a ``row vector'', $\transpose{\zerovector}$ that is totally zeros.  When we apply a sequence of row operations to a matrix, each row of the resulting matrix is some linear combination of the rows.  These observations tell us that the vectors in the left null space are scalars that record a sequence of row operations that result in a row of zeros in the row-reduced version of the matrix.  We will see this idea more explicitly in the course of proving \acronymref{theorem}{FS}.\end{para}
 %
 \begin{example}{LNS}{Left null space}{left null space}
-We will find the left null space of
+\begin{para}We will find the left null space of
 %
 \begin{equation*}
 A=
@@ -53,8 +56,9 @@ A=
  9 & -4 & 0
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-We transpose $A$ and row-reduce,
+\begin{para}We transpose $A$ and row-reduce,
 %
 \begin{equation*}
 \transpose{A}=
@@ -70,8 +74,9 @@ We transpose $A$ and row-reduce,
  0 & 0 & \leading{1} & 1
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-Applying \acronymref{definition}{LNS} and \acronymref{theorem}{BNS} we have
+\begin{para}Applying \acronymref{definition}{LNS} and \acronymref{theorem}{BNS} we have
 %
 \begin{equation*}
 \lns{A}=\nsp{\transpose{A}}=
@@ -79,20 +84,24 @@ Applying \acronymref{definition}{LNS} and \acronymref{theorem}{BNS} we have
 \colvector{-2\\3\\-1\\1}
 }}
 \end{equation*}
+\end{para}
 %
-If you row-reduce $A$ you will discover one zero row in the reduced row-echelon form.  This zero row is created by a sequence of row operations, which in total amounts to a linear combination, with scalars $a_1=-2$, $a_2=3$, $a_3=-1$ and $a_4=1$, on the rows of $A$ and which results in the zero vector (check this!).  So the components of the vector describing the left null space of $A$ provide a relation of linear dependence on the rows of $A$.
+\begin{para}If you row-reduce $A$ you will discover one zero row in the reduced row-echelon form.  This zero row is created by a sequence of row operations, which in total amounts to a linear combination, with scalars $a_1=-2$, $a_2=3$, $a_3=-1$ and $a_4=1$, on the rows of $A$ and which results in the zero vector (check this!).  So the components of the vector describing the left null space of $A$ provide a relation of linear dependence on the rows of $A$.
+\end{para}
 \end{example}
 %
 \sageadvice{LNS}{Left Null Spaces}{left null space}
 %
-\subsect{CCS}{Computing Column Spaces}
+\end{subsect}
 %
-We have three ways to build the column space of a matrix.  First, we can use just the definition, \acronymref{definition}{CSM}, and express the column space as a span of the columns of the matrix.  A second approach gives us the column space as the span of {\em some} of the columns of the matrix, but this set is linearly independent (\acronymref{theorem}{BCS}).  Finally, we can transpose the matrix, row-reduce the transpose, kick out zero rows, and transpose the remaining rows back into column vectors.  \acronymref{theorem}{CSRST} and \acronymref{theorem}{BRS} tell us that the resulting vectors are linearly independent and their span is the column space of the original matrix.\par
+\begin{subsect}{CCS}{Computing Column Spaces}
 %
-We will now demonstrate a fourth method by way of a rather complicated example.  Study this example carefully, but realize that its main purpose is to motivate a theorem that simplifies much of the apparent complexity.  So other than an instructive exercise or two, the procedure we are about to describe will not be a usual approach to computing a column space.
+\begin{para}We have three ways to build the column space of a matrix.  First, we can use just the definition, \acronymref{definition}{CSM}, and express the column space as a span of the columns of the matrix.  A second approach gives us the column space as the span of {\em some} of the columns of the matrix, but this set is linearly independent (\acronymref{theorem}{BCS}).  Finally, we can transpose the matrix, row-reduce the transpose, kick out zero rows, and transpose the remaining rows back into column vectors.  \acronymref{theorem}{CSRST} and \acronymref{theorem}{BRS} tell us that the resulting vectors are linearly independent and their span is the column space of the original matrix.\end{para}
+%
+\begin{para}We will now demonstrate a fourth method by way of a rather complicated example.  Study this example carefully, but realize that its main purpose is to motivate a theorem that simplifies much of the apparent complexity.  So other than an instructive exercise or two, the procedure we are about to describe will not be a usual approach to computing a column space.\end{para}
 %
 \begin{example}{CSANS}{Column space as null space}{column space!as null space}
-Lets find the column space of the matrix $A$ below with a new approach.
+\begin{para}Lets find the column space of the matrix $A$ below with a new approach.
 %
 \begin{equation*}
 A=
@@ -105,8 +114,9 @@ A=
  -1 & -1 & 1 & 1 & 0
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-By \acronymref{theorem}{CSCS} we know that the column vector $\vect{b}$ is in the column space of $A$ if and only if the linear system $\linearsystem{A}{\vect{b}}$ is consistent.  So let's try to solve this system in full generality, using a vector of variables for the vector of constants.  In other words, which vectors $\vect{b}$ lead to consistent systems?  Begin by forming the augmented matrix $\augmented{A}{\vect{b}}$ with a general version of $\vect{b}$,
+\begin{para}By \acronymref{theorem}{CSCS} we know that the column vector $\vect{b}$ is in the column space of $A$ if and only if the linear system $\linearsystem{A}{\vect{b}}$ is consistent.  So let's try to solve this system in full generality, using a vector of variables for the vector of constants.  In other words, which vectors $\vect{b}$ lead to consistent systems?  Begin by forming the augmented matrix $\augmented{A}{\vect{b}}$ with a general version of $\vect{b}$,
 %
 \begin{equation*}
 \augmented{A}{\vect{b}}=
@@ -119,8 +129,9 @@ By \acronymref{theorem}{CSCS} we know that the column vector $\vect{b}$ is in th
  -1 & -1 & 1 & 1 & 0 & b_ 6
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-To identify solutions we will row-reduce this matrix and bring it to reduced row-echelon form.  Despite the presence of variables in the last column, there is nothing to stop us from doing this.  Except our numerical routines on calculators can't be used, and even some of the symbolic algebra routines do some unexpected maneuvers with this computation.  So do it by hand.  Yes, it is a bit of work.  But worth it.  We'll still be here when you get back.  Notice along the way that the row operations are {\em exactly} the same ones you would do if you were just row-reducing the coefficient matrix alone, say in connection with a homogeneous system of equations.  The column with the $b_i$ acts as a sort of bookkeeping device.  There are many different possibilities for the result, depending on what order you choose to perform the row operations, but shortly we'll all be on the same page.  Here's one possibility (you can find this same result by doing additional row operations with the fifth and sixth rows to remove any occurrences of $b_1$ and $b_2$ from the first four rows of your result):
+\begin{para}To identify solutions we will row-reduce this matrix and bring it to reduced row-echelon form.  Despite the presence of variables in the last column, there is nothing to stop us from doing this.  Except our numerical routines on calculators can't be used, and even some of the symbolic algebra routines do some unexpected maneuvers with this computation.  So do it by hand.  Yes, it is a bit of work.  But worth it.  We'll still be here when you get back.  Notice along the way that the row operations are {\em exactly} the same ones you would do if you were just row-reducing the coefficient matrix alone, say in connection with a homogeneous system of equations.  The column with the $b_i$ acts as a sort of bookkeeping device.  There are many different possibilities for the result, depending on what order you choose to perform the row operations, but shortly we'll all be on the same page.  Here's one possibility (you can find this same result by doing additional row operations with the fifth and sixth rows to remove any occurrences of $b_1$ and $b_2$ from the first four rows of your result):
 %
 \begin{align*}
 \begin{bmatrix}
@@ -132,15 +143,17 @@ To identify solutions we will row-reduce this matrix and bring it to reduced row
  0 & 0 & 0 & 0 & 0 & b_2 - 2 b_3 + b_4 + b_5 - b_6
 \end{bmatrix}
 \end{align*}
+\end{para}
 %
-Our goal is to identify those vectors $\vect{b}$ which make $\linearsystem{A}{\vect{b}}$ consistent.  By \acronymref{theorem}{RCLS} we know that the consistent systems are precisely those without a leading 1 in the last column.  Are the expressions in the last column of rows 5 and 6 equal to zero, or are they leading 1's?  The answer is: maybe.  It depends on $\vect{b}$.  With a nonzero value for either of these expressions, we would scale the row and produce a leading 1.   So we get a consistent system, and $\vect{b}$ is in the column space, if and only if these two expressions are both simultaneously zero.  In other words, members of the column space of $A$ are exactly those vectors $\vect{b}$ that satisfy
+\begin{para}Our goal is to identify those vectors $\vect{b}$ which make $\linearsystem{A}{\vect{b}}$ consistent.  By \acronymref{theorem}{RCLS} we know that the consistent systems are precisely those without a leading 1 in the last column.  Are the expressions in the last column of rows 5 and 6 equal to zero, or are they leading 1's?  The answer is: maybe.  It depends on $\vect{b}$.  With a nonzero value for either of these expressions, we would scale the row and produce a leading 1.   So we get a consistent system, and $\vect{b}$ is in the column space, if and only if these two expressions are both simultaneously zero.  In other words, members of the column space of $A$ are exactly those vectors $\vect{b}$ that satisfy
 %
 \begin{align*}
 b_1 + 3 b_3 - b_4 + 3 b_5 + b_6 & = 0\\
 b_2 - 2 b_3 + b_4 + b_5 - b_6 & = 0
 \end{align*}
+\end{para}
 %
-Hmmm.  Looks suspiciously like a homogeneous system of two equations with six variables.  If you've been playing along (and we hope you have) then you may have a slightly different system, but you should have just two equations.  Form the coefficient matrix and row-reduce (notice that the system above has a coefficient matrix that is already in reduced row-echelon form).  We should all be together now with the same matrix,
+\begin{para}Hmmm.  Looks suspiciously like a homogeneous system of two equations with six variables.  If you've been playing along (and we hope you have) then you may have a slightly different system, but you should have just two equations.  Form the coefficient matrix and row-reduce (notice that the system above has a coefficient matrix that is already in reduced row-echelon form).  We should all be together now with the same matrix,
 %
 \begin{equation*}
 L=
@@ -149,8 +162,9 @@ L=
  0 & \leading{1} & -2 & 1 & 1 & -1
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-So, $\csp{A}=\nsp{L}$ and we can apply \acronymref{theorem}{BNS} to obtain a linearly independent set to use in a span construction,
+\begin{para}So, $\csp{A}=\nsp{L}$ and we can apply \acronymref{theorem}{BNS} to obtain a linearly independent set to use in a span construction,
 %
 \begin{equation*}
 \csp{A}=\nsp{L}=\spn{\set{
@@ -160,10 +174,11 @@ So, $\csp{A}=\nsp{L}$ and we can apply \acronymref{theorem}{BNS} to obtain a lin
 \colvector{-1\\1\\0\\0\\0\\1}
 }}
 \end{equation*}
+\end{para}
 %
-Whew!  As a postscript to this central example, you may wish to convince yourself that the four vectors above really are elements of the column space?  Do they create consistent systems with $A$ as coefficient matrix?  Can you recognize the constant vector in your description of these solution sets?\par
+\begin{para}Whew!  As a postscript to this central example, you may wish to convince yourself that the four vectors above really are elements of the column space?  Do they create consistent systems with $A$ as coefficient matrix?  Can you recognize the constant vector in your description of these solution sets?\end{para}
 %
-OK, that was so much fun, let's do it again.  But simpler this time.  And we'll all get the same results all the way through.  Doing row operations by hand with variables can be a bit error prone, so let's see if we can improve the process some.  Rather than row-reduce a column vector $\vect{b}$ full of variables, let's write $\vect{b}=I_6\vect{b}$ and we will row-reduce the matrix $I_6$ and when we finish row-reducing, {\em then} we will compute the matrix-vector product.  You should first convince yourself that we can operate like this (this is the subject of a future homework exercise).
+\begin{para}OK, that was so much fun, let's do it again.  But simpler this time.  And we'll all get the same results all the way through.  Doing row operations by hand with variables can be a bit error prone, so let's see if we can improve the process some.  Rather than row-reduce a column vector $\vect{b}$ full of variables, let's write $\vect{b}=I_6\vect{b}$ and we will row-reduce the matrix $I_6$ and when we finish row-reducing, {\em then} we will compute the matrix-vector product.  You should first convince yourself that we can operate like this (this is the subject of a future homework exercise).
 %%TODO (see \acronymref{exercise}{XX-commutingops-todo} on commuting operations).
 Rather than augmenting $A$ with $\vect{b}$, we will instead augment it with $I_6$ (does this feel familiar?),
 %
@@ -178,8 +193,9 @@ M=
  -1 & -1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-We want to row-reduce the left-hand side of this matrix, but we will apply the same row operations to the right-hand side as well.  And once we get the left-hand side in reduced row-echelon form, we will continue on to put leading 1's in the final two rows, as well as clearing out the columns containing those two additional leading 1's.  It is these additional row operations that will ensure that we all get to the same place, since the reduced row-echelon form is unique (\acronymref{theorem}{RREFU}),
+\begin{para}We want to row-reduce the left-hand side of this matrix, but we will apply the same row operations to the right-hand side as well.  And once we get the left-hand side in reduced row-echelon form, we will continue on to put leading 1's in the final two rows, as well as clearing out the columns containing those two additional leading 1's.  It is these additional row operations that will ensure that we all get to the same place, since the reduced row-echelon form is unique (\acronymref{theorem}{RREFU}),
 %
 \begin{equation*}
 N=
@@ -192,8 +208,9 @@ N=
  0 & 0 & 0 & 0 & 0 & 0 & 1 & -2 & 1 & 1 & -1
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-We are after the final six columns of this matrix, which we will multiply by $\vect{b}$
+\begin{para}We are after the final six columns of this matrix, which we will multiply by $\vect{b}$
 %
 \begin{equation*}
 J=
@@ -230,30 +247,34 @@ b_1 + 3 b_3 - b_4 + 3 b_5 + b_6\\
 b_2 - 2 b_3 + b_4 + b_5 - b_6\\
 }
 \end{equation*}
+\end{para}
 %
-So by applying  the same row operations that row-reduce $A$ to the identity matrix (which we could do with a calculator once $I_6$ is placed alongside of $A$), we can then arrive at the result of row-reducing a column of symbols where the vector of constants usually resides.  Since the row-reduced version of $A$ has two zero rows, for a consistent system we require that
+\begin{para}So by applying  the same row operations that row-reduce $A$ to the identity matrix (which we could do with a calculator once $I_6$ is placed alongside of $A$), we can then arrive at the result of row-reducing a column of symbols where the vector of constants usually resides.  Since the row-reduced version of $A$ has two zero rows, for a consistent system we require that
 %
 \begin{align*}
 b_1 + 3 b_3 - b_4 + 3 b_5 + b_6 & = 0\\
 b_2 - 2 b_3 + b_4 + b_5 - b_6 & = 0
 \end{align*}
+\end{para}
 %
-Now we are exactly back where we were on the first go-round.  Notice that we obtain the matrix $L$ as simply the last two rows and last six columns of $N$.
+\begin{para}Now we are exactly back where we were on the first go-round.  Notice that we obtain the matrix $L$ as simply the last two rows and last six columns of $N$.\end{para}
 %
 \end{example}
 %
-This example motivates the remainder of this section, so it is worth careful study.  You might attempt to mimic the second approach with the coefficient matrices of \acronymref{archetype}{I} and \acronymref{archetype}{J}.  We will see shortly that the matrix $L$ contains more information about $A$ than just the column space.
+\begin{para}This example motivates the remainder of this section, so it is worth careful study.  You might attempt to mimic the second approach with the coefficient matrices of \acronymref{archetype}{I} and \acronymref{archetype}{J}.  We will see shortly that the matrix $L$ contains more information about $A$ than just the column space.\end{para}
 %
 \sageadvice{RRSM}{Row-Reducing a Symbolic Matrix}{row-reduce!symbolic matrix}
 %
-\subsect{EEF}{Extended echelon form}
+\end{subsect}
 %
-The final matrix that we row-reduced in \acronymref{example}{CSANS} should look familiar in most respects to the procedure we used to compute the inverse of a nonsingular matrix, \acronymref{theorem}{CINM}.  We will now generalize that procedure to matrices that are not necessarily nonsingular, or even square.  First a definition.
+\begin{subsect}{EEF}{Extended echelon form}
+%
+\begin{para}The final matrix that we row-reduced in \acronymref{example}{CSANS} should look familiar in most respects to the procedure we used to compute the inverse of a nonsingular matrix, \acronymref{theorem}{CINM}.  We will now generalize that procedure to matrices that are not necessarily nonsingular, or even square.  First a definition.\end{para}
 %
 \begin{definition}{EEF}{Extended Echelon Form}{reduced row-echelon form!extended}
-Suppose $A$ is an $m\times n$ matrix.  Extend $A$ on its right side with the addition of an $m\times m$ identity matrix to form an $m\times (n + m)$ matrix M.  Use row operations to bring $M$ to reduced row-echelon form and call the result $N$.  $N$ is the \define{extended reduced row-echelon form} of $A$, and we will standardize on names for five submatrices ($B$, $C$, $J$, $K$, $L$) of $N$.\par
+\begin{para}Suppose $A$ is an $m\times n$ matrix.  Extend $A$ on its right side with the addition of an $m\times m$ identity matrix to form an $m\times (n + m)$ matrix M.  Use row operations to bring $M$ to reduced row-echelon form and call the result $N$.  $N$ is the \define{extended reduced row-echelon form} of $A$, and we will standardize on names for five submatrices ($B$, $C$, $J$, $K$, $L$) of $N$.\end{para}
 %
-Let $B$ denote the $m\times n$ matrix formed from the first $n$ columns of $N$ and let $J$ denote the $m\times m$ matrix formed from the last $m$ columns of $N$.  Suppose that $B$ has $r$ nonzero rows.  Further partition $N$ by letting $C$ denote the $r\times n$ matrix formed from all of the non-zero rows of $B$.  Let $K$ be the $r\times m$ matrix formed from the first $r$ rows of $J$, while $L$ will be the $(m-r)\times m$ matrix formed from the bottom $m-r$ rows of $J$.  Pictorially,
+\begin{para}Let $B$ denote the $m\times n$ matrix formed from the first $n$ columns of $N$ and let $J$ denote the $m\times m$ matrix formed from the last $m$ columns of $N$.  Suppose that $B$ has $r$ nonzero rows.  Further partition $N$ by letting $C$ denote the $r\times n$ matrix formed from all of the non-zero rows of $B$.  Let $K$ be the $r\times m$ matrix formed from the first $r$ rows of $J$, while $L$ will be the $(m-r)\times m$ matrix formed from the bottom $m-r$ rows of $J$.  Pictorially,
 %
 \begin{equation*}
 M=[A\vert I_m]
@@ -262,12 +283,13 @@ N=[B\vert J]
 =
 \left[\begin{array}{cc}C&K\\0&L\end{array}\right]
 \end{equation*}
+\end{para}
 %
 \end{definition}
 %
 %
 \begin{example}{SEEF}{Submatrices of extended echelon form}{extended echelon form!submatrices}
-We illustrate \acronymref{definition}{EEF} with the matrix $A$,
+\begin{para}We illustrate \acronymref{definition}{EEF} with the matrix $A$,
 %
 \begin{equation*}
 A=
@@ -278,8 +300,9 @@ A=
  3 & -1 & 2 & 9 & 1 & 12
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-Augmenting with the $4\times 4$ identity matrix,
+\begin{para}Augmenting with the $4\times 4$ identity matrix,
 %
 M=
 \begin{equation*}
@@ -302,8 +325,9 @@ N=
  0 & 0 & 0 & 0 & 0 & 0 & \leading{1} & 2 & 2 & 1
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-So we then obtain
+\begin{para}So we then obtain
 %
 \begin{align*}
 B&=
@@ -341,13 +365,14 @@ L&=
 \leading{1} & 2 & 2 & 1
 \end{bmatrix}
 \end{align*}
+\end{para}
 %
-You can observe (or verify) the properties of the following theorem with this example.
+\begin{para}You can observe (or verify) the properties of the following theorem with this example.\end{para}
 \end{example}
 %
 %
 \begin{theorem}{PEEF}{Properties of Extended Echelon Form}{extended reduced row-echelon form!properties}
-Suppose that $A$ is an $m\times n$ matrix and that $N$ is its extended echelon form.  Then
+\begin{para}Suppose that $A$ is an $m\times n$ matrix and that $N$ is its extended echelon form.  Then
 %
 \begin{enumerate}
 \item $J$ is nonsingular.
@@ -356,18 +381,19 @@ Suppose that $A$ is an $m\times n$ matrix and that $N$ is its extended echelon f
 \item $C$ is in reduced row-echelon form, has no zero rows and has $r$ pivot columns.
 \item $L$ is in reduced row-echelon form, has no zero rows and has $m-r$ pivot columns.
 \end{enumerate}
+\end{para}
 %
 \end{theorem}
 %
 \begin{proof}
-$J$ is the result of applying a sequence of row operations to $I_m$, as such $J$ and $I_m$ are row-equivalent.  $\homosystem{I_m}$ has only the zero solution, since $I_m$ is nonsingular (\acronymref{theorem}{NMRRI}).  Thus, $\homosystem{J}$ also has only the zero solution (\acronymref{theorem}{REMES}, \acronymref{definition}{ESYS}) and $J$ is therefore nonsingular (\acronymref{definition}{NSM}).\par
+\begin{para}$J$ is the result of applying a sequence of row operations to $I_m$, as such $J$ and $I_m$ are row-equivalent.  $\homosystem{I_m}$ has only the zero solution, since $I_m$ is nonsingular (\acronymref{theorem}{NMRRI}).  Thus, $\homosystem{J}$ also has only the zero solution (\acronymref{theorem}{REMES}, \acronymref{definition}{ESYS}) and $J$ is therefore nonsingular (\acronymref{definition}{NSM}).\end{para}
 %
-To prove the second part of this conclusion, first convince yourself that row operations and the matrix-vector are commutative operations.  By this we mean the following.
-Suppose that $F$ is an $m\times n$ matrix that is row-equivalent to the matrix $G$.  Apply to the column vector $F\vect{w}$ the same sequence of row operations that converts $F$ to $G$.  Then the result is $G\vect{w}$.  So we can do row operations on the matrix, then do a matrix-vector product, {\em or} do a matrix-vector product and then do row operations on a column vector, and the result will be the same either way.  Since matrix multiplication is defined by a collection of matrix-vector products (\acronymref{definition}{MM}), if we apply to the matrix product $FH$ the same sequence of row operations that converts $F$ to $G$ then the result will equal $GH$.  Now apply these observations to $A$.\par
+\begin{para}To prove the second part of this conclusion, first convince yourself that row operations and the matrix-vector are commutative operations.  By this we mean the following.
+Suppose that $F$ is an $m\times n$ matrix that is row-equivalent to the matrix $G$.  Apply to the column vector $F\vect{w}$ the same sequence of row operations that converts $F$ to $G$.  Then the result is $G\vect{w}$.  So we can do row operations on the matrix, then do a matrix-vector product, {\em or} do a matrix-vector product and then do row operations on a column vector, and the result will be the same either way.  Since matrix multiplication is defined by a collection of matrix-vector products (\acronymref{definition}{MM}), if we apply to the matrix product $FH$ the same sequence of row operations that converts $F$ to $G$ then the result will equal $GH$.  Now apply these observations to $A$.\end{para}
 %
-Write $AI_n=I_mA$ and apply the row operations that convert $M$ to $N$.  $A$ is converted to $B$, while $I_m$ is converted to $J$, so we have $BI_n=JA$.  Simplifying the left side gives the desired conclusion.\par
+\begin{para}Write $AI_n=I_mA$ and apply the row operations that convert $M$ to $N$.  $A$ is converted to $B$, while $I_m$ is converted to $J$, so we have $BI_n=JA$.  Simplifying the left side gives the desired conclusion.\end{para}
 %
-For the third conclusion, we now establish the two equivalences
+\begin{para}For the third conclusion, we now establish the two equivalences
 %
 \begin{align*}
 A\vect{x}&=\vect{y} &
@@ -376,26 +402,29 @@ JA\vect{x}&=J\vect{y} &
 &\iff &
 B\vect{x}&=J\vect{y}
 \end{align*}
+\end{para}
 %
-The forward direction of the first equivalence is accomplished by multiplying both sides of the matrix equality by $J$, while the backward direction is accomplished by multiplying by the inverse of $J$ (which we know exists by \acronymref{theorem}{NI} since $J$ is nonsingular).  The second equivalence is obtained simply by the substitutions given by $JA=B$.\par
+\begin{para}The forward direction of the first equivalence is accomplished by multiplying both sides of the matrix equality by $J$, while the backward direction is accomplished by multiplying by the inverse of $J$ (which we know exists by \acronymref{theorem}{NI} since $J$ is nonsingular).  The second equivalence is obtained simply by the substitutions given by $JA=B$.\end{para}
 %
-The first $r$ rows of $N$ are in reduced row-echelon form, since any contiguous collection of rows taken from a matrix in reduced row-echelon form will form a matrix that is again in reduced row-echelon form.   Since the matrix $C$ is formed by removing the last $n$ entries of each these rows, the remainder is still in reduced row-echelon form.  By its construction, $C$ has no zero rows. $C$ has $r$ rows and each contains a leading 1, so there are $r$ pivot columns in $C$.\par
+\begin{para}The first $r$ rows of $N$ are in reduced row-echelon form, since any contiguous collection of rows taken from a matrix in reduced row-echelon form will form a matrix that is again in reduced row-echelon form.   Since the matrix $C$ is formed by removing the last $n$ entries of each these rows, the remainder is still in reduced row-echelon form.  By its construction, $C$ has no zero rows. $C$ has $r$ rows and each contains a leading 1, so there are $r$ pivot columns in $C$.\end{para}
 %
-The final $m-r$ rows of $N$ are in reduced row-echelon form, since any contiguous collection of rows taken from a matrix in reduced row-echelon form will form a matrix that is again in reduced row-echelon form.  Since the matrix $L$ is formed by removing the first $n$ entries of each these rows, and these entries are all zero (they form the zero rows of $B$), the remainder is still in reduced row-echelon form.  $L$ is the final $m-r$ rows of the nonsingular matrix $J$, so none of these rows can be totally zero, or $J$ would not row-reduce to the identity matrix.  $L$ has $m-r$ rows and each contains a leading 1, so there are $m-r$ pivot columns in $L$.\par
+\begin{para}The final $m-r$ rows of $N$ are in reduced row-echelon form, since any contiguous collection of rows taken from a matrix in reduced row-echelon form will form a matrix that is again in reduced row-echelon form.  Since the matrix $L$ is formed by removing the first $n$ entries of each these rows, and these entries are all zero (they form the zero rows of $B$), the remainder is still in reduced row-echelon form.  $L$ is the final $m-r$ rows of the nonsingular matrix $J$, so none of these rows can be totally zero, or $J$ would not row-reduce to the identity matrix.  $L$ has $m-r$ rows and each contains a leading 1, so there are $m-r$ pivot columns in $L$.\end{para}
 %
 \end{proof}
 %
-Notice that in the case where $A$ is a nonsingular matrix we know that the reduced row-echelon form of $A$ is the identity matrix (\acronymref{theorem}{NMRRI}), so $B=I_n$.  Then the second conclusion above says $JA=B=I_n$, so $J$ is the inverse of $A$.  Thus this theorem generalizes \acronymref{theorem}{CINM}, though the result is a ``left-inverse'' of $A$ rather than a ``right-inverse.''\par
+\begin{para}Notice that in the case where $A$ is a nonsingular matrix we know that the reduced row-echelon form of $A$ is the identity matrix (\acronymref{theorem}{NMRRI}), so $B=I_n$.  Then the second conclusion above says $JA=B=I_n$, so $J$ is the inverse of $A$.  Thus this theorem generalizes \acronymref{theorem}{CINM}, though the result is a ``left-inverse'' of $A$ rather than a ``right-inverse.''\end{para}
 %
-The third conclusion of \acronymref{theorem}{PEEF} is the most telling.  It says that $\vect{x}$ is a solution to the linear system $\linearsystem{A}{\vect{y}}$ if and only if $\vect{x}$ is a solution to the linear system $\linearsystem{B}{J\vect{y}}$.  Or said differently, if we row-reduce the augmented matrix $\augmented{A}{\vect{y}}$ we will get the augmented matrix $\augmented{B}{J\vect{y}}$.  The matrix $J$ tracks the cumulative effect of the row operations that converts $A$ to reduced row-echelon form, here effectively applying them to the vector of constants in a system of equations having $A$ as a coefficient matrix.  When $A$ row-reduces to a matrix with zero rows, then $J\vect{y}$ should also have zero entries in the same rows if the system is to be consistent.\par
+\begin{para}The third conclusion of \acronymref{theorem}{PEEF} is the most telling.  It says that $\vect{x}$ is a solution to the linear system $\linearsystem{A}{\vect{y}}$ if and only if $\vect{x}$ is a solution to the linear system $\linearsystem{B}{J\vect{y}}$.  Or said differently, if we row-reduce the augmented matrix $\augmented{A}{\vect{y}}$ we will get the augmented matrix $\augmented{B}{J\vect{y}}$.  The matrix $J$ tracks the cumulative effect of the row operations that converts $A$ to reduced row-echelon form, here effectively applying them to the vector of constants in a system of equations having $A$ as a coefficient matrix.  When $A$ row-reduces to a matrix with zero rows, then $J\vect{y}$ should also have zero entries in the same rows if the system is to be consistent.\end{para}
 %
-\subsect{FS}{Four Subsets}
+\end{subsect}
 %
-With all the preliminaries in place we can state our main result for this section.  In essence this result will allow us to say that we can find linearly independent sets to use in span constructions for all four subsets (null space, column space, row space, left null space) by analyzing only the extended echelon form of the matrix, and specifically, just the two submatrices $C$ and $L$, which will be ripe for analysis since they are already in reduced row-echelon form (\acronymref{theorem}{PEEF}).\par
+\begin{subsect}{FS}{Four Subsets}
+%
+\begin{para}With all the preliminaries in place we can state our main result for this section.  In essence this result will allow us to say that we can find linearly independent sets to use in span constructions for all four subsets (null space, column space, row space, left null space) by analyzing only the extended echelon form of the matrix, and specifically, just the two submatrices $C$ and $L$, which will be ripe for analysis since they are already in reduced row-echelon form (\acronymref{theorem}{PEEF}).\end{para}
 %
 \begin{theorem}{FS}{Four Subsets}{column space! as null space}
 \index{left null space!as row space}
-Suppose $A$ is an $m\times n$ matrix with extended echelon form $N$.  Suppose the reduced row-echelon form of $A$ has $r$ nonzero rows.  Then $C$ is the submatrix of $N$ formed from the first $r$ rows and the first $n$ columns and $L$ is the submatrix of $N$ formed from the last $m$ columns and the last $m-r$ rows.  Then
+\begin{para}Suppose $A$ is an $m\times n$ matrix with extended echelon form $N$.  Suppose the reduced row-echelon form of $A$ has $r$ nonzero rows.  Then $C$ is the submatrix of $N$ formed from the first $r$ rows and the first $n$ columns and $L$ is the submatrix of $N$ formed from the last $m$ columns and the last $m-r$ rows.  Then
 %
 \begin{enumerate}
 \item The null space of $A$ is the null space of $C$, $\nsp{A}=\nsp{C}$.
@@ -403,15 +432,16 @@ Suppose $A$ is an $m\times n$ matrix with extended echelon form $N$.  Suppose th
 \item The column space of $A$ is the null space of $L$, $\csp{A}=\nsp{L}$.
 \item The left null space of $A$ is the row space of $L$, $\lns{A}=\rsp{L}$.
 \end{enumerate}
+\end{para}
 %
 \end{theorem}
 %
 \begin{proof}
-First, $\nsp{A}=\nsp{B}$ since $B$ is row-equivalent to $A$ (\acronymref{theorem}{REMES}).  The zero rows of $B$ represent equations that are always true in the homogeneous system $\homosystem{B}$, so the removal of these equations will not change the solution set.  Thus, in turn, $\nsp{B}=\nsp{C}$.\par
+\begin{para}First, $\nsp{A}=\nsp{B}$ since $B$ is row-equivalent to $A$ (\acronymref{theorem}{REMES}).  The zero rows of $B$ represent equations that are always true in the homogeneous system $\homosystem{B}$, so the removal of these equations will not change the solution set.  Thus, in turn, $\nsp{B}=\nsp{C}$.\end{para}
 %
-Second, $\rsp{A}=\rsp{B}$ since $B$ is row-equivalent to $A$ (\acronymref{theorem}{REMRS}).  The zero rows of $B$ contribute nothing to the span that is the row space of $B$, so the removal of these rows will not change the row space.  Thus, in turn, $\rsp{B}=\rsp{C}$.\par
+\begin{para}Second, $\rsp{A}=\rsp{B}$ since $B$ is row-equivalent to $A$ (\acronymref{theorem}{REMRS}).  The zero rows of $B$ contribute nothing to the span that is the row space of $B$, so the removal of these rows will not change the row space.  Thus, in turn, $\rsp{B}=\rsp{C}$.\end{para}
 %
-Third, we prove the set equality $\csp{A}=\nsp{L}$ with \acronymref{definition}{SE}.  Begin by showing that $\csp{A}\subseteq\nsp{L}$.  Choose $\vect{y}\in\csp{A}\subseteq\complex{m}$.  Then there exists a vector $\vect{x}\in\complex{n}$ such that $A\vect{x}=\vect{y}$ (\acronymref{theorem}{CSCS}).  Then for $1\leq k\leq m-r$,
+\begin{para}Third, we prove the set equality $\csp{A}=\nsp{L}$ with \acronymref{definition}{SE}.  Begin by showing that $\csp{A}\subseteq\nsp{L}$.  Choose $\vect{y}\in\csp{A}\subseteq\complex{m}$.  Then there exists a vector $\vect{x}\in\complex{n}$ such that $A\vect{x}=\vect{y}$ (\acronymref{theorem}{CSCS}).  Then for $1\leq k\leq m-r$,
 %
 \begin{align*}
 \vectorentry{L\vect{y}}{k}
@@ -428,12 +458,13 @@ Third, we prove the set equality $\csp{A}=\nsp{L}$ with \acronymref{definition}{
 &&\text{\acronymref{theorem}{MMZM}}
 %
 \end{align*}
+\end{para}
 %
-So, for all $1\leq k\leq m-r$, $\vectorentry{L\vect{y}}{k}=\vectorentry{\zerovector}{k}$.  So by \acronymref{definition}{CVE} we have $L\vect{y}=\zerovector$ and thus $\vect{y}\in\nsp{L}$.\par
+\begin{para}So, for all $1\leq k\leq m-r$, $\vectorentry{L\vect{y}}{k}=\vectorentry{\zerovector}{k}$.  So by \acronymref{definition}{CVE} we have $L\vect{y}=\zerovector$ and thus $\vect{y}\in\nsp{L}$.\end{para}
 %
-Now, show that $\nsp{L}\subseteq\csp{A}$.  Choose $\vect{y}\in\nsp{L}\subseteq\complex{m}$.  Form the vector $K\vect{y}\in\complex{r}$.  The linear system $\linearsystem{C}{K\vect{y}}$ is consistent since $C$ is in reduced row-echelon form and has no zero rows (\acronymref{theorem}{PEEF}).  Let $\vect{x}\in\complex{n}$ denote a solution to $\linearsystem{C}{K\vect{y}}$.\par
+\begin{para}Now, show that $\nsp{L}\subseteq\csp{A}$.  Choose $\vect{y}\in\nsp{L}\subseteq\complex{m}$.  Form the vector $K\vect{y}\in\complex{r}$.  The linear system $\linearsystem{C}{K\vect{y}}$ is consistent since $C$ is in reduced row-echelon form and has no zero rows (\acronymref{theorem}{PEEF}).  Let $\vect{x}\in\complex{n}$ denote a solution to $\linearsystem{C}{K\vect{y}}$.\end{para}
 %
-Then for $1\leq j\leq r$,
+\begin{para}Then for $1\leq j\leq r$,
 %
 \begin{align*}
 \vectorentry{B\vect{x}}{j}
@@ -446,9 +477,10 @@ Then for $1\leq j\leq r$,
 &=\vectorentry{J\vect{y}}{j}
 &&\text{$K$ a submatrix of $J$}\\
 %
-\end{align*}\par
+\end{align*}
+\end{para}
 %
-And for $r+1\leq k\leq m$,
+\begin{para}And for $r+1\leq k\leq m$,
 %
 \begin{align*}
 \vectorentry{B\vect{x}}{k}
@@ -465,10 +497,11 @@ And for $r+1\leq k\leq m$,
 &&\text{$L$ a submatrix of $J$}\\
 %
 \end{align*}
+\end{para}
 %
-So for all $1\leq i\leq m$, $\vectorentry{B\vect{x}}{i}=\vectorentry{J\vect{y}}{i}$ and by \acronymref{definition}{CVE} we have $B\vect{x}=J\vect{y}$.  From \acronymref{theorem}{PEEF} we know then that $A\vect{x}=\vect{y}$, and therefore $\vect{y}\in\csp{A}$ (\acronymref{theorem}{CSCS}).  By \acronymref{definition}{SE} we now have $\csp{A}=\nsp{L}$.\par
+\begin{para}So for all $1\leq i\leq m$, $\vectorentry{B\vect{x}}{i}=\vectorentry{J\vect{y}}{i}$ and by \acronymref{definition}{CVE} we have $B\vect{x}=J\vect{y}$.  From \acronymref{theorem}{PEEF} we know then that $A\vect{x}=\vect{y}$, and therefore $\vect{y}\in\csp{A}$ (\acronymref{theorem}{CSCS}).  By \acronymref{definition}{SE} we now have $\csp{A}=\nsp{L}$.\end{para}
 %
-Fourth, we prove the set equality $\lns{A}=\rsp{L}$ with \acronymref{definition}{SE}.  Begin by showing that $\rsp{L}\subseteq\lns{A}$.  Choose $\vect{y}\in\rsp{L}\subseteq\complex{m}$.  Then there exists a vector $\vect{w}\in\complex{m-r}$ such that $\vect{y}=\transpose{L}\vect{w}$ (\acronymref{definition}{RSM}, \acronymref{theorem}{CSCS}).  Then for $1\leq i\leq n$,
+\begin{para}Fourth, we prove the set equality $\lns{A}=\rsp{L}$ with \acronymref{definition}{SE}.  Begin by showing that $\rsp{L}\subseteq\lns{A}$.  Choose $\vect{y}\in\rsp{L}\subseteq\complex{m}$.  Then there exists a vector $\vect{w}\in\complex{m-r}$ such that $\vect{y}=\transpose{L}\vect{w}$ (\acronymref{definition}{RSM}, \acronymref{theorem}{CSCS}).  Then for $1\leq i\leq n$,
 %
 \begin{align*}
 \vectorentry{\transpose{A}\vect{y}}{i}
@@ -512,10 +545,11 @@ Fourth, we prove the set equality $\lns{A}=\rsp{L}$ with \acronymref{definition}
 &&\text{\acronymref{definition}{ZCV}}
 %
 \end{align*}
+\end{para}
 %
-Since $\vectorentry{\transpose{A}\vect{y}}{i}=\vectorentry{\zerovector}{i}$ for $1\leq i\leq n$, \acronymref{definition}{CVE} implies that $\transpose{A}\vect{y}=\zerovector$.  This means that $\vect{y}\in\nsp{\transpose{A}}$.\par
+\begin{para}Since $\vectorentry{\transpose{A}\vect{y}}{i}=\vectorentry{\zerovector}{i}$ for $1\leq i\leq n$, \acronymref{definition}{CVE} implies that $\transpose{A}\vect{y}=\zerovector$.  This means that $\vect{y}\in\nsp{\transpose{A}}$.\end{para}
 %
-Now, show that $\lns{A}\subseteq\rsp{L}$.  Choose $\vect{y}\in\lns{A}\subseteq\complex{m}$.  The matrix $J$ is nonsingular (\acronymref{theorem}{PEEF}), so $\transpose{J}$ is also nonsingular (\acronymref{theorem}{MIT}) and therefore the linear system $\linearsystem{\transpose{J}}{\vect{y}}$ has a unique solution.  Denote this solution as $\vect{x}\in\complex{m}$.  We will need to work with two ``halves'' of $\vect{x}$, which we will denote as $\vect{z}$ and $\vect{w}$ with formal definitions given by
+\begin{para}Now, show that $\lns{A}\subseteq\rsp{L}$.  Choose $\vect{y}\in\lns{A}\subseteq\complex{m}$.  The matrix $J$ is nonsingular (\acronymref{theorem}{PEEF}), so $\transpose{J}$ is also nonsingular (\acronymref{theorem}{MIT}) and therefore the linear system $\linearsystem{\transpose{J}}{\vect{y}}$ has a unique solution.  Denote this solution as $\vect{x}\in\complex{m}$.  We will need to work with two ``halves'' of $\vect{x}$, which we will denote as $\vect{z}$ and $\vect{w}$ with formal definitions given by
 %
 \begin{align*}
 \vectorentry{z}{j}&=\vectorentry{x}{i}
@@ -527,8 +561,9 @@ Now, show that $\lns{A}\subseteq\rsp{L}$.  Choose $\vect{y}\in\lns{A}\subseteq\c
 &1\leq k\leq m-r
 %
 \end{align*}
+\end{para}
 %
-Now, for $1\leq j\leq r$,
+\begin{para}Now, for $1\leq j\leq r$,
 %
 \begin{align*}
 \vectorentry{\transpose{C}\vect{z}}{j}
@@ -582,11 +617,11 @@ Now, for $1\leq j\leq r$,
 &=\vectorentry{\zerovector}{j}
 &&\text{$\vect{y}\in\lns{A}$}
 %
-\end{align*}
+\end{align*}\end{para}
 %
-So, by \acronymref{definition}{CVE}, $\transpose{C}\vect{z}=\zerovector$ and the vector $\vect{z}$ gives us a linear combination of the columns of $\transpose{C}$ that equals the zero vector.  In other words, $\vect{z}$ gives a relation of linear dependence on the rows of $C$.  However, the rows of $C$ are a linearly independent set by \acronymref{theorem}{BRS}.  According to \acronymref{definition}{LICV} we must conclude that the entries of $\vect{z}$ are all zero, i.e.\ $\vect{z}=\zerovector$.\par
+\begin{para}So, by \acronymref{definition}{CVE}, $\transpose{C}\vect{z}=\zerovector$ and the vector $\vect{z}$ gives us a linear combination of the columns of $\transpose{C}$ that equals the zero vector.  In other words, $\vect{z}$ gives a relation of linear dependence on the rows of $C$.  However, the rows of $C$ are a linearly independent set by \acronymref{theorem}{BRS}.  According to \acronymref{definition}{LICV} we must conclude that the entries of $\vect{z}$ are all zero, i.e.\ $\vect{z}=\zerovector$.\end{para}
 %
-Now, for $1\leq i\leq m$, we have
+\begin{para}Now, for $1\leq i\leq m$, we have
 %
 \begin{align*}
 \vectorentry{\vect{y}}{i}
@@ -616,26 +651,26 @@ Now, for $1\leq i\leq m$, we have
 &&\text{\acronymref{theorem}{EMP}}\\
 %
 \end{align*}
+\end{para}
 %
-So by \acronymref{definition}{CVE}, $\vect{y}=\transpose{L}\vect{w}$.  The existence of $\vect{w}$ implies that $\vect{y}\in\rsp{L}$, and therefore $\lns{A}\subseteq\rsp{L}$.  So by \acronymref{definition}{SE} we have $\lns{A}=\rsp{L}$.
+\begin{para}So by \acronymref{definition}{CVE}, $\vect{y}=\transpose{L}\vect{w}$.  The existence of $\vect{w}$ implies that $\vect{y}\in\rsp{L}$, and therefore $\lns{A}\subseteq\rsp{L}$.  So by \acronymref{definition}{SE} we have $\lns{A}=\rsp{L}$.\end{para}
 %
 \end{proof}
 %
-The first two conclusions of this theorem are nearly trivial.  But they set up a pattern of results for $C$ that is reflected in the latter two conclusions about $L$.  In total, they tell us that we can compute all four subsets just by finding null spaces and row spaces.  This theorem does not tell us exactly how to compute these subsets, but instead simply expresses them as null spaces and row spaces of matrices in reduced row-echelon form without any zero rows ($C$ and $L$).   A linearly independent set that spans the null space of a matrix in reduced row-echelon form can be found easily with \acronymref{theorem}{BNS}.  It is an even easier matter to find a linearly independent set that spans the row space of a matrix in reduced row-echelon form with \acronymref{theorem}{BRS}, especially when there are no zero rows present.  So an application of \acronymref{theorem}{FS} is typically followed by two applications each of \acronymref{theorem}{BNS} and \acronymref{theorem}{BRS}.\par
+\begin{para}The first two conclusions of this theorem are nearly trivial.  But they set up a pattern of results for $C$ that is reflected in the latter two conclusions about $L$.  In total, they tell us that we can compute all four subsets just by finding null spaces and row spaces.  This theorem does not tell us exactly how to compute these subsets, but instead simply expresses them as null spaces and row spaces of matrices in reduced row-echelon form without any zero rows ($C$ and $L$).   A linearly independent set that spans the null space of a matrix in reduced row-echelon form can be found easily with \acronymref{theorem}{BNS}.  It is an even easier matter to find a linearly independent set that spans the row space of a matrix in reduced row-echelon form with \acronymref{theorem}{BRS}, especially when there are no zero rows present.  So an application of \acronymref{theorem}{FS} is typically followed by two applications each of \acronymref{theorem}{BNS} and \acronymref{theorem}{BRS}.\end{para}
 %
-The situation when $r=m$ deserves comment, since now the matrix $L$ has no rows.  What is $\csp{A}$ when we try to apply \acronymref{theorem}{FS} and encounter $\nsp{L}$?  One interpretation of this situation is that $L$ is the coefficient matrix of a homogeneous system that has no equations.  How hard is it to find a solution vector to this system?  Some thought will convince you that {\em any} proposed vector will qualify as a solution, since it makes {\em all} of the equations true.  So every possible vector is in the null space of $L$ and therefore $\csp{A}=\nsp{L}=\complex{m}$.  OK, perhaps this sounds like some twisted argument from {\sl Alice in Wonderland}.  Let us try another argument that might solidly convince you of this logic.\par
+\begin{para}The situation when $r=m$ deserves comment, since now the matrix $L$ has no rows.  What is $\csp{A}$ when we try to apply \acronymref{theorem}{FS} and encounter $\nsp{L}$?  One interpretation of this situation is that $L$ is the coefficient matrix of a homogeneous system that has no equations.  How hard is it to find a solution vector to this system?  Some thought will convince you that {\em any} proposed vector will qualify as a solution, since it makes {\em all} of the equations true.  So every possible vector is in the null space of $L$ and therefore $\csp{A}=\nsp{L}=\complex{m}$.  OK, perhaps this sounds like some twisted argument from {\sl Alice in Wonderland}.  Let us try another argument that might solidly convince you of this logic.\end{para}
 %
-If $r=m$, when we row-reduce the augmented matrix of $\linearsystem{A}{\vect{b}}$ the result will have no zero rows, and all the leading 1's will occur in first $n$ columns, so by \acronymref{theorem}{RCLS} the system will be consistent.  By \acronymref{theorem}{CSCS}, $\vect{b}\in\csp{A}$.  Since $\vect{b}$ was arbitrary, every possible vector is in the column space of $A$, so we again have $\csp{A}=\complex{m}$.  The situation when a matrix has $r=m$ is known by the term \define{full rank}, and in the case of a square matrix coincides with nonsingularity (see \acronymref{exercise}{FS.M50}).\par
+\begin{para}If $r=m$, when we row-reduce the augmented matrix of $\linearsystem{A}{\vect{b}}$ the result will have no zero rows, and all the leading 1's will occur in first $n$ columns, so by \acronymref{theorem}{RCLS} the system will be consistent.  By \acronymref{theorem}{CSCS}, $\vect{b}\in\csp{A}$.  Since $\vect{b}$ was arbitrary, every possible vector is in the column space of $A$, so we again have $\csp{A}=\complex{m}$.  The situation when a matrix has $r=m$ is known by the term \define{full rank}, and in the case of a square matrix coincides with nonsingularity (see \acronymref{exercise}{FS.M50}).\end{para}
 %
-The properties of the matrix $L$ described by this theorem can be explained informally as follows.  A column vector $\vect{y}\in\complex{m}$ is in the column space of $A$ if the linear system $\linearsystem{A}{\vect{y}}$ is consistent (\acronymref{theorem}{CSCS}).  By \acronymref{theorem}{RCLS}, the reduced row-echelon form of the augmented matrix $\augmented{A}{\vect{y}}$ of a consistent system will have zeros in the bottom $m-r$ locations of the last column.  By \acronymref{theorem}{PEEF} this final column is the vector $J\vect{y}$ and so should then have zeros in the final $m-r$ locations.  But since $L$ comprises the final $m-r$ rows of $J$, this condition is expressed by saying $\vect{y}\in\nsp{L}$.\par
+\begin{para}The properties of the matrix $L$ described by this theorem can be explained informally as follows.  A column vector $\vect{y}\in\complex{m}$ is in the column space of $A$ if the linear system $\linearsystem{A}{\vect{y}}$ is consistent (\acronymref{theorem}{CSCS}).  By \acronymref{theorem}{RCLS}, the reduced row-echelon form of the augmented matrix $\augmented{A}{\vect{y}}$ of a consistent system will have zeros in the bottom $m-r$ locations of the last column.  By \acronymref{theorem}{PEEF} this final column is the vector $J\vect{y}$ and so should then have zeros in the final $m-r$ locations.  But since $L$ comprises the final $m-r$ rows of $J$, this condition is expressed by saying $\vect{y}\in\nsp{L}$.\end{para}
 %
-Additionally, the rows of $J$ are the scalars in linear combinations of the rows of $A$ that create the rows of $B$.  That is, the rows of $J$ record the net effect of the sequence of row operations that takes $A$ to its reduced row-echelon form, $B$.  This can be seen in the equation $JA=B$ (\acronymref{theorem}{PEEF}).  As such, the rows of $L$ are scalars for linear combinations of the rows of $A$ that yield zero rows.  But such linear combinations are precisely the elements of the left null space.  So any element of the row space of $L$ is also an element of the left null space of $A$.
+\begin{para}Additionally, the rows of $J$ are the scalars in linear combinations of the rows of $A$ that create the rows of $B$.  That is, the rows of $J$ record the net effect of the sequence of row operations that takes $A$ to its reduced row-echelon form, $B$.  This can be seen in the equation $JA=B$ (\acronymref{theorem}{PEEF}).  As such, the rows of $L$ are scalars for linear combinations of the rows of $A$ that yield zero rows.  But such linear combinations are precisely the elements of the left null space.  So any element of the row space of $L$ is also an element of the left null space of $A$.\end{para}
 %
-We will now illustrate \acronymref{theorem}{FS} with a few examples.\\
-%
+\begin{para}We will now illustrate \acronymref{theorem}{FS} with a few examples.\end{para}
 %
 \begin{example}{FS1}{Four subsets, \protect\#1}{four subsets}
-In \acronymref{example}{SEEF} we found the five relevant submatrices of the matrix
+\begin{para}In \acronymref{example}{SEEF} we found the five relevant submatrices of the matrix
 %
 \begin{equation*}
 A=
@@ -646,8 +681,9 @@ A=
  3 & -1 & 2 & 9 & 1 & 12
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-To apply \acronymref{theorem}{FS} we only need $C$ and $L$,
+\begin{para}To apply \acronymref{theorem}{FS} we only need $C$ and $L$,
 %
 \begin{align*}
 C&=
@@ -662,8 +698,9 @@ L&=
 \leading{1} & 2 & 2 & 1
 \end{bmatrix}
 \end{align*}
+\end{para}
 %
-Then we use \acronymref{theorem}{FS}  to obtain
+\begin{para}Then we use \acronymref{theorem}{FS}  to obtain
 %
 \begin{align*}
 \nsp{A}&=\nsp{C}=
@@ -696,15 +733,15 @@ Then we use \acronymref{theorem}{FS}  to obtain
 }}
 &&\text{\acronymref{theorem}{BRS}}
 %
-\end{align*}
+\end{align*}\end{para}
 %
-Boom!
+\begin{para}Boom!\end{para}
 %
 \end{example}
 %
 %
 \begin{example}{FS2}{Four subsets, \protect\#2}{four subsets}
-Now lets return to the matrix $A$ that we used to motivate this section in \acronymref{example}{CSANS},
+\begin{para}Now lets return to the matrix $A$ that we used to motivate this section in \acronymref{example}{CSANS},
 %
 \begin{equation*}
 A=
@@ -717,8 +754,9 @@ A=
  -1 & -1 & 1 & 1 & 0
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-We form the matrix $M$ by adjoining the $6\times 6$ identity matrix $I_6$,
+\begin{para}We form the matrix $M$ by adjoining the $6\times 6$ identity matrix $I_6$,
 %
 \begin{equation*}
 M=
@@ -745,8 +783,9 @@ N=
  0 & 0 & 0 & 0 & 0 & 0 & \leading{1} & -2 & 1 & 1 & -1
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-To find the four subsets for $A$, we only need identify the $4\times 5$ matrix $C$ and the $2\times 6$ matrix $L$,
+\begin{para}To find the four subsets for $A$, we only need identify the $4\times 5$ matrix $C$ and the $2\times 6$ matrix $L$,
 %
 \begin{align*}
 C&=
@@ -763,8 +802,9 @@ L&=
  0 & \leading{1} & -2 & 1 & 1 & -1
 \end{bmatrix}
 \end{align*}
+\end{para}
 %
-Then we apply \acronymref{theorem}{FS},
+\begin{para}Then we apply \acronymref{theorem}{FS},
 %
 \begin{align*}
 \nsp{A}&=\nsp{C}=
@@ -799,21 +839,22 @@ Then we apply \acronymref{theorem}{FS},
 &&\text{\acronymref{theorem}{BRS}}
 %
 \end{align*}
+\end{para}
 %
 \end{example}
 %
-The next example is just a bit different since the matrix has more rows than columns, and a trivial null space.
+\begin{para}The next example is just a bit different since the matrix has more rows than columns, and a trivial null space.\end{para}
 %
 \begin{example}{FSAG}{Four subsets, Archetype G}{column space!as null space, Archetype G}
 %
-\acronymref{archetype}{G} and \acronymref{archetype}{H} are both systems of $m=5$ equations in $n=2$ variables.  They have identical coefficient matrices, which we will denote here as the matrix $G$,
+\begin{para}\acronymref{archetype}{G} and \acronymref{archetype}{H} are both systems of $m=5$ equations in $n=2$ variables.  They have identical coefficient matrices, which we will denote here as the matrix $G$,
 %
 \begin{equation*}
 G=
-\archetypepart{G}{purematrix}
-\end{equation*}
+\archetypepart{G}{purematrix}\end{equation*}
+\end{para}
 %
-Adjoin the $5\times 5$ identity matrix, $I_5$, to form
+\begin{para}Adjoin the $5\times 5$ identity matrix, $I_5$, to form
 %
 \begin{equation*}
 M=
@@ -825,8 +866,9 @@ M=
 6 & 9 & 0&0&0&0&1
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-This row-reduces to
+\begin{para}This row-reduces to
 %
 \begin{equation*}
 N=
@@ -838,8 +880,9 @@ N=
 0 & 0 & 0 & 0 & \leading{1} & 1 & -1
 \end{bmatrix}
 \end{equation*}
+\end{para}
 %
-The first $n=2$ columns contain $r=2$ leading 1's, so we obtain $C$ as the $2\times 2$ identity matrix and extract $L$ from the final $m-r=3$ rows in the final $m=5$ columns.
+\begin{para}The first $n=2$ columns contain $r=2$ leading 1's, so we obtain $C$ as the $2\times 2$ identity matrix and extract $L$ from the final $m-r=3$ rows in the final $m=5$ columns.
 %
 \begin{align*}
 C&=
@@ -855,8 +898,9 @@ L&=
 0 & 0 & \leading{1}  & 1 & -1
 \end{bmatrix}
 \end{align*}
+\end{para}
 %
-Then we apply \acronymref{theorem}{FS},
+\begin{para}Then we apply \acronymref{theorem}{FS},
 %
 \begin{align*}
 \nsp{G}=\nsp{C}&=
@@ -895,22 +939,27 @@ Then we apply \acronymref{theorem}{FS},
 }}
 %
 \end{align*}
+\end{para}
 %
-As mentioned earlier, \acronymref{archetype}{G} is consistent, while \acronymref{archetype}{H} is inconsistent.  See if you can write the two different vectors of constants from these two archetypes as linear combinations of the two vectors in $\csp{G}$.  How about the two columns of $G$, can you write each individually as a linear combination of the two vectors in $\csp{G}$?  They must be in the column space of $G$ also.  Are your answers unique?  Do you notice anything about the scalars that appear in the linear combinations you are forming?
+\begin{para}As mentioned earlier, \acronymref{archetype}{G} is consistent, while \acronymref{archetype}{H} is inconsistent.  See if you can write the two different vectors of constants from these two archetypes as linear combinations of the two vectors in $\csp{G}$.  How about the two columns of $G$, can you write each individually as a linear combination of the two vectors in $\csp{G}$?  They must be in the column space of $G$ also.  Are your answers unique?  Do you notice anything about the scalars that appear in the linear combinations you are forming?\end{para}
 %
 \end{example}
 %
 \sageadvice{EEF}{Extended Echelon Form}{extended echelon form}
 %
-\acronymref{example}{COV} and \acronymref{example}{CSROI} each describes the column space of the coefficient matrix from \acronymref{archetype}{I} as the span of a set of $r=3$ linearly independent vectors.  It is no accident that these two different sets both have the same size.  If we (you?) were to calculate the column space of this matrix using the null space of the matrix $L$ from \acronymref{theorem}{FS} then we would again find a set of 3 linearly independent vectors that span the range.  More on this later.\par
+\begin{para}\acronymref{example}{COV} and \acronymref{example}{CSROI} each describes the column space of the coefficient matrix from \acronymref{archetype}{I} as the span of a set of $r=3$ linearly independent vectors.  It is no accident that these two different sets both have the same size.  If we (you?) were to calculate the column space of this matrix using the null space of the matrix $L$ from \acronymref{theorem}{FS} then we would again find a set of 3 linearly independent vectors that span the range.  More on this later.\end{para}
 %
-So we have three different methods to obtain a description of the column space of a matrix as the span of a linearly independent set.  \acronymref{theorem}{BCS} is sometimes useful since the vectors it specifies are equal to actual columns of the matrix. \acronymref{theorem}{BRS} and \acronymref{theorem}{CSRST} combine to create vectors with lots of zeros, and strategically placed 1's near the top of the vector.   \acronymref{theorem}{FS} and the matrix $L$ from the extended echelon form gives us a third method, which tends to create vectors with lots of zeros, and strategically placed 1's near the bottom of the vector.   If we don't care about linear independence we can also appeal to \acronymref{definition}{CSM} and simply express the column space as the span of all the columns of the matrix, giving us a fourth description.\par
+\begin{para}So we have three different methods to obtain a description of the column space of a matrix as the span of a linearly independent set.  \acronymref{theorem}{BCS} is sometimes useful since the vectors it specifies are equal to actual columns of the matrix. \acronymref{theorem}{BRS} and \acronymref{theorem}{CSRST} combine to create vectors with lots of zeros, and strategically placed 1's near the top of the vector.   \acronymref{theorem}{FS} and the matrix $L$ from the extended echelon form gives us a third method, which tends to create vectors with lots of zeros, and strategically placed 1's near the bottom of the vector.   If we don't care about linear independence we can also appeal to \acronymref{definition}{CSM} and simply express the column space as the span of all the columns of the matrix, giving us a fourth description.\end{para}
 %
-With \acronymref{theorem}{CSRST} and \acronymref{definition}{RSM}, we can compute column spaces with theorems about row spaces, and we can compute row spaces with theorems about row spaces, but in each case we must transpose the matrix first.  At this point you may be overwhelmed by all the possibilities for computing column and row spaces.  \acronymref{diagram}{CSRST} is meant to help.  For both the column space and row space, it suggests four techniques.  One is to appeal to the definition, another yields a span of a linearly independent set, and a third uses \acronymref{theorem}{FS}.  A fourth suggests transposing the matrix and the dashed line implies that then the companion set of techniques can be applied.  This can lead to a bit of silliness, since if you were to follow the dashed lines {\em twice} you would transpose the matrix twice, and by \acronymref{theorem}{TT} would accomplish nothing productive.\par
+\begin{para}With \acronymref{theorem}{CSRST} and \acronymref{definition}{RSM}, we can compute column spaces with theorems about row spaces, and we can compute row spaces with theorems about row spaces, but in each case we must transpose the matrix first.  At this point you may be overwhelmed by all the possibilities for computing column and row spaces.  \acronymref{diagram}{CSRST} is meant to help.  For both the column space and row space, it suggests four techniques.  One is to appeal to the definition, another yields a span of a linearly independent set, and a third uses \acronymref{theorem}{FS}.  A fourth suggests transposing the matrix and the dashed line implies that then the companion set of techniques can be applied.  This can lead to a bit of silliness, since if you were to follow the dashed lines {\em twice} you would transpose the matrix twice, and by \acronymref{theorem}{TT} would accomplish nothing productive.
 %
 \diagram{CSRST}{Column Space and Row Space Techniques}
 %
-Although we have many ways to describe a column space, notice that one tempting strategy will usually fail.  It is not possible to simply row-reduce a matrix directly and then use the columns of the row-reduced matrix as a set whose span equals the column space.  In other words, row operations {\em do not} preserve column spaces (however row operations do preserve row spaces, \acronymref{theorem}{REMRS}).  See \acronymref{exercise}{CRS.M21}.
+\end{para}
+%
+\begin{para}Although we have many ways to describe a column space, notice that one tempting strategy will usually fail.  It is not possible to simply row-reduce a matrix directly and then use the columns of the row-reduced matrix as a set whose span equals the column space.  In other words, row operations {\em do not} preserve column spaces (however row operations do preserve row spaces, \acronymref{theorem}{REMRS}).  See \acronymref{exercise}{CRS.M21}.\end{para}
+%
+\end{subsect}
 %
 %  End  fs.tex
 
