@@ -811,6 +811,7 @@ Licensed under the \href{http://www.gnu.org/licenses/fdl.html}{GNU Free Document
 \newcommand*{\examplemarker}{$\boxtimes$}
 \newcommand*{\techniquemarker}{$\circleddash$}
 \newcommand*{\computationmarker}{$\oplus$}
+\newcommand*{\sagemarker}{$\diamond$}
 \newcommand*{\proofmarker}{$\blacksquare$}
 
 % Environment Declarations
@@ -833,7 +834,12 @@ Licensed under the \href{http://www.gnu.org/licenses/fdl.html}{GNU Free Document
 \newenvironment{computation}[3]
   {\envleadin{Computation Note}{computation}{cmp}{#1}{#2}{#3}}
   {\envleadout{\computationmarker}}
-\newenvironment{proof}{\noindent{\bf Proof}\ \ }{\envleadout{\proofmarker}}
+\newenvironment{sagemath}[3]
+  {\envleadin{Sage}{sage}{sag}{#1}{#2}{#3}}
+  {\envleadout{\sagemarker}}
+\newenvironment{proof}
+  {\noindent{\bf Proof}\ \ }
+  {\envleadout{\proofmarker}}
 
 
 
@@ -1012,6 +1018,61 @@ Contributed~by~#1
 }{\relax}%                done with relevant notes
 }
 
+
+%%%%%%%%%%%%%%%%%
+%%
+%%  Sage Enhanced
+%%
+%%%%%%%%%%%%%%%%%
+
+%% Maybe control all this with a switch
+\usepackage{sagetex}
+
+%% Get text output in sageexample environments
+%% Also hacked sagetex.py to trash the latex versions of the output
+\renewcommand{\sageexampleincludetextoutput}{True}
+
+%% Control indentation here
+\setlength{\sagetexindent}{6ex}
+
+%%  syntax package will display Sage code inline (code not executed)
+%%  Needs \% to effect a percent symbol
+%%  sagetex package offers a \percent, which we might use if supported by tex4ht
+%%  Needs \caret command (defined below) to effect Sage exponentiation output
+%%  It would be nice to accomplish all this with the sagetex package - just
+%%  inline pretty-printing of very small hunks of Sage, with no evaluation
+%% \usepackage{syntax}
+
+%% Note: trash this verbatim stuff, use \verb?...? instead
+
+%% Test version of \sageref
+%% Eventually consolidate with following
+%% Usage:  \sageverb{"some stuff"}
+%%   Escapes: \" and \\
+\usepackage[nounderscore]{syntax}
+% http://groups.google.com/group/latexusersgroup/browse_thread/thread/fddccd2326d81f1a
+%   but maybe explanation is backward
+\let\sageverb\syntax
+%% http://ubuntuforums.org/showthread.php?t=1286215
+\newcommand{\ssq}{\char'15} % straight quote in tt fonts
+
+
+%% Prior inline version
+\newcommand{\sageinline}[1]{\lit*{#1}}
+\newcommand{\caret}{\^{}}
+
+%    Usage: \sageavice{acronym}{title-for-acronym-capitalized}{index-entry}
+%
+%       Creates a subsection of sagemath stuff,
+%       includes a blank workspace-cell at the end of each
+%
+%       (use a switch to toally supress all this, or a new argument for placeholder text)
+%
+\newcommand{\sageadvice}[3]{%
+\begin{sagemath}{#1}{#2}{#3}%
+\input{sage/#1.tex}%
+\end{sagemath}%
+}  % End \sageadvice
 %
 %  End of fcla-developer.sty
 %
