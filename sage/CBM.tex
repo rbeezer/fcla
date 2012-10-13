@@ -1,0 +1,60 @@
+To create a change-of-basis matrix, it is enough to construct an identity linear transformation relative to a domain and codomain with the specified user bases, which is simply a straight application of \acronymref{definition}{CBM}.  Here we go with two arbitrary bases.
+%
+\begin{sageexample}
+sage: b0 = vector(QQ, [-5, 8,  0, 4])
+sage: b1 = vector(QQ, [-3, 9, -2, 4])
+sage: b2 = vector(QQ, [-1, 4, -1, 2])
+sage: b3 = vector(QQ, [-1, 2,  0, 1])
+sage: B = [b0, b1, b2, b3]
+sage: U = (QQ^4).subspace_with_basis(B)
+
+sage: c0 = vector(QQ, [ 0,  2, -7,  5])
+sage: c1 = vector(QQ, [-1,  2, -1,  4])
+sage: c2 = vector(QQ, [ 1, -3,  5, -7])
+sage: c3 = vector(QQ, [ 1,  1, -8,  3])
+sage: C = [c0, c1, c2, c3]
+sage: V = (QQ^4).subspace_with_basis(C)
+
+sage: x1, x2, x3, x4 = var('x1, x2, x3, x4')
+sage: id_symbolic(x1, x2, x3, x4) = [x1, x2, x3, x4]
+sage: S = linear_transformation(U, V, id_symbolic)
+sage: CB = S.matrix(side='right')
+sage: CB
+[ 36  25   8   7]
+[ 27  34  15   7]
+[ 35  35  14   8]
+[-13  -4   0  -2]
+sage: S.is_invertible()
+True
+\end{sageexample}
+%
+We can demonstrate that \verb?CB? is indeed the change-of-basis matrix from \verb?B? to \verb?C?, converting vector representations relative to \verb?B? into vector representations relative to \verb?C?.  We choose an arbitrary vector, \verb?x?, to experiment with (you could experiment with other possibilities).  We use the Sage conveniences to create vector representations relative to the two bases, and then verify \acronymref{theorem}{CBM}.  Recognize that \verb?x?, \verb?u? and \verb?v? are all the same vector.
+%
+\begin{sageexample}
+sage: x = vector(QQ, [-45, 62, 171, 85])
+sage: u = U.coordinate_vector(x)
+sage: u
+(-103, -108, 45, 839)
+sage: v = V.coordinate_vector(x)
+sage: v
+(-175, 95, -43, 93)
+sage: v == CB*u
+True
+\end{sageexample}
+%
+We can also verify the construction above by building the change-of-basis matrix directly (i.e., without constructing a linear transformation).
+%
+\begin{sageexample}
+sage: cols = [V.coordinate_vector(u) for u in U.basis()]
+sage: M = column_matrix(cols)
+sage: M
+[ 36  25   8   7]
+[ 27  34  15   7]
+[ 35  35  14   8]
+[-13  -4   0  -2]
+\end{sageexample}
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
+

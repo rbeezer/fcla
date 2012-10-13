@@ -1,0 +1,26 @@
+An \define{endomorphism} is an ``operation-preserving'' function (a ``morphism'') whose domain and codomain are equal.  Sage takes this definition one step further for linear transformations and requires that the domain and codomain have the same bases (either a default echelonized basis or the same user basis).  When a linear transformation meets this extra requirement, several natural methods become available.\par
+%
+Principally, we can compute the eigenvalues provided by \acronymref{definition}{EELT}.  We also get a natural notion of a characteristic polynomial.
+%
+\begin{sageexample}
+sage: x1, x2, x3, x4 = var('x1, x2, x3, x4')
+sage: outputs = [ 4*x1 + 2*x2 -   x3 + 8*x4,
+...               3*x1 - 5*x2 - 9*x3       ,
+...                      6*x2 + 7*x3 + 6*x4,
+...              -3*x1 + 2*x2 + 5*x3 - 3*x4]
+sage: T_symbolic(x1, x2, x3, x4) = outputs
+sage: T = linear_transformation(QQ^4, QQ^4, T_symbolic)
+sage: T.eigenvalues()
+[3, -2, 1, 1]
+sage: cp = T.characteristic_polynomial()
+sage: cp
+x^4 - 3*x^3 - 3*x^2 + 11*x - 6
+sage: cp.factor()
+(x - 3) * (x + 2) * (x - 1)^2
+\end{sageexample}
+%
+Now the question of eigenvalues being elements of the set of scalars used for the vector space becomes even more obvious.  If we define an endomorphism on a vector space whose scalars are the rational numbers, should we ``allow'' irrational or complex eigenvalues?  You will now recognize our use of the complex numbers in the text for the gross convenience that it is.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

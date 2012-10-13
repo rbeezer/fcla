@@ -1,0 +1,242 @@
+In \acronymref{sage}{MR} we built two matrix representations of one linear transformation, relative to two different pairs of bases.  We now understand how these two matrix representations are related --- \acronymref{theorem}{MRCB} gives the precise relationship with change-of-basis matrices, one converting vector representations on the domain, the other converting vector representations on the codomain.  Here is the demonstration.  We use \verb?MT? as the prefix of names for matrix representations, \verb?CB? as the prefix for change-of-basis matrices, and numerals to distinguish the two domain-codomain pairs.
+%
+\begin{sageexample}
+sage: x1, x2, x3, x4 = var('x1, x2, x3, x4')
+sage: outputs = [3*x1 + 7*x2 + x3 - 4*x4,
+...              2*x1 + 5*x2 + x3 - 3*x4,
+...               -x1 - 2*x2      +   x4]
+sage: T_symbolic(x1, x2, x3, x4) = outputs
+
+sage: U = QQ^4
+sage: V = QQ^3
+
+sage: b0 = vector(QQ, [ 1, 1, -1, 0])
+sage: b1 = vector(QQ, [-1, 0, -2, 7])
+sage: b2 = vector(QQ, [ 0, 1, -2, 4])
+sage: b3 = vector(QQ, [-2, 0, -1, 6])
+sage: B = [b0, b1, b2, b3]
+
+sage: c0 = vector(QQ, [ 1,  6, -6])
+sage: c1 = vector(QQ, [ 0,  1, -1])
+sage: c2 = vector(QQ, [-2, -3,  4])
+sage: C = [c0, c1, c2]
+
+sage: d0 = vector(QQ, [ 1, -3,  2, -1])
+sage: d1 = vector(QQ, [ 0,  1,  0,  1])
+sage: d2 = vector(QQ, [-1,  2, -1, -1])
+sage: d3 = vector(QQ, [ 2, -8,  4, -3])
+sage: D = [d0, d1, d2, d3]
+
+sage: e0 = vector(QQ, [ 0,  1, -3])
+sage: e1 = vector(QQ, [-1,  2, -1])
+sage: e2 = vector(QQ, [ 2, -4,  3])
+sage: E = [e0, e1, e2]
+
+sage: U1 = U.subspace_with_basis(B)
+sage: V1 = V.subspace_with_basis(C)
+sage: T1 = linear_transformation(U1, V1, T_symbolic)
+sage: MTBC =T1.matrix(side='right')
+sage: MTBC
+[ 15 -67 -25 -61]
+[-75 326 120 298]
+[  3 -17  -7 -15]
+
+sage: U2 = U.subspace_with_basis(D)
+sage: V2 = V.subspace_with_basis(E)
+sage: T2 = linear_transformation(U2, V2, T_symbolic)
+sage: MTDE = T2.matrix(side='right')
+sage: MTDE
+[ -32    8   38  -91]
+[-148   37  178 -422]
+[ -80   20   96 -228]
+\end{sageexample}
+%
+This is as far as we could go back in \acronymref{section}{MR}.  These two matrices represent the same linear transformation (namely \verb?T_symbolic?), but the question now is ``how are these representations related?''  We need two change-of-basis matrices.  Notice that with different dimensions for the domain and codomain, we get square matrices of different sizes.
+%
+\begin{sageexample}
+sage: identity4(x1, x2, x3, x4) = [x1, x2, x3, x4]
+sage: CU = linear_transformation(U2, U1, identity4)
+sage: CBDB = CU.matrix(side='right')
+sage: CBDB
+[ 6  7 -8  1]
+[ 5  1 -5  9]
+[-9 -6 10 -9]
+[ 0  3 -1 -5]
+\end{sageexample}
+%
+\begin{sageexample}
+sage: identity3(x1, x2, x3) = [x1, x2, x3]
+sage: CV = linear_transformation(V1, V2, identity3)
+sage: CBCE = CV.matrix(side='right')
+sage: CBCE
+[  8   1  -7]
+[ 33   4 -28]
+[ 17   2 -15]
+\end{sageexample}
+%
+Finally, here is \acronymref{theorem}{MRCB}, relating the the two matrix representations via the change-of-basis matrices.
+%
+\begin{sageexample}
+sage: MTDE == CBCE * MTBC * CBDB
+True
+\end{sageexample}
+%
+We can walk through this theorem just a bit more carefully, step-by-step.  We will compute three matrix-vector products, using three vector representations, to demonstrate the equality above.  To prepare, we choose the vector \verb?x? arbitrarily, and we compute its value when evaluted by \verb?T_symbolic?, and then verify the vector and matrix representations relative to \verb?D? and \verb?E?.
+%
+\begin{sageexample}
+sage: T_symbolic(34, -61, 55, 18)
+(-342, -236, 106)
+sage: x = vector(QQ, [34, -61, 55, 18])
+sage: u_D = U2.coordinate_vector(x)
+sage: u_D
+(25, 24, -13, -2)
+sage: v_E = V2.coordinate_vector(vector(QQ, [-342, -236, 106]))
+sage: v_E
+(-920, -4282, -2312)
+sage: v_E == MTDE*u_D
+True
+\end{sageexample}
+%
+So far this is not really new, we have just verified the representation \verb?MTDE? in the case of one input vector (\verb?x?), but now we will use the alternate version of this matrix representation, \verb?CBCE * MTBC * CBDB?, in steps.\par
+%
+First, convert the input vector from a representation relative to \verb?D? to a representation relative to \verb?B?.
+%
+\begin{sageexample}
+sage: u_B = CBDB*u_D
+sage: u_B
+(420, 196, -481, 95)
+\end{sageexample}
+%
+Now apply the matrix representation, which expects ``input'' coordinatized relative to \verb?B? and produces ``output'' coordinatized relative to \verb?C?.
+%
+\begin{sageexample}
+sage: v_C = MTBC*u_B
+sage: v_C
+(-602, 2986, -130)
+\end{sageexample}
+%
+Now convert the output vector from a representation relative to \verb?C? to a representation relative to \verb?E?.
+%
+\begin{sageexample}
+sage: v_E = CBCE*v_C
+sage: v_E
+(-920, -4282, -2312)
+\end{sageexample}
+%
+It is no surprise that this version of \verb?v_E? equals the previous one, since we have checked the equality of the matrices earlier.  But it may be instructive to see the input converted by change-of-basis matrices before and after being hit by the linear transformation (as a matrix representation).
+%
+Now we will perform another example, but this time using Sage endomorphisms, linear transformations with equal bases for the domain and codomain.  This will allow us to illustrate \acronymref{theorem}{SCB}.  Just for fun, we will do something large. Notice the labor-saving device for manufacturing many symbolic variables at once.
+%
+\begin{sageexample}
+sage: [var('x{0}'.format(i)) for i in range(1, 12)]
+[x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11]
+sage: x = vector(SR, [x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11])
+sage: A = matrix(QQ, 11, [
+...   [ 146, -225, -10,  212,  419, -123, -73,  3,  219, -100, -57],
+...   [ -24,   32,   1,  -33,  -66,   13,  16,  1,  -33,   18,   3],
+...   [  79, -131, -15,  124,  235,  -74, -33, -3,  128,  -57, -29],
+...   [  -1,   13, -16,   -1,  -27,    3,  -5, -4,   -9,    6,   2],
+...   [-104,  170,  20, -162, -307,   95,  45,  3, -167,   75,  37],
+...   [ -16,   59, -19,  -34, -103,   27, -10, -1,  -51,   27,   8],
+...   [  36,  -41,  -7,   46,   80,  -25, -26,  2,   42,  -18, -16],
+...   [  -5,    0,   1,   -4,   -3,    2,   6, -1,    0,   -2,   3],
+...   [ 105, -176, -28,  168,  310, -103, -41, -4,  172,  -73, -40],
+...   [   1,    7,   0,   -3,   -9,    5,  -6, -2,   -7,    3,   2],
+...   [  74, -141,   4,  118,  255,  -72, -23, -1,  133,  -63, -26]
+...                      ])
+sage: out = (A*x).list()
+sage: T_symbolic(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11) = out
+sage: V1 = QQ^11
+sage: C = V1.basis()
+sage: T1 = linear_transformation(V1, V1, T_symbolic)
+sage: MC = T1.matrix(side='right')
+sage: MC
+[ 146 -225  -10  212  419 -123  -73    3  219 -100  -57]
+[ -24   32    1  -33  -66   13   16    1  -33   18    3]
+[  79 -131  -15  124  235  -74  -33   -3  128  -57  -29]
+[  -1   13  -16   -1  -27    3   -5   -4   -9    6    2]
+[-104  170   20 -162 -307   95   45    3 -167   75   37]
+[ -16   59  -19  -34 -103   27  -10   -1  -51   27    8]
+[  36  -41   -7   46   80  -25  -26    2   42  -18  -16]
+[  -5    0    1   -4   -3    2    6   -1    0   -2    3]
+[ 105 -176  -28  168  310 -103  -41   -4  172  -73  -40]
+[   1    7    0   -3   -9    5   -6   -2   -7    3    2]
+[  74 -141    4  118  255  -72  -23   -1  133  -63  -26]
+\end{sageexample}
+%
+Not very interesting, and perhaps even transparent, with a definiton from a matrix and with the standard basis attached to \verb?V1 == QQ^11?.  Let's use a different basis to obtain a more interesting representation.  We will input the basis compactly as the columns of a nonsingular matrix.
+%
+\begin{sageexample}
+sage: D = matrix(QQ, 11,
+...       [[ 1,  2, -1, -2,  4,  2,  2, -2,  4,  4,  8],
+...        [ 0,  1,  0,  2, -2,  1,  1, -1, -7,  5,  3],
+...        [ 1,  0,  0, -2,  3,  0, -1, -1,  6, -1, -1],
+...        [ 0, -1,  1, -1,  3, -2, -3,  0,  5, -8,  2],
+...        [-1,  0,  0,  3, -4,  0,  1,  1, -8,  1,  2],
+...        [-1, -1,  1,  0,  3, -3, -4, -1,  0, -7,  3],
+...        [ 0,  1,  0,  0,  2,  0,  0, -1,  0, -1,  8],
+...        [ 0,  0,  0, -1,  0,  0,  0,  1,  5, -4,  1],
+...        [ 1,  0,  0, -2,  3,  0, -2, -3,  3,  3, -4],
+...        [ 0, -1,  0,  0,  1, -1, -2, -1,  2, -4,  0],
+...        [ 1,  0, -1, -2,  0,  2,  2,  0,  5,  3, -1]])
+sage: E = D.columns()
+sage: V2 = (QQ^11).subspace_with_basis(E)
+sage: T2 = linear_transformation(V2, V2, T_symbolic)
+sage: MB = T2.matrix(side='right')
+sage: MB
+[ 2  1  0  0  0  0  0  0  0  0  0]
+[ 0  2  1  0  0  0  0  0  0  0  0]
+[ 0  0  2  0  0  0  0  0  0  0  0]
+[ 0  0  0  2  1  0  0  0  0  0  0]
+[ 0  0  0  0  2  0  0  0  0  0  0]
+[ 0  0  0  0  0 -1  1  0  0  0  0]
+[ 0  0  0  0  0  0 -1  1  0  0  0]
+[ 0  0  0  0  0  0  0 -1  1  0  0]
+[ 0  0  0  0  0  0  0  0 -1  1  0]
+[ 0  0  0  0  0  0  0  0  0 -1  1]
+[ 0  0  0  0  0  0  0  0  0  0 -1]
+\end{sageexample}
+%
+Well, now \emph{that} is interesting!  What a nice representation.  Of course, it is all due to the choice of the basis (which we have not explained).  To explain the relationship between the two matrix representations, we need a change-of-basis-matrix, and its inverse.  \acronymref{theorem}{SCB} says we need the matrix that converts vector representations relative to \verb?B? into vector representations relative to \verb?C?.
+%
+\begin{sageexample}
+sage: out = [x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11]
+sage: id11(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11) = out
+sage: L = linear_transformation(V2, V1, id11)
+sage: CB = L.matrix(side='right')
+sage: CB
+[ 1  2 -1 -2  4  2  2 -2  4  4  8]
+[ 0  1  0  2 -2  1  1 -1 -7  5  3]
+[ 1  0  0 -2  3  0 -1 -1  6 -1 -1]
+[ 0 -1  1 -1  3 -2 -3  0  5 -8  2]
+[-1  0  0  3 -4  0  1  1 -8  1  2]
+[-1 -1  1  0  3 -3 -4 -1  0 -7  3]
+[ 0  1  0  0  2  0  0 -1  0 -1  8]
+[ 0  0  0 -1  0  0  0  1  5 -4  1]
+[ 1  0  0 -2  3  0 -2 -3  3  3 -4]
+[ 0 -1  0  0  1 -1 -2 -1  2 -4  0]
+[ 1  0 -1 -2  0  2  2  0  5  3 -1]
+\end{sageexample}
+%
+OK, all set.
+%
+\begin{sageexample}
+sage: CB^-1*MC*CB
+[ 2  1  0  0  0  0  0  0  0  0  0]
+[ 0  2  1  0  0  0  0  0  0  0  0]
+[ 0  0  2  0  0  0  0  0  0  0  0]
+[ 0  0  0  2  1  0  0  0  0  0  0]
+[ 0  0  0  0  2  0  0  0  0  0  0]
+[ 0  0  0  0  0 -1  1  0  0  0  0]
+[ 0  0  0  0  0  0 -1  1  0  0  0]
+[ 0  0  0  0  0  0  0 -1  1  0  0]
+[ 0  0  0  0  0  0  0  0 -1  1  0]
+[ 0  0  0  0  0  0  0  0  0 -1  1]
+[ 0  0  0  0  0  0  0  0  0  0 -1]
+\end{sageexample}
+%
+Which is \verb?MB?.  So the conversion from a ``messy'' matrix representation relative to a standard basis to a ``clean'' representation relative to some other basis is just a similarity transformation by a change-of-basis matrix.  Oh, I almost forgot.  Where did that basis come from?  Hint: work your way up to \acronymref{section}{JCF}.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%

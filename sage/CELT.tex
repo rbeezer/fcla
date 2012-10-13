@@ -1,0 +1,61 @@
+How do we find the eigenvectors of a linear transformation?  How do we find pleasing (or computationally simple) matrix representations of linear transformations.  \acronymref{theorem}{EER} and \acronymref{theorem}{SCB} applied in the context of \acronymref{theorem}{DC} can answer both questions.  Here is an example.
+%
+\begin{sageexample}
+sage: outputs = [  9*x1 - 15*x2 - 7*x3 + 15*x4 - 36*x5 - 53*x6,
+...               24*x1 - 20*x2 - 9*x3 + 18*x4 - 24*x5 - 78*x6,
+...                8*x1 -  6*x2 - 3*x3 +  6*x4 -  6*x5 - 26*x6,
+...              -12*x1 -  9*x2 - 3*x3 + 13*x4 - 54*x5 - 24*x6,
+...               -8*x1 +  6*x2 + 3*x3 -  6*x4 +  6*x5 + 26*x6,
+...               -4*x1 -  3*x2 -   x3 +  3*x4 - 18*x5 -  4*x6]
+sage: T_symbolic(x1, x2, x3, x4, x5, x6) = outputs
+sage: T1 = linear_transformation(QQ^6, QQ^6, T_symbolic)
+sage: M1 = T1.matrix(side='right')
+sage: M1
+[  9 -15  -7  15 -36 -53]
+[ 24 -20  -9  18 -24 -78]
+[  8  -6  -3   6  -6 -26]
+[-12  -9  -3  13 -54 -24]
+[ -8   6   3  -6   6  26]
+[ -4  -3  -1   3 -18  -4]
+\end{sageexample}
+%
+Now we compute the eigenvalues and eigenvectors of \verb?M1?.  Since \verb?M1? is diagonalizable, we can find a basis of eigenvectors for use as the basis for a new representation.
+%
+\begin{sageexample}
+sage: ev = M1.eigenvectors_right()
+sage: ev
+[(4, [
+(1, 6/5, 2/5, 4/5, -2/5, 1/5)
+], 1), (0, [
+(1, 9/7, 4/7, 3/7, -3/7, 1/7)
+], 1), (-2, [
+(1, 7/5, 2/5, 3/5, -2/5, 1/5)
+], 1), (-3, [
+(1, 3, 1, -3/2, -1, -1/2)
+], 1), (1, [
+(1, 0, 0, 3, 0, 1),
+(0, 1, 1/3, -2, -1/3, -2/3)
+], 2)]
+sage: evalues, evectors = M1.eigenmatrix_right()
+sage: B = evectors.columns()
+sage: V = (QQ^6).subspace_with_basis(B)
+sage: T2 = linear_transformation(V, V, T_symbolic)
+sage: M2 = T2.matrix('right')
+sage: M2
+[ 4  0  0  0  0  0]
+[ 0  0  0  0  0  0]
+[ 0  0 -2  0  0  0]
+[ 0  0  0 -3  0  0]
+[ 0  0  0  0  1  0]
+[ 0  0  0  0  0  1]
+\end{sageexample}
+%
+The eigenvectors that are the basis elements in B are the eigenvectors of the linear transformation, \emph{relative} to the standard basis.  For different representations the eigenvectors tke different forms, relative to other bases.  What are the eigenvctors of the matrix representation M2?\par
+%
+Notice that the eigenvalues of the linear transformation are totally independent of the representation.  So in a sense, they are an inherent property of the linear transformation.\par
+%
+You should be able to use these techniques with linear transformations on abstract vector spaces --- just use a mental linear transformation transforming the abstract vector space back-and-forth between a vector space of column vectors of the right size.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
