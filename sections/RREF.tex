@@ -23,7 +23,7 @@
 \begin{definition}{M}{Matrix}{matrix}
 \begin{para}An $m\times n$ \define{matrix} is a rectangular layout of numbers from $\complex{\null}$ having $m$ rows and $n$ columns.  We will use upper-case Latin letters from the start of the alphabet ($A,\,B,\,C,\dotsc$) to denote matrices and squared-off brackets to delimit the layout.  Many use large parentheses instead of brackets --- the distinction is not important.  Rows of a matrix will be referenced starting at the top and working down (i.e.\ row 1 is at the top) and columns will be referenced starting from the left (i.e.\ column 1 is at the left).  For a matrix $A$, the notation $\matrixentry{A}{ij}$ will refer to the complex number in row $i$ and column $j$ of $A$.\end{para}
 \denote{M}{Matrix}{$A$}{matrix}
-\denote{MC}{Matrix Components}{$\matrixentry{A}{ij}$}{matrix components}
+\denote{ME}{Matrix Entries}{$\matrixentry{A}{ij}$}{matrix entries}
 \end{definition}
 %
 \begin{para}Be careful with this notation for individual entries, since it is easy to think that $\matrixentry{A}{ij}$ refers to the {\em whole} matrix.  It does not.  It is just a {\em number}, but is a convenient way to talk about the individual entries simultaneously.  This notation will get a heavy workout once we get to \acronymref{chapter}{M}.\end{para}
@@ -47,12 +47,12 @@ is a matrix with $m=3$ rows and $n=4$ columns.  We can say that $\matrixentry{B}
 \begin{para}When we do equation operations on system of equations, the names of the variables really aren't very important.  $x_1$, $x_2$, $x_3$, or $a$, $b$, $c$, or $x$, $y$, $z$, it really doesn't matter.  In this subsection we will describe some notation that will make it easier to describe linear systems, solve the systems and describe the solution sets.  Here is a list of definitions, laden with notation.\end{para}
 %
 \begin{definition}{CV}{Column Vector}{vector!column}
-\begin{para}A \define{column vector} of \define{size} $m$ is an ordered list of $m$ numbers, which is written in order vertically, starting at the top and proceeding to the bottom.  At times, we will refer to a column vector as simply a \define{vector}.  Column vectors will be written in bold, usually with lower case Latin letter from the end of the alphabet such as $\vect{u}$, $\vect{v}$, $\vect{w}$, $\vect{x}$, $\vect{y}$, $\vect{z}$.  Some books like to write vectors with arrows, such as $\vec{u}$.  Writing by hand, some like to put arrows on top of the symbol, or a tilde underneath the symbol, as in $\underset{\sim}{\textstyle u}$.  To refer to the \define{entry} or \define{component} that is number $i$ in the list that is the vector $\vect{v}$ we write $\vectorentry{\vect{v}}{i}$.\end{para}
+\begin{para}A \define{column vector} of \define{size} $m$ is an ordered list of $m$ numbers, which is written in order vertically, starting at the top and proceeding to the bottom.  At times, we will refer to a column vector as simply a \define{vector}.  Column vectors will be written in bold, usually with lower case Latin letter from the end of the alphabet such as $\vect{u}$, $\vect{v}$, $\vect{w}$, $\vect{x}$, $\vect{y}$, $\vect{z}$.  Some books like to write vectors with arrows, such as $\vec{u}$.  Writing by hand, some like to put arrows on top of the symbol, or a tilde underneath the symbol, as in $\underset{\sim}{\textstyle u}$.  To refer to the \define{entry} or \define{component} of vector $\vect{v}$ in location $i$ of the list, we write $\vectorentry{\vect{v}}{i}$.\end{para}
 \denote{CV}{Column Vector}{$\vect{v}$}{vector}
-\denote{CVC}{Column Vector Components}{$\vectorentry{\vect{v}}{i}$}{vector component}
+\denote{CVE}{Column Vector Entries}{$\vectorentry{\vect{v}}{i}$}{vector entries}
 \end{definition}
 %
-\begin{para}Be careful with this notation.  While the symbols $\vectorentry{\vect{v}}{i}$ might look somewhat substantial, as an object this represents just one component of a vector, which is just a single complex number.\end{para}
+\begin{para}Be careful with this notation.  While the symbols $\vectorentry{\vect{v}}{i}$ might look somewhat substantial, as an object this represents just one entry of a vector, which is just a single complex number.\end{para}
 %
 \begin{definition}{ZCV}{Zero Column Vector}{zero column vector}
 \begin{para}The \define{zero vector} of size $m$ is the column vector of size $m$ where each entry is the number zero,
@@ -212,7 +212,9 @@ We will use a symbolic shorthand to describe these row operations:
 \item $\rowopmult{\alpha}{i}$:\quad Multiply row $i$ by the nonzero scalar $\alpha$.
 \item $\rowopadd{\alpha}{i}{j}$:\quad Multiply row $i$ by the scalar $\alpha$ and add to row $j$.
 \end{enumerate}\end{para}
-\denote{RO}{Row Operations}{$\rowopswap{i}{j}$, $\rowopmult{\alpha}{i}$, $\rowopadd{\alpha}{i}{j}$}{row operations}
+\denote{ROS}{Row Operation, Swap}{$\rowopswap{i}{j}$}{row operation!swap}
+\denote{ROM}{Row Operation, Multiply}{$\rowopmult{\alpha}{i}$}{row operation!multiply}
+\denote{ROA}{Row Operation, Add}{$\rowopadd{\alpha}{i}{j}$}{row operation!add}
 \end{definition}
 %
 \begin{definition}{REM}{Row-Equivalent Matrices}{row-equivalent matrices}
@@ -513,7 +515,8 @@ We claim that as we begin Step~\ref{rref:columnloop}, the first $j$ columns of t
 \begin{para}Assuming no relationship about the form of $B$ and $C$, let $B$ have $r$ nonzero rows and denote the pivot columns as $D=\set{\scalarlist{d}{r}}$.  For $C$ let $r^\prime$ denote the number of nonzero rows and denote the pivot columns
 as
 % Extra thin space in set is triple brace protection for Sage worksheets
-$D^\prime=\set{\,\scalarlist{d^\prime}{r^\prime}}$ (\acronymref{notation}{RREFA}).  There are four steps in the proof, and the first three are about showing that $B$ and $C$ have the same number of pivot columns, in the same places.  In other words, the ``primed'' symbols are a necessary fiction.\end{para}
+% Maybe a space will work just as well now with straight-to MathJax
+$D^\prime=\set{\,\scalarlist{d^\prime}{r^\prime}}$ (\acronymref{definition}{RREF}).  There are four steps in the proof, and the first three are about showing that $B$ and $C$ have the same number of pivot columns, in the same places.  In other words, the ``primed'' symbols are a necessary fiction.\end{para}
 %
 \begin{para}
 First Step.  Suppose that $d_1<d^\prime_1$.  Then
