@@ -1,0 +1,98 @@
+Study the following sequence of commands, while cognizant of the failure to specify a number system for \verb?x?.
+%
+\begin{sageexample}
+sage: x = vector([1, 2, 3])
+sage: u = 3*x
+sage: u
+(3, 6, 9)
+sage: v = (1/3)*x
+sage: v
+(1/3, 2/3, 1)
+sage: y = vector(QQ, [4, 5, 6])
+sage: w = 8*y
+sage: w
+(32, 40, 48)
+sage: z = x + y
+sage: z
+(5, 7, 9)
+\end{sageexample}
+%
+None of this should be too much of a surprise, and the results should be what we would have expected.  Though for \verb?x? we never specified if \texttt{1, 2, 3} are integers, rationals, reals, complexes, or\dots?  Let's dig a little deeper and examine the parents of the five vectors involved.
+%
+\begin{sageexample}
+sage: x.parent()
+Ambient free module of rank 3 over
+the principal ideal domain Integer Ring
+sage: u.parent()
+Ambient free module of rank 3 over
+the principal ideal domain Integer Ring
+sage: v.parent()
+Vector space of dimension 3 over Rational Field
+sage: y.parent()
+Vector space of dimension 3 over Rational Field
+sage: w.parent()
+Vector space of dimension 3 over Rational Field
+sage: z.parent()
+Vector space of dimension 3 over Rational Field
+
+\end{sageexample}
+%
+So \verb?x? and \verb?u? belong to something called an ``ambient free module,'' whatever that is.  What is important here is that the parent of \verb?x? uses the integers as its number system.  How about \verb?u?, \verb?v?, \verb?y?, \verb?w?, \verb?z??  All but the first has a parent that uses the rationals for its number system.\par
+%
+Three of the final four vectors are examples of a process that Sage calls ``coercion.''  Mathematical elements get converted to a new parent, as necessary, when the conversion is totally unambiguous.  In the examples above:
+%
+\begin{itemize}
+%
+\item \texttt{u} is the result of scalar multiplication by an integer, so the computation and result can all be accommodated within the integers as the number system.
+%
+\item \texttt{v} involves scalar multiplication by what a scalr that is not an integer, and could be construed as a rational number.  So the result needs to have a parent whose number system is the rationals.
+%
+\item \texttt{y} is created \emph{explicitly} as a vector whose entries are rational numbers.
+%
+\item Even though \texttt{w} is created only with products of integers, the fact that \texttt{y} has entries considered as rational numbers, so too does the result.
+%
+\item The creation of \texttt{z} is the result of adding a vector of integers to a vector of rationals.  This is the best example of coercion --- Sage promotes \texttt{x} to a vector of rationals and therefore returns a result that is a vector of rationals.  Notice that there is no ambiguity and no argument about how to promote \texttt{x}, and the same would be true for any vector full of integers.
+%
+\end{itemize}
+%
+The coercion above is automatic, but we can also usually force it to happen without employing an operation.
+%
+\begin{sageexample}
+sage: t = vector([10, 20, 30])
+sage: t.parent()
+Ambient free module of rank 3 over
+the principal ideal domain Integer Ring
+sage: V = QQ^3
+sage: t_rational = V(t)
+sage: t_rational
+(10, 20, 30)
+sage: t_rational.parent()
+Vector space of dimension 3 over Rational Field
+sage: W = CC^3
+sage: t_complex = W(t)
+sage: t_complex
+(10.0000000000000, 20.0000000000000, 30.0000000000000)
+sage: t_complex.parent()
+Vector space of dimension 3 over
+Complex Field with 53 bits of precision
+\end{sageexample}
+%
+So the syntax is to use the name of the parent like a function and \emph{coerce} the element into the new parent.  This can fail if there is no natural way to make the conversion.
+%
+\begin{sageexample}
+sage: u = vector(CC, [5*I, 4-I])
+sage: u
+(5.00000000000000*I, 4.00000000000000 - 1.00000000000000*I)
+sage: V = QQ^2
+sage: V(u)
+Traceback (most recent call last):
+...
+TypeError: Unable to coerce 5.00000000000000*I
+(<type 'sage.rings.complex_number.ComplexNumber'>) to Rational
+\end{sageexample}
+%
+Coercion is one of the more mysterious aspects of Sage, and the above discussion may not be very clear the first time though.  But if you get an error (like the one above) talking about coercion, you know to come back here and have another read through.  For now, be sure to create all your vectors and matrices over \verb?QQ? and you should not have any difficulties.
+%
+\begin{sageverbatim}
+\end{sageverbatim}
+%
