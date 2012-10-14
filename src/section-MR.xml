@@ -1,0 +1,2443 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="MR">
+<title>Matrix Representations</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section MR -->
+<!-- %  Matrix Representations -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>We have seen that linear transformations whose domain and codomain are vector spaces of columns vectors have a close relationship with matrices (<acroref type="theorem" acro="MBLT" />, <acroref type="theorem" acro="MLTCV" />).  In this section, we will extend the relationship between matrices and linear transformations to the setting of linear transformations between abstract vector spaces.</p>
+
+</introduction>
+
+<subsection acro="MR">
+<title>Matrix Representations</title>
+
+<p>This is a fundamental definition.</p>
+
+<definition acro="MR" index="matrix representation">
+<title>Matrix Representation</title>
+<p>Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation, $B=\set{\vectorlist{u}{n}}$ is a basis for $U$ of size $n$, and $C$ is a basis for $V$ of size $m$.  Then the <define>matrix representation</define> of $T$ relative to $B$ and $C$ is the $m\times n$ matrix,
+<equation>
+\matrixrep{T}{B}{C}=\left[
+\left.\vectrep{C}{\lt{T}{\vect{u}_1}}\right|
+\left.\vectrep{C}{\lt{T}{\vect{u}_2}}\right|
+\left.\vectrep{C}{\lt{T}{\vect{u}_3}}\right|
+\ldots
+\left|\vectrep{C}{\lt{T}{\vect{u}_n}}\right.
+\right]
+</equation>
+</p>
+
+<notation acro="MR" index="matrix representation">
+<title>Matrix Representation</title>
+<usage>$\matrixrep{T}{B}{C}$</usage>
+</notation>
+</definition>
+
+<example acro="OLTTR" index="matrix representations">
+<title>One linear transformation, three representations</title>
+
+<p>Consider the linear transformation
+<equation>
+\ltdefn{S}{P_3}{M_{22}},\quad \lt{S}{a+bx+cx^2+dx^3}=
+\begin{bmatrix}
+<![CDATA[3a+7b-2c-5d & 8a+14b-2c-11d\\]]>
+<![CDATA[-4a-8b+2c+6d & 12a+22b-4c-17d]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>First, we build a representation relative to the bases,
+ <alignmath>
+<![CDATA[B&=\set{1+2x+x^2-x^3,\,1+3x+x^2+x^3,\,-1-2x+2x^3,\,2+3x+2x^2-5x^3}\\]]>
+<![CDATA[C&=\set{]]>
+<![CDATA[\begin{bmatrix}1 & 1 \\ 1 & 2\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}2 & 3 \\ 2 & 5\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-1 & -1 \\ 0 & -2\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-1 & -4 \\ -2 & -4\end{bmatrix}]]>
+}
+</alignmath>
+</p>
+
+<p>We evaluate $S$ with each element of the basis for the domain, $B$, and coordinatize the result relative to the vectors in the basis for the codomain, $C$.  Notice here how we take elements of vector spaces and decompose them into linear combinations of basis elements as the key step in constructing coordinatizations of vectors.  There is a system of equations involved almost every time, but we will omit these details since this should be a routine exercise at this stage.
+<alignmath>
+<![CDATA[&\vectrep{C}{\lt{S}{1+2x+x^2-x^3}}]]>
+<![CDATA[=\vectrep{C}{\begin{bmatrix}20 & 45 \\ -24 & 69\end{bmatrix}}\\]]>
+<![CDATA[&\quad\quad=\vectrep{C}{]]>
+<![CDATA[(-90)\begin{bmatrix}1 & 1 \\ 1 & 2\end{bmatrix}+]]>
+<![CDATA[37\begin{bmatrix}2 & 3 \\ 2 & 5\end{bmatrix}+]]>
+<![CDATA[(-40)\begin{bmatrix}-1 & -1 \\ 0 & -2\end{bmatrix}+]]>
+<![CDATA[4\begin{bmatrix}-1 & -4 \\ -2 & -4\end{bmatrix}]]>
+}
+=\colvector{-90\\37\\-40\\4}\\
+<![CDATA[&\vectrep{C}{\lt{S}{1+3x+x^2+x^3}}]]>
+<![CDATA[=\vectrep{C}{\begin{bmatrix}17 & 37 \\ -20 & 57\end{bmatrix}}\\]]>
+<![CDATA[&\quad\quad=\vectrep{C}{]]>
+<![CDATA[(-72)\begin{bmatrix}1 & 1 \\ 1 & 2\end{bmatrix}+]]>
+<![CDATA[29\begin{bmatrix}2 & 3 \\ 2 & 5\end{bmatrix}+]]>
+<![CDATA[(-34)\begin{bmatrix}-1 & -1 \\ 0 & -2\end{bmatrix}+]]>
+<![CDATA[3\begin{bmatrix}-1 & -4 \\ -2 & -4\end{bmatrix}]]>
+}
+=\colvector{-72\\29\\-34\\3}\\
+<![CDATA[&\vectrep{C}{\lt{S}{-1-2x+2x^3}}]]>
+<![CDATA[=\vectrep{C}{\begin{bmatrix}-27 & -58 \\ 32 & -90\end{bmatrix}}\\]]>
+<![CDATA[&\quad\quad=\vectrep{C}{]]>
+<![CDATA[114\begin{bmatrix}1 & 1 \\ 1 & 2\end{bmatrix}+]]>
+<![CDATA[(-46)\begin{bmatrix}2 & 3 \\ 2 & 5\end{bmatrix}+]]>
+<![CDATA[54\begin{bmatrix}-1 & -1 \\ 0 & -2\end{bmatrix}+]]>
+<![CDATA[(-5)\begin{bmatrix}-1 & -4 \\ -2 & -4\end{bmatrix}]]>
+}
+=\colvector{114\\-46\\54\\-5}\\
+<![CDATA[&\vectrep{C}{\lt{S}{2+3x+2x^2-5x^3}}]]>
+<![CDATA[=\vectrep{C}{\begin{bmatrix}48 & 109 \\ -58 & 167\end{bmatrix}}\\]]>
+<![CDATA[&\quad\quad=\vectrep{C}{]]>
+<![CDATA[(-220)\begin{bmatrix}1 & 1 \\ 1 & 2\end{bmatrix}+]]>
+<![CDATA[91\begin{bmatrix}2 & 3 \\ 2 & 5\end{bmatrix}+]]>
+<![CDATA[-96\begin{bmatrix}-1 & -1 \\ 0 & -2\end{bmatrix}+]]>
+<![CDATA[10\begin{bmatrix}-1 & -4 \\ -2 & -4\end{bmatrix}]]>
+}
+=\colvector{-220\\91\\-96\\10}\\
+</alignmath>
+</p>
+
+<p>Thus, employing <acroref type="definition" acro="MR" />
+<equation>
+\matrixrep{S}{B}{C}=
+\begin{bmatrix}
+<![CDATA[ -90 & -72 & 114 & -220 \\]]>
+<![CDATA[ 37 & 29 & -46 & 91 \\]]>
+<![CDATA[ -40 & -34 & 54 & -96 \\]]>
+<![CDATA[ 4 & 3 & -5 & 10]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Often we use <q>nice</q> bases to build matrix representations and the work involved is much easier.  Suppose we take bases
+<alignmath>
+<![CDATA[D&=\set{1,\,x,\,x^2,\,x^3}]]>
+<![CDATA[&]]>
+<![CDATA[E&=\set{]]>
+<![CDATA[\begin{bmatrix}1&0\\0&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&1\\0&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&0\\1&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&0\\0&1\end{bmatrix}}]]>
+</alignmath>
+</p>
+
+<p>The evaluation of $S$ at the elements of $D$ is easy and coordinatization relative to $E$ can be done on sight,
+<alignmath>
+\vectrep{E}{\lt{S}{1}}
+<![CDATA[&=\vectrep{E}{\begin{bmatrix}3 & 8 \\ -4 & 12\end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{E}{]]>
+<![CDATA[3\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[8\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[(-4)\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[12\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{3 \\ 8 \\ -4 \\ 12}\\
+\vectrep{E}{\lt{S}{x}}
+<![CDATA[&=\vectrep{E}{\begin{bmatrix}7 & 14 \\ -8 & 22\end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{E}{]]>
+<![CDATA[7\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[14\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[(-8)\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[22\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{7 \\ 14 \\ -8 \\ 22}\\
+\vectrep{E}{\lt{S}{x^2}}
+<![CDATA[&=\vectrep{E}{\begin{bmatrix}-2 & -2 \\ 2 & -4\end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{E}{]]>
+<![CDATA[(-2)\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[(-2)\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[2\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[(-4)\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{-2 \\ -2 \\ 2 \\ -4}\\
+\vectrep{E}{\lt{S}{x^3}}
+<![CDATA[&=\vectrep{E}{\begin{bmatrix}-5 & -11 \\ 6 & -17\end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{E}{]]>
+<![CDATA[(-5)\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[(-11)\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[6\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[(-17)\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{-5 \\ -11 \\ 6 \\ -17}\\
+</alignmath>
+</p>
+
+<p>So the matrix representation of $S$ relative to $D$ and $E$ is
+<equation>
+\matrixrep{S}{D}{E}=
+\begin{bmatrix}
+<![CDATA[ 3 & 7 & -2 & -5 \\]]>
+<![CDATA[ 8 & 14 & -2 & -11 \\]]>
+<![CDATA[ -4 & -8 & 2 & 6 \\]]>
+<![CDATA[ 12 & 22 & -4 & -17]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>One more time, but now let's use bases
+<alignmath>
+<![CDATA[F&=\set{1+x-x^2+2x^3,\,-1+2x+2x^3,\,2+x-2x^2+3x^3,\,1+x+2x^3}\\]]>
+<![CDATA[G&=\set{]]>
+<![CDATA[\begin{bmatrix}1&1\\-1&2\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-1&2\\0&2\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}2&1\\-2&3\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}1&1\\0&2\end{bmatrix}]]>
+}
+</alignmath>
+and evaluate $S$ with the elements of $F$, then coordinatize the results relative to $G$,
+<alignmath>
+\vectrep{G}{\lt{S}{1+x-x^2+2x^3}}
+<![CDATA[&=\vectrep{G}{\begin{bmatrix}2 & 2 \\ -2 & 4\end{bmatrix}}]]>
+=\vectrep{G}{
+<![CDATA[2\begin{bmatrix}1&1\\-1&2\end{bmatrix}]]>
+}
+=\colvector{2\\0\\0\\0}\\
+\vectrep{G}{\lt{S}{-1+2x+2x^3}}
+<![CDATA[&=\vectrep{G}{\begin{bmatrix}1 & -2 \\ 0 & -2\end{bmatrix}}]]>
+=\vectrep{G}{
+<![CDATA[(-1)\begin{bmatrix}-1&2\\0&2\end{bmatrix}]]>
+}
+=\colvector{0\\-1\\0\\0}\\
+\vectrep{G}{\lt{S}{2+x-2x^2+3x^3}}
+<![CDATA[&=\vectrep{G}{\begin{bmatrix}2 & 1 \\ -2 & 3\end{bmatrix}}]]>
+=\vectrep{G}{
+<![CDATA[\begin{bmatrix}2&1\\-2&3\end{bmatrix}]]>
+}
+=\colvector{0\\0\\1\\0}\\
+\vectrep{G}{\lt{S}{1+x+2x^3}}
+<![CDATA[&=\vectrep{G}{\begin{bmatrix}0 & 0 \\ 0 & 0\end{bmatrix}}]]>
+=\vectrep{G}{
+<![CDATA[0\begin{bmatrix}1&1\\0&2\end{bmatrix}]]>
+}
+=\colvector{0\\0\\0\\0}\\
+</alignmath>
+</p>
+
+<p>So we arrive at an especially economical matrix representation,
+<equation>
+\matrixrep{S}{F}{G}=
+\begin{bmatrix}
+<![CDATA[2 & 0 & 0 & 0 \\]]>
+<![CDATA[0 & -1 & 0 & 0 \\]]>
+<![CDATA[0 & 0 & 1 & 0 \\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+</example>
+
+<p>We may choose to use whatever terms we want when we make a definition.  Some are arbitrary, while others make sense, but only in light of subsequent theorems.  Matrix representation is in the latter category.  We begin with a linear transformation and produce a matrix.  So what?  Here's the theorem that <em>justifies</em> the term <q>matrix representation.</q></p>
+
+<theorem acro="FTMR" index="matrix representation">
+<title>Fundamental Theorem of Matrix Representation</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation, $B$ is a basis for $U$, $C$ is a basis for $V$ and $\matrixrep{T}{B}{C}$ is the matrix representation of $T$ relative to $B$ and $C$.  Then, for any $\vect{u}\in U$,
+<equation>
+\vectrep{C}{\lt{T}{\vect{u}}}=\matrixrep{T}{B}{C}\left(\vectrep{B}{\vect{u}}\right)
+</equation>
+or equivalently
+<equation>
+\lt{T}{\vect{u}}=\vectrepinv{C}{\matrixrep{T}{B}{C}\left(\vectrep{B}{\vect{u}}\right)}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>Let $B=\set{\vectorlist{u}{n}}$ be the basis of $U$.  Since $\vect{u}\in U$, there are scalars $\scalarlist{a}{n}$ such that
+<equation>
+\vect{u}=\lincombo{a}{u}{n}
+</equation>
+</p>
+
+<p>Then,
+<alignmath>
+<![CDATA[&\matrixrep{T}{B}{C}\vectrep{B}{\vect{u}}\\]]>
+<![CDATA[&=]]>
+\left[
+\left.\vectrep{C}{\lt{T}{\vect{u}_1}}\right|
+\left.\vectrep{C}{\lt{T}{\vect{u}_2}}\right|
+\left.\vectrep{C}{\lt{T}{\vect{u}_3}}\right|
+\ldots
+\left|\vectrep{C}{\lt{T}{\vect{u}_n}}\right.
+\right]
+\vectrep{B}{\vect{u}}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MR" />}\\
+<![CDATA[&=]]>
+\left[
+\left.\vectrep{C}{\lt{T}{\vect{u}_1}}\right|
+\left.\vectrep{C}{\lt{T}{\vect{u}_2}}\right|
+\left.\vectrep{C}{\lt{T}{\vect{u}_3}}\right|
+\ldots
+\left|\vectrep{C}{\lt{T}{\vect{u}_n}}\right.
+\right]
+\colvector{a_1\\a_2\\a_3\\\vdots\\a_n}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="VR" />}\\
+<![CDATA[&=]]>
+a_1\vectrep{C}{\lt{T}{\vect{u}_1}}+
+a_2\vectrep{C}{\lt{T}{\vect{u}_2}}+
+\cdots+
+a_n\vectrep{C}{\lt{T}{\vect{u}_n}}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MVP" />}\\
+<![CDATA[&=]]>
+\vectrep{C}{
+a_1\lt{T}{\vect{u}_1}+
+a_2\lt{T}{\vect{u}_2}+
+a_3\lt{T}{\vect{u}_3}+\cdots+
+a_n\lt{T}{\vect{u}_n}
+<![CDATA[}&&]]>\text{<acroref type="theorem" acro="LTLC" />}\\
+<![CDATA[&=]]>
+\vectrep{C}{
+\lt{T}{
+\lincombo{a}{u}{n}
+<![CDATA[}}&&]]>\text{<acroref type="theorem" acro="LTLC" />}\\
+<![CDATA[&=]]>
+\vectrep{C}{\lt{T}{\vect{u}}}
+</alignmath>
+</p>
+
+<p>The alternative conclusion is obtained as
+<alignmath>
+\lt{T}{\vect{u}}
+<![CDATA[&=\lt{I_V}{\lt{T}{\vect{u}}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IDLT" />}\\
+<![CDATA[&=\lt{\left(\compose{\vectrepinvname{C}}{\vectrepname{C}}\right)}{\lt{T}{\vect{u}}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IVLT" />}\\
+<![CDATA[&=\vectrepinv{C}{\vectrep{C}{\lt{T}{\vect{u}}}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="LTC" />}\\
+<![CDATA[&=\vectrepinv{C}{\matrixrep{T}{B}{C}\left(\vectrep{B}{\vect{u}}\right)}\\]]>
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>This theorem says that we can apply $T$ to $\vect{u}$ and coordinatize the result relative to $C$ in $V$, or we can first coordinatize $\vect{u}$ relative to $B$ in $U$, then multiply by the matrix representation.  Either way, the result is the same.  So the effect of a linear transformation can always be accomplished by a matrix-vector product (<acroref type="definition" acro="MVP" />).  That's important enough to say again.  The effect of a linear transformation is a matrix-vector product.
+<diagram acro="FTMR">
+<title>Fundamental Theorem of Matrix Representations</title>
+<tikz>
+\matrix (m) [matrix of math nodes, row sep=5em, column sep=10em, text height=1.5ex, text depth=0.25ex]
+<![CDATA[{ \vect{u} & \lt{T}{\vect{u}} \\]]>
+<![CDATA[\vectrep{B}{\vect{u}} & \matrixrep{T}{B}{C}\,\vectrep{B}{\vect{u}}=\vectrep{C}{\lt{T}{\vect{u}}}\\};]]>
+\path[->]
+(m-1-1) edge[thick] node[auto] {$T$}                   (m-1-2)
+(m-1-2) edge[thick] node[auto] {$\vectrepname{C}$}     (m-2-2)
+(m-1-1) edge[thick] node[auto] {$\vectrepname{B}$}     (m-2-1)
+(m-2-1) edge[thick] node[auto] {$\matrixrep{T}{B}{C}$} (m-2-2);
+</tikz>
+</diagram>
+</p>
+
+<p>The alternative conclusion of this result might be even more striking.  It says that to effect a linear transformation ($T$) of a vector ($\vect{u}$), coordinatize the input (with $\vectrepname{B}$), do a matrix-vector product (with $\matrixrep{T}{B}{C}$), and un-coordinatize the result (with $\vectrepinvname{C}$).  So, absent some bookkeeping about vector representations, a linear transformation <em>is</em> a matrix.  To adjust the diagram, we <q>reverse</q> the arrow on the right, which means inverting the vector representation $\vectrepname{C}$ on $V$.  Now we can go directly across the top of the diagram, computing the linear transformation between the abstract vector spaces.  Or, we can around the other three sides, using vector representation, a matrix-vector product, followed by un-coordinatization.
+<diagram acro="FTMRA">
+<title>Fundamental Theorem of Matrix Representations (Alternate)</title>
+<tikz>
+\matrix (m) [matrix of math nodes, row sep=5em, column sep=10em, text height=1.5ex, text depth=0.25ex]
+<![CDATA[{\vect{u} & \lt{T}{\vect{u}}=\vectrepinv{C}{\matrixrep{T}{B}{C}\,\vectrep{B}{\vect{u}}}\\]]>
+<![CDATA[\vectrep{B}{\vect{u}} & \matrixrep{T}{B}{C}\,\vectrep{B}{\vect{u}}\\};]]>
+\path[->]
+(m-1-1) edge[thick] node[auto] {$T$}                   (m-1-2)
+(m-2-2) edge[thick] node[auto] {$\vectrepinvname{C}$}  (m-1-2) % reversed direction
+(m-1-1) edge[thick] node[auto] {$\vectrepname{B}$}     (m-2-1)
+(m-2-1) edge[thick] node[auto] {$\matrixrep{T}{B}{C}$} (m-2-2);
+</tikz>
+</diagram>
+</p>
+
+<p>Here's an example to illustrate how the <q>action</q> of a linear transformation can be effected by matrix multiplication.</p>
+
+<example acro="ALTMM" index="linear transformation!as matrix multiplication">
+<title>A linear transformation as matrix multiplication</title>
+
+<p>In <acroref type="example" acro="OLTTR" /> we found three representations of the linear transformation $S$.  In this example, we will compute a single output of $S$ in four different ways.  First <q>normally,</q> then three times over using <acroref type="theorem" acro="FTMR" />.</p>
+
+<p>Choose $p(x)=3-x+2x^2-5x^3$, for no particular reason.  Then the straightforward application of $S$ to $p(x)$ yields
+<alignmath>
+\lt{S}{p(x)}
+<![CDATA[&=\lt{S}{3-x+2x^2-5x^3}\\]]>
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[3(3)+7(-1)-2(2)-5(-5) & 8(3)+14(-1)-2(2)-11(-5)\\]]>
+<![CDATA[-4(3)-8(-1)+2(2)+6(-5) & 12(3)+22(-1)-4(2)-17(-5)]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[23 & 61 \\ -30 & 91]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Now use the representation of $S$ relative to the bases $B$ and $C$ and <acroref type="theorem" acro="FTMR" />.  Note that we will employ the following linear combination in moving from the second line to the third,
+<alignmath>
+3-x+2x^2-5x^3
+<![CDATA[&= 48(1+2x+x^2-x^3)+(-20)(1+3x+x^2+x^3)+\\]]>
+<![CDATA[&\quad\quad (-1)(-1-2x+2x^3)+(-13)(2+3x+2x^2-5x^3)]]>
+</alignmath>
+</p>
+
+<p><alignmath>
+\lt{S}{p(x)}
+<![CDATA[&=\vectrepinv{C}{\matrixrep{S}{B}{C}\vectrep{B}{p(x)}}\\]]>
+<![CDATA[&=\vectrepinv{C}{\matrixrep{S}{B}{C}\vectrep{B}{3-x+2x^2-5x^3}}\\]]>
+<![CDATA[&=\vectrepinv{C}{\matrixrep{S}{B}{C}\colvector{48\\-20\\-1\\-13}}\\]]>
+<![CDATA[&=\vectrepinv{C}{]]>
+\begin{bmatrix}
+<![CDATA[ -90 & -72 & 114 & -220 \\]]>
+<![CDATA[ 37 & 29 & -46 & 91 \\]]>
+<![CDATA[ -40 & -34 & 54 & -96 \\]]>
+<![CDATA[ 4 & 3 & -5 & 10]]>
+\end{bmatrix}
+\colvector{48\\-20\\-1\\-13}}\\
+<![CDATA[&=\vectrepinv{C}{\colvector{-134\\59\\-46\\7}}\\]]>
+<![CDATA[&=]]>
+<![CDATA[(-134)\begin{bmatrix}1 & 1 \\ 1 & 2\end{bmatrix}+]]>
+<![CDATA[59\begin{bmatrix}2 & 3 \\ 2 & 5\end{bmatrix}+]]>
+<![CDATA[(-46)\begin{bmatrix}-1 & -1 \\ 0 & -2\end{bmatrix}+]]>
+<![CDATA[7\begin{bmatrix}-1 & -4 \\ -2 & -4\end{bmatrix}\\]]>
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[23 & 61 \\ -30 & 91]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Again, but now with <q>nice</q> bases like $D$ and $E$, and the computations are more transparent.
+<alignmath>
+\lt{S}{p(x)}
+<![CDATA[&=\vectrepinv{E}{\matrixrep{S}{D}{E}\vectrep{D}{p(x)}}\\]]>
+<![CDATA[&=\vectrepinv{E}{\matrixrep{S}{D}{E}\vectrep{D}{3-x+2x^2-5x^3}}\\]]>
+<![CDATA[&=\vectrepinv{E}{\matrixrep{S}{D}{E}\vectrep{D}{3(1)+(-1)(x)+2(x^2)+(-5)(x^3)}}\\]]>
+<![CDATA[&=\vectrepinv{E}{\matrixrep{S}{D}{E}\colvector{3\\-1\\2\\-5}}\\]]>
+<![CDATA[&=\vectrepinv{E}{]]>
+\begin{bmatrix}
+<![CDATA[ 3 & 7 & -2 & -5 \\]]>
+<![CDATA[ 8 & 14 & -2 & -11 \\]]>
+<![CDATA[ -4 & -8 & 2 & 6 \\]]>
+<![CDATA[ 12 & 22 & -4 & -17]]>
+\end{bmatrix}
+\colvector{3\\-1\\2\\-5}
+}\\
+<![CDATA[&=\vectrepinv{E}{\colvector{23 \\ 61 \\ -30 \\ 91}}\\]]>
+<![CDATA[&=]]>
+<![CDATA[23\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[61\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[(-30)\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[91\begin{bmatrix}0&0\\0&1\end{bmatrix}\\]]>
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[23 & 61 \\ -30 & 91]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>OK, last time, now with the bases $F$ and $G$.  The coordinatizations will take some work this time, but the matrix-vector product (<acroref type="definition" acro="MVP" />) (which is the actual action of the linear transformation) will be especially easy, given the diagonal nature of the matrix representation, $\matrixrep{S}{F}{G}$.  Here we go,
+<alignmath>
+\lt{S}{p(x)}
+<![CDATA[&=\vectrepinv{G}{\matrixrep{S}{F}{G}\vectrep{F}{p(x)}}\\]]>
+<![CDATA[&=\vectrepinv{G}{\matrixrep{S}{F}{G}\vectrep{F}{3-x+2x^2-5x^3}}\\]]>
+<![CDATA[&=\vectrepinv{G}{\matrixrep{S}{F}{G}\vectrep{F}{]]>
+32(1+x-x^2+2x^3)
+-7(-1+2x+2x^3)
+-17(2+x-2x^2+3x^3)
+-2(1+x+2x^3)
+}}\\
+<![CDATA[&=\vectrepinv{G}{\matrixrep{S}{F}{G}\colvector{32\\-7\\-17\\-2}}\\]]>
+<![CDATA[&=\vectrepinv{G}{]]>
+\begin{bmatrix}
+<![CDATA[2 & 0 & 0 & 0 \\]]>
+<![CDATA[0 & -1 & 0 & 0 \\]]>
+<![CDATA[0 & 0 & 1 & 0 \\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}
+\colvector{32\\-7\\-17\\-2}
+}\\
+<![CDATA[&=\vectrepinv{G}{\colvector{64 \\ 7 \\ -17 \\ 0}}\\]]>
+<![CDATA[&=]]>
+<![CDATA[64\begin{bmatrix}1&1\\-1&2\end{bmatrix}+]]>
+<![CDATA[7\begin{bmatrix}-1&2\\0&2\end{bmatrix}+]]>
+<![CDATA[(-17)\begin{bmatrix}2&1\\-2&3\end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix}1&1\\0&2\end{bmatrix}\\]]>
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[23 & 61 \\ -30 & 91]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>This example is not meant to necessarily illustrate that any one of these four computations is simpler than the others.  Instead, it is meant to illustrate the many different ways we can arrive at the same result, with the last three all employing a matrix representation to effect the linear transformation.</p>
+
+</example>
+
+<p>We will use <acroref type="theorem" acro="FTMR" /> frequently in the next few sections.  A typical application will feel like the linear transformation $T$ <q>commutes</q> with a vector representation, $\vectrepname{C}$, and as it does the transformation morphs into a matrix, $\matrixrep{T}{B}{C}$, while the vector representation changes to a new basis, $\vectrepname{B}$.  Or vice-versa.</p>
+
+<sageadvice acro="MR" index="matrix representations">
+<title>Matrix Representations</title>
+It is very easy to create matrix representations of linear transformations in Sage.  Our examples in the text have used abstract vector spaces to make it a little easier to keep track of the domain and codomain.  With Sage we will have to consistently use variants of <code>QQ^n</code>, but we will use non-obvious bases to make it nontrivial and interesting.  Here are the components of our first example, one linear function, two vector spaces, four bases.
+<sage>
+<input>x1, x2, x3, x4 = var('x1, x2, x3, x4')
+outputs = [3*x1 + 7*x2 + x3 - 4*x4,
+           2*x1 + 5*x2 + x3 - 3*x4,
+            -x1 - 2*x2      +   x4]
+T_symbolic(x1, x2, x3, x4) = outputs
+U = QQ^4
+V = QQ^3
+b0 = vector(QQ, [ 1, 1, -1, 0])
+b1 = vector(QQ, [-1, 0, -2, 7])
+b2 = vector(QQ, [ 0, 1, -2, 4])
+b3 = vector(QQ, [-2, 0, -1, 6])
+B = [b0, b1, b2, b3]
+c0 = vector(QQ, [ 1,  6, -6])
+c1 = vector(QQ, [ 0,  1, -1])
+c2 = vector(QQ, [-2, -3,  4])
+C = [c0, c1, c2]
+d0 = vector(QQ, [ 1, -3,  2, -1])
+d1 = vector(QQ, [ 0,  1,  0,  1])
+d2 = vector(QQ, [-1,  2, -1, -1])
+d3 = vector(QQ, [ 2, -8,  4, -3])
+D = [d0, d1, d2, d3]
+e0 = vector(QQ, [ 0,  1, -3])
+e1 = vector(QQ, [-1,  2, -1])
+e2 = vector(QQ, [ 2, -4,  3])
+E = [e0, e1, e2]
+</input>
+</sage>
+
+We create alternate versions of the domain and codomain by providing them with bases other than the standard ones.  Then we build the linear transformation and ask for its <code>.matrix()</code>.  We will use numerals to distinguish our two examples.
+<sage>
+<input>U1 = U.subspace_with_basis(B)
+V1 = V.subspace_with_basis(C)
+T1 = linear_transformation(U1, V1, T_symbolic)
+T1.matrix(side='right')
+</input>
+<output>[ 15 -67 -25 -61]
+[-75 326 120 298]
+[  3 -17  -7 -15]
+</output>
+</sage>
+
+Now, we do it again, but with the bases <code>D</code> and <code>E</code>.
+<sage>
+<input>U2 = U.subspace_with_basis(D)
+V2 = V.subspace_with_basis(E)
+T2 = linear_transformation(U2, V2, T_symbolic)
+T2.matrix(side='right')
+</input>
+<output>[ -32    8   38  -91]
+[-148   37  178 -422]
+[ -80   20   96 -228]
+</output>
+</sage>
+
+So once the pieces are in place, it is quite easy to obtain a matrix representation.  You might experiment with examples from the text, by first mentally converting elements of abstract vector spaces into column vectors via vector representations using simple bases for the abstract spaces.<br /><br />
+The linear transformations <code>T1</code> and <code>T2</code> are not different as functions, despite the fact that Sage treats them as unequal (since they have different matrix representations).  We can check that the two functions behave identically, first with random testing.  Repeated execution of the following compute cell should always produce <code>True</code>.
+<sage>
+<input>u = random_vector(QQ, 4)
+T1(u) == T2(u)
+</input>
+<output>True
+</output>
+</sage>
+
+A better approach would be to see if  <code>T1</code> and <code>T2</code> agree on a basis for the domain, and to avoid any favoritism, we will use the basis of <code>U</code> itself.  Convince yourself that this is a proper application of <acroref type="theorem" acro="LTDB" /> to demonstrate equality.
+<sage>
+<input>all([T1(u) == T2(u) for u in U.basis()])
+</input>
+<output>True
+</output>
+</sage>
+
+Or we can just ask if they are equal functions (a method that is implemented using the previous idea about agreeing on a basis).
+<sage>
+<input>T1.is_equal_function(T2)
+</input>
+<output>True
+</output>
+</sage>
+
+We can also demonstrate <acroref type="theorem" acro="FTMR" /> <mdash /> we will use the representation for <code>T1</code>.  We need a couple of vector representation linear transformations.
+<sage>
+<input>rhoB = linear_transformation(U1, U, U.basis())
+rhoC = linear_transformation(V1, V, V.basis())
+</input>
+</sage>
+
+Now we experiment with a <q>random</q> element of the domain.  Study the third computation carefully, as it is the Sage version of <acroref type="theorem" acro="FTMR" />.  You might compute some of the pieces of this expression to build up the final expression, and you might duplicate the experiment with a different input and/or with the <code>T2</code> version.
+<sage>
+<input>T_symbolic(-3, 4, -5, 2)
+</input>
+<output>(6, 3, -3)
+</output>
+</sage>
+
+<sage>
+<input>u = vector(QQ, [-3, 4, -5, 2])
+T1(u)
+</input>
+<output>(6, 3, -3)
+</output>
+</sage>
+
+<sage>
+<input>(rhoC^-1)(T1.matrix(side='right')*rhoB(u))
+</input>
+<output>(6, 3, -3)
+</output>
+</sage>
+
+One more time, but we will replace the vector representation linear transformations with Sage conveniences.  Recognize that the <code>.linear_combination_of_basis()</code> method is the inverse of vector representation (it is <q>un-coordinatization</q>).
+<sage>
+<input>output_coord = T1.matrix(side='right')*U1.coordinate_vector(u)
+V1.linear_combination_of_basis(output_coord)
+</input>
+<output>(6, 3, -3)
+</output>
+</sage>
+
+We have concentrated here on the first version of the conclusion of <acroref type="theorem" acro="FTMR" />.  You could experiment with the second version in a similar manner.  Extra credit: what changes do you need to make in any of these experiments if you remove the <code>side='right'</code> option?
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="NRFO">
+<title>New Representations from Old</title>
+
+<p>In <acroref type="subsection" acro="LT.NLTFO" /> we built new linear transformations from other linear transformations.  Sums, scalar multiples and compositions.  These new linear transformations will have matrix representations as well.  How do the new matrix representations relate to the old matrix representations?  Here are the three theorems.</p>
+
+<theorem acro="MRSLT" index="matrix representation!sum of linear transformations">
+<title>Matrix Representation of a Sum of Linear Transformations</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{U}{V}$ and $\ltdefn{S}{U}{V}$ are linear transformations, $B$ is a basis of $U$ and $C$ is a basis of $V$.  Then
+<equation>
+\matrixrep{T+S}{B}{C}=\matrixrep{T}{B}{C}+\matrixrep{S}{B}{C}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>Let $\vect{x}$ be any vector in $\complex{n}$.  Define $\vect{u}\in U$ by $\vect{u}=\vectrepinv{B}{\vect{x}}$, so $\vect{x}=\vectrep{B}{\vect{u}}$.  Then,
+<alignmath>
+<![CDATA[\matrixrep{T+S}{B}{C}\vect{x}&=]]>
+<![CDATA[\matrixrep{T+S}{B}{C}\vectrep{B}{\vect{u}}&&\text{Substitution}\\]]>
+<![CDATA[&=\vectrep{C}{\lt{\left(T+S\right)}{\vect{u}}}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\vectrep{C}{\lt{T}{\vect{u}}+\lt{S}{\vect{u}}}&&]]>\text{<acroref type="definition" acro="LTA" />}\\
+<![CDATA[&=\vectrep{C}{\lt{T}{\vect{u}}}+\vectrep{C}{\lt{S}{\vect{u}}}&&]]>\text{<acroref type="definition" acro="LT" />}\\
+<![CDATA[&=\matrixrep{T}{B}{C}\left(\vectrep{B}{\vect{u}}\right)+\matrixrep{S}{B}{C}\left(\vectrep{B}{\vect{u}}\right)&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\left(\matrixrep{T}{B}{C}+\matrixrep{S}{B}{C}\right)\vectrep{B}{\vect{u}}&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=\left(\matrixrep{T}{B}{C}+\matrixrep{S}{B}{C}\right)\vect{x}&&\text{Substitution}]]>
+</alignmath>
+</p>
+
+<p>Since the matrices $\matrixrep{T+S}{B}{C}$ and $\matrixrep{T}{B}{C}+\matrixrep{S}{B}{C}$ have equal matrix-vector products for <em>every</em> vector in $\complex{n}$, by <acroref type="theorem" acro="EMMVP" /> they are equal matrices.  (Now would be a good time to double-back and study the proof of <acroref type="theorem" acro="EMMVP" />.  You did promise to come back to this theorem sometime, didn't you?)</p>
+
+</proof>
+</theorem>
+
+<theorem acro="MRMLT" index="matrix representation!multiple of a linear transformation">
+<title>Matrix Representation of a Multiple of a Linear Transformation</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation, $\alpha\in\complex{\null}$, $B$ is a basis of $U$ and $C$ is a basis of $V$.  Then
+<equation>
+\matrixrep{\alpha T}{B}{C}=\alpha\matrixrep{T}{B}{C}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>Let $\vect{x}$ be any vector in $\complex{n}$.  Define $\vect{u}\in U$ by $\vect{u}=\vectrepinv{B}{\vect{x}}$, so $\vect{x}=\vectrep{B}{\vect{u}}$.  Then,
+<alignmath>
+<![CDATA[\matrixrep{\alpha T}{B}{C}\vect{x}&=]]>
+<![CDATA[\matrixrep{\alpha T}{B}{C}\vectrep{B}{\vect{u}}&&\text{Substitution}\\]]>
+<![CDATA[&=\vectrep{C}{\lt{\left(\alpha T\right)}{\vect{u}}}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\vectrep{C}{\alpha\lt{T}{\vect{u}}}&&]]>\text{<acroref type="definition" acro="LTSM" />}\\
+<![CDATA[&=\alpha\vectrep{C}{\lt{T}{\vect{u}}}&&]]>\text{<acroref type="definition" acro="LT" />}\\
+<![CDATA[&=\alpha\left(\matrixrep{T}{B}{C}\vectrep{B}{\vect{u}}\right)&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\left(\alpha\matrixrep{T}{B}{C}\right)\vectrep{B}{\vect{u}}&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=\left(\alpha\matrixrep{T}{B}{C}\right)\vect{x}&&\text{Substitution}]]>
+</alignmath>
+</p>
+
+<p>Since the matrices $\matrixrep{\alpha T}{B}{C}$ and $\alpha\matrixrep{T}{B}{C}$ have equal matrix-vector products for <em>every</em> vector in $\complex{n}$,  by <acroref type="theorem" acro="EMMVP" /> they are equal matrices.</p>
+
+</proof>
+</theorem>
+
+<p>The vector space of all linear transformations from $U$ to $V$ is now isomorphic to the vector space of all $m\times n$ matrices.</p>
+
+<theorem acro="MRCLT" index="matrix representation!composition of linear transformations">
+<title>Matrix Representation of a Composition of Linear Transformations</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{U}{V}$ and $\ltdefn{S}{V}{W}$ are linear transformations, $B$ is a basis of $U$, $C$ is a basis of $V$, and $D$ is a basis of $W$.  Then
+<equation>
+\matrixrep{\compose{S}{T}}{B}{D}=\matrixrep{S}{C}{D}\matrixrep{T}{B}{C}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>Let $\vect{x}$ be any vector in $\complex{n}$.  Define $\vect{u}\in U$ by $\vect{u}=\vectrepinv{B}{\vect{x}}$, so $\vect{x}=\vectrep{B}{\vect{u}}$.  Then,
+<alignmath>
+<![CDATA[\matrixrep{\compose{S}{T}}{B}{D}\vect{x}&=]]>
+<![CDATA[\matrixrep{\compose{S}{T}}{B}{D}\vectrep{B}{\vect{u}}&&\text{Substitution}\\]]>
+<![CDATA[&=\vectrep{D}{\lt{\left(\compose{S}{T}\right)}{\vect{u}}}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\vectrep{D}{\lt{S}{\lt{T}{\vect{u}}}}&&]]>\text{<acroref type="definition" acro="LTC" />}\\
+<![CDATA[&=\matrixrep{S}{C}{D}\vectrep{C}{\lt{T}{\vect{u}}}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\matrixrep{S}{C}{D}\left(\matrixrep{T}{B}{C}\vectrep{B}{\vect{u}}\right)&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\left(\matrixrep{S}{C}{D}\matrixrep{T}{B}{C}\right)\vectrep{B}{\vect{u}}&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=\left(\matrixrep{S}{C}{D}\matrixrep{T}{B}{C}\right)\vect{x}&&\text{Substitution}]]>
+</alignmath>
+</p>
+
+<p>Since the matrices $\matrixrep{\compose{S}{T}}{B}{D}$ and $\matrixrep{S}{C}{D}\matrixrep{T}{B}{C}$ have equal matrix-vector products for <em>every</em> vector in $\complex{n}$, by <acroref type="theorem" acro="EMMVP" /> they are equal matrices.</p>
+
+</proof>
+</theorem>
+
+<p>This is the second great surprise of introductory linear algebra.  Matrices are linear transformations (functions, really), and matrix multiplication is function composition!  We can form the composition of two linear transformations, then form the matrix representation of the result.  Or we can form the matrix representation of each linear transformation separately, then <em>multiply</em> the two representations together via <acroref type="definition" acro="MM" />.  In either case, we arrive at the same result.</p>
+
+<example acro="MPMR" index="matrix product!as composition of linear transformations">
+<title>Matrix product of matrix representations</title>
+
+<p>Consider the two linear transformations,
+<alignmath>
+<![CDATA[\ltdefn{T}{\complex{2}}{P_2}&\quad]]>
+\lt{T}{\colvector{a\\b}}=(-a + 3b)+(2a + 4b)x+(a - 2b)x^2\\
+<![CDATA[\ltdefn{S}{P_2}{M_{22}}&\quad\]]>
+\lt{S}{a+bx+cx^2}=
+\begin{bmatrix}
+<![CDATA[2a + b + 2c & a + 4b - c\\]]>
+<![CDATA[-a + 3c & 3a + b + 2 c\end{bmatrix}]]>
+</alignmath>
+and bases for $\complex{2}$, $P_2$ and $M_{22}$ (respectively),
+<alignmath>
+<![CDATA[B&=\set{\colvector{3\\1},\,\colvector{2\\1}}\\]]>
+<![CDATA[C&=\set{1-2x+x^2,\,-1+3x,\,2x+3x^2}\\]]>
+<![CDATA[D&=\set{]]>
+<![CDATA[\begin{bmatrix} 1 & -2\\ 1 & -1 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} 1 & -1\\ 1 & 2\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} -1 & 2 \\ 0 & 0 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} 2 & -3 \\ 2 & 2\end{bmatrix}]]>
+}
+</alignmath>
+</p>
+
+<p>Begin by computing the new linear transformation that is the composition of $T$ and $S$ (<acroref type="definition" acro="LTC" />, <acroref type="theorem" acro="CLTLT" />),  $\ltdefn{\left(\compose{S}{T}\right)}{\complex{2}}{M_{22}}$,
+<alignmath>
+\lt{\left(\compose{S}{T}\right)}{\colvector{a\\b}}
+<![CDATA[&=\lt{S}{\lt{T}{\colvector{a\\b}}}\\]]>
+<![CDATA[&=\lt{S}{(-a + 3b)+(2a + 4b)x+(a - 2b)x^2}\\]]>
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[2(-a + 3b) + (2a + 4b) + 2(a - 2b) & (-a + 3b) + 4(2a + 4b) - (a - 2b)\\]]>
+<![CDATA[-(-a + 3b) + 3(a - 2b) & 3(-a + 3b) + (2a + 4b) + 2(a - 2b)]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[2a + 6b & 6a + 21b\\]]>
+<![CDATA[4a - 9b &a + 9b]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Now compute the matrix representations (<acroref type="definition" acro="MR" />) for each of these three linear transformations ($T$, $S$, $\compose{S}{T}$), relative to the appropriate bases.  First for $T$,
+<alignmath>
+<![CDATA[\vectrep{C}{\lt{T}{\colvector{3\\1}}}&=\vectrep{C}{10x+x^2}\\]]>
+<![CDATA[&=\vectrep{C}{28(1-2x+x^2)+28(-1+3x)+(-9)(2x+3x^2)}=\colvector{28\\28\\-9}\\]]>
+<![CDATA[\vectrep{C}{\lt{T}{\colvector{2\\1}}}&=\vectrep{C}{1+8x}\\]]>
+<![CDATA[&=\vectrep{C}{33(1-2x+x^2)+32(-1+3x)+(-11)(2x+3x^2)}=\colvector{33\\32\\-11}\\]]>
+</alignmath>
+</p>
+
+<p>So we have the matrix representation of $T$,
+<equation>
+\matrixrep{T}{B}{C}=
+\begin{bmatrix}
+<![CDATA[ 28 & 33 \\]]>
+<![CDATA[ 28 & 32 \\]]>
+<![CDATA[ -9 & -11]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Now, a representation of $S$,
+<alignmath>
+<![CDATA[\vectrep{D}{\lt{S}{1-2x+x^2}}&=\vectrep{D}{\begin{bmatrix}2 & -8 \\ 2 & 3 \end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{D}{]]>
+<![CDATA[(-11)\begin{bmatrix} 1 & -2\\ 1 & -1 \end{bmatrix}+]]>
+<![CDATA[(-21)\begin{bmatrix} 1 & -1\\ 1 & 2\end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix} -1 & 2 \\ 0 & 0 \end{bmatrix}+]]>
+<![CDATA[(17)\begin{bmatrix} 2 & -3 \\ 2 & 2\end{bmatrix}]]>
+}\\
+<![CDATA[&=\colvector{-11\\-21\\0\\17}\\]]>
+<![CDATA[\vectrep{D}{\lt{S}{-1+3x}}&=\vectrep{D}{\begin{bmatrix}1 & 11 \\ 1 & 0\end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{D}{]]>
+<![CDATA[26\begin{bmatrix} 1 & -2\\ 1 & -1 \end{bmatrix}+]]>
+<![CDATA[51\begin{bmatrix} 1 & -1\\ 1 & 2\end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix} -1 & 2 \\ 0 & 0 \end{bmatrix}+]]>
+<![CDATA[(-38)\begin{bmatrix} 2 & -3 \\ 2 & 2\end{bmatrix}]]>
+}\\
+<![CDATA[&=\colvector{26\\51\\0\\-38}\\]]>
+<![CDATA[\vectrep{D}{\lt{S}{2x+3x^2}}&=\vectrep{D}{\begin{bmatrix}8 & 5 \\ 9 & 8\end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{D}{]]>
+<![CDATA[34\begin{bmatrix} 1 & -2\\ 1 & -1 \end{bmatrix}+]]>
+<![CDATA[67\begin{bmatrix} 1 & -1\\ 1 & 2\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix} -1 & 2 \\ 0 & 0 \end{bmatrix}+]]>
+<![CDATA[(-46)\begin{bmatrix} 2 & -3 \\ 2 & 2\end{bmatrix}]]>
+}\\
+<![CDATA[&=\colvector{34\\67\\1\\-46}\\]]>
+</alignmath>
+</p>
+
+<p>So we have the matrix representation of $S$,
+<equation>
+\matrixrep{S}{C}{D}=
+\begin{bmatrix}
+<![CDATA[ -11 & 26 & 34 \\]]>
+<![CDATA[ -21 & 51 & 67 \\]]>
+<![CDATA[ 0 & 0 & 1 \\]]>
+<![CDATA[ 17 & -38 & -46]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Finally, a representation of $\compose{S}{T}$,
+<alignmath>
+\vectrep{D}{\lt{\left(\compose{S}{T}\right)}{\colvector{3\\1}}}
+<![CDATA[&=\vectrep{D}{\begin{bmatrix}12 & 39\\3 &12\end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{D}{]]>
+<![CDATA[114\begin{bmatrix} 1 & -2\\ 1 & -1 \end{bmatrix}+]]>
+<![CDATA[237\begin{bmatrix} 1 & -1\\ 1 & 2\end{bmatrix}+]]>
+<![CDATA[(-9)\begin{bmatrix} -1 & 2 \\ 0 & 0 \end{bmatrix}+]]>
+<![CDATA[(-174)\begin{bmatrix} 2 & -3 \\ 2 & 2\end{bmatrix}]]>
+}\\
+<![CDATA[&=\colvector{114\\237\\-9\\-174}\\]]>
+\vectrep{D}{\lt{\left(\compose{S}{T}\right)}{\colvector{2\\1}}}
+<![CDATA[&=\vectrep{D}{\begin{bmatrix}10 & 33\\-1 & 11\end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{D}{]]>
+<![CDATA[95\begin{bmatrix} 1 & -2\\ 1 & -1 \end{bmatrix}+]]>
+<![CDATA[202\begin{bmatrix} 1 & -1\\ 1 & 2\end{bmatrix}+]]>
+<![CDATA[(-11)\begin{bmatrix} -1 & 2 \\ 0 & 0 \end{bmatrix}+]]>
+<![CDATA[(-149)\begin{bmatrix} 2 & -3 \\ 2 & 2\end{bmatrix}]]>
+}\\
+<![CDATA[&=\colvector{95\\202\\-11\\-149}\\]]>
+</alignmath>
+</p>
+
+<p>So we have the matrix representation of $\compose{S}{T}$,
+<equation>
+\matrixrep{\compose{S}{T}}{B}{D}=
+\begin{bmatrix}
+<![CDATA[ 114 & 95 \\]]>
+<![CDATA[ 237 & 202 \\]]>
+<![CDATA[ -9 & -11 \\]]>
+<![CDATA[ -174 & -149]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Now, we are all set to verify the conclusion of <acroref type="theorem" acro="MRCLT" />,
+<alignmath>
+\matrixrep{S}{C}{D}\matrixrep{T}{B}{C}
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ -11 & 26 & 34 \\]]>
+<![CDATA[ -21 & 51 & 67 \\]]>
+<![CDATA[ 0 & 0 & 1 \\]]>
+<![CDATA[ 17 & -38 & -46]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[ 28 & 33 \\]]>
+<![CDATA[ 28 & 32 \\]]>
+<![CDATA[ -9 & -11]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ 114 & 95 \\]]>
+<![CDATA[ 237 & 202 \\]]>
+<![CDATA[ -9 & -11 \\]]>
+<![CDATA[ -174 & -149]]>
+\end{bmatrix}\\
+<![CDATA[&=\matrixrep{\compose{S}{T}}{B}{D}]]>
+</alignmath>
+</p>
+
+<p>We have intentionally used non-standard bases.  If you were to choose <q>nice</q> bases for the three vector spaces, then the result of the theorem might be rather transparent.  But this would still be a worthwhile exercise <mdash /> give it a go.</p>
+
+</example>
+
+<p>A diagram, similar to ones we have seen earlier, might make the importance of this theorem clearer,
+<diagram acro="MRCLT">
+<title>Matrix Representation and Composition of Linear Transformations</title>
+<tikz>
+\matrix (m) [matrix of math nodes, row sep=5em, column sep=10em, text height=1.5ex, text depth=0.25ex]
+<![CDATA[{ S, T & \matrixrep{S}{C}{D},\ \matrixrep{T}{B}{C} \\]]>
+<![CDATA[\compose{S}{T} & \matrixrep{\compose{S}{T}}{B}{D}=\matrixrep{S}{C}{D}\,\matrixrep{T}{B}{C}\\};]]>
+\path[->]
+(m-1-1) edge[thick] node[auto]  {Definition MR}  (m-1-2)
+(m-1-2) edge[thick] node[right] {Definition MM}  (m-2-2)
+(m-1-1) edge[thick] node[left]  {Definition LTC} (m-2-1)
+(m-2-1) edge[thick] node[auto]  {Definition MR}  (m-2-2);
+</tikz>
+</diagram>
+</p>
+
+<p>One of our goals in the first part of this book is to make the definition of matrix multiplication (<acroref type="definition" acro="MVP" />, <acroref type="definition" acro="MM" />) seem as natural as possible.  However, many of us are brought up with an entry-by-entry description of matrix multiplication (<acroref type="theorem" acro="EMP" />) as the <em>definition</em> of matrix multiplication, and then theorems about columns of matrices and linear combinations follow from that definition.  With this unmotivated definition, the realization that matrix multiplication is function composition is quite remarkable.  It is an interesting exercise to begin with the question, <q>What is the matrix representation of the composition of two linear transformations?</q> and then, without using any theorems about matrix multiplication, finally arrive at the entry-by-entry description of matrix multiplication.  Try it yourself (<acroref type="exercise" acro="MR.T80" />).</p>
+
+<sageadvice acro="SUTH3" index="sage under the hood!round 3">
+<title>Sage Under The Hood, Round 3</title>
+We have seen that Sage is able to add two linear transformations, or multiply a single linear transformation by a scalar.  Under the hood, this is accomplished by simply adding matrix representations, or multiplying a matrix by a scalar, according to <acroref type="theorem" acro="MRSLT" /> and <acroref type="theorem" acro="MRMLT" /> (respectively).  <acroref type="theorem" acro="MRCLT" /> says linear transformation composition is matrix representation multiplication.  Is it still a mystery why we use the symbol <code>*</code> for linear transformation composition in Sage?<br /><br />
+We could do several examples here, but you should now be able to construct them yourselves.  We will do just one, linear transformation composition is matrix representation multiplication.
+<sage>
+<input>x1, x2, x3, x4 = var('x1, x2, x3, x4')
+outputs = [-5*x1 - 2*x2 +   x3,
+            4*x1 - 3*x2 - 3*x3,
+            4*x1 - 6*x2 - 4*x3,
+            5*x1 + 3*x2       ]
+T_symbolic(x1, x2, x3) = outputs
+outputs = [-3*x1 - x2 + x3 + 2*x4,
+            7*x1 + x2 + x3 -   x4]
+S_symbolic(x1, x2, x3, x4) = outputs
+b0 = vector(QQ, [-1, -2,  2])
+b1 = vector(QQ, [ 1,  1,  0])
+b2 = vector(QQ, [ 0,  3, -5])
+U = (QQ^3).subspace_with_basis([b0, b1, b2])
+c0 = vector(QQ, [ 0,  0,  2,  1])
+c1 = vector(QQ, [ 2, -3, -1, -6])
+c2 = vector(QQ, [-2,  3,  2,  7])
+c3 = vector(QQ, [ 1, -2, -4, -6])
+V = (QQ^4).subspace_with_basis([c0, c1, c2, c3])
+d0 = vector(QQ, [3, 4])
+d1 = vector(QQ, [2, 3])
+W = (QQ^2).subspace_with_basis([d0, d1])
+T = linear_transformation(U, V, T_symbolic)
+S = linear_transformation(V, W, S_symbolic)
+(S*T).matrix('right')
+</input>
+<output>[-321  218  297]
+[ 456 -310 -422]
+</output>
+</sage>
+
+<sage>
+<input>S.matrix(side='right')*T.matrix(side='right')
+</input>
+<output>[-321  218  297]
+[ 456 -310 -422]
+</output>
+</sage>
+
+Extra credit: what changes do you need to make if you dropped the <code>side='right'</code> option on these three matrix representations?
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="PMR">
+<title>Properties of Matrix Representations</title>
+
+<p>It will not be a surprise to discover that the kernel and range of a linear transformation are closely related to the null space and column space of the transformation's matrix representation.  Perhaps this idea has been bouncing around in your head already, even before seeing the definition of a matrix representation.  However, with a formal definition of a matrix representation (<acroref type="definition" acro="MR" />), and a fundamental theorem to go with it (<acroref type="theorem" acro="FTMR" />) we can be formal about the relationship, using the idea of isomorphic vector spaces (<acroref type="definition" acro="IVS" />).  Here are the twin theorems.</p>
+
+<theorem acro="KNSI" index="kernel!isomorphic to null space">
+<title>Kernel and Null Space Isomorphism</title>
+<statement>
+<indexlocation index="null space!isomorphic to kernel" />
+<p>Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation, $B$ is a basis for $U$ of size $n$, and $C$ is a basis for $V$.  Then the kernel of $T$ is isomorphic to the null space of $\matrixrep{T}{B}{C}$,
+<equation>
+\krn{T}\isomorphic\nsp{\matrixrep{T}{B}{C}}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>To establish that two vector spaces are isomorphic, we must find an isomorphism between them, an invertible linear transformation (<acroref type="definition" acro="IVS" />).  The kernel of the linear transformation $T$, $\krn{T}$, is a subspace of $U$, while the null space of the matrix representation, $\nsp{\matrixrep{T}{B}{C}}$ is a subspace of $\complex{n}$.  The function $\vectrepname{B}$ is defined as a function from $U$ to $\complex{n}$, but we can just as well employ the definition of $\vectrepname{B}$ as a function from $\krn{T}$ to $\nsp{\matrixrep{T}{B}{C}}$.</p>
+
+<p>We must first insure that if we choose an input for $\vectrepname{B}$ from $\krn{T}$ that then the output will be an element of $\nsp{\matrixrep{T}{B}{C}}$.  So suppose that $\vect{u}\in\krn{T}$.  Then
+<alignmath>
+\matrixrep{T}{B}{C}\vectrep{B}{\vect{u}}
+<![CDATA[&=\vectrep{C}{\lt{T}{\vect{u}}}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\vectrep{C}{\zerovector}&&]]>\text{<acroref type="definition" acro="KLT" />}\\
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="theorem" acro="LTTZZ" />}\\
+</alignmath>
+</p>
+
+<p>This says that $\vectrep{B}{\vect{u}}\in\nsp{\matrixrep{T}{B}{C}}$, as desired.</p>
+
+<p>The restriction in the size of the domain and codomain $\vectrepname{B}$ will not affect the fact that $\vectrepname{B}$ is a linear transformation (<acroref type="theorem" acro="VRLT" />), nor will it affect the fact that $\vectrepname{B}$ is injective (<acroref type="theorem" acro="VRI" />).  Something must be done though to verify that $\vectrepname{B}$ is surjective.  To this end, appeal to the definition of surjective (<acroref type="definition" acro="SLT" />), and suppose that we have an element of the codomain, $\vect{x}\in\nsp{\matrixrep{T}{B}{C}}\subseteq\complex{n}$ and we wish to find an element of the domain with $\vect{x}$ as its image.  We now show that the desired element of the domain is $\vect{u}=\vectrepinv{B}{\vect{x}}$.  First, verify that $\vect{u}\in\krn{T}$,
+<alignmath>
+\lt{T}{\vect{u}}
+<![CDATA[&=\lt{T}{\vectrepinv{B}{\vect{x}}}\\]]>
+<![CDATA[&=\vectrepinv{C}{\matrixrep{T}{B}{C}\left(\vectrep{B}{\vectrepinv{B}{\vect{x}}}\right)}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\vectrepinv{C}{\matrixrep{T}{B}{C}\left(\lt{I_{\complex{n}}}{\vect{x}}\right)}&&]]>\text{<acroref type="definition" acro="IVLT" />}\\
+<![CDATA[&=\vectrepinv{C}{\matrixrep{T}{B}{C}\vect{x}}&&]]>\text{<acroref type="definition" acro="IDLT" />}\\
+<![CDATA[&=\vectrepinv{C}{\zerovector_{\complex{n}}}&&]]>\text{<acroref type="definition" acro="KLT" />}\\
+<![CDATA[&=\zerovector_{V}&&]]>\text{<acroref type="theorem" acro="LTTZZ" />}\\
+<intertext>Second, verify that the proposed isomorphism, $\vectrepname{B}$, takes $\vect{u}$ to $\vect{x}$,</intertext>
+<![CDATA[\vectrep{B}{\vect{u}}&=\vectrep{B}{\vectrepinv{B}{\vect{x}}}&&\text{Substitution}\\]]>
+<![CDATA[&=\lt{I_{\complex{n}}}{\vect{x}}&&]]>\text{<acroref type="definition" acro="IVLT" />}\\
+<![CDATA[&=\vect{x}&&]]>\text{<acroref type="definition" acro="IDLT" />}
+</alignmath>
+</p>
+
+<p>With $\vectrepname{B}$ demonstrated to be an injective and surjective linear transformation from $\krn{T}$ to $\nsp{\matrixrep{T}{B}{C}}$, <acroref type="theorem" acro="ILTIS" /> tells us $\vectrepname{B}$ is invertible, and so by <acroref type="definition" acro="IVS" />, we say $\krn{T}$ and $\nsp{\matrixrep{T}{B}{C}}$ are isomorphic.</p>
+
+</proof>
+</theorem>
+
+<example acro="KVMR" index="kernel!via matrix representation">
+<title>Kernel via matrix representation</title>
+
+<p>Consider the kernel of the linear transformation
+<equation>
+<![CDATA[\ltdefn{T}{M_{22}}{P_2},\quad \lt{T}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}=]]>
+(2a-b+c-5d)+(a+4b+5c+2d)x+(3a-2b+c-8d)x^2
+</equation>
+</p>
+
+<p>We will begin with a matrix representation of $T$ relative to the bases for $M_{22}$ and $P_2$ (respectively),
+<alignmath>
+<![CDATA[B&=\set{]]>
+<![CDATA[\begin{bmatrix}1 & 2 \\ -1 & -1\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}1 & 3 \\ -1 & -4\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}1 & 2 \\ 0 & -2\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}2 & 5 \\ -2 & -4\end{bmatrix}]]>
+}\\
+<![CDATA[C&=\set{1+x+x^2,\,2+3x,\,-1-2x^2}]]>
+</alignmath>
+</p>
+
+<p>Then,
+<alignmath>
+<![CDATA[\vectrep{C}{\lt{T}{\begin{bmatrix}1 & 2 \\ -1 & -1\end{bmatrix}}}]]>
+<![CDATA[&=\vectrep{C}{4+2x+6x^2}\\]]>
+<![CDATA[&=\vectrep{C}{2(1+x+x^2)+0(2+3x)+(-2)(-1-2x^2)}\\]]>
+<![CDATA[&=\colvector{2\\0\\-2}\\]]>
+<![CDATA[\vectrep{C}{\lt{T}{\begin{bmatrix}1 & 3 \\ -1 & -4\end{bmatrix}}}]]>
+<![CDATA[&=\vectrep{C}{18+28x^2}\\]]>
+<![CDATA[&=\vectrep{C}{(-24)(1+x+x^2)+8(2+3x)+(-26)(-1-2x^2)}\\]]>
+<![CDATA[&=\colvector{-24\\8\\-26}\\]]>
+<![CDATA[\vectrep{C}{\lt{T}{\begin{bmatrix}1 & 2 \\ 0 & -2\end{bmatrix}}}]]>
+<![CDATA[&=\vectrep{C}{10+5x+15x^2}\\]]>
+<![CDATA[&=\vectrep{C}{5(1+x+x^2)+0(2+3x)+(-5)(-1-2x^2)}\\]]>
+<![CDATA[&=\colvector{5\\0\\-5}\\]]>
+<![CDATA[\vectrep{C}{\lt{T}{\begin{bmatrix}2 & 5 \\ -2 & -4\end{bmatrix}}}]]>
+<![CDATA[&=\vectrep{C}{17+4x+26x^2}\\]]>
+<![CDATA[&=\vectrep{C}{(-8)(1+x+x^2)+(4)(2+3x)+(-17)(-1-2x^2)}\\]]>
+<![CDATA[&=\colvector{-8\\4\\-17}]]>
+</alignmath>
+</p>
+
+<p>So the matrix representation of $T$ (relative to $B$ and $C$) is
+<equation>
+\matrixrep{T}{B}{C}
+=
+\begin{bmatrix}
+<![CDATA[ 2 & -24 & 5 & -8 \\]]>
+<![CDATA[ 0 & 8 & 0 & 4 \\]]>
+<![CDATA[ -2 & -26 & -5 & -17]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We know from <acroref type="theorem" acro="KNSI" /> that the kernel of the linear transformation $T$ is isomorphic to the null space of the matrix representation $\matrixrep{T}{B}{C}$ and by studying the proof of <acroref type="theorem" acro="KNSI" /> we learn that $\vectrepname{B}$ is an isomorphism between these null spaces. Rather than trying to compute the kernel of $T$ using definitions and techniques from <acroref type="chapter" acro="LT" /> we will instead analyze the null space of $\matrixrep{T}{B}{C}$ using techniques from way back in <acroref type="chapter" acro="V" />.  First row-reduce $\matrixrep{T}{B}{C}$,
+<equation>
+\begin{bmatrix}
+<![CDATA[2 & -24 & 5 & -8 \\]]>
+<![CDATA[0 & 8 & 0 & 4 \\]]>
+<![CDATA[-2 & -26 & -5 & -17]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & \frac{5}{2} & 2 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & \frac{1}{2} \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>So, by <acroref type="theorem" acro="BNS" />, a basis for $\nsp{\matrixrep{T}{B}{C}}$ is
+<equation>
+\spn{\set{\colvector{-\frac{5}{2}\\0\\1\\0},\,\colvector{-2\\-\frac{1}{2}\\0\\1}}}
+</equation>
+</p>
+
+<p>We can  now convert this basis of $\nsp{\matrixrep{T}{B}{C}}$ into a basis of $\krn{T}$ by applying $\vectrepinvname{B}$ to each element of the basis,
+<alignmath>
+<![CDATA[\vectrepinv{B}{\colvector{-\frac{5}{2}\\0\\1\\0}}&=]]>
+<![CDATA[(-\frac{5}{2})\begin{bmatrix}1 & 2 \\ -1 & -1\end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix}1 & 3 \\ -1 & -4\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}1 & 2 \\ 0 & -2\end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix}2 & 5 \\ -2 & -4\end{bmatrix}\\]]>
+<![CDATA[&=\begin{bmatrix}-\frac{3}{2} & -3 \\ \frac{5}{2} & \frac{1}{2}\end{bmatrix}\\]]>
+<![CDATA[\vectrepinv{B}{\colvector{-2\\-\frac{1}{2}\\0\\1}}&=]]>
+<![CDATA[(-2)\begin{bmatrix}1 & 2 \\ -1 & -1\end{bmatrix}+]]>
+<![CDATA[(-\frac{1}{2})\begin{bmatrix}1 & 3 \\ -1 & -4\end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix}1 & 2 \\ 0 & -2\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}2 & 5 \\ -2 & -4\end{bmatrix}\\]]>
+<![CDATA[&=\begin{bmatrix}-\frac{1}{2} & -\frac{1}{2} \\ \frac{1}{2} &0\end{bmatrix}]]>
+</alignmath>
+</p>
+
+<p>So the set
+<equation>
+\set{
+<![CDATA[\begin{bmatrix}-\frac{3}{2} & -3 \\ \frac{5}{2} & \frac{1}{2}\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-\frac{1}{2} & -\frac{1}{2} \\ \frac{1}{2} &0\end{bmatrix}]]>
+}
+</equation>
+is a basis for $\krn{T}$  Just for fun, you might evaluate $T$ with each of these two basis vectors and verify that the output is the zero polynomial (<acroref type="exercise" acro="MR.C10" />).</p>
+
+</example>
+
+<p>An entirely similar result applies to the range of a linear transformation and the column space of a matrix representation of the linear transformation.</p>
+
+<theorem acro="RCSI" index="range!isomorphic to column space">
+<title>Range and Column Space Isomorphism</title>
+<statement>
+<indexlocation index="column space!isomorphic to range" />
+<p>Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation, $B$ is a basis for $U$ of size $n$, and $C$ is a basis for $V$ of size $m$.  Then the range of $T$ is isomorphic to the column space of $\matrixrep{T}{B}{C}$,
+<equation>
+\rng{T}\isomorphic\csp{\matrixrep{T}{B}{C}}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>To establish that two vector spaces are isomorphic, we must find an isomorphism between them, an invertible linear transformation (<acroref type="definition" acro="IVS" />).  The range of the linear transformation $T$, $\rng{T}$, is a subspace of $V$, while the column space of the matrix representation, $\csp{\matrixrep{T}{B}{C}}$ is a subspace of $\complex{m}$.  The function $\vectrepname{C}$ is defined as a function from $V$ to $\complex{m}$, but we can just as well employ the definition of $\vectrepname{C}$ as a function from $\rng{T}$ to $\csp{\matrixrep{T}{B}{C}}$.</p>
+
+<p>We must first insure that if we choose an input for $\vectrepname{C}$ from $\rng{T}$ that then the output will be an element of $\csp{\matrixrep{T}{B}{C}}$.  So suppose that $\vect{v}\in\rng{T}$.  Then there is a vector $\vect{u}\in U$, such that $\lt{T}{\vect{u}}=\vect{v}$.  Consider
+<alignmath>
+\matrixrep{T}{B}{C}\vectrep{B}{\vect{u}}
+<![CDATA[&=\vectrep{C}{\lt{T}{\vect{u}}}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\vectrep{C}{\vect{v}}&&]]>\text{<acroref type="definition" acro="RLT" />}
+</alignmath></p>
+
+<p>This says that $\vectrep{C}{\vect{v}}\in\csp{\matrixrep{T}{B}{C}}$, as desired.</p>
+
+<p>The restriction in the size of the domain and codomain will not affect the fact that $\vectrepname{C}$ is a linear transformation (<acroref type="theorem" acro="VRLT" />), nor will it affect the fact that $\vectrepname{C}$ is injective (<acroref type="theorem" acro="VRI" />).  Something must be done though to verify that $\vectrepname{C}$ is surjective.  This all gets a bit confusing, since the domain of our isomorphism is the range of the linear transformation, so think about your objects as you go.  To establish that $\vectrepname{C}$ is surjective, appeal to the definition of a surjective linear transformation (<acroref type="definition" acro="SLT" />), and suppose that we have an element of the codomain, $\vect{y}\in\csp{\matrixrep{T}{B}{C}}\subseteq\complex{m}$ and we wish to find an element of the domain with $\vect{y}$ as its image.  Since $\vect{y}\in\csp{\matrixrep{T}{B}{C}}$, there exists a vector, $\vect{x}\in\complex{n}$ with $\matrixrep{T}{B}{C}\vect{x}=\vect{y}$.</p>
+
+<p>We now show that the desired element of the domain is $\vect{v}=\vectrepinv{C}{\vect{y}}$.     First, verify that $\vect{v}\in\rng{T}$ by applying $T$ to $\vect{u}=\vectrepinv{B}{\vect{x}}$,
+<alignmath>
+<![CDATA[\lt{T}{\vect{u}}&=\lt{T}{\vectrepinv{B}{\vect{x}}}\\]]>
+<![CDATA[&=\vectrepinv{C}{\matrixrep{T}{B}{C}\left(\vectrep{B}{\vectrepinv{B}{\vect{x}}}\right)}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\vectrepinv{C}{\matrixrep{T}{B}{C}\left(\lt{I_{\complex{n}}}{\vect{x}}\right)}&&]]>\text{<acroref type="definition" acro="IVLT" />}\\
+<![CDATA[&=\vectrepinv{C}{\matrixrep{T}{B}{C}\vect{x}}&&]]>\text{<acroref type="definition" acro="IDLT" />}\\
+<![CDATA[&=\vectrepinv{C}{\vect{y}}&&]]>\text{<acroref type="definition" acro="CSM" />}\\
+<![CDATA[&=\vect{v}&&\text{Substitution}\\]]>
+<intertext>Second, verify that the proposed isomorphism, $\vectrepname{C}$, takes $\vect{v}$ to $\vect{y}$,</intertext>
+<![CDATA[\vectrep{C}{\vect{v}}&=\vectrep{C}{\vectrepinv{C}{\vect{y}}}&&\text{Substitution}\\]]>
+<![CDATA[&=\lt{I_{\complex{m}}}{\vect{y}}&&]]>\text{<acroref type="definition" acro="IVLT" />}\\
+<![CDATA[&=\vect{y}&&]]>\text{<acroref type="definition" acro="IDLT" />}
+</alignmath>
+</p>
+
+<p>With $\vectrepname{C}$ demonstrated to be an injective and surjective linear transformation from $\rng{T}$ to $\csp{\matrixrep{T}{B}{C}}$, <acroref type="theorem" acro="ILTIS" /> tells us $\vectrepname{C}$ is invertible, and so by <acroref type="definition" acro="IVS" />, we say $\rng{T}$ and $\csp{\matrixrep{T}{B}{C}}$ are isomorphic.</p>
+
+</proof>
+</theorem>
+
+<example acro="RVMR" index="range!via matrix representation">
+<title>Range via matrix representation</title>
+
+<p>In this example, we will recycle the linear transformation $T$ and the bases $B$ and $C$ of <acroref type="example" acro="KVMR" /> but now we will compute the range of $T$,
+<equation>
+<![CDATA[\ltdefn{T}{M_{22}}{P_2},\quad \lt{T}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}=]]>
+(2a-b+c-5d)+(a+4b+5b+2d)x+(3a-2b+c-8d)x^2
+</equation>
+</p>
+
+<p>With bases $B$ and $C$,
+<alignmath>
+<![CDATA[B&=\set{]]>
+<![CDATA[\begin{bmatrix}1 & 2 \\ -1 & -1\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}1 & 3 \\ -1 & -4\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}1 & 2 \\ 0 & -2\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}2 & 5 \\ -2 & -4\end{bmatrix}]]>
+}\\
+<![CDATA[C&=\set{1+x+x^2,\,2+3x,\,-1-2x^2}]]>
+</alignmath>
+we obtain the matrix representation
+<equation>
+\matrixrep{T}{B}{C}
+=
+\begin{bmatrix}
+<![CDATA[ 2 & -24 & 5 & -8 \\]]>
+<![CDATA[ 0 & 8 & 0 & 4 \\]]>
+<![CDATA[ -2 & -26 & -5 & -17]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We know from <acroref type="theorem" acro="RCSI" /> that the range of the linear transformation $T$ is isomorphic to the column space of the matrix representation $\matrixrep{T}{B}{C}$ and by studying the proof of <acroref type="theorem" acro="RCSI" /> we learn that $\vectrepname{C}$ is an isomorphism between these subspaces.   Notice that since the range is a subspace of the codomain, we will employ $\vectrepname{C}$ as the isomorphism, rather than $\vectrepname{B}$, which was the correct choice for an isomorphism between the null spaces of <acroref type="example" acro="KVMR" />.</p>
+
+<p>Rather than trying to compute the range of $T$ using definitions and techniques from <acroref type="chapter" acro="LT" /> we will instead analyze the column space of $\matrixrep{T}{B}{C}$ using techniques from way back in <acroref type="chapter" acro="M" />.  First row-reduce $\transpose{\left(\matrixrep{T}{B}{C}\right)}$,
+<equation>
+\begin{bmatrix}
+<![CDATA[2 & 0 & -2 \\]]>
+<![CDATA[-24 & 8 & -26 \\]]>
+<![CDATA[5 & 0 & -5 \\]]>
+<![CDATA[-8 & 4 & -17]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & -1 \\]]>
+<![CDATA[0 & \leading{1} & -\frac{25}{4} \\]]>
+<![CDATA[0 & 0 & 0 \\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Now employ <acroref type="theorem" acro="CSRST" /> and <acroref type="theorem" acro="BRS" /> (there are other methods we could choose here to compute the column space, such as <acroref type="theorem" acro="BCS" />) to obtain the basis for $\csp{\matrixrep{T}{B}{C}}$,
+<equation>
+\set{
+\colvector{1\\0\\-1},\,
+\colvector{0\\1\\-\frac{25}{4}}
+}
+</equation>
+</p>
+
+<p>We can  now convert this basis of $\csp{\matrixrep{T}{B}{C}}$ into a basis of $\rng{T}$ by applying $\vectrepinvname{C}$ to each element of the basis,
+<alignmath>
+<![CDATA[\vectrepinv{C}{\colvector{1\\0\\-1}}&=]]>
+(1+x+x^2)-(-1-2x^2)=2+x+3x^2\\
+<![CDATA[\vectrepinv{C}{\colvector{0\\1\\-\frac{25}{4}}}&=]]>
+(2+3x)-\frac{25}{4}(-1-2x^2)=\frac{33}{4}+3x+\frac{31}{2}x^2
+</alignmath>
+</p>
+
+<p>So the set
+<equation>
+\set{
+2+3x+3x^2,\,
+\frac{33}{4}+3x+\frac{31}{2}x^2
+}
+</equation>
+is a basis for $\rng{T}$.
+</p>
+
+</example>
+
+<p><acroref type="theorem" acro="KNSI" /> and <acroref type="theorem" acro="RCSI" /> can be viewed as further formal evidence for the <miscref type="principle" text="Coordinatization Principle" />, though they are not direct consequences.</p>
+
+<sageadvice acro="LTR" index="linear transformation!restrictions">
+<title>Linear Transformation Restrictions</title>
+<acroref type="theorem" acro="KNSI" /> and <acroref type="theorem" acro="RCSI" /> have two of the most subtle proofs we have seen so far.  The conclusion that two vector spaces are isomorphic is established by actually constructing an isomorphism between the vector spaces.  To build the isomorphism, we begin with a familar object, a vector representation linear transformation, but the hard work is showing that we can <q>restrict</q> the domain and codomain of this function and still arrive at a legitimate (bijective) linear transformation.  In an effort to make the proofs more concrete, we will walk through a nontrivial example for <acroref type="theorem" acro="KNSI" />, and you might try to do the same for <acroref type="theorem" acro="RCSI" />.  (An understanding of this subsection is not needed for the remainder <mdash /> its second purpose is to demonstrate some of the powerful tools Sage provides.)<br /><br />
+Here are the pieces.  We build a linear transformation with two different representations, one with respect to standard bases, the other with respect to less-obvious bases.
+<sage>
+<input>x1, x2, x3, x4, x5 = var('x1, x2, x3, x4, x5')
+outputs = [ x1 - x2 - 5*x3 +   x4 +   x5,
+            x1      - 2*x3 -   x4 -   x5,
+               - x2 - 3*x3 + 2*x4 + 2*x5,
+           -x1 + x2 + 5*x3 -   x4 -   x5]
+T_symbolic(x1, x2, x3, x4, x5) = outputs
+b0 = vector(QQ, [-1,  6,  5,  5,  1])
+b1 = vector(QQ, [-1,  5,  4,  4,  1])
+b2 = vector(QQ, [-2,  4,  3,  2,  5])
+b3 = vector(QQ, [ 1, -1,  0,  1, -5])
+b4 = vector(QQ, [ 3, -7, -6, -5, -4])
+U = (QQ^5).subspace_with_basis([b0, b1, b2, b3, b4])
+c0 = vector(QQ, [1, 1, 1, -3])
+c1 = vector(QQ, [-2, 3, -6, -7])
+c2 = vector(QQ, [0, -1, 1, 2])
+c3 = vector(QQ, [-1, 3, -4, -7])
+V = (QQ^4).subspace_with_basis([c0, c1, c2, c3])
+T_plain = linear_transformation(QQ^5, QQ^4, T_symbolic)
+T_fancy = linear_transformation(   U,    V, T_symbolic)
+</input>
+</sage>
+
+Now we compute the kernel of the linear transformation using the <q>plain</q> version, and the null space of a matrix representation coming from the <q>fancy</q> version.
+<sage>
+<input>K = T_plain.kernel()
+K
+</input>
+<output>Vector space of degree 5 and dimension 3 over Rational Field
+Basis matrix:
+[   1    0  2/7    0  3/7]
+[   0    1 -1/7    0  2/7]
+[   0    0    0    1   -1]
+</output>
+</sage>
+
+<sage>
+<input>MK = T_fancy.matrix(side='right').right_kernel()
+MK
+</input>
+<output>Vector space of degree 5 and dimension 3 over Rational Field
+Basis matrix:
+[      1       0       0 -97/203 164/203]
+[      0       1       0  -10/29   19/29]
+[      0       0       1 129/203 100/203]
+</output>
+</sage>
+
+So quite obviously, the kernel of the linear transformation is quite different looking from the null space of the matrix representation.  Though it is no accident that they have the same dimension.  Now we build the necessary vector representation, and use two Sage commands to <q>restrict</q> the function to a smaller domain (the kernel of the linear transformation) and a smaller codomain (the null space of the matrix representation relative to nonstandard bases).
+<sage>
+<input>rhoB = linear_transformation(U, QQ^5, (QQ^5).basis())
+rho_restrict = rhoB.restrict_domain(K).restrict_codomain(MK)
+rho_restrict
+</input>
+<output>Vector space morphism represented by the matrix:
+[ 33/7 -37/7 -11/7]
+[-13/7  22/7 -12/7]
+[   -4     5     6]
+Domain: Vector space of degree 5 and dimension 3 over Rational Field
+Basis matrix:
+[   1    0  2/7    0  3/7]
+[   0    1 -1/7    0  2/7]
+[   0    0    0    1   -1]
+Codomain: Vector space of degree 5 and dimension 3 over Rational Field
+Basis matrix:
+[      1       0       0 -97/203 164/203]
+[      0       1       0  -10/29   19/29]
+[      0       0       1 129/203 100/203]
+</output>
+</sage>
+
+The first success is that the restriction was even created.  Sage would recognize if the original linear transformation ever carried an input from the restricted domain to an output that was not contained in the proposed codomain, and would have raised an error in that event.  Phew!  Guaranteeing this success was the first big step in the proof of <acroref type="theorem" acro="KNSI" />.  Notice that the matrix representation of the restriction is a $3\times 3$ matrix, since the restriction runs between a domain and codomain that each have dimension 3.  These two vector spaces (the domain and codomain of the restriction) have dimension 3 but still contain vectors with 5 entries in their un-coordinatized versions.<br /><br />
+The next two steps of the proof show that the restriction is injective (easy in the proof) and surjective (hard in the proof).  In Sage, here is the second success,
+<sage>
+<input>rho_restrict.is_injective()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>rho_restrict.is_surjective()
+</input>
+<output>True
+</output>
+</sage>
+
+Verified as a bijection, <code>rho_restrict</code> qualifies as an isomorphism between the linear transformation kernel, <code>K</code>, and the matrix representation null space, <code>MK</code>.  Only an example, but still very nice.  Your turn <mdash /> can you create a verfication of <acroref type="theorem" acro="RCSI" /> (for this example, or some other nontrivial example you might create yourself)?
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="IVLT">
+<title>Invertible Linear Transformations</title>
+
+<p>We have seen, both in theorems and in examples, that questions about linear transformations are often equivalent to questions about matrices.  It is the matrix representation of a linear transformation that makes this idea precise.  Here's our final theorem that solidifies this connection.</p>
+
+<theorem acro="IMR" index="matrix representation!invertible">
+<title>Invertible Matrix Representations</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation, $B$ is a basis for $U$ and $C$ is a basis for $V$. Then $T$ is an invertible linear transformation if and only if the matrix representation of $T$ relative to $B$ and $C$, $\matrixrep{T}{B}{C}$ is an invertible matrix.  When $T$ is invertible,
+<equation>
+\matrixrep{\ltinverse{T}}{C}{B}=\inverse{\left(\matrixrep{T}{B}{C}\right)}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p><implyreverse />  Suppose $T$ is invertible, so the inverse linear transformation $\ltdefn{\ltinverse{T}}{V}{U}$ exists (<acroref type="definition" acro="IVLT" />).  Both linear transformations have matrix representations relative to the bases of $U$ and $V$, namely $\matrixrep{T}{B}{C}$ and $\matrixrep{\ltinverse{T}}{C}{B}$ (<acroref type="definition" acro="MR" />).  </p>
+
+<p>Then
+<alignmath>
+\matrixrep{\ltinverse{T}}{C}{B}\matrixrep{T}{B}{C}
+<![CDATA[&=\matrixrep{\compose{\ltinverse{T}}{T}}{B}{B}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MRCLT" />}\\
+<![CDATA[&=\matrixrep{I_U}{B}{B}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IVLT" />}\\
+<![CDATA[&=\left[]]>
+\left.\vectrep{B}{\lt{I_U}{\vect{u}_1}}\right|
+\left.\vectrep{B}{\lt{I_U}{\vect{u}_2}}\right|
+\ldots
+\left|\vectrep{B}{\lt{I_U}{\vect{u}_n}}\right.
+\right]
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MR" />}\\
+<![CDATA[&=\left[]]>
+\left.\vectrep{B}{\vect{u}_1}\right|
+\left.\vectrep{B}{\vect{u}_2}\right|
+\left.\vectrep{B}{\vect{u}_3}\right|
+\ldots
+\left|\vectrep{B}{\vect{u}_n}\right.
+\right]
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IDLT" />}\\
+<![CDATA[&=\matrixcolumns{e}{n}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="VR" />}\\
+<![CDATA[&=I_n]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IM" />}
+</alignmath>
+</p>
+
+<p>And
+<alignmath>
+<![CDATA[\matrixrep{T}{B}{C}\matrixrep{\ltinverse{T}}{C}{B}&=]]>
+\matrixrep{\compose{T}{\ltinverse{T}}}{C}{C}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MRCLT" />}\\
+<![CDATA[&=\matrixrep{I_V}{C}{C}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IVLT" />}\\
+<![CDATA[&=\left[]]>
+\left.\vectrep{C}{\lt{I_V}{\vect{v}_1}}\right|
+\left.\vectrep{C}{\lt{I_V}{\vect{v}_2}}\right|
+\ldots
+\left|\vectrep{C}{\lt{I_V}{\vect{v}_n}}\right.
+\right]
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MR" />}\\
+<![CDATA[&=\left[]]>
+\left.\vectrep{C}{\vect{v}_1}\right|
+\left.\vectrep{C}{\vect{v}_2}\right|
+\left.\vectrep{C}{\vect{v}_3}\right|
+\ldots
+\left|\vectrep{C}{\vect{v}_n}\right.
+<![CDATA[\right]&&]]>\text{<acroref type="definition" acro="IDLT" />}\\
+<![CDATA[&=\matrixcolumns{e}{n}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="VR" />}\\
+<![CDATA[&=I_n]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IM" />}
+</alignmath>
+</p>
+
+<p>These two equations show that $\matrixrep{T}{B}{C}$ and $\matrixrep{\ltinverse{T}}{C}{B}$ are inverse matrices (<acroref type="definition" acro="MI" />) and establish that when $T$ is invertible, then $\matrixrep{\ltinverse{T}}{C}{B}=\inverse{\left(\matrixrep{T}{B}{C}\right)}$.</p>
+
+<p><implyreverse />
+Suppose now that $\matrixrep{T}{B}{C}$ is an invertible matrix and hence nonsingular (<acroref type="theorem" acro="NI" />).  We compute the nullity of $T$,
+<alignmath>
+\nullity{T}
+<![CDATA[&=\dimension{\krn{T}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="KLT" />}\\
+<![CDATA[&=\dimension{\nsp{\matrixrep{T}{B}{C}}}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="KNSI" />}\\
+<![CDATA[&=\nullity{\matrixrep{T}{B}{C}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="NOM" />}\\
+<![CDATA[&=0]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="RNNM" />}
+</alignmath>
+</p>
+
+<p>So the kernel of $T$ is trivial, and by <acroref type="theorem" acro="KILT" />, $T$ is injective.</p>
+
+<p>We now compute the rank of $T$,
+<alignmath>
+\rank{T}
+<![CDATA[&=\dimension{\rng{T}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="RLT" />}\\
+<![CDATA[&=\dimension{\csp{\matrixrep{T}{B}{C}}}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="RCSI" />}\\
+<![CDATA[&=\rank{\matrixrep{T}{B}{C}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="ROM" />}\\
+<![CDATA[&=\dimension{V}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="RNNM" />}
+</alignmath>
+</p>
+
+<p>Since the dimension of the range of $T$ equals the dimension of the codomain $V$, by <acroref type="theorem" acro="EDYES" />, $\rng{T}=V$.  Which says that $T$ is surjective by <acroref type="theorem" acro="RSLT" />.</p>
+
+<p>Because $T$ is both injective and surjective, by <acroref type="theorem" acro="ILTIS" />, $T$ is invertible.</p>
+
+</proof>
+</theorem>
+
+<p>By now, the connections between matrices and linear transformations should be starting to become more transparent, and you may have already recognized the invertibility of a matrix as being  tantamount to the invertibility of the associated matrix representation.  The next example shows how to apply this theorem to the problem of actually building a formula for the inverse of an invertible linear transformation.</p>
+
+<example acro="ILTVR" index="linear transformation inverse!via matrix representation">
+<title>Inverse of a linear transformation via a representation</title>
+
+<p>Consider the linear transformation
+<equation>
+\ltdefn{R}{P_3}{M_{22}},\quad
+\lt{R}{a+bx+cx^2+x^3}=
+\begin{bmatrix}
+<![CDATA[a +b - c + 2d & 2a + 3b - 2c + 3d\\]]>
+<![CDATA[a + b + 2 d & -a + b + 2c - 5d]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>If we wish to quickly find a formula for the inverse of $R$ (presuming it exists), then choosing <q>nice</q> bases will work best.  So build a matrix representation of $R$ relative to the bases $B$ and $C$,
+<alignmath>
+<![CDATA[B&=\set{1,\,x,\,x^2,\,x^3}\\]]>
+<![CDATA[C&=\set{]]>
+<![CDATA[\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} 0 & 0 \\ 1 & 0 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}]]>
+}
+</alignmath>
+</p>
+
+<p>Then,
+<alignmath>
+\vectrep{C}{\lt{R}{1}}
+<![CDATA[&=\vectrep{C}{\begin{bmatrix} 1 & 2 \\ 1 & -1 \end{bmatrix}}]]>
+=\colvector{1\\2\\1\\-1}\\
+\vectrep{C}{\lt{R}{x}}
+<![CDATA[&=\vectrep{C}{\begin{bmatrix} 1 & 3 \\ 1 & 1 \end{bmatrix}}]]>
+=\colvector{1\\3\\1\\1}\\
+\vectrep{C}{\lt{R}{x^2}}
+<![CDATA[&=\vectrep{C}{\begin{bmatrix} -1 & -2 \\ 0 & 2 \end{bmatrix}}]]>
+=\colvector{-1\\-2\\0\\2}\\
+\vectrep{C}{\lt{R}{x^3}}
+<![CDATA[&=\vectrep{C}{\begin{bmatrix} 2 & 3 \\ 2 & -5 \end{bmatrix}}]]>
+=\colvector{2\\3\\2\\-5}
+</alignmath>
+</p>
+
+<p>So a representation of $R$ is
+<equation>
+\matrixrep{R}{B}{C}=
+\begin{bmatrix}
+<![CDATA[ 1 & 1 & -1 & 2 \\]]>
+<![CDATA[ 2 & 3 & -2 & 3 \\]]>
+<![CDATA[ 1 & 1 & 0 & 2 \\]]>
+<![CDATA[ -1 & 1 & 2 & -5]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>The matrix $\matrixrep{R}{B}{C}$ is invertible (as you can check) so we know for sure that $R$ is invertible by <acroref type="theorem" acro="IMR" />.  Furthermore,
+<equation>
+\matrixrep{\ltinverse{R}}{C}{B}
+=\inverse{\left(\matrixrep{R}{B}{C}\right)}
+=
+\inverse{
+\begin{bmatrix}
+<![CDATA[ 1 & 1 & -1 & 2 \\]]>
+<![CDATA[ 2 & 3 & -2 & 3 \\]]>
+<![CDATA[ 1 & 1 & 0 & 2 \\]]>
+<![CDATA[ -1 & 1 & 2 & -5]]>
+\end{bmatrix}
+}
+=
+\begin{bmatrix}
+<![CDATA[20 & -7 & -2 & 3 \\]]>
+<![CDATA[-8 & 3 & 1 & -1 \\]]>
+<![CDATA[-1 & 0 & 1 & 0 \\]]>
+<![CDATA[-6 & 2 & 1 & -1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We can use this representation of the inverse linear transformation, in concert with <acroref type="theorem" acro="FTMR" />, to determine an explicit formula for the inverse itself,
+<alignmath>
+<![CDATA[\lt{\ltinverse{R}}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}]]>
+<![CDATA[&=\vectrepinv{B}{\matrixrep{\ltinverse{R}}{C}{B}\vectrep{C}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\vectrepinv{B}{\inverse{\left(\matrixrep{R}{B}{C}\right)}\vectrep{C}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}}&&]]>\text{<acroref type="theorem" acro="IMR" />}\\
+<![CDATA[&=\vectrepinv{B}{\inverse{\left(\matrixrep{R}{B}{C}\right)}\colvector{a\\b\\c\\d}}&&]]>\text{<acroref type="definition" acro="VR" />}\\
+<![CDATA[&=\vectrepinv{B}{]]>
+\begin{bmatrix}
+<![CDATA[20 & -7 & -2 & 3 \\]]>
+<![CDATA[-8 & 3 & 1 & -1 \\]]>
+<![CDATA[-1 & 0 & 1 & 0 \\]]>
+<![CDATA[-6 & 2 & 1 & -1]]>
+\end{bmatrix}
+<![CDATA[\colvector{a\\b\\c\\d}}&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=\vectrepinv{B}{]]>
+\colvector{
+20a - 7b - 2c + 3d\\
+-8a + 3b + c -d\\
+-a + c\\
+<![CDATA[-6a + 2b + c - d}}&&]]>\text{<acroref type="definition" acro="MVP" />}\\
+<![CDATA[&=(20a - 7b - 2c + 3d)+(-8a + 3b + c -d)x\\]]>
+<![CDATA[&\quad\quad +(-a + c)x^2+(-6a + 2b + c - d)x^3]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="VR" />}
+</alignmath>
+</p>
+
+</example>
+
+<p>You might look back at <acroref type="example" acro="AIVLT" />, where we first witnessed the inverse of a linear transformation and recognize that the inverse ($S$) was built from using the method of <acroref type="example" acro="ILTVR" /> with a matrix representation of $T$.</p>
+
+<theorem acro="IMILT" index="invertible linear transformation!defined by invertible matrix">
+<title>Invertible Matrices, Invertible Linear Transformation</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $n$ and $\ltdefn{T}{\complex{n}}{\complex{n}}$ is the linear transformation defined by $\lt{T}{\vect{x}}=A\vect{x}$.  Then $A$ is invertible matrix if and only if $T$ is an invertible linear transformation.</p>
+
+</statement>
+
+<proof>
+<p>Choose bases $B=C=\set{\vectorlist{e}{n}}$ consisting of the standard unit vectors as a basis of $\complex{n}$ (<acroref type="theorem" acro="SUVB" />) and build a matrix representation of $T$ relative to $B$ and $C$.  Then
+<alignmath>
+\vectrep{C}{\lt{T}{\vect{e}_i}}
+<![CDATA[&=\vectrep{C}{A\vect{e}_i}\\]]>
+<![CDATA[&=\vectrep{C}{\vect{A}_i}\\]]>
+<![CDATA[&=\vect{A}_i]]>
+</alignmath>
+</p>
+
+<p>So then the matrix representation of $T$, relative to $B$ and $C$, is simply $\matrixrep{T}{B}{C}=A$.  with this observation, the proof becomes a specialization of <acroref type="theorem" acro="IMR" />,
+<alignmath>
+T\text{ is invertible}
+\iff\matrixrep{T}{B}{C}\text{ is invertible}
+\iff A\text{ is invertible}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>This theorem may seem gratuitous.  Why state such a special case of <acroref type="theorem" acro="IMR" />?  Because it adds another condition to our NMEx series of theorems, and in some ways it is the most fundamental expression of what it means for a matrix to be nonsingular <mdash /> the associated linear transformation is invertible.  This is our final update.</p>
+
+<theorem acro="NME9" index="nonsingular matrix!equivalences">
+<title>Nonsingular Matrix Equivalences, Round 9</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $n$.  The following are equivalent.
+<ol><li> $A$ is nonsingular.
+</li><li> $A$ row-reduces to the identity matrix.
+</li><li> The null space of $A$ contains only the zero vector, $\nsp{A}=\set{\zerovector}$.
+</li><li> The linear system $\linearsystem{A}{\vect{b}}$ has a unique solution for every possible choice of $\vect{b}$.
+</li><li> The columns of $A$ are a linearly independent set.
+</li><li> $A$ is invertible.
+</li><li> The column space of $A$ is $\complex{n}$, $\csp{A}=\complex{n}$.
+</li><li> The columns of $A$ are a basis for $\complex{n}$.
+</li><li> The rank of $A$ is $n$, $\rank{A}=n$.
+</li><li> The nullity of $A$ is zero, $\nullity{A}=0$.
+</li><li> The determinant of $A$ is nonzero, $\detname{A}\neq 0$.
+</li><li> $\lambda=0$ is not an eigenvalue of $A$.
+</li><li> The linear transformation $\ltdefn{T}{\complex{n}}{\complex{n}}$ defined by $\lt{T}{\vect{x}}=A\vect{x}$ is invertible.
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>By <acroref type="theorem" acro="IMILT" /> the new addition to this list is equivalent to the statement that $A$ is invertible so we can expand <acroref type="theorem" acro="NME8" />.</p>
+
+</proof>
+</theorem>
+
+<sageadvice acro="NME9" index="nonsingular matrix equivalences, round 9">
+<title>Nonsingular Matrix Equivalences, Round 9</title>
+Our final fact about nonsingular matrices expresses the correspondence between invertible matrices and invertible linear transformations.  As a Sage demonstration, we will begin with an invertible linear transformation and examine two matrix representations.  We will create the linear transformation with nonstandard bases and then compute its representation relative to standard bases.
+<sage>
+<input>x1, x2, x3, x4 = var('x1, x2, x3, x4')
+outputs = [ x1        - 2*x3 - 4*x4,
+                   x2 -   x3 - 5*x4,
+           -x1 - 2*x2 + 2*x3 + 7*x4,
+               -   x2        +   x4]
+T_symbolic(x1, x2, x3, x4) = outputs
+b0 = vector(QQ, [ 1, -2, -1,  8])
+b1 = vector(QQ, [ 0,  1,  0, -2])
+b2 = vector(QQ, [-1, -2,  2, -5])
+b3 = vector(QQ, [-1, -3,  2, -2])
+U = (QQ^4).subspace_with_basis([b0, b1, b2, b3])
+c0 = vector(QQ, [ 3, -1,  4, -8])
+c1 = vector(QQ, [ 1,  0,  1, -1])
+c2 = vector(QQ, [ 0,  2, -1,  6])
+c3 = vector(QQ, [-1,  2, -2,  8])
+V = (QQ^4).subspace_with_basis([c0, c1, c2, c3])
+T = linear_transformation(U, V, T_symbolic)
+T
+</input>
+<output>Vector space morphism represented by the matrix:
+[ 131  -56 -321  366]
+[ -37   17   89 -102]
+[ -61   25  153 -173]
+[  -7   -1   24  -25]
+Domain: Vector space of degree 4 and dimension 4 over Rational Field
+User basis matrix:
+[ 1 -2 -1  8]
+[ 0  1  0 -2]
+[-1 -2  2 -5]
+[-1 -3  2 -2]
+Codomain: Vector space of degree 4 and dimension 4 over Rational Field
+User basis matrix:
+[ 3 -1  4 -8]
+[ 1  0  1 -1]
+[ 0  2 -1  6]
+[-1  2 -2  8]
+</output>
+</sage>
+
+<sage>
+<input>T.is_invertible()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>T.matrix(side='right').is_invertible()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>(T^-1).matrix(side='right') == (T.matrix(side='right'))^-1
+</input>
+<output>True
+</output>
+</sage>
+
+We can convert <code>T</code> to a new representation using standard bases for <code>QQ^4</code> by computing images of the standard basis.
+<sage>
+<input>images = [T(u) for u in (QQ^4).basis()]
+T_standard = linear_transformation(QQ^4, QQ^4, images)
+T_standard
+</input>
+<output>Vector space morphism represented by the matrix:
+[ 1  0 -1  0]
+[ 0  1 -2 -1]
+[-2 -1  2  0]
+[-4 -5  7  1]
+Domain: Vector space of dimension 4 over Rational Field
+Codomain: Vector space of dimension 4 over Rational Field
+</output>
+</sage>
+
+<sage>
+<input>T_standard.matrix(side='right').is_invertible()
+</input>
+<output>True
+</output>
+</sage>
+
+Understand that <em>any</em> matrix representation of <code>T_symbolic</code> will have an invertible matrix representation, no matter which bases are used.  If you look at the matrix representation of <code>T_standard</code> and the definition of <code>T_symbolic</code> the construction of this example will be transparent, especially if you know the random matrix constructor,
+<sage>
+<input>A = random_matrix(QQ, 4, algorithm='unimodular', upper_bound=9)
+A                                                      # random
+</input>
+<output>[-1 -1  2  1]
+[ 1  1 -1  0]
+[-2 -1  5  6]
+[ 1  0 -4 -5]
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<!--   End of  mr.tex -->
+<readingquestions>
+<ol>
+<li>Why does <acroref type="theorem" acro="FTMR" /> deserve the moniker <q>fundamental</q>?
+</li>
+<li>Find the matrix representation, $\matrixrep{T}{B}{C}$ of the linear transformation
+<equation>
+\ltdefn{T}{\complex{2}}{\complex{2}},\quad\lt{T}{\colvector{x_1\\x_2}}=\colvector{2x_1-x_2\\3x_1+2x_2}
+</equation>
+relative to the bases
+<alignmath>
+<![CDATA[B&=\set{\colvector{2\\3},\,\colvector{-1\\2}}&]]>
+<![CDATA[C&=\set{\colvector{1\\0},\,\colvector{1\\1}}]]>
+</alignmath>
+</li>
+<li>What is the second <q>surprise,</q> and why is it surprising?
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="10" rough="Evaluate lt on kernel basis vectors from example">
+<problem contributor="robertbeezer"><acroref type="example" acro="KVMR" /> concludes with a basis for the kernel of the linear transformation $T$.  Compute the value of $T$ for each of these two basis vectors.  Did you get what you expected?
+</problem>
+</exercise>
+
+<exercise type="C" number="20" rough="Matrix representation">
+<problem contributor="robertbeezer">Compute the matrix representation of $T$ relative to the bases $B$ and $C$.
+<!--was a gather-->
+<alignmath>
+\ltdefn{T}{P_3}{\complex{3}},\quad \lt{T}{a+bx+cx^2+dx^3}=
+\colvector{2a-3b+4c-2d\\a+b-c+d\\3a+2c-3d}\\
+B=\set{1,\,x,\,x^2,\,x^3}\quad\quad
+C=\set{\colvector{1\\0\\0},\,\colvector{1\\1\\0},\,\colvector{1\\1\\1}}
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">Apply <acroref type="definition" acro="MR" />,
+<alignmath>
+<![CDATA[\vectrep{C}{\lt{T}{1}}&=\vectrep{C}{\colvector{2\\1\\3}}]]>
+=\vectrep{C}{1\colvector{1\\0\\0}+(-2)\colvector{1\\1\\0}+3\colvector{1\\1\\1}}=\colvector{1\\-2\\3}\\
+<![CDATA[\vectrep{C}{\lt{T}{x}}&=\vectrep{C}{\colvector{-3\\1\\0}}]]>
+=\vectrep{C}{(-4)\colvector{1\\0\\0}+1\colvector{1\\1\\0}+0\colvector{1\\1\\1}}=\colvector{-4\\1\\0}\\
+<![CDATA[\vectrep{C}{\lt{T}{x^2}}&=\vectrep{C}{\colvector{4\\-1\\2}}]]>
+=\vectrep{C}{5\colvector{1\\0\\0}+(-3)\colvector{1\\1\\0}+2\colvector{1\\1\\1}}=\colvector{5\\-3\\2}\\
+<![CDATA[\vectrep{C}{\lt{T}{x^3}}&=\vectrep{C}{\colvector{-2\\1\\-3}}]]>
+=\vectrep{C}{(-3)\colvector{1\\0\\0}+4\colvector{1\\1\\0}+(-3)\colvector{1\\1\\1}}=\colvector{-3\\4\\-3}
+</alignmath>
+These four vectors are the columns of the matrix representation,
+<equation>
+\matrixrep{T}{B}{C}=
+\begin{bmatrix}
+<![CDATA[1 & -4 & 5 & -3\\]]>
+<![CDATA[-2 & 1 & -3 & 4\\]]>
+<![CDATA[3 & 0 & 2 & -3]]>
+\end{bmatrix}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="C" number="21" rough="Matrix representation, P_2->C^2, evaluations">
+<problem contributor="robertbeezer">Find a matrix representation of the linear transformation $T$ relative to the bases $B$ and $C$.
+<alignmath>
+<![CDATA[&\ltdefn{T}{P_2}{\complex{2}},\quad \lt{T}{p(x)}=\colvector{p(1)\\p(3)}\\]]>
+<![CDATA[&B=\set{2-5x+x^2,\,1+x-x^2,\,x^2}\\]]>
+<![CDATA[&C=\set{\colvector{3\\4},\,\colvector{2\\3}}]]>
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">Applying <acroref type="definition" acro="MR" />,
+<alignmath>
+<![CDATA[\vectrep{C}{\lt{T}{2-5x+x^2}}&=\vectrep{C}{\colvector{-2\\-4}}]]>
+=\vectrep{C}{2\colvector{3\\4}+(-4)\colvector{2\\3}}=\colvector{2\\-4}\\
+<![CDATA[\vectrep{C}{\lt{T}{1+x-x^2}}&=\vectrep{C}{\colvector{1\\-5}}]]>
+=\vectrep{C}{13\colvector{3\\4}+(-19)\colvector{2\\3}}=\colvector{13\\-19}\\
+<![CDATA[\vectrep{C}{\lt{T}{x^2}}&=\vectrep{C}{\colvector{1\\9}}]]>
+=\vectrep{C}{(-15)\colvector{3\\4}+23\colvector{2\\3}}=\colvector{-15\\23}
+</alignmath>
+So the resulting matrix representation is
+<alignmath>
+\matrixrep{T}{B}{C}
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ 2 & 13 & -15 \\]]>
+<![CDATA[ -4 & -19 & 23]]>
+\end{bmatrix}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="22" rough="Matrix representation, P_2->Sym 2x2">
+<problem contributor="robertbeezer">Let $S_{22}$ be the vector space of $2\times 2$ symmetric matrices.  Build the matrix representation of the linear transformation $\ltdefn{T}{P_2}{S_{22}}$ relative to the bases $B$ and $C$ and then use this matrix representation to compute $\lt{T}{3+5x-2x^2}$.
+<alignmath>
+<![CDATA[B&=\set{1,\,1+x,\,1+x+x^2}]]>
+<![CDATA[&]]>
+<![CDATA[C&=\set{]]>
+<![CDATA[\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}\\
+<![CDATA[\lt{T}{a+bx+cx^2}&=]]>
+\begin{bmatrix}
+<![CDATA[2a-b+c & a+3b-c \\ a+3b-c & a-c]]>
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">Input to $T$ the vectors of the basis $B$ and coordinatize the outputs relative to $C$,
+<alignmath>
+<![CDATA[\vectrep{C}{\lt{T}{1}}&=]]>
+\vectrep{C}{
+<![CDATA[\begin{bmatrix}2 & 1 \\ 1 & 1\end{bmatrix}]]>
+}
+=
+\vectrep{C}{
+<![CDATA[2\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}
+=
+\colvector{2\\1\\1}\\
+<![CDATA[\vectrep{C}{\lt{T}{1+x}}&=]]>
+\vectrep{C}{
+<![CDATA[\begin{bmatrix}1 & 4 \\ 4 & 1\end{bmatrix}]]>
+}
+=
+\vectrep{C}{
+<![CDATA[1\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[4\begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}
+=
+\colvector{1\\4\\1}\\
+<![CDATA[\vectrep{C}{\lt{T}{1+x+x^2}}&=]]>
+\vectrep{C}{
+<![CDATA[\begin{bmatrix}2 & 3 \\ 3 & 0\end{bmatrix}]]>
+}
+=
+\vectrep{C}{
+<![CDATA[2\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[3\begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}
+=
+\colvector{2\\3\\0}
+</alignmath>
+Applying <acroref type="definition" acro="MR" /> we have the matrix representation
+<equation>
+\matrixrep{T}{B}{C}=
+<![CDATA[\begin{bmatrix}2 & 1  & 2 \\ 1 & 4 & 3 \\ 1 & 1 & 0 \end{bmatrix}]]>
+</equation>
+To compute $\lt{T}{3+5x-2x^2}$ employ <acroref type="theorem" acro="FTMR" />,
+<alignmath>
+<![CDATA[\lt{T}{3+5x-2x^2}&=]]>
+\vectrepinv{C}{\matrixrep{T}{B}{C}\vectrep{B}{3+5x-2x^2}}\\
+<![CDATA[&=\vectrepinv{C}{\matrixrep{T}{B}{C}\vectrep{B}{(-2)(1)+7(1+x)+(-2)(1+x+x^2)}}\\]]>
+<![CDATA[&=\vectrepinv{C}{]]>
+<![CDATA[\begin{bmatrix}2&1&2\\1&4&3\\1&1&0\end{bmatrix}]]>
+\colvector{-2\\7\\-2}
+}\\
+<![CDATA[&=\vectrepinv{C}{\colvector{-1\\20\\5}}\\]]>
+<![CDATA[&=]]>
+<![CDATA[(-1)\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[20\begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix}+]]>
+<![CDATA[5\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}\\]]>
+<![CDATA[&=]]>
+<![CDATA[\begin{bmatrix}-1 & 20 \\ 20 & 5\end{bmatrix}]]>
+</alignmath>
+You can, of course, check your answer by evaluating $\lt{T}{3+5x-2x^2}$ directly.
+</solution>
+</exercise>
+
+<exercise type="C" number="25" rough="Polys to matrices, surjective?">
+<problem contributor="robertbeezer">Use a matrix representation to determine if the linear transformation $\ltdefn{T}{P_3}{M_{22}}$ surjective.
+<equation>
+\lt{T}{a+bx+cx^2+dx^3}=
+\begin{bmatrix}
+<![CDATA[-a+4b+c+2d & 4a-b+6c-d\\]]>
+<![CDATA[a+5b-2c+2d & a+2c+5d]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">Choose bases $B$ and $C$ for the matrix representation,
+<alignmath>
+<![CDATA[B&=\set{1,\,x,\,x^2,\,x^3}]]>
+<![CDATA[&]]>
+<![CDATA[C&=\set{]]>
+<![CDATA[\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}\\
+</alignmath>
+Input to $T$ the vectors of the basis $B$ and coordinatize the outputs relative to $C$,
+<alignmath>
+<![CDATA[\vectrep{C}{\lt{T}{1}}&=]]>
+<![CDATA[\vectrep{C}{\begin{bmatrix}-1 & 4 \\ 1 & 1\end{bmatrix}}]]>
+=
+\vectrep{C}{
+<![CDATA[(-1)\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[4\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}
+=
+\colvector{-1\\4\\1\\1}\\
+<![CDATA[\vectrep{C}{\lt{T}{x}}&=]]>
+<![CDATA[\vectrep{C}{\begin{bmatrix}4 & -1 \\ 5 & 0\end{bmatrix}}]]>
+=
+\vectrep{C}{
+<![CDATA[4\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[(-1)\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[5\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}
+=
+\colvector{4\\-1\\5\\0}\\
+<![CDATA[\vectrep{C}{\lt{T}{x^2}}&=]]>
+<![CDATA[\vectrep{C}{\begin{bmatrix}1 & 6 \\ -2 & 2\end{bmatrix}}]]>
+=
+\vectrep{C}{
+<![CDATA[1\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[6\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[(-2)\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix}+]]>
+<![CDATA[2\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}
+=
+\colvector{1\\6\\-2\\2}\\
+<![CDATA[\vectrep{C}{\lt{T}{x^3}}&=]]>
+<![CDATA[\vectrep{C}{\begin{bmatrix}2 & -1 \\ 2 & 5\end{bmatrix}}]]>
+=
+\vectrep{C}{
+<![CDATA[2\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[(-1)\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[2\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix}+]]>
+<![CDATA[5\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}
+=
+\colvector{2\\-1\\2\\5}
+</alignmath>
+Applying <acroref type="definition" acro="MR" /> we have the matrix representation
+<equation>
+\matrixrep{T}{B}{C}=
+\begin{bmatrix}
+<![CDATA[-1 & 4 & 1 & 2 \\]]>
+<![CDATA[ 4 & -1 & 6 & -1 \\]]>
+<![CDATA[ 1 & 5 & -2 & 2 \\]]>
+<![CDATA[ 1 & 0 & 2 & 5]]>
+\end{bmatrix}
+</equation>
+Properties of this matrix representation will translate to properties of the linear transformation The matrix representation is nonsingular since it row-reduces to the identity matrix (<acroref type="theorem" acro="NMRRI" />) and therefore has a column space equal to $\complex{4}$ (<acroref type="theorem" acro="CNMB" />).  The column space of the matrix representation is isomorphic to the range of the linear transformation (<acroref type="theorem" acro="RCSI" />).  So the range of $T$ has dimension 4, equal to the dimension of the codomain $M_{22}$.  By <acroref type="theorem" acro="ROSLT" />, $T$ is surjective.
+</solution>
+</exercise>
+
+<exercise type="C" number="30" rough="Column space, range via matrix rep">
+<problem contributor="robertbeezer">Find bases for the kernel and range of the linear transformation $S$ below.
+<equation>
+<![CDATA[\ltdefn{S}{M_{22}}{P_2},\quad\lt{S}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}=]]>
+(a+2b+5c-4d)+(3a-b+8c+2d)x+(a+b+4c-2d)x^2
+</equation>
+</problem>
+<solution contributor="robertbeezer">These subspaces will be easiest to construct by analyzing a matrix representation of $S$.  Since we can use any matrix representation, we might as well use natural bases that allow us to construct the matrix representation quickly and easily,
+<alignmath>
+<![CDATA[B&=\set{]]>
+<![CDATA[\begin{bmatrix}1&0\\0&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&1\\0&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&0\\1&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+<![CDATA[&]]>
+<![CDATA[C&=\set{1,\,x,\,x^2}]]>
+</alignmath>
+then we can practically build the matrix representation on sight,
+<equation>
+\matrixrep{S}{B}{C}=
+\begin{bmatrix}
+<![CDATA[1 & 2 & 5 & -4\\]]>
+<![CDATA[3 & -1 & 8 & 2\\]]>
+<![CDATA[1 & 1 & 4 & -2]]>
+\end{bmatrix}
+</equation>
+The first step is to find bases for the null space and column space of the matrix representation.  Row-reducing the matrix representation we find,
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 3 & 0\\]]>
+<![CDATA[0 & \leading{1} & 1 & -2\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+So by <acroref type="theorem" acro="BNS" /> and <acroref type="theorem" acro="BCS" />, we have
+<alignmath>
+<![CDATA[\nsp{\matrixrep{S}{B}{C}}&=\spn{\set{\colvector{-3\\-1\\1\\0},\,\colvector{0\\2\\0\\1}}}]]>
+<![CDATA[&]]>
+<![CDATA[\csp{\matrixrep{S}{B}{C}}&=\spn{\set{\colvector{1\\3\\1},\,\colvector{2\\-1\\1}}}]]>
+</alignmath>
+Now, the proofs of <acroref type="theorem" acro="KNSI" /> and <acroref type="theorem" acro="RCSI" /> tell us that we can apply $\ltinverse{\vectrepname{B}}$ and $\vectrepinvname{C}$ (respectively) to <q>un-coordinatize</q> and get bases for the kernel and range of the linear transformation $S$ itself,
+<alignmath>
+<![CDATA[\krn{S}&=\spn{\set{]]>
+\begin{bmatrix}
+<![CDATA[-3&-1\\1&0]]>
+\end{bmatrix},\,
+\begin{bmatrix}
+<![CDATA[0&2\\0&1]]>
+\end{bmatrix}
+}}
+<![CDATA[&]]>
+<![CDATA[\rng{S}&=\spn{\set{1+3x+x^2,\,2-x+x^2}}]]>
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="40" rough="Inverse lin trans via matrix rep">
+<problem contributor="robertbeezer">Let $S_{22}$ be the set of $2\times 2$ symmetric matrices.  Verify that the linear transformation $R$ is invertible and find $\ltinverse{R}$.
+<equation>
+<![CDATA[\ltdefn{R}{S_{22}}{P_2},\quad\lt{R}{\begin{bmatrix}a&b\\b&c\end{bmatrix}}=]]>
+(a-b)+(2a-3b-2c)x+(a-b+c)x^2
+</equation>
+</problem>
+<solution contributor="robertbeezer">The analysis of $R$ will be easiest if we analyze a matrix representation of $R$.  Since we can use any matrix representation, we might as well use natural bases that allow us to construct the matrix representation quickly and easily,
+<alignmath>
+<![CDATA[B&=\set{]]>
+<![CDATA[\begin{bmatrix}1&0\\0&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&1\\1&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+<![CDATA[&]]>
+<![CDATA[C&=\set{1,\,x,\,x^2}]]>
+</alignmath>
+then we can practically build the matrix representation on sight,
+<equation>
+\matrixrep{R}{B}{C}=
+\begin{bmatrix}
+<![CDATA[1 & -1 & 0\\]]>
+<![CDATA[2 & -3 & -2\\]]>
+<![CDATA[1 & -1 & 1]]>
+\end{bmatrix}
+</equation>
+This matrix representation is invertible (it has a nonzero determinant of $-1$, <acroref type="theorem" acro="SMZD" />, <acroref type="theorem" acro="NI" />) so <acroref type="theorem" acro="IMR" /> tells us that the linear transformation $R$ is also invertible.  To find a formula for $\ltinverse{R}$  we compute,
+<alignmath>
+\lt{\ltinverse{R}}{a+bx+cx^2}
+<![CDATA[&=\vectrepinv{B}{\matrixrep{\ltinverse{R}}{C}{B}\vectrep{C}{a+bx+cx^2}}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\vectrepinv{B}{\inverse{\left(\matrixrep{R}{B}{C}\right)}\vectrep{C}{a+bx+cx^2}}&&]]>\text{<acroref type="theorem" acro="IMR" />}\\
+<![CDATA[&=\vectrepinv{B}{\inverse{\left(\matrixrep{R}{B}{C}\right)}\colvector{a\\b\\c}}&&]]>\text{<acroref type="definition" acro="VR" />}\\
+<![CDATA[&=\vectrepinv{B}{]]>
+<![CDATA[\begin{bmatrix}5&-1&-2\\4&-1&-2\\-1&0&1\end{bmatrix}]]>
+<![CDATA[\colvector{a\\b\\c}}&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=\vectrepinv{B}{\colvector{5a-b-2c\\4a-b-2c\\-a+c}}&&]]>\text{<acroref type="definition" acro="MVP" />}\\
+<![CDATA[&=\begin{bmatrix}5a-b-2c&4a-b-2c\\4a-b-2c&-a+c\end{bmatrix}&&]]>\text{<acroref type="definition" acro="VR" />}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="41" rough="Inverse lin trans via matrix rep">
+<problem contributor="robertbeezer">Prove that the linear transformation $S$ is invertible.  Then find a formula for the inverse linear transformation, $\ltinverse{S}$, by employing a matrix inverse.
+<equation>
+\ltdefn{S}{P_1}{M_{1,2}},\quad \lt{S}{a+bx}=
+<![CDATA[\begin{bmatrix} 3a+b & 2a+b \end{bmatrix}]]>
+</equation>
+</problem>
+<solution contributor="robertbeezer">First, build a matrix representation of $S$ (<acroref type="definition" acro="MR" />).  We are free to choose whatever bases we wish, so we should choose ones that are easy to work with, such as
+<alignmath>
+<![CDATA[B&=\set{1,\,x}\\]]>
+<![CDATA[C&=\set{\begin{bmatrix}1 & 0\end{bmatrix},\,\begin{bmatrix}0 & 1\end{bmatrix}}]]>
+</alignmath>
+The resulting matrix representation is then
+<equation>
+\matrixrep{T}{B}{C}=
+\begin{bmatrix}
+<![CDATA[3 & 1\\]]>
+<![CDATA[2 & 1]]>
+\end{bmatrix}
+</equation>
+this matrix is invertible, since it has a nonzero determinant, so by <acroref type="theorem" acro="IMR" /> the linear transformation $S$ is invertible.  We can use the matrix inverse and <acroref type="theorem" acro="IMR" /> to find a formula for the inverse linear transformation,
+<alignmath>
+<![CDATA[\lt{\ltinverse{S}}{\begin{bmatrix}a&b\end{bmatrix}}]]>
+<![CDATA[&=\vectrepinv{B}{\matrixrep{\ltinverse{S}}{C}{B}\vectrep{C}{\begin{bmatrix}a&b\end{bmatrix}}}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\vectrepinv{B}{\inverse{\left(\matrixrep{S}{B}{C}\right)}\vectrep{C}{\begin{bmatrix}a&b\end{bmatrix}}}&&]]>\text{<acroref type="theorem" acro="IMR" />}\\
+<![CDATA[&=\vectrepinv{B}{\inverse{\left(\matrixrep{S}{B}{C}\right)}\colvector{a\\b}}&&]]>\text{<acroref type="definition" acro="VR" />}\\
+<![CDATA[&=\vectrepinv{B}{]]>
+\inverse{\left(
+\begin{bmatrix}
+<![CDATA[3 & 1\\]]>
+<![CDATA[2 & 1]]>
+\end{bmatrix}
+\right)}
+\colvector{a\\b}}\\
+<![CDATA[&=\vectrepinv{B}{]]>
+\begin{bmatrix}
+<![CDATA[1 & -1\\]]>
+<![CDATA[-2 & 3]]>
+\end{bmatrix}
+<![CDATA[\colvector{a\\b}}&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=\vectrepinv{B}{]]>
+\colvector{
+a-b\\
+-2a+3b
+<![CDATA[}}&&]]>\text{<acroref type="definition" acro="MVP" />}\\
+<![CDATA[&=(a-b)+(-2a+3b)x&&]]>\text{<acroref type="definition" acro="VR" />}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="42" rough="Inverse lin trans via matrix rep">
+<problem contributor="robertbeezer">The linear transformation $\ltdefn{R}{M_{12}}{M_{21}}$ is invertible.  Use a matrix representation to determine a formula for the inverse linear transformation $\ltdefn{\ltinverse{R}}{M_{21}}{M_{12}}$.
+<equation>
+<![CDATA[\lt{R}{\begin{bmatrix}a & b\end{bmatrix}}]]>
+=
+\begin{bmatrix}
+a+3b\\
+4a+11b
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">Choose bases $B$ and $C$ for $M_{12}$ and $M_{21}$ (respectively),
+<alignmath>
+B=\set{
+<![CDATA[\begin{bmatrix}1 & 0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0 & 1\end{bmatrix}]]>
+}
+C=\set{
+\begin{bmatrix}1 \\ 0\end{bmatrix},\,
+\begin{bmatrix}0 \\ 1\end{bmatrix}
+}
+</alignmath>
+The resulting matrix representation is
+<equation>
+\matrixrep{R}{B}{C}
+=
+\begin{bmatrix}
+<![CDATA[1 & 3\\]]>
+<![CDATA[4 & 11]]>
+\end{bmatrix}
+</equation>
+This matrix is invertible (its determinant is nonzero, <acroref type="theorem" acro="SMZD" />), so by <acroref type="theorem" acro="IMR" />, we can compute the matrix representation of $\ltinverse{R}$ with a matrix inverse (<acroref type="theorem" acro="TTMI" />),
+<equation>
+\matrixrep{\ltinverse{R}}{C}{B}
+<![CDATA[=\inverse{\begin{bmatrix}1 & 3\\4 & 11\end{bmatrix}}]]>
+<![CDATA[=\begin{bmatrix}-11 & 3\\4 & -1\end{bmatrix}]]>
+</equation>
+To obtain a general formula for $\ltinverse{R}$, use <acroref type="theorem" acro="FTMR" />,
+<alignmath>
+\lt{\ltinverse{R}}{\begin{bmatrix}x \\ y\end{bmatrix}}
+<![CDATA[&=\vectrepinv{B}{\matrixrep{\ltinverse{R}}{C}{B}\vectrep{C}{\begin{bmatrix}x\\y\end{bmatrix}}}\\]]>
+<![CDATA[&=\vectrepinv{B}{\begin{bmatrix}-11&3\\4&-1\end{bmatrix}\colvector{x\\y}}\\]]>
+<![CDATA[&=\vectrepinv{B}{\colvector{-11x+3y\\4x-y}}\\]]>
+<![CDATA[&=\begin{bmatrix}-11x+3y&4x-y\end{bmatrix}]]>
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="50" rough="Range via representation">
+<problem contributor="robertbeezer">Use a matrix representation to find a basis for the range of the linear transformation $L$.
+<equation>
+\ltdefn{L}{M_{22}}{P_2},\quad
+<![CDATA[\lt{T}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}=]]>
+(a+2b+4c+d)+(3a+c-2d)x+(-a+b+3c+3d)x^2
+</equation>
+</problem>
+<solution contributor="robertbeezer">As usual, build any matrix representation of $L$, most likely using a <q>nice</q> bases, such as
+<alignmath>
+<![CDATA[B&=\set{]]>
+<![CDATA[\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} 0 & 0 \\ 1 & 0 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}]]>
+}\\
+<![CDATA[C&=\set{1,\,x,\,x^2}]]>
+</alignmath>
+Then the matrix representation (<acroref type="definition" acro="MR" />) is,
+<equation>
+\matrixrep{L}{B}{C}=
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 4 & 1 \\]]>
+<![CDATA[ 3 & 0 & 1 & -2 \\]]>
+<![CDATA[ -1 & 1 & 3 & 3]]>
+\end{bmatrix}
+</equation>
+<acroref type="theorem" acro="RCSI" /> tells us that we can compute the column space of the matrix representation, then use the isomorphism $\vectrepinvname{C}$ to convert the column space of the matrix representation into the range of the linear transformation.  So we first analyze the matrix representation,
+<equation>
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 4 & 1 \\]]>
+<![CDATA[ 3 & 0 & 1 & -2 \\]]>
+<![CDATA[ -1 & 1 & 3 & 3]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & -1 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & -1 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 1]]>
+\end{bmatrix}
+</equation>
+With three nonzero rows in the reduced row-echelon form of the matrix, we know the column space has dimension 3.  Since $P_2$ has dimension 3 (<acroref type="theorem" acro="DP" />), the range must be all of $P_2$.  So <em>any</em> basis of $P_2$ would suffice as a basis for the range.  For instance, $C$ itself would be a correct answer.<br /><br />
+A more laborious approach would be to use <acroref type="theorem" acro="BCS" /> and choose the first three columns of the matrix representation as a basis for the range of the matrix representation.  These could then be <q>un-coordinatized</q> with $\vectrepinvname{C}$ to yield a (<q>not nice</q>) basis for $P_2$.
+</solution>
+</exercise>
+
+<exercise type="C" number="51" rough="Kernel via representation">
+<problem contributor="robertbeezer">Use a matrix representation to find a basis for the kernel of the linear transformation $L$.
+<equation>
+\ltdefn{L}{M_{22}}{P_2},\quad
+<![CDATA[\lt{T}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}=]]>
+(a+2b+4c+d)+(3a+c-2d)x+(-a+b+3c+3d)x^2
+</equation>
+</problem>
+</exercise>
+
+<exercise type="C" number="52" rough="Kernel via representation, poly to matrices">
+<problem contributor="robertbeezer">Find a basis for the kernel of the linear transformation $\ltdefn{T}{P_2}{M_{22}}$.
+<equation>
+\lt{T}{a+bx+cx^2}=
+\begin{bmatrix}
+<![CDATA[a+2b-2c & 2a+2b \\]]>
+<![CDATA[-a+b-4c & 3a+2b+2c]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">Choose bases $B$ and $C$ for the matrix representation,
+<alignmath>
+<![CDATA[B&=\set{1,\,x,\,x^2}]]>
+<![CDATA[&]]>
+<![CDATA[C&=\set{]]>
+<![CDATA[\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}\\
+</alignmath>
+Input to $T$ the vectors of the basis $B$ and coordinatize the outputs relative to $C$,
+<alignmath>
+<![CDATA[\vectrep{C}{\lt{T}{1}}&=]]>
+<![CDATA[\vectrep{C}{\begin{bmatrix}1 & 2 \\ -1 & 3\end{bmatrix}}]]>
+=
+\vectrep{C}{
+<![CDATA[1\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[2\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[(-1)\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix}+]]>
+<![CDATA[3\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}
+=
+\colvector{1\\2\\-1\\3}\\
+<![CDATA[\vectrep{C}{\lt{T}{x}}&=]]>
+<![CDATA[\vectrep{C}{\begin{bmatrix}2 & 2 \\ 1 & 2 \end{bmatrix}}]]>
+=
+\vectrep{C}{
+<![CDATA[2\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[2\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix}+]]>
+<![CDATA[2\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}
+=
+\colvector{2\\2\\1\\2}\\
+<![CDATA[\vectrep{C}{\lt{T}{x^2}}&=]]>
+<![CDATA[\vectrep{C}{\begin{bmatrix}-2 & 0 \\ -4 & 2\end{bmatrix}}]]>
+=
+\vectrep{C}{
+<![CDATA[(-2)\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}+]]>
+<![CDATA[(-4)\begin{bmatrix}0 & 0 \\ 1 & 0\end{bmatrix}+]]>
+<![CDATA[2\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}
+=
+\colvector{-2\\0\\-4\\2}\\
+</alignmath>
+Applying <acroref type="definition" acro="MR" /> we have the matrix representation
+<equation>
+\matrixrep{T}{B}{C}=
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & -2 \\]]>
+<![CDATA[ 2 & 2 & 0 \\]]>
+<![CDATA[ -1 & 1 & -4 \\]]>
+<![CDATA[ 3 & 2 & 2]]>
+\end{bmatrix}
+</equation>
+The null space of the matrix representation is isomorphic (via $\vectrepname{B}$) to the kernel of the linear transformation (<acroref type="theorem" acro="KNSI" />).  So we compute the null space of the matrix representation by first row-reducing the matrix to,
+<equation>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 \\]]>
+<![CDATA[ 0 & \leading{1} & -2 \\]]>
+<![CDATA[ 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+Employing <acroref type="theorem" acro="BNS" /> we have
+<equation>
+\nsp{\matrixrep{T}{B}{C}}=\spn{\set{\colvector{-2\\2\\1}}}
+</equation>
+We only need to uncoordinatize this one basis vector to get a basis for $\krn{T}$,
+<equation>
+\krn{T}
+=\spn{\set{\vectrepinv{B}{\colvector{-2\\2\\1}}}}
+=\spn{\set{-2+2x+x^2}}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="M" number="20" rough="Rank nullity, differentiation operator">
+<problem contributor="robertbeezer">The linear transformation $D$ performs differentiation on polynomials.  Use a matrix representation of $D$ to find the rank and nullity of $D$.
+<equation>
+\ltdefn{D}{P_n}{P_n},\quad \lt{D}{p(x)}=p^\prime(x)
+</equation>
+</problem>
+<solution contributor="robertbeezer">Build a matrix representation (<acroref type="definition" acro="MR" />) with the set
+<equation>
+B=\set{1,\,x,\,x^2,\,\dots,\,x^n}
+</equation>
+employed as a basis of both the domain and codomain.  Then
+<alignmath>
+<![CDATA[\vectrep{B}{\lt{D}{1}}&=\vectrep{B}{0}]]>
+=\colvector{0\\0\\0\\\vdots\\0\\0}
+<![CDATA[&]]>
+<![CDATA[\vectrep{B}{\lt{D}{x}}&=\vectrep{B}{1}]]>
+=\colvector{1\\0\\0\\\vdots\\0\\0}\\
+<![CDATA[\vectrep{B}{\lt{D}{x^2}}&=\vectrep{B}{2x}]]>
+=\colvector{0\\2\\0\\\vdots\\0\\0}
+<![CDATA[&]]>
+<![CDATA[\vectrep{B}{\lt{D}{x^3}}&=\vectrep{B}{3x^2}]]>
+=\colvector{0\\0\\3\\\vdots\\0\\0}\\
+<![CDATA[&\vdots\\]]>
+<![CDATA[\vectrep{B}{\lt{D}{x^n}}&=\vectrep{B}{nx^{n-1}}]]>
+=\colvector{0\\0\\0\\\vdots\\n\\0}\\
+</alignmath>
+and the resulting matrix representation is
+<equation>
+\matrixrep{D}{B}{B}=
+\begin{bmatrix}
+<![CDATA[0 & 1 & 0 & 0 & \dots & 0 & 0 \\]]>
+<![CDATA[0 & 0 & 2 & 0 & \dots & 0 & 0 \\]]>
+<![CDATA[0 & 0 & 0 & 3 & \dots & 0 & 0 \\]]>
+<![CDATA[   & \vdots &&& \ddots & & \vdots \\]]>
+<![CDATA[0 & 0 & 0 & 0 & \dots & 0 & n \\]]>
+<![CDATA[0 & 0 & 0 & 0 & \dots & 0 & 0]]>
+\end{bmatrix}
+</equation>
+This $(n+1)\times(n+1)$ matrix is very close to being in reduced row-echelon form.  Multiply row $i$ by $\frac{1}{i}$, for $1\leq i\leq n$, to convert it to reduced row-echelon form.  From this we can see that matrix representation $\matrixrep{D}{B}{B}$ has rank $n$ and nullity $1$.  Applying <acroref type="theorem" acro="RCSI" /> and <acroref type="theorem" acro="KNSI" /> tells us that the linear transformation $D$ will have the same values for the rank and nullity, as well.
+</solution>
+</exercise>
+
+<exercise type="M" number="60" rough="Invertible zero linear transformation">
+<problem contributor="robertbeezer">Suppose $U$ and $V$ are vector spaces and define a function $\ltdefn{Z}{U}{V}$ by $\lt{T}{\vect{u}}=\zerovector_{V}$ for every $\vect{u}\in U$.  Then <acroref type="exercise" acro="IVLT.M60" /> asks you to formulate the theorem:  $Z$ is invertible if and only if $U=\set{\zerovector_U}$ and $V=\set{\zerovector_V}$.  What would a matrix representation of $Z$ look like in this case?  How does <acroref type="theorem" acro="IMR" /> read in this case?
+</problem>
+</exercise>
+
+<exercise type="M" number="80" rough="Compositions, null spaces, kernels">
+<problem contributor="robertbeezer">In light of <acroref type="theorem" acro="KNSI" /> and <acroref type="theorem" acro="MRCLT" />, write a short comparison of <acroref type="exercise" acro="MM.T40" /> with <acroref type="exercise" acro="ILT.T15" />.
+</problem>
+</exercise>
+
+<exercise type="M" number="81" rough="Compositions, column spaces, ranges">
+<problem contributor="robertbeezer">In light of <acroref type="theorem" acro="RCSI" /> and <acroref type="theorem" acro="MRCLT" />, write a short comparison of <acroref type="exercise" acro="CRS.T40" /> with <acroref type="exercise" acro="SLT.T15" />.
+</problem>
+</exercise>
+
+<exercise type="M" number="82" rough="Compositions, matrix inverses, lt inverses">
+<problem contributor="robertbeezer">In light of <acroref type="theorem" acro="MRCLT" /> and <acroref type="theorem" acro="IMR" />, write a short comparison of  <acroref type="theorem" acro="SS" /> and <acroref type="theorem" acro="ICLT" />.
+</problem>
+</exercise>
+
+<exercise type="M" number="83" rough="Compositions, invertible parts, Theorem NPNT">
+<problem contributor="robertbeezer">In light of <acroref type="theorem" acro="MRCLT" /> and <acroref type="theorem" acro="IMR" />, write a short comparison of <acroref type="theorem" acro="NPNT" /> and <acroref type="exercise" acro="IVLT.T40" />.
+</problem>
+</exercise>
+
+<exercise type="T" number="20" rough="Redo B.T50 with T(x)=Ax formulation">
+<problem contributor="robertbeezer">Construct a new solution to <acroref type="exercise" acro="B.T50" /> along the following outline.  From the $n\times n$ matrix $A$, construct the linear transformation $\ltdefn{T}{\complex{n}}{\complex{n}}$, $\lt{T}{\vect{x}}=A\vect{x}$.  Use <acroref type="theorem" acro="NI" />, <acroref type="theorem" acro="IMILT" /> and <acroref type="theorem" acro="ILTIS" /> to translate between the nonsingularity of $A$ and the surjectivity/injectivity of $T$.  Then apply <acroref type="theorem" acro="ILTB" /> and  <acroref type="theorem" acro="SLTB" /> to connect these properties with bases.
+</problem>
+<solution contributor="robertbeezer">Given the nonsingular $n\times n$ matrix $A$, create the linear transformation $\ltdefn{T}{\complex{n}}{\complex{n}}$ defined by $\lt{T}{\vect{x}}=A\vect{x}$.  Then
+<alignmath>
+A\text{ nonsingular}
+<![CDATA[&\iff A\text{ invertible}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="NI" />}\\
+<![CDATA[&\iff T\text{ invertible}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="IMILT" />}\\
+<![CDATA[&\iff T\text{ injective and surjective}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="ILTIS" />}\\
+<![CDATA[&\iff C\text{ linearly independent, and}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="ILTB" />}\\
+<![CDATA[&\quad\quad\quad\quad C\text{ spans }\complex{n}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="SLTB" />}\\
+<![CDATA[&\iff C\text{ basis for }\complex{n}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="B" />}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="T" number="60" rough="A, T invertibility equivalence from definitions">
+<problem contributor="robertbeezer">Create an entirely different proof of <acroref type="theorem" acro="IMILT" />  that relies on <acroref type="definition" acro="IVLT" /> to establish the invertibility of $T$, and that relies on <acroref type="definition" acro="MI" /> to establish the invertibility of $A$.
+</problem>
+</exercise>
+
+<exercise type="T" number="80" rough="Entry-by-entry matrix mult from lt composition">
+<problem contributor="robertbeezer">Suppose that $\ltdefn{T}{U}{V}$ and $\ltdefn{S}{V}{W}$ are linear transformations, and that $B$, $C$ and $D$ are bases for $U$, $V$, and $W$.  Using only <acroref type="definition" acro="MR" /> define matrix representations for $T$ and $S$.  Using these two definitions, and <acroref type="definition" acro="MR" />, derive a matrix representation for the composition $\compose{S}{T}$ in terms of the entries of the matrices $\matrixrep{T}{B}{C}$ and $\matrixrep{S}{C}{D}$.  Explain how you would use this result to <em>motivate a definition</em> for matrix multiplication that is strikingly similar to <acroref type="theorem" acro="EMP" />.
+</problem>
+<solution contributor="robertbeezer">Suppose that
+$B=\set{\vectorlist{u}{m}}$, $C=\set{\vectorlist{v}{n}}$ and $D=\set{\vectorlist{w}{p}}$.  For convenience, set $M=\matrixrep{T}{B}{C}$, $m_{ij}=\matrixentry{M}{ij}$, $1\leq i\leq n$, $1\leq j\leq m$, and similarly, set $N=\matrixrep{S}{C}{D}$, $n_{ij}=\matrixentry{N}{ij}$, $1\leq i\leq p$, $1\leq j\leq n$.   We want to learn about the matrix representation of $\ltdefn{\compose{S}{T}}{V}{W}$ relative to $B$ and $D$.  We will examine a single (generic) entry of this representation.<br /><br />
+<alignmath>
+\matrixentry{\matrixrep{\compose{S}{T}}{B}{D}}{ij}
+<![CDATA[&=\vectorentry{\vectrep{D}{\lt{\left(\compose{S}{T}\right)}{\vect{u}_j}}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MR" />}\\
+<![CDATA[&=\vectorentry{\vectrep{D}{\lt{S}{\lt{T}{\vect{u}_j}}}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="LTC" />}\\
+<![CDATA[&=\vectorentry{\vectrep{D}{\lt{S}{\sum_{k=1}^{n}m_{kj}\vect{v}_k}}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MR" />}\\
+<![CDATA[&=\vectorentry{\vectrep{D}{\sum_{k=1}^{n}m_{kj}\lt{S}{\vect{v}_k}}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="LTLC" />}\\
+<![CDATA[&=\vectorentry{\vectrep{D}{\sum_{k=1}^{n}m_{kj}\sum_{\ell=1}^{p}n_{\ell k}\vect{w}_\ell}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MR" />}\\
+<![CDATA[&=\vectorentry{\vectrep{D}{\sum_{k=1}^{n}\sum_{\ell=1}^{p}m_{kj}n_{\ell k}\vect{w}_\ell}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DVA" />}\\
+<![CDATA[&=\vectorentry{\vectrep{D}{\sum_{\ell=1}^{p}\sum_{k=1}^{n}m_{kj}n_{\ell k}\vect{w}_\ell}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="C" />}\\
+<![CDATA[&=\vectorentry{\vectrep{D}{\sum_{\ell=1}^{p}\left(\sum_{k=1}^{n}m_{kj}n_{\ell k}\right)\vect{w}_\ell}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DSA" />}\\
+<![CDATA[&=\sum_{k=1}^{n}m_{kj}n_{ik}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="VR" />}\\
+<![CDATA[&=\sum_{k=1}^{n}n_{ik}m_{kj}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="CMCN" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{\matrixrep{S}{C}{D}}{ik}\matrixentry{\matrixrep{T}{B}{C}}{kj}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="CMCN" />}
+</alignmath>
+This formula for the entry of a matrix should remind you of <acroref type="theorem" acro="EMP" />.  However, while the theorem presumed we knew how to multiply matrices, the solution before us never uses any understanding of matrix products.  It uses the definitions of vector and matrix representations, properties of linear transformations and vector spaces.  So if we began a course by first discussing vector space, and then linear transformations between vector spaces, we could carry matrix representations into a <em>motivation</em> for a definition of matrix multiplication that is grounded in function composition.  That is worth saying again <mdash /> a definition of matrix representations of linear transformations <em>results</em> in a matrix product being the representation of a composition of linear transformations.<br /><br />
+This exercise is meant to explain why many authors take the formula in <acroref type="theorem" acro="EMP" /> as their <em>definition</em> of matrix multiplication, and why it is a natural choice when the proper motivation is in place.  If we first defined matrix multiplication in the style of <acroref type="theorem" acro="EMP" />, then the above argument, followed by a simple application of the definition of matrix equality (<acroref type="definition" acro="ME" />), would yield <acroref type="theorem" acro="MRCLT" />.
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

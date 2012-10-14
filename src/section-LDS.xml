@@ -1,0 +1,1215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="LDS">
+<title>Linear Dependence and Spans</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section LDS -->
+<!-- %  Linear Dependence and Spans -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>In any linearly dependent set there is always one vector that can be written as a linear combination of the others.  This is the substance of the upcoming <acroref type="theorem" acro="DLDS" />.  Perhaps this will explain the use of the word <q>dependent.</q>  In a linearly dependent set, at least one vector <q>depends</q> on the others (via a linear combination).</p>
+
+<p>Indeed, because <acroref type="theorem" acro="DLDS" /> is an equivalence (<acroref type="technique" acro="E" />) some authors use this condition as a definition (<acroref type="technique" acro="D" />) of linear dependence.  Then linear independence is defined as the logical opposite of linear dependence.  Of course, we have <em>chosen</em> to take <acroref type="definition" acro="LICV" /> as our definition, and then follow with <acroref type="theorem" acro="DLDS" /> as a theorem.</p>
+
+</introduction>
+
+<subsection acro="LDSS">
+<title>Linearly Dependent Sets and Spans</title>
+
+<p>If we use a linearly dependent set to construct a span, then we can <em>always</em> create the same infinite set with a starting set that is one vector smaller in size.  We will illustrate this behavior in <acroref type="example" acro="RSC5" />.  However, this will not be possible if we build a span from a linearly independent set.  So in a certain sense, using a linearly independent set to formulate a span is the best possible way <mdash /> there aren't any extra vectors being used to build up all the necessary linear combinations.  OK, here's the theorem, and then the example.</p>
+
+<theorem acro="DLDS" index="linearly dependent set!linear combinations within">
+<title>Dependency in Linearly Dependent Sets</title>
+<statement>
+<p>Suppose that $S=\set{\vectorlist{u}{n}}$ is a set of vectors.  Then $S$ is a linearly dependent set if and only if there is an index $t$, $1\leq t\leq n$ such that $\vect{u_t}$ is a linear combination of the vectors $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\ldots,\,\vect{u}_{t-1},\,\vect{u}_{t+1},\,\ldots,\,\vect{u}_n$.</p>
+
+</statement>
+
+<proof>
+<p><implyforward /> Suppose that $S$ is linearly dependent, so there exists a nontrivial relation of linear dependence by <acroref type="definition" acro="LICV" />.  That is, there are scalars, $\alpha_i$, $1\leq i\leq n$, which are not all zero, such that
+<equation>
+\lincombo{\alpha}{u}{n}=\zerovector.
+</equation>
+Since the $\alpha_i$ cannot all be zero, choose one, say $\alpha_t$, that is nonzero.  Then,
+<alignmath>
+\vect{u}_t
+<![CDATA[&=\frac{-1}{\alpha_t}\left(-\alpha_t\vect{u}_t\right)&&]]>\text{<acroref type="property" acro="MICN" />}\\
+<![CDATA[&=]]>
+\frac{-1}{\alpha_t}\left(
+\alpha_1\vect{u}_1+
+\cdots+
+\alpha_{t-1}\vect{u}_{t-1}+
+\alpha_{t+1}\vect{u}_{t+1}+
+\cdots+
+\alpha_n\vect{u}_n
+<![CDATA[\right)&&]]>\text{<acroref type="theorem" acro="VSPCV" />}\\
+<![CDATA[&=]]>
+\frac{-\alpha_1}{\alpha_t}\vect{u}_1+
+\cdots+
+\frac{-\alpha_{t-1}}{\alpha_t}\vect{u}_{t-1}+
+\frac{-\alpha_{t+1}}{\alpha_t}\vect{u}_{t+1}+
+\cdots+
+\frac{-\alpha_n}{\alpha_t}\vect{u}_n
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="VSPCV" />}
+</alignmath>
+</p>
+
+<p>Since the values of $\frac{\alpha_i}{\alpha_t}$ are again scalars, we have expressed $\vect{u}_t$ as a linear combination of the other elements of $S$.</p>
+
+<p><implyreverse /> Assume that the vector $\vect{u}_t$ is a linear combination of the other vectors in $S$.  Write this linear combination,  denoting the relevant scalars as $\beta_1$, $\beta_2$, <ellipsis />, $\beta_{t-1}$, $\beta_{t+1}$, <ellipsis />, $\beta_n$, as
+<alignmath>
+\vect{u_t}
+<![CDATA[&=]]>
+\beta_1\vect{u}_1+
+\beta_2\vect{u}_2+
+\cdots+
+\beta_{t-1}\vect{u}_{t-1}+
+\beta_{t+1}\vect{u}_{t+1}+
+\cdots+
+\beta_n\vect{u}_n
+</alignmath>
+</p>
+
+<p>Then we have
+<alignmath>
+\beta_1\vect{u}_1
+<![CDATA[&+\cdots+]]>
+\beta_{t-1}\vect{u}_{t-1}+
+(-1)\vect{u}_t+
+\beta_{t+1}\vect{u}_{t+1}+
+\cdots+
+\beta_n\vect{u}_n\\
+<![CDATA[&=\vect{u}_t+(-1)\vect{u}_t&&]]>\text{<acroref type="theorem" acro="VSPCV" />}\\
+<![CDATA[&=\left(1+\left(-1\right)\right)\vect{u}_t&&]]>\text{<acroref type="property" acro="DSAC" />}\\
+<![CDATA[&=0\vect{u}_t&&]]>\text{<acroref type="property" acro="AICN" />}\\
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="definition" acro="CVSM" />}
+</alignmath>
+</p>
+
+<p>So the scalars $\beta_1,\,\beta_2,\,\beta_3,\,\ldots,\,\beta_{t-1},\,\beta_t=-1,\beta_{t+1},\,\,\ldots,\,\beta_n$ provide a <em>nontrivial</em> linear combination of the vectors in $S$, thus establishing that $S$ is a linearly dependent set (<acroref type="definition" acro="LICV" />).
+</p>
+
+</proof>
+</theorem>
+
+<p>This theorem can be used, sometimes repeatedly, to whittle down the size of a set of vectors used in a span construction.  We have seen some of this already in <acroref type="example" acro="SCAD" />, but in the next example we will detail some of the subtleties.</p>
+
+<example acro="RSC5" index="reducing a span">
+<title>Reducing a span in $\complex{5}$</title>
+
+<p>Consider the set of $n=4$ vectors from $\complex{5}$,
+<equation>
+R=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}
+=
+\set{
+\colvector{1\\2\\-1\\3\\2},\,
+\colvector{2\\1\\3\\1\\2},\,
+\colvector{0\\-7\\6\\-11\\-2},\,
+\colvector{4\\1\\2\\1\\6}
+}\\
+</equation>
+and define $V=\spn{R}$.</p>
+
+<p>To employ <acroref type="theorem" acro="LIVHS" />, we form a $5\times 4$ coefficient matrix, $D$,
+<equation>
+D=
+\begin{bmatrix}
+<![CDATA[1&2&0&4\\]]>
+<![CDATA[2&1&-7&1\\]]>
+<![CDATA[-1&3&6&2\\]]>
+<![CDATA[3&1&-11&1\\]]>
+<![CDATA[2&2&-2&6]]>
+\end{bmatrix}
+</equation>
+and row-reduce to understand solutions to the homogeneous system $\homosystem{D}$,
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1}&0&0&4\\]]>
+<![CDATA[0&\leading{1}&0&0\\]]>
+<![CDATA[0&0&\leading{1}&1\\]]>
+<![CDATA[0&0&0&0\\]]>
+<![CDATA[0&0&0&0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We can find infinitely many solutions to this system, most of them nontrivial, and we choose any one we like to build a relation of linear dependence on $R$.   Let's begin with $x_4=1$, to find the solution
+<equation>
+\colvector{-4\\0\\-1\\1}
+</equation>
+</p>
+
+<p>So we can write the relation of linear dependence,
+<equation>
+(-4)\vect{v}_1+0\vect{v}_2+(-1)\vect{v}_3+1\vect{v}_4=\zerovector
+</equation>
+</p>
+
+<p><acroref type="theorem" acro="DLDS" /> guarantees that we can solve this relation of linear dependence for <em>some</em> vector in $R$, but the choice of which one is up to us.  Notice however that $\vect{v}_2$ has a zero coefficient.  In this case, we cannot choose to solve for $\vect{v}_2$.  Maybe some other relation of linear dependence would produce a nonzero coefficient for $\vect{v}_2$ if we just had to solve for this vector.  Unfortunately, this example has been engineered to <em>always</em> produce a zero coefficient here, as you can see from solving the homogeneous system.  Every solution has $x_2=0$!</p>
+
+<p>OK, if we are convinced that we cannot solve for $\vect{v}_2$, let's instead solve for $\vect{v}_3$,
+<equation>
+\vect{v}_3=(-4)\vect{v}_1+0\vect{v}_2+1\vect{v}_4=(-4)\vect{v}_1+1\vect{v}_4
+</equation>
+</p>
+
+<p>We now claim that this particular equation will allow us to write
+<equation>
+V=\spn{R}=
+\spn{\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}}=
+\spn{\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_4}}
+</equation>
+in essence declaring $\vect{v}_3$ as surplus for the task of building $V$ as a span.  This claim is an equality of two sets, so we will use <acroref type="definition" acro="SE" /> to establish it carefully.  Let $R^\prime=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_4}$ and $V^\prime=\spn{R^\prime}$.  We want to show that $V=V^\prime$.</p>
+
+<p>First show that $V^\prime\subseteq V$.  Since every vector of $R^\prime$ is in $R$, any vector we can construct in $V^\prime$ as a linear combination of vectors from $R^\prime$ can also be constructed as a vector in $V$ by the same linear combination of the same vectors in $R$.  That was easy, now turn it around.</p>
+
+<p>Next show that $V\subseteq V^\prime$.  Choose any $\vect{v}$ from $V$.  Then there are scalars $\alpha_1,\,\alpha_2,\,\alpha_3,\,\alpha_4$ so that
+<alignmath>
+<![CDATA[\vect{v}&=]]>
+\alpha_1\vect{v}_1+\alpha_2\vect{v}_2+\alpha_3\vect{v}_3+\alpha_4\vect{v}_4\\
+<![CDATA[&=\alpha_1\vect{v}_1+\alpha_2\vect{v}_2+]]>
+\alpha_3\left((-4)\vect{v}_1+1\vect{v}_4\right)+
+\alpha_4\vect{v}_4\\
+<![CDATA[&=\alpha_1\vect{v}_1+\alpha_2\vect{v}_2+]]>
+\left((-4\alpha_3)\vect{v}_1+\alpha_3\vect{v}_4\right)+
+\alpha_4\vect{v}_4\\
+<![CDATA[&=\left(\alpha_1-4\alpha_3\right)\vect{v}_1+]]>
+\alpha_2\vect{v}_2+
+\left(\alpha_3+\alpha_4\right)\vect{v}_4.
+</alignmath>
+</p>
+
+<p>This equation says that $\vect{v}$ can then be written as a linear combination of the vectors in $R^\prime$ and hence qualifies for membership in $V^\prime$.  So $V\subseteq V^\prime$ and we have established that $V=V^\prime$.</p>
+
+<p>If $R^\prime$ was also linearly dependent (it is not), we could reduce the set even further.  Notice that we could have chosen to eliminate any one of $\vect{v}_1$, $\vect{v}_3$ or $\vect{v}_4$, but somehow $\vect{v}_2$ is essential to the creation of $V$ since it cannot be replaced by any linear combination of $\vect{v}_1$, $\vect{v}_3$ or $\vect{v}_4$.</p>
+
+</example>
+
+<sageadvice acro="RLD" index="relations of linear dependence">
+<title>Relations of Linear Dependence</title>
+<acroref type="example" acro="RSC5" /> turned on a non-trivial relation of linear dependence (<acroref type="definition" acro="RLDCV" />) on the set $\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}$.  Besides indicating linear independence, the Sage vector space method <code>.linear_dependence()</code> produces relations of linear dependence for linearly dependent sets.  Here is how we would employ this method in <acroref type="example" acro="RSC5" />.  The optional argument <code>zeros='right'</code> will produce results consistent with our work here, you can also experiment with <code>zeros='left'</code> (which is the default).
+<sage>
+<input>V = QQ^5
+v1 = vector(QQ, [1,  2, -1,   3,  2])
+v2 = vector(QQ, [2,  1,  3,   1,  2])
+v3 = vector(QQ, [0, -7,  6, -11, -2])
+v4 = vector(QQ, [4,  1,  2,   1,  6])
+R = [v1, v2, v3, v4]
+L = V.linear_dependence(R, zeros='right')
+L[0]
+</input>
+<output>(-4, 0, -1, 1)
+</output>
+</sage>
+
+<sage>
+<input>-4*v1 + 0*v2 +(-1)*v3 +1*v4
+</input>
+<output>(0, 0, 0, 0, 0)
+</output>
+</sage>
+
+<sage>
+<input>V.span(R) == V.span([v1, v2, v4])
+</input>
+<output>True
+</output>
+</sage>
+
+You can check that the list <code>L</code> has just one element (maybe with <code>len(L)</code>), but realize that any multiple of the vector <code>L[0]</code> is also a relation of linear dependence on <code>R</code>, most of which are non-trivial.  Notice that we have verified the final conclusion of <acroref type="example" acro="RSC5" /> with a comparison of two spans.<br /><br />
+We will give the <code>.linear_dependence()</code> method a real workout in the nest Sage subsection (<acroref type="sage" acro="COV" />) <mdash /> this is just a quick introduction.
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="COV">
+<title>Casting Out Vectors</title>
+
+<p>In <acroref type="example" acro="RSC5" /> we used four vectors to create a span.  With a relation of linear dependence in hand, we were able to <q>toss out</q> one of these four vectors and create the same span from a subset of just three vectors from the original set of four.  We did have to take some care as to just which vector we tossed out.  In the next example, we will be more methodical about just how we choose to eliminate vectors from a linearly dependent set while preserving a span.</p>
+
+<example acro="COV" index="span!removing vectors">
+<title>Casting out vectors</title>
+
+<indexlocation index="Archetype I:casting out vectors" />
+<p>We begin with a set $S$ containing seven vectors from $\complex{4}$,
+<equation>
+S=\set{
+\colvector{1\\2\\0\\-1},\,
+\colvector{4\\8\\0\\-4},\,
+\colvector{0\\-1\\2\\2},\,
+\colvector{-1\\3\\-3\\4},\,
+\colvector{0\\9\\-4\\8},\,
+\colvector{7\\-13\\12\\-31},\,
+\colvector{-9\\7\\-8\\37}
+}
+</equation>
+and define $W=\spn{S}$.</p>
+
+<p>The set $S$ is obviously linearly dependent by <acroref type="theorem" acro="MVSLD" />, since we have $n=7$ vectors from $\complex{4}$.   So we can slim down $S$ some, and still create $W$ as the span of a smaller set of vectors.</p>
+
+<p>As a device for identifying relations of linear dependence among the vectors of $S$, we place the seven column vectors of $S$ into a matrix as columns,
+<equation>
+A=\matrixcolumns{A}{7}=<archetypepart acro="I" part="purematrix" /></equation>
+</p>
+
+<p>By <acroref type="theorem" acro="SLSLC" /> a nontrivial solution to $\homosystem{A}$ will give us a nontrivial relation of linear dependence (<acroref type="definition" acro="RLDCV" />) on the columns of $A$ (which are the elements of the set $S$).  The row-reduced form for $A$ is the matrix
+<equation>
+B=<archetypepart acro="I" part="matrixreduced" /></equation>
+so we can easily create solutions to the homogeneous system $\homosystem{A}$ using the free variables $x_2,\,x_5,\,x_6,\,x_7$.  Any such solution will correspond to a relation of linear dependence on the columns of $B$.  These solutions will allow us to solve for one column vector as a linear combination of some others, in the spirit of <acroref type="theorem" acro="DLDS" />, and remove that vector from the set.  We'll set about forming these linear combinations methodically.</p>
+
+<p>Set the free variable $x_2$ to one, and set the other free variables to zero.  Then a solution to $\linearsystem{A}{\zerovector}$ is
+<equation>
+\vect{x}=\colvector{-4\\1\\0\\0\\0\\0\\0}
+</equation>
+which can be used to create the linear combination
+<equation>
+(-4)\vect{A}_1+
+1\vect{A}_2+
+0\vect{A}_3+
+0\vect{A}_4+
+0\vect{A}_5+
+0\vect{A}_6+
+0\vect{A}_7
+=\zerovector
+</equation>
+</p>
+
+<p>This can then be arranged and solved for $\vect{A}_2$, resulting in $\vect{A}_2$ expressed as a linear combination of $\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4}$,
+<equation>
+\vect{A}_2=
+4\vect{A}_1+
+0\vect{A}_3+
+0\vect{A}_4
+</equation>
+</p>
+
+<p>This means that $\vect{A}_2$ is surplus, and we can create $W$ just as well with a smaller set with  this vector removed,
+<equation>
+W=\spn{\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4,\,\vect{A}_5,\,\vect{A}_6,\,\vect{A}_7}}
+</equation>
+</p>
+
+<p>Technically, this set equality for $W$ requires a proof, in the spirit of <acroref type="example" acro="RSC5" />, but we will bypass this requirement here, and in the next few paragraphs.</p>
+
+<p>Now, set the free variable $x_5$ to one, and set the other free variables to zero.  Then a solution to $\linearsystem{B}{\zerovector}$ is
+<equation>
+\vect{x}=\colvector{-2\\0\\-1\\-2\\1\\0\\0}
+</equation>
+which can be used to create the linear combination
+<equation>
+(-2)\vect{A}_1+
+0\vect{A}_2+
+(-1)\vect{A}_3+
+(-2)\vect{A}_4+
+1\vect{A}_5+
+0\vect{A}_6+
+0\vect{A}_7
+=\zerovector
+</equation>
+</p>
+
+<p>This can then be arranged and solved for $\vect{A}_5$, resulting in $\vect{A}_5$ expressed as a linear combination of $\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4}$,
+<equation>
+\vect{A}_5=
+2\vect{A}_1+
+1\vect{A}_3+
+2\vect{A}_4
+</equation>
+</p>
+
+<p>This means that $\vect{A}_5$ is surplus, and we can create $W$ just as well with a smaller set with  this vector removed,
+<equation>
+W=\spn{\left\{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4,\,\vect{A}_6,\,\vect{A}_7\right\}}
+</equation>
+</p>
+
+<p>Do it again, set the free variable $x_6$ to one, and set the other free variables to zero.  Then a solution to $\linearsystem{B}{\zerovector}$ is
+<equation>
+\vect{x}=\colvector{-1\\0\\3\\6\\0\\1\\0}
+</equation>
+which can be used to create the linear combination
+<equation>
+(-1)\vect{A}_1+
+0\vect{A}_2+
+3\vect{A}_3+
+6\vect{A}_4+
+0\vect{A}_5+
+1\vect{A}_6+
+0\vect{A}_7
+=\zerovector
+</equation>
+</p>
+
+<p>This can then be arranged and solved for $\vect{A}_6$, resulting in $\vect{A}_6$ expressed as a linear combination of $\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4}$,
+<equation>
+\vect{A}_6=
+1\vect{A}_1+
+(-3)\vect{A}_3+
+(-6)\vect{A}_4
+</equation>
+This means that $\vect{A}_6$ is surplus, and we can create $W$ just as well with a smaller set with  this vector removed,
+<equation>
+W=\spn{\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4,\,\vect{A}_7}}
+</equation></p>
+
+<p>Set the free variable $x_7$ to one, and set the other free variables to zero.  Then a solution to $\linearsystem{B}{\zerovector}$ is
+<equation>
+\vect{x}=\colvector{3\\0\\-5\\-6\\0\\0\\1}
+</equation>
+which can be used to create the linear combination
+<equation>
+3\vect{A}_1+
+0\vect{A}_2+
+(-5)\vect{A}_3+
+(-6)\vect{A}_4+
+0\vect{A}_5+
+0\vect{A}_6+
+1\vect{A}_7
+=\zerovector
+</equation>
+</p>
+
+<p>This can then be arranged and solved for $\vect{A}_7$, resulting in $\vect{A}_7$ expressed as a linear combination of $\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4}$,
+<equation>
+\vect{A}_7=
+(-3)\vect{A}_1+
+5\vect{A}_3+
+6\vect{A}_4
+</equation>
+</p>
+
+<p>This means that $\vect{A}_7$ is surplus, and we can create $W$ just as well with a smaller set with  this vector removed,
+<equation>
+W=\spn{\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4}}
+</equation>
+</p>
+
+<p>You might think we could keep this up, but we have run out of free variables.  And not coincidentally, the set $\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4}$ is linearly independent (check this!).  It should be clear how each free variable was used to eliminate the corresponding column from the set used to span the column space, as this will be the essence of the proof of the next theorem.  The column vectors in $S$ were not chosen entirely at random, they are the columns of <acroref type="archetype" acro="I" />.  See if you can mimic this example using the columns of <acroref type="archetype" acro="J" />.  Go ahead, we'll go grab a cup of coffee and be back before you finish up.</p>
+
+<p>For extra credit, notice that the vector
+<equation>
+\vect{b}=\colvector{3\\9\\1\\4}
+</equation>
+is the vector of constants in the definition of <acroref type="archetype" acro="I" />.  Since the system $\linearsystem{A}{\vect{b}}$ is consistent, we know by <acroref type="theorem" acro="SLSLC" /> that $\vect{b}$ is a linear combination of the columns of $A$, or stated equivalently, $\vect{b}\in W$.  This means that $\vect{b}$ must also be a linear combination of just the three columns $\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4$.  Can you find such a linear combination?  Did you notice that there is just a single (unique) answer?  Hmmmm.</p>
+
+</example>
+
+<sageadvice acro="COV" index="span!casting out vectors">
+<title>Casting Out Vectors</title>
+We will redo <acroref type="example" acro="COV" />, though somewhat tersely, just producing the justification for each time we toss a vector (a specific relation of linear dependence), and then verifying that the resulting spans, each with one fewer vector, still produce the original span.  We also introduce the <code>.remove()</code> method for lists.  Ready?  Here we go.
+<sage>
+<input>V = QQ^4
+v1 = vector(QQ,  [ 1,   2,  0,  -1])
+v2 = vector(QQ,  [ 4,   8,  0,  -4])
+v3 = vector(QQ,  [ 0,  -1,  2,   2])
+v4 = vector(QQ,  [-1,   3, -3,   4])
+v5 = vector(QQ,  [ 0,   9, -4,   8])
+v6 = vector(QQ,  [ 7, -13, 12, -31])
+v7 = vector(QQ,  [-9,   7, -8,  37])
+S = [v1, v2, v3, v4, v5, v6, v7]
+W = V.span(S)
+D = V.linear_dependence(S, zeros='right')
+D
+</input>
+<output>[
+(-4, 1, 0, 0, 0, 0, 0),
+(-2, 0, -1, -2, 1, 0, 0),
+(-1, 0, 3, 6, 0, 1, 0),
+(3, 0, -5, -6, 0, 0, 1)
+]
+</output>
+</sage>
+
+<sage>
+<input>D[0]
+</input>
+<output>(-4, 1, 0, 0, 0, 0, 0)
+</output>
+</sage>
+
+<sage>
+<input>S.remove(v2)
+W == V.span(S)
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>D[1]
+</input>
+<output>(-2, 0, -1, -2, 1, 0, 0)
+</output>
+</sage>
+
+<sage>
+<input>S.remove(v5)
+W == V.span(S)
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>D[2]
+</input>
+<output>(-1, 0, 3, 6, 0, 1, 0)
+</output>
+</sage>
+
+<sage>
+<input>S.remove(v6)
+W == V.span(S)
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>D[3]
+</input>
+<output>(3, 0, -5, -6, 0, 0, 1)
+</output>
+</sage>
+
+<sage>
+<input>S.remove(v7)
+W == V.span(S)
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>S
+</input>
+<output>[(1, 2, 0, -1), (0, -1, 2, 2), (-1, 3, -3, 4)]
+</output>
+</sage>
+
+<sage>
+<input>S == [v1, v3, v4]
+</input>
+<output>True
+</output>
+</sage>
+
+Notice that <code>S</code> begins with all seven original vectors, and slowly gets whittled down to just the list <code>[v1, v3, v4]</code>.  If you experiment with the above commands, be sure to return to the start and work your way through in order, or the results will not be right.<br /><br />
+As a bonus, notice that the set of relations of linear dependence provided by Sage, <code>D</code>, is itself a linearly independent set (but within a very different vector space).  Is that too weird?
+<sage>
+<input>U = QQ^7
+U.linear_dependence(D) == []
+</input>
+<output>True
+</output>
+</sage>
+
+Now, can you answer the extra credit question from <acroref type="example" acro="COV" /> using Sage?
+
+
+</sageadvice>
+<p><acroref type="example" acro="COV" /> deserves your careful attention, since this important example motivates the following very fundamental theorem.</p>
+
+<theorem acro="BS" index="span!basis">
+<title>Basis of a Span</title>
+<statement>
+<p>Suppose that $S=\set{\vectorlist{v}{n}}$ is a set of column vectors.  Define $W=\spn{S}$ and let $A$ be the matrix whose columns are the vectors from $S$.  Let $B$ be the reduced row-echelon form of $A$, with $D=\set{\scalarlist{d}{r}}$ the set of column indices corresponding to the pivot columns of $B$.  Then
+<ol><li> $T=\set{\vect{v}_{d_1},\,\vect{v}_{d_2},\,\vect{v}_{d_3},\,\ldots\,\vect{v}_{d_r}}$ is a linearly independent set.
+</li><li> $W=\spn{T}$.
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>To prove that $T$ is linearly independent, begin with a relation of linear dependence on $T$,
+<equation>
+\zerovector=
+\alpha_1\vect{v}_{d_1}+\alpha_2\vect{v}_{d_2}+\alpha_3\vect{v}_{d_3}+\ldots+\alpha_r\vect{v}_{d_r}
+</equation>
+and we will try to conclude that the only possibility for the scalars $\alpha_i$ is that they are all zero.
+Denote the non-pivot columns of $B$ by $F=\set{\scalarlist{f}{n-r}}$.  Then we can preserve the equality by adding a big fat zero to the linear combination,
+<equation>
+\zerovector=
+\alpha_1\vect{v}_{d_1}+\alpha_2\vect{v}_{d_2}+\alpha_3\vect{v}_{d_3}+\ldots+\alpha_r\vect{v}_{d_r}+
+0\vect{v}_{f_1}+0\vect{v}_{f_2}+0\vect{v}_{f_3}+\ldots+0\vect{v}_{f_{n-r}}
+</equation>
+</p>
+
+<p>By <acroref type="theorem" acro="SLSLC" />, the scalars in this linear combination (suitably reordered) are a solution to the homogeneous system $\homosystem{A}$.  But notice that this is the solution obtained by setting each free variable to zero.   If we consider the description of a solution vector in the conclusion of <acroref type="theorem" acro="VFSLS" />, in the case of a homogeneous system, then we see that if all the free variables are set to zero the resulting solution vector is trivial (all zeros).   So it must be that $\alpha_i=0$, $1\leq i\leq r$.  This implies by <acroref type="definition" acro="LICV" /> that $T$ is a linearly independent set.</p>
+
+<p>The second conclusion of this theorem is an equality of sets (<acroref type="definition" acro="SE" />).  Since $T$ is a subset of $S$, any linear combination of elements of the set $T$ can also be viewed as a linear combination of elements of the set $S$.  So $\spn{T}\subseteq\spn{S}=W$.  It remains to prove that $W=\spn{S}\subseteq\spn{T}$.</p>
+
+<p>For each $k$, $1\leq k\leq n-r$, form a solution $\vect{x}$ to $\homosystem{A}$ by setting the free variables as follows:
+<alignmath>
+<![CDATA[x_{f_1}&=0]]>
+<![CDATA[&]]>
+<![CDATA[x_{f_2}&=0]]>
+<![CDATA[&]]>
+<![CDATA[x_{f_3}&=0]]>
+<![CDATA[&]]>
+<![CDATA[\ldots&]]>
+<![CDATA[&]]>
+<![CDATA[x_{f_k}&=1]]>
+<![CDATA[&]]>
+<![CDATA[\ldots&]]>
+<![CDATA[&]]>
+<![CDATA[x_{f_{n-r}}&=0]]>
+</alignmath>
+</p>
+
+<p>By <acroref type="theorem" acro="VFSLS" />, the remainder of this solution vector is given by,
+<alignmath>
+<![CDATA[x_{d_1}&=-\matrixentry{B}{1,f_k}]]>
+<![CDATA[&]]>
+<![CDATA[x_{d_2}&=-\matrixentry{B}{2,f_k}]]>
+<![CDATA[&]]>
+<![CDATA[x_{d_3}&=-\matrixentry{B}{3,f_k}]]>
+<![CDATA[&]]>
+<![CDATA[\dots&]]>
+<![CDATA[&]]>
+<![CDATA[x_{d_r}&=-\matrixentry{B}{r,f_k}]]>
+</alignmath>
+</p>
+
+<p>From this solution, we obtain a relation of linear dependence on the columns of $A$,
+<equation>
+-\matrixentry{B}{1,f_k}\vect{v}_{d_1}
+-\matrixentry{B}{2,f_k}\vect{v}_{d_2}
+-\matrixentry{B}{3,f_k}\vect{v}_{d_3}
+-\ldots
+-\matrixentry{B}{r,f_k}\vect{v}_{d_r}
++1\vect{v}_{f_k}
+=\zerovector
+</equation>
+which can be arranged as the equality
+<equation>
+\vect{v}_{f_k}=
+\matrixentry{B}{1,f_k}\vect{v}_{d_1}+
+\matrixentry{B}{2,f_k}\vect{v}_{d_2}+
+\matrixentry{B}{3,f_k}\vect{v}_{d_3}+
+\ldots+
+\matrixentry{B}{r,f_k}\vect{v}_{d_r}
+</equation>
+</p>
+
+<p>Now, suppose we take an arbitrary element, $\vect{w}$, of $W=\spn{S}$ and write it as a linear combination of the elements of $S$, but with the terms organized according to the indices in $D$ and $F$,
+<alignmath>
+<![CDATA[\vect{w}&=]]>
+\alpha_1\vect{v}_{d_1}+
+\alpha_2\vect{v}_{d_2}+
+\alpha_3\vect{v}_{d_3}+
+\ldots+
+\alpha_r\vect{v}_{d_r}+
+\beta_1\vect{v}_{f_1}+
+\beta_2\vect{v}_{f_2}+
+\beta_3\vect{v}_{f_3}+
+\ldots+
+\beta_{n-r}\vect{v}_{f_{n-r}}
+</alignmath>
+</p>
+
+<p>From the above, we can replace each $\vect{v}_{f_j}$ by a linear combination of the $\vect{v}_{d_i}$,
+<alignmath>
+<![CDATA[\vect{w}=&]]>
+\ \alpha_1\vect{v}_{d_1}+
+\alpha_2\vect{v}_{d_2}+
+\alpha_3\vect{v}_{d_3}+
+\ldots+
+\alpha_r\vect{v}_{d_r}+\\
+<![CDATA[&\beta_1\left(]]>
+\matrixentry{B}{1,f_1}\vect{v}_{d_1}+
+\matrixentry{B}{2,f_1}\vect{v}_{d_2}+
+\matrixentry{B}{3,f_1}\vect{v}_{d_3}+
+\ldots+
+\matrixentry{B}{r,f_1}\vect{v}_{d_r}
+\right)+\\
+<![CDATA[&\beta_2\left(]]>
+\matrixentry{B}{1,f_2}\vect{v}_{d_1}+
+\matrixentry{B}{2,f_2}\vect{v}_{d_2}+
+\matrixentry{B}{3,f_2}\vect{v}_{d_3}+
+\ldots+
+\matrixentry{B}{r,f_2}\vect{v}_{d_r}
+\right)+\\
+<![CDATA[&\beta_3\left(]]>
+\matrixentry{B}{1,f_3}\vect{v}_{d_1}+
+\matrixentry{B}{2,f_3}\vect{v}_{d_2}+
+\matrixentry{B}{3,f_3}\vect{v}_{d_3}+
+\ldots+
+\matrixentry{B}{r,f_3}\vect{v}_{d_r}
+\right)+\\
+<![CDATA[&\quad\quad\vdots\\]]>
+<![CDATA[&\beta_{n-r}\left(]]>
+\matrixentry{B}{1,f_{n-r}}\vect{v}_{d_1}+
+\matrixentry{B}{2,f_{n-r}}\vect{v}_{d_2}+
+\matrixentry{B}{3,f_{n-r}}\vect{v}_{d_3}+
+\ldots+
+\matrixentry{B}{r,f_{n-r}}\vect{v}_{d_r}
+\right)\\
+<intertext>With repeated applications of several of the properties of <acroref type="theorem" acro="VSPCV" /> we can rearrange this expression as,</intertext>
+<![CDATA[=&\ \left(]]>
+\alpha_1+
+\beta_1\matrixentry{B}{1,f_1}+
+\beta_2\matrixentry{B}{1,f_2}+
+\beta_3\matrixentry{B}{1,f_3}+
+\ldots+
+\beta_{n-r}\matrixentry{B}{1,f_{n-r}}
+\right)\vect{v}_{d_1}+\\
+<![CDATA[&\left(\alpha_2+]]>
+\beta_1\matrixentry{B}{2,f_1}+
+\beta_2\matrixentry{B}{2,f_2}+
+\beta_3\matrixentry{B}{2,f_3}+
+\ldots+
+\beta_{n-r}\matrixentry{B}{2,f_{n-r}}
+\right)\vect{v}_{d_2}+\\
+<![CDATA[&\left(\alpha_3+]]>
+\beta_1\matrixentry{B}{3,f_1}+
+\beta_2\matrixentry{B}{3,f_2}+
+\beta_3\matrixentry{B}{3,f_3}+
+\ldots+
+\beta_{n-r}\matrixentry{B}{3,f_{n-r}}
+\right)\vect{v}_{d_3}+\\
+<![CDATA[&\quad\quad\vdots\\]]>
+<![CDATA[&\left(\alpha_r+]]>
+\beta_1\matrixentry{B}{r,f_1}+
+\beta_2\matrixentry{B}{r,f_2}+
+\beta_3\matrixentry{B}{r,f_3}+
+\ldots+\beta_{n-r}\matrixentry{B}{r,f_{n-r}}
+\right)\vect{v}_{d_r}
+</alignmath>
+This mess expresses the vector $\vect{w}$ as a linear combination of the vectors in
+<equation>
+T=\set{\vect{v}_{d_1},\,\vect{v}_{d_2},\,\vect{v}_{d_3},\,\ldots\,\vect{v}_{d_r}}
+</equation>
+thus saying that $\vect{w}\in\spn{T}$.  Therefore, $W=\spn{S}\subseteq\spn{T}$.</p>
+
+</proof>
+</theorem>
+
+<p>In <acroref type="example" acro="COV" />, we tossed-out vectors one at a time.  But in each instance, we rewrote the offending vector as a linear combination of those vectors that corresponded to the pivot columns of the reduced row-echelon form of the matrix of columns.  In the proof of <acroref type="theorem" acro="BS" />, we accomplish this reduction in one big step.  In <acroref type="example" acro="COV" /> we arrived at a linearly independent set at exactly the same moment that we ran out of free variables to exploit.  This was not a coincidence, it is the substance of our conclusion of linear independence in <acroref type="theorem" acro="BS" />.</p>
+
+<p>Here's a straightforward application of <acroref type="theorem" acro="BS" />.
+</p>
+
+<example acro="RSC4" index="span!reducing">
+<title>Reducing a span in $\complex{4}$</title>
+
+<p>Begin with a set of five vectors from $\complex{4}$,
+<equation>
+S=\set{
+\colvector{ 1 \\ 1 \\ 2 \\ 1},\,
+\colvector{ 2 \\ 2 \\ 4 \\ 2},\,
+\colvector{ 2 \\ 0 \\ -1 \\ 1},\,
+\colvector{ 7 \\ 1 \\ -1 \\ 4},\,
+\colvector{ 0 \\ 2 \\ 5 \\ 1}
+}
+</equation>
+and let $W=\spn{S}$.  To arrive at a (smaller) linearly independent set, follow the procedure described in <acroref type="theorem" acro="BS" />.  Place the vectors from $S$ into a matrix as columns, and row-reduce,
+<equation>
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 2 & 7 & 0 \\]]>
+<![CDATA[ 1 & 2 & 0 & 1 & 2 \\]]>
+<![CDATA[ 2 & 4 & -1 & -1 & 5 \\]]>
+<![CDATA[ 1 & 2 & 1 & 4 & 1]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 2 & 0 & 1 & 2 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 3 & -1 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation></p>
+
+<p>Columns 1 and 3 are the pivot columns ($D=\set{1,\,3}$) so the set
+<equation>
+T=\set{
+\colvector{ 1 \\ 1 \\ 2 \\ 1},\,
+\colvector{ 2 \\ 0 \\ -1 \\ 1}
+}
+</equation>
+is linearly independent and $\spn{T}=\spn{S}=W$.  Boom!</p>
+
+<p>Since the reduced row-echelon form of a matrix is unique (<acroref type="theorem" acro="RREFU" />), the procedure of <acroref type="theorem" acro="BS" /> leads us to a unique set $T$.  However, there is a wide variety of possibilities for sets $T$ that are linearly independent and which can be employed in a span to create $W$.  Without proof, we list two other possibilities:
+<alignmath>
+<![CDATA[T^{\prime}&=\set{]]>
+\colvector{ 2 \\ 2 \\ 4 \\ 2},\,
+\colvector{ 2 \\ 0 \\ -1 \\ 1}
+}\\
+<![CDATA[T^{*}&=\set{]]>
+\colvector{3 \\ 1 \\ 1 \\ 2},\,
+\colvector{-1 \\ 1 \\ 3 \\ 0}
+}
+</alignmath>
+</p>
+
+<p>Can you prove that $T^{\prime}$ and $T^{*}$ are linearly independent sets and $W=\spn{S}=\spn{T^{\prime}}=\spn{T^{*}}$?</p>
+
+</example>
+
+<sageadvice acro="RS" index="span!reduced">
+<title>Reducing a Span</title>
+<acroref type="theorem" acro="BS" /> allows us to construct a reduced spanning set for a span.  As with the theorem, employing Sage we begin by constructing a matrix with the vectors of the spanning set as columns.  Here is a do-over of <acroref type="example" acro="RSC4" />, illustrating the use of <acroref type="theorem" acro="BS" /> in Sage.
+<sage>
+<input>V = QQ^4
+v1 = vector(QQ, [1,1,2,1])
+v2 = vector(QQ, [2,2,4,2])
+v3 = vector(QQ, [2,0,-1,1])
+v4 = vector(QQ, [7,1,-1,4])
+v5 = vector(QQ, [0,2,5,1])
+S = [v1, v2, v3, v4, v5]
+A = column_matrix(S)
+T = [A.column(p) for p in A.pivots()]
+T
+</input>
+<output>[(1, 1, 2, 1), (2, 0, -1, 1)]
+</output>
+</sage>
+
+<sage>
+<input>V.linear_dependence(T) == []
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>V.span(S) == V.span(T)
+</input>
+<output>True
+</output>
+</sage>
+
+Notice how we compute <code>T</code> with the single line that mirrors the construction of the set $T=\set{\vect{v}_{d_1},\,\vect{v}_{d_2},\,\vect{v}_{d_3},\,\ldots\,\vect{v}_{d_r}}$ in the statement of <acroref type="theorem" acro="BS" />.  Again, the row-reducing is hidden in the use of the <code>.pivot()</code> matrix method, which necessarily must compute the reduced row-echelon form.  The final two compute cells verify both conclusions of the theorem.
+
+
+</sageadvice>
+<example acro="RES" index="span!reworking elements">
+<title>Reworking elements of a span</title>
+
+<p>Begin with a set of five vectors from $\complex{4}$,
+<equation>
+R=\set{
+\colvector{ 2 \\ 1 \\ 3 \\ 2 },\,
+\colvector{ -1 \\ 1 \\ 0 \\ 1 },\,
+\colvector{ -8 \\ -1 \\ -9 \\ -4 },\,
+\colvector{ 3 \\ 1 \\ -1 \\ -2 },\,
+\colvector{ -10 \\ -1 \\ -1 \\ 4}
+}
+</equation>
+</p>
+
+<p>It is easy to create elements of $X=\spn{R}$ <mdash /> we will create one at random,
+<equation>
+\vect{y}=
+6\colvector{ 2 \\ 1 \\ 3 \\ 2 }+
+(-7)\colvector{ -1 \\ 1 \\ 0 \\ 1 }+
+1\colvector{ -8 \\ -1 \\ -9 \\ -4 }+
+6\colvector{ 3 \\ 1 \\ -1 \\ -2 }+
+2\colvector{ -10 \\ -1 \\ -1 \\ 4}
+=
+\colvector{9\\2\\1\\-3}
+</equation>
+</p>
+
+<p>We know we can replace $R$ by a smaller set (since it is obviously linearly dependent by <acroref type="theorem" acro="MVSLD" />) that will create the same span.  Here goes,
+<equation>
+\begin{bmatrix}
+<![CDATA[ 2 & -1 & -8 & 3 & -10 \\]]>
+<![CDATA[ 1 & 1 & -1 & 1 & -1 \\]]>
+<![CDATA[ 3 & 0 & -9 & -1 & -1 \\]]>
+<![CDATA[ 2 & 1 & -4 & -2 & 4]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & -3 & 0 & -1 \\]]>
+<![CDATA[ 0 & \leading{1} & 2 & 0 & 2 \\]]>
+<![CDATA[ 0 & 0 & 0 & \leading{1} & -2 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>So, if we collect the first, second and fourth vectors from $R$,
+<equation>
+P=\set{
+\colvector{ 2 \\ 1 \\ 3 \\ 2 },\,
+\colvector{ -1 \\ 1 \\ 0 \\ 1 },\,
+\colvector{ 3 \\ 1 \\ -1 \\ -2 }
+}
+</equation>
+then $P$ is linearly independent and $\spn{P}=\spn{R}=X$ by <acroref type="theorem" acro="BS" />.  Since we built $\vect{y}$ as an element of $\spn{R}$ it must also be an element of $\spn{P}$.  Can we write $\vect{y}$ as a linear combination of just the three vectors in $P$?  The answer is, of course, yes.  But let's compute an explicit linear combination just for fun.  By <acroref type="theorem" acro="SLSLC" /> we can get such a linear combination by solving a system of equations with the column vectors of $R$ as the columns of a coefficient matrix, and $\vect{y}$ as the vector of constants.</p>
+
+<p>Employing an augmented matrix to solve this system,
+<equation>
+\begin{bmatrix}
+<![CDATA[ 2 & -1 & 3 & 9 \\]]>
+<![CDATA[ 1 & 1 & 1 & 2 \\]]>
+<![CDATA[ 3 & 0 & -1 & 1 \\]]>
+<![CDATA[ 2 & 1 & -2 & -3]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0  & 0 & 1 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & -1 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 2 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>So we see, as expected, that
+<equation>
+1\colvector{ 2 \\ 1 \\ 3 \\ 2 }+
+(-1)\colvector{ -1 \\ 1 \\ 0 \\ 1 }+
+2\colvector{ 3 \\ 1 \\ -1 \\ -2 }
+=\colvector{9 \\ 2 \\ 1 \\ -3}
+=\vect{y}
+</equation></p>
+
+<p>A key feature of this example is that the linear combination that expresses $\vect{y}$ as a linear combination of the vectors in $P$ is unique.  This is a consequence of the linear independence of $P$.  The linearly independent set $P$ is smaller than $R$, but still just (barely) big enough to create elements of the set $X=\spn{R}$.  There are many, many ways to write $\vect{y}$ as a linear combination of the five vectors in $R$ (the appropriate system of equations to verify this claim has two free variables in the description of the solution set), yet there is precisely one way to write $\vect{y}$ as a linear combination of the three vectors in $P$.</p>
+
+</example>
+
+<sageadvice acro="RES" index="span!reworked">
+<title>Reworking a Span</title>
+As another demonstration of using Sage to help us understand spans, linear combinations, linear independence and reduced row-echelon form, we will recreate parts of <acroref type="example" acro="RES" />.  Most of this should be familiar, but see the commments following.
+<sage>
+<input>V = QQ^4
+v1 = vector(QQ, [2,1,3,2])
+v2 = vector(QQ, [-1,1,0,1])
+v3 = vector(QQ, [-8,-1,-9,-4])
+v4 = vector(QQ, [3,1,-1,-2])
+v5 = vector(QQ, [-10,-1,-1,4])
+y = 6*v1 - 7*v2 + v3 +6*v4 + 2*v5
+y
+</input>
+<output>(9, 2, 1, -3)
+</output>
+</sage>
+
+<sage>
+<input>R = [v1, v2, v3, v4, v5]
+X = V.span(R)
+y in X
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A = column_matrix(R)
+P = [A.column(p) for p in A.pivots()]
+W = V.span(P)
+W == X
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>y in W
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>coeff = column_matrix(P)
+coeff.solve_right(y)
+</input>
+<output>(1, -1, 2)
+</output>
+</sage>
+
+<sage>
+<input>coeff.right_kernel()
+</input>
+<output>Vector space of degree 3 and dimension 0 over Rational Field
+Basis matrix:
+[]
+</output>
+</sage>
+
+<sage>
+<input>V.linear_dependence(P) == []
+</input>
+<output>True
+</output>
+</sage>
+
+The final two results <mdash /> a trivial null space for <code>coeff</code> and the linear independence of <code>P</code> <mdash /> both individually imply that the solution to the system of equations (just prior) is unique.  Sage produces its own linearly independent spanning set for each span, as we see whenever we inquire about a span.
+<sage>
+<input>X
+</input>
+<output>Vector space of degree 4 and dimension 3 over Rational Field
+Basis matrix:
+[    1     0     0 -8/15]
+[    0     1     0  7/15]
+[    0     0     1 13/15]
+</output>
+</sage>
+
+Can you extract the three vectors that Sage uses to span <code>X</code> and solve the appropriate system of equations to see how to write <code>y</code> as a linear combination of these three vectors?  Once you have done that, check your answer <em>by hand</em> and think about how using Sage could have been overkill for this question.
+
+
+</sageadvice>
+</subsection>
+
+<!--   End  lds.tex -->
+<readingquestions>
+<ol>
+<li>Let  $S$  be the linearly dependent set of three vectors below.
+<equation>
+S=\set{\colvector{1\\10\\100\\1000},\,\colvector{1\\1\\1\\1},\,\colvector{5\\23\\203\\2003}}
+</equation>
+Write one vector from $S$ as a linear combination of the other two and include this vector equality in your response.  (You should be able to do this on sight, rather than doing some computations.)  Convert this expression into a nontrivial relation of linear dependence on $S$.
+</li>
+<li> Explain why the word <q>dependent</q> is used in the definition of linear dependence.
+</li>
+<li>Suppose that $Y=\spn{P}=\spn{Q}$, where $P$ is a linearly dependent set and $Q$ is linearly independent.  Would you rather use $P$ or $Q$ to describe $Y$?  Why?
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="20" rough="Shrink a lin dep set by one vector">
+<problem contributor="robertbeezer">Let $T$ be the set of columns of the matrix $B$ below.  Define $W=\spn{T}$.  Find a set $R$ so that (1) $R$ has 3 vectors, (2) $R$ is a subset of $T$, and (3) $W=\spn{R}$.
+<equation>
+B=
+\begin{bmatrix}
+<![CDATA[-3 & 1 & -2 & 7\\]]>
+<![CDATA[-1 & 2 & 1 & 4\\]]>
+<![CDATA[1 & 1 & 2 & -1]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">Let $T=\set{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3,\,\vect{w}_4}$.  The vector $\colvector{2\\-1\\0\\1}$
+ is a solution to the homogeneous system with the matrix $B$ as the coefficient matrix (check this!).  By <acroref type="theorem" acro="SLSLC" /> it provides the scalars for a linear combination of the columns of $B$ (the vectors in $T$) that equals the zero vector, a relation of linear dependence on $T$,
+<equation>
+2\vect{w}_1+(-1)\vect{w}_2+(1)\vect{w}_4=\zerovector
+</equation>
+We can rearrange this equation by solving for $\vect{w}_4$,
+<equation>
+\vect{w}_4=(-2)\vect{w}_1+\vect{w}_2
+</equation>
+This equation tells us that the vector $\vect{w}_4$ is superfluous in the span construction that creates $W$.  So $W=\spn{\set{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3}}$.  The requested set is $R=\set{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3}$.
+</solution>
+</exercise>
+
+<exercise type="C" number="40" rough="Lin ind detail from Example RSC5">
+<problem contributor="robertbeezer">Verify that the set $R^\prime=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_4}$ at the end of <acroref type="example" acro="RSC5" /> is linearly independent.
+</problem>
+</exercise>
+
+<exercise type="C" number="50" rough="Toss two of 5 vectors from C^3">
+<problem contributor="robertbeezer">Consider the set of vectors from $\complex{3}$, $W$, given below.  Find a linearly independent set $T$ that contains three vectors from $W$ and such that $\spn{W}=\spn{T}$.
+<equation>
+W=
+\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4,\,\vect{v}_5}
+=\set{
+\colvector{2\\1\\1},\,
+\colvector{-1\\-1\\1},\,
+\colvector{1\\2\\3},\,
+\colvector{3\\1\\3},\,
+\colvector{0\\1\\-3}
+}
+</equation>
+</problem>
+<solution contributor="robertbeezer">To apply <acroref type="theorem" acro="BS" />, we formulate a matrix $A$ whose columns are $\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4,\,\vect{v}_5$.  Then we row-reduce $A$.  After row-reducing, we obtain
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 2 & -1\\]]>
+<![CDATA[0 & \leading{1} & 0 & 1 & -2\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0]]>
+\end{bmatrix}
+</equation>
+From this we see that the pivot columns are $D=\set{1,\,2,\,3}$.  Thus
+<equation>
+T=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3}=\set{\colvector{2\\1\\1},\,\colvector{-1\\-1\\1},\,\colvector{1\\2\\3}}
+</equation>
+is a linearly independent set and $\spn{T}=W$.  Compare this problem with <acroref type="exercise" acro="LI.M50" />.
+</solution>
+</exercise>
+
+<exercise type="C" number="51" rough="Toss two of 4 vectors from C^3">
+<problem contributor="robertbeezer">Given the set $S$ below, find a linearly independent set $T$ so that $\spn{T}=\spn{S}$.
+<equation>
+S=\set{
+\colvector{2\\-1\\2},\,
+\colvector{3\\0\\1},\,
+\colvector{1\\1\\-1},\,
+\colvector{5\\-1\\3}
+}
+</equation>
+</problem>
+<solution contributor="robertbeezer"><acroref type="theorem" acro="BS" /> says we can make a matrix with these four vectors as columns, row-reduce, and just keep the columns with indices in the set $D$.  Here we go, forming the relevant matrix and row-reducing,
+<equation>
+\begin{bmatrix}
+<![CDATA[ 2 & 3 & 1 & 5 \\]]>
+<![CDATA[ -1 & 0 & 1 & -1 \\]]>
+<![CDATA[ 2 & 1 & -1 & 3]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & -1 & 1 \\]]>
+<![CDATA[ 0 & \leading{1} & 1 & 1 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+Analyzing the row-reduced version of this matrix, we see that the first two columns are pivot columns, so $D=\set{1,2}$.  <acroref type="theorem" acro="BS" /> says we need only <q>keep</q> the first two columns to create a set with the requisite properties,
+<equation>
+T=\set{
+\colvector{2\\-1\\2},\,
+\colvector{3\\0\\1}
+}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="C" number="52" rough="Toss two of 5 vectors from C^3">
+<problem contributor="robertbeezer">Let $W$ be the span of the set of vectors $S$ below, $W=\spn{S}$.  Find a set $T$ so that 1) the span of $T$ is $W$, $\spn{T}=W$, (2) $T$ is a linearly independent set, and (3) $T$ is a subset of $S$.
+<alignmath>
+<![CDATA[S&=]]>
+\set{
+\colvector{1 \\ 2 \\ -1},\,
+\colvector{2 \\ -3 \\ 1},\,
+\colvector{4 \\ 1 \\ -1},\,
+\colvector{3 \\ 1 \\ 1},\,
+\colvector{3 \\ -1 \\ 0}
+}
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">This is a straight setup for the conclusion of <acroref type="theorem" acro="BS" />.  The hypotheses of this theorem tell us to pack the vectors of $W$ into the columns of a matrix and row-reduce,
+<alignmath>
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 4 & 3 & 3 \\]]>
+<![CDATA[ 2 & -3 & 1 & 1 & -1 \\]]>
+<![CDATA[ -1 & 1 & -1 & 1 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 & 0 & 1 \\]]>
+<![CDATA[ 0 & \leading{1} & 1 & 0 & 1 \\]]>
+<![CDATA[ 0 & 0 & 0 & \leading{1} & 0]]>
+\end{bmatrix}
+</alignmath>
+Pivot columns have indices $D=\set{1,\,2,\,4}$.  <acroref type="theorem" acro="BS" /> tells us to form $T$ with columns $1,\,2$ and $4$ of $S$,
+<alignmath>
+<![CDATA[S&=]]>
+\set{
+\colvector{1 \\ 2 \\ -1},\,
+\colvector{2 \\ -3 \\ 1},\,
+\colvector{3 \\ 1 \\ 1}
+}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="55" rough="Toss out one vector of four, but two ways">
+<problem contributor="robertbeezer">Let $T$ be the set of vectors
+$T=\set{
+\colvector{1 \\ -1 \\ 2},\,
+\colvector{3 \\ 0 \\ 1},\,
+\colvector{4 \\ 2 \\ 3},\,
+\colvector{3 \\ 0 \\ 6}
+}$.
+Find two different subsets of $T$, named $R$ and $S$, so that $R$ and $S$ each contain three vectors, and so that $\spn{R}=\spn{T}$ and $\spn{S}=\spn{T}$.  Prove that both $R$ and $S$ are linearly independent.
+</problem>
+<solution contributor="robertbeezer">Let $A$ be the matrix whose columns are the vectors in $T$.  Then row-reduce $A$,
+<equation>
+A\rref B=
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & 2 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & -1 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 1]]>
+\end{bmatrix}
+</equation>
+From <acroref type="theorem" acro="BS" /> we can form $R$ by choosing the columns of $A$ that correspond to the pivot columns of $B$.  <acroref type="theorem" acro="BS" /> also guarantees that $R$ will be linearly independent.
+<equation>
+R=\set{
+\colvector{1 \\ -1 \\ 2},\,
+\colvector{3 \\ 0 \\ 1},\,
+\colvector{4 \\ 2 \\ 3}
+}
+</equation>
+That was easy.  To find $S$ will require a bit more work.  From $B$ we can obtain a solution to $\homosystem{A}$, which by <acroref type="theorem" acro="SLSLC" /> will provide a nontrivial relation of linear dependence on the columns of $A$, which are the vectors in $T$.  To wit,  choose the free variable $x_4$ to be 1, then $x_1=-2$, $x_2=1$, $x_3=-1$, and so
+<equation>
+(-2)\colvector{1 \\ -1 \\ 2}+
+(1)\colvector{3 \\ 0 \\ 1}+
+(-1)\colvector{4 \\ 2 \\ 3}+
+(1)\colvector{3 \\ 0 \\ 6}
+=
+\colvector{0\\0\\0}
+</equation>
+this equation can be rewritten with the second vector staying put, and the other three moving to the other side of the equality,
+<equation>
+\colvector{3 \\ 0 \\ 1}
+=
+(2)\colvector{1 \\ -1 \\ 2}+
+(1)\colvector{4 \\ 2 \\ 3}+
+(-1)\colvector{3 \\ 0 \\ 6}
+</equation>
+We could have chosen other vectors to stay put, but may have then needed to divide by a nonzero scalar.   This equation is enough to conclude that the second vector in $T$ is <q>surplus</q> and can be replaced (see the careful argument in <acroref type="example" acro="RSC5" />).  So set
+<equation>
+S=\set{
+\colvector{1 \\ -1 \\ 2},\,
+\colvector{4 \\ 2 \\ 3},\,
+\colvector{3 \\ 0 \\ 6}
+}
+</equation>
+and then $\spn{S}=\spn{T}$.  $T$ is also a linearly independent set, which we can show directly.  Make a matrix $C$ whose columns are the vectors in $S$.  Row-reduce $B$ and you will obtain the identity matrix $I_3$.  By <acroref type="theorem" acro="LIVRN" />, the set $S$ is linearly independent.
+</solution>
+</exercise>
+
+<exercise type="C" number="70" rough="Reprise Example RES">
+<problem contributor="robertbeezer">Reprise <acroref type="example" acro="RES" /> by creating a new version of the vector $\vect{y}$.  In other words, form a new, different linear combination of the vectors in $R$ to create a new vector $\vect{y}$ (but do not simplify the problem too much by choosing any of the five new scalars to be zero).  Then express this new $\vect{y}$ as a combination of the vectors in $P$.
+</problem>
+</exercise>
+
+<exercise type="M" number="10" rough="Re-express spanning set in two more ways">
+<problem contributor="robertbeezer">At the conclusion of <acroref type="example" acro="RSC4" /> two alternative solutions, sets $T^{\prime}$ and $T^{*}$, are proposed.  Verify these claims by proving that $\spn{T}=\spn{T^{\prime}}$ and $\spn{T}=\spn{T^{*}}$.
+</problem>
+</exercise>
+
+<exercise type="T" number="40" rough="Spn(v1,v2)=Span(v1+v2,v1-v2)">
+<problem contributor="robertbeezer">Suppose that $\vect{v}_1$ and $\vect{v}_2$ are any two vectors from $\complex{m}$.  Prove the following set equality.
+<equation>
+\spn{\set{\vect{v}_1,\,\vect{v}_2}}
+=
+\spn{\set{\vect{v}_1+\vect{v}_2,\,\vect{v}_1-\vect{v}_2}}
+</equation>
+</problem>
+<solution contributor="robertbeezer">This is an equality of sets, so <acroref type="definition" acro="SE" /> applies.<br /><br />
+The <q>easy</q> half first.  Show that $X=\spn{\set{\vect{v}_1+\vect{v}_2,\,\vect{v}_1-\vect{v}_2}}\subseteq
+\spn{\set{\vect{v}_1,\,\vect{v}_2}}=Y$.\\
+Choose $\vect{x}\in X$.  Then
+$\vect{x}=a_1(\vect{v}_1+\vect{v}_2)+a_2(\vect{v}_1-\vect{v}_2)$ for some scalars $a_1$ and $a_2$.  Then,
+<alignmath>
+\vect{x}
+<![CDATA[&=a_1(\vect{v}_1+\vect{v}_2)+a_2(\vect{v}_1-\vect{v}_2)\\]]>
+<![CDATA[&=a_1\vect{v}_1+a_1\vect{v}_2+a_2\vect{v}_1+(-a_2)\vect{v}_2\\]]>
+<![CDATA[&=(a_1+a_2)\vect{v}_1+(a_1-a_2)\vect{v}_2]]>
+</alignmath>
+which qualifies $\vect{x}$ for membership in $Y$, as it is a linear combination of $\vect{v}_1,\,\vect{v}_2$.<br /><br />
+Now show the opposite inclusion, $Y=\spn{\set{\vect{v}_1,\,\vect{v}_2}}\subseteq\spn{\set{\vect{v}_1+\vect{v}_2,\,\vect{v}_1-\vect{v}_2}}=X$.\\
+Choose $\vect{y}\in Y$.  Then there are scalars $b_1,\,b_2$ such that $ \vect{y}=b_1\vect{v}_1+b_2\vect{v}_2 $.  Rearranging, we obtain,
+<alignmath>
+\vect{y}
+<![CDATA[&=b_1\vect{v}_1+b_2\vect{v}_2\\]]>
+<![CDATA[&=\frac{b_1}{2}\left[\left(\vect{v}_1+\vect{v}_2\right)+\left(\vect{v}_1-\vect{v}_2\right)\right]]]>
+     +
+\frac{b_2}{2}\left[\left(\vect{v}_1+\vect{v}_2\right)-\left(\vect{v}_1-\vect{v}_2\right)\right]\\
+<![CDATA[&=\frac{b_1+b_2}{2}\left(\vect{v}_1+\vect{v}_2\right)+\frac{b_1-b_2}{2}\left(\vect{v}_1-\vect{v}_2\right)]]>
+</alignmath>
+This is an expression for $\vect{y}$ as a linear combination of $\vect{v}_1+\vect{v}_2$ and $\vect{v}_1-\vect{v}_2$, earning $\vect{y}$ membership in $X$.
+Since $X$ is a subset of $Y$, and vice versa, we see that $X=Y$, as desired.
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

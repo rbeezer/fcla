@@ -1,0 +1,1548 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="LC">
+<title>Linear Combinations</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section LC -->
+<!-- %  Linear Combinations -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>In <acroref type="section" acro="VO" /> we defined vector addition and scalar multiplication.  These two operations combine nicely to give us a construction known as a linear combination, a construct that we will work with throughout this course.</p>
+
+</introduction>
+
+<subsection acro="LC">
+<title>Linear Combinations</title>
+
+<!--   Any changes here should be carried forward to Definition LC. -->
+<definition acro="LCCV" index="linear combination">
+<title>Linear Combination of Column Vectors</title>
+<p>Given $n$ vectors $\vectorlist{u}{n}$ from $\complex{m}$ and $n$ scalars $\alpha_1,\,\alpha_2,\,\alpha_3,\,\ldots,\,\alpha_n$, their <define>linear combination</define> is the vector
+<equation>
+\lincombo{\alpha}{u}{n}
+</equation>
+</p>
+
+</definition>
+
+<p>So this definition takes an equal number of scalars and vectors, combines them using our two new operations (scalar multiplication and vector addition) and creates a single brand-new vector, of the same size as the original vectors.  When a definition or theorem employs a linear combination, think about the nature of the objects that go into its creation (lists of scalars and vectors), and the type of object that results (a single vector).  Computationally, a linear combination is pretty easy.</p>
+
+<example acro="TLC" index="linear combination">
+<title>Two linear combinations in $\complex{6}$</title>
+
+<p>Suppose that
+<alignmath>
+<![CDATA[\alpha_1=1&&\alpha_2=-4&&\alpha_3=2&&\alpha_4=-1]]>
+</alignmath>
+and
+<alignmath>
+<![CDATA[\vect{u}_1&=\colvector{2\\4\\-3\\1\\2\\9}&]]>
+<![CDATA[\vect{u}_2&=\colvector{6\\3\\0\\-2\\1\\4}&]]>
+<![CDATA[\vect{u}_3&=\colvector{-5\\2\\1\\1\\-3\\0}&]]>
+<![CDATA[\vect{u}_4&=\colvector{3\\2\\-5\\7\\1\\3}]]>
+</alignmath>
+then their linear combination is
+<alignmath>
+<![CDATA[\alpha_1\vect{u_1}+ \alpha_2\vect{u_2}+ \alpha_3\vect{u_3}+ \alpha_4\vect{u_4}&=]]>
+(1)\colvector{2\\4\\-3\\1\\2\\9}+
+(-4)\colvector{6\\3\\0\\-2\\1\\4}+
+(2)\colvector{-5\\2\\1\\1\\-3\\0}+
+(-1)\colvector{3\\2\\-5\\7\\1\\3}\\
+<![CDATA[&=]]>
+\colvector{2\\4\\-3\\1\\2\\9}+
+\colvector{-24\\-12\\0\\8\\-4\\-16}+
+\colvector{-10\\4\\2\\2\\-6\\0}+
+\colvector{-3\\-2\\5\\-7\\-1\\-3}
+=\colvector{-35\\-6\\4\\4\\-9\\-10}
+</alignmath>
+</p>
+
+<p>A different linear combination, of the same set of vectors, can be formed with different scalars. Take
+<alignmath>
+<![CDATA[\beta_1=3&&\beta_2=0&&\beta_3=5&&\beta_4=-1]]>
+</alignmath>
+and form the linear combination
+<alignmath>
+<![CDATA[\beta_1\vect{u_1}+ \beta_2\vect{u_2}+ \beta_3\vect{u_3}+ \beta_4\vect{u_4}&=]]>
+(3)\colvector{2\\4\\-3\\1\\2\\9}+
+(0)\colvector{6\\3\\0\\-2\\1\\4}+
+(5)\colvector{-5\\2\\1\\1\\-3\\0}+
+(-1)\colvector{3\\2\\-5\\7\\1\\3}\\
+<![CDATA[&=]]>
+\colvector{6\\12\\-9\\3\\6\\27}+
+\colvector{0\\0\\0\\0\\0\\0}+
+\colvector{-25\\10\\5\\5\\-15\\0}+
+\colvector{-3\\-2\\5\\-7\\-1\\-3}
+=\colvector{-22\\20\\1\\1\\-10\\24}
+</alignmath>
+</p>
+
+<p>Notice how we could keep our set of vectors fixed, and use different sets of scalars to construct different vectors.  You might build a few new linear combinations of $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4$ right now.  We'll be right here when you get back.  What vectors were you able to create?  Do you think you could create the vector
+<!-- % lin combo w/ coefficients 2, 3, 1 -2 -->
+<equation>
+\vect{w}=\colvector{13\\15\\5\\-17\\2\\25}
+</equation>
+with a <q>suitable</q> choice of four scalars?  Do you think you could create <em>any</em> possible vector from $\complex{6}$ by choosing the proper scalars?  These last two questions are very fundamental, and time spent considering them <em>now</em> will prove beneficial later.</p>
+
+</example>
+
+<sageadvice acro="LC" index="linear combinations">
+<title>Linear Combinations</title>
+We can redo <acroref type="example" acro="TLC" /> with Sage.  First we build the relevant vectors and then do the computation.
+<sage>
+<input>u1 = vector(QQ,  [ 2, 4, -3,  1,  2, 9])
+u2 = vector(QQ,  [ 6, 3,  0, -2,  1, 4])
+u3 = vector(QQ,  [-5, 2,  1,  1, -3, 0])
+u4 = vector(QQ,  [ 3, 2, -5,  7,  1, 3])
+1*u1 + (-4)*u2 + 2*u3 +(-1)*u4
+</input>
+<output>(-35, -6, 4, 4, -9, -10)
+</output>
+</sage>
+
+With a linear combination combining many vectors, we sometimes will use more compact ways of forming a linear combination.  So we will redo the second linear combination of $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4$ using a list comprehension and the <code>sum()</code> function.
+<sage>
+<input>vectors = [u1, u2, u3, u4]
+scalars = [3, 0, 5, -1]
+multiples = [scalars[i]*vectors[i] for i in range(4)]
+multiples
+</input>
+<output>[(6, 12, -9, 3, 6, 27), (0, 0, 0, 0, 0, 0),
+ (-25, 10, 5, 5, -15, 0), (-3, -2, 5, -7, -1, -3)]
+</output>
+</sage>
+
+We have constructed two lists and used a list comprehension to just form the scalar multiple of each vector as part of the list <code>multiples</code>.  Now we use the <code>sum()</code> function to add them all together.
+<sage>
+<input>sum(multiples)
+</input>
+<output>(-22, 20, 1, 1, -10, 24)
+</output>
+</sage>
+
+We can improve on this in two ways.  First, we can determine the number of elements in any list with the <code>len()</code> function.  So we do not have to count up that we have 4 vectors (not that it is very hard to count!).  Second, we can combine this all into one line, once we have defined the list of vectors and the list of scalars.
+<sage>
+<input>sum([scalars[i]*vectors[i] for i in range(len(vectors))])
+</input>
+<output>(-22, 20, 1, 1, -10, 24)
+</output>
+</sage>
+
+The corresponding expression in mathematical notation, after a change of names and with counting starting from 1, would roughly be:
+<alignmath>
+\sum_{i=1}^4 a_i\vect{u}_i
+</alignmath>
+Using <code>sum()</code> and a list comprehension might be overkill in this example, but we will find it very useful in just a minute.
+
+
+</sageadvice>
+<p>Our next two examples are key ones, and a discussion about decompositions is timely.  Have a look at <acroref type="technique" acro="DC" /> before studying the next two examples.</p>
+
+<example acro="ABLC" index="linear combination! system of equations">
+<title>Archetype B as a linear combination</title>
+
+<indexlocation index="Archetype B!system as linear combination" />
+<p>In this example we will rewrite <acroref type="archetype" acro="B" /> in the language of vectors, vector equality and linear combinations.  In <acroref type="example" acro="VESE" /> we wrote the  system of $m=3$ equations as the vector equality
+<equation>
+\colvector{-7x_1 -6 x_2 - 12x_3\\ 5x_1  + 5x_2 + 7x_3\\ x_1 +4x_3}
+=
+\colvector{-33\\24\\5}
+</equation></p>
+
+<p>Now we will bust up the linear expressions on the left, first using vector addition,
+<equation>
+\colvector{-7x_1\\ 5x_1\\x_1}+
+\colvector{-6 x_2\\5x_2\\0x_2}+
+\colvector{-12x_3\\7x_3\\4x_3}
+=
+\colvector{-33\\24\\5}
+</equation></p>
+
+<p>Now we can rewrite each of these $n=3$ vectors as a scalar multiple of a fixed vector, where the scalar is one of the unknown variables, converting the left-hand side into a linear combination
+<equation>
+x_1\colvector{-7\\5\\1}+
+x_2\colvector{-6\\5\\0}+
+x_3\colvector{-12\\7\\4}
+=
+\colvector{-33\\24\\5}
+</equation></p>
+
+<p>We can now interpret the problem of solving the system of equations as determining values for the scalar multiples that make the vector equation true.  In the analysis of <acroref type="archetype" acro="B" />, we were able to determine that it had only one solution.  A quick way to see this is to row-reduce the coefficient matrix to the $3\times 3$ identity matrix and apply <acroref type="theorem" acro="NMRRI" /> to determine that the coefficient matrix is nonsingular.  Then <acroref type="theorem" acro="NMUS" /> tells us that the system of equations has a unique solution.  This solution is
+<alignmath>
+<![CDATA[x_1 = -3&&x_2 = 5&&x_3 = 2]]>
+</alignmath></p>
+
+<p>So, in the context of this example, we can express the fact that these values of the variables are a solution by writing the linear combination,
+<equation>
+(-3)\colvector{-7\\5\\1}+
+(5)\colvector{-6\\5\\0}+
+(2)\colvector{-12\\7\\4}
+=
+\colvector{-33\\24\\5}
+</equation></p>
+
+<p>Furthermore, these are the only three scalars that will accomplish this equality, since they come from a unique solution.</p>
+
+<p>Notice how the three vectors in this example are the columns of the coefficient matrix of the system of equations.  This is our first hint of the important interplay between the vectors that form the columns of a matrix, and the matrix itself.</p>
+
+</example>
+
+<p>With any discussion of <acroref type="archetype" acro="A" /> or <acroref type="archetype" acro="B" /> we should be sure to contrast with the other.</p>
+
+<example acro="AALC" index="linear combination!system of equations">
+<title>Archetype A as a linear combination</title>
+
+<indexlocation index="Archetype A!system as linear combination" />
+<p>As a vector equality, <acroref type="archetype" acro="A" /> can be written as
+<equation>
+\colvector{x_1 -x_2 +2x_3\\2x_1+ x_2 + x_3\\ x_1 + x_2}
+=
+\colvector{1\\8\\5}
+</equation></p>
+
+<p>Now  bust up the linear expressions on the left, first using vector addition,
+<equation>
+\colvector{x_1\\2x_1\\x_1}+
+\colvector{-x_2\\x_2\\x_2}+
+\colvector{2x_3\\x_3\\0x_3}
+=
+\colvector{1\\8\\5}
+</equation></p>
+
+<p>Rewrite each of these $n=3$ vectors as a scalar multiple of a fixed vector, where the scalar is one of the unknown variables, converting the left-hand side into a linear combination
+<equation>
+x_1\colvector{1\\2\\1}+
+x_2\colvector{-1\\1\\1}+
+x_3\colvector{2\\1\\0}
+=
+\colvector{1\\8\\5}
+</equation></p>
+
+<p>Row-reducing the augmented matrix for <acroref type="archetype" acro="A" /> leads to the conclusion that the system is consistent and has free variables, hence infinitely many solutions.  So for example, the two solutions
+<alignmath>
+<![CDATA[x_1 = 2&&x_2 = 3&&x_3 = 1\\]]>
+<![CDATA[x_1 = 3&&x_2 = 2&&x_3 = 0]]>
+</alignmath>
+can be used together to say that,
+<equation>
+(2)\colvector{1\\2\\1}+
+(3)\colvector{-1\\1\\1}+
+(1)\colvector{2\\1\\0}
+=
+\colvector{1\\8\\5}
+=
+(3)\colvector{1\\2\\1}+
+(2)\colvector{-1\\1\\1}+
+(0)\colvector{2\\1\\0}
+</equation>
+Ignore the middle of this equation, and move all the terms to the left-hand side,
+<equation>
+(2)\colvector{1\\2\\1}+
+(3)\colvector{-1\\1\\1}+
+(1)\colvector{2\\1\\0}+
+(-3)\colvector{1\\2\\1}+
+(-2)\colvector{-1\\1\\1}+
+(-0)\colvector{2\\1\\0}
+=
+\colvector{0\\0\\0}
+</equation>
+Regrouping gives
+<equation>
+(-1)\colvector{1\\2\\1}+
+(1)\colvector{-1\\1\\1}+
+(1)\colvector{2\\1\\0}
+=
+\colvector{0\\0\\0}
+</equation></p>
+
+<p>Notice that these three vectors are the columns of the coefficient matrix for the system of equations in <acroref type="archetype" acro="A" />.  This equality says there is a linear combination of those columns that equals the vector of all zeros.  Give it some thought, but this says that
+<alignmath>
+<![CDATA[x_1=-1&&x_2=1&&x_3=1]]>
+</alignmath>
+is a nontrivial solution to the homogeneous system of equations with the coefficient matrix for the original system in <acroref type="archetype" acro="A" />.  In particular, this demonstrates that this coefficient matrix is singular.
+</p>
+</example>
+
+<p>There's  a lot going on in the last two examples.  Come back to them in a while and make some connections with the intervening material.
+For now, we will summarize and explain some of this behavior with a theorem.</p>
+
+<theorem acro="SLSLC" index="linear combinations!solutions to linear systems">
+<title>Solutions to Linear Systems are Linear Combinations</title>
+<statement>
+<p>Denote the columns of the $m\times n$ matrix $A$ as the vectors $\vectorlist{A}{n}$.  Then
+$\vect{x}\in\complexes{n}$ is a solution to the linear system of equations $\linearsystem{A}{\vect{b}}$ if and only if $\vect{b}$ equals the linear combination of the columns of $A$ formed with the entries of $\vect{x}$,
+<equation>
+\vectorentry{\vect{x}}{1}\vect{A}_1+
+\vectorentry{\vect{x}}{2}\vect{A}_2+
+\vectorentry{\vect{x}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{x}}{n}\vect{A}_n
+=
+\vect{b}
+</equation></p>
+
+</statement>
+
+<proof>
+<p>The proof of this theorem is as much about a change in notation as it is about making logical deductions.    Write the system of equations $\linearsystem{A}{\vect{b}}$ as
+<alignmath>
+<![CDATA[a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&=b_1\\]]>
+<![CDATA[a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&=b_2\\]]>
+<![CDATA[a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&=b_3\\]]>
+<![CDATA[\vdots&\\]]>
+<![CDATA[a_{m1}x_1+a_{m2}x_2+a_{m3}x_3+\dots+a_{mn}x_n&=b_m]]>
+</alignmath></p>
+
+<p>Notice then that the entry of the coefficient matrix $A$ in row $i$ and column $j$ has two names:  $a_{ij}$ as the coefficient of $x_j$ in equation $i$ of the system and $\vectorentry{\vect{A}_j}{i}$ as the $i$-th entry of the column vector in column $j$ of the coefficient matrix $A$.  Likewise, entry $i$ of $\vect{b}$ has two names:  $b_i$ from the linear system and $\vectorentry{\vect{b}}{i}$ as an entry of a vector.  Our theorem is an equivalence (<acroref type="technique" acro="E" />) so we need to prove both <q>directions.</q></p>
+
+<p><implyreverse />   Suppose we have the vector equality between $\vect{b}$ and the linear combination of the columns of $A$.  Then for $1\leq i\leq m$,
+<alignmath>
+b_i
+<![CDATA[&=\vectorentry{\vect{b}}{i}&&]]>\text{<acroref type="definition" acro="CV" />}\\
+<![CDATA[&=\vectorentry{]]>
+\vectorentry{\vect{x}}{1}\vect{A}_1+
+\vectorentry{\vect{x}}{2}\vect{A}_2+
+\vectorentry{\vect{x}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{x}}{n}\vect{A}_n
+<![CDATA[}{i}&&\text{Hypothesis}\\]]>
+<![CDATA[&=]]>
+\vectorentry{\vectorentry{\vect{x}}{1}\vect{A}_1}{i}+
+\vectorentry{\vectorentry{\vect{x}}{2}\vect{A}_2}{i}+
+\vectorentry{\vectorentry{\vect{x}}{3}\vect{A}_3}{i}+
+\cdots+
+\vectorentry{\vectorentry{\vect{x}}{n}\vect{A}_n}{i}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVA" />}\\
+<![CDATA[&=]]>
+\vectorentry{\vect{x}}{1}\vectorentry{\vect{A}_1}{i}+
+\vectorentry{\vect{x}}{2}\vectorentry{\vect{A}_2}{i}+
+\vectorentry{\vect{x}}{3}\vectorentry{\vect{A}_3}{i}+
+\cdots+
+\vectorentry{\vect{x}}{n}\vectorentry{\vect{A}_n}{i}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVSM" />}\\
+<![CDATA[&=]]>
+\vectorentry{\vect{x}}{1}a_{i1}+
+\vectorentry{\vect{x}}{2}a_{i2}+
+\vectorentry{\vect{x}}{3}a_{i3}+
+\cdots+
+\vectorentry{\vect{x}}{n}a_{in}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CV" />}\\
+<![CDATA[&=]]>
+a_{i1}\vectorentry{\vect{x}}{1}+
+a_{i2}\vectorentry{\vect{x}}{2}+
+a_{i3}\vectorentry{\vect{x}}{3}+
+\cdots+
+a_{in}\vectorentry{\vect{x}}{n}
+<![CDATA[&&\text{\text{<acroref type="property" acro="CMCN" />}}]]>
+</alignmath></p>
+
+<p>This says that the entries of $\vect{x}$ form a solution to equation $i$ of $\linearsystem{A}{\vect{b}}$ for all $1\leq i\leq m$, in other words, $\vect{x}$ is a solution to $\linearsystem{A}{\vect{b}}$.</p>
+
+<p><implyforward />  Suppose now that $\vect{x}$ is a solution to the linear system $\linearsystem{A}{\vect{b}}$.  Then for all $1\leq i\leq m$,
+<alignmath>
+\vectorentry{\vect{b}}{i}
+<![CDATA[&=b_i&&]]>\text{<acroref type="definition" acro="CV" />}\\
+<![CDATA[&=]]>
+a_{i1}\vectorentry{\vect{x}}{1}+
+a_{i2}\vectorentry{\vect{x}}{2}+
+a_{i3}\vectorentry{\vect{x}}{3}+
+\cdots+
+a_{in}\vectorentry{\vect{x}}{n}
+<![CDATA[&&\text{Hypothesis}\\]]>
+<![CDATA[&=]]>
+\vectorentry{\vect{x}}{1}a_{i1}+
+\vectorentry{\vect{x}}{2}a_{i2}+
+\vectorentry{\vect{x}}{3}a_{i3}+
+\cdots+
+\vectorentry{\vect{x}}{n}a_{in}
+<![CDATA[&&]]>\text{<acroref type="property" acro="CMCN" />}\\
+<![CDATA[&=]]>
+\vectorentry{\vect{x}}{1}\vectorentry{\vect{A}_1}{i}+
+\vectorentry{\vect{x}}{2}\vectorentry{\vect{A}_2}{i}+
+\vectorentry{\vect{x}}{3}\vectorentry{\vect{A}_3}{i}+
+\cdots+
+\vectorentry{\vect{x}}{n}\vectorentry{\vect{A}_n}{i}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CV" />}\\
+<![CDATA[&=]]>
+\vectorentry{\vectorentry{\vect{x}}{1}\vect{A}_1}{i}+
+\vectorentry{\vectorentry{\vect{x}}{2}\vect{A}_2}{i}+
+\vectorentry{\vectorentry{\vect{x}}{3}\vect{A}_3}{i}+
+\cdots+
+\vectorentry{\vectorentry{\vect{x}}{n}\vect{A}_n}{i}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVSM" />}\\
+<![CDATA[&=\vectorentry{]]>
+\vectorentry{\vect{x}}{1}\vect{A}_1+
+\vectorentry{\vect{x}}{2}\vect{A}_2+
+\vectorentry{\vect{x}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{x}}{n}\vect{A}_n
+<![CDATA[}{i}&&]]>\text{<acroref type="definition" acro="CVA" />}
+</alignmath>
+Since the components of $\vect{b}$ and the linear combination of the columns of $A$ agree for all $1\leq i\leq m$, <acroref type="definition" acro="CVE" /> tells us that the vectors are equal.</p>
+
+</proof>
+</theorem>
+
+<p>In other words, this theorem tells us that solutions to systems of equations are linear combinations of the $n$ column vectors of the coefficient matrix ($\vect{A}_j$) which yield the constant vector $\vect{b}$.  Or said another way, a solution to a system of equations $\linearsystem{A}{\vect{b}}$  is an answer to the question <q>How can I form the vector $\vect{b}$ as a linear combination of the columns of $A$?</q>  Look through the archetypes that are systems of equations and examine a few of the advertised solutions.  In each case use the solution to form a linear combination of the columns of the coefficient matrix and verify that the result equals the constant vector (see <acroref type="exercise" acro="LC.C21" />).</p>
+
+<sageadvice acro="SLC" index="solutions, linear combinations">
+<title>Solutions and Linear Combinations</title>
+We can easily illustrate <acroref type="theorem" acro="SLSLC" /> with Sage.  We will use <acroref type="archetype" acro="F" /> as an example.
+<sage>
+<input>coeff = matrix(QQ, [[33, -16,  10,-2],
+                    [99, -47,  27,-7],
+                    [78, -36,  17,-6],
+                    [-9,   2,   3, 4]])
+const = vector(QQ, [-27, -77, -52, 5])
+</input>
+</sage>
+
+A solution to this system is $x_1=1,\,x_2=2,\,x_3=-2,\,x_4=4$.  So we will use these four values as scalars in a linear combination of the columns of the coefficient matrix.  However, we do not have to type in the columns individually, we can have Sage extract them all for us into a list with the matrix method <code>.columns()</code>.
+<sage>
+<input>cols = coeff.columns()
+cols
+</input>
+<output>[(33, 99, 78, -9), (-16, -47, -36, 2),
+ (10, 27, 17, 3), (-2, -7, -6, 4)]
+</output>
+</sage>
+
+With our scalars also in a list, we can compute the linear combination of the columns, like we did in <acroref type="sage" acro="LC" />.
+<sage>
+<input>soln = [1, 2, -2, 4]
+sum([soln[i]*cols[i] for i in range(len(cols))])
+</input>
+<output>(-27, -77, -52, 5)
+</output>
+</sage>
+
+So we see that the solution gives us scalars that yield the vector of constants as a linear combination of the columns of the coefficient matrix.  Exactly as predicted by <acroref type="theorem" acro="SLSLC" />.  We can duplicate this observation with just one line:
+<sage>
+<input>const == sum([soln[i]*cols[i] for i in range(len(cols))])
+</input>
+<output>True
+</output>
+</sage>
+
+In a similar fashion we can test other potential solutions.  With theory we will develop later, we will be able to determine that <acroref type="archetype" acro="F" /> has only one solution.  Since <acroref type="theorem" acro="SLSLC" /> is an equivalence (<acroref type="technique" acro="E" />), any other choice for the scalars should not create the vector of constants as a linear combination.
+<sage>
+<input>alt_soln = [-3, 2, 4, 1]
+const == sum([alt_soln[i]*cols[i] for i in range(len(cols))])
+</input>
+<output>False
+</output>
+</sage>
+
+Now would be a good time to find another system of equations, perhaps one with infinitely many solutions, and practice the techniques above.
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="VFSS">
+<title>Vector Form of Solution Sets</title>
+
+<p>We have written solutions to systems of equations as column vectors.  For example <acroref type="archetype" acro="B" /> has the solution  $x_1 = -3,\,x_2 = 5,\,x_3 = 2$ which we now write as
+<equation>
+\vect{x}=\colvector{x_1\\x_2\\x_3}=\colvector{-3\\5\\2}
+</equation></p>
+
+<p>Now, we will use column vectors and linear combinations to express <em>all</em> of the solutions to a linear system of equations in a compact and understandable way.  First, here's two examples that will motivate our next theorem.  This is a valuable technique, almost the equal of row-reducing a matrix, so be sure you get comfortable with it over the course of this section.</p>
+
+<example acro="VFSAD" index="vector form of solutions!Archetype D">
+<title>Vector form of solutions for Archetype D</title>
+
+<indexlocation index="Archetype D!vector form of solutions" />
+<p><acroref type="archetype" acro="D" /> is a linear system of 3 equations in 4 variables.  Row-reducing the augmented matrix yields
+<equation>
+<archetypepart acro="D" part="augmentedreduced" /></equation>
+and we see $r=2$ nonzero rows. Also, $D=\set{1,\,2}$ so the dependent variables are then $x_1$ and $x_2$.  $F=\set{3,\,4,\,5}$ so the two free variables are $x_3$ and $x_4$.  We will express a generic solution for the system by two slightly different methods, though both arrive at the same conclusion.</p>
+
+<p>First, we will decompose (<acroref type="technique" acro="DC" />) a solution vector.  Rearranging each equation represented in the row-reduced form of the augmented matrix by solving for the dependent variable in each row yields the vector equality,
+<alignmath>
+<![CDATA[\colvector{x_1\\x_2\\x_3\\x_4}&=]]>
+\colvector{4-3x_3+2x_4\\ -x_3+3x_4\\x_3\\x_4}
+<intertext>Now we will use the definitions of column vector addition and scalar multiplication to express this vector as a linear combination,</intertext>
+<![CDATA[&=\colvector{4\\0\\0\\0}+]]>
+\colvector{-3x_3\\-x_3\\x_3\\0}+
+<![CDATA[\colvector{2x_4\\3x_4\\0\\x_4}&&]]>\text{<acroref type="definition" acro="CVA" />}\\
+<![CDATA[&=\colvector{4\\0\\0\\0}+]]>
+x_3\colvector{-3\\-1\\1\\0}+
+<![CDATA[x_4\colvector{2\\3\\0\\1}&&]]>\text{<acroref type="definition" acro="CVSM" />}\\
+</alignmath></p>
+
+<p>We will develop the same linear combination a bit quicker, using three steps.  While the method above is instructive, the method below will be our preferred approach.</p>
+
+<p>Step 1.  Write the vector of variables as a fixed vector, plus a linear combination of $n-r$ vectors, using the free variables as the scalars.
+<equation>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4}=
+\colvector{\ \\\ \\\ \\\ }+x_3\colvector{\ \\\ \\\ \\\ }+x_4\colvector{\ \\\ \\\ \\\ }
+</equation></p>
+
+<p>Step 2.  Use 0's and 1's to ensure equality for the entries of the vectors with indices in $F$ (corresponding to the free variables).
+<equation>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4}=
+\colvector{\ \\\ \\0\\0}+x_3\colvector{\ \\\ \\1\\0}+x_4\colvector{\ \\\ \\0\\1}
+</equation></p>
+
+<p>Step 3.  For each dependent variable, use the augmented matrix to formulate an equation expressing the dependent variable as a constant plus multiples of the free variables.  Convert this equation into entries of the vectors that ensure equality for each dependent variable, one at a time.
+<alignmath>
+<![CDATA[x_1=4-3x_3+2x_4&&\Rightarrow&&]]>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4}=
+\colvector{4\\\ \\0\\0}+x_3\colvector{-3\\\ \\1\\0}+x_4\colvector{2\\\ \\0\\1}\\
+<![CDATA[x_2=0-1x_3+3x_4&&\Rightarrow&&]]>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4}=
+\colvector{4\\0\\0\\0}+x_3\colvector{-3\\-1\\1\\0}+x_4\colvector{2\\3\\0\\1}
+</alignmath></p>
+
+<p>This final <em>form</em> of a typical solution is especially pleasing and useful.  For example, we can build solutions quickly by choosing values for our free variables, and then compute a linear combination.  Such as
+<alignmath>
+<![CDATA[x_3=2,\,x_4=-5&&\Rightarrow&&]]>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4}=
+\colvector{4\\0\\0\\0}+(2)\colvector{-3\\-1\\1\\0}+(-5)\colvector{2\\3\\0\\1}
+=\colvector{-12\\-17\\2\\-5}
+<intertext>or,</intertext>
+<![CDATA[x_3=1,\,x_4=3&&\Rightarrow&&]]>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4}=
+\colvector{4\\0\\0\\0}+(1)\colvector{-3\\-1\\1\\0}+(3)\colvector{2\\3\\0\\1}
+=\colvector{7\\8\\1\\3}
+</alignmath>
+</p>
+
+<p>You'll find the second solution listed in the write-up for <acroref type="archetype" acro="D" />, and you might check the first solution by substituting it back into the original equations.</p>
+
+<p>While this form is useful for quickly creating solutions, it's even better because it tells us <em>exactly</em> what every solution looks like.  We know the solution set is infinite, which is pretty big, but now we can say that a solution is some multiple of $\colvector{-3\\-1\\1\\0}$ plus a multiple of $\colvector{2\\3\\0\\1}$ plus the fixed vector $\colvector{4\\0\\0\\0}$.  Period.  So it only takes us <em>three</em> vectors to describe the entire infinite solution set, provided we also agree on how to combine the three vectors into a linear combination.</p>
+
+</example>
+
+<p>This is such an important and fundamental technique, we'll do another example.</p>
+
+<example acro="VFS" index="vector form of solutions">
+<title>Vector form of solutions</title>
+
+<p>Consider a linear system of $m=5$ equations in $n=7$ variables, having the augmented matrix $A$.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 2 & 1 & -1 & -2 & 2 & 1 & 5 & 21 \\]]>
+<![CDATA[ 1 & 1 & -3 & 1 & 1 & 1 & 2 & -5 \\]]>
+<![CDATA[ 1 & 2 & -8 & 5 & 1 & 1 & -6 & -15 \\]]>
+<![CDATA[ 3 & 3 & -9 & 3 & 6 & 5 & 2 & -24 \\]]>
+<![CDATA[ -2 & -1 & 1 & 2 & 1 & 1 & -9 & -30]]>
+\end{bmatrix}
+</equation></p>
+
+<p>Row-reducing we obtain the matrix
+<equation>
+B=
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 & -3 & 0 & 0 & 9 &  15 \\]]>
+<![CDATA[ 0 & \leading{1} & -5 & 4 & 0 & 0 & -8 &  -10 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & \leading{1} & 0 & -6 &  11 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & \leading{1} & 7 &  -21 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+and we see $r=4$ nonzero rows. Also, $D=\set{1,\,2,\,5,\,6}$ so the dependent variables are then $x_1,\,x_2,\,x_5,$ and $x_6$.  $F=\set{3,\,4,\,7,\,8}$ so the $n-r=3$ free variables are $x_3,\,x_4$ and $x_7$.  We will express a generic solution for the system by two different methods: both a decomposition and a construction.</p>
+
+<p>First, we will decompose (<acroref type="technique" acro="DC" />) a solution vector.  Rearranging each equation represented in the row-reduced form of the augmented matrix by solving for the dependent variable in each row yields the vector equality,
+<alignmath>
+<![CDATA[\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}&=]]>
+\colvector{
+15-2x_3+3x_4-9x_7\\
+-10+5x_3-4x_4+8x_7\\
+x_3\\
+x_4\\
+11+6x_7\\
+-21-7x_7\\
+x_7
+}
+<intertext>Now we will use the definitions of column vector addition and scalar multiplication to decompose this generic solution vector as a linear combination,</intertext>
+<![CDATA[&=]]>
+\colvector{15\\ -10\\ 0\\ 0\\ 11\\ -21\\ 0 }
++
+\colvector{ -2x_3\\ 5x_3\\ x_3\\ 0\\ 0\\ 0\\ 0 }
++
+\colvector{ 3x_4\\ -4x_4\\ 0\\ x_4\\ 0\\ 0\\ 0 }
++
+\colvector{ -9x_7\\ 8x_7\\ 0\\ 0\\ 6x_7\\ -7x_7\\ x_7 }
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVA" />}\\
+<![CDATA[&=]]>
+\colvector{15\\ -10\\ 0\\ 0\\ 11\\ -21\\ 0 }
++
+x_3\colvector{ -2\\ 5\\ 1\\ 0\\ 0\\ 0\\ 0 }
++
+x_4\colvector{ 3\\ -4\\ 0\\ 1\\ 0\\ 0\\ 0 }
++
+x_7\colvector{ -9\\ 8\\ 0\\ 0\\ 6\\ -7\\ 1 }
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVSM" />}
+</alignmath>
+We will now develop the same linear combination a bit quicker, using three steps.  While the method above is instructive, the method below will be our preferred approach.</p>
+
+<p>Step 1.  Write the vector of variables as a fixed vector, plus a linear combination of $n-r$ vectors, using the free variables as the scalars.
+<equation>
+\vect{x}=
+\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
+\colvector{\ \\\ \\\ \\\ \\\ \\\ \\\ }+x_3\colvector{\ \\\ \\\ \\\ \\\ \\\ \\\ }+x_4\colvector{\ \\\ \\\ \\\ \\\ \\\ \\\ }+x_7\colvector{\ \\\ \\\ \\\ \\\ \\\ \\\ }
+</equation></p>
+
+<p>Step 2.  Use 0's and 1's to ensure equality for the entries of the vectors with indices in $F$ (corresponding to the free variables).
+<equation>
+\vect{x}=
+\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
+\colvector{\\ \\ 0\\ 0\\ \\ \\ 0}+x_3\colvector{\\ \\ 1\\ 0\\ \\ \\ 0}+x_4\colvector{\\ \\ 0\\ 1\\ \\ \\ 0}+x_7\colvector{\\ \\ 0\\ 0\\ \\ \\ 1}
+</equation></p>
+
+<p>Step 3.  For each dependent variable, use the augmented matrix to formulate an equation expressing the dependent variable as a constant plus multiples of the free variables.  Convert this equation into entries of the vectors that ensure equality for each dependent variable, one at a time.
+<alignmath>
+<![CDATA[x_1&=15-2x_3+3x_4-9x_7]]>
+<![CDATA[&]]>
+<![CDATA[\Rightarrow&]]>
+<![CDATA[&]]>
+<![CDATA[\vect{x}&=]]>
+\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
+\colvector{15\\ \\ 0\\ 0\\ \\ \\ 0}+
+x_3\colvector{-2\\ \\ 1\\ 0\\ \\ \\ 0}+
+x_4\colvector{3\\ \\ 0\\ 1\\ \\ \\ 0}+
+x_7\colvector{-9\\ \\ 0\\ 0\\ \\ \\ 1}\\
+<![CDATA[x_2&=-10+5x_3-4x_4+8x_7]]>
+<![CDATA[&]]>
+<![CDATA[\Rightarrow&]]>
+<![CDATA[&]]>
+<![CDATA[\vect{x}&=]]>
+\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
+\colvector{15\\ -10\\ 0\\ 0\\ \\ \\ 0}+
+x_3\colvector{-2\\ 5\\ 1\\ 0\\ \\ \\ 0}+
+x_4\colvector{3\\ -4\\ 0\\ 1\\ \\ \\ 0}+
+x_7\colvector{-9\\ 8\\ 0\\ 0\\ \\ \\ 1}\\
+<![CDATA[x_5&=11+6x_7]]>
+<![CDATA[&]]>
+<![CDATA[\Rightarrow&]]>
+<![CDATA[&]]>
+<![CDATA[\vect{x}&=]]>
+\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
+\colvector{15\\ -10\\ 0\\ 0\\ 11\\ \\ 0}+
+x_3\colvector{-2\\ 5\\ 1\\ 0\\ 0\\ \\ 0}+
+x_4\colvector{3\\ -4\\ 0\\ 1\\ 0\\ \\ 0}+
+x_7\colvector{-9\\ 8\\ 0\\ 0\\ 6\\ \\ 1}\\
+<![CDATA[x_6&=-21-7x_7]]>
+<![CDATA[&]]>
+<![CDATA[\Rightarrow&]]>
+<![CDATA[&]]>
+<![CDATA[\vect{x}&=]]>
+\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
+\colvector{15\\ -10\\ 0\\ 0\\ 11\\ -21\\ 0}+
+x_3\colvector{-2\\ 5\\ 1\\ 0\\ 0\\ 0\\ 0}+
+x_4\colvector{3\\ -4\\ 0\\ 1\\ 0\\ 0\\ 0}+
+x_7\colvector{-9\\ 8\\ 0\\ 0\\ 6\\ -7\\ 1}
+</alignmath></p>
+
+<p>This final <em>form</em> of a typical solution is especially pleasing and useful.  For example, we can build solutions quickly by choosing values for our free variables, and then compute a linear combination.  For example
+<alignmath>
+<![CDATA[x_3&=2,\,]]>
+x_4=-4,\,
+x_7=3
+\quad\quad\Rightarrow\\
+<![CDATA[\vect{x}&=]]>
+\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
+\colvector{15\\ -10\\ 0\\ 0\\ 11\\ -21\\ 0}+
+(2)\colvector{-2\\ 5\\ 1\\ 0\\ 0\\ 0\\ 0}+
+(-4)\colvector{3\\ -4\\ 0\\ 1\\ 0\\ 0\\ 0}+
+(3)\colvector{-9\\ 8\\ 0\\ 0\\ 6\\ -7\\ 1}
+=
+\colvector{-28\\40\\2\\-4\\29\\-42\\3}
+</alignmath>
+or perhaps,
+<alignmath>
+<![CDATA[x_3&=5,\,]]>
+x_4=2,\,
+x_7=1
+\quad\quad\Rightarrow\\
+<![CDATA[\vect{x}&=]]>
+\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
+\colvector{15\\ -10\\ 0\\ 0\\ 11\\ -21\\ 0}+
+(5)\colvector{-2\\ 5\\ 1\\ 0\\ 0\\ 0\\ 0}+
+(2)\colvector{3\\ -4\\ 0\\ 1\\ 0\\ 0\\ 0}+
+(1)\colvector{-9\\ 8\\ 0\\ 0\\ 6\\ -7\\ 1}
+=
+\colvector{2\\15\\5\\2\\17\\-28\\1}
+</alignmath>
+or even,
+<alignmath>
+<![CDATA[x_3&=0,\,]]>
+x_4=0,\,
+x_7=0
+\quad\quad\Rightarrow\\
+<![CDATA[\vect{x}&=]]>
+\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
+\colvector{15\\ -10\\ 0\\ 0\\ 11\\ -21\\ 0}+
+(0)\colvector{-2\\ 5\\ 1\\ 0\\ 0\\ 0\\ 0}+
+(0)\colvector{3\\ -4\\ 0\\ 1\\ 0\\ 0\\ 0}+
+(0)\colvector{-9\\ 8\\ 0\\ 0\\ 6\\ -7\\ 1}
+=
+\colvector{15\\ -10\\ 0\\ 0\\ 11\\ -21\\ 0}
+</alignmath></p>
+
+<p>So we can compactly express <em>all</em> of the solutions to this linear system with just 4 fixed vectors, provided we agree how to combine them in a linear combinations to create solution vectors.</p>
+
+<p>Suppose you were told that the vector $\vect{w}$ below was a solution to this system of equations.  Could you turn the problem around and write $\vect{w}$ as a linear combination of the four vectors $\vect{c}$, $\vect{u}_1$, $\vect{u}_2$, $\vect{u}_3$?  (See <acroref type="exercise" acro="LC.M11" />.)
+<alignmath>
+<![CDATA[\vect{w}&=\colvector{100\\-75\\7\\9\\-37\\35\\-8}]]>
+<![CDATA[&]]>
+<![CDATA[\vect{c}&=\colvector{15\\ -10\\ 0\\ 0\\ 11\\ -21\\ 0}]]>
+<![CDATA[&]]>
+<![CDATA[\vect{u}_1&=\colvector{-2\\ 5\\ 1\\ 0\\ 0\\ 0\\ 0}]]>
+<![CDATA[&]]>
+<![CDATA[\vect{u}_2&=\colvector{3\\ -4\\ 0\\ 1\\ 0\\ 0\\ 0}]]>
+<![CDATA[&]]>
+<![CDATA[\vect{u}_3&=\colvector{-9\\ 8\\ 0\\ 0\\ 6\\ -7\\ 1}]]>
+</alignmath></p>
+
+</example>
+
+<p>Did you think a few weeks ago that you could so quickly and easily list <em>all</em> the solutions to a linear system of 5 equations in 7 variables?</p>
+
+<p>We'll now formalize the last two (important) examples as a theorem.</p>
+
+<theorem acro="VFSLS" index="vector form of solutions">
+<title>Vector Form of Solutions to Linear Systems</title>
+<statement>
+<p>Suppose that $\augmented{A}{\vect{b}}$ is the augmented matrix for a consistent linear system $\linearsystem{A}{\vect{b}}$ of $m$ equations in $n$ variables.
+Let $B$ be a row-equivalent $m\times (n+1)$ matrix in reduced row-echelon form. Suppose that $B$ has $r$ nonzero rows,  columns without leading 1's with indices $F=\set{f_1,\,f_2,\,f_3,\,\ldots,\,f_{n-r},\,n+1}$, and columns with leading 1's (pivot columns) having indices $D=\set{d_1,\,d_2,\,d_3,\,\ldots,\,d_r}$.  Define vectors $\vect{c}$, $\vect{u}_j$, $1\leq j\leq n-r$ of size $n$ by
+<alignmath>
+<![CDATA[\vectorentry{\vect{c}}{i}&=]]>
+\begin{cases}
+<![CDATA[0&\text{if $i\in F$}\\]]>
+<![CDATA[\matrixentry{B}{k,n+1}&\text{if $i\in D$, $i=d_k$}]]>
+\end{cases}\\
+<![CDATA[\vectorentry{\vect{u}_j}{i}&=]]>
+\begin{cases}
+<![CDATA[1&\text{if $i\in F$, $i=f_j$}\\]]>
+<![CDATA[0&\text{if $i\in F$, $i\neq f_j$}\\]]>
+<![CDATA[-\matrixentry{B}{k,f_j}&\text{if $i\in D$, $i=d_k$}]]>
+\end{cases}.
+</alignmath></p>
+
+<p>Then the set of solutions to the system of equations $\linearsystem{A}{\vect{b}}$ is
+<equation>
+S=\setparts{
+\vect{c}+\alpha_1\vect{u}_1+\alpha_2\vect{u}_2+\alpha_3\vect{u}_3+\cdots+\alpha_{n-r}\vect{u}_{n-r}
+}{
+\alpha_1,\,\alpha_2,\,\alpha_3,\,\ldots,\,\alpha_{n-r}\in\complex{\null}
+}
+</equation></p>
+
+</statement>
+
+<proof>
+<p>First, $\linearsystem{A}{\vect{b}}$ is equivalent to the linear system of equations that has the matrix $B$ as its augmented matrix (<acroref type="theorem" acro="REMES" />), so we need only show that $S$ is the solution set for the system with $B$ as its augmented matrix.  The conclusion of this theorem is that the solution set is equal to the set $S$, so we will apply <acroref type="definition" acro="SE" />.</p>
+
+<p>We begin by showing that every element of $S$ is indeed a solution to the system.  Let $\alpha_1,\,\alpha_2,\,\alpha_3,\,\ldots,\,\alpha_{n-r}$ be one choice of the scalars used to describe elements of $S$.  So an arbitrary element of $S$, which we will consider as a proposed solution is
+<equation>
+\vect{x}=
+\vect{c}+\alpha_1\vect{u}_1+\alpha_2\vect{u}_2+\alpha_3\vect{u}_3+\cdots+\alpha_{n-r}\vect{u}_{n-r}
+</equation></p>
+
+<p>When $r+1\leq\ell\leq m$, row $\ell$ of the matrix $B$ is a zero row, so the equation represented by that row is always true, no matter which solution vector we propose.  So concentrate on rows representing equations $1\leq\ell\leq r$.  We evaluate equation $\ell$ of the system represented by $B$ with the proposed solution vector $\vect{x}$ and refer to the value of the left-hand side of the equation as $\beta_\ell$,
+<equation>
+\beta_\ell=
+\matrixentry{B}{\ell 1}\vectorentry{\vect{x}}{1}+
+\matrixentry{B}{\ell 2}\vectorentry{\vect{x}}{2}+
+\matrixentry{B}{\ell 3}\vectorentry{\vect{x}}{3}+
+\cdots+
+\matrixentry{B}{\ell n}\vectorentry{\vect{x}}{n}
+</equation></p>
+
+<p>Since $\matrixentry{B}{\ell d_{i}}=0$ for all $1\leq i\leq r$, except that $\matrixentry{B}{\ell d_{\ell}}=1$, we see that $\beta_\ell$ simplifies to
+<equation>
+\beta_\ell=
+\vectorentry{\vect{x}}{d_{\ell}}+
+\matrixentry{B}{\ell f_1}\vectorentry{\vect{x}}{f_1}+
+\matrixentry{B}{\ell f_2}\vectorentry{\vect{x}}{f_2}+
+\matrixentry{B}{\ell f_3}\vectorentry{\vect{x}}{f_3}+
+\cdots+
+\matrixentry{B}{\ell f_{n-r}}\vectorentry{\vect{x}}{f_{n-r}}
+</equation></p>
+
+<p>Notice that for $1\leq i\leq n-r$
+<alignmath>
+\vectorentry{\vect{x}}{f_i}
+<![CDATA[&=]]>
+\vectorentry{\vect{c}}{f_i}+
+\alpha_1\vectorentry{\vect{u}_1}{f_i}+
+\alpha_2\vectorentry{\vect{u}_2}{f_i}+
+\alpha_3\vectorentry{\vect{u}_3}{f_i}+
+\cdots+
+\alpha_i\vectorentry{\vect{u}_i}{f_i}+
+\cdots+
+\alpha_{n-r}\vectorentry{\vect{u_{n-r}}}{f_i}\\
+<![CDATA[&=]]>
+0+
+\alpha_1(0)+
+\alpha_2(0)+
+\alpha_3(0)+
+\cdots+
+\alpha_i(1)+
+\cdots+
+\alpha_{n-r}(0)\\
+<![CDATA[&=]]>
+\alpha_i
+</alignmath></p>
+
+<p>So $\beta_\ell$ simplifies further, and we expand the first term
+<alignmath>
+\beta_\ell
+<![CDATA[&=]]>
+\vectorentry{\vect{x}}{d_{\ell}}+
+\matrixentry{B}{\ell f_1}\alpha_1+
+\matrixentry{B}{\ell f_2}\alpha_2+
+\matrixentry{B}{\ell f_3}\alpha_3+
+\cdots+
+\matrixentry{B}{\ell f_{n-r}}\alpha_{n-r}\\
+<![CDATA[&=]]>
+\vectorentry{
+\vect{c}+
+\alpha_1\vect{u}_1+
+\alpha_2\vect{u}_2+
+\alpha_3\vect{u}_3+
+\cdots+
+\alpha_{n-r}\vect{u}_{n-r}
+}{d_{\ell}}
++\\
+<![CDATA[&\quad\quad]]>
+\matrixentry{B}{\ell f_1}\alpha_1+
+\matrixentry{B}{\ell f_2}\alpha_2+
+\matrixentry{B}{\ell f_3}\alpha_3+
+\cdots+
+\matrixentry{B}{\ell f_{n-r}}\alpha_{n-r}\\
+<![CDATA[&=]]>
+\vectorentry{\vect{c}}{d_{\ell}}+
+\alpha_1\vectorentry{\vect{u}_1}{d_{\ell}}+
+\alpha_2\vectorentry{\vect{u}_2}{d_{\ell}}+
+\alpha_3\vectorentry{\vect{u}_3}{d_{\ell}}+
+\cdots+
+\alpha_{n-r}\vectorentry{\vect{u_{n-r}}}{d_{\ell}}
++\\
+<![CDATA[&\quad\quad]]>
+\matrixentry{B}{\ell f_1}\alpha_1+
+\matrixentry{B}{\ell f_2}\alpha_2+
+\matrixentry{B}{\ell f_3}\alpha_3+
+\cdots+
+\matrixentry{B}{\ell f_{n-r}}\alpha_{n-r}\\
+<![CDATA[&=]]>
+\matrixentry{B}{\ell,{n+1}}+
+\alpha_1(-\matrixentry{B}{\ell,f_1})+
+\alpha_2(-\matrixentry{B}{\ell,f_2})+
+\alpha_3(-\matrixentry{B}{\ell,f_3})+
+\cdots+
+\alpha_{n-r}(-\matrixentry{B}{\ell,f_{n-r}})
++\\
+<![CDATA[&\quad\quad]]>
+\matrixentry{B}{\ell f_1}\alpha_1+
+\matrixentry{B}{\ell f_2}\alpha_2+
+\matrixentry{B}{\ell f_3}\alpha_3+
+\cdots+
+\matrixentry{B}{\ell f_{n-r}}\alpha_{n-r}\\
+<![CDATA[&=]]>
+\matrixentry{B}{\ell,{n+1}}
+</alignmath></p>
+
+<p>So $\beta_\ell$ began as the left-hand side of equation $\ell$ of the system represented by $B$ and we now know it equals $\matrixentry{B}{\ell,{n+1}}$, the constant term for equation $\ell$ of this system.  So the arbitrarily chosen vector from $S$ makes every equation of the system true, and therefore is a solution to the system.  So all the elements of $S$ are solutions to the system.</p>
+
+<p>For the second half of the proof, assume that $\vect{x}$ is a solution vector for the system having $B$ as its augmented matrix.  For convenience and clarity, denote the entries of $\vect{x}$ by $x_i$, in other words, $x_i=\vectorentry{\vect{x}}{i}$.  We desire to show that this solution vector is also an element of the set $S$.  Begin with the observation that a solution vector's entries makes equation $\ell$ of the system true for all $1\leq\ell\leq m$,
+<equation>
+\matrixentry{B}{\ell,1}x_1+
+\matrixentry{B}{\ell,2}x_2+
+\matrixentry{B}{\ell,3}x_3+
+\cdots+
+\matrixentry{B}{\ell,n}x_n=
+\matrixentry{B}{\ell,n+1}
+</equation></p>
+
+<p>When $\ell\leq r$, the pivot columns of $B$ have zero entries in row $\ell$ with the exception of column $d_\ell$, which will contain a $1$.  So for $1\leq\ell\leq r$, equation $\ell$ simplifies to
+<equation>
+1x_{d_\ell}+
+\matrixentry{B}{\ell,f_1}x_{f_1}+
+\matrixentry{B}{\ell,f_2}x_{f_2}+
+\matrixentry{B}{\ell,f_3}x_{f_3}+
+\cdots+
+\matrixentry{B}{\ell,f_{n-r}}x_{f_{n-r}}=
+\matrixentry{B}{\ell,n+1}
+</equation>
+</p>
+
+<p>This allows us to write,
+<alignmath>
+\vectorentry{\vect{x}}{d_\ell}
+<![CDATA[&=]]>
+x_{d_\ell}\\
+<![CDATA[&=]]>
+\matrixentry{B}{\ell,n+1}
+-\matrixentry{B}{\ell,f_1}x_{f_1}
+-\matrixentry{B}{\ell,f_2}x_{f_2}
+-\matrixentry{B}{\ell,f_3}x_{f_3}
+-\cdots
+-\matrixentry{B}{\ell,f_{n-r}}x_{f_{n-r}}\\
+<![CDATA[&=]]>
+\vectorentry{\vect{c}}{d_\ell}
++x_{f_1}\vectorentry{\vect{u}_1}{d_\ell}
++x_{f_2}\vectorentry{\vect{u}_2}{d_\ell}
++x_{f_3}\vectorentry{\vect{u}_3}{d_\ell}
++\cdots
++x_{f_{n-r}}\vectorentry{\vect{u}_{n-r}}{d_\ell}\\
+<![CDATA[&=]]>
+\vectorentry{
+\vect{c}
++x_{f_1}\vect{u}_1
++x_{f_2}\vect{u}_2
++x_{f_3}\vect{u}_3
++\cdots
++x_{f_{n-r}}\vect{u}_{n-r}
+}{d_\ell}
+</alignmath></p>
+
+<p>This tells us that the entries of the solution vector $\vect{x}$ corresponding to dependent variables (indices in $D$), are equal to those of a vector in the set $S$.  We still need to check the other entries of the solution vector $\vect{x}$ corresponding to the free variables (indices in $F$) to see if they are equal to the entries of the same vector in the set $S$.  To this end, suppose $i\in F$ and $i=f_j$.  Then
+<alignmath>
+\vectorentry{\vect{x}}{i}
+<![CDATA[&=x_{i}=x_{f_j}\\]]>
+<![CDATA[&=]]>
+0+
+0x_{f_1}+
+0x_{f_2}+
+0x_{f_3}+
+\cdots+
+0x_{f_{j-1}}+
+1x_{f_j}+
+0x_{f_{j+1}}+
+\cdots+
+0x_{f_{n-r}}\\
+<![CDATA[&=]]>
+\vectorentry{\vect{c}}{i}+
+x_{f_1}\vectorentry{\vect{u}_1}{i}+
+x_{f_2}\vectorentry{\vect{u}_2}{i}+
+x_{f_3}\vectorentry{\vect{u}_3}{i}+
+\cdots+
+x_{f_j}\vectorentry{\vect{u}_j}{i}+
+\cdots+
+x_{f_{n-r}}\vectorentry{\vect{u}_{n-r}}{i}\\
+<![CDATA[&=\vectorentry{]]>
+\vect{c}
++x_{f_1}\vect{u}_1
++x_{f_2}\vect{u}_2
++\cdots
++x_{f_{n-r}}\vect{u}_{n-r}
+}{i}
+</alignmath></p>
+
+<p>So entries of
+$\vect{x}$ and $\vect{c} +x_{f_1}\vect{u}_1 +x_{f_2}\vect{u}_2 +\cdots +x_{f_{n-r}}\vect{u}_{n-r}$
+are equal and therefore by <acroref type="definition" acro="CVE" /> they are equal vectors.  Since $x_{f_1},\,x_{f_2},\,x_{f_3},\,\ldots,\,x_{f_{n-r}}$ are scalars, this shows us that $\vect{x}$ qualifies for membership in $S$. So the set $S$ contains all of the solutions to the system.</p>
+
+</proof>
+</theorem>
+
+<p>Note that both halves of the proof of <acroref type="theorem" acro="VFSLS" /> indicate that $\alpha_i=\vectorentry{\vect{x}}{f_i}$.  In other words, the arbitrary scalars, $\alpha_i$, in the description of the set $S$ actually have more meaning <mdash /> they are the values of the free variables $\vectorentry{\vect{x}}{f_i}$, $1\leq i\leq n-r$.  So we will often exploit this observation in our descriptions of solution sets.</p>
+
+<p><acroref type="theorem" acro="VFSLS" /> formalizes what happened in the three steps of <acroref type="example" acro="VFSAD" />.  The theorem will be useful in proving other theorems, and it it is useful since it tells us an exact procedure for simply describing an infinite solution set.  We could program a computer to implement it, once we have the augmented matrix row-reduced and have checked that the system is consistent.  By Knuth's definition, this completes our conversion of linear equation solving from art into science.  Notice that it even applies (but is overkill) in the case of a unique solution.  However, as a practical matter, I prefer the three-step process of <acroref type="example" acro="VFSAD" /> when I need to describe an infinite solution set.  So let's practice some more, but with a bigger example.</p>
+
+<example acro="VFSAI" index="vector form of solutions!Archetype I">
+<title>Vector form of solutions for Archetype I</title>
+
+<indexlocation index="Archetype I!vector form of solutions" />
+<p><acroref type="archetype" acro="I" /> is a linear system of $m=4$ equations in $n=7$ variables.  Row-reducing the augmented matrix yields
+<equation>
+<archetypepart acro="I" part="augmentedreduced" /></equation>
+and we see $r=3$ nonzero rows.  The columns with leading 1's are $D=\{1,\,3,\,4\}$ so the $r$ dependent variables are $x_1,\,x_3,\,x_4$.  The columns without leading 1's are $F=\{2,\,5,\,6,\,7,\,8\}$, so the $n-r=4$ free variables are $x_2,\,x_5,\,x_6,\,x_7$.</p>
+
+<p>Step 1.  Write the vector of variables ($\vect{x}$) as a fixed vector ($\vect{c}$), plus a linear combination of $n-r=4$ vectors ($\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4$), using the free variables as the scalars.
+<equation>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
+\colvector{\ \\\ \\\ \\\ \\\ \\\ \\\ }+
+x_2\colvector{\ \\\ \\\ \\\ \\\ \\\ \\\ }+
+x_5\colvector{\ \\\ \\\ \\\ \\\ \\\ \\\ }+
+x_6\colvector{\ \\\ \\\ \\\ \\\ \\\ \\\ }+
+x_7\colvector{\ \\\ \\\ \\\ \\\ \\\ \\\ }
+</equation>
+</p>
+
+<p>Step 2.  For each free variable, use 0's and 1's to ensure equality for the corresponding entry of the vectors.  Take note of the pattern of 0's and 1's at this stage, because this is the best look you'll have at it.  We'll state an important theorem in the next section and the proof will essentially rely on this observation.
+<equation>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
+\colvector{\ \\0\\\ \\\ \\0\\0\\0}+
+x_2\colvector{\ \\1\\\ \\\ \\0\\0\\0}+
+x_5\colvector{\ \\0\\\ \\\ \\1\\0\\0}+
+x_6\colvector{\ \\0\\\ \\\ \\0\\1\\0}+
+x_7\colvector{\ \\0\\\ \\\ \\0\\0\\1}
+</equation></p>
+
+<p>Step 3.  For each dependent variable, use the augmented matrix to formulate an equation expressing the dependent variable as a constant plus multiples of the free variables.  Convert this equation into entries of the vectors that ensure equality for each dependent variable, one at a time.
+<alignmath>
+<![CDATA[x_1&=4-4x_2-2x_5-1x_6+3x_7\quad\Rightarrow\\]]>
+<![CDATA[\vect{x}&=\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=]]>
+\colvector{4\\0\\\ \\\ \\0\\0\\0}+
+x_2\colvector{-4\\1\\\ \\\ \\0\\0\\0}+
+x_5\colvector{-2\\0\\\ \\\ \\1\\0\\0}+
+x_6\colvector{-1\\0\\\ \\\ \\0\\1\\0}+
+x_7\colvector{3\\0\\\ \\\ \\0\\0\\1}\\[12pt]
+<![CDATA[x_3&=2+0x_2-x_5+3x_6-5x_7\quad\Rightarrow\\]]>
+<![CDATA[\vect{x}&=\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=]]>
+\colvector{4\\0\\2\\\ \\0\\0\\0}+
+x_2\colvector{-4\\1\\0\\\ \\0\\0\\0}+
+x_5\colvector{-2\\0\\-1\\\ \\1\\0\\0}+
+x_6\colvector{-1\\0\\3\\\ \\0\\1\\0}+
+x_7\colvector{3\\0\\-5\\\ \\0\\0\\1}\\[12pt]
+<![CDATA[x_4&=1+0x_2-2x_5+6x_6-6x_7\quad\Rightarrow\\]]>
+<![CDATA[\vect{x}&=\colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=]]>
+\colvector{4\\0\\2\\1\\0\\0\\0}+
+x_2\colvector{-4\\1\\0\\0\\0\\0\\0}+
+x_5\colvector{-2\\0\\-1\\-2\\1\\0\\0}+
+x_6\colvector{-1\\0\\3\\6\\0\\1\\0}+
+x_7\colvector{3\\0\\-5\\-6\\0\\0\\1}\\
+</alignmath></p>
+
+<p>We can now use this final expression to quickly build solutions to the system.  You might try to recreate each of the solutions listed in the write-up for <acroref type="archetype" acro="I" />.  (Hint: look at the values of the free variables in each solution, and notice that the vector $\vect{c}$ has 0's in these locations.)</p>
+
+<p>Even better, we have a description of the infinite solution set, based on just 5 vectors, which we combine in linear combinations to produce solutions.</p>
+
+<p>Whenever we discuss <acroref type="archetype" acro="I" /> you know that's your cue to go work through <acroref type="archetype" acro="J" /> by yourself.  Remember to take note of the 0/1 pattern at the conclusion of Step 2.  Have fun <mdash /> we won't go anywhere while you're away.</p>
+
+</example>
+
+<p>This technique is so important, that we'll do one more example.  However, an important distinction will be that this system is homogeneous.</p>
+
+<example acro="VFSAL" index="vector form of solutions!Archetype L">
+<title>Vector form of solutions for Archetype L</title>
+
+<indexlocation index="Archetype L!vector form of solutions" />
+<p><acroref type="archetype" acro="L" /> is presented simply as the $5\times 5$ matrix
+<equation>
+L=<archetypepart acro="L" part="matrixdefn" /></equation>
+</p>
+
+<p>We'll interpret it here as the coefficient matrix of a homogeneous system and reference this matrix as $L$.  So we are solving the homogeneous system $\linearsystem{L}{\zerovector}$ having $m=5$ equations in $n=5$ variables.  If we built the augmented matrix, we would add a sixth column to $L$ containing all zeros.  As we did row operations, this sixth column would remain all zeros.  So instead we will row-reduce the coefficient matrix, and mentally remember the missing sixth column of zeros.  This row-reduced matrix is
+<equation>
+<archetypepart acro="L" part="matrixreduced" /></equation>
+and we see $r=3$ nonzero rows.  The columns with leading 1's are $D=\{1,\,2,\,3\}$ so the $r$ dependent variables are $x_1,\,x_2,\,x_3$.  The columns without leading 1's are $F=\{4,\,5\}$, so the $n-r=2$ free variables are $x_4,\,x_5$.  Notice that if we had included the all-zero vector of constants to form the augmented matrix for the system, then the index 6 would have appeared in the set $F$, and subsequently would have been ignored when listing the free variables.</p>
+
+<p>Step 1.  Write the vector of variables ($\vect{x}$) as a fixed vector ($\vect{c}$), plus a linear combination of $n-r=2$ vectors ($\vect{u}_1,\,\vect{u}_2$), using the free variables as the scalars.
+<equation>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4\\x_5}=
+\colvector{\ \\\ \\\ \\\ \\\ }+
+x_4\colvector{\ \\\ \\\ \\\ \\\ }+
+x_5\colvector{\ \\\ \\\ \\\ \\\ }
+</equation></p>
+
+<p>Step 2.  For each free variable, use 0's and 1's to ensure equality for the corresponding entry of the vectors.  Take note of the pattern of 0's and 1's at this stage, even if it is not as illuminating as in other examples.
+<equation>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4\\x_5}=
+\colvector{\ \\\ \\\ \\0\\0}+
+x_4\colvector{\ \\\ \\\ \\1\\0}+
+x_5\colvector{\ \\\ \\\ \\0\\1}
+</equation></p>
+
+<p>Step 3.  For each dependent variable, use the augmented matrix to formulate an equation expressing the dependent variable as a constant plus multiples of the free variables.  Don't forget about the <q>missing</q> sixth column being full of zeros.  Convert this equation into entries of the vectors that ensure equality for each dependent variable, one at a time.
+<alignmath>
+<![CDATA[x_1&=0-1x_4+2x_5&&\Rightarrow&&]]>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4\\x_5}=
+\colvector{0\\\ \\\ \\0\\0}+
+x_4\colvector{-1\\\ \\\ \\1\\0}+
+x_5\colvector{2\\\ \\\ \\0\\1}\\
+<![CDATA[x_2&=0+2x_4-2x_5&&\Rightarrow&&]]>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4\\x_5}=
+\colvector{0\\0\\\ \\0\\0}+
+x_4\colvector{-1\\2\\\ \\1\\0}+
+x_5\colvector{2\\-2\\\ \\0\\1}\\
+<![CDATA[x_3&=0-2x_4+1x_5&&\Rightarrow&&]]>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4\\x_5}=
+\colvector{0\\0\\0\\0\\0}+
+x_4\colvector{-1\\2\\-2\\1\\0}+
+x_5\colvector{2\\-2\\1\\0\\1}
+</alignmath>
+The vector $\vect{c}$ will always have 0's in the entries corresponding to free variables.  However, since we are solving a homogeneous system, the row-reduced augmented matrix has zeros in column $n+1=6$, and hence <em>all</em> the entries of $\vect{c}$ are zero.  So we can write
+<equation>
+\vect{x}=\colvector{x_1\\x_2\\x_3\\x_4\\x_5}=
+\zerovector+
+x_4\colvector{-1\\2\\-2\\1\\0}+
+x_5\colvector{2\\-2\\1\\0\\1}
+=
+x_4\colvector{-1\\2\\-2\\1\\0}+
+x_5\colvector{2\\-2\\1\\0\\1}
+</equation></p>
+
+<p>It will always happen that the solutions to a homogeneous system has $\vect{c}=\zerovector$ (even in the case of a unique solution?).  So our expression for the solutions is a bit more pleasing.  In this example it says that the solutions are <em>all possible</em> linear combinations of the two vectors $\vect{u}_1=\colvector{-1\\2\\-2\\1\\0}$ and $\vect{u}_2=\colvector{2\\-2\\1\\0\\1}$, with no mention of any fixed vector entering into the linear combination.</p>
+
+<p>This observation will motivate our next section and the main definition of that section, and after that we will conclude the section by formalizing this situation.</p>
+
+</example>
+
+<sageadvice acro="SS2" index="solving linear systems">
+<title>Solving Systems, Part 2</title>
+We can now resolve a bit of the mystery around Sage's <code>.solve_right()</code> method.  Recall from <acroref type="sage" acro="SS1" /> that if a linear system has solutions, Sage only provides one solution, even in the case when there are infinitely many solutions.  In our previous discussion, we used the system from <acroref type="example" acro="ISSI" />.
+<sage>
+<input>coeff = matrix(QQ, [[ 1,  4,  0, -1,  0,   7, -9],
+                    [ 2,  8, -1,  3,  9, -13,  7],
+                    [ 0,  0,  2, -3, -4,  12, -8],
+                    [-1, -4,  2,  4,  8, -31, 37]])
+const = vector(QQ, [3, 9, 1, 4])
+coeff.solve_right(const)
+</input>
+<output>(4, 0, 2, 1, 0, 0, 0)
+</output>
+</sage>
+
+The vector $\vect{c}$ described in the statement of <acroref type="theorem" acro="VFSLS" /> is precisely the solution returned from Sage's <code>.solve_right()</code> method.  This is the solution where we choose the $\alpha_i$, $1\leq i\leq n-r$ to all be zero, in other words, each free variable is set to zero (how convenient!).  Free variables correspond to columns of the row-reduced augmented matrix that are <em>not</em> pivot columns.  So we can profitably employ the <code>.nonpivots()</code> matrix method.  Lets put this all together.
+<sage>
+<input>aug = coeff.augment(const)
+reduced = aug.rref()
+reduced
+</input>
+<output>[ 1  4  0  0  2  1 -3  4]
+[ 0  0  1  0  1 -3  5  2]
+[ 0  0  0  1  2 -6  6  1]
+[ 0  0  0  0  0  0  0  0]
+</output>
+</sage>
+
+<sage>
+<input>aug.nonpivots()
+</input>
+<output>(1, 4, 5, 6, 7)
+</output>
+</sage>
+
+Since the eighth column (numbered 7) of the reduced row-echelon form is not a pivot column, we know by <acroref type="theorem" acro="RCLS" /> that the system is consistent.  We can use the indices of the remaining non-pivot columns to place zeros into the vector $\vect{c}$ in those locations.  The remaining entries of $\vect{c}$ are the entries of the reduced row-echelon form in the last column, inserted in that order.  Boom!<br /><br />
+So we have three ways to get to the same solution: (a) row-reduce the augmented matrix and set the free variables all to zero, (b) row-reduce the augmented matrix and use the formula from <acroref type="theorem" acro="VFSLS" /> to construct $\vect{c}$, and (c) use Sage's <code>.solve_right()</code> method.<br /><br />
+One mystery left to resolve.  How can we get Sage to give us infinitely many solutions in the case of systems with an infinite solution set?  This is best handled in the next section, <acroref type="section" acro="SS" />, specifically in <acroref type="sage" acro="SS3" />.
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="PSHS">
+<title>Particular Solutions, Homogeneous Solutions</title>
+
+<p>The next theorem tells us that in order to find all of the solutions to a linear system of equations, it is sufficient to find just one solution, and then find all of the solutions to the corresponding homogeneous system.  This explains part of our interest in the null space, the set of all solutions to a homogeneous system.</p>
+
+<theorem acro="PSPHS" index="solution set">
+<title>Particular Solution Plus Homogeneous Solutions</title>
+<statement>
+<p>Suppose that $\vect{w}$ is one solution to the linear system of equations $\linearsystem{A}{b}$.  Then $\vect{y}$ is a solution to $\linearsystem{A}{b}$ if and only if $\vect{y}=\vect{w}+\vect{z}$ for some vector $\vect{z}\in\nsp{A}$.</p>
+
+</statement>
+
+<proof>
+<p>Let $\vectorlist{A}{n}$ be the columns of the coefficient matrix $A$.</p>
+
+<p><implyreverse />  Suppose $\vect{y}=\vect{w}+\vect{z}$ and $\vect{z}\in\nsp{A}$. Then
+<alignmath>
+\vect{b}
+<![CDATA[&=]]>
+\vectorentry{\vect{w}}{1}\vect{A}_1+
+\vectorentry{\vect{w}}{2}\vect{A}_2+
+\vectorentry{\vect{w}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{w}}{n}\vect{A}_n
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="SLSLC" />}\\
+<![CDATA[&=]]>
+\vectorentry{\vect{w}}{1}\vect{A}_1+
+\vectorentry{\vect{w}}{2}\vect{A}_2+
+\vectorentry{\vect{w}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{w}}{n}\vect{A}_n
++\zerovector
+<![CDATA[&&]]>\text{<acroref type="property" acro="ZC" />}\\
+<![CDATA[&=]]>
+\vectorentry{\vect{w}}{1}\vect{A}_1+
+\vectorentry{\vect{w}}{2}\vect{A}_2+
+\vectorentry{\vect{w}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{w}}{n}\vect{A}_n
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="SLSLC" />}\\
+<![CDATA[&\quad\quad\quad\quad]]>
++
+\vectorentry{\vect{z}}{1}\vect{A}_1+
+\vectorentry{\vect{z}}{2}\vect{A}_2+
+\vectorentry{\vect{z}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{z}}{n}\vect{A}_n\\
+<![CDATA[&=]]>
+\left(\vectorentry{\vect{w}}{1}+\vectorentry{\vect{z}}{1}\right)\vect{A}_1+
+\left(\vectorentry{\vect{w}}{2}+\vectorentry{\vect{z}}{2}\right)\vect{A}_2+
+\cdots+
+\left(\vectorentry{\vect{w}}{n}+\vectorentry{\vect{z}}{n}\right)\vect{A}_n
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="VSPCV" />}\\
+<![CDATA[&=]]>
+\vectorentry{\vect{w}+\vect{z}}{1}\vect{A}_1+
+\vectorentry{\vect{w}+\vect{z}}{2}\vect{A}_2+
+\vectorentry{\vect{w}+\vect{z}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{w}+\vect{z}}{n}\vect{A}_n
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVA" />}\\
+<![CDATA[&=]]>
+\vectorentry{\vect{y}}{1}\vect{A}_1+
+\vectorentry{\vect{y}}{2}\vect{A}_2+
+\vectorentry{\vect{y}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{y}}{n}\vect{A}_n
+<![CDATA[&&\text{Definition of $\vect{y}$}]]>
+</alignmath>
+Applying <acroref type="theorem" acro="SLSLC" /> we see that the vector $\vect{y}$ is a solution to $\linearsystem{A}{\vect{b}}$.</p>
+
+<p><implyforward />  Suppose $\vect{y}$ is a solution to $\linearsystem{A}{b}$.  Then
+<alignmath>
+\zerovector
+<![CDATA[&=]]>
+<![CDATA[\vect{b}-\vect{b}&&\text{}\\]]>
+<![CDATA[&=]]>
+\vectorentry{\vect{y}}{1}\vect{A}_1+
+\vectorentry{\vect{y}}{2}\vect{A}_2+
+\vectorentry{\vect{y}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{y}}{n}\vect{A}_n
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="SLSLC" />}\\
+<![CDATA[&\quad\quad\quad\quad]]>
+-
+\left(
+\vectorentry{\vect{w}}{1}\vect{A}_1+
+\vectorentry{\vect{w}}{2}\vect{A}_2+
+\vectorentry{\vect{w}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{w}}{n}\vect{A}_n
+\right)\\
+<![CDATA[&=]]>
+\left(\vectorentry{\vect{y}}{1}-\vectorentry{\vect{w}}{1}\right)\vect{A}_1+
+\left(\vectorentry{\vect{y}}{2}-\vectorentry{\vect{w}}{2}\right)\vect{A}_2+
+\cdots+
+\left(\vectorentry{\vect{y}}{n}-\vectorentry{\vect{w}}{n}\right)\vect{A}_n
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="VSPCV" />}\\
+<![CDATA[&=]]>
+\vectorentry{\vect{y}-\vect{w}}{1}\vect{A}_1+
+\vectorentry{\vect{y}-\vect{w}}{2}\vect{A}_2+
+\vectorentry{\vect{y}-\vect{w}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{y}-\vect{w}}{n}\vect{A}_n
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVA" />}
+</alignmath>
+By <acroref type="theorem" acro="SLSLC" /> we see that the vector $\vect{y}-\vect{w}$ is a solution to the homogeneous system $\homosystem{A}$ and by <acroref type="definition" acro="NSM" />, $\vect{y}-\vect{w}\in\nsp{A}$.  In other words, $\vect{y}-\vect{w}=\vect{z}$ for some vector $\vect{z}\in\nsp{A}$.  Rewritten, this is
+$\vect{y}=\vect{w}+\vect{z}$, as desired.</p>
+
+</proof>
+</theorem>
+
+<p>After proving <acroref type="theorem" acro="NMUS" /> we commented (insufficiently) on the negation of one half of the theorem.  Nonsingular coefficient matrices lead to unique solutions for every choice of the vector of constants.  What does this say about singular matrices?  A singular matrix $A$ has a nontrivial null space (<acroref type="theorem" acro="NMTNS" />).  For a given vector of constants, $\vect{b}$, the system $\linearsystem{A}{b}$ could be inconsistent, meaning there are no solutions.  But if there is at least one solution ($\vect{w}$), then <acroref type="theorem" acro="PSPHS" /> tells us there will be infinitely many solutions because of the role of the infinite null space for a singular matrix.  So a system of equations with a singular coefficient matrix <em>never</em> has a unique solution.  Either there are no solutions, or infinitely many solutions, depending on the choice of the vector of constants ($\vect{b}$).</p>
+
+<example acro="PSHS" index="particular solutions">
+<title>Particular solutions, homogeneous solutions, Archetype D</title>
+
+<p><acroref type="archetype" acro="D" /> is a consistent system of equations with a nontrivial null space.  Let $A$ denote the coefficient matrix of this system.  The write-up for this system begins with three solutions,
+<alignmath>
+<![CDATA[\vect{y}_1=\colvector{0\\1\\2\\1}&&]]>
+<![CDATA[\vect{y}_2=\colvector{4\\0\\0\\0}&&]]>
+\vect{y}_3=\colvector{7\\8\\1\\3}
+</alignmath></p>
+
+<p>We will choose to have $\vect{y}_1$ play the role of $\vect{w}$ in the statement of <acroref type="theorem" acro="PSPHS" />, any one of the three vectors listed here (or others) could have been chosen.   To illustrate the theorem, we should be able to write each of these three solutions as the vector $\vect{w}$ plus a solution to the corresponding homogeneous system of equations.  Since $\zerovector$ is always a solution to a homogeneous system we can easily write
+<equation>
+\vect{y}_1=\vect{w}=\vect{w}+\zerovector.
+</equation></p>
+
+<p>The vectors $\vect{y}_2$ and $\vect{y}_3$ will require a bit more effort.  Solutions to the homogeneous system $\homosystem{A}$ are exactly the elements of the null space of the coefficient matrix, which by an application of <acroref type="theorem" acro="VFSLS" /> is
+<equation>
+\nsp{A}=\setparts{
+x_3\colvector{-3\\-1\\1\\0}+x_4\colvector{2\\3\\0\\1}
+}{
+x_3,\,x_4\in\complex{\null}
+}
+</equation></p>
+
+<p>Then
+<equation>
+\vect{y}_2=\colvector{4\\0\\0\\0}
+=\colvector{0\\1\\2\\1}+\colvector{4\\-1\\-2\\-1}
+=\colvector{0\\1\\2\\1}+\left((-2)\colvector{-3\\-1\\1\\0}+(-1)\colvector{2\\3\\0\\1}\right)
+=\vect{w}+\vect{z}_2
+</equation>
+where
+<equation>
+\vect{z}_2
+=\colvector{4\\-1\\-2\\-1}
+=(-2)\colvector{-3\\-1\\1\\0}+(-1)\colvector{2\\3\\0\\1}
+</equation>
+is obviously a solution of the homogeneous system since it is written as a linear combination of the vectors describing the null space of the coefficient matrix (or as a check, you could just evaluate the equations in the homogeneous system with $\vect{z}_2$).</p>
+
+<p>Again
+<equation>
+\vect{y}_3=\colvector{7\\8\\1\\3}
+=\colvector{0\\1\\2\\1}+\colvector{7\\7\\-1\\2}
+=\colvector{0\\1\\2\\1}+\left((-1)\colvector{-3\\-1\\1\\0}+2\colvector{2\\3\\0\\1}\right)
+=\vect{w}+\vect{z}_3
+</equation>
+where
+<equation>
+\vect{z}_3=\colvector{7\\7\\-1\\2}=
+(-1)\colvector{-3\\-1\\1\\0}+2\colvector{2\\3\\0\\1}
+</equation>
+is obviously a solution of the homogeneous system since it is written as a linear combination of the vectors describing the null space of the coefficient matrix (or as a check, you could just evaluate the equations in the homogeneous system with $\vect{z}_2$).</p>
+
+<p>Here's another view of this theorem, in the context of this example.  Grab two new solutions of the original system of equations, say
+<alignmath>
+<![CDATA[\vect{y}_4=\colvector{11\\0\\-3\\-1}&&]]>
+\vect{y}_5=\colvector{-4\\2\\4\\2}
+</alignmath>
+and form their difference,
+<equation>
+\vect{u}=\colvector{11\\0\\-3\\-1}-\colvector{-4\\2\\4\\2}=\colvector{15\\-2\\-7\\-3}.
+</equation></p>
+
+<p>It is no accident that $\vect{u}$ is a solution to the homogeneous system (check this!).  In other words, the difference between any two solutions to a linear system of equations is an element of the null space of the coefficient matrix.  This is an equivalent way to state <acroref type="theorem" acro="PSPHS" />.   (See <acroref type="exercise" acro="MM.T50" />).</p>
+
+</example>
+
+<p>The ideas of this subsection will appear again in <acroref type="chapter" acro="LT" /> when we discuss pre-images of linear transformations (<acroref type="definition" acro="PI" />).</p>
+
+<sageadvice acro="PSHS" index="particular solutions, homogeneous solutions">
+<title>Particular Solutions, Homogeneous Solutions</title>
+Again, Sage is useful for illustrating a theorem, in this case <acroref type="theorem" acro="PSPHS" />.  We will illustrate both <q>directions</q> of this equivalence with the system from <acroref type="example" acro="ISSI" />.
+<sage>
+<input>coeff = matrix(QQ,[[ 1,  4,  0, -1,  0,   7, -9],
+                   [ 2,  8, -1,  3,  9, -13,  7],
+                   [ 0,  0,  2, -3, -4,  12, -8],
+                   [-1, -4,  2,  4,  8, -31, 37]])
+n = coeff.ncols()
+const = vector(QQ, [3, 9, 1, 4])
+</input>
+</sage>
+
+First we will build solutions to this system.  <acroref type="theorem" acro="PSPHS" /> says we need a particular solution, <ie /> one solution to the system, $\vect{w}$.  We can get this from Sage's <code>.solve_right()</code> matrix method.  Then for <em>any</em> vector $\vect{z}$ from the null space of the coefficient matrix, the new vector $\vect{y}=\vect{w}+\vect{z}$ should be a solution.  We walk through this construction in the next few cells, where we have employed a specific element of the null space, <code>z</code>, along with a check that it is really in the null space.
+<sage>
+<input>w = coeff.solve_right(const)
+nsp = coeff.right_kernel(basis='pivot')
+z = vector(QQ, [42, 0, 84, 28, -50, -47, -35])
+z in nsp
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>y = w + z
+y
+</input>
+<output>(46, 0, 86, 29, -50, -47, -35)
+</output>
+</sage>
+
+<sage>
+<input>const == sum([y[i]*coeff.column(i) for i in range(n)])
+</input>
+<output>True
+</output>
+</sage>
+
+You can create solutions repeatedly via the creation of random elements of the null space.  Be sure you have executed the cells above, so that <code>coeff</code>, <code>n</code>, <code>const</code>, <code>nsp</code> and <code>w</code> are all defined.  Try executing the cell below repeatedly to test infinitely many solutions to the system.  You can use the subsequent compute cell to peek at any of the solutions you create.
+<sage>
+<input>z = nsp.random_element()
+y = w + z
+const == sum([y[i]*coeff.column(i) for i in range(n)])
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>y     # random
+</input>
+<output>(-11/2, 0, 45/2, 34, 0, 7/2, -2)
+</output>
+</sage>
+
+For the other direction, we present (and verify) two solutions to the linear system of equations.  The condition that $\vect{y}=\vect{w}+\vect{z}$ can be rewritten as $\vect{y}-\vect{w}=\vect{z}$, where $\vect{z}$ is in the null space of the coefficient matrix.  which of our two solutions is the <q>particular</q> solution and which is <q>some other</q> solution?  It does not matter, it is all sematics at this point.  What is important is that their <em>difference</em> is an element of the null space (in either order).  So we define the solutions, along with checks that they are really solutions, then examine their difference.
+<sage>
+<input>soln1 = vector(QQ,[4, 0, -96, 29, 46, 76, 56])
+const == sum([soln1[i]*coeff.column(i) for i in range(n)])
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>soln2 = vector(QQ,[-108, -84, 86, 589, 240, 283, 105])
+const == sum([soln2[i]*coeff.column(i) for i in range(n)])
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>(soln1 - soln2) in nsp
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<!--   End  lc.tex -->
+<readingquestions>
+<ol>
+<li>Earlier, a reading question asked you to solve the system of equations
+<alignmath>
+<![CDATA[2x_1 + 3x_2 - x_3&= 0\\]]>
+<![CDATA[x_1 + 2x_2 + x_3&= 3\\]]>
+<![CDATA[x_1 + 3x_2 + 3x_3&= 7]]>
+</alignmath>
+Use a linear combination to rewrite this system of equations as a vector equality.
+</li>
+<li>Find a linear combination of the vectors
+<equation>
+S=\set{\colvector{1\\3\\-1},\,\colvector{2\\0\\4},\,\colvector{-1\\3\\-5}}
+</equation>
+that equals the vector $\colvector{1\\-9\\11}$.
+</li>
+<li>The matrix below is the augmented matrix of a system of equations, row-reduced to reduced row-echelon form.  Write the vector form of the solutions to the system.
+<equation>
+\begin{bmatrix}
+<![CDATA[ \leading{1}&3&0&6&0&9\\]]>
+<![CDATA[ 0&0&\leading{1}&-2&0&-8\\]]>
+<![CDATA[ 0&0&0&0&\leading{1}&3]]>
+\end{bmatrix}
+</equation>
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="21" rough="All archetype solutions to linear combos">
+<problem contributor="robertbeezer">Consider each archetype that is a system of equations. For individual solutions listed (both for the original system and the corresponding homogeneous system) express the vector of constants as a linear combination of the columns of the coefficient matrix, as guaranteed by <acroref type="theorem" acro="SLSLC" />.  Verify this equality by computing the linear combination.  For systems with no solutions, recognize that it is then impossible to write the vector of constants as a linear combination of the columns of the coefficient matrix.  Note too, for homogeneous systems, that the solutions give rise to linear combinations that equal the zero vector.<br /><br />
+<acroref type="archetype" acro="A" />,
+<acroref type="archetype" acro="B" />,
+<acroref type="archetype" acro="C" />,
+<acroref type="archetype" acro="D" />,
+<acroref type="archetype" acro="E" />,
+<acroref type="archetype" acro="F" />,
+<acroref type="archetype" acro="G" />,
+<acroref type="archetype" acro="H" />,
+<acroref type="archetype" acro="I" />,
+<acroref type="archetype" acro="J" />
+</problem>
+<solution contributor="robertbeezer">Solutions for <acroref type="archetype" acro="A" /> and <acroref type="archetype" acro="B" /> are described carefully in <acroref type="example" acro="AALC" /> and <acroref type="example" acro="ABLC" />.
+</solution>
+</exercise>
+
+<exercise type="C" number="22" rough="All archetypes to vector form of solutions">
+<problem contributor="robertbeezer">Consider each archetype that is a system of equations. Write elements of the solution set in vector form, as guaranteed by <acroref type="theorem" acro="VFSLS" />.<br /><br />
+<acroref type="archetype" acro="A" />,
+<acroref type="archetype" acro="B" />,
+<acroref type="archetype" acro="C" />,
+<acroref type="archetype" acro="D" />,
+<acroref type="archetype" acro="E" />,
+<acroref type="archetype" acro="F" />,
+<acroref type="archetype" acro="G" />,
+<acroref type="archetype" acro="H" />,
+<acroref type="archetype" acro="I" />,
+<acroref type="archetype" acro="J" />
+</problem>
+<solution contributor="robertbeezer">Solutions for <acroref type="archetype" acro="D" /> and <acroref type="archetype" acro="I" /> are described carefully in <acroref type="example" acro="VFSAD" /> and <acroref type="example" acro="VFSAI" />.  The technique described in these examples is probably more useful than carefully deciphering the notation of <acroref type="theorem" acro="VFSLS" />.  The solution for each archetype is contained in its description.  So now you can check-off the box for that item.
+</solution>
+</exercise>
+
+<exercise type="C" number="40" rough="Vector form of solutions, 4 eqs, 5 vars">
+<problem contributor="robertbeezer">Find the vector form of the solutions to the system of equations below.
+<alignmath>
+<![CDATA[2x_1-4x_2+3x_3+x_5&=6\\]]>
+<![CDATA[x_1-2x_2-2x_3+14x_4-4x_5&=15\\]]>
+<![CDATA[x_1-2x_2+x_3+2x_4+x_5&=-1\\]]>
+<![CDATA[-2x_1+4x_2-12x_4+x_5&=-7]]>
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">Row-reduce the augmented matrix representing this system, to find
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & -2 & 0 & 6 & 0 & 1\\]]>
+<![CDATA[0 & 0 & \leading{1} & -4 & 0 & 3\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & -5\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+The system is consistent (no leading one in column 6, <acroref type="theorem" acro="RCLS" />). $x_2$ and $x_4$ are the free variables.  Now apply <acroref type="theorem" acro="VFSLS" /> directly, or follow the three-step process of <acroref type="example" acro="VFS" />, <acroref type="example" acro="VFSAD" />, <acroref type="example" acro="VFSAI" />, or <acroref type="example" acro="VFSAL" /> to obtain
+<equation>
+\colvector{x_1\\x_2\\x_3\\x_4\\x_5}
+=
+\colvector{1\\0\\3\\0\\-5}+
+x_2\colvector{2\\1\\0\\0\\0}+
+x_4\colvector{-6\\0\\4\\1\\0}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="C" number="41" rough="Vector form of solutions, 6 eqs, 9 vars">
+<problem contributor="robertbeezer">Find the vector form of the solutions to the system of equations below.
+<alignmath>
+<![CDATA[ -2 x_1 -1 x_2 -8 x_3+ 8 x_4+ 4 x_5 -9 x_6 -1 x_7 -1 x_8 -18 x_9 &= 3 \\]]>
+<![CDATA[ 3 x_1 -2 x_2+ 5 x_3+ 2 x_4 -2 x_5 -5 x_6+ 1 x_7+ 2 x_8+ 15 x_9 &= 10 \\]]>
+<![CDATA[ 4 x_1 -2 x_2+ 8 x_3+  2 x_5 -14 x_6 -2 x_8+ 2 x_9 &= 36 \\]]>
+<![CDATA[ -1 x_1+ 2 x_2+ 1 x_3 -6 x_4+  7 x_6 -1 x_7 -3 x_9 &= -8 \\]]>
+<![CDATA[ 3 x_1+ 2 x_2+ 13 x_3 -14 x_4 -1 x_5+ 5 x_6 -1 x_8+ 12 x_9 &= 15 \\]]>
+<![CDATA[ -2 x_1+ 2 x_2 -2 x_3 -4 x_4+ 1 x_5+ 6 x_6 -2 x_7 -2 x_8 -15 x_9 &= -7]]>
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">Row-reduce the augmented matrix representing this system, to find
+<equation>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 3 & -2 & 0 & -1 & 0 & 0 & 3 & 6 \\]]>
+<![CDATA[ 0 & \leading{1} & 2 & -4 & 0 & 3 & 0 & 0 & 2 & -1 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & \leading{1} & -2 & 0 & 0 & -1 & 3 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0 & \leading{1} & 0 & 4 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0 & 0 & \leading{1} & 2 & -2 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+The system is consistent (no leading one in column 10, <acroref type="theorem" acro="RCLS" />).   $F=\set{3,\,4,\,6,\,9,\,10}$, so the free variables are $x_3,\,x_4,\,x_6$ and $x_9$.  Now apply <acroref type="theorem" acro="VFSLS" /> directly, or follow the three-step process of <acroref type="example" acro="VFS" />, <acroref type="example" acro="VFSAD" />, <acroref type="example" acro="VFSAI" />, or <acroref type="example" acro="VFSAL" /> to obtain the solution set
+<equation>
+S=\setparts{
+\colvector{ 6\\ -1\\ 0\\ 0\\ 3\\ 0\\ 0\\ -2\\0}+
+x_3\colvector{ -3\\ -2\\ 1\\ 0\\ 0\\ 0\\ 0\\ 0\\0}+
+x_4\colvector{ 2\\ 4\\ 0\\ 1\\ 0\\ 0\\ 0\\ 0\\0}+
+x_6\colvector{ 1\\ -3\\ 0\\ 0\\ 2\\ 1\\ 0\\ 0\\0}+
+x_9\colvector{ -3\\ -2\\ 0\\ 0\\ 1\\ 0\\ -4\\ -2\\1}
+}{
+x_3,\,x_4,\,x_6,\,x_9\in\complex{\null}
+}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="M" number="10" rough="Example TLC and spanning questions">
+<problem contributor="robertbeezer"><acroref type="example" acro="TLC" /> asks if the vector
+<equation>
+\vect{w}=\colvector{13\\15\\5\\-17\\2\\25}
+</equation>
+can be written as a linear combination of the four vectors
+<alignmath>
+<![CDATA[\vect{u}_1&=\colvector{2\\4\\-3\\1\\2\\9}&]]>
+<![CDATA[\vect{u}_2&=\colvector{6\\3\\0\\-2\\1\\4}&]]>
+<![CDATA[\vect{u}_3&=\colvector{-5\\2\\1\\1\\-3\\0}&]]>
+<![CDATA[\vect{u}_4&=\colvector{3\\2\\-5\\7\\1\\3}]]>
+</alignmath>
+Can it?  Can any vector in $\complex{6}$ be written as a linear combination of the four vectors $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4$?
+</problem>
+<solution contributor="robertbeezer">No, it is not possible to create $\vect{w}$ as a linear combination
+of the four vectors $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4$.  By creating the desired linear combination with unknowns as scalars, <acroref type="theorem" acro="SLSLC" /> provides a system of equations that has no solution.  This one computation is enough to show us that it is not possible to create all the vectors of $\complex{6}$ through linear combinations of the four vectors $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4$.
+</solution>
+</exercise>
+
+<exercise type="M" number="11" rough="Example VFS, solution as lin combo">
+<problem contributor="robertbeezer">At the end of <acroref type="example" acro="VFS" />, the vector $\vect{w}$ is claimed to be a solution to the linear system under discussion.  Verify that $\vect{w}$ really is a solution.  Then determine the four scalars that express $\vect{w}$ as a linear combination of $\vect{c}$, $\vect{u}_1$, $\vect{u}_2$, $\vect{u}_3$.
+</problem>
+<solution contributor="robertbeezer">The coefficient of $\vect{c}$ is 1.  The coefficients of $\vect{u}_1$, $\vect{u}_2$, $\vect{u}_3$ lie in the third, fourth and seventh entries of $\vect{w}$.  Can you see why?  (Hint:  $F=\set{3,\,4,\,7,\,8}$, so the free variables are $x_3,\,x_4$ and $x_7$.)
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

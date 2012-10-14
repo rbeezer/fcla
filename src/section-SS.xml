@@ -1,0 +1,1471 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="SS">
+<title>Spanning Sets</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section SS -->
+<!-- %  Spanning Sets -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>In this section we will describe a compact way to indicate the elements of an infinite set of vectors, making use of linear combinations.  This will give us a convenient way to describe the elements of a set of solutions to a linear system, or the elements of the null space of a matrix, or many other sets of vectors.</p>
+
+</introduction>
+
+<subsection acro="SSV">
+<title>Span of a Set of Vectors</title>
+
+<p>In <acroref type="example" acro="VFSAL" /> we saw the solution set of a homogeneous system described as all possible linear combinations of two particular vectors.  This happens to be a useful way to construct or describe infinite sets of vectors, so we encapsulate this idea in a definition.</p>
+
+<!--   Any changes here should be carried forward to Definition SS. -->
+<definition acro="SSCV" index="span">
+<title>Span of a Set of Column Vectors</title>
+<p>Given a set of vectors $S=\{\vectorlist{u}{p}\}$, their <define>span</define>, $\spn{S}$, is the set of all possible linear combinations of $\vectorlist{u}{p}$.  Symbolically,
+<alignmath>
+<![CDATA[\spn{S}&=\setparts{\lincombo{\alpha}{u}{p}}{\alpha_i\in\complex{\null},\,1\leq i\leq p}\\]]>
+<![CDATA[&=\setparts{\sum_{i=1}^{p}\alpha_i\vect{u}_i}{\alpha_i\in\complex{\null},\,1\leq i\leq p}]]>
+</alignmath>
+</p>
+
+<notation acro="SSV" index="span">
+<title>Span of a Set of Vectors</title>
+<usage>$\spn{S}$</usage>
+</notation>
+</definition>
+
+<p>The span is just a set of vectors, though in all but one situation it is an infinite set.  (Just when is it not infinite?)  So we start with a finite collection of vectors $S$ ($p$ of them to be precise), and use this finite set to describe an infinite set of vectors, $\spn{S}$.  Confusing the <em>finite</em> set $S$ with the <em>infinite</em> set $\spn{S}$ is one of the most pervasive problems in understanding introductory linear algebra.  We will see this construction repeatedly, so let's work through some examples to get comfortable with it.  The most obvious question about a set is if a particular item of the correct type is in the set, or not.</p>
+
+<example acro="ABS" index="span!basic">
+<title>A basic span</title>
+
+<p>Consider the set of 5 vectors, $S$, from $\complex{4}$
+<equation>
+S=\set{
+ \colvector{1 \\ 1 \\ 3 \\ 1},\,
+ \colvector{2 \\ 1 \\ 2 \\ -1},\,
+ \colvector{7 \\ 3 \\ 5 \\ -5},\,
+ \colvector{1 \\ 1 \\ -1 \\ 2},\,
+ \colvector{-1 \\ 0 \\ 9 \\ 0}
+}
+</equation>
+and consider the infinite set of vectors $\spn{S}$ formed from all possible linear combinations of the elements of $S$.  Here are four vectors we definitely know are elements of $\spn{S}$, since we will construct them in accordance with <acroref type="definition" acro="SSCV" />,
+<equation>
+\vect{w}=
+(2)\colvector{1 \\ 1 \\ 3 \\ 1}+
+(1)\colvector{2 \\ 1 \\ 2 \\ -1}+
+(-1)\colvector{7 \\ 3 \\ 5 \\ -5}+
+(2)\colvector{1 \\ 1 \\ -1 \\ 2}+
+(3)\colvector{-1 \\ 0 \\ 9 \\ 0}
+=
+\colvector{-4\\2\\28\\10}
+</equation>
+<equation>
+\vect{x}=
+(5)\colvector{1 \\ 1 \\ 3 \\ 1}+
+(-6)\colvector{2 \\ 1 \\ 2 \\ -1}+
+(-3)\colvector{7 \\ 3 \\ 5 \\ -5}+
+(4)\colvector{1 \\ 1 \\ -1 \\ 2}+
+(2)\colvector{-1 \\ 0 \\ 9 \\ 0}
+=
+\colvector{-26\\-6\\2\\34}
+</equation>
+<equation>
+\vect{y}=
+(1)\colvector{1 \\ 1 \\ 3 \\ 1}+
+(0)\colvector{2 \\ 1 \\ 2 \\ -1}+
+(1)\colvector{7 \\ 3 \\ 5 \\ -5}+
+(0)\colvector{1 \\ 1 \\ -1 \\ 2}+
+(1)\colvector{-1 \\ 0 \\ 9 \\ 0}
+=
+\colvector{7\\4\\17\\-4}
+</equation>
+<equation>
+\vect{z}=
+(0)\colvector{1 \\ 1 \\ 3 \\ 1}+
+(0)\colvector{2 \\ 1 \\ 2 \\ -1}+
+(0)\colvector{7 \\ 3 \\ 5 \\ -5}+
+(0)\colvector{1 \\ 1 \\ -1 \\ 2}+
+(0)\colvector{-1 \\ 0 \\ 9 \\ 0}
+=
+\colvector{0\\0\\0\\0}
+</equation>
+</p>
+
+<p>The purpose of a set is to collect objects with some common property, and to exclude objects without that property.  So the most fundamental question about a set is if a given object is an element of the set or not.  Let's learn more about $\spn{S}$ by investigating which vectors are elements of the set, and which are not.</p>
+
+<p>First, is $\vect{u}=\colvector{-15\\-6\\19\\5}$ an element of $\spn{S}$?  We are asking if there are scalars $\alpha_1,\,\alpha_2,\,\alpha_3,\,\alpha_4,\,\alpha_5$ such that
+<equation>
+\alpha_1\colvector{1 \\ 1 \\ 3 \\ 1}+
+\alpha_2\colvector{2 \\ 1 \\ 2 \\ -1}+
+\alpha_3\colvector{7 \\ 3 \\ 5 \\ -5}+
+\alpha_4\colvector{1 \\ 1 \\ -1 \\ 2}+
+\alpha_5\colvector{-1 \\ 0 \\ 9 \\ 0}
+=\vect{u}
+=\colvector{-15\\-6\\19\\5}
+</equation>
+</p>
+
+<p>Applying <acroref type="theorem" acro="SLSLC" /> we recognize the search for these scalars as a solution to a linear system of equations with augmented matrix
+<equation>
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 7 & 1 & -1 & -15 \\]]>
+<![CDATA[ 1 & 1 & 3 & 1 & 0 & -6 \\]]>
+<![CDATA[ 3 & 2 & 5 & -1 & 9 & 19 \\]]>
+<![CDATA[ 1 & -1 & -5 & 2 & 0 & 5]]>
+\end{bmatrix}
+</equation>
+which row-reduces to
+<equation>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & -1 & 0 & 3 & 10 \\]]>
+<![CDATA[ 0 & \leading{1} & 4 & 0 & -1 & -9 \\]]>
+<![CDATA[ 0 & 0 & 0 & \leading{1} & -2 & -7 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>At this point, we see that the system is consistent (<acroref type="theorem" acro="RCLS" />), so we know there <em>is</em> a solution for the five scalars $\alpha_1,\,\alpha_2,\,\alpha_3,\,\alpha_4,\,\alpha_5$.  This is enough evidence for us to say that $\vect{u}\in\spn{S}$.  If we wished further evidence, we could compute an actual solution, say
+<alignmath>
+<![CDATA[\alpha_1&=2]]>
+<![CDATA[&]]>
+<![CDATA[\alpha_2&=1]]>
+<![CDATA[&]]>
+<![CDATA[\alpha_3&=-2]]>
+<![CDATA[&]]>
+<![CDATA[\alpha_4&=-3]]>
+<![CDATA[&]]>
+<![CDATA[\alpha_5&=2]]>
+</alignmath>
+</p>
+
+<p>This particular solution allows us to write
+<equation>
+(2)\colvector{1 \\ 1 \\ 3 \\ 1}+
+(1)\colvector{2 \\ 1 \\ 2 \\ -1}+
+(-2)\colvector{7 \\ 3 \\ 5 \\ -5}+
+(-3)\colvector{1 \\ 1 \\ -1 \\ 2}+
+(2)\colvector{-1 \\ 0 \\ 9 \\ 0}
+=\vect{u}
+=\colvector{-15\\-6\\19\\5}
+</equation>
+making it even more obvious that $\vect{u}\in\spn{S}$.</p>
+
+<p>Lets do it again.   Is $\vect{v}=\colvector{3\\1\\2\\-1}$ an element of $\spn{S}$?  We are asking if there are scalars $\alpha_1,\,\alpha_2,\,\alpha_3,\,\alpha_4,\,\alpha_5$ such that
+<equation>
+\alpha_1\colvector{1 \\ 1 \\ 3 \\ 1}+
+\alpha_2\colvector{2 \\ 1 \\ 2 \\ -1}+
+\alpha_3\colvector{7 \\ 3 \\ 5 \\ -5}+
+\alpha_4\colvector{1 \\ 1 \\ -1 \\ 2}+
+\alpha_5\colvector{-1 \\ 0 \\ 9 \\ 0}
+=\vect{v}
+=\colvector{3\\1\\2\\-1}
+</equation>
+</p>
+
+<p>Applying <acroref type="theorem" acro="SLSLC" /> we recognize the search for these scalars as a solution to a linear system of equations with augmented matrix
+<equation>
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 7 & 1 & -1 & 3 \\]]>
+<![CDATA[ 1 & 1 & 3 & 1 & 0 & 1 \\]]>
+<![CDATA[ 3 & 2 & 5 & -1 & 9 & 2 \\]]>
+<![CDATA[ 1 & -1 & -5 & 2 & 0 & -1]]>
+\end{bmatrix}
+</equation>
+which row-reduces to
+<equation>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & -1 & 0 & 3 & 0 \\]]>
+<![CDATA[ 0 & \leading{1} & 4 & 0 & -1 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & \leading{1} & -2 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & \leading{1}]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>At this point, we see that the system is inconsistent by <acroref type="theorem" acro="RCLS" />, so we know there <em>is not</em> a solution for the five scalars $\alpha_1,\,\alpha_2,\,\alpha_3,\,\alpha_4,\,\alpha_5$.  This is enough evidence for us to say that $\vect{v}\not\in\spn{S}$.  End of story.</p>
+
+</example>
+
+<example acro="SCAA" index="span of columns!Archetype A">
+<title>Span of the columns of Archetype A</title>
+
+<p>Begin with the finite set of three vectors of size $3$
+<equation>
+S=\{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3\}
+=\left\{
+\colvector{1\\2\\1},\,\colvector{-1\\1\\1},\,\colvector{2\\1\\0}
+\right\}
+</equation>
+and consider the infinite set $\spn{S}$.  The vectors of $S$ could have been chosen to be anything, but for reasons that will become clear later, we have chosen the three columns of the coefficient matrix in <acroref type="archetype" acro="A" />.</p>
+
+<p>First, as an example, note that
+<equation>
+\vect{v}=(5)\colvector{1\\2\\1}+(-3)\colvector{-1\\1\\1}+(7)\colvector{2\\1\\0}=
+\colvector{22\\14\\2}
+</equation>
+is in $\spn{S}$, since it is a linear combination of $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3$.  We write this succinctly as $\vect{v}\in\spn{S}$.  There is nothing magical about the scalars $\alpha_1=5,\,\alpha_2=-3,\,\alpha_3=7$, they could have been chosen to be anything.  So repeat this part of the example yourself, using different values of $\alpha_1,\,\alpha_2,\,\alpha_3$.  What happens if you choose all three scalars to be zero?</p>
+
+<p>So we know how to quickly construct sample elements of the set $\spn{S}$.  A slightly different question arises when you are handed a vector of the correct size and asked if it is an element of $\spn{S}$.  For example, is $\vect{w}=\colvector{1\\8\\5}$ in $\spn{S}$?  More succinctly, $\vect{w}\in\spn{S}$?</p>
+
+<p>To answer this question, we will look for scalars $\alpha_1,\,\alpha_2,\,\alpha_3$ so that
+<alignmath>
+<![CDATA[\alpha_1\vect{u}_1+\alpha_2\vect{u}_2+\alpha_3\vect{u}_3&=\vect{w}\\]]>
+<intertext>By <acroref type="theorem" acro="SLSLC" /> solutions to this vector equation are solutions to the system of equations</intertext>
+<![CDATA[\alpha_1-\alpha_2+2\alpha_3&=1\\]]>
+<![CDATA[2\alpha_1+\alpha_2+\alpha_3&=8\\]]>
+<![CDATA[\alpha_1+\alpha_2&=5]]>
+<intertext>Building the augmented matrix for this linear system, and row-reducing, gives</intertext>
+<archetypepart acro="A" part="augmentedreduced" /></alignmath>
+</p>
+
+<p>This system has infinitely many solutions (there's a free variable in $x_3$), but all we need is one solution vector.  The solution,
+<alignmath>
+<![CDATA[\alpha_1 &= 2]]>
+<![CDATA[&]]>
+<![CDATA[\alpha_2 &= 3]]>
+<![CDATA[&]]>
+<![CDATA[\alpha_3 &= 1]]>
+</alignmath>
+tells us that
+<equation>
+(2)\vect{u}_1+(3)\vect{u}_2+(1)\vect{u}_3=\vect{w}
+</equation>
+so we are convinced that $\vect{w}$ really is in $\spn{S}$.  Notice that there are an infinite number of ways to answer this question affirmatively.  We could choose a different solution, this time choosing the free variable to be zero,
+<alignmath>
+<![CDATA[\alpha_1 &= 3]]>
+<![CDATA[&]]>
+<![CDATA[\alpha_2 &= 2]]>
+<![CDATA[&]]>
+<![CDATA[\alpha_3 &= 0]]>
+</alignmath>
+shows us that
+<equation>
+(3)\vect{u}_1+(2)\vect{u}_2+(0)\vect{u}_3=\vect{w}
+</equation>
+</p>
+
+<p>Verifying the arithmetic in this second solution will make it obvious that $\vect{w}$ is in this span.  And of course, we now realize that there are an infinite number of ways to realize $\vect{w}$ as element of $\spn{S}$.</p>
+
+<p>Let's ask the same type of question again, but this time with $\vect{y}=\colvector{2\\4\\3}$, <ie /> is  $\vect{y}\in\spn{S}$?</p>
+
+<p>So we'll look for scalars $\alpha_1,\,\alpha_2,\,\alpha_3$ so that
+<alignmath>
+<![CDATA[\alpha_1\vect{u}_1+\alpha_2\vect{u}_2+\alpha_3\vect{u}_3&=\vect{y}\\]]>
+<intertext>By <acroref type="theorem" acro="SLSLC" /> solutions to this vector equation are the solutions to the system of equations</intertext>
+<![CDATA[\alpha_1-\alpha_2+2\alpha_3&=2\\]]>
+<![CDATA[2\alpha_1+\alpha_2+\alpha_3&=4\\]]>
+<![CDATA[\alpha_1+\alpha_2&=3]]>
+<intertext>Building the augmented matrix for this linear system, and row-reducing, gives</intertext>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 1 & 0\\]]>
+<![CDATA[0 & \leading{1} & -1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1}]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>This system is inconsistent (there's a leading 1 in the last column, <acroref type="theorem" acro="RCLS" />), so there are no scalars $\alpha_1,\,\alpha_2,\,\alpha_3$ that will create a linear combination of $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3$ that equals $\vect{y}$.  More precisely, $\vect{y}\not\in\spn{S}$.</p>
+
+<p>There are three things to observe in this example.  (1) It is easy to construct vectors in $\spn{S}$.  (2) It is possible that some vectors are in $\spn{S}$ (<eg /> $\vect{w}$), while others are not (<eg /> $\vect{y}$).  (3)  Deciding if a given vector is in $\spn{S}$ leads to solving a linear system of equations and asking if the system is consistent.</p>
+
+<p>With a computer program in hand to solve systems of linear equations, could you create a program to decide if a vector was, or wasn't, in the span of a given set of vectors?  Is this art or science?</p>
+
+<p>This example was built on vectors from the columns of the coefficient matrix of <acroref type="archetype" acro="A" />.  Study the determination that $\vect{v}\in\spn{S}$ and see if you can connect it with some of the other properties of <acroref type="archetype" acro="A" />.</p>
+
+</example>
+
+<p>Having analyzed <acroref type="archetype" acro="A" /> in <acroref type="example" acro="SCAA" />, we will of course subject <acroref type="archetype" acro="B" /> to a similar investigation.</p>
+
+<example acro="SCAB" index="span of columns!Archetype B">
+<title>Span of the columns of Archetype B</title>
+
+<p>Begin with the finite set of three vectors of size $3$ that are the columns of the coefficient matrix in <acroref type="archetype" acro="B" />,
+<equation>
+R=\{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3\}
+=\left\{
+\colvector{-7\\5\\1},\,\colvector{-6\\5\\0},\,\colvector{-12\\7\\4}
+\right\}
+</equation>
+and consider the infinite set $\spn{R}$.</p>
+
+<p>First, as an example, note that
+<equation>
+\vect{x}=(2)\colvector{-7\\5\\1}+(4)\colvector{-6\\5\\0}+(-3)\colvector{-12\\7\\4}=
+\colvector{-2\\9\\-10}
+</equation>
+is in $\spn{R}$, since it is a linear combination of $\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3$.  In other words, $\vect{x}\in\spn{R}$.  Try some different values of $\alpha_1,\,\alpha_2,\,\alpha_3$ yourself, and see what vectors you can create as elements of $\spn{R}$.</p>
+
+<p>Now ask if a given vector is an element of $\spn{R}$.  For example, is $\vect{z}=\colvector{-33\\24\\5}$ in $\spn{R}$?   Is $\vect{z}\in\spn{R}$?</p>
+
+<p>To answer this question, we will look for scalars $\alpha_1,\,\alpha_2,\,\alpha_3$ so that
+<alignmath>
+<![CDATA[\alpha_1\vect{v}_1+\alpha_2\vect{v}_2+\alpha_3\vect{v}_3&=\vect{z}\\]]>
+<intertext>By <acroref type="theorem" acro="SLSLC" /> solutions to this vector equation are the solutions to the system of equations</intertext>
+<![CDATA[-7\alpha_1-6\alpha_2-12\alpha_3&=-33\\]]>
+<![CDATA[5\alpha_1+5\alpha_2+7\alpha_3&=24\\]]>
+<![CDATA[\alpha_1+4\alpha_3&=5]]>
+<intertext>Building the augmented matrix for this linear system, and row-reducing, gives</intertext>
+<archetypepart acro="B" part="augmentedreduced" /></alignmath>
+</p>
+
+<p>This system has a unique solution,
+<alignmath>
+<![CDATA[\alpha_1 = -3&&\alpha_2 = 5&&\alpha_3 = 2]]>
+</alignmath>
+telling us that
+<equation>
+(-3)\vect{v}_1+(5)\vect{v}_2+(2)\vect{v}_3=\vect{z}
+</equation>
+so we are convinced that $\vect{z}$ really is in $\spn{R}$.  Notice that in this case we have only one way to answer the question affirmatively since the solution is unique.</p>
+
+<p>Let's ask about another vector, say is $\vect{x}=\colvector{-7\\8\\-3}$ in $\spn{R}$?   Is $\vect{x}\in\spn{R}$?</p>
+
+<p>We desire scalars $\alpha_1,\,\alpha_2,\,\alpha_3$ so that
+<alignmath>
+<![CDATA[\alpha_1\vect{v}_1+\alpha_2\vect{v}_2+\alpha_3\vect{v}_3&=\vect{x}\\]]>
+<intertext>By <acroref type="theorem" acro="SLSLC" /> solutions to this vector equation are the solutions to the system of equations</intertext>
+<![CDATA[-7\alpha_1-6\alpha_2-12\alpha_3&=-7\\]]>
+<![CDATA[5\alpha_1+5\alpha_2+7\alpha_3&=8\\]]>
+<![CDATA[\alpha_1+4\alpha_3&=-3]]>
+<intertext>Building the augmented matrix for this linear system, and row-reducing, gives</intertext>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & 1 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & 2 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & -1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>This system has a unique solution,
+<alignmath>
+<![CDATA[\alpha_1 = 1&&\alpha_2 = 2&&\alpha_3 = -1]]>
+</alignmath>
+telling us that
+<equation>
+(1)\vect{v}_1+(2)\vect{v}_2+(-1)\vect{v}_3=\vect{x}
+</equation>
+so we are convinced that $\vect{x}$ really is in $\spn{R}$.  Notice that in this case we again have only one way to answer the question affirmatively since the solution is again unique.</p>
+
+<p>We could continue to test other vectors for membership in $\spn{R}$, but there is no point.   A question about membership in $\spn{R}$ inevitably leads to a system of three equations in the three variables $\alpha_1,\,\alpha_2,\,\alpha_3$ with a coefficient matrix whose columns are the vectors $\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3$.  This particular coefficient matrix is nonsingular, so by <acroref type="theorem" acro="NMUS" />, the system is guaranteed to have a solution.  (This solution is unique, but that's not critical here.)  So <em>no matter</em> which vector we might have chosen for $\vect{z}$, we would have been <em>certain</em> to discover that it was an element of $\spn{R}$.  Stated differently, every vector of size 3 is in $\spn{R}$, or $\spn{R}=\complex{3}$.</p>
+
+<p>Compare this example with <acroref type="example" acro="SCAA" />, and see if you can connect $\vect{z}$ with some aspects of the write-up for <acroref type="archetype" acro="B" />.</p>
+
+</example>
+
+<sageadvice acro="SS" index="spanning sets">
+<title>Spanning Sets</title>
+A strength of Sage is the ability to create infinite sets, such as the span of a set of vectors, from finite descriptions.  In other words, we can take a finite set with just a handful of vectors and Sage will create the set that is the span of these vectors, which is an infinite set.  Here we will show you how to do this, and show how you can use the results.  The key command is the vector space method <code>.span()</code>.<br /><br />
+<sage>
+<input>V = QQ^4
+v1 = vector(QQ, [1,1,2,-1])
+v2 = vector(QQ, [2,3,5,-4])
+W = V.span([v1, v2])
+W
+</input>
+<output>Vector space of degree 4 and dimension 2 over Rational Field
+Basis matrix:
+[ 1  0  1  1]
+[ 0  1  1 -2]
+</output>
+</sage>
+
+<sage>
+<input>x = 2*v1 + (-3)*v2
+x
+</input>
+<output>(-4, -7, -11, 10)
+</output>
+</sage>
+
+<sage>
+<input>x in W
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>y = vector(QQ, [3, -1, 2, 2])
+y in W
+</input>
+<output>False
+</output>
+</sage>
+
+<sage>
+<input>u = vector(QQ, [3, -1, 2, 5])
+u in W
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input><![CDATA[W <= V]]>
+</input>
+<output>True
+</output>
+</sage>
+
+Most of the above should be fairly self-explanatory, but a few comments are in order.  The span, <code>W</code>, is created in the first compute cell with the <code>.span()</code> method, which accepts a list of vectors and needs to be employed as a method of a vector space.  The information about <code>W</code> printed when we just input the span itself may be somewhat confusing, and as before, we need to learn some more theory to totally understand it all.  For now you can see the number system (<code>Rational Field</code>) and the number of entries in each vector (<code>degree 4</code>).  The <code>dimension</code> may be more complicated than you first suspect.<br /><br />
+Sets are all about membership, and we see that we can easily check membership in a span.  We know the vector <code>x</code> will be in the span <code>W</code> since we built it as a linear combination of <code>v1</code> and <code>v2</code>.  The vectors <code>y</code> and <code>u</code> are a bit more mysterious, but Sage can answer the membership question easily for both.<br /><br />
+The last compute cell is something new.  The symbol <code><![CDATA[<=]]></code> is meant here to be the <q>subset of</q> relation, <ie /> a slight abuse of the mathematical symbol $\subseteq$, and then we are not surprised to learn that <code>W</code> really is a subset of <code>V</code>.<br /><br />
+It is important to realize that the span is a <em>construction</em> that begins with a finite set, yet creates an infinite set.  With a loop (the <code>for</code> command) and the <code>.random_element()</code> vector space method we can create <em>many</em>, but not all, of the elements of a span.  In the examples below, you can edit the total number of random vectors produced, and you may need to click through to another file of output if you ask for more than about 100 vectors.<br /><br />
+Each example is designed to illustrate some aspect of the behavior of the span command and to provoke some questions.  So put on your mathematician's hat, evaluate the compute cells to create some sample elements, and then <em>study</em> the output carefully looking for patterns and maybe even conjecture some explanations for the behavior.  The puzzle gets just a bit harder for each new example.  (We use the <code>Sequence()</code> command to get nicely-formatted line-by-line output of the list, and notice that we are only providing a portion of the output here.  You will want to evalaute the computation of <code>vecs</code> and then evaluate the next cell in the Sage notebook for maximum effect.)
+<sage>
+<input>V = QQ^4
+W = V.span([ vector(QQ, [0, 1, 0, 1]),
+             vector(QQ, [1, 0, 1, 0]) ])
+vecs = [(i, W.random_element()) for i in range(100)]
+</input>
+</sage>
+
+<sage>
+<input>Sequence(vecs, cr=True)          # random
+</input>
+<output>[
+(0, (1/5, 16, 1/5, 16)),
+(1, (-3, 0, -3, 0)),
+(2, (1/11, 0, 1/11, 0)),
+...
+(97, (-2, -1/2, -2, -1/2)),
+(98, (1/13, -3, 1/13, -3)),
+(99, (0, 1, 0, 1))
+]
+</output>
+</sage>
+
+<sage>
+<input>V = QQ^4
+W = V.span([ vector(QQ, [0, 1, 1, 0]),
+             vector(QQ, [0, 0, 1, 1]) ])
+vecs = [(i, W.random_element()) for i in range(100)]
+</input>
+</sage>
+
+<sage>
+<input>Sequence(vecs, cr=True)          # random
+</input>
+<output>[
+(0, (0, 1/9, 2, 17/9)),
+(1, (0, -1/8, 3/2, 13/8)),
+(2, (0, 1/2, -1, -3/2)),
+...
+(97, (0, 4/7, 24, 164/7)),
+(98, (0, -5/2, 0, 5/2)),
+(99, (0, 13/2, 1, -11/2))
+]
+</output>
+</sage>
+
+<sage>
+<input>V = QQ^4
+W = V.span([ vector(QQ, [2, 1, 2, 1]),
+             vector(QQ, [4, 2, 4, 2]) ])
+vecs = [(i, W.random_element()) for i in range(100)]
+</input>
+</sage>
+
+<sage>
+<input>Sequence(vecs, cr=True)          # random
+</input>
+<output>[
+(0, (1, 1/2, 1, 1/2)),
+(1, (-1, -1/2, -1, -1/2)),
+(2, (-1/7, -1/14, -1/7, -1/14)),
+...
+(97, (1/3, 1/6, 1/3, 1/6)),
+(98, (0, 0, 0, 0)),
+(99, (-11, -11/2, -11, -11/2))
+]
+</output>
+</sage>
+
+<sage>
+<input>V = QQ^4
+W = V.span([ vector(QQ, [1, 0, 0, 0]),
+             vector(QQ, [0, 1 ,0, 0]),
+             vector(QQ, [0, 0, 1, 0]),
+             vector(QQ, [0, 0, 0, 1]) ])
+vecs = [(i, W.random_element()) for i in range(100)]
+</input>
+</sage>
+
+<sage>
+<input>Sequence(vecs, cr=True)          # random
+</input>
+<output>[
+(0, (-7/4, -2, -1, 63)),
+(1, (6, -2, -1/2, -28)),
+(2, (5, -2, -2, -1)),
+...
+(97, (1, -1/2, -2, -1)),
+(98, (-1/12, -4, 2, 1)),
+(99, (2/3, 0, -4, -1))
+]
+</output>
+</sage>
+
+<sage>
+<input>V = QQ^4
+W = V.span([ vector(QQ, [1, 2,  3, 4]),
+             vector(QQ, [0,-1, -1, 0]),
+             vector(QQ, [1, 1,  2, 4]) ])
+vecs = [(i, W.random_element()) for i in range(100)]
+</input>
+</sage>
+
+<sage>
+<input>Sequence(vecs, cr=True)          # random
+</input>
+<output>[
+(0, (-1, 3, 2, -4)),
+(1, (-1/27, -1, -28/27, -4/27)),
+(2, (-7/11, -1, -18/11, -28/11)),
+...
+(97, (1/3, -1/7, 4/21, 4/3)),
+(98, (-1, -14, -15, -4)),
+(99, (0, -2/7, -2/7, 0))
+]
+</output>
+</sage>
+
+
+
+</sageadvice>
+<sageadvice acro="CSS" index="consistent systems, spans">
+<title>Consistent Systems and Spans</title>
+With the notion of a span, we can expand our techniques for checking the consistency of a linear system.  <acroref type="theorem" acro="SLSLC" /> tells us a system is consistent if and only if the vector of constants is a linear combination of the columns of the coefficient matrix.  This is because <acroref type="theorem" acro="SLSLC" /> says that any solution to the system will provide a linear combination of the columns of the coefficient that equals the vector of constants.  So consistency of a system is equivalent to the membership of the vector of constants in the span of the columns of the coefficient matrix.  Read that last sentence again carefully.  We will see this idea again, but more formally, in <acroref type="theorem" acro="CSCS" />.<br /><br />
+We will reprise <acroref type="sage" acro="SLC" />, which is based on <acroref type="archetype" acro="F" />.  We again make use of the matrix method <code>.columns()</code> to get all of the columns into a list at once.<br /><br />
+<sage>
+<input>coeff = matrix(QQ, [[33, -16, 10, -2],
+                    [99, -47, 27, -7],
+                    [78, -36, 17, -6],
+                    [-9,   2,  3,  4]])
+column_list = coeff.columns()
+column_list
+</input>
+<output>[(33, 99, 78, -9), (-16, -47, -36, 2),
+(10, 27, 17, 3), (-2, -7, -6, 4)]
+</output>
+</sage>
+
+<sage>
+<input>span = (QQ^4).span(column_list)
+const = vector(QQ, [-27, -77, -52, 5])
+const in span
+</input>
+<output>True
+</output>
+</sage>
+
+You could try to find an example of a vector of constants which would create an inconsistent system with this coefficient matrix.  But there is no such thing.  Here's why <mdash /> the null space of <code>coeff</code> is trivial, just the zero vector.
+<sage>
+<input>nsp = coeff.right_kernel(basis='pivot')
+nsp.list()
+</input>
+<output>[(0, 0, 0, 0)]
+</output>
+</sage>
+
+The system is consistent, as we have shown, so we can apply <acroref type="theorem" acro="PSPHS" />. We can read <acroref type="theorem" acro="PSPHS" /> as saying <em>any</em> two different solutions of the system will differ by an element of the null space, and the only possibility for this null space vector is just the zero vector.  In other words, any two solutions <em>cannot</em> be different.
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="SSNS">
+<title>Spanning Sets of Null Spaces</title>
+
+<p>We saw in <acroref type="example" acro="VFSAL" /> that when a system of equations is homogeneous the solution set can be expressed in the form described by <acroref type="theorem" acro="VFSLS" /> where the vector $\vect{c}$ is the zero vector.  We can essentially ignore this vector, so that the remainder of the typical expression for a solution looks like an arbitrary linear combination, where the scalars are the free variables and the vectors are $\vectorlist{u}{n-r}$.  Which sounds a lot like a span.  This is the substance of the next theorem.</p>
+
+<theorem acro="SSNS" index="null space!spanning set">
+<title>Spanning Sets for Null Spaces</title>
+<statement>
+<p>Suppose that $A$ is an $m\times n$ matrix, and $B$ is a row-equivalent matrix in reduced row-echelon form with $r$ nonzero rows.  Let $D=\{d_1,\,d_2,\,d_3,\,\ldots,\,d_r\}$ be the column indices where $B$ has leading 1's (pivot columns) and $F=\{f_1,\,f_2,\,f_3,\,\ldots,\,f_{n-r}\}$ be the set of column indices where $B$ does not have leading 1's.  Construct the $n-r$ vectors $\vect{z}_j$, $1\leq j\leq n-r$ of size $n$ as
+<equation>
+\vectorentry{\vect{z}_j}{i}=
+\begin{cases}
+<![CDATA[1&\text{if $i\in F$, $i=f_j$}\\]]>
+<![CDATA[0&\text{if $i\in F$, $i\neq f_j$}\\]]>
+<![CDATA[-\matrixentry{B}{k,f_j}&\text{if $i\in D$, $i=d_k$}]]>
+\end{cases}
+</equation>
+</p>
+
+<p>Then the null space of $A$ is given by
+<equation>
+\nsp{A}=\spn{\left\{\vectorlist{z}{n-r}\right\}}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>Consider the homogeneous system with $A$ as a coefficient matrix, $\homosystem{A}$.  Its set of solutions, $S$, is by <acroref type="definition" acro="NSM" />, the null space of $A$, $\nsp{A}$.  Let $B^{\prime}$ denote the result of row-reducing the augmented matrix of this homogeneous system.  Since the system is homogeneous, the final column of the augmented matrix will be all zeros, and after any number of row operations (<acroref type="definition" acro="RO" />), the column will still be all zeros.  So $B^{\prime}$ has a final column that is totally zeros.</p>
+
+<p>Now apply <acroref type="theorem" acro="VFSLS" /> to $B^{\prime}$, after noting that our homogeneous system must be consistent (<acroref type="theorem" acro="HSC" />).  The vector $\vect{c}$ has zeros for each entry that corresponds to an index in $F$.  For entries that correspond to an index in $D$, the value is $-\matrixentry{B^{\prime}}{k,{n+1}}$, but for $B^{\prime}$ any entry in the final column (index $n+1$) is zero.  So $\vect{c}=\zerovector$.  The vectors $\vect{z}_j$, $1\leq j\leq n-r$ are identical to the vectors $\vect{u}_j$, $1\leq j\leq n-r$ described in <acroref type="theorem" acro="VFSLS" />.  Putting it all together and applying <acroref type="definition" acro="SSCV" /> in the final step,
+<alignmath>
+\nsp{A}
+<![CDATA[&=S\\]]>
+<![CDATA[&=\setparts{]]>
+\vect{c}+\alpha_1\vect{u}_1+\alpha_2\vect{u}_2+\alpha_3\vect{u}_3+\cdots+\alpha_{n-r}\vect{u}_{n-r}
+}{
+\alpha_1,\,\alpha_2,\,\alpha_3,\,\ldots,\,\alpha_{n-r}\in\complex{\null}
+}\\
+<![CDATA[&=\setparts{]]>
+\alpha_1\vect{u}_1+\alpha_2\vect{u}_2+\alpha_3\vect{u}_3+\cdots+\alpha_{n-r}\vect{u}_{n-r}
+}{
+\alpha_1,\,\alpha_2,\,\alpha_3,\,\ldots,\,\alpha_{n-r}\in\complex{\null}
+}\\
+<![CDATA[&=\spn{\set{\vectorlist{z}{n-r}}}]]>
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<example acro="SSNS" index="null space!spanning set">
+<title>Spanning set of a null space</title>
+
+<p>Find a set of vectors, $S$, so that the null space of the matrix $A$ below is the span of $S$, that is, $\spn{S}=\nsp{A}$.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 1 & 3 & 3 & -1 & -5\\]]>
+<![CDATA[ 2 & 5 & 7 & 1 & 1\\]]>
+<![CDATA[ 1 & 1 & 5 & 1 & 5\\]]>
+<![CDATA[ -1 & -4 & -2 & 0 & 4]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>The null space of $A$ is the set of all solutions to the homogeneous system $\homosystem{A}$.  If we find the vector form of the solutions to this homogeneous system (<acroref type="theorem" acro="VFSLS" />) then the vectors $\vect{u}_j$, $1\leq j\leq n-r$ in the linear combination are exactly the vectors $\vect{z}_j$, $1\leq j\leq n-r$ described in <acroref type="theorem" acro="SSNS" />.  So we can mimic <acroref type="example" acro="VFSAL" /> to arrive at these vectors (rather than being a slave to the formulas in the statement of the theorem).</p>
+
+<p>Begin by row-reducing $A$.  The result is
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 6 & 0 & 4\\]]>
+<![CDATA[0 & \leading{1} & -1 & 0 & -2\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 3\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>With $D=\set{1,\,2,\,4}$ and $F=\set{3,\,5}$ we recognize that $x_3$ and $x_5$ are free variables and we can express each nonzero row as an expression for the dependent variables $x_1$, $x_2$, $x_4$ (respectively) in the free variables $x_3$ and $x_5$.  With this we can write the vector form of a solution vector as
+<equation>
+\colvector{x_1\\x_2\\x_3\\x_4\\x_5}=
+\colvector{-6x_3-4x_5\\x_3+2x_5\\x_3\\-3x_5\\x_5}=
+x_3\colvector{-6\\1\\1\\0\\0}+
+x_5\colvector{-4\\2\\0\\-3\\1}
+</equation>
+</p>
+
+<p>Then in the notation of <acroref type="theorem" acro="SSNS" />,
+<alignmath>
+<![CDATA[\vect{z}_1&=\colvector{-6\\1\\1\\0\\0}&]]>
+<![CDATA[\vect{z}_2&=\colvector{-4\\2\\0\\-3\\1}]]>
+</alignmath>
+and
+<equation>
+\nsp{A}
+=\spn{\set{\vect{z}_1,\,\vect{z}_2}}
+=\spn{\set{\colvector{-6\\1\\1\\0\\0},\,\colvector{-4\\2\\0\\-3\\1}}}
+</equation>
+</p>
+
+</example>
+
+<example acro="NSDS" index="Null space!as a span">
+<title>Null space directly as a span</title>
+
+<p>Let's express the null space of $A$ as the span of a set of vectors, applying <acroref type="theorem" acro="SSNS" /> as economically as possible, without reference to the underlying homogeneous system of equations (in contrast to <acroref type="example" acro="SSNS" />).
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 2 & 1 & 5 & 1 & 5 & 1 \\]]>
+<![CDATA[ 1 & 1 & 3 & 1 & 6 & -1 \\]]>
+<![CDATA[ -1 & 1 & -1 & 0 & 4 & -3 \\]]>
+<![CDATA[ -3 & 2 & -4 & -4 & -7 & 0 \\]]>
+<![CDATA[ 3 & -1 & 5 & 2 & 2 & 3]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p><acroref type="theorem" acro="SSNS" /> creates vectors for the span by first row-reducing the matrix in question.  The row-reduced version of $A$ is
+<equation>
+B=
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 & 0 & -1 & 2 \\]]>
+<![CDATA[ 0 & \leading{1} & 1 & 0 & 3 & -1 \\]]>
+<![CDATA[ 0 & 0 & 0 & \leading{1} & 4 & -2 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We will mechanically follow the prescription of <acroref type="theorem" acro="SSNS" />.  Here we go, in two big steps.</p>
+
+<p>First, the non-pivot columns have indices $F=\set{3,\,5,\,6}$, so we will construct the $n-r=6-3=3$ vectors with a pattern of zeros and ones corresponding to the indices in $F$.  This is the realization of the first two lines of the three-case definition of the vectors $\vect{z}_j$, $1\leq j\leq n-r$.
+<alignmath>
+<![CDATA[\vect{z}_1&=\colvector{\\ \\ 1\\ \\0 \\ 0}]]>
+<![CDATA[&]]>
+<![CDATA[\vect{z}_2&=\colvector{\\ \\ 0\\ \\ 1\\ 0}]]>
+<![CDATA[&]]>
+<![CDATA[\vect{z}_3&=\colvector{\\ \\ 0\\ \\ 0\\ 1}]]>
+</alignmath>
+</p>
+
+<p>Each of these vectors arises due to the presence of a column that is not a pivot column.  The remaining entries of each vector are the entries of the corresponding non-pivot column, negated, and distributed into the empty slots in order (these slots have indices in the set $D$ and correspond to pivot columns).  This is the realization of the third line of the three-case definition of the vectors $\vect{z}_j$, $1\leq j\leq n-r$.
+<alignmath>
+<![CDATA[\vect{z}_1&=\colvector{-2\\ -1\\ 1\\  0 \\0 \\ 0}]]>
+<![CDATA[&]]>
+<![CDATA[\vect{z}_2&=\colvector{1\\ -3\\ 0\\ -4\\ 1\\ 0}]]>
+<![CDATA[&]]>
+<![CDATA[\vect{z}_3&=\colvector{-2\\ 1\\ 0\\ 2\\ 0\\ 1}]]>
+</alignmath>
+</p>
+
+<p>So, by <acroref type="theorem" acro="SSNS" />, we have
+<equation>
+\nsp{A}
+=
+\spn{\set{\vect{z}_1,\,\vect{z}_2,\,\vect{z}_3}}
+=
+\spn{\set{
+\colvector{-2\\ -1\\ 1\\  0 \\0 \\ 0},\,
+\colvector{1\\ -3\\ 0\\ -4\\ 1\\ 0},\,
+\colvector{-2\\ 1\\ 0\\ 2\\ 0\\ 1}
+}}
+</equation>
+</p>
+
+<p>We know that the null space of $A$ is the solution set of the homogeneous system $\homosystem{A}$, but nowhere in this application of <acroref type="theorem" acro="SSNS" /> have we found occasion to reference the variables or equations of this system.  These details are all buried in the proof of <acroref type="theorem" acro="SSNS" />.</p>
+
+</example>
+
+<sageadvice acro="SSNS" index="null space!spanning set">
+<title>Spanning Sets for Null Spaces</title>
+We have seen that we can create a null space in Sage with the <code>.right_kernel()</code> method for matrices.  We use the optional argument <code>basis='pivot'</code>, so we get exactly the spanning set $\set{\vectorlist{z}{n-r}}$ described in <acroref type="theorem" acro="SSNS" />.  This optional argument will overide Sage's default spanning set, whose purpose we will explain fully in <acroref type="sage" acro="SUTH0" />.  Here's <acroref type="example" acro="SSNS" /> again, along with a few extras we will comment on afterwards.
+<sage>
+<input>A = matrix(QQ, [[ 1,  3,  3, -1, -5],
+                [ 2,  5,  7,  1,  1],
+                [ 1,  1,  5,  1,  5],
+                [-1, -4, -2,  0,  4]])
+nsp = A.right_kernel(basis='pivot')
+N = nsp.basis()
+N
+</input>
+<output>[
+(-6, 1, 1, 0, 0),
+(-4, 2, 0, -3, 1)
+]
+</output>
+</sage>
+
+<sage>
+<input>z1 = N[0]
+z2 = N[1]
+z = 4*z1 +(-3)*z2
+z
+</input>
+<output>(-12, -2, 4, 9, -3)
+</output>
+</sage>
+
+<sage>
+<input>z in nsp
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>sum([z[i]*A.column(i) for i in range(A.ncols())])
+</input>
+<output>(0, 0, 0, 0)
+</output>
+</sage>
+
+We built the null space as <code>nsp</code>, and then asked for its <code>.basis()</code>.  For now, a <q>basis</q> will give us a spanning set, and with more theory we will understand it better.  This is a set of vectors that form a spanning set for the null space, and with the <code>basis='pivot'</code> argument we have asked for the spanning set in the format described in <acroref type="theorem" acro="SSNS" />.  The spanning set <code>N</code> is a list of vectors, which we have extracted and named as <code>z1</code> and <code>z2</code>.  The linear combination of these two vectors, named <code>z</code>, will also be in the null space since <code>N</code> is a spanning set for <code>nsp</code>.  As verification, we have have used the five entries of <code>z</code> in a linear combination of the columns of <code>A</code>, yielding the zero vector (with four entries) as we expect.<br /><br />
+We can also just ask Sage if <code>z</code> is in <code>nsp</code>:
+<sage>
+<input>z in nsp
+</input>
+<output>True
+</output>
+</sage>
+
+Now is an appropriate time to comment on how Sage displays a null space when we just ask about it alone.  Just as with a span, the number system and the number of entries are easy to see.  Again, <code>dimension</code> should wait for a bit.  But you will notice now that the <code>Basis matrix</code> has been replaced by <code>User basis matrix</code>.  This is a consequence of our request for something other than the default basis (the <code>'pivot'</code> basis).  As part of its standard information about a null space, or a span, Sage spits out the basis matrix.  This is a matrix, whose <em>rows</em> are vectors in a spanning set.  This matrix can be requested by itself, using the method <code>.basis_matrix()</code>.  It is important to notice that this is very different than the output of <code>.basis()</code> which is a list of vectors.  The two objects print very similarly, but even this is different <mdash /> compare the organization of the brackets and parentheses.  Finally the last command should print true for <em>any</em> span or null space Sage creates.  If you rerun the commands below, be sure the null space <code>nsp</code> is defined from the code just above.
+<sage>
+<input>nsp
+</input>
+<output>Vector space of degree 5 and dimension 2 over Rational Field
+User basis matrix:
+[-6  1  1  0  0]
+[-4  2  0 -3  1]
+</output>
+</sage>
+
+<sage>
+<input>nsp.basis_matrix()
+</input>
+<output>[-6  1  1  0  0]
+[-4  2  0 -3  1]
+</output>
+</sage>
+
+<sage>
+<input>nsp.basis()
+</input>
+<output>[
+(-6, 1, 1, 0, 0),
+(-4, 2, 0, -3, 1)
+]
+</output>
+</sage>
+
+<sage>
+<input>nsp.basis() == nsp.basis_matrix().rows()
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+<p>Here's an example that will simultaneously exercise the span construction and <acroref type="theorem" acro="SSNS" />, while also pointing the way to the next section.</p>
+
+<example acro="SCAD" index="span of columns!Archetype D">
+<title>Span of the columns of Archetype D</title>
+
+<p>Begin with the set of four vectors of size $3$
+<equation>
+T=\set{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3,\,\vect{w}_4}
+=\set{
+\colvector{2\\-3\\1},\,
+\colvector{1\\4\\1},\,
+\colvector{7\\-5\\4},\,
+\colvector{-7\\-6\\-5}
+}
+</equation>
+and consider the infinite set $W=\spn{T}$.  The vectors of $T$ have been chosen as the four columns of the coefficient matrix in <acroref type="archetype" acro="D" />.  Check that the vector
+<equation>
+\vect{z}_2=\colvector{2\\3\\0\\1}
+</equation>
+is a solution to the homogeneous system $\homosystem{D}$ (it is the  vector $\vect{z}_2$ provided by the description of the null space of the coefficient matrix $D$ from <acroref type="theorem" acro="SSNS" />).</p>
+
+<p>Applying <acroref type="theorem" acro="SLSLC" />, we can write the linear combination,
+<equation>
+2\vect{w}_1+3\vect{w}_2+0\vect{w}_3+1\vect{w}_4=\zerovector
+</equation>
+which we can solve for $\vect{w}_4$,
+<equation>
+\vect{w}_4=(-2)\vect{w}_1+(-3)\vect{w}_2.
+</equation>
+</p>
+
+<p>This equation says that whenever we encounter the vector $\vect{w}_4$, we can replace it with a specific linear combination of the vectors $\vect{w}_1$ and $\vect{w}_2$.  So using $\vect{w}_4$ in the set $T$, along with $\vect{w}_1$ and $\vect{w}_2$, is excessive.  An example of what we mean here can be illustrated by the computation,
+<alignmath>
+<![CDATA[5\vect{w}_1+(-4)\vect{w}_2+6\vect{w}_3+(-3)\vect{w}_4&=]]>
+5\vect{w}_1+(-4)\vect{w}_2+6\vect{w}_3+(-3)\left((-2)\vect{w}_1+(-3)\vect{w}_2\right)\\
+<![CDATA[&=5\vect{w}_1+(-4)\vect{w}_2+6\vect{w}_3+\left(6\vect{w}_1+9\vect{w}_2\right)\\]]>
+<![CDATA[&=11\vect{w}_1+5\vect{w}_2+6\vect{w}_3]]>
+</alignmath></p>
+
+<p>So what began as a linear combination of the vectors $\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3,\,\vect{w}_4$ has been reduced to a linear combination of the vectors $\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3$.  A careful proof using our definition of set equality (<acroref type="definition" acro="SE" />) would now allow us to conclude that this reduction is possible for any vector in $W$, so
+<equation>
+W=\spn{\left\{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3\right\}}
+</equation>
+So the span of our set of vectors, $W$, has not changed, but we have <em>described</em> it by the span of a set of <em>three</em> vectors, rather than <em>four</em>.  Furthermore, we can achieve yet another, similar, reduction.</p>
+
+<p>Check that the vector
+<equation>
+\vect{z}_1=\colvector{-3\\-1\\1\\0}
+</equation>
+is a solution to the homogeneous system $\linearsystem{D}{\zerovector}$ (it is the  vector $\vect{z}_1$ provided by the description of the null space of the coefficient matrix $D$ from <acroref type="theorem" acro="SSNS" />).  Applying <acroref type="theorem" acro="SLSLC" />, we can write the linear combination,
+<equation>
+(-3)\vect{w}_1+(-1)\vect{w}_2+1\vect{w}_3=\zerovector
+</equation>
+which we can solve for $\vect{w}_3$,
+<equation>
+\vect{w}_3=3\vect{w}_1+1\vect{w}_2
+</equation>
+</p>
+
+<p>This equation says that whenever we encounter the vector $\vect{w}_3$, we can replace it with a specific linear combination of the vectors $\vect{w}_1$ and $\vect{w}_2$.  So, as before, the vector $\vect{w}_3$ is not needed in the description of $W$, provided we have $\vect{w}_1$ and $\vect{w}_2$ available.  In particular, a careful proof (such as is done in <acroref type="example" acro="RSC5" />) would show that
+<equation>
+W=\spn{\left\{\vect{w}_1,\,\vect{w}_2\right\}}
+</equation>
+</p>
+
+<p>So $W$ began life as the span of a set of four vectors, and we have now shown (utilizing solutions to a homogeneous system) that $W$ can also be described as the span of a set of just two vectors.  Convince yourself that we cannot go any further.  In other words, it is not possible to dismiss either $\vect{w}_1$ or $\vect{w}_2$ in a similar fashion and winnow the set down to just one vector.</p>
+
+<p>What was it about the original set of four vectors that allowed us to declare certain vectors as surplus?  And just which vectors were we able to dismiss?  And why did we have to stop once we had two vectors remaining?  The answers to these questions motivate <q>linear independence,</q> our next section and next definition, and so are worth considering carefully <em>now</em>.</p>
+
+</example>
+
+<sageadvice acro="SS3" index="solving systems">
+<title>Solving Systems, Part 3</title>
+We have deferred several mysteries and postponed some explanations of the terms Sage uses to describe certain objects.  This is because Sage is a comprehensive tool that you can use throughout your mathematical career, and Sage assumes you already know a lot of linear algebra.  Don't worry, you already know <em>some</em> linear algebra and will very soon will know a <em>whole lot more</em>.  And we know enough now that we can now solve one mystery.  How can we create <em>all</em> of the solutions to a linear system of equations when the solution set is infinite?<br /><br />
+<acroref type="theorem" acro="VFSLS" /> described elements of a solution set as a single vector $\vect{c}$, plus linear combinations of vectors $\vectorlist{u}{n-r}$.  The vectors $\vect{u}_j$ are identical to the vectors $\vect{z}_j$ in the description of the spanning set of a null space in <acroref type="theorem" acro="SSNS" />, suitably adjusted from the setting of a general system and the relevant homogeneous system for a null space.  We can get the single vector $\vect{c}$ from the <code>.solve_right()</code> method of a coefficient matrix, once supplied with the vector of constants.  The vectors $\set{\vectorlist{z}{n-r}}$ come from Sage in the basis returned by the <code>.right_kernel(basis='pivot')</code> method applied to the coefficient matrix.  <acroref type="theorem" acro="PSPHS" /> amplifies and generalizes this discussion, making it clear that the choice of the particular particular solution $\vect{c}$ (Sage's choice, and your author's choice) is just a matter of convenience.<br /><br />
+In our previous discussion, we used the system from <acroref type="example" acro="ISSI" />.  We will use it one more time.
+<sage>
+<input>coeff = matrix(QQ, [[ 1,  4,  0, -1,  0,   7, -9],
+                    [ 2,  8, -1,  3,  9, -13,  7],
+                    [ 0,  0,  2, -3, -4,  12, -8],
+                    [-1, -4,  2,  4,  8, -31, 37]])
+n = coeff.ncols()
+const = vector(QQ, [3, 9, 1, 4])
+c = coeff.solve_right(const)
+c
+</input>
+<output>(4, 0, 2, 1, 0, 0, 0)
+</output>
+</sage>
+
+<sage>
+<input>N = coeff.right_kernel(basis='pivot').basis()
+z1 = N[0]
+z2 = N[1]
+z3 = N[2]
+z4 = N[3]
+soln = c + 2*z1 - 3*z2 - 5*z3 + 8*z4
+soln
+</input>
+<output>(31, 2, -50, -71, -3, -5, 8)
+</output>
+</sage>
+
+<sage>
+<input>check = sum([soln[i]*coeff.column(i) for i in range(n)])
+check
+</input>
+<output>(3, 9, 1, 4)
+</output>
+</sage>
+
+<sage>
+<input>check == const
+</input>
+<output>True
+</output>
+</sage>
+
+So we can describe the infinitely many solutions with just five items: the specific solution, $\vect{c}$, and the four vectors of the spanning set.  Boom!<br /><br />
+As an exercise in understanding <acroref type="theorem" acro="PSPHS" />, you might begin with <code>soln</code> and add a linear combination of the spanning set for the null space to create another solution (which you can check).
+
+
+</sageadvice>
+</subsection>
+
+<!--   End  ss.tex -->
+<readingquestions>
+<ol>
+<li>Let  S  be the set of three vectors below.
+<equation>
+S=\set{\colvector{1\\2\\-1},\,\colvector{3\\-4\\2},\,\colvector{4\\-2\\1}}
+</equation>
+Let $W=\spn{S}$ be the span of  S. Is the vector $\colvector{-1\\8\\-4}$ in $W$?  Give an explanation of the reason for your answer.
+</li>
+<li>Use  $S$ and $W$  from the previous question.
+Is the vector $\colvector{6\\5\\-1}$ in $W$?  Give an explanation of the reason for your answer.
+</li>
+<li>For the matrix $A$ below, find a set $S$ so that $\spn{S}=\nsp{A}$, where $\nsp{A}$ is the null space of $A$.  (See <acroref type="theorem" acro="SSNS" />.)
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[1 & 3 & 1 & 9\\]]>
+<![CDATA[2 & 1 & -3 & 8\\]]>
+<![CDATA[1 & 1 & -1 & 5]]>
+\end{bmatrix}
+</equation>
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="22" rough="Vector form of archetype homo systems">
+<problem contributor="robertbeezer">For each archetype that is a system of equations, consider the corresponding homogeneous system of equations.  Write elements of the solution set to these homogeneous systems in vector form, as guaranteed by <acroref type="theorem" acro="VFSLS" />.  Then  write the null space of the coefficient matrix of each system as the span of a set of vectors, as described in <acroref type="theorem" acro="SSNS" />.<br /><br />
+<acroref type="archetype" acro="A" />,
+<acroref type="archetype" acro="B" />,
+<acroref type="archetype" acro="C" />,
+<acroref type="archetype" acro="D" />/<acroref type="archetype" acro="E" />,
+<acroref type="archetype" acro="F" />,
+<acroref type="archetype" acro="G" />/<acroref type="archetype" acro="H" />,
+<acroref type="archetype" acro="I" />,
+<acroref type="archetype" acro="J" />
+</problem>
+<solution contributor="robertbeezer">The vector form of the solutions obtained in this manner will involve precisely the vectors described in <acroref type="theorem" acro="SSNS" /> as providing the null space of the coefficient matrix of the system as a span.  These vectors occur in each archetype in a description of the null space.  Studying <acroref type="example" acro="VFSAL" /> may be of some help.
+</solution>
+</exercise>
+
+<exercise type="C" number="23" rough="Null space of pure matrix archetypes">
+<problem contributor="robertbeezer"><acroref type="archetype" acro="K" /> and <acroref type="archetype" acro="L" /> are defined as matrices.  Use <acroref type="theorem" acro="SSNS" /> directly to find a set $S$ so that $\spn{S}$ is the null space of the matrix.  Do not make any reference to the associated homogeneous system of equations in your solution.
+</problem>
+<solution contributor="robertbeezer">Study <acroref type="example" acro="NSDS" /> to understand the correct approach to this question.  The solution for each is listed in the Archetypes (<miscref type="archetype" text="Archetypes" />) themselves.
+</solution>
+</exercise>
+
+<exercise type="C" number="40" rough="In span of 2 vectors from C^4">
+<problem contributor="robertbeezer">Suppose that $S=\set{\colvector{2\\-1\\3\\4},\,\colvector{3\\2\\-2\\1}}$. Let $W=\spn{S}$ and let $\vect{x}=\colvector{5\\8\\-12\\-5}$.  Is $\vect{x}\in W$?  If so, provide an explicit linear combination that demonstrates this.
+</problem>
+<solution contributor="robertbeezer">Rephrasing the question, we want to know if there are scalars $\alpha_1$ and $\alpha_2$ such that
+<equation>
+\alpha_1\colvector{2\\-1\\3\\4}+\alpha_2\colvector{3\\2\\-2\\1}=\colvector{5\\8\\-12\\-5}
+</equation>
+<acroref type="theorem" acro="SLSLC" /> allows us to rephrase the question again as a quest for solutions to the system of four equations in two unknowns with an augmented matrix given by
+<equation>
+\begin{bmatrix}
+<![CDATA[2 & 3 & 5\\]]>
+<![CDATA[-1 & 2 & 8\\]]>
+<![CDATA[3 & -2 & -12\\]]>
+<![CDATA[4 &  1 & -5]]>
+\end{bmatrix}
+</equation>
+This matrix row-reduces to
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & -2\\]]>
+<![CDATA[0 & \leading{1} & 3\\]]>
+<![CDATA[0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+From the form of this matrix, we can see that $\alpha_1=-2$ and $\alpha_2=3$ is an affirmative answer to our question.  More convincingly,
+<equation>
+(-2)\colvector{2\\-1\\3\\4}+(3)\colvector{3\\2\\-2\\1}=\colvector{5\\8\\-12\\-5}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="C" number="41" rough="In span of 2 vectors from C^4">
+<problem contributor="robertbeezer">Suppose that $S=\set{\colvector{2\\-1\\3\\4},\,\colvector{3\\2\\-2\\1}}$. Let $W=\spn{S}$ and let $\vect{y}=\colvector{5\\1\\3\\5}$.  Is $\vect{y}\in W$? If so, provide an explicit linear combination that demonstrates this.
+</problem>
+<solution contributor="robertbeezer">Rephrasing the question, we want to know if there are scalars $\alpha_1$ and $\alpha_2$ such that
+<equation>
+\alpha_1\colvector{2\\-1\\3\\4}+\alpha_2\colvector{3\\2\\-2\\1}=\colvector{5\\1\\3\\5}
+</equation>
+<acroref type="theorem" acro="SLSLC" /> allows us to rephrase the question again as a quest for solutions to the system of four equations in two unknowns with an augmented matrix given by
+<equation>
+\begin{bmatrix}
+<![CDATA[2 & 3 & 5\\]]>
+<![CDATA[-1 & 2 & 1\\]]>
+<![CDATA[3 & -2 & 3\\]]>
+<![CDATA[4 &  1 & 5]]>
+\end{bmatrix}
+</equation>
+This matrix row-reduces to
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0\\]]>
+<![CDATA[0 & \leading{1} & 0\\]]>
+<![CDATA[0 & 0 & \leading{1}\\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+With a leading 1 in the last column of this matrix (<acroref type="theorem" acro="RCLS" />)  we can see that the system of equations has no solution, so there are no values for $\alpha_1$ and $\alpha_2$ that will allow us to conclude that $\vect{y}$ is in $W$.  So $\vect{y}\not\in W$.
+</solution>
+</exercise>
+
+<exercise type="C" number="42" rough="In span of 3 vectors from C^5">
+<problem contributor="robertbeezer">Suppose $R=\set{\colvector{2\\-1\\3\\4\\0},\,\colvector{1\\1\\2\\2\\-1},\,\colvector{3\\-1\\0\\3\\-2}}$.  Is $\vect{y}=\colvector{1\\-1\\-8\\-4\\-3}$ in $\spn{R}$?
+</problem>
+<solution contributor="robertbeezer">Form a linear combination, with unknown scalars, of $R$ that equals $\vect{y}$,
+<equation>
+a_1\colvector{2\\-1\\3\\4\\0}+
+a_2\colvector{1\\1\\2\\2\\-1}+
+a_3\colvector{3\\-1\\0\\3\\-2}
+=
+\colvector{1\\-1\\-8\\-4\\-3}
+</equation>
+We want to know if there are values for the scalars that make the vector equation true since that is the definition of membership in $\spn{R}$.  By <acroref type="theorem" acro="SLSLC" /> any such values will also be solutions to the linear system represented by the augmented matrix,
+<equation>
+\begin{bmatrix}
+<![CDATA[2 & 1 & 3 & 1\\]]>
+<![CDATA[-1 & 1 & -1 & -1\\]]>
+<![CDATA[3 & 2 & 0 & -8\\]]>
+<![CDATA[4 & 2 & 3 & -4\\]]>
+<![CDATA[0 & -1 & -2 & -3]]>
+\end{bmatrix}
+</equation>
+Row-reducing the matrix yields,
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & -2\\]]>
+<![CDATA[0 & \leading{1} & 0 & -1\\]]>
+<![CDATA[0 & 0 & \leading{1} & 2\\]]>
+<![CDATA[0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+From this we  see that the system of equations is consistent (<acroref type="theorem" acro="RCLS" />), and has a unique solution.  This solution will provide a linear combination of the vectors in $R$ that equals $\vect{y}$. So $\vect{y}\in R$.
+</solution>
+</exercise>
+
+<exercise type="C" number="43" rough="In span of 3 vectors from C^5">
+<problem contributor="robertbeezer">Suppose $R=\set{\colvector{2\\-1\\3\\4\\0},\,\colvector{1\\1\\2\\2\\-1},\,\colvector{3\\-1\\0\\3\\-2}}$.  Is $\vect{z}=\colvector{1\\1\\5\\3\\1}$ in $\spn{R}$?
+</problem>
+<solution contributor="robertbeezer">Form a linear combination, with unknown scalars, of $R$ that equals $\vect{z}$,
+<equation>
+a_1\colvector{2\\-1\\3\\4\\0}+
+a_2\colvector{1\\1\\2\\2\\-1}+
+a_3\colvector{3\\-1\\0\\3\\-2}
+=
+\colvector{1\\1\\5\\3\\1}
+</equation>
+We want to know if there are values for the scalars that make the vector equation true since that is the definition of membership in $\spn{R}$.  By <acroref type="theorem" acro="SLSLC" /> any such values will also be solutions to the linear system represented by the augmented matrix,
+<equation>
+\begin{bmatrix}
+<![CDATA[2 & 1 & 3 & 1\\]]>
+<![CDATA[-1 & 1 & -1 & 1\\]]>
+<![CDATA[3 & 2 & 0 & 5\\]]>
+<![CDATA[4 & 2 & 3 & 3\\]]>
+<![CDATA[0 & -1 & -2 & 1]]>
+\end{bmatrix}
+</equation>
+Row-reducing the matrix yields,
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1}\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+With a leading 1 in the last column, the system is inconsistent (<acroref type="theorem" acro="RCLS" />), so there are no scalars $a_1,\,a_2,\,a_3$ that will create a linear combination of the vectors in $R$ that equal $\vect{z}$.  So $\vect{z}\not\in R$.
+</solution>
+</exercise>
+
+<exercise type="C" number="44" rough="In span of 4 vectors from C^3">
+<problem contributor="robertbeezer">Suppose that $S=\set{
+\colvector{-1 \\ 2 \\ 1},\,
+\colvector{ 3 \\ 1 \\ 2},\,
+\colvector{ 1 \\ 5 \\ 4},\,
+\colvector{-6 \\ 5 \\ 1}
+}$. Let $W=\spn{S}$ and let $\vect{y}=\colvector{-5\\3\\0}$.  Is $\vect{y}\in W$?  If so, provide an explicit linear combination that demonstrates this.
+</problem>
+<solution contributor="robertbeezer">Form a linear combination, with unknown scalars, of $S$ that equals $\vect{y}$,
+<equation>
+a_1\colvector{-1 \\ 2 \\ 1}+
+a_2\colvector{ 3 \\ 1 \\ 2}+
+a_3\colvector{ 1 \\ 5 \\ 4}+
+a_4\colvector{-6 \\ 5 \\ 1}
+=
+\colvector{-5\\3\\0}
+</equation>
+We want to know if there are values for the scalars that make the vector equation true since that is the definition of membership in $\spn{S}$.  By <acroref type="theorem" acro="SLSLC" /> any such values will also be solutions to the linear system represented by the augmented matrix,
+<equation>
+\begin{bmatrix}
+<![CDATA[ -1 & 3 & 1 & -6 & -5 \\]]>
+<![CDATA[ 2 & 1 & 5 & 5 & 3 \\]]>
+<![CDATA[ 1 & 2 & 4 & 1 & 0]]>
+\end{bmatrix}
+</equation>
+Row-reducing the matrix yields,
+<equation>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 & 3 & 2 \\]]>
+<![CDATA[ 0 & \leading{1} & 1 & -1 & -1 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+From this we  see that the system of equations is consistent (<acroref type="theorem" acro="RCLS" />), and has a infinitely many solutions.  Any solution will provide a linear combination of the vectors in $R$ that equals $\vect{y}$. So $\vect{y}\in S$, for example,
+<equation>
+(-10)\colvector{-1 \\ 2 \\ 1}+
+(-2)\colvector{ 3 \\ 1 \\ 2}+
+(3)\colvector{ 1 \\ 5 \\ 4}+
+(2)\colvector{-6 \\ 5 \\ 1}
+=
+\colvector{-5\\3\\0}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="C" number="45" rough="In span of 4 vectors from C^3">
+<problem contributor="robertbeezer">Suppose that $S=\set{
+\colvector{-1 \\ 2 \\ 1},\,
+\colvector{ 3 \\ 1 \\ 2},\,
+\colvector{ 1 \\ 5 \\ 4},\,
+\colvector{-6 \\ 5 \\ 1}
+}$. Let $W=\spn{S}$ and let $\vect{w}=\colvector{2\\1\\3}$.  Is $\vect{w}\in W$?  If so, provide an explicit linear combination that demonstrates this.
+</problem>
+<solution contributor="robertbeezer">Form a linear combination, with unknown scalars, of $S$ that equals $\vect{w}$,
+<equation>
+a_1\colvector{-1 \\ 2 \\ 1}+
+a_2\colvector{ 3 \\ 1 \\ 2}+
+a_3\colvector{ 1 \\ 5 \\ 4}+
+a_4\colvector{-6 \\ 5 \\ 1}
+=
+\colvector{2\\1\\3}
+</equation>
+We want to know if there are values for the scalars that make the vector equation true since that is the definition of membership in $\spn{S}$.  By <acroref type="theorem" acro="SLSLC" /> any such values will also be solutions to the linear system represented by the augmented matrix,
+<equation>
+\begin{bmatrix}
+<![CDATA[ -1 & 3 & 1 & -6 & 2 \\]]>
+<![CDATA[ 2 & 1 & 5 & 5 & 1 \\]]>
+<![CDATA[ 1 & 2 & 4 & 1 & 3]]>
+\end{bmatrix}
+</equation>
+Row-reducing the matrix yields,
+<equation>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 & 3 & 0 \\]]>
+<![CDATA[ 0 & \leading{1} & 1 & -1 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & \leading{1}]]>
+\end{bmatrix}
+</equation>
+With a leading 1 in the last column, the system is inconsistent (<acroref type="theorem" acro="RCLS" />), so there are no scalars $a_1,\,a_2,\,a_3,\,a_4$ that will create a linear combination of the vectors in $S$ that equal $\vect{w}$.  So $\vect{w}\not\in\spn{S}$.
+</solution>
+</exercise>
+
+<!-- %  No more "in span?" questions -->
+<exercise type="C" number="50" rough="Null space basis, element in as lin combo">
+<problem contributor="robertbeezer">Let $A$ be the matrix below.
+<ol>
+<li>Find a set $S$ so that $\nsp{A}=\spn{S}$.</li>
+<li>If $\vect{z}=\colvector{3 \\ -5 \\ 1 \\ 2}$, then show directly that $\vect{z}\in\nsp{A}$.</li>
+<li>Write $\vect{z}$ as a linear combination of the vectors in $S$.</li>
+</ol>
+<alignmath>
+A=
+\begin{bmatrix}
+<![CDATA[ 2 & 3 & 1 & 4 \\]]>
+<![CDATA[ 1 & 2 & 1 & 3 \\]]>
+<![CDATA[ -1 & 0 & 1 & 1]]>
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">(1)
+<acroref type="theorem" acro="SSNS" /> provides formulas for a set $S$ with this property, but first we must row-reduce $A$
+<equation>
+A\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & -1 & -1 \\]]>
+<![CDATA[ 0 & \leading{1} & 1 & 2 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+$x_3$ and $x_4$ would be the free variables in the homogeneous system $\homosystem{A}$ and <acroref type="theorem" acro="SSNS" /> provides the set $S=\set{\vect{z}_1,\,\vect{z}_2}$ where
+<alignmath>
+\vect{z}_1
+<![CDATA[&=]]>
+\colvector{1\\-1\\1\\0}
+<![CDATA[&]]>
+\vect{z}_2
+<![CDATA[&=]]>
+\colvector{1\\-2\\0\\1}
+</alignmath>
+(2)
+Simply employ the components of the vector $\vect{z}$ as the variables in the homogeneous system $\homosystem{A}$.  The three equations of this system evaluate as follows,
+<alignmath>
+<![CDATA[ 2(3) + 3(-5)+ 1(1) + 4(2)&=0 \\]]>
+<![CDATA[ 1(3) + 2(-5)+ 1(1) + 3(2)&= 0\\]]>
+<![CDATA[ -1(3) + 0(-5)+ 1(1) + 1(2)&=0]]>
+</alignmath>
+Since each result is zero, $\vect{z}$ qualifies for membership in $\nsp{A}$.<br /><br />
+(3)
+By <acroref type="theorem" acro="SSNS" /> we know this must be possible (that is the moral of this exercise).  Find scalars $\alpha_1$ and $\alpha_2$ so that
+<equation>
+\alpha_1\vect{z}_1+\alpha_2\vect{z}_2
+=
+\alpha_1\colvector{1\\-1\\1\\0}+\alpha_2\colvector{1\\-2\\0\\1}
+=
+\colvector{3 \\ -5 \\ 1 \\ 2}
+=
+\vect{z}
+</equation>
+<acroref type="theorem" acro="SLSLC" /> allows us to convert this question into a question about a system of four equations in two variables.  The augmented matrix of this system row-reduces to
+<equation>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 1 \\]]>
+<![CDATA[ 0 & \leading{1} & 2 \\]]>
+<![CDATA[ 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+A solution is $\alpha_1=1$ and $\alpha_2=2$.  (Notice too that this solution is unique!)
+</solution>
+</exercise>
+
+<exercise type="C" number="60" rough="Null space basis, 3 rows 4 columns">
+<problem contributor="robertbeezer">For the matrix $A$ below, find a set of vectors $S$ so that the span of $S$ equals the null space of $A$, $\spn{S}=\nsp{A}$.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[1 & 1 & 6 & -8\\]]>
+<![CDATA[1 & -2 & 0 & 1\\]]>
+<![CDATA[-2 & 1 & -6 & 7]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer"><acroref type="theorem" acro="SSNS" /> says that if we find the vector form of the solutions to the homogeneous system $\homosystem{A}$, then the fixed vectors (one per free variable) will have the desired property.  Row-reduce $A$, viewing it as the augmented matrix of a homogeneous system with an invisible columns of zeros as the last column,
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 4 & -5\\]]>
+<![CDATA[0 & \leading{1} & 2 & -3\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+Moving to the vector form of the solutions (<acroref type="theorem" acro="VFSLS" />), with free variables $x_3$ and $x_4$, solutions to the consistent system (it is homogeneous, <acroref type="theorem" acro="HSC" />) can be expressed as
+<equation>
+\colvector{x_1\\x_2\\x_3\\x_4}
+=
+x_3\colvector{-4\\-2\\1\\0}+
+x_4\colvector{5\\3\\0\\1}
+</equation>
+Then with $S$ given by
+<equation>
+S=\set{\colvector{-4\\-2\\1\\0},\,\colvector{5\\3\\0\\1}}
+</equation>
+<acroref type="theorem" acro="SSNS" /> guarantees that
+<equation>
+\nsp{A}=\spn{S}=\spn{\set{\colvector{-4\\-2\\1\\0},\,\colvector{5\\3\\0\\1}}}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="M" number="10" rough="geometric interpretation of span in R^2">
+<problem contributor="chrisblack">Consider the set of all size $2$ vectors in the Cartesian plane $\real{2}$.
+<ol><li> Give a geometric description of the span of a single vector.
+</li><li> How can you tell if two vectors span the entire plane, without doing any row reduction or calculation?
+</li></ol>
+</problem>
+<solution contributor="chrisblack"><ol><li>
+The span of a single vector $\vect{v}$ is the set of all linear combinations of that vector.  Thus,
+$\spn{\vect{v}} = \setparts{\alpha\vect{v}}{\alpha\in\mathbb{R}}$.
+This is the line through the origin and containing the (geometric) vector $\vect{v}$.  Thus, if
+$\vect{v}=\colvector{v_1\\v_2}$,
+then the span of $\vect{v}$ is the line through $(0,0)$ and $(v_1,v_2)$.
+</li><li>
+Two vectors will span the entire plane if they point in different directions, meaning that $\vect{u}$ does not lie on the line through $\vect{v}$ and vice-versa.  That is, for vectors $\vect{u}$ and $\vect{v}$ in $\real{2}$, $\spn{\vect{u}, \vect{v}} = \real{2}$ if $\vect{u}$ is not a multiple of $\vect{v}$.
+</li></ol>
+</solution>
+</exercise>
+
+<exercise type="M" number="11" rough="geometric interpretation of span in R^3">
+<problem contributor="chrisblack">Consider the set of all size $3$ vectors in Cartesian 3-space $\real{3}$.
+<ol><li> Give a geometric description of the span of a single vector.
+</li><li> Describe the possibilities for the span of two vectors.
+</li><li> Describe the possibilities for the span of three vectors.
+</li></ol>
+</problem>
+<solution contributor="chrisblack"><ol><li>
+The span of a single vector $\vect{v}$ is the set of all linear combinations of that vector.  Thus, $\spn{\vect{v}} = \setparts{\alpha\vect{v}}{\alpha\in\mathbb{R}}$.  This is the line through the origin and containing the (geometric) vector $\vect{v}$.  Thus, if $\vect{v} = \colvector{v_1\\v_2\\v_3}$, then the span of $\vect{v}$ is the line through $(0,0,0)$ and $(v_1, v_2, v_3)$.
+</li><li>
+If the two vectors point in the same direction, then their span is the line through them.  Recall that while two points determine a line, three points determine a plane. Two vectors will span a plane if they point in different directions, meaning that $\vect{u}$ does not lie on the line through $\vect{v}$ and vice-versa.  The plane spanned by $\vect{u} = \colvector{u_1\\u_1\\u_1}$
+and  $\vect{v} = \colvector{v_1\\v_2\\v_3}$  is determined by the origin and the points $(u_1, u_2, u_3)$ and $(v_1, v_2, v_3)$.
+</li><li>
+If all three vectors lie on the same line, then the span is that line.  If one is a linear combination of the other two, but they are not all on the same line, then they will lie in a plane.  Otherwise, the span of the set of three vectors will be all of 3-space.
+</li></ol>
+</solution>
+</exercise>
+
+<exercise type="M" number="12" rough="find vector in/not in span">
+<problem contributor="chrisblack">Let $\vect{u} = \colvector{1\\3\\-2}$ and $\vect{v} = \colvector{2\\-2\\1}$.
+<ol><li> Find a vector $\vect{w}_1$, different from $\vect{u}$ and $\vect{v}$,  so that $\spn{\set{\vect{u}, \vect{v}, \vect{w}_1}} = \spn{\set{\vect{u}, \vect{v}}}$.
+</li><li> Find a vector $\vect{w}_2$ so that $\spn{\set{\vect{u}, \vect{v}, \vect{w}_2}} \ne \spn{\set{\vect{u}, \vect{v}}}$.
+</li></ol>
+</problem>
+<solution contributor="chrisblack"><ol><li>
+If we can find a vector $\vect{w_1}$ that is a linear combination of $\vect{u}$ and $\vect{v}$, then $\spn{\set{\vect{u}, \vect{v}, \vect{w}_1}}$ will be the same set as $\spn{\set{\vect{u}, \vect{v}}}$.  Thus, $\vect{w}_1$ can be any linear combination of $\vect{u}$ and $\vect{v}$.  One such example is
+$\vect{w}_1 = 3\vect{u} - \vect{v} = \colvector{1\\11\\-7}$.
+</li><li>
+Now we are looking for a vector $\vect{w}_2$ that cannot be written as a linear combination of $\vect{u}$ and $\vect{v}$. How can we find such a vector?  Any vector that matches two components but not the third of any element of $\spn{\set{\vect{u}, \vect{v}}}$ will not be in the span. (Why?)  One such example is
+$\vect{w}_2 = \colvector{4\\-4\\1}$
+(which is nearly $2\vect{v}$, but not quite).
+</li></ol>
+</solution>
+</exercise>
+
+<exercise type="M" number="20" rough="Finish linear dependence on Example SCAD">
+<problem contributor="robertbeezer">In <acroref type="example" acro="SCAD" /> we began with the four columns of the coefficient matrix of <acroref type="archetype" acro="D" />, and used these columns in a span construction.  Then we methodically argued that we could remove the last column, then the third column, and create the same set by just doing a span construction with the first two columns.  We claimed we could not go any further, and had removed as many vectors as possible.  Provide a convincing argument for why a third vector cannot be removed.
+</problem>
+</exercise>
+
+<exercise type="M" number="21" rough="Example SCAD mimicked on Archetype C">
+<problem contributor="robertbeezer">In the spirit of <acroref type="example" acro="SCAD" />, begin with the four columns of the coefficient matrix of <acroref type="archetype" acro="C" />, and use these columns in a span construction to build the set $S$.  Argue that $S$ can be expressed as the span of just three of the columns of the coefficient matrix (saying exactly which three) and in the spirit of <acroref type="exercise" acro="SS.M20" /> argue that no one of these three vectors can be removed and still have a span construction create $S$.
+</problem>
+<solution contributor="robertbeezer">If the columns of the coefficient matrix from <acroref type="archetype" acro="C" /> are named $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4$ then we can discover the equation
+<equation>
+(-2)\vect{u}_1+(-3)\vect{u}_2+\vect{u}_3+\vect{u}_4=\zerovector
+</equation>
+by building a homogeneous system of equations and viewing a solution to the system as scalars in a linear combination via <acroref type="theorem" acro="SLSLC" />.  This particular vector equation can be rearranged to read
+<equation>
+\vect{u}_4=(2)\vect{u}_1+(3)\vect{u}_2+(-1)\vect{u}_3
+</equation>
+This can be interpreted to mean that $\vect{u}_4$ is unnecessary in
+$\spn{\set{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4}}$, so that
+<equation>
+\spn{\set{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4}}
+=
+\spn{\set{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3}}
+</equation>
+If we try to repeat this process and find a linear combination of $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3$ that equals the zero vector, we will fail.  The required homogeneous system of equations (via <acroref type="theorem" acro="SLSLC" />) has only a trivial solution, which will not provide the kind of equation we need to remove one of the three remaining vectors.
+</solution>
+</exercise>
+
+<exercise type="T" number="10" rough="Span, set equality, linear combo">
+<problem contributor="robertbeezer">Suppose that $\vect{v}_1,\,\vect{v}_2\in\complex{m}$.  Prove that
+<equation>
+\spn{\set{\vect{v}_1,\,\vect{v}_2}}=
+\spn{\set{\vect{v}_1,\,\vect{v}_2,\,5\vect{v}_1+3\vect{v}_2}}
+</equation>
+</problem>
+<solution contributor="robertbeezer">This is an equality of sets, so <acroref type="definition" acro="SE" /> applies.<br /><br />
+First show that $X=\spn{\set{\vect{v}_1,\,\vect{v}_2}}\subseteq
+\spn{\set{\vect{v}_1,\,\vect{v}_2,\,5\vect{v}_1+3\vect{v}_2}}=Y$.\\
+Choose $\vect{x}\in X$.  Then $\vect{x}=a_1\vect{v}_1+a_2\vect{v}_2$ for some scalars $a_1$ and $a_2$.  Then,
+<equation>
+\vect{x}=a_1\vect{v}_1+a_2\vect{v}_2=a_1\vect{v}_1+a_2\vect{v}_2+0(5\vect{v}_1+3\vect{v}_2)
+</equation>
+which qualifies $\vect{x}$ for membership in $Y$, as it is a linear combination of $\vect{v}_1,\,\vect{v}_2,\,5\vect{v}_1+3\vect{v}_2$.<br /><br />
+Now show the opposite inclusion, $Y=\spn{\set{\vect{v}_1,\,\vect{v}_2,\,5\vect{v}_1+3\vect{v}_2}}\subseteq\spn{\set{\vect{v}_1,\,\vect{v}_2}}=X$.\\
+Choose $\vect{y}\in Y$.  Then there are scalars $a_1,\,a_2,\,a_3$ such that
+<equation>
+\vect{y}=a_1\vect{v}_1+a_2\vect{v}_2+a_3(5\vect{v}_1+3\vect{v}_2)
+</equation>
+Rearranging, we obtain,
+<alignmath>
+<![CDATA[\vect{y}&=a_1\vect{v}_1+a_2\vect{v}_2+a_3(5\vect{v}_1+3\vect{v}_2)\\]]>
+<![CDATA[&=a_1\vect{v}_1+a_2\vect{v}_2+5a_3\vect{v}_1+3a_3\vect{v}_2&&]]>\text{<acroref type="property" acro="DVAC" />}\\
+<![CDATA[&=a_1\vect{v}_1+5a_3\vect{v}_1+a_2\vect{v}_2+3a_3\vect{v}_2&&]]>\text{<acroref type="property" acro="CC" />}\\
+<![CDATA[&=(a_1+5a_3)\vect{v}_1+(a_2+3a_3)\vect{v}_2&&]]>\text{<acroref type="property" acro="DSAC" />}\\
+</alignmath>
+This is an expression for $\vect{y}$ as a linear combination of $\vect{v}_1$ and $\vect{v}_2$, earning $\vect{y}$ membership in $X$.
+Since $X$ is a subset of $Y$, and vice versa, we see that $X=Y$, as desired.
+</solution>
+</exercise>
+
+<exercise type="T" number="20" rough="Zero vector in any span">
+<problem contributor="robertbeezer">Suppose that $S$ is a set of vectors from $\complex{m}$.  Prove that the zero vector, $\zerovector$, is an element of $\spn{S}$.
+</problem>
+<solution contributor="robertbeezer">No matter what the elements of the set $S$ are, we can choose the scalars in a linear combination to all be zero.  Suppose that $S=\set{\vectorlist{v}{p}}$.  Then compute
+<alignmath>
+0\vect{v}_1+0\vect{v}_2+0\vect{v}_3+\cdots+0\vect{v}_p
+<![CDATA[&=\zerovector+\zerovector+\zerovector+\cdots+\zerovector\\]]>
+<![CDATA[&=\zerovector]]>
+</alignmath>
+But what if we choose $S$ to be the empty set?  The <em>convention</em> is that the empty sum in <acroref type="definition" acro="SSCV" /> evaluates to <q>zero,</q> in this case this is the zero vector.
+</solution>
+</exercise>
+
+<exercise type="T" number="21" rough="Additive closure for span">
+<problem contributor="robertbeezer">Suppose that $S$ is a set of vectors from $\complex{m}$ and $\vect{x},\,\vect{y}\in\spn{S}$.  Prove that $\vect{x}+\vect{y}\in\spn{S}$.
+</problem>
+</exercise>
+
+<exercise type="T" number="22" rough="Scalar closure for span">
+<problem contributor="robertbeezer">Suppose that $S$ is a set of vectors from $\complex{m}$, $\alpha\in\complex{\null}$, and $\vect{x}\in\spn{S}$.  Prove that $\alpha\vect{x}\in\spn{S}$.
+</problem>
+</exercise>
+
+</exercisesubsection>
+
+</section>

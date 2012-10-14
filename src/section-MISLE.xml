@@ -1,0 +1,1163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="MISLE">
+<title>Matrix Inverses and Systems of Linear Equations</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section MISLE -->
+<!-- %  Matrix Inverses and Systems of Linear Equations -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>The inverse of a square matrix, and solutions to linear systems with square coefficient matrices, are intimately connected.</p>
+
+</introduction>
+
+<subsection acro="SI">
+<title>Solutions and Inverses</title>
+
+<p>We begin with a familiar example, performed in a novel way.</p>
+
+<example acro="SABMI" index="Archetype B!solutions via inverse">
+<title>Solutions to Archetype B with a matrix inverse</title>
+
+<p><acroref type="archetype" acro="B" /> is the system of $m=3$ linear equations in $n=3$ variables,
+<archetypepart acro="B" part="systemdefn" />
+</p>
+
+<p>By <acroref type="theorem" acro="SLEMM" /> we can represent this system of equations as
+<equation>
+A\vect{x}=\vect{b}
+</equation>
+where
+<alignmath>
+A=<archetypepart acro="B" part="purematrix" /><![CDATA[&&\vect{x}=\colvector{x_1\\x_2\\x_3}&&\vect{b}=\colvector{-33\\24\\5}]]>
+</alignmath>
+</p>
+
+<p>Now, entirely unmotivated, we define the $3\times 3$ matrix $B$,
+<equation>
+B=<archetypepart acro="B" part="matrixinverse" /></equation>
+and note the remarkable fact that
+<equation>
+BA=<archetypepart acro="B" part="matrixinverse" /><archetypepart acro="B" part="purematrix" />=
+\begin{bmatrix}
+<![CDATA[1 & 0 & 0\\]]>
+<![CDATA[0 & 1 & 0\\]]>
+<![CDATA[0 & 0 & 1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Now apply this computation to the problem of solving the system of equations,
+<alignmath>
+\vect{x}
+<![CDATA[&=I_3\vect{x}&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=(BA)\vect{x}&&\text{Substitution}\\]]>
+<![CDATA[&=B(A\vect{x})&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=B\vect{b}&&\text{Substitution}\\]]>
+</alignmath>
+</p>
+
+<p>So we have
+<equation>
+\vect{x}=B\vect{b}=
+<archetypepart acro="B" part="matrixinverse" />\colvector{-33\\24\\5}=
+\colvector{-3\\5\\2}
+</equation></p>
+
+<p>So with the help and assistance of $B$ we have been able to determine a solution to the system represented by $A\vect{x}=\vect{b}$ through judicious use of matrix multiplication.  We know by <acroref type="theorem" acro="NMUS" /> that since the coefficient matrix in this example is nonsingular, there would be a unique solution, no matter what the choice of $\vect{b}$.  The derivation above amplifies this result, since we were <em>forced</em> to conclude that $\vect{x}=B\vect{b}$ and the solution couldn't be anything else.  You should notice that this argument would hold for any particular value of $\vect{b}$.</p>
+
+</example>
+
+<p>The matrix $B$ of the previous example is called the inverse of $A$.  When $A$ and $B$ are combined via matrix multiplication, the result is the identity matrix, which can be inserted <q>in front</q> of  $\vect{x}$ as the first step in finding the solution.  This is entirely analogous to how we might solve a single linear equation like $3x=12$.
+<equation>
+x=1x=\left(\frac{1}{3}\left(3\right)\right)x=\frac{1}{3}\left(3x\right)=\frac{1}{3}\left(12\right)=4
+</equation>
+</p>
+
+<p>Here we have obtained a solution by employing the <q>multiplicative inverse</q> of $3$, $3^{-1}=\frac{1}{3}$.  This works fine for any scalar multiple of $x$, except for zero, since zero does not have a multiplicative inverse.  Consider separately the two linear equations,
+<alignmath>
+<![CDATA[0x&=12]]>
+<![CDATA[&]]>
+<![CDATA[0x&=0]]>
+</alignmath>
+</p>
+
+<p>The first has no solutions, while the second has infinitely many solutions.  For matrices, it is all just a little more complicated.  Some matrices have inverses, some do not.  And when a matrix does have an inverse, just how would we compute it?  In other words, just where did that matrix $B$ in the last example come from?  Are there other matrices that might have worked just as well?</p>
+
+</subsection>
+
+<subsection acro="IM">
+<title>Inverse of a Matrix</title>
+
+<definition acro="MI" index="matrix!inverse">
+<title>Matrix Inverse</title>
+<indexlocation index="inverse!of a matrix" />
+<p>Suppose $A$ and $B$ are square matrices of size $n$ such that $AB=I_n$ and $BA=I_n$.  Then $A$ is <define>invertible</define> and $B$ is the <define>inverse</define> of $A$.  In this situation, we write $B=\inverse{A}$.</p>
+
+<notation acro="MI" index="inverse">
+<title>Matrix Inverse</title>
+<usage>$\inverse{A}$</usage>
+</notation>
+</definition>
+
+<p>Notice that if $B$ is the inverse of $A$, then we can just as easily say $A$ is the inverse of $B$, or $A$ and $B$ are inverses of each other.</p>
+
+<p>Not every square matrix has an inverse.  In <acroref type="example" acro="SABMI" /> the matrix $B$ is the inverse of the coefficient matrix of <acroref type="archetype" acro="B" />.  To see this it only remains to check that $AB=I_3$.  What about <acroref type="archetype" acro="A" />?  It is an example of a square matrix without an inverse.</p>
+
+<example acro="MWIAA" index="Archetype B!not invertible">
+<title>A matrix without an inverse, Archetype A</title>
+
+<p>Consider the coefficient matrix from <acroref type="archetype" acro="A" />,
+<equation>
+A=<archetypepart acro="A" part="purematrix" /></equation></p>
+
+<p>Suppose that $A$ is invertible and does have an inverse, say $B$.  Choose the vector of constants
+<equation>
+\vect{b}=\colvector{1\\3\\2}
+</equation>
+and consider the system of equations $\linearsystem{A}{\vect{b}}$.  Just as in <acroref type="example" acro="SABMI" />, this vector equation would have the unique solution $\vect{x}=B\vect{b}$.</p>
+
+<p>However, the system $\linearsystem{A}{\vect{b}}$ is inconsistent.  Form the augmented matrix $\augmented{A}{\vect{b}}$ and row-reduce to
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 1 & 0\\]]>
+<![CDATA[0 & \leading{1} & -1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1}]]>
+\end{bmatrix}
+</equation>
+which allows us to recognize the inconsistency by <acroref type="theorem" acro="RCLS" />.</p>
+
+<p>So the assumption of $A$'s inverse leads to a logical inconsistency (the system can't be both consistent and inconsistent), so our assumption is false.  $A$ is not invertible.</p>
+
+<p>It's possible this example is less than satisfying.  Just where did that particular choice of the vector $\vect{b}$ come from anyway?  Stay tuned for an application of the future <acroref type="theorem" acro="CSCS" /> in <acroref type="example" acro="CSAA" />.</p>
+
+</example>
+
+<p>Let's look at one more matrix inverse before we embark on a more systematic study.</p>
+
+<example acro="MI" index="inverse">
+<title>Matrix inverse</title>
+
+<p>Consider the matrices,
+<alignmath>
+<![CDATA[A&=]]>
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 1 & 2 & 1 \\]]>
+<![CDATA[ -2 & -3 & 0 & -5 & -1 \\]]>
+<![CDATA[ 1 & 1 & 0 & 2 & 1 \\]]>
+<![CDATA[ -2 & -3 & -1 & -3 & -2 \\]]>
+<![CDATA[ -1 & -3 & -1 & -3 & 1]]>
+\end{bmatrix}
+<![CDATA[&]]>
+<![CDATA[B&=]]>
+\begin{bmatrix}
+<![CDATA[ -3 & 3 & 6 & -1 & -2 \\]]>
+<![CDATA[ 0 & -2 & -5 & -1 & 1 \\]]>
+<![CDATA[ 1 & 2 & 4 & 1 & -1 \\]]>
+<![CDATA[ 1 & 0 & 1 & 1 & 0 \\]]>
+<![CDATA[ 1 & -1 & -2 & 0 & 1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Then
+<alignmath>
+AB
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 1 & 2 & 1 \\]]>
+<![CDATA[ -2 & -3 & 0 & -5 & -1 \\]]>
+<![CDATA[ 1 & 1 & 0 & 2 & 1 \\]]>
+<![CDATA[ -2 & -3 & -1 & -3 & -2 \\]]>
+<![CDATA[ -1 & -3 & -1 & -3 & 1]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[ -3 & 3 & 6 & -1 & -2 \\]]>
+<![CDATA[ 0 & -2 & -5 & -1 & 1 \\]]>
+<![CDATA[ 1 & 2 & 4 & 1 & -1 \\]]>
+<![CDATA[ 1 & 0 & 1 & 1 & 0 \\]]>
+<![CDATA[ 1 & -1 & -2 & 0 & 1]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[1 & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 1 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 1 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 1]]>
+\end{bmatrix}\\
+<intertext>and</intertext>
+BA
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ -3 & 3 & 6 & -1 & -2 \\]]>
+<![CDATA[ 0 & -2 & -5 & -1 & 1 \\]]>
+<![CDATA[ 1 & 2 & 4 & 1 & -1 \\]]>
+<![CDATA[ 1 & 0 & 1 & 1 & 0 \\]]>
+<![CDATA[ 1 & -1 & -2 & 0 & 1]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 1 & 2 & 1 \\]]>
+<![CDATA[ -2 & -3 & 0 & -5 & -1 \\]]>
+<![CDATA[ 1 & 1 & 0 & 2 & 1 \\]]>
+<![CDATA[ -2 & -3 & -1 & -3 & -2 \\]]>
+<![CDATA[ -1 & -3 & -1 & -3 & 1]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[1 & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 1 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 1 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 1]]>
+\end{bmatrix}
+</alignmath>
+so by <acroref type="definition" acro="MI" />, we can say that $A$ is invertible and write $B=\inverse{A}$.
+</p>
+
+</example>
+
+<p>We will now concern ourselves less with whether or not an inverse of a matrix exists, but instead with how you can find one when it does exist.  In <acroref type="section" acro="MINM" /> we will have some theorems that allow us to more quickly and easily determine just when a matrix is invertible.</p>
+
+</subsection>
+
+<subsection acro="CIM">
+<title>Computing the Inverse of a Matrix</title>
+
+<p>We've seen that the matrices from <acroref type="archetype" acro="B" /> and <acroref type="archetype" acro="K" /> both have inverses, but these inverse matrices have just dropped from the sky.  How would we compute an inverse?  And just when is a matrix invertible, and when is it not?  Writing a putative inverse with $n^2$ unknowns and solving the resultant $n^2$ equations is one approach.  Applying this approach to $2\times 2$ matrices can get us somewhere, so just for fun, let's do it.</p>
+
+<theorem acro="TTMI" index="matrix inverse!size 2 matrices">
+<title>Two-by-Two Matrix Inverse</title>
+<statement>
+<p>Suppose
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[a&b\\]]>
+<![CDATA[c&d]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Then $A$ is invertible if and only if $ad-bc\neq 0$.  When $A$ is invertible, then
+<equation>
+\inverse{A}=\frac{1}{ad-bc}
+\begin{bmatrix}
+<![CDATA[d&-b\\]]>
+<![CDATA[-c&a]]>
+\end{bmatrix}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p><implyreverse /> Assume that $ad-bc\neq 0$.  We will use the definition of the inverse of a matrix to establish that $A$ has inverse (<acroref type="definition" acro="MI" />).  Note that if $ad-bc\neq 0$ then the displayed formula for $\inverse{A}$ is legitimate since we are not dividing by zero).  Using this proposed formula for the inverse of $A$, we compute
+<alignmath>
+A\inverse{A}
+<![CDATA[&=]]>
+<![CDATA[\begin{bmatrix}a&b\\c&d\end{bmatrix}]]>
+\left(\frac{1}{ad-bc}
+<![CDATA[\begin{bmatrix}d&-b\\-c&a\end{bmatrix}]]>
+\right)
+=
+\frac{1}{ad-bc}
+<![CDATA[\begin{bmatrix}ad-bc&0\\0&ad-bc\end{bmatrix}]]>
+=
+<![CDATA[\begin{bmatrix}1&0\\0&1\end{bmatrix}\\]]>
+<intertext>and</intertext>
+\inverse{A}A
+<![CDATA[&=]]>
+\frac{1}{ad-bc}
+<![CDATA[\begin{bmatrix}d&-b\\-c&a\end{bmatrix}]]>
+<![CDATA[\begin{bmatrix}a&b\\c&d\end{bmatrix}]]>
+=
+\frac{1}{ad-bc}
+<![CDATA[\begin{bmatrix}ad-bc&0\\0&ad-bc\end{bmatrix}]]>
+=
+<![CDATA[\begin{bmatrix}1&0\\0&1\end{bmatrix}]]>
+</alignmath>
+</p>
+
+<p>By <acroref type="definition" acro="MI" /> this is sufficient to establish that $A$ is invertible, and that the expression for $\inverse{A}$ is correct.</p>
+
+<p><implyforward />\quad Assume that $A$ is invertible, and proceed with a proof by contradiction (<acroref type="technique" acro="CD" />), by assuming also that $ad-bc=0$.  This translates to $ad=bc$.  Let
+<equation>
+B=
+\begin{bmatrix}
+<![CDATA[e&f\\]]>
+<![CDATA[g&h]]>
+\end{bmatrix}
+</equation>
+be a putative inverse of $A$.</p>
+
+<p>This means that
+<equation>
+I_2=AB=
+\begin{bmatrix}
+<![CDATA[a&b\\]]>
+<![CDATA[c&d]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[e&f\\]]>
+<![CDATA[g&h]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[ae+bg & af+bh\\]]>
+<![CDATA[ce+dg & cf+dh]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Working on the matrices on two ends of this equation, we will multiply the top row by $c$ and the bottom row by $a$.
+<equation>
+\begin{bmatrix}
+<![CDATA[c&0\\]]>
+<![CDATA[0&a]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[ace+bcg & acf+bch\\]]>
+<![CDATA[ace+adg & acf+adh]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We are assuming that $ad=bc$, so we can replace two occurrences of $ad$ by $bc$ in the bottom row of the right matrix.
+<equation>
+\begin{bmatrix}
+<![CDATA[c&0\\]]>
+<![CDATA[0&a]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[ace+bcg & acf+bch\\]]>
+<![CDATA[ace+bcg & acf+bch]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>The matrix on the right now has two rows that are identical, and therefore the same must be true of the matrix on the left.    Identical rows for the matrix on the left implies that $a=0$ and $c=0$.</p>
+
+<p>With this information, the product $AB$ becomes
+<equation>
+\begin{bmatrix}
+<![CDATA[1 & 0\\]]>
+<![CDATA[0 & 1]]>
+\end{bmatrix}
+=I_2
+=AB
+=
+\begin{bmatrix}
+<![CDATA[ae+bg & af+bh\\]]>
+<![CDATA[ce+dg & cf+dh]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[bg & bh\\]]>
+<![CDATA[dg & dh]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>So $bg=dh=1$ and thus $b,g,d,h$ are all nonzero.  But then $bh$ and $dg$ (the <q>other corners</q>) must also be nonzero, so this is (finally) a contradiction.   So our assumption was false and we see that $ad-bc\neq 0$ whenever $A$ has an inverse.</p>
+
+</proof>
+</theorem>
+
+<p>There are several ways one could try to prove this theorem, but there is a continual temptation to divide by one of the eight entries involved ($a$ through $f$), but we can never be sure if these numbers are zero or not.  This could lead to an analysis by cases, which is messy, messy, messy.  Note how the above proof never divides, but always multiplies, and how zero/nonzero considerations are handled.  Pay attention to the expression $ad-bc$, as we will see it again in a while (<acroref type="chapter" acro="D" />).</p>
+
+<p>This theorem is cute, and it is nice to have a formula for the inverse, and a condition that tells us when we can use it.  However, this approach becomes impractical for larger matrices, even though it is possible to demonstrate that, in theory, there is a general formula.  (Think for a minute about extending this result to just $3\times 3$ matrices.  For starters, we need 18 letters!)  Instead, we will work column-by-column.  Let's first work an example that will motivate the main theorem and remove some of the previous mystery.</p>
+
+<example acro="CMI" index="inverse">
+<title>Computing a matrix inverse</title>
+
+<p>Consider the matrix defined in <acroref type="example" acro="MI" /> as,
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 1 & 2 & 1 \\]]>
+<![CDATA[ -2 & -3 & 0 & -5 & -1 \\]]>
+<![CDATA[ 1 & 1 & 0 & 2 & 1 \\]]>
+<![CDATA[ -2 & -3 & -1 & -3 & -2 \\]]>
+<![CDATA[ -1 & -3 & -1 & -3 & 1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>For its inverse, we desire a matrix $B$ so that $AB=I_5$.  Emphasizing the structure of the columns and employing the definition of matrix multiplication <acroref type="definition" acro="MM" />,
+<!-- Bug?  \\, then [ on next line fools MathJax -->
+<alignmath>    
+AB<![CDATA[&=]]>I_5\\
+A\lbrack \vect{B}_1|\vect{B}_2|\vect{B}_3|\vect{B}_4|\vect{B}_5]<![CDATA[&=]]>[\vect{e}_1|\vect{e}_2|\vect{e}_3|\vect{e}_4|\vect{e}_5\rbrack\\
+\lbrack A\vect{B}_1|A\vect{B}_2|A\vect{B}_3|A\vect{B}_4|A\vect{B}_5]<![CDATA[&=]]>[\vect{e}_1|\vect{e}_2|\vect{e}_3|\vect{e}_4|\vect{e}_5\rbrack
+</alignmath>
+</p>
+
+<p>Equating the matrices column-by-column we have
+<alignmath>
+<![CDATA[A\vect{B}_1=\vect{e}_1&&]]>
+<![CDATA[A\vect{B}_2=\vect{e}_2&&]]>
+<![CDATA[A\vect{B}_3=\vect{e}_3&&]]>
+<![CDATA[A\vect{B}_4=\vect{e}_4&&]]>
+A\vect{B}_5=\vect{e}_5.
+</alignmath>
+</p>
+
+<p>Since the matrix $B$ is what we are trying to compute, we can view each column, $\vect{B}_i$, as a column vector of unknowns.  Then we have five systems of equations to solve, each with 5 equations in 5 variables.  Notice that all 5 of these systems have the same coefficient matrix.  We'll now solve each system in turn,
+<!--  Keep silly blank line to not confuse translators -->
+<!--  and make a non-null firtst grouping -->
+<alignmath>
+<![CDATA[\ &]]>
+<intertext>Row-reduce the augmented matrix of the linear system $\linearsystem{A}{\vect{e}_1}$,</intertext>
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 1 & 2 & 1 & 1\\]]>
+<![CDATA[ -2 & -3 & 0 & -5 & -1 & 0\\]]>
+<![CDATA[ 1 & 1 & 0 & 2 & 1 & 0\\]]>
+<![CDATA[ -2 & -3 & -1 & -3 & -2 & 0\\]]>
+<![CDATA[ -1 & -3 & -1 & -3 & 1 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref&]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & 0 & -3\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0 & 1\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0 & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & 1]]>
+\end{bmatrix}
+<![CDATA[&\text{ so}&]]>
+\vect{B}_1=\colvector{-3\\0\\1\\1\\1}\\
+<intertext>Row-reduce the augmented matrix of the linear system $\linearsystem{A}{\vect{e}_2}$,</intertext>
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 1 & 2 & 1 & 0\\]]>
+<![CDATA[ -2 & -3 & 0 & -5 & -1 & 1\\]]>
+<![CDATA[ 1 & 1 & 0 & 2 & 1 & 0\\]]>
+<![CDATA[ -2 & -3 & -1 & -3 & -2 & 0\\]]>
+<![CDATA[ -1 & -3 & -1 & -3 & 1 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref&]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & 0 & 3\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0 & -2\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0 & 2\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & -1]]>
+\end{bmatrix}
+<![CDATA[&\text{ so}&]]>
+\vect{B}_2=\colvector{3\\-2\\2\\0\\-1}\\
+<intertext>Row-reduce the augmented matrix of the linear system $\linearsystem{A}{\vect{e}_3}$,</intertext>
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 1 & 2 & 1 & 0\\]]>
+<![CDATA[ -2 & -3 & 0 & -5 & -1 & 0\\]]>
+<![CDATA[ 1 & 1 & 0 & 2 & 1 & 1\\]]>
+<![CDATA[ -2 & -3 & -1 & -3 & -2 & 0\\]]>
+<![CDATA[ -1 & -3 & -1 & -3 & 1 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref&]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & 0 & 6\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0 & -5\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0 & 4\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0 & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & -2]]>
+\end{bmatrix}
+<![CDATA[&\text{ so}&]]>
+\vect{B}_3=\colvector{6\\-5\\4\\1\\-2}\\
+<intertext>Row-reduce the augmented matrix of the linear system $\linearsystem{A}{\vect{e}_4}$,</intertext>
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 1 & 2 & 1 & 0\\]]>
+<![CDATA[ -2 & -3 & 0 & -5 & -1 & 0\\]]>
+<![CDATA[ 1 & 1 & 0 & 2 & 1 & 0\\]]>
+<![CDATA[ -2 & -3 & -1 & -3 & -2 & 1\\]]>
+<![CDATA[ -1 & -3 & -1 & -3 & 1 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref&]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & 0 & -1\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0 & -1\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0 & 1\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0 & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & 0]]>
+\end{bmatrix}
+<![CDATA[&\text{ so}&]]>
+\vect{B}_4=\colvector{-1\\-1\\1\\1\\0}\\
+<intertext>Row-reduce the augmented matrix of the linear system $\linearsystem{A}{\vect{e}_5}$,</intertext>
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 1 & 2 & 1 & 0\\]]>
+<![CDATA[ -2 & -3 & 0 & -5 & -1 & 0\\]]>
+<![CDATA[ 1 & 1 & 0 & 2 & 1 & 0\\]]>
+<![CDATA[ -2 & -3 & -1 & -3 & -2 & 0\\]]>
+<![CDATA[ -1 & -3 & -1 & -3 & 1 & 1]]>
+\end{bmatrix}
+<![CDATA[&\rref&]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & 0 & -2\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0 & 1\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0 & -1\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & 1]]>
+\end{bmatrix}
+<![CDATA[&\text{ so}&]]>
+\vect{B}_5=\colvector{-2\\1\\-1\\0\\1}\\
+</alignmath>
+We can now collect our 5 solution vectors into the matrix $B$,
+<alignmath>
+B=
+<![CDATA[&[\vect{B}_1|\vect{B}_2|\vect{B}_3|\vect{B}_4|\vect{B}_5]\\]]>
+<![CDATA[=&]]>
+\left[\colvector{-3\\0\\1\\1\\1}
+\left\lvert\colvector{3\\-2\\2\\0\\-1}\right.
+\left\lvert\colvector{6\\-5\\4\\1\\-2}\right.
+\left\lvert\colvector{-1\\-1\\1\\1\\0}\right.
+\left\lvert\colvector{-2\\1\\-1\\0\\1}\right.
+\right]\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ -3 & 3 & 6 & -1 & -2 \\]]>
+<![CDATA[ 0 & -2 & -5 & -1 & 1 \\]]>
+<![CDATA[ 1 & 2 & 4 & 1 & -1 \\]]>
+<![CDATA[ 1 & 0 & 1 & 1 & 0 \\]]>
+<![CDATA[ 1 & -1 & -2 & 0 & 1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>By this method, we know that $AB=I_5$.  Check that $BA=I_5$, and then we will know that we have the inverse of $A$.</p>
+
+</example>
+
+<p>Notice how the five systems of equations in the preceding example were all solved by <em>exactly</em> the same sequence of row operations.  Wouldn't it be nice to avoid this obvious duplication of effort?  Our main theorem for this section follows, and it mimics this previous example, while also avoiding all the overhead.</p>
+
+<theorem acro="CINM" index="matrix inverse!computation">
+<title>Computing the Inverse of a Nonsingular Matrix</title>
+<statement>
+<p>Suppose $A$ is a nonsingular square matrix of size $n$.  Create the $n\times 2n$ matrix $M$ by placing the $n\times n$ identity matrix $I_n$ to the right of the matrix $A$.  Let $N$ be a matrix that is row-equivalent to $M$ and in reduced row-echelon form.  Finally,  let $J$ be the matrix formed from the final $n$ columns of $N$. Then $AJ=I_n$.</p>
+
+</statement>
+
+<proof>
+<p>$A$ is nonsingular, so by <acroref type="theorem" acro="NMRRI" /> there is a sequence of row operations that will convert $A$ into $I_n$.  It is this same sequence of row operations that will convert $M$ into $N$, since having the identity matrix in the first $n$ columns of $N$ is sufficient to guarantee that $N$ is in reduced row-echelon form.</p>
+
+<p>If we consider the systems of linear equations, $\linearsystem{A}{\vect{e}_i}$, $1\leq i\leq n$, we see that the aforementioned sequence of row operations will also bring the augmented matrix of each of these systems into reduced row-echelon form.  Furthermore, the unique solution to $\linearsystem{A}{\vect{e}_i}$ appears in column $n+1$ of the row-reduced augmented matrix of the system and is identical to column $n+i$ of $N$.  Let $\vectorlist{N}{2n}$ denote the columns of $N$.  So we find,
+<alignmath>
+<![CDATA[AJ=&A[\vect{N}_{n+1}|\vect{N}_{n+2}|\vect{N}_{n+3}|\ldots|\vect{N}_{n+n}]\\]]>
+<![CDATA[=&[A\vect{N}_{n+1}|A\vect{N}_{n+2}|A\vect{N}_{n+3}|\ldots|A\vect{N}_{n+n}]&&]]>\text{<acroref type="definition" acro="MM" />}\\
+<![CDATA[=&[\vect{e}_1|\vect{e}_2|\vect{e}_3|\ldots|\vect{e}_n]\\]]>
+<![CDATA[=&I_n&&]]>\text{<acroref type="definition" acro="IM" />}
+</alignmath>
+as desired.</p>
+
+</proof>
+</theorem>
+
+<p>We have to be just a bit careful here about both what this theorem says and what it doesn't say.  If $A$ is a nonsingular matrix, then we are guaranteed a matrix $B$ such that $AB=I_n$, and the proof gives us a process for constructing $B$.   However, the definition of the inverse of a matrix (<acroref type="definition" acro="MI" />) requires that $BA=I_n$ also.  So at this juncture we must compute the matrix product in the <q>opposite</q> order before we claim $B$ as the inverse of $A$.  However, we'll soon see that this is <em>always</em> the case, in <acroref type="theorem" acro="OSIS" />, so the title of this theorem is not inaccurate.</p>
+
+<p>What if $A$ is singular?  At this point we only know that <acroref type="theorem" acro="CINM" /> cannot be applied.  The question of $A$'s inverse is still open.  (But see <acroref type="theorem" acro="NI" /> in the next section.)</p>
+
+<p>We'll finish by computing the inverse for the coefficient matrix of <acroref type="archetype" acro="B" />, the one we just pulled from a hat in <acroref type="example" acro="SABMI" />.  There are more examples in the Archetypes (<miscref type="archetype" text="Archetypes" />) to practice with, though notice that it is silly to ask for the inverse of a rectangular matrix (the sizes aren't right) and not every square matrix has an inverse (remember <acroref type="example" acro="MWIAA" />?).</p>
+
+<example acro="CMIAB" index="Archetype B!inverse">
+<title>Computing a matrix inverse, Archetype B</title>
+
+<indexlocation index="matrix inverse!Archetype B" />
+<p><acroref type="archetype" acro="B" /> has a coefficient matrix given as
+<alignmath>
+B<![CDATA[=&]]><archetypepart acro="B" part="purematrix" />\\
+<intertext>Exercising <acroref type="theorem" acro="CINM" /> we set</intertext>
+<![CDATA[M=&]]>
+\begin{bmatrix}
+<![CDATA[-7&-6&-12&1&0&0\\]]>
+<![CDATA[ 5&5&7&0&1&0\\]]>
+<![CDATA[ 1&0&4&0&0&1]]>
+\end{bmatrix}.\\
+<intertext>which row reduces to</intertext>
+<![CDATA[N=&]]>
+\begin{bmatrix}
+<![CDATA[1&0&0&-10 & -12 & -9\\]]>
+<![CDATA[0&1&0&\frac{13}{2} & 8 & \frac{11}{2}\\]]>
+<![CDATA[0&0&1&\frac{5}{2} & 3 & \frac{5}{2}]]>
+\end{bmatrix}.\\
+<intertext>So</intertext>
+\inverse{B}<![CDATA[=&]]><archetypepart acro="B" part="matrixinverse" />
+</alignmath>
+once we check that $\inverse{B}B=I_3$ (the product in the opposite order is a consequence of the theorem).</p>
+
+</example>
+
+<sageadvice acro="MISLE" index="matrix inverse, system of equations">
+<title>Matrix Inverse, Systems of Equations</title>
+We can use the computational method described in this section in hopes of finding a matrix inverse, as <acroref type="theorem" acro="CINMN" /> gets us halfway there.  We will continue with the matrix from <acroref type="example" acro="MI" />.  First we check that the matrix is nonsingular so we can apply the theorem, then we get <q>half</q> an inverse, and verify that it also behaves as a <q>full</q> inverse by meeting the fuill definition of a matrix inverse (<acroref type="definition" acro="MI" />).
+<sage>
+<input>A = matrix(QQ, [[ 1,  2,  1,  2,  1],
+                [-2, -3,  0, -5, -1],
+                [ 1,  1,  0,  2,  1],
+                [-2, -3, -1, -3, -2],
+                [-1, -3, -1, -3,  1]])
+A.is_singular()
+</input>
+<output>False
+</output>
+</sage>
+
+<sage>
+<input>I5 = identity_matrix(5)
+M = A.augment(I5); M
+</input>
+<output>[ 1  2  1  2  1  1  0  0  0  0]
+[-2 -3  0 -5 -1  0  1  0  0  0]
+[ 1  1  0  2  1  0  0  1  0  0]
+[-2 -3 -1 -3 -2  0  0  0  1  0]
+[-1 -3 -1 -3  1  0  0  0  0  1]
+</output>
+</sage>
+
+<sage>
+<input>N = M.rref(); N
+</input>
+<output>[ 1  0  0  0  0 -3  3  6 -1 -2]
+[ 0  1  0  0  0  0 -2 -5 -1  1]
+[ 0  0  1  0  0  1  2  4  1 -1]
+[ 0  0  0  1  0  1  0  1  1  0]
+[ 0  0  0  0  1  1 -1 -2  0  1]
+</output>
+</sage>
+
+<sage>
+<input>J = N.matrix_from_columns(range(5,10)); J
+</input>
+<output>[-3  3  6 -1 -2]
+[ 0 -2 -5 -1  1]
+[ 1  2  4  1 -1]
+[ 1  0  1  1  0]
+[ 1 -1 -2  0  1]
+</output>
+</sage>
+
+<sage>
+<input>A*J == I5
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>J*A == I5
+</input>
+<output>True
+</output>
+</sage>
+
+Note that the matrix <code>J</code> is constructed by taking the last 5 columns of <code>N</code> (numbered 5 through 9) and using them in the <code>matrix_from_columns()</code> matrix method.  What happens if you apply the procedure above to a singular matrix?  That would be an instructive experiment to conduct.<br /><br />
+With an inverse of a coefficient matrix in hand, we can easily solve systems of equations, in the style of <acroref type="example" acro="SABMI" />.  We will recycle the matrices <code>A</code> and its inverse, <code>J</code>, from above, so be sure to run those compute cells first if you are playing along.  We consider a system with <code>A</code> as a coefficient matrix and solve a linear system twice, once the old way and once the new way.  Recall that with a nonsingular coefficient matrix, the solution will be unique for any choice of <code>const</code>, so you can experiment by changing the vector of constants and re-executing the code.
+<sage>
+<input>const = vector(QQ, [3, -4, 2, 1, 1])
+A.solve_right(const)
+</input>
+<output>(-12, -2, 3, 6, 4)
+</output>
+</sage>
+
+<sage>
+<input>J*const
+</input>
+<output>(-12, -2, 3, 6, 4)
+</output>
+</sage>
+
+<sage>
+<input>A.solve_right(const) == J*const
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="PMI">
+<title>Properties of Matrix Inverses</title>
+
+<p>The inverse of a matrix enjoys some nice properties.  We collect a few here.  First, a matrix can have but one inverse.</p>
+
+<theorem acro="MIU" index="matrix inverse!uniqueness">
+<title>Matrix Inverse is Unique</title>
+<statement>
+<p>Suppose the square matrix $A$ has an inverse.  Then $\inverse{A}$ is unique.</p>
+
+</statement>
+
+<proof>
+<p>As described in <acroref type="technique" acro="U" />, we will assume that $A$ has two inverses.  The hypothesis tells there is at least one.  Suppose then that $B$ and $C$ are both inverses for $A$, so we know by <acroref type="definition" acro="MI" /> that $AB=BA=I_n$ and $AC=CA=I_n$.  Then we have,
+<alignmath>
+B
+<![CDATA[&=BI_n&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=B(AC)&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=(BA)C&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=I_nC&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=C&&]]>\text{<acroref type="theorem" acro="MMIM" />}
+</alignmath>
+</p>
+
+<p>So we conclude that $B$ and $C$ are the same, and cannot be different.  So any matrix that acts like <em>an</em> inverse, must be <em>the</em> inverse.</p>
+
+</proof>
+</theorem>
+
+<p>When most of us dress in the morning, we put on our socks first, followed by our shoes.  In the evening we must then first remove our shoes, followed by our socks.  Try to connect the conclusion of the following theorem with this everyday example.</p>
+
+<theorem acro="SS" index="matrix inverse!product">
+<title>Socks and Shoes</title>
+<statement>
+<indexlocation index="socks" /><indexlocation index="shoes" />
+<p>Suppose $A$ and $B$ are invertible matrices of size $n$.  Then $AB$ is an invertible matrix and $\inverse{(AB)}=\inverse{B}\inverse{A}$.</p>
+
+</statement>
+
+<proof>
+<p>At the risk of carrying our everyday analogies too far, the proof of this theorem is quite easy when we compare it to the workings of a dating service.  We have a statement about the inverse of the matrix $AB$, which for all we know right now might not even exist.  Suppose $AB$ was to sign up for a dating service with two requirements for a compatible date.  Upon multiplication on the left, and on the right, the result should be the identity matrix.  In other words, $AB$'s ideal date would be its inverse.</p>
+
+<p>Now along comes the matrix $\inverse{B}\inverse{A}$ (which we know exists because our hypothesis says both $A$ and $B$ are invertible and we can form the product of these two matrices), also looking for a date.  Let's see if $\inverse{B}\inverse{A}$ is a good match for $AB$.  First they meet at a non-committal neutral location, say a coffee shop, for quiet conversation:
+<alignmath>
+(\inverse{B}\inverse{A})(AB)
+<![CDATA[&=\inverse{B}(\inverse{A}A)B&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=\inverse{B}I_nB&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=\inverse{B}B&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=I_n&&]]>\text{<acroref type="definition" acro="MI" />}
+<intertext>The first date having gone smoothly, a second, more serious, date is arranged, say dinner and a show:</intertext>
+(AB)(\inverse{B}\inverse{A})
+<![CDATA[&=A(B\inverse{B})\inverse{A}&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=AI_n\inverse{A}&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=A\inverse{A}&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=I_n&&]]>\text{<acroref type="definition" acro="MI" />}
+</alignmath>
+</p>
+
+<p>So the matrix $\inverse{B}\inverse{A}$ has met all of the requirements to be $AB$'s inverse (date) and with the ensuing marriage proposal we can announce that $\inverse{(AB)}=\inverse{B}\inverse{A}$.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="MIMI" index="matrix inverse!of a matrix inverse">
+<title>Matrix Inverse of a Matrix Inverse</title>
+<statement>
+<indexlocation index="transpose!matrix inverse" />
+<p>Suppose $A$ is an invertible matrix.  Then $\inverse{A}$ is invertible and $\inverse{(\inverse{A})}=A$.</p>
+
+</statement>
+
+<proof>
+<p>As with the proof of <acroref type="theorem" acro="SS" />, we examine if $A$ is a suitable inverse for $\inverse{A}$ (by definition, the opposite is true).
+<alignmath>
+<![CDATA[A\inverse{A}&=I_n&&]]>\text{<acroref type="definition" acro="MI" />}
+<intertext>and</intertext>
+<![CDATA[\inverse{A}A&=I_n&&]]>\text{<acroref type="definition" acro="MI" />}
+</alignmath>
+</p>
+
+<p>The matrix $A$ has met all the requirements to be the inverse of $\inverse{A}$, and so is invertible and we can write $A=\inverse{(\inverse{A})}$.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="MIT" index="matrix inverse!transpose">
+<title>Matrix Inverse of a Transpose</title>
+<statement>
+<indexlocation index="transpose!matrix inverse" />
+<p>Suppose $A$ is an invertible matrix.  Then $\transpose{A}$ is invertible and $\inverse{(\transpose{A})}=\transpose{(\inverse{A})}$.</p>
+</statement>
+
+<proof>
+<p>As with the proof of <acroref type="theorem" acro="SS" />, we see if $\transpose{(\inverse{A})}$ is a suitable inverse for $\transpose{A}$. Apply <acroref type="theorem" acro="MMT" /> to see that
+<alignmath>
+\transpose{(\inverse{A})}\transpose{A}
+<![CDATA[&=\transpose{(A\inverse{A})}&&]]>\text{<acroref type="theorem" acro="MMT" />}\\
+<![CDATA[&=\transpose{I_n}&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=I_n&&]]>\text{<acroref type="definition" acro="SYM" />}
+<intertext>and</intertext>
+\transpose{A}\transpose{(\inverse{A})}
+<![CDATA[&=\transpose{(\inverse{A}A)}&&]]>\text{<acroref type="theorem" acro="MMT" />}\\
+<![CDATA[&=\transpose{I_n}&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=I_n&&]]>\text{<acroref type="definition" acro="SYM" />}
+</alignmath>
+</p>
+
+<p>The matrix $\transpose{(\inverse{A})}$ has met all the requirements to be the inverse of $\transpose{A}$, and so is invertible and we can write $\inverse{(\transpose{A})}=\transpose{(\inverse{A})}$.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="MISM" index="matrix inverse!scalar multiple">
+<title>Matrix Inverse of a Scalar Multiple</title>
+<statement>
+<indexlocation index="scalar multiple!matrix inverse" />
+<p>Suppose $A$ is an invertible matrix and $\alpha$ is a nonzero scalar.  Then $\inverse{\left(\alpha A\right)}=\frac{1}{\alpha}\inverse{A}$ and $\alpha A$ is invertible.</p>
+
+</statement>
+
+<proof>
+<p>As with the proof of <acroref type="theorem" acro="SS" />, we see if $\frac{1}{\alpha}\inverse{A}$ is a suitable inverse for $\alpha A$.
+<alignmath>
+\left(\frac{1}{\alpha}\inverse{A}\right)\left(\alpha A\right)
+<![CDATA[&=\left(\frac{1}{\alpha}\alpha\right)\left(A\inverse{A}\right)&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=1I_n&&\text{Scalar multiplicative inverses}\\]]>
+<![CDATA[&=I_n&&]]>\text{<acroref type="property" acro="OM" />}
+<intertext>and</intertext>
+<![CDATA[\left(\alpha A\right)\left(\frac{1}{\alpha}\inverse{A}\right)&=]]>
+<![CDATA[\left(\alpha\frac{1}{\alpha}\right)\left(\inverse{A}A\right)&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=1I_n&&\text{Scalar multiplicative inverses}\\]]>
+<![CDATA[&=I_n&&]]>\text{<acroref type="property" acro="OM" />}
+</alignmath>
+</p>
+
+<p>The matrix $\frac{1}{\alpha}\inverse{A}$ has met all the requirements to be the inverse of $\alpha A$, so we can write $\inverse{\left(\alpha A\right)}=\frac{1}{\alpha}\inverse{A}$.</p>
+
+</proof>
+</theorem>
+
+<p>Notice that there are some likely theorems that are missing here.  For example, it would be tempting to think that $\inverse{(A+B)}=\inverse{A}+\inverse{B}$, but this is false.  Can you find a counterexample? (See <acroref type="exercise" acro="MISLE.T10" />.)</p>
+
+</subsection>
+
+<!--   End  misle.tex -->
+<readingquestions>
+<ol>
+<li> Compute the inverse of the matrix below.
+<equation>
+\begin{bmatrix}
+<![CDATA[-2 & 3\\]]>
+<![CDATA[-3 & 4]]>
+\end{bmatrix}
+</equation>
+</li>
+<li>Compute the inverse of the matrix below.
+<equation>
+\begin{bmatrix}
+<![CDATA[2 & 3 & 1\\]]>
+<![CDATA[1 & -2 & -3\\]]>
+<![CDATA[-2 & 4 & 6]]>
+\end{bmatrix}
+</equation>
+</li>
+<li> Explain why <acroref type="theorem" acro="SS" /> has the title it does. (Do not just state
+the theorem, explain the choice of the title making reference to the
+theorem itself.)
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="16" rough="3x3 matrix, exists, integer entries">
+<problem contributor="chrisblack">If it exists, find the inverse of
+<![CDATA[$A = \begin{bmatrix} 1 & 0 & 1 \\ 1 & 1 & 1 \\ 2 & -1 & 1\end{bmatrix}$,]]>
+and check your answer.
+</problem>
+<solution contributor="chrisblack"><![CDATA[Answer: $\inverse{A} = \begin{bmatrix} -2 & 1 & 1 \\ -1 & 1 & 0\\3 & -1 & -1 \end{bmatrix}$.]]>
+</solution>
+</exercise>
+
+<exercise type="C" number="17" rough="3x3 matrix, does not exist">
+<problem contributor="chrisblack">If it exists, find the inverse of
+<![CDATA[$A = \begin{bmatrix}  2 & -1 & 1\\ 1 & 2 & 1\\3 & 1 & 2\end{bmatrix}$,]]>
+and check your answer.
+</problem>
+<solution contributor="chrisblack">The procedure we have for finding a matrix inverse fails for this matrix $A$ since $A$ does not row-reduce to $I_3$.  We suspect in this case that $A$ is not invertible, although we do not yet know that concretely.  (Stay tuned for upcoming revelations in <acroref type="section" acro="MINM" />!)
+</solution>
+</exercise>
+
+<exercise type="C" number="18" rough="3x3 matrix, exists, integer entries">
+<problem contributor="chrisblack">If it exists, find the inverse of
+<![CDATA[$A = \begin{bmatrix} 1 & 3 & 1 \\ 1 & 2 & 1 \\ 2 & 2 & 1\end{bmatrix}$,]]>
+and check your answer.
+</problem>
+<solution contributor="chrisblack"><![CDATA[Answer: $\inverse{A} = \begin{bmatrix} 0 & -1 & 1\\ 1 & -1 & 0\\-2 & 4 & -1]]>
+\end{bmatrix}$
+</solution>
+</exercise>
+
+<exercise type="C" number="19" rough="3x3 matrix, exists, rational entries">
+<problem contributor="chrisblack">If it exists, find the inverse of
+<![CDATA[$A = \begin{bmatrix}  1 & 3 & 1 \\ 0 & 2 & 1 \\ 2 & 2 & 1\end{bmatrix}$,]]>
+and check your answer.
+</problem>
+<solution contributor="chrisblack"><![CDATA[Answer: $\inverse{A} = \begin{bmatrix} 0 & -1/2 & 1/2\\ 1 & -1/2 & -1/2 \\ -2 & 2 & 1]]>
+\end{bmatrix}$
+</solution>
+</exercise>
+
+<exercise type="C" number="21" rough="Check a 4x4 inverse">
+<problem contributor="robertbeezer">Verify that $B$ is the inverse of $A$.
+<alignmath>
+<![CDATA[A&=]]>
+\begin{bmatrix}
+<![CDATA[1 & 1 & -1 & 2\\]]>
+<![CDATA[-2 & -1 & 2 & -3\\]]>
+<![CDATA[1 & 1 & 0 & 2\\]]>
+<![CDATA[-1 & 2 & 0 & 2]]>
+\end{bmatrix}
+<![CDATA[&]]>
+<![CDATA[B&=]]>
+\begin{bmatrix}
+<![CDATA[4 & 2 & 0 & -1\\]]>
+<![CDATA[8 & 4 & -1 & -1\\]]>
+<![CDATA[-1 & 0 & 1 & 0\\]]>
+<![CDATA[-6 & -3 & 1 & 1]]>
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">Check that <em>both</em> matrix products (<acroref type="definition" acro="MM" />) $AB$ and $BA$ equal the $4\times 4$ identity matrix $I_4$ (<acroref type="definition" acro="IM" />).
+</solution>
+</exercise>
+
+<exercise type="C" number="22" rough="Use provided inverse from C21 to solve system">
+<problem contributor="robertbeezer">Recycle the matrices $A$ and $B$ from <acroref type="exercise" acro="MISLE.C21" /> and set
+<alignmath>
+<![CDATA[\vect{c}&=\colvector{2\\1\\-3\\2}&\vect{d}&=\colvector{1\\1\\1\\1}]]>
+</alignmath>
+Employ the matrix $B$ to solve the two linear systems $\linearsystem{A}{\vect{c}}$ and $\linearsystem{A}{\vect{d}}$.
+</problem>
+<solution contributor="robertbeezer">Represent each of the two systems by a vector equality, $A\vect{x}=\vect{c}$ and $A\vect{y}=\vect{d}$.  Then in the spirit of <acroref type="example" acro="SABMI" />, solutions are given by
+<alignmath>
+<![CDATA[\vect{x}&=B\vect{c}=\colvector{8\\21\\-5\\-16}&]]>
+<![CDATA[\vect{y}&=B\vect{d}=\colvector{5\\10\\0\\-7}]]>
+</alignmath>
+Notice how we could solve many more systems having $A$ as the coefficient matrix, and how each such system has a unique solution.  You might check your work by substituting the solutions back into the systems of equations, or forming the linear combinations of the columns of $A$ suggested by <acroref type="theorem" acro="SLSLC" />.
+</solution>
+</exercise>
+
+<exercise type="C" number="23" rough="2x2 matrix, exists">
+<problem contributor="robertbeezer">If it exists, find the inverse of the $2\times 2$ matrix
+<alignmath>
+A=\begin{bmatrix}
+<![CDATA[7&3\\5&2]]>
+\end{bmatrix}
+</alignmath>
+and check your answer.  (See <acroref type="theorem" acro="TTMI" />.)
+</problem>
+</exercise>
+
+<exercise type="C" number="24" rough="2x2 matrix, does not exist">
+<problem contributor="robertbeezer">If it exists, find the inverse of the $2\times 2$ matrix
+<alignmath>
+A=\begin{bmatrix}
+<![CDATA[6&3\\4&2]]>
+\end{bmatrix}
+</alignmath>
+and check your answer.  (See <acroref type="theorem" acro="TTMI" />.)
+</problem>
+</exercise>
+
+<exercise type="C" number="25" rough="Product in opposite order, Example CMIAK">
+<problem contributor="robertbeezer">At the conclusion of <acroref type="example" acro="CMI" />, verify that $BA=I_5$ by computing the matrix product.
+</problem>
+</exercise>
+
+<exercise type="C" number="26" rough="5x5 inverse, row-reduce 5x10, the calculator">
+<problem contributor="robertbeezer">Let
+<equation>
+D=\begin{bmatrix}
+<![CDATA[1 & -1 & 3 & -2 & 1\\]]>
+<![CDATA[-2 & 3 & -5 & 3 & 0\\]]>
+<![CDATA[1 & -1 & 4 & -2 & 2\\]]>
+<![CDATA[-1 & 4 & -1 & 0 & 4\\]]>
+<![CDATA[1 & 0 & 5 & -2 & 5]]>
+\end{bmatrix}
+</equation>
+Compute the inverse of $D$, $\inverse{D}$, by forming the $5\times 10$ matrix $\augmented{D}{I_5}$ and row-reducing (<acroref type="theorem" acro="CINM" />).  Then use a calculator to compute $\inverse{D}$ directly.
+</problem>
+<solution contributor="robertbeezer">The inverse of $D$ is
+<equation>
+\inverse{D}=
+\begin{bmatrix}
+<![CDATA[-7 & -6 & -3 & 2 & 1\\]]>
+<![CDATA[-7 & -4 & 2 & 2 & -1\\]]>
+<![CDATA[-5 & -2 & 3 & 1 & -1\\]]>
+<![CDATA[-6 & -3 & 1 & 1 & 0\\]]>
+<![CDATA[4 & 2 & -2 & -1 & 1]]>
+\end{bmatrix}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="C" number="27" rough="5x5 inverse? does not exist">
+<problem contributor="robertbeezer">Let
+<equation>
+E=\begin{bmatrix}
+<![CDATA[1 & -1 & 3 & -2 & 1\\]]>
+<![CDATA[-2 & 3 & -5 & 3 & -1\\]]>
+<![CDATA[1 & -1 & 4 & -2 & 2\\]]>
+<![CDATA[-1 & 4 & -1 & 0 & 2\\]]>
+<![CDATA[1 & 0 & 5 & -2 & 4]]>
+\end{bmatrix}
+</equation>
+Compute the inverse of $E$, $\inverse{E}$, by forming the $5\times 10$ matrix $\augmented{E}{I_5}$ and row-reducing (<acroref type="theorem" acro="CINM" />).  Then use a calculator to compute $\inverse{E}$ directly.
+</problem>
+<solution contributor="robertbeezer">The matrix $E$ has no inverse, though we do not yet have a theorem that allows us to reach this conclusion.  However, when row-reducing the matrix $\augmented{E}{I_5}$, the first 5 columns will not row-reduce to the $5\times 5$ identity matrix, so we are a t a loss on how we might compute the inverse.  When requesting that your calculator compute $\inverse{E}$, it should give some indication that $E$ does not have an inverse.
+</solution>
+</exercise>
+
+<exercise type="C" number="28" rough="4x4 inverse, row-reduce 4x8">
+<problem contributor="robertbeezer">Let
+<equation>
+C=
+\begin{bmatrix}
+<![CDATA[ 1 & 1 & 3 & 1\\]]>
+<![CDATA[ -2 & -1 & -4 & -1\\]]>
+<![CDATA[ 1 & 4 & 10 & 2\\]]>
+<![CDATA[ -2 & 0 & -4 & 5]]>
+\end{bmatrix}
+</equation>
+Compute the inverse of $C$, $\inverse{C}$, by forming the $4\times 8$ matrix $\augmented{C}{I_4}$ and row-reducing (<acroref type="theorem" acro="CINM" />).  Then use a calculator to compute $\inverse{C}$ directly.
+</problem>
+<solution contributor="robertbeezer">Employ <acroref type="theorem" acro="CINM" />,
+<equation>
+\begin{bmatrix}
+<![CDATA[ 1 & 1 & 3 & 1     &   1 & 0 & 0 & 0\\]]>
+<![CDATA[ -2 & -1 & -4 & -1 &  0 & 1 & 0 & 0\\]]>
+<![CDATA[ 1 & 4 & 10 & 2   &   0 & 0 & 1 & 0\\]]>
+<![CDATA[ -2 & 0 & -4 & 5	&	 0 & 0 & 0 & 1]]>
+ \end{bmatrix}
+ \rref
+ \begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & 0	&	38 & 18 & -5 & -2\\]]>
+<![CDATA[ 0 & \leading{1} & 0 & 0 &	96 & 47 & -12 & -5\\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 0	&	-39 & -19 & 5 & 2\\]]>
+<![CDATA[ 0 & 0 & 0 & \leading{1}	&	-16 & -8 & 2 & 1]]>
+ \end{bmatrix}
+</equation>
+And therefore we see that $C$ is nonsingular ($C$ row-reduces to the identity matrix, <acroref type="theorem" acro="NMRRI" />) and by <acroref type="theorem" acro="CINM" />,
+<equation>
+\inverse{C}=
+\begin{bmatrix}
+<![CDATA[38 & 18 & -5 & -2\\]]>
+<![CDATA[96 & 47 & -12 & -5\\]]>
+<![CDATA[-39 & -19 & 5 & 2\\]]>
+<![CDATA[-16 & -8 & 2 & 1]]>
+\end{bmatrix}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="C" number="40" rough="Solve 4x4 system with inverse from C28">
+<problem contributor="robertbeezer">Find all solutions to the system of equations below, making use of the matrix inverse found in <acroref type="exercise" acro="MISLE.C28" />.
+<alignmath>
+<![CDATA[x_1+x_2+3x_3+x_4&=-4\\]]>
+<![CDATA[ -2x_1-x_2-4x_3-x_4&=4\\]]>
+<![CDATA[ x_1+4x_2+10x_3+2x_4&=-20\\]]>
+<![CDATA[ -2x_1-4x_3+5x_4&=9]]>
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">View this system as $\linearsystem{C}{\vect{b}}$, where $C$ is the $4\times 4$ matrix from <acroref type="exercise" acro="MISLE.C28" /> and $\vect{b}=\colvector{-4\\4\\-20\\9}$.
+Since $C$ was seen to be nonsingular in <acroref type="exercise" acro="MISLE.C28" /> <acroref type="theorem" acro="SNCM" /> says the  solution, which is unique by <acroref type="theorem" acro="NMUS" />, is given by
+<equation>
+\inverse{C}\vect{b}=
+\begin{bmatrix}
+<![CDATA[38 & 18 & -5 & -2\\]]>
+<![CDATA[96 & 47 & -12 & -5\\]]>
+<![CDATA[-39 & -19 & 5 & 2\\]]>
+<![CDATA[-16 & -8 & 2 & 1]]>
+\end{bmatrix}
+\colvector{-4\\4\\-20\\9}
+=
+\colvector{2\\-1\\-2\\1}
+</equation>
+Notice that this solution can be easily checked in the original system of equations.
+</solution>
+</exercise>
+
+<exercise type="C" number="41" rough="Solve 3x3 system with inverse">
+<problem contributor="robertbeezer">Use the inverse of a matrix to find all the solutions to the following system of equations.  %
+<alignmath>
+<![CDATA[x_1 + 2 x_2 - x_3 &= -3\\]]>
+<![CDATA[2 x_1 + 5 x_2 - x_3 &= -4\\]]>
+<![CDATA[-x_1 - 4 x_2 &= 2]]>
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">The coefficient matrix of this system of equations is
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & -1 \\]]>
+<![CDATA[ 2 & 5 & -1 \\]]>
+<![CDATA[ -1 & -4 & 0]]>
+\end{bmatrix}
+</equation>
+and the vector of constants is $\vect{b}=\colvector{-3\\-4\\2}$.  So by <acroref type="theorem" acro="SLEMM" /> we can convert the system to the form $A\vect{x}=\vect{b}$.   Row-reducing this matrix yields the identity matrix so by <acroref type="theorem" acro="NMRRI" /> we know $A$ is nonsingular.  This allows us to apply <acroref type="theorem" acro="SNCM" /> to find the unique solution as
+<equation>
+\vect{x}
+=
+\inverse{A}\vect{b}
+=
+\begin{bmatrix}
+<![CDATA[ -4 & 4 & 3 \\]]>
+<![CDATA[ 1 & -1 & -1 \\]]>
+<![CDATA[ -3 & 2 & 1]]>
+\end{bmatrix}
+\colvector{-3\\-4\\2}
+=
+\colvector{2\\-1\\3}
+</equation>
+Remember, you can check this solution easily by evaluating the matrix-vector product  $A\vect{x}$ (<acroref type="definition" acro="MVP" />).
+</solution>
+</exercise>
+
+<exercise type="C" number="42" rough="Solve 3x3 system with inverse">
+<problem contributor="robertbeezer">Use a matrix inverse to solve the linear system of equations.
+<alignmath>
+<![CDATA[x_1-x_2+2x_3&=5\\]]>
+<![CDATA[x_1-2x_3&=-8\\]]>
+<![CDATA[2x_1-x_2-x_3&=-6]]>
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">We can reformulate the linear system as a vector equality with a matrix-vector product via <acroref type="theorem" acro="SLEMM" />.  The system is then represented by $A\vect{x}=\vect{b}$ where
+<alignmath>
+<![CDATA[A&=]]>
+\begin{bmatrix}
+<![CDATA[1 & -1 & 2 \\]]>
+<![CDATA[1 & 0 & -2\\]]>
+<![CDATA[2 & -1 & -1]]>
+\end{bmatrix}
+<![CDATA[&]]>
+\vect{b}
+<![CDATA[&=\colvector{5\\-8\\-6}]]>
+</alignmath>
+According to <acroref type="theorem" acro="SNCM" />, if $A$ is nonsingular then the (unique) solution will be given by $\inverse{A}\vect{b}$.  We attempt the computation of $\inverse{A}$ through <acroref type="theorem" acro="CINM" />, or with our favorite computational device and obtain,
+<alignmath>
+\inverse{A}=
+\begin{bmatrix}
+<![CDATA[ 2 & 3 & -2 \\]]>
+<![CDATA[ 3 & 5 & -4 \\]]>
+<![CDATA[ 1 & 1 & -1]]>
+\end{bmatrix}
+</alignmath>
+So by <acroref type="theorem" acro="NI" />, we know $A$ is nonsingular, and so the unique solution is
+<alignmath>
+\inverse{A}\vect{b}
+=
+\begin{bmatrix}
+<![CDATA[ 2 & 3 & -2 \\]]>
+<![CDATA[ 3 & 5 & -4 \\]]>
+<![CDATA[ 1 & 1 & -1]]>
+\end{bmatrix}
+\colvector{5\\-8\\-6}
+=
+\colvector{-2\\-1\\3}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="T" number="10" rough="Counterexample to inverse of sum = sum of inverses">
+<problem contributor="robertbeezer">Construct an example to demonstrate that $\inverse{(A+B)}=\inverse{A}+\inverse{B}$ is not true for all square matrices $A$ and $B$ of the same size.
+</problem>
+<solution contributor="robertbeezer">For a large collection of small examples, let $D$ be any $2\times 2$ matrix that has an inverse (<acroref type="theorem" acro="TTMI" /> can help you construct such a matrix, $I_2$ is a simple choice).  Set $A=D$ and $B=(-1)D$.  While $\inverse{A}$ and $\inverse{B}$ both exist, what is $\inverse{\left(A+B\right)}$?<br /><br />
+For a large collection of examples of any size, consider $A=B=I_n$.  Can the proposed statement be salvaged to become a theorem?
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

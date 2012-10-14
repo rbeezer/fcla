@@ -1,0 +1,1385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="SD">
+<title>Similarity and Diagonalization</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section SD -->
+<!-- %  Similarity and Diagonalization -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>This section's topic will perhaps seem out of place at first, but we will make the connection soon with eigenvalues and eigenvectors.  This is also our first look at one of the central ideas of <acroref type="chapter" acro="R" />.</p>
+
+</introduction>
+
+<subsection acro="SM">
+<title>Similar Matrices</title>
+
+<p>The notion of matrices being <q>similar</q> is a lot like saying two matrices are row-equivalent.  Two similar matrices are not equal, but they share many important properties.  This section, and later sections in <acroref type="chapter" acro="R" /> will be devoted in part to discovering just what these common properties are.</p>
+
+<p>First, the main definition for this section.</p>
+
+<definition acro="SIM" index="similarity">
+<title>Similar Matrices</title>
+<p>Suppose $A$ and $B$ are two square matrices of size $n$.  Then $A$ and $B$ are <define>similar</define> if there exists a nonsingular matrix of size $n$, $S$, such that $A=\similar{B}{S}$.</p>
+
+</definition>
+
+<p>We will say <q>$A$ is similar to $B$ via $S$</q> when we want to emphasize the role of $S$ in the relationship between $A$ and $B$.  Also, it doesn't matter if we say $A$ is similar to $B$, or $B$ is similar to $A$.  If one statement is true then so is the other, as can be seen by using $\inverse{S}$ in place of $S$ (see <acroref type="theorem" acro="SER" /> for the careful proof).    Finally, we will refer to $\similar{B}{S}$ as a <define>similarity transformation</define> when we want to emphasize the way $S$ changes $B$.  OK, enough about language, let's build a few examples.</p>
+
+<example acro="SMS5" index="similar matrices">
+<title>Similar matrices of size 5</title>
+
+<p>If you wondered if there are examples of similar matrices, then it won't be hard to convince you they exist.  Define
+<alignmath>
+B=\begin{bmatrix}
+<![CDATA[-4 & 1 & -3 & -2 & 2 \\]]>
+<![CDATA[1 & 2 & -1 & 3 & -2 \\]]>
+<![CDATA[-4 & 1 & 3 & 2 & 2 \\]]>
+<![CDATA[-3 & 4 & -2 & -1 & -3 \\]]>
+<![CDATA[3 & 1 & -1 & 1 & -4]]>
+\end{bmatrix}
+<![CDATA[&&]]>
+S=\begin{bmatrix}
+<![CDATA[1 & 2 & -1 & 1 & 1 \\]]>
+<![CDATA[0 & 1 & -1 & -2 & -1 \\]]>
+<![CDATA[1 & 3 & -1 & 1 & 1 \\]]>
+<![CDATA[-2 & -3 & 3 & 1 & -2 \\]]>
+<![CDATA[1 & 3 & -1 & 2 & 1\\]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Check that $S$ is nonsingular and then compute
+<alignmath>
+<![CDATA[A&=\similar{B}{S}\\]]>
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[10 & 1 & 0 & 2 & -5 \\]]>
+<![CDATA[-1 & 0 & 1 & 0 & 0 \\]]>
+<![CDATA[3 & 0 & 2 & 1 & -3 \\]]>
+<![CDATA[0 & 0 & -1 & 0 & 1 \\]]>
+<![CDATA[-4 & -1 & 1 & -1 & 1]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[-4 & 1 & -3 & -2 & 2 \\]]>
+<![CDATA[1 & 2 & -1 & 3 & -2 \\]]>
+<![CDATA[-4 & 1 & 3 & 2 & 2 \\]]>
+<![CDATA[-3 & 4 & -2 & -1 & -3 \\]]>
+<![CDATA[3 & 1 & -1 & 1 & -4]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[1 & 2 & -1 & 1 & 1 \\]]>
+<![CDATA[0 & 1 & -1 & -2 & -1 \\]]>
+<![CDATA[1 & 3 & -1 & 1 & 1 \\]]>
+<![CDATA[-2 & -3 & 3 & 1 & -2 \\]]>
+<![CDATA[1 & 3 & -1 & 2 & 1]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[-10 & -27 & -29 & -80 & -25 \\]]>
+<![CDATA[-2 & 6 & 6 & 10 & -2 \\]]>
+<![CDATA[-3 & 11 & -9 & -14 & -9 \\]]>
+<![CDATA[-1 & -13 & 0 & -10 & -1 \\]]>
+<![CDATA[11 & 35 & 6 & 49 & 19]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>So by this construction, we know that $A$ and $B$ are similar.</p>
+
+</example>
+
+<p>Let's do that again.</p>
+
+<example acro="SMS3" index="similar matrices">
+<title>Similar matrices of size 3</title>
+
+<p>Define
+<alignmath>
+B=\begin{bmatrix}
+<![CDATA[-13 & -8 & -4 \\]]>
+<![CDATA[12 & 7 & 4 \\]]>
+<![CDATA[24 & 16 & 7]]>
+\end{bmatrix}
+<![CDATA[&&]]>
+S=\begin{bmatrix}
+<![CDATA[1 & 1 & 2 \\]]>
+<![CDATA[-2 & -1 & -3 \\]]>
+<![CDATA[1 & -2 & 0]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Check that $S$ is nonsingular and then compute
+<alignmath>
+<![CDATA[A&=\similar{B}{S}\\]]>
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[-6 & -4 & -1 \\]]>
+<![CDATA[-3 & -2 & -1 \\]]>
+<![CDATA[5 & 3 & 1]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[-13 & -8 & -4 \\]]>
+<![CDATA[12 & 7 & 4 \\]]>
+<![CDATA[24 & 16 & 7]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[1 & 1 & 2 \\]]>
+<![CDATA[-2 & -1 & -3 \\]]>
+<![CDATA[1 & -2 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[-1 & 0 & 0 \\]]>
+<![CDATA[0 & 3 & 0 \\]]>
+<![CDATA[0 & 0 & -1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>So by this construction, we know that $A$ and $B$ are similar.  But before we move on, look at how pleasing the form of $A$ is.  Not convinced?  Then consider that several computations related to $A$ are especially easy.  For example, in the spirit of <acroref type="example" acro="DUTM" />, $\detname{A}=(-1)(3)(-1)=3$.  Similarly, the characteristic polynomial is straightforward to compute by hand, $\charpoly{A}{x}=(-1-x)(3-x)(-1-x)=-(x-3)(x+1)^2$ and since the result is already factored, the eigenvalues are transparently $\lambda=3,\,-1$.  Finally, the eigenvectors of $A$ are just the standard unit vectors (<acroref type="definition" acro="SUV" />).</p>
+
+</example>
+
+</subsection>
+
+<subsection acro="PSM">
+<title>Properties of Similar Matrices</title>
+
+<p>Similar matrices share many properties and it is these theorems that justify the choice of the word <q>similar.</q>  First we will show that similarity is an <define>equivalence relation</define>.  Equivalence relations are important in the study of various algebras and can always be regarded as a kind of weak version of equality.  Sort of alike, but not quite equal.  The notion of two matrices being row-equivalent is an example of an equivalence relation we have been working with since the beginning of the course (see <acroref type="exercise" acro="RREF.T11" />).  Row-equivalent matrices are not equal, but they are a lot alike.  For example, row-equivalent matrices have the same rank.  Formally, an equivalence relation requires three conditions hold:  reflexive, symmetric and transitive.  We will illustrate these as we prove that similarity is an equivalence relation.</p>
+
+<theorem acro="SER" index="similarity!equivalence relation">
+<title>Similarity is an Equivalence Relation</title>
+<statement>
+<p>Suppose $A$, $B$ and $C$ are square matrices of size $n$.  Then
+<ol><li> $A$ is similar to $A$.  (Reflexive)
+</li><li> If $A$ is similar to $B$, then $B$ is similar to $A$.  (Symmetric)
+</li><li> If $A$ is similar to $B$ and $B$ is similar to $C$, then $A$ is similar to $C$.  (Transitive)
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>To see that $A$ is similar to $A$, we need only demonstrate a nonsingular matrix that effects a similarity transformation of $A$ to $A$.  $I_n$ is nonsingular (since it row-reduces to the identity matrix, <acroref type="theorem" acro="NMRRI" />), and
+<equation>
+\similar{A}{I_n}=I_nAI_n=A
+</equation></p>
+
+<p>If we assume that $A$ is similar to $B$, then we know there is a nonsingular matrix $S$ so that $A=\similar{B}{S}$ by <acroref type="definition" acro="SIM" />.  By <acroref type="theorem" acro="MIMI" />, $\inverse{S}$ is invertible, and by <acroref type="theorem" acro="NI" /> is therefore nonsingular.  So
+<alignmath>
+<![CDATA[\similar{A}{(\inverse{S})}&=SA\inverse{S}&&]]>\text{<acroref type="theorem" acro="MIMI" />}\\
+<![CDATA[&=S\similar{B}{S}\inverse{S}&&]]>\text{<acroref type="definition" acro="SIM" />}\\
+<![CDATA[&=\left(S\inverse{S}\right)B\left(S\inverse{S}\right)&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=I_nBI_n&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=B&&]]>\text{<acroref type="theorem" acro="MMIM" />}
+</alignmath>
+and we see that $B$ is similar to $A$.</p>
+
+<p>Assume that $A$ is similar to $B$, and $B$ is similar to $C$.  This gives us the existence of two nonsingular matrices, $S$ and $R$, such that $A=\similar{B}{S}$ and $B=\similar{C}{R}$, by <acroref type="definition" acro="SIM" />.  (Notice how we have to assume $S\neq R$, as will usually be the case.)  Since $S$ and $R$ are invertible, so too $RS$ is invertible by <acroref type="theorem" acro="SS" /> and then nonsingular by <acroref type="theorem" acro="NI" />.  Now
+<alignmath>
+<![CDATA[\similar{C}{(RS)}&=\similar{\similar{C}{R}}{S}&&]]>\text{<acroref type="theorem" acro="SS" />}\\
+<![CDATA[&=\similar{\left(\similar{C}{R}\right)}{S}&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=\similar{B}{S}&&]]>\text{<acroref type="definition" acro="SIM" />}\\
+<![CDATA[&=A]]>
+</alignmath>
+so $A$ is similar to $C$ via the nonsingular matrix $RS$.</p>
+
+</proof>
+</theorem>
+
+<p>Here's another theorem that tells us exactly what sorts of properties similar matrices share.</p>
+
+<theorem acro="SMEE" index="similar matrices!eual eigenvalues">
+<title>Similar Matrices have Equal Eigenvalues</title>
+<statement>
+<p>Suppose $A$ and $B$ are similar matrices.  Then the characteristic polynomials of $A$ and $B$ are equal, that is, $\charpoly{A}{x}=\charpoly{B}{x}$.</p>
+
+</statement>
+
+<proof>
+<p>Let $n$ denote the size of $A$ and $B$.  Since $A$ and $B$ are similar, there exists a nonsingular matrix $S$, such that $A=\similar{B}{S}$ (<acroref type="definition" acro="SIM" />).  Then
+<alignmath>
+<![CDATA[\charpoly{A}{x}&=\detname{A-xI_n}&&]]>\text{<acroref type="definition" acro="CP" />}\\
+<![CDATA[&=\detname{\similar{B}{S}-xI_n}&&]]>\text{<acroref type="definition" acro="SIM" />}\\
+<![CDATA[&=\detname{\similar{B}{S}-x\similar{I_n}{S}}&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=\detname{\similar{B}{S}-\inverse{S}xI_nS}&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=\detname{\similar{\left(B-xI_n\right)}{S}}&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=\detname{\inverse{S}}\detname{B-xI_n}\detname{S}&&]]>\text{<acroref type="theorem" acro="DRMM" />}\\
+<![CDATA[&=\detname{\inverse{S}}\detname{S}\detname{B-xI_n}&&]]>\text{<acroref type="property" acro="CMCN" />}\\
+<![CDATA[&=\detname{\inverse{S}S}\detname{B-xI_n}&&]]>\text{<acroref type="theorem" acro="DRMM" />}\\
+<![CDATA[&=\detname{I_n}\detname{B-xI_n}&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=1\detname{B-xI_n}&&]]>\text{<acroref type="definition" acro="DM" />}\\
+<![CDATA[&=\charpoly{B}{x}&&]]>\text{<acroref type="definition" acro="CP" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>So similar matrices not only have the same <em>set</em> of eigenvalues, the algebraic multiplicities of these eigenvalues will also be the same.  However, be careful with this theorem.  It is tempting to think the converse is true, and argue that if two matrices have the same eigenvalues, then they are similar.  Not so, as the following example illustrates.</p>
+
+<example acro="EENS" index="similar matrices!equal eigenvalues">
+<title>Equal eigenvalues, not similar</title>
+
+<p>Define
+<alignmath>
+<![CDATA[A&=\begin{bmatrix}1&1\\0&1\end{bmatrix}]]>
+<![CDATA[&]]>
+<![CDATA[B&=\begin{bmatrix}1&0\\0&1\end{bmatrix}]]>
+</alignmath>
+and check that
+<equation>
+\charpoly{A}{x}=\charpoly{B}{x}=1-2x+x^2=(x-1)^2
+</equation>
+and so $A$ and $B$ have equal characteristic polynomials.  If the converse of <acroref type="theorem" acro="SMEE" /> were true, then $A$ and $B$ would be similar.  Suppose this is the case. More precisely, suppose there is a nonsingular matrix $S$ so that $A=\similar{B}{S}$.</p>
+
+<p>Then
+<equation>
+A=\similar{B}{S}=\similar{I_2}{S}=\inverse{S}S=I_2
+</equation></p>
+
+<p>Clearly $A\neq I_2$ and this contradiction tells us that the converse of <acroref type="theorem" acro="SMEE" /> is false.</p>
+
+</example>
+
+<sageadvice acro="SM" index="similar matrices">
+<title>Similar Matrices</title>
+It is quite easy to determine if two matrices are similar, using the matrix method <code>.is_similar()</code>.  However, computationally this can be a very difficult proposition, so support in Sage is incomplete now, though it will always return a result for matrices with rational entries.  Here are examples where the two matrices, are and are not, similar.  Notice that the keyword option <code>transformation=True</code> will cause a pair to be returned, such that if the matrices are indeed similar, the matrix effecting the similarity transformation will be in the second slot of the pair.
+<sage>
+<input>A = matrix(QQ, [[ 25,   2,  -8,  -1,  11,  26,  35],
+                [ 28,   2, -15,   2,   6,  34,  31],
+                [  1, -17, -25,  28, -44,  26, -23],
+                [ 36,  -2, -24,  10,  -1,  50,  39],
+                [  0,  -7, -13,  14, -21,  14, -11],
+                [-22, -17, -16,  27, -51,   1, -53],
+                [  -1, 10,  17, -18,  28, -18,  15]])
+B = matrix(QQ, [[-89, -16, -55, -23, -104, -48, -67],
+                [-15,   1, -20, -21,  -20, -60, -26],
+                [ 48,   6,  37,  25,   59,  64,  46],
+                [-96, -16, -49, -16, -114, -23, -67],
+                [ 56,  10,  33,  13,   67,  29,  37],
+                [ 10,   2,   2,  -2,   12,  -9,   4],
+                [ 28,   6,  13,   1,   32,  -4,  16]])
+is_sim, trans = A.is_similar(B, transformation=True)
+is_sim
+</input>
+<output>True
+</output>
+</sage>
+
+Since we knew in advance these two matrices are similar, we requested the transformation matrix, so the output is a pair.  The similarity matrix is a bit of a mess, so we will let you output <code>trans</code> with the next command rather than including it here.
+<sage>
+<input>trans
+</input>
+</sage>
+
+The matrix <code>C</code> is not similar to <code>A</code> (and hence not similar to <code>B</code> by <acroref type="theorem" acro="SER" />), so we illustrate the return value when we do not request the similarity matrix (since it does not even exist).
+<sage>
+<input>C = matrix(QQ, [[ 16, -26,  19,  -56,  26,   8, -49],
+                [ 20, -43,  36, -102,  52,  23, -65],
+                [-18,  29, -21,   62, -30,  -9,  56],
+                [-17,  31, -27,   73, -37, -16,  49],
+                [ 18, -36,  30,  -82,  43,  18, -54],
+                [-32,  62, -56,  146, -77, -35,  88],
+                [ 11, -19,  17,  -44,  23,  10, -29]])
+C.is_similar(A)
+</input>
+<output>False
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="D">
+<title>Diagonalization</title>
+
+<p>Good things happen when a matrix is similar to a diagonal matrix.  For example, the eigenvalues of the matrix are the  entries on the diagonal of the diagonal matrix.  And it can be a much simpler matter to compute high powers of the matrix.  Diagonalizable matrices are also of interest in more abstract settings.  Here are the relevant definitions, then our main theorem for this section.</p>
+
+<definition acro="DIM" index="diagonal matrix">
+<title>Diagonal Matrix</title>
+<p>Suppose that $A$ is a square matrix.  Then $A$ is a <define>diagonal matrix</define> if $\matrixentry{A}{ij}=0$ whenever $i\neq j$.</p>
+
+</definition>
+
+<definition acro="DZM" index="diagonalizable">
+<title>Diagonalizable Matrix</title>
+<p>Suppose $A$ is a square matrix.  Then $A$ is <define>diagonalizable</define> if $A$ is similar to a diagonal matrix.</p>
+
+</definition>
+
+<example acro="DAB" index="diagonalization!Archetype B">
+<title>Diagonalization of Archetype B</title>
+
+<p><acroref type="archetype" acro="B" /> has a $3\times 3$ coefficient matrix
+<equation>
+B=<archetypepart acro="B" part="purematrix" /></equation>
+and is similar to a diagonal matrix, as can be seen by the following computation with the nonsingular matrix $S$,
+<alignmath>
+<![CDATA[\similar{B}{S}&=]]>
+<![CDATA[\inverse{\begin{bmatrix}-5&-3&-2\\3&2&1\\1&1&1\end{bmatrix}}]]>
+<![CDATA[<archetypepart acro="B" part="purematrix" />\begin{bmatrix}-5&-3&-2\\3&2&1\\1&1&1\end{bmatrix}\\]]>
+<![CDATA[&=\begin{bmatrix}-1&-1&-1\\2&3&1\\-1&-2&1\end{bmatrix}]]>
+<![CDATA[<archetypepart acro="B" part="purematrix" />\begin{bmatrix}-5&-3&-2\\3&2&1\\1&1&1\end{bmatrix}\\]]>
+<![CDATA[&=]]>
+<![CDATA[\begin{bmatrix}-1&0&0\\0&1&0\\0&0&2\end{bmatrix}]]>
+</alignmath>
+</p>
+
+</example>
+
+<p><acroref type="example" acro="SMS3" /> provides yet another example of a matrix that is subjected to a similarity transformation and the result is a diagonal matrix.  Alright, just how would we find the magic matrix $S$ that can be used in a similarity transformation to produce a diagonal matrix?  Before you read the statement of the next theorem, you might study the eigenvalues and eigenvectors of <acroref type="archetype" acro="B" /> and compute the eigenvalues and eigenvectors of the matrix in <acroref type="example" acro="SMS3" />.</p>
+
+<theorem acro="DC" index="diagonalization!criteria">
+<title>Diagonalization Characterization</title>
+<statement>
+<p>Suppose $A$ is a square matrix of size $n$.  Then $A$ is diagonalizable if and only if there exists a linearly independent set $S$ that contains $n$ eigenvectors of $A$.</p>
+
+</statement>
+
+<proof>
+<p><implyreverse />  Let $S=\set{\vectorlist{x}{n}}$ be a linearly independent set of eigenvectors of $A$ for the eigenvalues $\scalarlist{\lambda}{n}$.  Recall <acroref type="definition" acro="SUV" /> and define
+<alignmath>
+<![CDATA[R&=\matrixcolumns{x}{n}\\]]>
+<![CDATA[D&=]]>
+\begin{bmatrix}
+<![CDATA[\lambda_1 & 0 & 0 &\cdots & 0\\]]>
+<![CDATA[ 0 &\lambda_2 & 0 &\cdots & 0\\]]>
+<![CDATA[ 0 & 0 &\lambda_3 &\cdots & 0\\]]>
+<![CDATA[ \vdots & \vdots & \vdots & & \vdots\\]]>
+<![CDATA[ 0 & 0 & 0 &\cdots & \lambda_n]]>
+\end{bmatrix}
+=[\lambda_1\vect{e}_1|\lambda_2\vect{e}_2|\lambda_3\vect{e}_3|\ldots|\lambda_n\vect{e}_n]
+</alignmath></p>
+
+<p>The columns of $R$ are the vectors of the linearly independent set $S$ and so by <acroref type="theorem" acro="NMLIC" /> the matrix $R$ is nonsingular.  By <acroref type="theorem" acro="NI" /> we know $\inverse{R}$ exists.
+<alignmath>
+<![CDATA[\inverse{R}AR&=]]>
+\inverse{R}A\matrixcolumns{x}{n}\\
+<![CDATA[&=\inverse{R}[A\vect{x}_1|A\vect{x}_2|A\vect{x}_3|\ldots|A\vect{x}_n]]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MM" />}\\
+<![CDATA[&=\inverse{R}[\lambda_1\vect{x}_1|\lambda_2\vect{x}_2|\lambda_3\vect{x}_3|\ldots|\lambda_n\vect{x}_n]]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="EEM" />}\\
+<![CDATA[&=\inverse{R}[\lambda_1R\vect{e}_1|\lambda_2R\vect{e}_2|\lambda_3R\vect{e}_3|\ldots|\lambda_nR\vect{e}_n]]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MVP" />}\\
+<![CDATA[&=\inverse{R}[R(\lambda_1\vect{e}_1)|R(\lambda_2\vect{e}_2)|R(\lambda_3\vect{e}_3)|\ldots|R(\lambda_n\vect{e}_n)]]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=\inverse{R}R[\lambda_1\vect{e}_1|\lambda_2\vect{e}_2|\lambda_3\vect{e}_3|\ldots|\lambda_n\vect{e}_n]]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MM" />}\\
+<![CDATA[&=I_nD]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=D]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMIM" />}
+</alignmath>
+</p>
+
+<p>This says that $A$ is similar to the diagonal matrix $D$ via the nonsingular matrix $R$.  Thus $A$ is diagonalizable (<acroref type="definition" acro="DZM" />).</p>
+
+<p><implyforward />  Suppose that $A$ is diagonalizable, so there is a nonsingular matrix of size $n$
+<alignmath>
+<![CDATA[T&=\matrixcolumns{y}{n}]]>
+<intertext>and a diagonal matrix (recall <acroref type="definition" acro="SUV" />)</intertext>
+<![CDATA[E&=\begin{bmatrix}]]>
+<![CDATA[d_1 & 0 & 0 &\cdots & 0\\]]>
+<![CDATA[0 &d_2 & 0 &\cdots & 0\\]]>
+<![CDATA[0 & 0 &d_3 &\cdots & 0\\]]>
+<![CDATA[\vdots & \vdots & \vdots & & \vdots\\]]>
+<![CDATA[0 & 0 & 0 &\cdots & d_n]]>
+\end{bmatrix}
+<![CDATA[=[d_1\vect{e}_1|d_2\vect{e}_2|d_3\vect{e}_3|\ldots|d_n\vect{e}_n]&&\text{}]]>
+</alignmath>
+such that $\inverse{T}AT=E$.</p>
+
+<p>Then consider,
+<alignmath>
+<![CDATA[[A\vect{y}_1|A\vect{y}_2|A\vect{y}_3|\ldots|A\vect{y}_n]&=A\matrixcolumns{y}{n}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MM" />}\\
+<![CDATA[&=AT\\]]>
+<![CDATA[&=I_nAT]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=T\inverse{T}AT]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=TE\\]]>
+<![CDATA[&=T[d_1\vect{e}_1|d_2\vect{e}_2|d_3\vect{e}_3|\ldots|d_n\vect{e}_n]\\]]>
+<![CDATA[&=[T(d_1\vect{e}_1)|T(d_2\vect{e}_2)|T(d_3\vect{e}_3)|\ldots|T(d_n\vect{e}_n)]]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MM" />}\\
+<![CDATA[&=[d_1T\vect{e}_1|d_2T\vect{e}_2|d_3T\vect{e}_3|\ldots|d_nT\vect{e}_n]]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MM" />}\\
+<![CDATA[&=[d_1\vect{y}_1|d_2\vect{y}_2|d_3\vect{y}_3|\ldots|d_n\vect{y}_n]]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MVP" />}
+</alignmath>
+</p>
+
+<p>This equality of matrices (<acroref type="definition" acro="ME" />) allows us to conclude that the individual columns are equal vectors (<acroref type="definition" acro="CVE" />).  That is, $A\vect{y}_i=d_i\vect{y}_i$ for $1\leq i\leq n$.  In other words, $\vect{y}_i$ is an eigenvector of $A$ for the eigenvalue $d_i$, $1\leq i\leq n$.  (Why can't $\vect{y}_i=\zerovector$?).  Because $T$ is nonsingular, the set containing $T$'s columns, $S=\set{\vectorlist{y}{n}}$, is a linearly independent set (<acroref type="theorem" acro="NMLIC" />).  So the set $S$ has all the required properties.</p>
+
+</proof>
+</theorem>
+
+<p>Notice that the proof of <acroref type="theorem" acro="DC" /> is constructive.  To diagonalize a matrix, we need only locate $n$ linearly independent eigenvectors.  Then we can construct a nonsingular matrix using the eigenvectors as columns ($R$) so that $\inverse{R}AR$ is a diagonal matrix ($D$).  The entries on the diagonal of $D$ will be the eigenvalues of the eigenvectors used to create $R$, <em>in the same order</em> as the eigenvectors appear in $R$.  We illustrate this by <define>diagonalizing</define> some matrices.</p>
+
+<example acro="DMS3" index="diagonalization">
+<title>Diagonalizing a matrix of size 3</title>
+
+<p>Consider the matrix
+<equation>
+F=
+\begin{bmatrix}
+<![CDATA[-13 & -8 & -4\\]]>
+<![CDATA[12 & 7 & 4\\]]>
+<![CDATA[24 & 16 & 7]]>
+\end{bmatrix}
+</equation>
+of <acroref type="example" acro="CPMS3" />, <acroref type="example" acro="EMS3" /> and <acroref type="example" acro="ESMS3" />.  $F$'s eigenvalues and eigenspaces are
+<alignmath>
+\eigensystem{F}{3}{\colvector{-\frac{1}{2}\\\frac{1}{2}\\1}}\\
+\eigensystem{F}{-1}{\colvector{-\frac{2}{3}\\1\\0},\,\colvector{-\frac{1}{3}\\0\\1}}
+</alignmath></p>
+
+<p>Define the matrix $S$ to be the $3\times 3$ matrix whose columns are the three basis vectors in the eigenspaces for $F$,
+<equation>
+S=
+\begin{bmatrix}
+<![CDATA[-\frac{1}{2} & -\frac{2}{3} & -\frac{1}{3}\\]]>
+<![CDATA[\frac{1}{2} & 1 & 0\\]]>
+<![CDATA[1 & 0 & 1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Check that $S$ is nonsingular (row-reduces to the identity matrix, <acroref type="theorem" acro="NMRRI" /> or has a nonzero determinant, <acroref type="theorem" acro="SMZD" />).  Then the three columns of $S$ are a linearly independent set (<acroref type="theorem" acro="NMLIC" />).  By <acroref type="theorem" acro="DC" /> we now know that $F$ is diagonalizable.  Furthermore, the construction in the proof of <acroref type="theorem" acro="DC" /> tells us that if we apply the matrix $S$ to $F$ in a similarity transformation, the result will be a diagonal matrix with the eigenvalues of $F$ on the diagonal.  The eigenvalues appear on the diagonal of the matrix in the same order as the eigenvectors appear in $S$.  So,
+<alignmath>
+<![CDATA[\similar{F}{S}&=]]>
+\inverse{
+\begin{bmatrix}
+<![CDATA[-\frac{1}{2} & -\frac{2}{3} & -\frac{1}{3}\\]]>
+<![CDATA[\frac{1}{2} & 1 & 0\\]]>
+<![CDATA[1 & 0 & 1]]>
+\end{bmatrix}
+}
+\begin{bmatrix}
+<![CDATA[-13 & -8 & -4\\]]>
+<![CDATA[12 & 7 & 4\\]]>
+<![CDATA[24 & 16 & 7]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[-\frac{1}{2} & -\frac{2}{3} & -\frac{1}{3}\\]]>
+<![CDATA[\frac{1}{2} & 1 & 0\\]]>
+<![CDATA[1 & 0 & 1]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[6 & 4 & 2\\]]>
+<![CDATA[-3 & -1 & -1\\]]>
+<![CDATA[-6 & -4 & -1]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[-13 & -8 & -4\\]]>
+<![CDATA[12 & 7 & 4\\]]>
+<![CDATA[24 & 16 & 7]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[-\frac{1}{2} & -\frac{2}{3} & -\frac{1}{3}\\]]>
+<![CDATA[\frac{1}{2} & 1 & 0\\]]>
+<![CDATA[1 & 0 & 1]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[3 & 0 & 0\\]]>
+<![CDATA[0 & -1 & 0\\]]>
+<![CDATA[0 & 0 & -1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Note that the above computations can be viewed two ways.  The proof of <acroref type="theorem" acro="DC" /> tells us that the four matrices ($F$, $S$, $\inverse{F}$ and the diagonal matrix) <em>will</em> interact the way we have written the equation.  Or as an example, we can actually <em>perform</em> the computations to verify what the theorem predicts.</p>
+
+</example>
+
+<p>The dimension of an eigenspace can be no larger than the algebraic multiplicity of the eigenvalue by <acroref type="theorem" acro="ME" />.  When every eigenvalue's eigenspace is this large, then we can diagonalize the matrix, and only then.   Three examples we have seen so far in this section,  <acroref type="example" acro="SMS5" />,  <acroref type="example" acro="DAB" /> and <acroref type="example" acro="DMS3" />,  illustrate the diagonalization of a matrix, with varying degrees of detail about just how the diagonalization is achieved.  However, in each case, you can verify that the geometric and algebraic multiplicities are equal for every eigenvalue.  This is the substance of the next theorem.</p>
+
+<theorem acro="DMFE" index="diagonalizable!full eigenspaces">
+<title>Diagonalizable Matrices have Full Eigenspaces</title>
+<statement>
+<p>Suppose $A$ is a square matrix.  Then $A$ is diagonalizable if and only if $\geomult{A}{\lambda}=\algmult{A}{\lambda}$ for every eigenvalue $\lambda$ of $A$.</p>
+
+</statement>
+
+<proof>
+<p>Suppose $A$ has size $n$ and $k$ distinct eigenvalues, $\scalarlist{\lambda}{k}$.  Let $S_i=\set{\vect{x}_{i1},\,\vect{x}_{i2},\,\vect{x}_{i3},\,\ldots,\,\vect{x}_{i\geomult{A}{\lambda_i}}}$,  denote a basis for the eigenspace of $\lambda_i$, $\eigenspace{A}{\lambda_i}$,  for $1\leq i\leq k$.  Then
+<equation>
+S=S_1\cup S_2\cup S_3\cup\cdots\cup S_k
+</equation>
+is a set of eigenvectors for $A$.  A vector cannot be an eigenvector for two different eigenvalues (see <acroref type="exercise" acro="EE.T20" />) so $S_i\cap S_j=\emptyset$ whenever $i\neq j$.  In other words, $S$ is a disjoint union of $S_i$, $1\leq i\leq k$.</p>
+
+<p><implyreverse />  The size of $S$ is
+<alignmath>
+\card{S}
+<![CDATA[&=\sum_{i=1}^k\geomult{A}{\lambda_i}&&\text{$S$ disjoint union of $S_i$}\\]]>
+<![CDATA[&=\sum_{i=1}^k\algmult{A}{\lambda_i}&&\text{Hypothesis}\\]]>
+<![CDATA[&=n&&]]>\text{<acroref type="theorem" acro="NEM" />}
+</alignmath>
+</p>
+
+<p>We next show that $S$ is a linearly independent set.  So we will begin with a relation of linear dependence on $S$, using doubly-subscripted scalars and eigenvectors,
+<alignmath>
+<![CDATA[\zerovector&=]]>
+\left(a_{11}\vect{x}_{11}+a_{12}\vect{x}_{12}+\cdots+a_{1\geomult{A}{\lambda_1}}\vect{x}_{1\geomult{A}{\lambda_1}}\right)+
+\left(a_{21}\vect{x}_{21}+a_{22}\vect{x}_{22}+\cdots+a_{2\geomult{A}{\lambda_2}}\vect{x}_{2\geomult{A}{\lambda_2}}\right)\\
+<![CDATA[&\quad\quad+\cdots+]]>
+\left(a_{k1}\vect{x}_{k1}+a_{k2}\vect{x}_{k2}+\cdots+a_{k\geomult{A}{\lambda_k}}\vect{x}_{k\geomult{A}{\lambda_k}}\right)
+</alignmath>
+</p>
+
+<p>Define the vectors $\vect{y}_i$, $1\leq i\leq k$ by
+<alignmath>
+<![CDATA[\vect{y}_1&=\left(a_{11}\vect{x}_{11}+a_{12}\vect{x}_{12}+a_{13}\vect{x}_{13}+\cdots+a_{\geomult{A}{1\lambda_1}}\vect{x}_{1\geomult{A}{\lambda_1}}\right)\\]]>
+<![CDATA[\vect{y}_2&=\left(a_{21}\vect{x}_{21}+a_{22}\vect{x}_{22}+a_{23}\vect{x}_{23}+\cdots+a_{\geomult{A}{2\lambda_2}}\vect{x}_{2\geomult{A}{\lambda_2}}\right)\\]]>
+<![CDATA[\vect{y}_3&=\left(a_{31}\vect{x}_{31}+a_{32}\vect{x}_{32}+a_{33}\vect{x}_{33}+\cdots+a_{\geomult{A}{3\lambda_3}}\vect{x}_{3\geomult{A}{\lambda_3}}\right)\\]]>
+<![CDATA[&\quad\quad\vdots\\]]>
+<![CDATA[\vect{y}_k&=\left(a_{k1}\vect{x}_{k1}+a_{k2}\vect{x}_{k2}+a_{k3}\vect{x}_{k3}+\cdots+a_{\geomult{A}{k\lambda_k}}\vect{x}_{k\geomult{A}{\lambda_k}}\right)]]>
+</alignmath>
+</p>
+
+<p>Then the relation of linear dependence becomes
+<alignmath>
+<![CDATA[\zerovector&=\vect{y}_1+\vect{y}_2+\vect{y}_3+\cdots+\vect{y}_k]]>
+</alignmath>
+</p>
+
+<p>Since the eigenspace $\eigenspace{A}{\lambda_i}$ is closed under vector addition and scalar multiplication, $\vect{y}_i\in\eigenspace{A}{\lambda_i}$, $1\leq i\leq k$.  Thus, for each $i$, the vector $\vect{y}_i$ is an eigenvector of $A$ for $\lambda_i$, or is the zero vector.  Recall that sets of eigenvectors whose eigenvalues are distinct form a linearly independent set by <acroref type="theorem" acro="EDELI" />.  Should any (or some) $\vect{y}_i$ be nonzero, the previous equation would provide a nontrivial relation of linear dependence on a set of eigenvectors with distinct eigenvalues, contradicting <acroref type="theorem" acro="EDELI" />.  Thus $\vect{y}_i=\zerovector$, $1\leq i\leq k$.</p>
+
+<p>Each of the $k$ equations, $\vect{y}_i=\zerovector$ is a relation of linear dependence on the corresponding set $S_i$, a set of basis vectors for the eigenspace $\eigenspace{A}{\lambda_i}$, which is therefore linearly independent.  From these relations of linear dependence on linearly independent sets we conclude that the scalars are all zero, more precisely, $a_{ij}=0$, $1\leq j\leq\geomult{A}{\lambda_i}$ for $1\leq i\leq k$.  This establishes that our original relation of linear dependence on $S$ has only the trivial relation of linear dependence, and hence $S$ is a linearly independent set.</p>
+
+<p>We have determined that $S$ is a set of $n$ linearly independent eigenvectors for $A$, and so by <acroref type="theorem" acro="DC" /> is diagonalizable.</p>
+
+<p><implyforward />  Now we assume that $A$ is diagonalizable.  Aiming for a contradiction (<acroref type="technique" acro="CD" />), suppose that there is at least one eigenvalue, say $\lambda_t$, such that $\geomult{A}{\lambda_t}\neq\algmult{A}{\lambda_t}$.  By <acroref type="theorem" acro="ME" /> we must have
+<![CDATA[$\geomult{A}{\lambda_t}<\algmult{A}{\lambda_t}$,]]>
+and $\geomult{A}{\lambda_i}\leq\algmult{A}{\lambda_i}$ for $1\leq i\leq k$, $i\neq t$.</p>
+
+<p>Since $A$ is diagonalizable, <acroref type="theorem" acro="DC" /> guarantees a set of $n$ linearly independent vectors, all of which are eigenvectors of $A$.  Let $n_i$ denote the number of eigenvectors in $S$ that are eigenvectors for $\lambda_i$, and recall that a vector cannot be an eigenvector for two different eigenvalues (<acroref type="exercise" acro="EE.T20" />).  $S$ is a linearly independent set, so the subset $S_i$ containing the $n_i$ eigenvectors for $\lambda_i$ must also be linearly independent.  Because the eigenspace $\eigenspace{A}{\lambda_i}$ has dimension $\geomult{A}{\lambda_i}$ and $S_i$ is a linearly independent subset in $\eigenspace{A}{\lambda_i}$, <acroref type="theorem" acro="G" /> tells us that $n_i\leq\geomult{A}{\lambda_i}$, for $1\leq i\leq k$.</p>
+
+<p>Putting all these facts together gives,
+<alignmath>
+n
+<![CDATA[&=n_1+n_2+n_3+\cdots+n_t+\cdots+n_k]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="SU" />}\\
+<![CDATA[&\leq\geomult{A}{\lambda_1}+\geomult{A}{\lambda_2}+\geomult{A}{\lambda_3}+\cdots+\geomult{A}{\lambda_t}+\cdots+\geomult{A}{\lambda_k}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="G" />}\\
+<![CDATA[&<\algmult{A}{\lambda_1}+\algmult{A}{\lambda_2}+\algmult{A}{\lambda_3}+\cdots+\algmult{A}{\lambda_t}+\cdots+\algmult{A}{\lambda_k}&&]]>\text{<acroref type="theorem" acro="ME" />}\\
+<![CDATA[&=n]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="NEM" />}
+</alignmath>
+</p>
+
+<p>This is a contradiction
+<![CDATA[(we can't have $n<n$!)]]>
+and so our assumption that some eigenspace had less than full dimension was false.</p>
+
+</proof>
+</theorem>
+
+<p><acroref type="example" acro="SEE" />,
+<acroref type="example" acro="CAEHW" />,
+<acroref type="example" acro="ESMS3" />,
+<acroref type="example" acro="ESMS4" />,
+<acroref type="example" acro="DEMS5" />,
+<acroref type="archetype" acro="B" />,
+<acroref type="archetype" acro="F" />,
+<acroref type="archetype" acro="K" /> and
+<acroref type="archetype" acro="L" />
+are all examples of matrices that are diagonalizable and that illustrate <acroref type="theorem" acro="DMFE" />.  While we have provided many examples of matrices that are diagonalizable, especially among the archetypes, there are many matrices that are not diagonalizable.  Here's one now.</p>
+
+<example acro="NDMS4" index="diagonalizable!not">
+<title>A non-diagonalizable matrix of size 4</title>
+
+<p>In <acroref type="example" acro="EMMS4" /> the matrix
+<equation>
+B=
+\begin{bmatrix}
+<![CDATA[-2 & 1 & -2 & -4\\]]>
+<![CDATA[12 & 1 & 4 & 9\\]]>
+<![CDATA[6 & 5 & -2 & -4\\]]>
+<![CDATA[3 & -4 & 5 & 10]]>
+\end{bmatrix}
+</equation>
+was determined to have characteristic polynomial
+<equation>
+\charpoly{B}{x}=(x-1)(x-2)^3
+</equation>
+and an eigenspace for $\lambda=2$ of
+<equation>
+\eigenspace{B}{2}=\spn{\set{\colvector{-\frac{1}{2}\\1\\-\frac{1}{2}\\1}}}\\
+</equation>
+</p>
+
+<p>So the geometric multiplicity of $\lambda=2$ is $\geomult{B}{2}=1$, while the algebraic multiplicity is $\algmult{B}{2}=3$.  By <acroref type="theorem" acro="DMFE" />, the matrix $B$ is not diagonalizable.</p>
+
+</example>
+
+<p><acroref type="archetype" acro="A" /> is the lone archetype with a square matrix that is not diagonalizable, as the algebraic and geometric multiplicities of the eigenvalue $\lambda=0$ differ.  <acroref type="example" acro="HMEM5" /> is another example of a matrix that cannot be diagonalized due to the difference between the geometric and algebraic multiplicities of $\lambda=2$, as is <acroref type="example" acro="CEMS6" /> which has two complex eigenvalues, each with differing multiplicities.  Likewise, <acroref type="example" acro="EMMS4" /> has an eigenvalue with different algebraic and geometric multiplicities and so cannot be diagonalized.</p>
+
+<sageadvice acro="MD" index="diagonalization of a matrix">
+<title>Matrix Diagonalization</title>
+The third way to get eigenvectors is the matrix method <code>.eigenmatrix_right()</code> (and the analogous <code>.eigenmatrix_left()</code>).  It always returns two square matrices of the same size as the original matrix.  The first matrix of the output is a diagonal matrix with the eigenvalues of the matrix filling the diagonal entries of the matrix.  The second matrix has eigenvectors in the columns, in the same order as the corresponding eigenvalues.  For a single eigenvalue, these columns/eigenvectors form a linearly independent set.<br /><br />
+A careful reading of the previous paragraph suggests the question:  what if we do not have enough eigenvectors to fill the columns of the second square matrix?  When the geometric multiplicity does not equal the algebraic multiplicity, the deficit is met by inserting zero columns in the matrix of eigenvectors.  Conversely, when the matrix is diagonalizable, by <acroref type="theorem" acro="DMFE" /> the geometric and algebraic multiplicities of each eigenvalue are equal, and the union of the bases of the eigenspaces provides a complete set of linearly independent vectors.  So for a matrix $A$, Sage will output two matrices, $D$ and $S$ such that $\inverse{S}AS=D$.<br /><br />
+We can rewrite the relation above as $AS=SD$.  In the case of a non-diagonalizable matrix, the matrix of eigenvectors is singular (it has zero columns), but the relationship $AS=SD$ still holds.  Here are examples of the two scenarios, along with demonstrations of the matrix method <code>is_diagonalizable()</code>.
+<sage>
+<input>A = matrix(QQ, [[ 2, -18, -68,  64, -99, -87,  83],
+                [ 4, -10, -41,  34, -58, -57,  46],
+                [ 4,  16,  59, -60,  86,  70, -72],
+                [ 2, -15, -65,  57, -92, -81,  78],
+                [-4,  -7, -32,  31, -45, -31,  41],
+                [ 2,  -6, -22,  20, -32, -31,  26],
+                [ 0,   7,  30, -27,  42,  37, -36]])
+D, S = A.eigenmatrix_right()
+D
+</input>
+<output>[ 0  0  0  0  0  0  0]
+[ 0  2  0  0  0  0  0]
+[ 0  0  2  0  0  0  0]
+[ 0  0  0 -1  0  0  0]
+[ 0  0  0  0 -1  0  0]
+[ 0  0  0  0  0 -3  0]
+[ 0  0  0  0  0  0 -3]
+</output>
+</sage>
+
+<sage>
+<input>S
+</input>
+<output>[     1      1      0      1      0      1      0]
+[ 13/23      0      1      0      1      0      1]
+[-20/23    1/3     -2     -1    2/7   -4/3    5/6]
+[ 21/23    1/3      1      0   10/7      1      0]
+[ 10/23   -1/6      1     -1   15/7    4/3   -4/3]
+[  8/23    1/3      0      1     -1      0    1/2]
+[-10/23    1/6     -1     -1    6/7   -1/3   -1/6]
+</output>
+</sage>
+
+<sage>
+<input>S.inverse()*A*S == D
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.is_diagonalizable()
+</input>
+<output>True
+</output>
+</sage>
+
+Now for a matrix that is far from diagonalizable.
+<sage>
+<input>B = matrix(QQ, [[ 37, -13,  30,  81, -74, -13,  18],
+                [  6,  26,  21, -11, -46, -48,  19],
+                [ 16,  10,  29,  16, -42, -39,  26],
+                [-24,   8, -24, -53,  54,  13, -15],
+                [ -8,   3,  -8, -20,  24,   4,  -5],
+                [ 31,  12,  46,  48, -97, -56,  35],
+                [  8,   5,  16,  12, -34, -20,  11]])
+D, S = B.eigenmatrix_right()
+D
+</input>
+<output>[-2  0  0  0  0  0  0]
+[ 0 -2  0  0  0  0  0]
+[ 0  0 -2  0  0  0  0]
+[ 0  0  0  6  0  0  0]
+[ 0  0  0  0  6  0  0]
+[ 0  0  0  0  0  6  0]
+[ 0  0  0  0  0  0  6]
+</output>
+</sage>
+
+<sage>
+<input>S
+</input>
+<output>[   1    0    0    1    0    0    0]
+[ 1/4    0    0  1/4    0    0    0]
+[ 1/2    0    0  3/8    0    0    0]
+[-3/4    0    0 -5/8    0    0    0]
+[-1/4    0    0 -1/4    0    0    0]
+[   1    0    0  7/8    0    0    0]
+[ 1/4    0    0  1/4    0    0    0]
+</output>
+</sage>
+
+<sage>
+<input>B*S == S*D
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>B.is_diagonalizable()
+</input>
+<output>False
+</output>
+</sage>
+
+
+
+</sageadvice>
+<theorem acro="DED" index="diagonalizable!distinct eigenvalues">
+<title>Distinct Eigenvalues implies Diagonalizable</title>
+<statement>
+<p>Suppose $A$ is a square matrix of size $n$ with $n$ distinct eigenvalues.  Then $A$ is diagonalizable.</p>
+
+</statement>
+
+<proof>
+<p>Let $\scalarlist{\lambda}{n}$ denote the $n$ distinct eigenvalues of $A$.
+Then by <acroref type="theorem" acro="NEM" /> we have $n=\sum_{i=1}^n\algmult{A}{\lambda_i}$, which implies that $\algmult{A}{\lambda_i}=1$, $1\leq i\leq n$.  From <acroref type="theorem" acro="ME" /> it follows that $\geomult{A}{\lambda_i}=1$, $1\leq i\leq n$.  So $\geomult{A}{\lambda_i}=\algmult{A}{\lambda_i}$, $1\leq i\leq n$ and <acroref type="theorem" acro="DMFE" /> says $A$ is diagonalizable.</p>
+
+</proof>
+</theorem>
+
+<example acro="DEHD" index="diagonalizable!distinct eigenvalues">
+<title>Distinct eigenvalues, hence diagonalizable</title>
+
+<p>In <acroref type="example" acro="DEMS5" /> the matrix
+<equation>
+H=
+\begin{bmatrix}
+<![CDATA[15 & 18 & -8 & 6 & -5\\]]>
+<![CDATA[5 & 3 & 1 & -1 & -3\\]]>
+<![CDATA[0 & -4 & 5 & -4 & -2\\]]>
+<![CDATA[-43 & -46 & 17 & -14 & 15\\]]>
+<![CDATA[26 & 30 & -12 & 8 & -10]]>
+\end{bmatrix}
+</equation>
+has characteristic polynomial
+<equation>
+\charpoly{H}{x}=x(x-2)(x-1)(x+1)(x+3)
+</equation>
+and so is a $5\times 5$ matrix with 5 distinct eigenvalues.</p>
+
+<p>By <acroref type="theorem" acro="DED" /> we know $H$ must be diagonalizable.  But just for practice, we exhibit the diagonalization itself.  The matrix $S$ contains eigenvectors of $H$ as columns, one from each eigenspace, guaranteeing linear independent columns and thus the nonsingularity of $S$.  The diagonal matrix has the eigenvalues of $H$ in the same order that their respective eigenvectors appear as the columns of $S$.  Notice that we are using the versions of the eigenvectors from <acroref type="example" acro="DEMS5" /> that have integer entries.
+<alignmath>
+<![CDATA[&\similar{H}{S}\\]]>
+<![CDATA[&=]]>
+\inverse{
+\begin{bmatrix}
+<![CDATA[2 & 1 & -1 & 1 & 1\\]]>
+<![CDATA[-1 & 0 & 2 & 0 & -1\\]]>
+<![CDATA[-2 & 0 & 2 & -1 & -2\\]]>
+<![CDATA[-4 & -1 & 0 & -2 & -1\\]]>
+<![CDATA[2 & 2 & 1 & 2 & 1]]>
+\end{bmatrix}
+}
+\begin{bmatrix}
+<![CDATA[15 & 18 & -8 & 6 & -5\\]]>
+<![CDATA[5 & 3 & 1 & -1 & -3\\]]>
+<![CDATA[0 & -4 & 5 & -4 & -2\\]]>
+<![CDATA[-43 & -46 & 17 & -14 & 15\\]]>
+<![CDATA[26 & 30 & -12 & 8 & -10]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[2 & 1 & -1 & 1 & 1\\]]>
+<![CDATA[-1 & 0 & 2 & 0 & -1\\]]>
+<![CDATA[-2 & 0 & 2 & -1 & -2\\]]>
+<![CDATA[-4 & -1 & 0 & -2 & -1\\]]>
+<![CDATA[2 & 2 & 1 & 2 & 1]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[-3 & -3 & 1 & -1 & 1\\]]>
+<![CDATA[-1 & -2 & 1 & 0 & 1\\]]>
+<![CDATA[-5 & -4 & 1 & -1 & 2\\]]>
+<![CDATA[10 & 10 & -3 & 2 & -4\\]]>
+<![CDATA[-7 & -6 & 1 & -1 & 3]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[15 & 18 & -8 & 6 & -5\\]]>
+<![CDATA[5 & 3 & 1 & -1 & -3\\]]>
+<![CDATA[0 & -4 & 5 & -4 & -2\\]]>
+<![CDATA[-43 & -46 & 17 & -14 & 15\\]]>
+<![CDATA[26 & 30 & -12 & 8 & -10]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[2 & 1 & -1 & 1 & 1\\]]>
+<![CDATA[-1 & 0 & 2 & 0 & -1\\]]>
+<![CDATA[-2 & 0 & 2 & -1 & -2\\]]>
+<![CDATA[-4 & -1 & 0 & -2 & -1\\]]>
+<![CDATA[2 & 2 & 1 & 2 & 1]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[-3 & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & -1 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 2]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+</example>
+
+<p><acroref type="archetype" acro="B" /> is another example of a matrix that has as many distinct eigenvalues as its size, and is hence diagonalizable by <acroref type="theorem" acro="DED" />.</p>
+
+<p>Powers of a diagonal matrix are easy to compute, and when a matrix is diagonalizable, it is almost as easy.  We could state a theorem here perhaps, but we will settle instead for an example that makes the point just as well.</p>
+
+<example acro="HPDM" index="diagonalizable matrix!high power">
+<title>High power of a diagonalizable matrix</title>
+
+<p>Suppose that
+<equation>
+A=\begin{bmatrix}
+<![CDATA[ 19 & 0 & 6 & 13 \\]]>
+<![CDATA[ -33 & -1 & -9 & -21 \\]]>
+<![CDATA[ 21 & -4 & 12 & 21 \\]]>
+<![CDATA[ -36 & 2 & -14 & -28]]>
+\end{bmatrix}
+</equation>
+and we wish to compute $A^{20}$.  Normally this would require 19 matrix multiplications, but since $A$ is diagonalizable, we can simplify the computations substantially.</p>
+
+<p>First, we diagonalize $A$.  With
+<equation>
+S=\begin{bmatrix}
+<![CDATA[ 1 & -1 & 2 & -1 \\]]>
+<![CDATA[ -2 & 3 & -3 & 3 \\]]>
+<![CDATA[ 1 & 1 & 3 & 3 \\]]>
+<![CDATA[ -2 & 1 & -4 & 0]]>
+\end{bmatrix}
+</equation>
+we find
+<alignmath>
+D=\similar{A}{S}
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ -6 & 1 & -3 & -6 \\]]>
+<![CDATA[ 0 & 2 & -2 & -3 \\]]>
+<![CDATA[ 3 & 0 & 1 & 2 \\]]>
+<![CDATA[ -1 & -1 & 1 & 1]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[ 19 & 0 & 6 & 13 \\]]>
+<![CDATA[ -33 & -1 & -9 & -21 \\]]>
+<![CDATA[ 21 & -4 & 12 & 21 \\]]>
+<![CDATA[ -36 & 2 & -14 & -28]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[ 1 & -1 & 2 & -1 \\]]>
+<![CDATA[ -2 & 3 & -3 & 3 \\]]>
+<![CDATA[ 1 & 1 & 3 & 3 \\]]>
+<![CDATA[ -2 & 1 & -4 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ -1 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 2 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Now we find an alternate expression for $A^{20}$,
+<alignmath>
+A^{20}
+<![CDATA[&=AAA\ldots A\\]]>
+<![CDATA[&=I_nAI_nAI_nAI_n\ldots I_nAI_n\\]]>
+<![CDATA[&=\left(S\inverse{S}\right)A\left(S\inverse{S}\right)A\left(S\inverse{S}\right)A\left(S\inverse{S}\right)\ldots]]>
+\left(S\inverse{S}\right)A\left(S\inverse{S}\right)\\
+<![CDATA[&=S\left(\inverse{S}AS\right)\left(\inverse{S}AS\right)\left(\inverse{S}AS\right)\ldots \left(\inverse{S}AS\right)\inverse{S}\\]]>
+<![CDATA[&=SDDD\ldots D\inverse{S}\\]]>
+<![CDATA[&=SD^{20}\inverse{S}]]>
+<intertext>and since $D$ is a diagonal matrix, powers are much easier to compute,</intertext>
+<![CDATA[&=]]>
+S
+\begin{bmatrix}
+<![CDATA[ -1 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 2 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 1]]>
+\end{bmatrix}^{20}
+\inverse{S}\\
+<![CDATA[&=]]>
+S
+\begin{bmatrix}
+<![CDATA[ (-1)^{20} & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & (0)^{20} & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & (2)^{20} & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & (1)^{20}]]>
+\end{bmatrix}
+\inverse{S}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ 1 & -1 & 2 & -1 \\]]>
+<![CDATA[ -2 & 3 & -3 & 3 \\]]>
+<![CDATA[ 1 & 1 & 3 & 3 \\]]>
+<![CDATA[ -2 & 1 & -4 & 0]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[ 1 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 1048576 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 1]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[ -6 & 1 & -3 & -6 \\]]>
+<![CDATA[ 0 & 2 & -2 & -3 \\]]>
+<![CDATA[ 3 & 0 & 1 & 2 \\]]>
+<![CDATA[ -1 & -1 & 1 & 1]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ 6291451 & 2 & 2097148 & 4194297 \\]]>
+<![CDATA[ -9437175 & -5 & -3145719 & -6291441 \\]]>
+<![CDATA[ 9437175 & -2 & 3145728 &  6291453 \\]]>
+<![CDATA[ -12582900 & -2 & -4194298 & -8388596]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Notice how we effectively replaced the twentieth power of $A$ by the twentieth power of $D$, and how a high power of a diagonal matrix is just a collection of powers of scalars on the diagonal.  The price we pay for this simplification is the need to diagonalize the matrix (by computing eigenvalues and eigenvectors) and finding the inverse of the matrix of eigenvectors.  And we still need to do two matrix products.  But the higher the power, the greater the savings.</p>
+
+</example>
+
+</subsection>
+
+<subsection acro="FS">
+<title>Fibonacci Sequences</title>
+
+<example acro="FSCF" index="Fibonacci sequence">
+<title>Fibonacci sequence, closed form</title>
+
+<p>The <define>Fibonacci sequence</define> is a sequence of integers defined recursively by
+<alignmath>
+<![CDATA[a_0&=0]]>
+<![CDATA[&]]>
+<![CDATA[a_1&=1]]>
+<![CDATA[&]]>
+<![CDATA[a_{n+1}&=a_n+a_{n-1},\quad n\geq 1]]>
+</alignmath></p>
+
+<p>So the initial portion of the sequence is $0,\,1,\,1,\,2,\,3,\,5,\,8,\,13,\,21,\,\ldots$.  In this subsection we will illustrate an application of eigenvalues and diagonalization through the determination of a closed-form expression for an arbitrary term of this sequence.</p>
+
+<p>To begin, verify that for any $n\geq 1$ the recursive statement above establishes the truth of the statement
+<alignmath>
+\colvector{a_n\\a_{n+1}}
+<![CDATA[&=]]>
+<![CDATA[\begin{bmatrix}0&1\\1&1\end{bmatrix}]]>
+\colvector{a_{n-1}\\a_n}
+</alignmath>
+</p>
+
+<p>Let $A$ denote this $2\times 2$ matrix.  Through repeated applications of the statement above we have
+<alignmath>
+\colvector{a_n\\a_{n+1}}
+<![CDATA[&]]>
+=A\colvector{a_{n-1}\\a_n}
+=A^2\colvector{a_{n-2}\\a_{n-1}}
+=A^3\colvector{a_{n-3}\\a_{n-2}}
+=\cdots
+=A^n\colvector{a_{0}\\a_{1}}
+</alignmath></p>
+
+<p>In preparation for working with this high power of $A$, not unlike in <acroref type="example" acro="HPDM" />, we will diagonalize $A$.  The characteristic polynomial of $A$ is $\charpoly{A}{x}=x^2-x-1$, with roots  (the eigenvalues of $A$ by <acroref type="theorem" acro="EMRCP" />)
+<alignmath>
+<![CDATA[\rho&=\frac{1+\sqrt{5}}{2}]]>
+<![CDATA[&]]>
+<![CDATA[\delta&=\frac{1-\sqrt{5}}{2}]]>
+</alignmath>
+</p>
+
+<p>With two distinct eigenvalues, <acroref type="theorem" acro="DED" /> implies that $A$ is diagonalizable.  It will be easier to compute with these eigenvalues once you confirm the following properties (all but the last can be derived from the fact that $\rho$ and $\delta$ are roots of the characteristic polynomial, in a factored or unfactored form)
+<alignmath>
+<![CDATA[\rho+\delta&=1]]>
+<![CDATA[&]]>
+<![CDATA[\rho\delta&=-1]]>
+<![CDATA[&]]>
+<![CDATA[1+\rho&=\rho^2]]>
+<![CDATA[&]]>
+<![CDATA[1+\delta&=\delta^2]]>
+<![CDATA[&]]>
+<![CDATA[\rho-\delta&=\sqrt{5}]]>
+</alignmath>
+</p>
+
+<p>Then eigenvectors of $A$ (for $\rho$ and $\delta$, respectively) are
+<alignmath>
+<![CDATA[&\colvector{1\\\rho}]]>
+<![CDATA[&]]>
+<![CDATA[&\colvector{1\\\delta}]]>
+</alignmath>
+which can be easily confirmed, as we demonstrate for the eigenvector for $\rho$,
+<alignmath>
+<![CDATA[\begin{bmatrix}0&1\\1&1\end{bmatrix}\colvector{1\\\rho}]]>
+<![CDATA[&]]>
+=\colvector{\rho\\1+\rho}
+=\colvector{\rho\\\rho^2}
+=\rho\colvector{1\\\rho}
+</alignmath>
+</p>
+
+<p>From the proof of <acroref type="theorem" acro="DC" /> we know $A$ can be diagonalized by a matrix $S$ with these eigenvectors as columns, giving $D=\inverse{S}AS$.  We list $S$, $\inverse{S}$ and the diagonal matrix $D$,
+<alignmath>
+<![CDATA[S&=\begin{bmatrix}1&1\\\rho&\delta\end{bmatrix}]]>
+<![CDATA[&]]>
+<![CDATA[\inverse{S}&=\frac{1}{\rho-\delta}\begin{bmatrix}-\delta&1\\\rho&-1\end{bmatrix}]]>
+<![CDATA[&]]>
+<![CDATA[D&=\begin{bmatrix}\rho&0\\0&\delta\end{bmatrix}]]>
+</alignmath>
+</p>
+
+<p>OK, we have everything in place now.  The main step in the following is to replace $A$ by $SD\inverse{S}$. Here we go,
+<alignmath>
+\colvector{a_n\\a_{n+1}}
+<![CDATA[&=A^n\colvector{a_{0}\\a_{1}}\\]]>
+<![CDATA[&=\left(SD\inverse{S}\right)^n\colvector{a_{0}\\a_{1}}\\]]>
+<![CDATA[&=SD\inverse{S}SD\inverse{S}SD\inverse{S}\cdots SD\inverse{S}\colvector{a_{0}\\a_{1}}\\]]>
+<![CDATA[&=SDDD\cdots D\inverse{S}\colvector{a_{0}\\a_{1}}\\]]>
+<![CDATA[&=SD^n\inverse{S}\colvector{a_{0}\\a_{1}}\\]]>
+<![CDATA[&=]]>
+<![CDATA[\begin{bmatrix}1&1\\\rho&\delta\end{bmatrix}]]>
+<![CDATA[\begin{bmatrix}\rho&0\\0&\delta\end{bmatrix}^n]]>
+<![CDATA[\frac{1}{\rho-\delta}\begin{bmatrix}-\delta&1\\\rho&-1\end{bmatrix}]]>
+\colvector{a_{0}\\a_{1}}\\
+<![CDATA[&=]]>
+\frac{1}{\rho-\delta}
+<![CDATA[\begin{bmatrix}1&1\\\rho&\delta\end{bmatrix}]]>
+<![CDATA[\begin{bmatrix}\rho^n&0\\0&\delta^n\end{bmatrix}]]>
+<![CDATA[\begin{bmatrix}-\delta&1\\\rho&-1\end{bmatrix}]]>
+\colvector{0\\1}\\
+<![CDATA[&=]]>
+\frac{1}{\rho-\delta}
+<![CDATA[\begin{bmatrix}1&1\\\rho&\delta\end{bmatrix}]]>
+<![CDATA[\begin{bmatrix}\rho^n&0\\0&\delta^n\end{bmatrix}]]>
+\colvector{1\\-1}\\
+<![CDATA[&=]]>
+\frac{1}{\rho-\delta}
+<![CDATA[\begin{bmatrix}1&1\\\rho&\delta\end{bmatrix}]]>
+\colvector{\rho^n\\-\delta^n}\\
+<![CDATA[&=]]>
+\frac{1}{\rho-\delta}
+\colvector{\rho^n-\delta^n\\\rho^{n+1}-\delta^{n+1}}
+</alignmath>
+</p>
+
+<p>Performing the scalar multiplication and equating the first entries of the two vectors, we arrive at the closed form expression
+<alignmath>
+<![CDATA[a_n&=\frac{1}{\rho-\delta}\left(\rho^n-\delta^n\right)\\]]>
+<![CDATA[&=\frac{1}{\sqrt{5}}]]>
+\left(\left(\frac{1+\sqrt{5}}{2}\right)^n-\left(\frac{1-\sqrt{5}}{2}\right)^n\right)\\
+<![CDATA[&=\frac{1}{2^n\sqrt{5}}]]>
+\left(\left(1+\sqrt{5}\right)^n-\left(1-\sqrt{5}\right)^n\right)
+</alignmath>
+</p>
+
+<p>Notice that it does not matter whether we use the equality of the first or second entries of the vectors, we will arrive at the same formula, once in terms of $n$ and again in terms of $n+1$.  Also, our definition clearly describes a sequence that will only contain integers, yet the presence of the irrational number $\sqrt{5}$ might make us suspicious.  But no, our expression for $a^n$ will always yield an integer!</p>
+
+<p>The Fibonacci sequence, and generalizations of it, have been extensively studied (Fibonacci lived in the 12th and 13th centuries).  There are many ways to derive the closed-form expression we just found, and our approach may not be the most efficient route.  But it is a nice demonstration of how diagonalization can be used to solve a problem outside the field of linear algebra.</p>
+
+</example>
+
+<p>We close this section with a comment about an important upcoming theorem that we prove in <acroref type="chapter" acro="R" />.  A consequence of <acroref type="theorem" acro="OD" /> is that every Hermitian matrix (<acroref type="definition" acro="HM" />) is diagonalizable (<acroref type="definition" acro="DZM" />), and the similarity transformation that accomplishes the diagonalization uses a unitary matrix (<acroref type="definition" acro="UM" />).  This means that for every Hermitian matrix of size $n$ there is a basis of $\complex{n}$  that is composed entirely of eigenvectors for the matrix and also forms an orthonormal set (<acroref type="definition" acro="ONS" />).  Notice that for matrices with only real entries, we only need the hypothesis that the matrix is symmetric (<acroref type="definition" acro="SYM" />) to reach this conclusion (<acroref type="example" acro="ESMS4" />).  Can you imagine a prettier basis for use with a matrix?  I can't.</p>
+
+<p>These results in <acroref type="section" acro="OD" /> explain much of our recurring interest in orthogonality, and make the section a high point in your study of linear algebra.  A precise statement of this diagonalization result applies to a slightly broader class of matrices, known as <q>normal</q> matrices (<acroref type="definition" acro="NRML" />), which are matrices that commute with their adjoints.  With this expanded category of matrices, the result becomes an equivalence (<acroref type="technique" acro="E" />).  See <acroref type="theorem" acro="OD" /> and <acroref type="theorem" acro="OBNM" /> in <acroref type="section" acro="OD" /> for all the details.</p>
+
+</subsection>
+
+<!--   End of  sd.tex -->
+<readingquestions>
+<ol>
+<li>What is an equivalence relation?
+</li>
+<li>State a condition that is equivalent to a matrix being diagonalizable, but is not the definition.
+</li>
+<li>Find a diagonal matrix similar to
+<equation>
+A=\begin{bmatrix}
+<![CDATA[-5 & 8\\-4 & 7]]>
+\end{bmatrix}
+</equation>
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="20" rough="diagonalization of a 4x4">
+<problem contributor="robertbeezer">Consider the matrix $A$ below.  First, show that $A$ is diagonalizable by computing the geometric multiplicities of the eigenvalues and quoting the relevant theorem.  Second, find a diagonal matrix $D$ and a nonsingular matrix $S$ so that $\similar{A}{S}=D$.  (See <acroref type="exercise" acro="EE.C20" /> for some of the necessary computations.)
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[18 & -15 & 33 & -15\\]]>
+<![CDATA[-4 & 8 & -6 & 6\\]]>
+<![CDATA[-9 & 9 & -16 & 9\\]]>
+<![CDATA[5 & -6 & 9 & -4]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">Using a calculator, we find that $A$ has three distinct eigenvalues, $\lambda=3,\,2,\,-1$, with $\lambda=2$ having algebraic multiplicity two, $\algmult{A}{2}=2$.  The eigenvalues $\lambda=3,\,-1$ have algebraic multiplicity one, and so by <acroref type="theorem" acro="ME" /> we can conclude that their geometric multiplicities are one as well.  Together with the computation of the geometric multiplicity of $\lambda=2$ from <acroref type="exercise" acro="EE.C20" />, we know
+<alignmath>
+<![CDATA[\geomult{A}{3}&=\algmult{A}{3}=1&]]>
+<![CDATA[\geomult{A}{2}&=\algmult{A}{2}=2&]]>
+<![CDATA[\geomult{A}{-1}&=\algmult{A}{-1}=1]]>
+</alignmath>
+This satisfies the hypotheses of <acroref type="theorem" acro="DMFE" />, and so we can conclude that $A$ is diagonalizable.<br /><br />
+A calculator will give us four eigenvectors of $A$, the two for $\lambda=2$ being linearly independent presumably.  Or, by hand, we could find basis vectors for the three eigenspaces.  For $\lambda=3,\,-1$ the eigenspaces have dimension one, and so any eigenvector for these eigenvalues will be multiples of the ones we use below.  For $\lambda=2$ there are many different bases for the eigenspace, so your answer could vary.  Our eigenvectors are the basis vectors we would have obtained if we had actually constructed a basis in <acroref type="exercise" acro="EE.C20" /> rather than just computing the dimension.<br /><br />
+By the construction in the proof of <acroref type="theorem" acro="DC" />, the required matrix $S$ has columns that are four linearly independent eigenvectors of $A$ and the diagonal matrix has the eigenvalues on the diagonal (in the same order as the eigenvectors in $S$).  Here are the pieces, <q>doing</q> the diagonalization,
+<equation>
+\inverse{
+\begin{bmatrix}
+<![CDATA[-1 & 0 & -3 & 6\\]]>
+<![CDATA[-2 & -1 & -1 & 0\\]]>
+<![CDATA[0 & 0 & 1 & -3\\]]>
+<![CDATA[1 & 1 & 0 & 1]]>
+\end{bmatrix}
+}
+\begin{bmatrix}
+<![CDATA[18 & -15 & 33 & -15\\]]>
+<![CDATA[-4 & 8 & -6 & 6\\]]>
+<![CDATA[-9 & 9 & -16 & 9\\]]>
+<![CDATA[5 & -6 & 9 & -4]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[-1 & 0 & -3 & 6\\]]>
+<![CDATA[-2 & -1 & -1 & 0\\]]>
+<![CDATA[0 & 0 & 1 & -3\\]]>
+<![CDATA[1 & 1 & 0 & 1]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[3 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 2 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 2 & 0\\]]>
+<![CDATA[0 & 0 & 0 & -1]]>
+\end{bmatrix}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="C" number="21" rough="diagonalization of a 4x4">
+<problem contributor="robertbeezer">Determine if the matrix $A$ below is diagonalizable.  If the matrix is diagonalizable, then find a diagonal matrix $D$ that is similar to $A$, and provide the invertible matrix $S$ that performs the similarity transformation.  You should use your calculator to find the eigenvalues of the matrix, but try only using the row-reducing function of your calculator to assist with finding eigenvectors.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[1 & 9 & 9 & 24 \\]]>
+<![CDATA[ -3 & -27 & -29 & -68 \\]]>
+<![CDATA[ 1 & 11 & 13 & 26 \\]]>
+<![CDATA[ 1 & 7 & 7 & 18]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">A calculator will provide the eigenvalues $\lambda=2,\,2,\,1,\,0$, so we can reconstruct the characteristic polynomial as
+<equation>
+\charpoly{A}{x}=(x-2)^2(x-1)x
+</equation>
+so the algebraic multiplicities of the eigenvalues are
+<alignmath>
+<![CDATA[\algmult{A}{2}&=2&]]>
+<![CDATA[\algmult{A}{1}&=1&]]>
+<![CDATA[\algmult{A}{0}&=1]]>
+</alignmath>
+Now compute eigenspaces by hand, obtaining null spaces for each of the three eigenvalues by constructing the correct singular matrix (<acroref type="theorem" acro="EMNS" />),
+<alignmath>
+<![CDATA[A-2I_4&=]]>
+\begin{bmatrix}
+<![CDATA[ -1 & 9 & 9 & 24 \\]]>
+<![CDATA[ -3 & -29 & -29 & -68 \\]]>
+<![CDATA[ 1 & 11 & 11 & 26 \\]]>
+<![CDATA[ 1 & 7 & 7 & 16]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ 1 & 0 & 0 & -\frac{3}{2} \\]]>
+<![CDATA[ 0 & 1 & 1 & \frac{5}{2} \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{A}{2}&=\nsp{A-2I_4}]]>
+=\spn{\set{\colvector{\frac{3}{2}\\-\frac{5}{2}\\0\\1},\,\colvector{0\\-1\\1\\0}}}
+=\spn{\set{\colvector{3\\-5\\0\\2},\,\colvector{0\\-1\\1\\0}}}\\
+<![CDATA[A-1I_4&=]]>
+\begin{bmatrix}
+<![CDATA[0 & 9 & 9 & 24 \\]]>
+<![CDATA[ -3 & -28 & -29 & -68 \\]]>
+<![CDATA[ 1 & 11 & 12 & 26 \\]]>
+<![CDATA[ 1 & 7 & 7 & 17]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ 1 & 0 & 0 & -\frac{5}{3} \\]]>
+<![CDATA[ 0 & 1 & 0 & \frac{13}{3} \\]]>
+<![CDATA[ 0 & 0 & 1 & -\frac{5}{3} \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{A}{1}&=\nsp{A-I_4}]]>
+=\spn{\set{\colvector{\frac{5}{3}\\-\frac{13}{3}\\\frac{5}{3}\\1}}}
+=\spn{\set{\colvector{5\\-13\\5\\3}}}\\
+<![CDATA[A-0I_4&=]]>
+\begin{bmatrix}
+<![CDATA[ 1 & 9 & 9 & 24 \\]]>
+<![CDATA[ -3 & -27 & -29 & -68 \\]]>
+<![CDATA[ 1 & 11 & 13 & 26 \\]]>
+<![CDATA[ 1 & 7 & 7 & 18]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ 1 & 0 & 0 & -3 \\]]>
+<![CDATA[ 0 & 1 & 0 & 5 \\]]>
+<![CDATA[ 0 & 0 & 1 & -2 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{A}{0}&=\nsp{A-I_4}=\spn{\set{\colvector{3\\-5\\2\\1}}}]]>
+</alignmath>
+From this we can compute the dimensions of the eigenspaces to obtain the geometric multiplicities,
+<alignmath>
+<![CDATA[\geomult{A}{2}&=2&]]>
+<![CDATA[\geomult{A}{1}&=1&]]>
+<![CDATA[\geomult{A}{0}&=1]]>
+</alignmath>
+For each eigenvalue, the algebraic and geometric multiplicities are equal and so by <acroref type="theorem" acro="DMFE" /> we now know that $A$ is diagonalizable.  The construction in <acroref type="theorem" acro="DC" /> suggests we form a matrix whose columns are eigenvectors of $A$
+<equation>
+S=
+\begin{bmatrix}
+<![CDATA[ 3 & 0 & 5 & 3 \\]]>
+<![CDATA[ -5 & -1 & -13 & -5 \\]]>
+<![CDATA[ 0 & 1 & 5 & 2 \\]]>
+<![CDATA[ 2 & 0 & 3 & 1]]>
+\end{bmatrix}
+</equation>
+Since $\detname{S}=-1\neq 0$, we know that $S$ is nonsingular (<acroref type="theorem" acro="SMZD" />), so the columns of $S$ are a set of 4 linearly independent eigenvectors of $A$.  By the proof of <acroref type="theorem" acro="SMZD" /> we know
+<equation>
+\similar{A}{S}=
+\begin{bmatrix}
+<![CDATA[ 2 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 2 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 1 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+a diagonal matrix with the eigenvalues of $A$ along the diagonal, in the same order as the associated eigenvectors appear as columns of $S$.
+</solution>
+</exercise>
+
+<exercise type="C" number="22" rough="diagonalization of a 4x4">
+<problem contributor="robertbeezer">Consider the matrix $A$ below.  Find the eigenvalues of $A$ using a calculator and use these to construct the characteristic polynomial of $A$, $\charpoly{A}{x}$.  State the algebraic multiplicity of each eigenvalue. Find all of the eigenspaces for $A$ by computing expressions for null spaces, only using your calculator to row-reduce matrices.  State the geometric multiplicity of each eigenvalue.  Is $A$ diagonalizable?  If not, explain why.  If so, find a diagonal matrix $D$ that is similar to $A$.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 19 & 25 & 30 & 5 \\]]>
+<![CDATA[ -23 & -30 & -35 & -5 \\]]>
+<![CDATA[ 7 & 9 & 10 & 1 \\]]>
+<![CDATA[ -3 & -4 & -5 & -1]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">A calculator will report $\lambda=0$ as an eigenvalue of algebraic multiplicity of 2, and $\lambda=-1$ as an eigenvalue of algebraic multiplicity 2 as well.  Since eigenvalues are roots of the characteristic polynomial (<acroref type="theorem" acro="EMRCP" />) we have the factored version
+<equation>
+\charpoly{A}{x}=(x-0)^2(x-(-1))^2=x^2(x^2+2x+1)=x^4+2x^3+x^2
+</equation>
+The eigenspaces are then
+<alignmath>
+<![CDATA[\lambda&=0\\]]>
+<![CDATA[A-(0)I_4&=]]>
+\begin{bmatrix}
+<![CDATA[ 19 & 25 & 30 & 5 \\]]>
+<![CDATA[ -23 & -30 & -35 & -5 \\]]>
+<![CDATA[ 7 & 9 & 10 & 1 \\]]>
+<![CDATA[ -3 & -4 & -5 & -1]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & -5 & -5 \\]]>
+<![CDATA[ 0 & \leading{1} & 5 & 4 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{A}{0}&=\nsp{C-(0)I_4}=]]>
+\spn{\set{\colvector{5\\-5\\1\\0},\,\colvector{5\\-4\\0\\1}}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=-1\\]]>
+<![CDATA[A-(-1)I_4&=]]>
+\begin{bmatrix}
+<![CDATA[ 20 & 25 & 30 & 5 \\]]>
+<![CDATA[ -23 & -29 & -35 & -5 \\]]>
+<![CDATA[ 7 & 9 & 11 & 1 \\]]>
+<![CDATA[ -3 & -4 & -5 & 0]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & -1 & 4 \\]]>
+<![CDATA[ 0 & \leading{1} & 2 & -3 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{A}{-1}&=\nsp{C-(-1)I_4}=]]>
+\spn{\set{\colvector{1\\-2\\1\\0},\,\colvector{-4\\3\\0\\1}}}
+</alignmath>
+Each eigenspace above is described by a spanning set obtained through an application of <acroref type="theorem" acro="BNS" /> and so is a basis for the eigenspace.  In each case the dimension, and therefore the geometric multiplicity, is 2.<br /><br />
+For each of the two eigenvalues, the algebraic and geometric multiplicities are equal.  <acroref type="theorem" acro="DMFE" /> says that in this situation the matrix is diagonalizable.  We know from <acroref type="theorem" acro="DC" /> that when we diagonalize $A$ the diagonal matrix will have the eigenvalues of $A$ on the diagonal (in some order).  So we can claim that
+<equation>
+D=
+\begin{bmatrix}
+<![CDATA[ 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & -1 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & -1]]>
+\end{bmatrix}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="T" number="15" rough="A, B similar implies A^3, B^3 similar">
+<problem contributor="robertbeezer">Suppose that $A$ and $B$ are similar matrices.  Prove that $A^3$ and $B^3$ are similar matrices.  Generalize.
+</problem>
+<solution contributor="robertbeezer">By <acroref type="definition" acro="SIM" /> we know that there is a nonsingular matrix $S$ so that $A=\similar{B}{S}$.  Then
+<alignmath>
+<![CDATA[A^3&=(\similar{B}{S})^3\\]]>
+<![CDATA[&=(\similar{B}{S})(\similar{B}{S})(\similar{B}{S})\\]]>
+<![CDATA[&=\inverse{S}B(S\inverse{S})B(S\inverse{S})BS&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=\inverse{S}B(I_3)B(I_3)BS&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=\inverse{S}BBBS&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=\inverse{S}B^3S]]>
+</alignmath>
+This equation says that $A^3$ is similar to $B^3$ (via the matrix $S$).<br /><br />
+More generally, if $A$ is similar to $B$, and $m$ is a non-negative integer, then $A^m$ is similar to $B^m$.  This can be proved using induction (<acroref type="technique" acro="I" />).
+</solution>
+</exercise>
+
+<exercise type="T" number="16" rough="A, B similar, A nonsingular implies A^-1, B^-1 similar">
+<problem contributor="robertbeezer">Suppose that $A$ and $B$ are similar matrices, with $A$ nonsingular.  Prove that $B$ is nonsingular, and that $\inverse{A}$ is similar to $\inverse{B}$.
+</problem>
+<solution contributor="stevecanfield">$A$ being similar to $B$ means that there exists an $S$ such that $A=\inverse{S}BS$. So, $B=SA\inverse{S}$ and because $S$, $A$, and $\inverse{S}$ are nonsingular, by <acroref type="theorem" acro="NPNT" />, $B$ is nonsingular.
+<alignmath>
+\inverse{A}
+<![CDATA[&= \inverse{\left(\inverse{S}BS\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="SIM" />}\\
+<![CDATA[&= \inverse{S}\inverse{B}\inverse{\left(\inverse{S}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="SS" />}
+<![CDATA[&= \inverse{S}\inverse{B}S]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MIMI" />}
+</alignmath>
+Then by <acroref type="definition" acro="SIM" />, $\inverse{A}$ is similar to $\inverse{B}$.
+</solution>
+</exercise>
+
+<exercise type="T" number="17" rough="B nonsingular implies AB, BA similar">
+<problem contributor="robertbeezer">Suppose that $B$ is a nonsingular matrix.  Prove that $AB$ is similar to $BA$.
+</problem>
+<solution contributor="robertbeezer">The nonsingular (invertible) matrix $B$ will provide the desired similarity transformation,
+<alignmath>
+\inverse{B}\left(BA\right)B
+<![CDATA[&=\left(\inverse{B}B\right)\left(AB\right)&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=I_nAB&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=AB&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+</alignmath>
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

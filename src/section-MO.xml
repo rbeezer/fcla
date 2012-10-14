@@ -1,0 +1,1371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="MO">
+<title>Matrix Operations</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section MO -->
+<!-- %  Matrix Operations -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>In this section we will back up and start simple.  We begin with a definition of a totally general set of matrices, and see where that takes us.</p>
+
+</introduction>
+
+<subsection acro="MEASM">
+<title>Matrix Equality, Addition, Scalar Multiplication</title>
+
+<definition acro="VSM" index="vector space of matrices">
+<title>Vector Space of $m\times n$ Matrices</title>
+<p>The vector space $M_{mn}$ is the set of all $m\times n$ matrices with entries from the set of complex numbers.</p>
+
+<notation acro="VSM" index="vector space of matrices">
+<title>Vector Space of Matrices</title>
+<usage>$M_{mn}$</usage>
+</notation>
+</definition>
+
+<p>Just as we made, and used, a careful definition of equality for column vectors, so too, we have precise definitions for matrices.</p>
+
+<definition acro="ME" index="matrix!equality">
+<title>Matrix Equality</title>
+<p>The $m\times n$ matrices $A$ and $B$ are <define>equal</define>, written $A=B$ provided $\matrixentry{A}{ij}=\matrixentry{B}{ij}$ for all $1\leq i\leq m$, $1\leq j\leq n$.</p>
+
+<notation acro="ME" index="matrix!equality">
+<title>Matrix Equality</title>
+<usage>$A=B$</usage>
+</notation>
+</definition>
+
+<p>So equality of matrices translates to the equality of complex numbers, on an entry-by-entry basis.  Notice that we now have yet another definition that uses the symbol <q>=</q> for shorthand.  Whenever a theorem has a conclusion saying two matrices are equal (think about your objects), we will consider appealing to this definition as a way of formulating the top-level structure of the proof.</p>
+
+<p>We will now define two operations on the set $M_{mn}$.  Again, we will overload a symbol (`+') and a convention (juxtaposition for scalar multiplication).</p>
+
+<definition acro="MA" index="matrix!addition">
+<title>Matrix Addition</title>
+<p>Given the $m\times n$ matrices  $A$ and $B$, define the <define>sum</define> of $A$ and $B$ as an $m\times n$ matrix, written $A+B$, according to
+<alignmath>
+<![CDATA[\matrixentry{A+B}{ij}&=\matrixentry{A}{ij}+\matrixentry{B}{ij}]]>
+<![CDATA[&&1\leq i\leq m,\,1\leq j\leq n]]>
+</alignmath>
+</p>
+
+<notation acro="MA" index="matrix!addition">
+<title>Matrix Addition</title>
+<usage>$A+B$</usage>
+</notation>
+</definition>
+
+<p>So matrix addition takes two matrices of the same size and combines them (in a natural way!) to create a new matrix of the same size.  Perhaps this is the <q>obvious</q> thing to do, but it doesn't relieve us from the obligation to state it carefully.</p>
+
+<example acro="MA" index="matrix addition">
+<title>Addition of two matrices in $M_{23}$</title>
+
+<p>If
+<alignmath>
+A=
+\begin{bmatrix}
+<![CDATA[2&-3&4\\]]>
+<![CDATA[1&0&-7]]>
+\end{bmatrix}
+<![CDATA[&&]]>
+B=
+\begin{bmatrix}
+<![CDATA[6&2&-4\\]]>
+<![CDATA[3&5&2]]>
+\end{bmatrix}
+</alignmath>
+then
+<equation>
+A+B=
+\begin{bmatrix}
+<![CDATA[2&-3&4\\]]>
+<![CDATA[1&0&-7]]>
+\end{bmatrix}
++
+\begin{bmatrix}
+<![CDATA[6&2&-4\\]]>
+<![CDATA[3&5&2]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[2+6&-3+2&4+(-4)\\]]>
+<![CDATA[1+3&0+5&-7+2]]>
+\end{bmatrix}
+=\begin{bmatrix}
+<![CDATA[8&-1&0\\]]>
+<![CDATA[4&5&-5]]>
+\end{bmatrix}
+</equation>
+</p>
+
+</example>
+
+<p>Our second operation takes two objects of different types, specifically a number and a matrix, and combines them to create another matrix.  As with vectors, in this context we call a number a <define>scalar</define> in order to emphasize that it is not a matrix.</p>
+
+<definition acro="MSM" index="matrix!scalar multiplication">
+<title>Matrix Scalar Multiplication</title>
+<p>Given the $m\times n$ matrix $A$
+and the scalar $\alpha\in\complex{\null}$, the <define>scalar multiple</define> of $A$ is an $m\times n$ matrix, written $\alpha A$ and defined according to
+<alignmath>
+<![CDATA[\matrixentry{\alpha A}{ij}&=\alpha\matrixentry{A}{ij}&&]]>
+\quad 1\leq i\leq m,\,1\leq j\leq n
+</alignmath>
+</p>
+
+<notation acro="MSM" index="matrix!scalar multiplication">
+<title>Matrix Scalar Multiplication</title>
+<usage>$\alpha A$</usage>
+</notation>
+</definition>
+
+<p>Notice again that we have yet another kind of multiplication, and it is again written putting two symbols side-by-side.  Computationally, scalar matrix multiplication is very easy.</p>
+
+<example acro="MSM" index="matrix scalar multiplication">
+<title>Scalar multiplication in $M_{32}$</title>
+
+<p>If
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[2&8\\]]>
+<![CDATA[-3&5\\0&1]]>
+\end{bmatrix}
+</equation>
+and $\alpha=7$, then
+<equation>
+\alpha A=
+<![CDATA[7\begin{bmatrix}2&8\\-3&5\\0&1\end{bmatrix}=]]>
+<![CDATA[\begin{bmatrix}7(2)&7(8)\\7(-3)&7(5)\\7(0)&7(1)\end{bmatrix}=]]>
+<![CDATA[\begin{bmatrix}14&56\\-21&35\\0&7\end{bmatrix}]]>
+</equation>
+</p>
+
+</example>
+
+<sageadvice acro="MS" index="matrix spaces">
+<title>Matrix Spaces</title>
+Sage defines our set $M_{mn}$ as a <q>matrix space</q> with the command <code>MatrixSpace(R, m, n)</code> where <code>R</code> is a number system and <code>m</code> and <code>n</code> are the number of rows and number of columns, respectively.  This object does not have much functionality defined in Sage.  Its main purposes are to provide a parent for matrices, and to provide another way to create matrices.  The two matrix operations just defined (addition and scalar multiplication) are implemented as you would expect.  In the example below, we create two matrices in $M_{2,3}$ from just a list of 6 entries, by coercing the list into a matrix by using the relevant matrix space as if it were a function.  Then we can perform the basic operations of matrix addition (<acroref type="definition" acro="MA" />) and matrix scalar multiplication (<acroref type="definition" acro="MSM" />).
+<sage>
+<input>MS = MatrixSpace(QQ, 2, 3)
+MS
+</input>
+<output>Full MatrixSpace of 2 by 3 dense matrices over Rational Field
+</output>
+</sage>
+
+<sage>
+<input>A = MS([1, 2, 1, 4, 5, 4])
+B = MS([1/1, 1/2, 1/3, 1/4, 1/5, 1/6])
+A + B
+</input>
+<output>[   2  5/2  4/3]
+[17/4 26/5 25/6]
+</output>
+</sage>
+
+<sage>
+<input>60*B
+</input>
+<output>[60 30 20]
+[15 12 10]
+</output>
+</sage>
+
+<sage>
+<input>5*A - 120*B
+</input>
+<output>[-115  -50  -35]
+[ -10    1    0]
+</output>
+</sage>
+
+Coercion can make some interesting conveniences possible.  Notice how the scalar <code>37</code> in the following expression is coerced to $37$ times an identity matrix of the proper size.
+<sage>
+<input>A = matrix(QQ, [[ 0,  2, 4],
+                [ 6,  0, 8],
+                [10, 12, 0]])
+A + 37
+</input>
+<output>[37  2  4]
+[ 6 37  8]
+[10 12 37]
+</output>
+</sage>
+
+This coercion only applies to sums with <em>square</em> matrices.  You might try this again, but with a rectangular matrix, just to see what the error message says.
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="VSP">
+<title>Vector Space Properties</title>
+
+<p>With definitions of matrix addition and scalar multiplication we can now state, and prove, several properties of each operation, and some properties that involve their interplay.  We now collect ten of them here for later reference.</p>
+
+<theorem acro="VSPM" index="vector space properties!matrices">
+<title>Vector Space Properties of Matrices</title>
+<statement>
+<p>Suppose that $M_{mn}$ is the set of all $m\times n$ matrices (<acroref type="definition" acro="VSM" />) with addition and scalar multiplication as defined in <acroref type="definition" acro="MA" /> and <acroref type="definition" acro="MSM" />.  Then
+<propertylist>
+<property acro="ACM" index="additive closure!matrices">
+<title>Additive Closure, Matrices</title><content>
+If $A,\,B\in M_{mn}$, then $A+B\in M_{mn}$.</content></property>
+
+<property acro="SCM" index="scalar closure!matrices">
+<title>Scalar Closure, Matrices</title><content>
+If $\alpha\in\complex{\null}$ and $A\in M_{mn}$, then $\alpha A\in M_{mn}$.</content></property>
+
+<property acro="CM" index="commutativity!matrices">
+<title>Commutativity, Matrices</title><content>
+If $A,\,B\in M_{mn}$, then $A+B=B+A$.</content></property>
+
+<property acro="AAM" index="additive associativity!matrices">
+<title>Additive Associativity, Matrices</title><content>
+If $A,\,B,\,C\in M_{mn}$, then $A+\left(B+C\right)=\left(A+B\right)+C$.</content></property>
+
+<property acro="ZM" index="zero vector!matrices">
+<title>Zero Vector, Matrices</title><content>
+There is a matrix, $\zeromatrix$, called the <define>zero matrix</define>, such that  $A+\zeromatrix=A$  for all $A\in M_{mn}$.</content></property>
+
+<property acro="AIM" index="additive inverses!matrices">
+<title>Additive Inverses, Matrices</title><content>
+If $A\in M_{mn}$, then there exists a matrix $-A\in M_{mn}$ so that $A+(-A)=\zeromatrix$.</content></property>
+
+<property acro="SMAM" index="scalar multiplication associativity!matrices">
+<title>Scalar Multiplication Associativity, Matrices</title><content>
+If $\alpha,\,\beta\in\complex{\null}$ and $A\in M_{mn}$, then $\alpha(\beta A)=(\alpha\beta)A$.</content></property>
+
+<property acro="DMAM" index="distributivity, matrix addition!matrices">
+<title>Distributivity across Matrix Addition, Matrices</title><content>
+If $\alpha\in\complex{\null}$ and $A,\,B\in M_{mn}$, then $\alpha(A+B)=\alpha A+\alpha B$.</content></property>
+
+<property acro="DSAM" index="distributivity, scalar addition!matrices">
+<title>Distributivity across Scalar Addition, Matrices</title><content>
+If $\alpha,\,\beta\in\complex{\null}$ and $A\in M_{mn}$, then
+$(\alpha+\beta)A=\alpha A+\beta A$.</content></property>
+
+<property acro="OM" index="one!matrices">
+<title>One, Matrices</title><content>
+If $A\in M_{mn}$, then $1A=A$.</content></property>
+
+</propertylist>
+
+</p>
+
+</statement>
+
+<proof>
+<p>While some of these properties seem very obvious, they all require proof.  However, the proofs are not very interesting, and border on tedious. We'll prove one version of distributivity very carefully, and you can test your proof-building skills on some of the others.  We'll give our new notation for matrix entries a workout here.  Compare the style of the proofs here with those given for vectors in <acroref type="theorem" acro="VSPCV" /> <mdash /> while the objects here are more complicated, our notation makes the proofs cleaner.</p>
+
+<p>To prove <acroref type="property" acro="DSAM" />,  $(\alpha+\beta)A=\alpha A+\beta A$, we need to establish the equality of two matrices (see <acroref type="technique" acro="GS" />).  <acroref type="definition" acro="ME" /> says we need to establish the equality of their entries, one-by-one.  How do we do this, when we do not even know how many entries the two matrices might have?  This is where the notation for matrix entries, given in <acroref type="definition" acro="M" />, comes into play.  Ready?  Here we go.</p>
+
+<p>For <em>any</em> $i$ and $j$, $1\leq i\leq m$, $1\leq j\leq n$,
+<alignmath>
+<![CDATA[\matrixentry{(\alpha+\beta)A}{ij}&=]]>
+<![CDATA[(\alpha+\beta)\matrixentry{A}{ij}&&]]>\text{<acroref type="definition" acro="MSM" />}\\
+<![CDATA[&=\alpha\matrixentry{A}{ij}+\beta\matrixentry{A}{ij}&&\text{Distributivity in $\complex{\null}$}\\]]>
+<![CDATA[&=\matrixentry{\alpha A}{ij}+\matrixentry{\beta A}{ij}&&]]>\text{<acroref type="definition" acro="MSM" />}\\
+<![CDATA[&=\matrixentry{\alpha A+\beta A}{ij}&&]]>\text{<acroref type="definition" acro="MA" />}
+</alignmath>
+</p>
+
+<p>There are several things to notice here.  (1)  Each equals sign is an equality of numbers.  (2) The two ends of the equation, being true for any $i$ and $j$, allow us to conclude the equality of the matrices by <acroref type="definition" acro="ME" />.  (3)  There are several plus signs, and several instances of juxtaposition.  Identify each one, and state exactly what operation is being represented by each.</p>
+
+</proof>
+</theorem>
+
+<p>For now, note the similarities between <acroref type="theorem" acro="VSPM" /> about matrices and <acroref type="theorem" acro="VSPCV" /> about vectors.</p>
+
+<p>The zero matrix described in this theorem, $\zeromatrix$, is what you would expect <mdash /> a matrix full of zeros.</p>
+
+<definition acro="ZM" index="matrix!zero">
+<title>Zero Matrix</title>
+<p>The $m\times n$ <define>zero matrix</define> is written as $\zeromatrix=\zeromatrix_{m\times n}$ and defined by $\matrixentry{\zeromatrix}{ij}=0$, for all $1\leq i\leq m$, $1\leq j\leq n$.</p>
+
+<notation acro="ZM" index="zero matrix">
+<title>Zero Matrix</title>
+<usage>$\zeromatrix$</usage>
+</notation>
+</definition>
+
+</subsection>
+
+<subsection acro="TSM">
+<title>Transposes and Symmetric Matrices</title>
+
+<p>We describe one more common operation we can perform on matrices.  Informally, to transpose a matrix is to build a new matrix by swapping its rows and columns.</p>
+
+<definition acro="TM" index="matrix!transpose">
+<title>Transpose of a Matrix</title>
+<p>Given an $m\times n$ matrix $A$, its <define>transpose</define> is the $n\times m$ matrix $\transpose{A}$ given by
+<equation>
+\matrixentry{\transpose{A}}{ij}=\matrixentry{A}{ji},\quad 1\leq i\leq n,\,1\leq j\leq m.
+</equation>
+</p>
+
+<notation acro="TM" index="transpose">
+<title>Transpose of a Matrix</title>
+<usage>$\transpose{A}$</usage>
+</notation>
+</definition>
+
+<example acro="TM" index="transpose">
+<title>Transpose of a $3\times 4$ matrix</title>
+
+<p>Suppose
+<equation>
+D=
+\begin{bmatrix}
+<![CDATA[3&7&2&-3\\]]>
+<![CDATA[-1&4&2&8\\]]>
+<![CDATA[0&3&-2&5]]>
+\end{bmatrix}.
+</equation></p>
+
+<p>We could formulate the transpose, entry-by-entry, using the definition.  But it is easier to just systematically rewrite rows as columns (or vice-versa).  The form of the definition given will be more useful in proofs.  So we have
+<equation>
+\transpose{D}=
+\begin{bmatrix}
+<![CDATA[3&-1&0\\]]>
+<![CDATA[7&4&3\\]]>
+<![CDATA[2&2&-2\\]]>
+<![CDATA[-3&8&5]]>
+\end{bmatrix}
+</equation>
+</p>
+
+</example>
+
+<p>It will sometimes happen that a matrix is equal to its transpose.  In this case, we will call a matrix <define>symmetric</define>.  These matrices occur naturally in certain situations, and also have some nice properties, so it is worth stating the definition carefully.  Informally a matrix is symmetric if we can <q>flip</q> it about the main diagonal (upper-left corner, running down to the lower-right corner) and have it look unchanged.</p>
+
+<definition acro="SYM" index="matrix!symmetric">
+<title>Symmetric Matrix</title>
+<p>The matrix $A$ is <define>symmetric</define> if $A=\transpose{A}$.</p>
+
+</definition>
+
+<example acro="SYM" index="symmetric matrix">
+<title>A symmetric $5\times 5$ matrix</title>
+
+<p>The matrix
+<equation>
+E=
+\begin{bmatrix}
+<![CDATA[2&3&-9&5&7\\]]>
+<![CDATA[3&1&6&-2&-3\\]]>
+<![CDATA[-9&6&0&-1&9\\]]>
+<![CDATA[5&-2&-1&4&-8\\]]>
+<![CDATA[7&-3&9&-8&-3]]>
+\end{bmatrix}
+</equation>
+is symmetric.</p>
+
+</example>
+
+<p>You might have noticed that <acroref type="definition" acro="SYM" /> did not specify the size of the matrix $A$, as has been our custom.  That's because it wasn't necessary.  An alternative would have been to state the definition just for square matrices, but this is the substance of the next proof.</p>
+
+<p>Before reading the next proof, we want to offer you some advice about how to become more proficient at constructing proofs.  Perhaps you can apply this advice to the next theorem.  Have a peek at <acroref type="technique" acro="P" /> now.</p>
+
+<theorem acro="SMS" index="symmetric matrices">
+<title>Symmetric Matrices are Square</title>
+<statement>
+<p>Suppose that $A$ is a symmetric matrix.  Then $A$ is square.</p>
+
+</statement>
+
+<proof>
+<p>We start by specifying $A$'s size, without assuming it is square, since we are trying to <em>prove</em> that, so we can't also assume it.  Suppose $A$ is an $m\times n$ matrix.  Because $A$ is symmetric, we know by <acroref type="definition" acro="SM" /> that $A=\transpose{A}$.  So, in particular, <acroref type="definition" acro="ME" /> requires that $A$ and $\transpose{A}$ must have the same size.  The size of $\transpose{A}$ is $n\times m$.  Because $A$ has $m$ rows and $\transpose{A}$ has $n$ rows, we conclude that $m=n$, and hence $A$ must be square by <acroref type="definition" acro="SQM" />.</p>
+
+</proof>
+</theorem>
+
+<p>We finish this section with three easy theorems, but they illustrate the interplay of our three new operations, our new notation, and the techniques used to prove matrix equalities.</p>
+
+<theorem acro="TMA" index="transpose!matrix addition">
+<title>Transpose and Matrix Addition</title>
+<statement>
+<p>Suppose that $A$ and $B$ are $m\times n$ matrices.  Then  $\transpose{(A+B)}=\transpose{A}+\transpose{B}$.</p>
+
+</statement>
+
+<proof>
+<p>The statement  to be proved is an equality of matrices, so we work entry-by-entry and use <acroref type="definition" acro="ME" />.  Think carefully about the objects involved here, and the many uses of the plus sign.  For $1\leq i\leq m$, $1\leq j\leq n$,
+<alignmath>
+\matrixentry{\transpose{(A+B)}}{ij}
+<![CDATA[&=\matrixentry{A+B}{ji}&&]]>\text{<acroref type="definition" acro="TM" />}\\
+<![CDATA[&=\matrixentry{A}{ji}+\matrixentry{B}{ji}&&]]>\text{<acroref type="definition" acro="MA" />}\\
+<![CDATA[&=\matrixentry{\transpose{A}}{ij}+\matrixentry{\transpose{B}}{ij}&&]]>\text{<acroref type="definition" acro="TM" />}\\
+<![CDATA[&=\matrixentry{\transpose{A}+\transpose{B}}{ij}&&]]>\text{<acroref type="definition" acro="MA" />}
+</alignmath>
+</p>
+
+<p>Since the matrices $\transpose{(A+B)}$ and $\transpose{A}+\transpose{B}$ agree at each entry, <acroref type="definition" acro="ME" /> tells us the two matrices are equal.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="TMSM" index="transpose! matrix scalar multiplication">
+<title>Transpose and Matrix Scalar Multiplication</title>
+<statement>
+<p>Suppose that $\alpha\in\complex{\null}$ and $A$ is an $m\times n$ matrix.  Then $\transpose{(\alpha A)}=\alpha\transpose{A}$.</p>
+
+</statement>
+
+<proof>
+<p>The statement  to be proved is an equality of matrices, so we work entry-by-entry and use <acroref type="definition" acro="ME" />.  Notice that the desired equality is of $n\times m$ matrices, and think carefully about the objects involved here, plus the many uses of juxtaposition.  For $1\leq i\leq m$, $1\leq j\leq n$,
+<alignmath>
+<![CDATA[\matrixentry{\transpose{(\alpha A)}}{ji}&=]]>
+<![CDATA[\matrixentry{\alpha A}{ij}&&]]>\text{<acroref type="definition" acro="TM" />}\\
+<![CDATA[&=\alpha\matrixentry{A}{ij}&&]]>\text{<acroref type="definition" acro="MSM" />}\\
+<![CDATA[&=\alpha\matrixentry{\transpose{A}}{ji}&&]]>\text{<acroref type="definition" acro="TM" />}\\
+<![CDATA[&=\matrixentry{\alpha\transpose{A}}{ji}&&]]>\text{<acroref type="definition" acro="MSM" />}
+</alignmath></p>
+
+<p>Since the matrices $\transpose{(\alpha A)}$ and $\alpha\transpose{A}$ agree at each entry, <acroref type="definition" acro="ME" /> tells us the two matrices are equal.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="TT" index="transpose of a transpose">
+<title>Transpose of a Transpose</title>
+<statement>
+<indexlocation index="transpose!scalar multiplication" />
+<p>Suppose that $A$ is an $m\times n$ matrix.  Then $\transpose{\left(\transpose{A}\right)}=A$.</p>
+
+</statement>
+
+<proof>
+<p>We again want to prove an equality of matrices, so we work entry-by-entry and use <acroref type="definition" acro="ME" />.  For $1\leq i\leq m$, $1\leq j\leq n$,
+<alignmath>
+\matrixentry{\transpose{\left(\transpose{A}\right)}}{ij}
+<![CDATA[&=\matrixentry{\transpose{A}}{ji}&&]]>\text{<acroref type="definition" acro="TM" />}\\
+<![CDATA[&=\matrixentry{A}{ij}&&]]>\text{<acroref type="definition" acro="TM" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+</subsection>
+
+<subsection acro="MCC">
+<title>Matrices and Complex Conjugation</title>
+
+<p>As we did with vectors (<acroref type="definition" acro="CCCV" />), we can define what it means to take the conjugate of a matrix.</p>
+
+<definition acro="CCM" index="conjugate!matrix">
+<title>Complex Conjugate of a Matrix</title>
+<p>Suppose $A$ is an $m\times n$ matrix.  Then the <define>conjugate</define> of $A$, written $\conjugate{A}$ is an $m\times n$ matrix defined by
+<equation>
+\matrixentry{\conjugate{A}}{ij}=\conjugate{\matrixentry{A}{ij}}
+</equation></p>
+
+<notation acro="CCM" index="conjugate!matrix">
+<title>Complex Conjugate of a Matrix</title>
+<usage>$\conjugate{A}$</usage>
+</notation>
+</definition>
+
+<example acro="CCM" index="matrix!complex conjugate">
+<title>Complex conjugate of a matrix</title>
+
+<p>If
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[2-i & 3 & 5+4i\\]]>
+<![CDATA[-3+6i & 2-3i & 0]]>
+\end{bmatrix}
+</equation>
+then
+<equation>
+\conjugate{A}=
+\begin{bmatrix}
+<![CDATA[2+i & 3 & 5-4i\\]]>
+<![CDATA[-3-6i & 2+3i & 0]]>
+\end{bmatrix}
+</equation></p>
+
+</example>
+
+<p>The interplay between the conjugate of a matrix and the two operations on matrices is what you might expect.</p>
+
+<theorem acro="CRMA" index="conjugation!matrix addition">
+<title>Conjugation Respects Matrix Addition</title>
+<statement>
+<p>Suppose that $A$ and $B$ are $m\times n$ matrices.  Then $\conjugate{A+B}=\conjugate{A}+\conjugate{B}$.</p>
+
+</statement>
+
+<proof>
+<p>For $1\leq i\leq m$, $1\leq j\leq n$,
+<alignmath>
+\matrixentry{\conjugate{A+B}}{ij}
+<![CDATA[&=\conjugate{\matrixentry{A+B}{ij}}&&]]>\text{<acroref type="definition" acro="CCM" />}\\
+<![CDATA[&=\conjugate{\matrixentry{A}{ij}+\matrixentry{B}{ij}}&&]]>\text{<acroref type="definition" acro="MA" />}\\
+<![CDATA[&=\conjugate{\matrixentry{A}{ij}}+\conjugate{\matrixentry{B}{ij}}&&]]>\text{<acroref type="theorem" acro="CCRA" />}\\
+<![CDATA[&=\matrixentry{\conjugate{A}}{ij}+\matrixentry{\conjugate{B}}{ij}&&]]>\text{<acroref type="definition" acro="CCM" />}\\
+<![CDATA[&=\matrixentry{\conjugate{A}+\conjugate{B}}{ij}&&]]>\text{<acroref type="definition" acro="MA" />}
+</alignmath>
+</p>
+
+<p>Since the matrices  $\conjugate{A+B}$ and $\conjugate{A}+\conjugate{B}$  are equal in each entry, <acroref type="definition" acro="ME" /> says that $\conjugate{A+B}=\conjugate{A}+\conjugate{B}$.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="CRMSM" index="conjugation!matrix scalar multiplication">
+<title>Conjugation Respects Matrix Scalar Multiplication</title>
+<statement>
+<p>Suppose that $\alpha\in\complex{\null}$ and $A$ is an $m\times n$ matrix.  Then $\conjugate{\alpha A}=\conjugate{\alpha}\conjugate{A}$.</p>
+
+</statement>
+
+<proof>
+<p>For $1\leq i\leq m$, $1\leq j\leq n$,
+<alignmath>
+\matrixentry{\conjugate{\alpha A}}{ij}
+<![CDATA[&=\conjugate{\matrixentry{\alpha A}{ij}}&&]]>\text{<acroref type="definition" acro="CCM" />}\\
+<![CDATA[&=\conjugate{\alpha\matrixentry{A}{ij}}&&]]>\text{<acroref type="definition" acro="MSM" />}\\
+<![CDATA[&=\conjugate{\alpha}\conjugate{\matrixentry{A}{ij}}&&]]>\text{<acroref type="theorem" acro="CCRM" />}\\
+<![CDATA[&=\conjugate{\alpha}\matrixentry{\conjugate{A}}{ij}&&]]>\text{<acroref type="definition" acro="CCM" />}\\
+<![CDATA[&=\matrixentry{\conjugate{\alpha}\conjugate{A}}{ij}&&]]>\text{<acroref type="definition" acro="MSM" />}
+</alignmath>
+</p>
+
+<p>Since the matrices  $\conjugate{\alpha A}$ and $\conjugate{\alpha}\conjugate{A}$  are equal in each entry, <acroref type="definition" acro="ME" /> says that $\conjugate{\alpha A}=\conjugate{\alpha}\conjugate{A}$.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="CCM" index="conjugate!of conjugate of a matrix">
+<title>Conjugate of the Conjugate of a Matrix</title>
+<statement>
+<p>Suppose that $A$ is an $m\times n$ matrix.  Then $\conjugate{\left(\conjugate{A}\right)}=A$.</p>
+
+</statement>
+
+<proof>
+<p>For $1\leq i\leq m$, $1\leq j\leq n$,
+<alignmath>
+\matrixentry{\conjugate{\left(\conjugate{A}\right)}}{ij}
+<![CDATA[&=\conjugate{\matrixentry{\conjugate{A}}{ij}}&&]]>\text{<acroref type="definition" acro="CCM" />}\\
+<![CDATA[&=\conjugate{\conjugate{\matrixentry{A}{ij}}}&&]]>\text{<acroref type="definition" acro="CCM" />}\\
+<![CDATA[&=\matrixentry{A}{ij}&&]]>\text{<acroref type="theorem" acro="CCT" />}%
+</alignmath>
+</p>
+
+<p>Since the matrices  $\conjugate{\left(\conjugate{A}\right)}$ and $A$  are equal in each entry, <acroref type="definition" acro="ME" /> says that $\conjugate{\left(\conjugate{A}\right)}=A$.</p>
+
+</proof>
+</theorem>
+
+<p>Finally, we will need the following result about matrix conjugation and transposes later.</p>
+
+<theorem acro="MCT" index="conjugation!matrix transpose">
+<title>Matrix Conjugation and Transposes</title>
+<statement>
+<p>Suppose that $A$ is an $m\times n$ matrix.  Then $\conjugate{\left(\transpose{A}\right)}=\transpose{\left(\conjugate{A}\right)}$.</p>
+
+</statement>
+
+<proof>
+<p>For $1\leq i\leq m$, $1\leq j\leq n$,
+<alignmath>
+\matrixentry{\conjugate{\left(\transpose{A}\right)}}{ji}
+<![CDATA[&=\conjugate{\matrixentry{\transpose{A}}{ji}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CCM" />}\\
+<![CDATA[&=\conjugate{\matrixentry{A}{ij}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="TM" />}\\
+<![CDATA[&=\matrixentry{\conjugate{A}}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CCM" />}\\
+<![CDATA[&=\matrixentry{\transpose{\left(\conjugate{A}\right)}}{ji}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="TM" />}\\
+</alignmath>
+</p>
+
+<p>Since the matrices  $\conjugate{\left(\transpose{A}\right)}$ and $\transpose{\left(\conjugate{A}\right)}$  are equal in each entry, <acroref type="definition" acro="ME" /> says that $\conjugate{\left(\transpose{A}\right)}=\transpose{\left(\conjugate{A}\right)}$.</p>
+
+</proof>
+</theorem>
+
+</subsection>
+
+<subsection acro="AM">
+<title>Adjoint of a Matrix</title>
+
+<p>The combination of transposing and conjugating a matrix will be important in subsequent sections, such as <acroref type="subsection" acro="MINM.UM" /> and <acroref type="section" acro="OD" />.  We make a key definition here and prove some basic results in the same spirit as those above.</p>
+
+<definition acro="A" index="adjoint">
+<title>Adjoint</title>
+<p>If $A$ is a matrix, then its <define>adjoint</define> is
+$\adjoint{A}=\transpose{\left(\conjugate{A}\right)}$.</p>
+
+<notation acro="A" index="adjoint">
+<title>Adjoint</title>
+<usage>$\adjoint{A}$</usage>
+</notation>
+</definition>
+
+<p>You will see the adjoint written elsewhere variously as $A^H$, $A^\ast$ or $A^\dagger$.  Notice that <acroref type="theorem" acro="MCT" /> says it does not really matter if we conjugate and then transpose, or transpose and then conjugate.</p>
+
+<theorem acro="AMA" index="adjoint!of a matrix sum">
+<title>Adjoint and Matrix Addition</title>
+<statement>
+<p>Suppose $A$ and $B$ are matrices of the same size.  Then $\adjoint{\left(A+B\right)}=\adjoint{A}+\adjoint{B}$.</p>
+
+</statement>
+
+<proof>
+<p>
+<alignmath>
+\adjoint{\left(A+B\right)}
+<![CDATA[&=\transpose{\left(\conjugate{A+B}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="A" />}\\
+<![CDATA[&=\transpose{\left(\conjugate{A}+\conjugate{B}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="CRMA" />}\\
+<![CDATA[&=\transpose{\left(\conjugate{A}\right)}+\transpose{\left(\conjugate{B}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="TMA" />}\\
+<![CDATA[&=\adjoint{A}+\adjoint{B}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="A" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<theorem acro="AMSM" index="adjoint!of matrix scalar multiplication">
+<title>Adjoint and Matrix Scalar Multiplication</title>
+<statement>
+<p>Suppose $\alpha\in\complexes$ is a scalar and $A$ is a matrix.  Then $\adjoint{\left(\alpha A\right)}=\conjugate{\alpha}\adjoint{A}$.</p>
+
+</statement>
+
+<proof>
+<p>
+<alignmath>
+\adjoint{\left(\alpha A\right)}
+<![CDATA[&=\transpose{\left(\conjugate{\alpha A}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="A" />}\\
+<![CDATA[&=\transpose{\left(\conjugate{\alpha}\conjugate{A}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="CRMSM" />}\\
+<![CDATA[&=\conjugate{\alpha}\transpose{\left(\conjugate{A}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="TMSM" />}\\
+<![CDATA[&=\conjugate{\alpha}\adjoint{A}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="A" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<theorem acro="AA" index="adjoint!of an adjoint">
+<title>Adjoint of an Adjoint</title>
+<statement>
+<p>Suppose that $A$ is a matrix.  Then $\adjoint{\left(\adjoint{A}\right)}=A$.</p>
+
+</statement>
+
+<proof>
+<p>
+<alignmath>
+\adjoint{\left(\adjoint{A}\right)}
+<![CDATA[&=\transpose{\left(\conjugate{\left(\adjoint{A}\right)}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="A" />}\\
+<![CDATA[&=\conjugate{\left(\transpose{\left(\adjoint{A}\right)}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MCT" />}\\
+<![CDATA[&=\conjugate{\left(\transpose{\left(\transpose{\left(\conjugate{A}\right)}\right)}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="A" />}\\
+<![CDATA[&=\conjugate{\left(\conjugate{A}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="TT" />}\\
+<![CDATA[&=A]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="CCM" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>Take note of how the theorems in this section, while simple, build on earlier theorems and definitions and never descend to the level of entry-by-entry proofs based on <acroref type="definition" acro="ME" />.  In other words, the equal signs that appear in the previous proofs are equalities of matrices, not scalars (which is the opposite of a proof like that of <acroref type="theorem" acro="TMA" />).</p>
+
+<sageadvice acro="MO" index="matrix operations">
+<title>Matrix Operations</title>
+Every operation in this section is implemented in Sage.  The only real subtlety is determining if certain matrices are symmetric, which we will discuss below.  In linear algebra, the term <q>adjoint</q> has two unrelated meanings, so you need to be careful when you see this term.  In particular, in Sage it is used to mean something different.  So our version of the adjoint is implemented as the matrix method <code>.conjugage_transpose()</code>.  Here are some straightforward examples.
+<sage>
+<input>A = matrix(QQ, [[-1, 2, 4],
+                [ 0, 3, 1]])
+A
+</input>
+<output>[-1  2  4]
+[ 0  3  1]
+</output>
+</sage>
+
+<sage>
+<input>A.transpose()
+</input>
+<output>[-1  0]
+[ 2  3]
+[ 4  1]
+</output>
+</sage>
+
+<sage>
+<input>A.is_symmetric()
+</input>
+<output>False
+</output>
+</sage>
+
+<sage>
+<input>B = matrix(QQ, [[ 1, 2, -1],
+                [ 2, 3,  4],
+                [-1, 4, -6]])
+B.is_symmetric()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>C = matrix(QQbar, [[  2-I, 3+4*I],
+                   [5+2*I,     6]])
+C.conjugate()
+</input>
+<output>[2 + 1*I 3 - 4*I]
+[5 - 2*I       6]
+</output>
+</sage>
+
+<sage>
+<input>C.conjugate_transpose()
+</input>
+<output>[2 + 1*I 5 - 2*I]
+[3 - 4*I       6]
+</output>
+</sage>
+
+With these constructions, we can test, or demonstrate, some of the theorems above.  Of course, this does not make the theorems true, but is satisfying nonetheless.  This can be an effective technique when you are learning new Sage commands or new linear algebra <mdash /> if your computations are not consistent with theorems, then your understanding of the linear algebra may be flawed, or your understanding of Sage may be flawed, or Sage may have a bug!  Note in the following how we use comparison (<code>==</code>) between matrices as an implementation of matrix equality (<acroref type="definition" acro="ME" />).
+<sage>
+<input>A = matrix(QQ, [[ 1, -1, 3],
+                [-3,  2, 0]])
+B = matrix(QQ, [[5, -2,  7],
+                [1,  3, -2]])
+C = matrix(QQbar, [[2+3*I, 1 - 6*I], [3, 5+2*I]])
+A.transpose().transpose() == A
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>(A+B).transpose() == A.transpose() + B.transpose()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>(2*C).conjugate() == 2*C.conjugate()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>a = QQbar(3 + 4*I)
+acon = a.conjugate()
+(a*C).conjugate_transpose() == acon*C.conjugate_transpose()
+</input>
+<output>True
+</output>
+</sage>
+
+The opposite is true <mdash /> you can use theorems to convert, or express, Sage code into alternative, but mathematically equivalent forms.<br /><br />
+Here is the subtlety.  With approximate numbers, such as in <code>RDF</code> and <code>CDF</code>, it can be tricky to decide if two numbers are equal, or if a very small number is zero or not.  In these situations Sage allows us to specify a <q>tolerance</q> <mdash /> the largest number that can be effectively considered zero.  Consider the following:
+<sage>
+<input>A = matrix(CDF, [[1.0, 0.0], [0.0, 1.0]])
+A
+</input>
+<output>[1.0   0]
+[  0 1.0]
+</output>
+</sage>
+
+<sage>
+<input>A.is_symmetric()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A[0,1] = 0.000000000002
+A
+</input>
+<output>[  1.0 2e-12]
+[    0   1.0]
+</output>
+</sage>
+
+<sage>
+<input>A.is_symmetric()
+</input>
+<output>False
+</output>
+</sage>
+
+<sage>
+<input>A[0,1] = 0.000000000001
+A
+</input>
+<output>[  1.0 1e-12]
+[    0   1.0]
+</output>
+</sage>
+
+<sage>
+<input>A.is_symmetric()
+</input>
+<output>True
+</output>
+</sage>
+
+Clearly the last result is not correct.  This is because $0.000000000001 = 1.0\times 10^{-12}$ is <q>small enough</q> to be confused as equal to the zero in the other corner of the matrix.  However, Sage will let us set our own idea of when two numbers are equal, by setting a tolerance on the difference between two numbers that will allow them to be considered equal.  The default tolerance is set at $1.0\times 10^{-12}$.  Here we use Sage's syntax for scientific notation to specify the tolerance.
+<sage>
+<input>A = matrix(CDF, [[1.0, 0.0], [0.0, 1.0]])
+A.is_symmetric()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A[0,1] = 0.000000000001
+A.is_symmetric()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.is_symmetric(tol=1.0e-13)
+</input>
+<output>False
+</output>
+</sage>
+
+This is not a course in numerical linear algebra, even if that is a fascinating field of study.  To concentrate on the main ideas of introductory linear algebra, whenever possible we will concentrate on number systems like the rational numbers or algebraic numbers where we can rely on exact results.  If you are ever unsure if a number system is exact or not, just ask.
+<sage>
+<input>QQ.is_exact()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>RDF.is_exact()
+</input>
+<output>False
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<!--   End  mo.tex -->
+<readingquestions>
+<ol>
+<li>Perform the following matrix computation.
+<equation>
+(6)
+\begin{bmatrix}
+<![CDATA[2 & -2 & 8 & 1 \\]]>
+<![CDATA[4 & 5 & -1 & 3\\]]>
+<![CDATA[7 & -3 & 0 & 2]]>
+\end{bmatrix}
++
+(-2)
+\begin{bmatrix}
+<![CDATA[2 & 7 & 1 & 2\\]]>
+<![CDATA[3 & -1 & 0 & 5\\]]>
+<![CDATA[1 & 7 & 3 & 3]]>
+\end{bmatrix}
+</equation>
+</li>
+<li> <acroref type="theorem" acro="VSPM" /> reminds you of what previous theorem? How strong is the similarity?
+</li>
+<li>Compute the transpose of the matrix below.
+<equation>
+\begin{bmatrix}
+<![CDATA[6 & 8 & 4 \\]]>
+<![CDATA[-2 & 1 & 0 \\]]>
+<![CDATA[9 & -5 & 6]]>
+\end{bmatrix}
+</equation>
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="10" rough="basic computations">
+<problem contributor="chrisblack">Let
+<![CDATA[$A = \begin{bmatrix} 1 & 4 & -3 \\ 6 & 3 & 0\end{bmatrix}$,]]>
+<![CDATA[$B = \begin{bmatrix} 3 & 2 & 1 \\ -2 & -6 & 5\end{bmatrix}$ and]]>
+<![CDATA[$C = \begin{bmatrix} 2 & 4 \\ 4 & 0 \\ -2 & 2\end{bmatrix}$.]]>
+Let $\alpha = 4$ and $\beta = 1/2$.
+Perform the following calculations:
+<ol><li> $A + B$
+</li><li> $A + C$
+</li><li> $\transpose{B} + C$
+</li><li> $A + \transpose{B}$
+</li><li> $\beta C$
+</li><li> $4A - 3B$
+</li><li> $\transpose{A} + \alpha C$
+</li><li> $A + B - \transpose{C}$
+</li><li> $4A + 2B - 5\transpose{C}$
+</li></ol>
+</problem>
+<solution contributor="chrisblack"><ol>
+     <li> <![CDATA[$A + B = \begin{bmatrix} 4 &  6 & -2 \\ 4 & -3 & 5 \end{bmatrix}$]]>
+</li><li> $A + C$ is undefined; $A$ and $C$ are not the same size.
+</li><li> <![CDATA[$\transpose{B} + C = \begin{bmatrix} 5 & 2 \\ 6 & -6 \\ -1 & 7 \end{bmatrix}$]]>
+</li><li> $A + \transpose{B}$  is undefined; $A$ and $\transpose{B}$ are not the same size.
+</li><li> <![CDATA[$\beta C = \begin{bmatrix} 1 & 2 \\ 2 & 0 \\ -1 & 1 \end{bmatrix}$]]>
+</li><li> <![CDATA[$4A - 3B = \begin{bmatrix} -5 & 10 & -15\\ 30 & 30 & -15 \end{bmatrix}$]]>
+</li><li> <![CDATA[$\transpose{A} + \alpha C = \begin{bmatrix} 9 & 22 \\ 20 & 3\\ -11 & 8 \end{bmatrix}$]]>
+</li><li> <![CDATA[$A + B - \transpose{C} = \begin{bmatrix} 2 & 2 & 0\\ 0 & -3 & 3\end{bmatrix}$]]>
+</li><li> <![CDATA[$4A + 2B - 5\transpose{C} = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix}$]]>
+</li></ol>
+</solution>
+</exercise>
+
+<exercise type="C" number="11" rough="basic computations">
+<problem contributor="chrisblack">Solve the given vector equation for $x$, or explain why no solution exists:
+<equation>
+<![CDATA[2 \begin{bmatrix} 1 & 2 & 3 \\ 0 & 4 & 2 \end{bmatrix} -]]>
+<![CDATA[3 \begin{bmatrix} 1 & 1 & 2 \\ 0 & 1 & x \end{bmatrix}]]>
+=
+<![CDATA[\begin{bmatrix} -1 & 1 & 0 \\ 0 & 5 & -2 \end{bmatrix}]]>
+</equation>
+</problem>
+<solution contributor="chrisblack">The given equation
+<alignmath>
+<![CDATA[\begin{bmatrix} -1 & 1 & 0 \\ 0 & 5  & -2 \end{bmatrix}]]>
+<![CDATA[&=]]>
+<![CDATA[2\begin{bmatrix} 1 & 2 & 3 \\ 0 & 4 & 2 \end{bmatrix} -]]>
+<![CDATA[3\begin{bmatrix} 1 & 1 & 2 \\ 0 & 1 & x \end{bmatrix}]]>
+=
+<![CDATA[\begin{bmatrix} -1 & 1 & 0 \\ 0 &5  & 4 - 3x \end{bmatrix}]]>
+</alignmath>
+is valid only if $4 - 3x = -2$.  Thus, the only solution is $x = 2$.
+</solution>
+</exercise>
+
+<exercise type="C" number="12" rough="basic computations">
+<problem contributor="chrisblack">Solve the given matrix equation for $\alpha$, or explain why no solution exists:
+<equation>
+<![CDATA[\alpha\begin{bmatrix} 1 & 3 & 4 \\ 2 & 1 & -1 \end{bmatrix} +]]>
+<![CDATA[\begin{bmatrix} 4 & 3 & -6 \\ 0 & 1 & 1 \end{bmatrix}]]>
+=
+<![CDATA[\begin{bmatrix} 7 & 12 & 6 \\ 6 & 4 & -2 \end{bmatrix}]]>
+</equation>
+</problem>
+<solution contributor="chrisblack">The given equation
+<alignmath>
+<![CDATA[\begin{bmatrix} 7 & 12 & 6\\ 6 & 4 & -2 \end{bmatrix}]]>
+<![CDATA[&=]]>
+\alpha\begin{bmatrix}
+<![CDATA[1 & 3 & 4 \\]]>
+<![CDATA[ 2 & 1 & -1]]>
+\end{bmatrix}
++
+\begin{bmatrix}
+<![CDATA[4 & 3 & -6 \\]]>
+<![CDATA[0 & 1 & 1]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[\alpha & 3\alpha & 4\alpha \\]]>
+<![CDATA[2\alpha & \alpha & -\alpha]]>
+\end{bmatrix}
++
+\begin{bmatrix}
+<![CDATA[4 & 3 & -6 \\]]>
+<![CDATA[0 & 1 & 1]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[4 + \alpha & 3 + 3\alpha & -6 + 4\alpha \\]]>
+<![CDATA[2\alpha & 1 + \alpha & 1 - \alpha]]>
+\end{bmatrix}
+</alignmath>
+leads to the 6 equations in $\alpha$:
+<alignmath>
+<![CDATA[4 + \alpha &= 7\\]]>
+<![CDATA[3 + 3\alpha &= 12\\]]>
+<![CDATA[-6 + 4\alpha &= 6\\]]>
+<![CDATA[2\alpha &= 6\\]]>
+<![CDATA[1 + \alpha &= 4\\]]>
+<![CDATA[1 - \alpha &= -2.]]>
+</alignmath>
+The only value that solves all 6 equations is $\alpha = 3$, which is the solution to the original matrix equation.
+</solution>
+</exercise>
+
+<exercise type="C" number="13" rough="basic computations">
+<problem contributor="chrisblack">Solve the given matrix equation for $\alpha$, or explain why no solution exists:
+<equation>
+<![CDATA[\alpha \begin{bmatrix} 3 & 1 \\ 2 & 0 \\ 1 & 4\end{bmatrix} -]]>
+<![CDATA[\begin{bmatrix} 4 & 1 \\ 3 & 2 \\ 0 & 1 \end{bmatrix}]]>
+=
+<![CDATA[\begin{bmatrix} 2 & 1 \\ 1 & -2 \\ 2 & 6 \end{bmatrix}]]>
+</equation>
+</problem>
+<solution contributor="chrisblack">The given equation
+<alignmath>
+\begin{bmatrix}
+<![CDATA[2 & 1 \\]]>
+<![CDATA[1 & -2 \\]]>
+<![CDATA[2 & 6]]>
+\end{bmatrix}
+<![CDATA[&=]]>
+\alpha\begin{bmatrix}
+<![CDATA[3 & 1 \\]]>
+<![CDATA[2 & 0 \\]]>
+<![CDATA[1 & 4]]>
+\end{bmatrix}
++
+\begin{bmatrix}
+<![CDATA[4 & 1 \\]]>
+<![CDATA[3 & 2 \\]]>
+<![CDATA[0 & 1]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[3\alpha - 4 & \alpha - 1 \\]]>
+<![CDATA[2\alpha - 3 & -2 \\]]>
+<![CDATA[\alpha & 4\alpha - 1]]>
+\end{bmatrix}
+</alignmath>
+gives a system of six equations in $\alpha$:
+<alignmath>
+<![CDATA[3\alpha - 4 &= 2\\]]>
+<![CDATA[\alpha - 1 &= 1 \\]]>
+<![CDATA[2\alpha - 3&= 1\\]]>
+<![CDATA[-2 &= -2\\]]>
+<![CDATA[\alpha  &= 2\\]]>
+<![CDATA[4\alpha - 1 &= 6.]]>
+</alignmath>
+Solving each of these equations, we see that the first three and the fifth all lead to the solution $\alpha = 2$, the fourth equation is true no matter what the value of $\alpha$, but the last equation is only solved by $\alpha = 7/4$.  Thus, the system has no solution, and the original matrix equation also has no solution.
+</solution>
+</exercise>
+
+<exercise type="C" number="14" rough="basic computations">
+<problem contributor="chrisblack">Find $\alpha$ and $\beta$ that solve the following equation:
+<equation>
+<![CDATA[\alpha\begin{bmatrix} 1 & 2 \\ 4 & 1 \end{bmatrix} +]]>
+<![CDATA[\beta\begin{bmatrix} 2 & 1 \\ 3 & 1 \end{bmatrix}]]>
+=
+<![CDATA[\begin{bmatrix} -1 & 4 \\ 6 & 1 \end{bmatrix}]]>
+</equation>
+</problem>
+<solution contributor="chrisblack">The given equation
+<alignmath>
+\begin{bmatrix}
+<![CDATA[-1 & 4 \\]]>
+<![CDATA[6 & 1]]>
+\end{bmatrix}
+<![CDATA[&=]]>
+\alpha
+\begin{bmatrix}
+<![CDATA[1 & 2 \\]]>
+<![CDATA[4 & 1]]>
+\end{bmatrix}
++
+\beta
+\begin{bmatrix}
+<![CDATA[2 & 1 \\]]>
+<![CDATA[ 3 & 1]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[\alpha + 2\beta & 2\alpha + \beta \\]]>
+<![CDATA[ 4\alpha + 3\beta & \alpha + \beta]]>
+\end{bmatrix}
+</alignmath>
+gives a system of four equations in two variables
+<alignmath>
+<![CDATA[\alpha + 2\beta &= -1\\]]>
+<![CDATA[2\alpha + \beta &= 4\\]]>
+<![CDATA[4\alpha + 3\beta &= 6\\]]>
+<![CDATA[\alpha + \beta &= 1.]]>
+</alignmath>
+Solving this linear system by row-reducing the augmnented matrix shows that $\alpha = 3$, $\beta = -2$ is the only solution.
+</solution>
+</exercise>
+
+<exercisegroup>
+<p>In <acroref type="chapter" acro="V" /> we defined the operations of vector addition and vector  scalar multiplication in <acroref type="definition" acro="CVA" /> and <acroref type="definition" acro="CVSM" />.  These two operations formed the underpinnings of the remainder of the chapter.  We have now defined similar operations for matrices in <acroref type="definition" acro="MA" /> and <acroref type="definition" acro="MSM" />.  You will have noticed the resulting similarities between <acroref type="theorem" acro="VSPCV" /> and <acroref type="theorem" acro="VSPM" />.</p>
+
+<p>In Exercises M20<ndash />M25, you will be asked to extend these similarities to other fundamental definitions and concepts we first saw in <acroref type="chapter" acro="V" />.  This sequence of problems was suggested by <contributorname code="martinjackson" />.</p>
+
+<exercise type="M" number="20" rough="Definitions">
+<problem contributor="robertbeezer">Suppose $S=\set{B_1,\,B_2,\,B_3,\,\ldots,\,B_p}$ is a set of matrices from $M_{mn}$.  Formulate appropriate definitions for the following terms and give an example of the use of each.
+<ol><li> A linear combination of elements of $S$.
+</li><li> A relation of linear dependence on $S$, both trivial and non-trivial.
+</li><li> $S$ is a linearly independent set.
+</li><li> $\spn{S}$.
+</li></ol>
+</problem>
+</exercise>
+
+<exercise type="M" number="21" rough="Standard basis is lin ind">
+<problem contributor="robertbeezer">Show that the set $S$ is linearly independent in $M_{2,2}$.
+<equation>
+S=\set{
+<![CDATA[\begin{bmatrix}1&0\\0&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&1\\0&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&0\\1&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+</equation>
+</problem>
+<solution contributor="chrisblack">Suppose there exist constants $\alpha$, $\beta$, $\gamma$, and $\delta$ so that
+<alignmath>
+<![CDATA[\alpha \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix} +]]>
+<![CDATA[\beta \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix} +]]>
+<![CDATA[\gamma \begin{bmatrix} 0 & 0 \\ 1 & 0 \end{bmatrix} +]]>
+<![CDATA[\delta \begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}]]>
+<![CDATA[&=]]>
+<![CDATA[\begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix} .]]>
+</alignmath>
+Then,
+<alignmath>
+<![CDATA[\begin{bmatrix}\alpha & 0 \\ 0 & 0 \end{bmatrix} +]]>
+<![CDATA[ \begin{bmatrix} 0 & \beta \\ 0 & 0 \end{bmatrix} +]]>
+<![CDATA[\begin{bmatrix} 0 & 0 \\ \gamma & 0 \end{bmatrix} +]]>
+<![CDATA[ \begin{bmatrix} 0 & 0 \\ 0 & \delta \end{bmatrix}]]>
+<![CDATA[&=]]>
+<![CDATA[\begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix}]]>
+</alignmath>
+so that
+$\begin{bmatrix}
+<![CDATA[\alpha & \beta \\]]>
+<![CDATA[ \gamma & \delta]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[0 & 0 \\]]>
+<![CDATA[0 & 0]]>
+\end{bmatrix}$.
+The only solution is then $\alpha = 0$, $\beta = 0$, $\gamma = 0$, and $\delta = 0$, so that the set $S$ is a linearly independent set of matrices.
+</solution>
+</exercise>
+
+<exercise type="M" number="22" rough="Stray lin ind set in M_23">
+<problem contributor="robertbeezer">Determine if the set
+<equation>
+S=\set{
+<![CDATA[\begin{bmatrix} -2 & 3 & 4 \\ -1 & 3 & -2 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} 4 & -2 & 2 \\ 0 & -1 & 1 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-1 & -2 & -2 \\ 2 & 2 & 2 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-1 & 1 & 0 \\ -1 & 0 & -2 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-1 & 2 & -2 \\ 0 & -1 & -2 \end{bmatrix}]]>
+}
+</equation>
+is linearly independent in $M_{2,3}$.
+</problem>
+<solution contributor="chrisblack">Suppose that there exist constants $a_1$, $a_2$, $a_3$, $a_4$, and $a_5$ so that
+<alignmath>
+<![CDATA[a_1 \begin{bmatrix} -2 & 3 & 4 \\ -1 & 3 & -2 \end{bmatrix}  +]]>
+<![CDATA[a_2 \begin{bmatrix} 4 & -2 & 2 \\ 0 & -1 & 1 \end{bmatrix}  +]]>
+<![CDATA[a_3 \begin{bmatrix} -1 & -2 & -2 \\ 2 & 2 & 2  \end{bmatrix}  +]]>
+<![CDATA[a_4 \begin{bmatrix}  -1 & 1 & 0\\ -1 & 0 & 2 \end{bmatrix}  +]]>
+<![CDATA[a_5 \begin{bmatrix} -1 & 2 & -1\\ 0 & -1 & -2 \end{bmatrix}]]>
+<![CDATA[&=]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0\\0 & 0 & 0 \end{bmatrix}.]]>
+</alignmath>
+Then, we have the matrix equality (<acroref type="definition" acro="ME" />)
+<alignmath>
+\begin{bmatrix}
+<![CDATA[-2a_1 + 4a_2 - a_3 - a_4 - a_5 & 3a_1 - 2a_2 - 2a_3 + a_4 + 2a_5 & 4a_1 + 2a_2 - 2a_3 - 2a_5\\]]>
+<![CDATA[-a_1  + 2a_3 - a_4 & 3a_1 - a_2 + 2a_3 - a_5 & -2a_1 + a_2 + 2a_3 + 2a_4 - 2a_5]]>
+\end{bmatrix}
+<![CDATA[&=]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0\\0 & 0 & 0 \end{bmatrix},]]>
+</alignmath>
+which yields the linear system of equations
+<alignmath>
+<![CDATA[-2a_1 + 4a_2 - a_3 - a_4 - a_5 &= 0\\]]>
+<![CDATA[3a_1 - 2a_2 - 2a_3 + a_4 + 2a_5&= 0\\]]>
+<![CDATA[4a_1 + 2a_2 - 2a_3 - 2a_5&=0\\]]>
+<![CDATA[-a_1  + 2a_3 - a_4 &= 0\\]]>
+<![CDATA[ 3a_1 - a_2 + 2a_3 - a_5 &= 0\\]]>
+<![CDATA[ -2a_1 + a_2 + 2a_3 + 2a_4 - 2a_5 &= 0.]]>
+</alignmath>
+By row-reducing the associated $6\times 5$ homogeneous system, we see that the only solution is
+$ a_1 = a_2 = a_3 = a_4 = a_5 = 0$, so these matrices are a linearly independent subset of $M_{2,3}$.
+</solution>
+</exercise>
+
+<exercise type="M" number="23" rough="Span question">
+<problem contributor="robertbeezer">Determine if the matrix $A$ is in the span of $S$.  In other words, is  $A\in\spn{S}$?  If so write $A$ as a linear combination of the elements of $S$.
+<alignmath>
+<![CDATA[A&=]]>
+\begin{bmatrix}
+<![CDATA[-13 & 24 & 2\\]]>
+<![CDATA[-8 & -2 & -20]]>
+\end{bmatrix}\\
+<![CDATA[S&=\set{]]>
+<![CDATA[\begin{bmatrix} -2 & 3 & 4 \\ -1 & 3 & -2 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} 4 & -2 & 2 \\ 0 & -1 & 1 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-1 & -2 & -2 \\ 2 & 2 & 2 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-1 & 1 & 0 \\ -1 & 0 & -2 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-1 & 2 & -2 \\ 0 & -1 & -2 \end{bmatrix}]]>
+}
+</alignmath>
+</problem>
+<solution contributor="chrisblack">The matrix $A$ is in the span of $S$, since
+<alignmath>
+<![CDATA[\begin{bmatrix} -13 & 24 & 2 \\ -8 & -2 & -20 \end{bmatrix}]]>
+<![CDATA[&=]]>
+<![CDATA[2\begin{bmatrix} -2 & 3 & 4 \\ -1 & 3 & -2 \end{bmatrix}]]>
+<![CDATA[-2\begin{bmatrix} 4 & -2 & 2 \\ 0 & -1 & 1 \end{bmatrix}]]>
+<![CDATA[-3\begin{bmatrix} -1 & -2 & -2 \\ 2 & 2 & 2 \end{bmatrix}]]>
+<![CDATA[+ 4\begin{bmatrix} -1 & 2 & -2 \\0 & -1 & -2 \end{bmatrix}]]>
+</alignmath>
+Note that if we were to write a complete linear combination of <em>all</em> of the matrices in $S$, then the fourth matrix would have a zero coefficient.
+</solution>
+</exercise>
+
+<exercise type="M" number="24" rough="Symmetric matrices, basis">
+<problem contributor="robertbeezer">Suppose $Y$ is the set of all $3\times 3$ symmetric matrices (<acroref type="definition" acro="SYM" />).  Find a set $T$ so that $T$ is linearly independent and $\spn{T}=Y$.
+</problem>
+<solution contributor="chrisblack">Since any symmetric matrix is of the form
+<alignmath>
+<![CDATA[\begin{bmatrix} a & b & c \\ b & d & e \\ c & e & f \end{bmatrix}]]>
+<![CDATA[&=]]>
+<![CDATA[\begin{bmatrix} a & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} +]]>
+<![CDATA[\begin{bmatrix} 0 & b & 0 \\ b & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} +]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & c \\ 0 & 0 & 0 \\ c & 0 & 0 \end{bmatrix} +]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0 \\ 0 & d & 0 \\ 0 & 0 & 0 \end{bmatrix} +]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & e \\ 0 & e & 0 \end{bmatrix} +]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & f \end{bmatrix},]]>
+</alignmath>
+Any symmetric matrix is a linear combination of the linearly independent vectors in set $T$ below, so that $\spn{T} = Y$:
+<equation>
+T = \set{
+<![CDATA[\begin{bmatrix} 1 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix},]]>
+<![CDATA[\begin{bmatrix} 0 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix},]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 1 & 0 & 0 \end{bmatrix},]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 0 \end{bmatrix},]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 1 \\ 0 & 1 & 0 \end{bmatrix},]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 1 \end{bmatrix}]]>
+}
+</equation>
+(Something to think about:  How do we know that these matrices are linearly independent?)
+</solution>
+</exercise>
+
+<exercise type="M" number="25" rough="Upper triangular, basis">
+<problem contributor="robertbeezer">Define a subset of $M_{3,3}$ by
+<equation>
+U_{33}=\setparts{
+A\in M_{3,3}
+}{
+\matrixentry{A}{ij}=0\text{ whenever }i>j
+}
+</equation>
+Find a set $R$ so that $R$ is linearly independent and $\spn{R}=U_{33}$.
+</problem>
+</exercise>
+
+</exercisegroup>
+
+<!--                                               % 10 axioms to prove, number consecutively -->
+<exercise type="T" number="13" rough="CM">
+<problem contributor="robertbeezer">Prove <acroref type="property" acro="CM" /> of <acroref type="theorem" acro="VSPM" />.  Write your proof in the style of the proof of <acroref type="property" acro="DSAM" /> given in this section.
+</problem>
+<solution contributor="robertbeezer">For all $A,\,B\in M_{mn}$ and for all $1\leq i\leq m$,  $1\leq i\leq n$,
+<alignmath>
+\matrixentry{A+B}{ij}
+<![CDATA[&=\matrixentry{A}{ij}+\matrixentry{B}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MA" />}\\
+<![CDATA[&=\matrixentry{B}{ij}+\matrixentry{A}{ij}]]>
+<![CDATA[&&\text{Commutativity in $\complex{\null}$}\\]]>
+<![CDATA[&=\matrixentry{B+A}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MA" />}
+</alignmath>
+With equality of each entry of the matrices $A+B$ and $B+A$ being equal <acroref type="definition" acro="ME" /> tells us the two matrices are equal.
+</solution>
+</exercise>
+
+<exercise type="T" number="14" rough="AAM">
+<problem contributor="robertbeezer">Prove <acroref type="property" acro="AAM" /> of <acroref type="theorem" acro="VSPM" />.  Write your proof in the style of the proof of <acroref type="property" acro="DSAM" /> given in this section.
+</problem>
+</exercise>
+
+<exercise type="T" number="17" rough="SMAM">
+<problem contributor="robertbeezer">Prove <acroref type="property" acro="SMAM" /> of <acroref type="theorem" acro="VSPM" />.  Write your proof in the style of the proof of <acroref type="property" acro="DSAM" /> given in this section.
+</problem>
+</exercise>
+
+<exercise type="T" number="18" rough="DVAM">
+<problem contributor="robertbeezer">Prove <acroref type="property" acro="DMAM" /> of <acroref type="theorem" acro="VSPM" />.  Write your proof in the style of the proof of <acroref type="property" acro="DSAM" /> given in this section.
+</problem>
+</exercise>
+
+<exercisegroup>
+<p>A matrix $A$ is <define>skew-symmetric</define> if $\transpose{A}=-A$  Exercises T30<ndash />T37 employ this definition.</p>
+
+<exercise type="T" number="30" rough="skew => square">
+<problem contributor="robertbeezer">Prove that a skew-symmetric matrix is square.  (Hint: study the proof of <acroref type="theorem" acro="SMS" />.)
+</problem>
+</exercise>
+
+<exercise type="T" number="31" rough="skew => zero diagonal">
+<problem contributor="manleyperkel">Prove that a skew-symmetric matrix must have zeros for its diagonal elements.  In other words, if $A$ is skew-symmetric of size $n$, then $\matrixentry{A}{ii}=0$ for $1\leq i\leq n$.  (Hint: carefully construct an example of a $3\times 3$ skew-symmetric matrix before attempting a proof.)
+</problem>
+</exercise>
+
+<exercise type="T" number="32" rough="skew, symmetric iff zero matrix">
+<problem contributor="manleyperkel">Prove that a matrix $A$ is both skew-symmetric and symmetric if and only if $A$ is the zero matrix.  (Hint: one half of this proof is very easy, the other half takes a little more work.)
+</problem>
+</exercise>
+
+<exercise type="T" number="33" rough="linear combo of skew is skew">
+<problem contributor="manleyperkel">Suppose $A$ and $B$ are both skew-symmetric matrices of the same size and $\alpha,\,\beta\in\complexes$.  Prove that $\alpha A + \beta B$ is a skew-symmetric matrix.
+</problem>
+</exercise>
+
+<exercise type="T" number="34" rough="A + A-transpose is symmetric">
+<problem contributor="manleyperkel">Suppose $A$ is a square matrix.  Prove that $A+\transpose{A}$ is a symmetric matrix.
+</problem>
+</exercise>
+
+<exercise type="T" number="35" rough="A - A-transpose is skew">
+<problem contributor="manleyperkel">Suppose $A$ is a square matrix.  Prove that $A-\transpose{A}$ is a skew-symmetric matrix.
+</problem>
+</exercise>
+
+<exercise type="T" number="36" rough="Decompose to symmetric + skew">
+<problem contributor="manleyperkel">Suppose $A$ is a square matrix.  Prove that there is a symmetric matrix $B$ and a skew-symmetric matrix $C$ such that $A=B+C$.  In other words, any square matrix can be decomposed into a symmetric matrix and a skew-symmetric matrix (<acroref type="technique" acro="DC" />).  (Hint: consider building a proof on <acroref type="exercise" acro="MO.T34" /> and <acroref type="exercise" acro="MO.T35" />.)
+</problem>
+</exercise>
+
+<exercise type="T" number="37" rough="Decomposition is unique">
+<problem contributor="manleyperkel">Prove that the decomposition in <acroref type="exercise" acro="MO.T36" /> is unique (see <acroref type="technique" acro="U" />).  (Hint: a proof can turn on <acroref type="exercise" acro="MO.T31" />.)
+</problem>
+</exercise>
+
+</exercisegroup>
+
+</exercisesubsection>
+
+</section>

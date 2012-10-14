@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="MINM">
+<title>Matrix Inverses and Nonsingular Matrices</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section MINM -->
+<!-- %  Matrix Inverses and Nonsingular Matrices -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>We saw in <acroref type="theorem" acro="CINM" /> that if a square matrix $A$ is nonsingular, then there is a matrix $B$ so that $AB=I_n$.  In other words, $B$ is halfway to being an inverse of $A$.  We will see in this section that $B$ automatically fulfills the second condition ($BA=I_n$).  <acroref type="example" acro="MWIAA" /> showed us that the coefficient matrix from <acroref type="archetype" acro="A" /> had no inverse.  Not coincidentally, this coefficient matrix is singular.  We'll make all these connections precise now.  Not many examples or definitions in this section, just theorems.</p>
+
+</introduction>
+
+<subsection acro="NMI">
+<title>Nonsingular Matrices are Invertible</title>
+
+<p>We need a couple of technical results for starters.  Some books would call these minor, but essential, results <q>lemmas.</q>  We'll just call 'em theorems.  See <acroref type="technique" acro="LC" /> for more on the distinction.</p>
+
+<p>The first of these technical results is interesting in that the hypothesis says something about a product of two square matrices and the conclusion then says the same thing about each individual matrix in the product.  This result has an analogy in the algebra of complex numbers: suppose $\alpha,\,\beta\in\complexes$, then $\alpha\beta\neq 0$ if and only if $\alpha\neq 0$ and $\beta\neq 0$.  We can view this result as suggesting that the term <q>nonsingular</q> for matrices is like the term <q>nonzero</q> for scalars.</p>
+
+<theorem acro="NPNT" index="nonsingular matrix!product of nonsingular matrices">
+<title>Nonsingular Product has Nonsingular Terms</title>
+<statement>
+<p>Suppose that $A$ and $B$ are square matrices of size $n$.  The product $AB$ is nonsingular if and only if $A$ and $B$ are both nonsingular.</p>
+
+</statement>
+
+<proof>
+<p><implyforward /> We'll do this portion of the proof in two parts, each as a proof by contradiction (<acroref type="technique" acro="CD" />).  Assume that $AB$ is nonsingular. Establishing that $B$ is nonsingular is the easier part, so we will do it first, but in reality, we will <em>need</em> to know that $B$ is nonsingular when we prove that $A$ is nonsingular.</p>
+
+<p>You can also think of this proof as being a study of four possible conclusions in the table below.  One of the four rows <em>must</em> happen (the list is exhaustive).  In the proof we learn that the first three rows lead to contradictions, and so are impossible.  That leaves the fourth row as a certainty, which is our desired conclusion.
+
+<table>
+<latex>\begin{tabular}{l|l|c}
+<![CDATA[\multicolumn{1}{c}{$A$}&]]>
+<![CDATA[\multicolumn{1}{c}{$B$}&]]>
+\multicolumn{1}{c}{Case}\\\hline\hline
+<![CDATA[Singular&Singular&1\\\hline]]>
+<![CDATA[Nonsingular&Singular&1\\\hline]]>
+<![CDATA[Singular&Nonsingular&2\\\hline]]>
+<![CDATA[Nonsingular&Nonsingular&]]>
+\end{tabular}</latex>
+<html>
+<![CDATA[<table border="1" cellpadding="2">
+  <tr><td>$A$</td><td>$B$</td><td>Case</td></tr>
+  <tr><td>Singular</td><td>Singular</td><td>1</td></tr>
+  <tr><td>Nonsingular</td><td>Singular</td><td>1</td></tr>
+  <tr><td>Singular</td><td>Nonsingular</td><td>2</td></tr>
+  <tr><td>Nonsingular</td><td>Nonsingular</td><td></td></tr>
+</table>]]>
+</html>
+</table>
+
+
+</p>
+
+<p>Part 1.  Suppose $B$ is singular.  Then there is a nonzero vector $\vect{z}$ that is a solution to $\homosystem{B}$.  So
+<alignmath>
+(AB)\vect{z}
+<![CDATA[&=A(B\vect{z})&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=A\zerovector&&]]>\text{<acroref type="theorem" acro="SLEMM" />}\\
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="theorem" acro="MMZM" />}\\
+</alignmath></p>
+
+<p>Because $\vect{z}$ is a nonzero solution to $\homosystem{AB}$,  we conclude that $AB$ is singular (<acroref type="definition" acro="NM" />).  This is a contradiction, so $B$ is nonsingular, as desired.</p>
+
+<p>Part 2.  Suppose $A$ is singular.  Then there is a nonzero vector $\vect{y}$ that is a solution to $\homosystem{A}$.  Now consider the linear system $\linearsystem{B}{\vect{y}}$.  Since we know $B$ is nonsingular from Case 1, the system has a unique solution (<acroref type="theorem" acro="NMUS" />), which we will denote as $\vect{w}$.  We first claim $\vect{w}$ is not the zero vector either.  Assuming the opposite, suppose that $\vect{w}=\zerovector$ (<acroref type="technique" acro="CD" />).  Then
+<alignmath>
+\vect{y}
+<![CDATA[&=B\vect{w}&&]]>\text{<acroref type="theorem" acro="SLEMM" />}\\
+<![CDATA[&=B\zerovector&&\text{Hypothesis}\\]]>
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="theorem" acro="MMZM" />}
+<intertext>contrary to $\vect{y}$ being nonzero.  So $\vect{w}\neq\zerovector$.  The pieces are in place, so here we go,</intertext>
+(AB)\vect{w}
+<![CDATA[&=A(B\vect{w})&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=A\vect{y}&&]]>\text{<acroref type="theorem" acro="SLEMM" />}\\
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="theorem" acro="SLEMM" />}\\
+</alignmath>
+</p>
+
+<p>So $\vect{w}$ is a nonzero solution to $\homosystem{AB}$,  and thus we can say  that $AB$ is singular (<acroref type="definition" acro="NM" />).  This is a contradiction, so $A$ is nonsingular, as desired.</p>
+
+<p><implyreverse /> Now assume that both $A$ and $B$ are nonsingular.  Suppose that $\vect{x}\in\complex{n}$ is a solution to $\homosystem{AB}$.  Then
+<alignmath>
+\zerovector
+<![CDATA[&=\left(AB\right)\vect{x}&&]]>\text{<acroref type="theorem" acro="SLEMM" />}\\
+<![CDATA[&=A\left(B\vect{x}\right)&&]]>\text{<acroref type="theorem" acro="MMA" />}
+</alignmath>
+</p>
+
+<p>By <acroref type="theorem" acro="SLEMM" />, $B\vect{x}$ is a solution to $\homosystem{A}$, and by the definition of a nonsingular matrix (<acroref type="definition" acro="NM" />), we conclude that $B\vect{x}=\zerovector$.  Now, by an entirely similar argument, the nonsingularity of $B$ forces us to conclude that $\vect{x}=\zerovector$.  So the only solution to $\homosystem{AB}$ is the zero vector and we conclude that $AB$ is nonsingular by <acroref type="definition" acro="NM" />.</p>
+
+</proof>
+</theorem>
+
+<p>This is a powerful result in the <q>forward</q> direction, because it allows us to begin with a hypothesis that something complicated (the matrix product $AB$) has the property of being nonsingular, and we can then conclude that the simpler constituents ($A$ and $B$ individually) then also have the property of being nonsingular.  If we had thought that the matrix product was an artificial construction, results like this would make us begin to think twice.</p>
+
+<p>The contrapositive of this result is equally interesting.  It says that $A$ or $B$ (or both) is a singular matrix if and only if the product $AB$ is singular.  Notice how the negation of the theorem's conclusion ($A$ and $B$ both nonsingular) becomes the statement <q>at least one of $A$ and $B$ is singular.</q>  (See <acroref type="technique" acro="CP" />.)</p>
+
+<!--   TODO: Insert reference to a technique about negations. -->
+<theorem acro="OSIS" index="matrix inverse!one-sided">
+<title>One-Sided Inverse is Sufficient</title>
+<statement>
+<p>Suppose $A$ and $B$ are  square matrices of size $n$ such that $AB=I_n$.  Then $BA=I_n$.</p>
+
+</statement>
+
+<proof>
+<p>The matrix $I_n$ is nonsingular (since it row-reduces easily to $I_n$, <acroref type="theorem" acro="NMRRI" />).  So $A$ and $B$ are nonsingular by <acroref type="theorem" acro="NPNT" />, so in particular $B$ is nonsingular.  We can therefore apply <acroref type="theorem" acro="CINM" /> to assert the existence of a matrix $C$ so that $BC=I_n$.  This application of <acroref type="theorem" acro="CINM" /> could be a bit confusing, mostly because of the names of the matrices involved.  $B$ is nonsingular, so there must be a <q>right-inverse</q> for $B$, and we're calling it $C$.</p>
+
+<p>Now
+<alignmath>
+BA
+<![CDATA[&=(BA)I_n&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=(BA)(BC)&&]]>\text{<acroref type="theorem" acro="CINM" />}\\
+<![CDATA[&=B(AB)C&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=BI_nC&&\text{Hypothesis}\\]]>
+<![CDATA[&=BC&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=I_n&&]]>\text{<acroref type="theorem" acro="CINM" />}
+</alignmath>
+which is the desired conclusion.</p>
+
+</proof>
+</theorem>
+
+<p>So <acroref type="theorem" acro="OSIS" /> tells us that if $A$ is nonsingular, then the matrix $B$ guaranteed by <acroref type="theorem" acro="CINM" /> will be both a <q>right-inverse</q> and a <q>left-inverse</q> for $A$, so $A$ is invertible and $\inverse{A}=B$.</p>
+
+<p>So if you have a nonsingular matrix, $A$, you can use the procedure described in <acroref type="theorem" acro="CINM" /> to find an inverse for $A$.  If $A$ is singular, then the procedure in <acroref type="theorem" acro="CINM" /> will fail as the first $n$ columns of $M$ will not row-reduce to the identity matrix.  However, we can say a bit more.  When $A$ is singular, then $A$ does not have an inverse (which is very different from saying that the procedure in <acroref type="theorem" acro="CINM" /> fails to find an inverse).
+This may feel like we are splitting hairs, but it's important that we do not make unfounded assumptions.  These observations motivate the next theorem.</p>
+
+<theorem acro="NI" index="matrix inverse!nonsingular matrix">
+<title>Nonsingularity is Invertibility</title>
+<statement>
+<indexlocation index="nonsingular matrix!matrix inverse" />
+<p>Suppose that $A$ is a square matrix.  Then $A$ is nonsingular if and only if $A$ is invertible.</p>
+
+</statement>
+
+<proof>
+<p><implyreverse />  Since $A$ is invertible, we can write $I_n=A\inverse{A}$ (<acroref type="definition" acro="MI" />).  Notice that $I_n$ is nonsingular (<acroref type="theorem" acro="NMRRI" />) so <acroref type="theorem" acro="NPNT" /> implies that $A$ (and $\inverse{A}$) is nonsingular.</p>
+
+<p><implyforward />  Suppose now that $A$ is nonsingular.  By <acroref type="theorem" acro="CINM" /> we find $B$ so that $AB=I_n$.  Then <acroref type="theorem" acro="OSIS" /> tells us that $BA=I_n$.  So $B$ is $A$'s inverse, and by construction, $A$ is invertible.</p>
+
+</proof>
+</theorem>
+
+<p>So for a square matrix, the properties of having an inverse and of having a trivial null space are one and the same.  Can't have one without the other.</p>
+
+<theorem acro="NME3" index="nonsingular matrix!equivalences">
+<title>Nonsingular Matrix Equivalences, Round 3</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $n$.  The following are equivalent.
+<ol><li> $A$ is nonsingular.
+</li><li> $A$ row-reduces to the identity matrix.
+</li><li> The null space of $A$ contains only the zero vector, $\nsp{A}=\set{\zerovector}$.
+</li><li> The linear system $\linearsystem{A}{\vect{b}}$ has a unique solution for every possible choice of $\vect{b}$.
+</li><li> The columns of $A$ are a linearly independent set.
+</li><li> $A$ is invertible.
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>We can update our list of equivalences for nonsingular matrices (<acroref type="theorem" acro="NME2" />) with the equivalent condition from <acroref type="theorem" acro="NI" />.</p>
+
+</proof>
+</theorem>
+
+<p>In the case that $A$ is a nonsingular coefficient matrix of a system of equations, the inverse allows us to very quickly compute the unique solution, for any vector of constants.</p>
+
+<theorem acro="SNCM" index="coefficient matrix!nonsingular">
+<title>Solution with Nonsingular Coefficient Matrix</title>
+<statement>
+<p>Suppose that $A$ is nonsingular.  Then the unique solution to $\linearsystem{A}{\vect{b}}$ is $\inverse{A}\vect{b}$.</p>
+
+</statement>
+
+<proof>
+<p>By <acroref type="theorem" acro="NMUS" /> we know already that $\linearsystem{A}{\vect{b}}$ has a unique solution for every choice of $\vect{b}$.  We need to show that the expression stated is indeed a solution (<em>the</em> solution).  That's easy, just <q>plug it in</q> to the corresponding vector equation representation (<acroref type="theorem" acro="SLEMM" />),
+<alignmath>
+A\left(\inverse{A}\vect{b}\right)
+<![CDATA[&=\left(A\inverse{A}\right)\vect{b}&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=I_n\vect{b}&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=\vect{b}&&]]>\text{<acroref type="theorem" acro="MMIM" />}
+</alignmath>
+</p>
+
+<p>Since $A\vect{x}=\vect{b}$ is true when we substitute $\inverse{A}\vect{b}$ for $\vect{x}$, $\inverse{A}\vect{b}$ is a (the!) solution to $\linearsystem{A}{\vect{b}}$.</p>
+
+</proof>
+</theorem>
+
+<sageadvice acro="MI" index="matrix inverse">
+<title>Matrix Inverse</title>
+Now we know that invertibility is equivalent to nonsingularity, and that the procedure outlined in <acroref type="theorem" acro="CINM" /> will always yield an inverse for a nonsingular matrix.  But rather than using that procedure, Sage implements a <code>.inverse()</code> method.  In the following, we compute the inverse of a $3\times 3$ matrix, and then purposely convert it to a singular matrix by replacing the last column by a linear combination of the first two.
+<sage>
+<input>A = matrix(QQ,[[ 3,  7, -6],
+               [ 2,  5, -5],
+               [-3, -8,  8]])
+A.is_singular()
+</input>
+<output>False
+</output>
+</sage>
+
+<sage>
+<input>Ainv = A.inverse(); Ainv
+</input>
+<output>[ 0  8  5]
+[ 1 -6 -3]
+[ 1 -3 -1]
+</output>
+</sage>
+
+<sage>
+<input>A*Ainv
+</input>
+<output>[1 0 0]
+[0 1 0]
+[0 0 1]
+</output>
+</sage>
+
+<sage>
+<input>col_0 = A.column(0)
+col_1 = A.column(1)
+C = column_matrix([col_0, col_1, 2*col_0 - 4*col_1])
+C.is_singular()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>C.inverse()
+</input>
+<output>Traceback (most recent call last):
+...
+ZeroDivisionError: input matrix must be nonsingular
+</output>
+</sage>
+
+Notice how the failure to invert <code>C</code> is explained by the matrix being singular.<br /><br />
+Systems with nonsingular coefficient matrices can be solved easily with the matrix inverse.  We will recycle <code>A</code> as a coefficient matrix, so be sure to execute the code above.
+<sage>
+<input>const = vector(QQ, [2, -1, 4])
+A.solve_right(const)
+</input>
+<output>(12, -4, 1)
+</output>
+</sage>
+
+<sage>
+<input>A.inverse()*const
+</input>
+<output>(12, -4, 1)
+</output>
+</sage>
+
+<sage>
+<input>A.solve_right(const) == A.inverse()*const
+</input>
+<output>True
+</output>
+</sage>
+
+If you find it more convenient, you can use the same notation as the text for a matrix inverse.
+<sage>
+<input>A^-1
+</input>
+<output>[ 0  8  5]
+[ 1 -6 -3]
+[ 1 -3 -1]
+</output>
+</sage>
+
+
+
+</sageadvice>
+<sageadvice acro="NME3" index="nonsingular matrix equivalences, round 3">
+<title>Nonsingular Matrix Equivalences, Round 3</title>
+For square matrices, Sage has the methods <code>.is_singular()</code> and <code>.is_invertible()</code>.  By <acroref type="theorem" acro="NI" /> we know these two functions to be logical opposites.  One way to express this is that these two methods will always return different values.  Here we demonstrate with a nonsingular matrix and a singular matrix.  The comparison <code>!=</code> is <q>not equal.</q>
+<sage>
+<input>nonsing = matrix(QQ, [[ 0, -1,  1, -3],
+                      [ 1,  1,  0, -3],
+                      [ 0,  4, -3,  8],
+                      [-2, -4,  1,  5]])
+nonsing.is_singular() != nonsing.is_invertible()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>sing = matrix(QQ, [[ 1, -2, -6,  8],
+                   [-1,  3,  7, -8],
+                   [ 0, -4, -3, -2],
+                   [ 0,  3,  1,  4]])
+sing.is_singular() != sing.is_invertible()
+</input>
+<output>True
+</output>
+</sage>
+
+We could test other properties of the matrix inverse, such as <acroref type="theorem" acro="SS" />.
+<sage>
+<input>A = matrix(QQ, [[ 3, -5, -2,  8],
+                [-1,  2,  0, -1],
+                [-2,  4,  1, -4],
+                [ 4, -5,  0,  8]])
+B = matrix(QQ, [[ 1,  2,  4, -1],
+                [-2, -3, -8, -2],
+                [-2, -4, -7,  5],
+                [ 2,  5,  7, -8]])
+A.is_invertible() and B.is_invertible()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>(A*B).inverse() == B.inverse()*A.inverse()
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="UM">
+<title>Unitary Matrices</title>
+
+<p>Recall that the adjoint of a matrix is $\adjoint{A}=\transpose{\left(\conjugate{A}\right)}$ (<acroref type="definition" acro="A" />).</p>
+
+<definition acro="UM" index="matrix!unitary">
+<title>Unitary Matrices</title>
+<p>Suppose that $U$ is a square matrix of size $n$ such that $\adjoint{U}U=I_n$.  Then we say $U$ is <define>unitary</define>.</p>
+
+</definition>
+
+<p>This condition may seem rather far-fetched at first glance.  Would there be <em>any</em> matrix that behaved this way?  Well, yes, here's one.</p>
+
+<example acro="UM3" index="unitary!size 3">
+<title>Unitary matrix of size 3</title>
+
+<p><equation>
+U=
+\begin{bmatrix}
+<![CDATA[\frac{1 + i }{{\sqrt{5}}} &]]>
+<![CDATA[   \frac{3 + 2\,i }{{\sqrt{55}}} &]]>
+   \frac{2+2i}{\sqrt{22}} \\
+<![CDATA[\frac{1 - i }{{\sqrt{5}}} &]]>
+<![CDATA[   \frac{2 + 2\,i }{{\sqrt{55}}} &]]>
+   \frac{-3 + i }{{\sqrt{22}}} \\
+<![CDATA[\frac{i }{{\sqrt{5}}} &]]>
+<![CDATA[   \frac{3 - 5\,i }{{\sqrt{55}}} &]]>
+   -\frac{2}{\sqrt{22}}
+\end{bmatrix}
+</equation>
+The computations get a bit tiresome, but if you work your way through the computation of $\adjoint{U}U$, you <em>will</em> arrive at the $3\times 3$ identity matrix $I_3$.</p>
+
+</example>
+
+<!--   Above example from Mathematica input: -->
+<!--   GramSchmidt[{{1 + I, 1 - I, I}, {I, 1 + I, -I}, {I, -1 + I, 1}}, -->
+<!--                        InnerProduct -> (Conjugate[#1].#2 &)] // Simplify -->
+<p>Unitary matrices do not have to look quite so gruesome.  Here's a larger one that is a bit more pleasing.</p>
+
+<example acro="UPM" index="unitary!permutation matrix">
+<title>Unitary permutation matrix</title>
+
+<p>The matrix
+<equation>
+P=
+\begin{bmatrix}
+<![CDATA[0&1&0&0&0\\]]>
+<![CDATA[0&0&0&1&0\\]]>
+<![CDATA[1&0&0&0&0\\]]>
+<![CDATA[0&0&0&0&1\\]]>
+<![CDATA[0&0&1&0&0]]>
+\end{bmatrix}
+</equation>
+is unitary as can be easily checked.  Notice that it is just a rearrangement of the columns of the $5\times 5$ identity matrix, $I_5$ (<acroref type="definition" acro="IM" />).</p>
+
+<p>An interesting exercise is to build another $5\times 5$ unitary matrix, $R$, using a different rearrangement of the columns of $I_5$.  Then form the product $PR$.  This will be another unitary matrix (<acroref type="exercise" acro="MINM.T10" />).  If you were to build all $5!=5\times 4\times 3\times 2\times 1=120$ matrices of this type you would have a set that remains closed under matrix multiplication.  It is an example of another algebraic structure known as a <define>group</define> since together the set and the one operation (matrix multiplication here) is closed, associative, has an identity ($I_5$), and inverses (<acroref type="theorem" acro="UMI" />).  Notice though that the operation in this group is not commutative!</p>
+
+</example>
+
+<p>If a matrix $A$ has only real number entries (we say it is a <define>real matrix</define>) then the defining property of being unitary simplifies to $\transpose{A}A=I_n$.  In this case we, and everybody else, call the matrix <define>orthogonal</define>, so you may often encounter this term in your other reading when the complex numbers are not under consideration.</p>
+
+<p>Unitary matrices have easily computed inverses.  They also have columns that form orthonormal sets.  Here are the theorems that show us that unitary matrices are not as strange as they might initially appear.</p>
+
+<theorem acro="UMI" index="matrix!unitary is invertible">
+<title>Unitary Matrices are Invertible</title>
+<statement>
+<p>Suppose that $U$ is a unitary matrix of size $n$.  Then $U$ is nonsingular, and $\inverse{U}=\adjoint{U}$.</p>
+
+</statement>
+
+<proof>
+<p>By <acroref type="definition" acro="UM" />, we know that $\adjoint{U}U=I_n$.  The matrix $I_n$ is nonsingular (since it row-reduces easily to $I_n$, <acroref type="theorem" acro="NMRRI" />).  So by <acroref type="theorem" acro="NPNT" />, $U$ and $\adjoint{U}$ are both nonsingular matrices.</p>
+
+<p>The equation $\adjoint{U}U=I_n$ gets us halfway to an inverse of $U$, and <acroref type="theorem" acro="OSIS" /> tells us that then $U\adjoint{U}=I_n$ also.  So $U$ and $\adjoint{U}$ are inverses of each other (<acroref type="definition" acro="MI" />).</p>
+
+</proof>
+</theorem>
+
+<theorem acro="CUMOS" index="unitary matrices!columns">
+<title>Columns of Unitary Matrices are Orthonormal Sets</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $n$ with columns $S=\set{\vectorlist{A}{n}}$.  Then $A$ is a unitary matrix if and only if $S$ is an orthonormal set.</p>
+
+</statement>
+
+<proof>
+<p>The proof revolves around recognizing that a typical entry of the product $\adjoint{A}A$ is an inner product of columns of $A$.  Here are the details to support this claim.
+<alignmath>
+\matrixentry{\adjoint{A}A}{ij}
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{\adjoint{A}}{ik}\matrixentry{A}{kj}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{\transpose{\conjugate{A}}}{ik}\matrixentry{A}{kj}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{\,\conjugate{A}\,}{ki}\matrixentry{A}{kj}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="TM" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\conjugate{\matrixentry{A}{ki}}\matrixentry{A}{kj}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CCM" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\conjugate{\vectorentry{\vect{A}_i}{k}}\vectorentry{\vect{A}_j}{k}\\]]>
+<![CDATA[&=\innerproduct{\vect{A}_i}{\vect{A}_j}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IP" />}
+</alignmath>
+</p>
+
+<p>We now employ this equality in a chain of equivalences,
+<alignmath>
+<![CDATA[&\text{$S=\set{\vectorlist{A}{n}}$ is an orthonormal set}\\]]>
+<![CDATA[&\iff \innerproduct{\vect{A}_i}{\vect{A}_j}=]]>
+\begin{cases}
+<![CDATA[0 &\text{if $i\neq j$}\\]]>
+<![CDATA[1 & \text{if $i=j$}]]>
+<![CDATA[\end{cases}&&]]>\text{<acroref type="definition" acro="ONS" />}\\
+<![CDATA[&\iff \matrixentry{\adjoint{A}A}{ij}=]]>
+\begin{cases}
+<![CDATA[0 &\text{if $i\neq j$}\\]]>
+<![CDATA[1 & \text{if $i=j$}]]>
+\end{cases}\\
+<![CDATA[&\iff \matrixentry{\adjoint{A}A}{ij}=\matrixentry{I_n}{ij},\ 1\leq i\leq n,\ 1\leq j\leq n]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IM" />}\\
+<![CDATA[&\iff \adjoint{A}A=I_n]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="ME" />}\\
+<![CDATA[&\iff \text{$A$ is a unitary matrix}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="UM" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<example acro="OSMC" index="orthonormal!matrix columns">
+<title>Orthonormal set from matrix columns</title>
+
+<p>The matrix
+<equation>
+U=
+\begin{bmatrix}
+<![CDATA[\frac{1 + i }{{\sqrt{5}}} &]]>
+<![CDATA[   \frac{3 + 2\,i }{{\sqrt{55}}} &]]>
+   \frac{2+2i}{\sqrt{22}} \\
+<![CDATA[\frac{1 - i }{{\sqrt{5}}} &]]>
+<![CDATA[   \frac{2 + 2\,i }{{\sqrt{55}}} &]]>
+   \frac{-3 + i }{{\sqrt{22}}} \\
+<![CDATA[\frac{i }{{\sqrt{5}}} &]]>
+<![CDATA[   \frac{3 - 5\,i }{{\sqrt{55}}} &]]>
+   -\frac{2}{\sqrt{22}}
+\end{bmatrix}
+</equation>
+from <acroref type="example" acro="UM3" /> is a unitary matrix.  By <acroref type="theorem" acro="CUMOS" />, its columns
+<equation>
+\set{
+\colvector{
+\frac{1 + i }{{\sqrt{5}}}\\
+   \frac{1 - i }{{\sqrt{5}}}\\
+   \frac{i }{{\sqrt{5}}}
+},\,
+\colvector{
+\frac{3 + 2\,i }{{\sqrt{55}}}\\
+   \frac{2 + 2\,i }{{\sqrt{55}}}\\
+   \frac{3 - 5\,i }{{\sqrt{55}}}
+},\,
+\colvector{
+\frac{2+2i}{\sqrt{22}}\\
+   \frac{-3 + i }{{\sqrt{22}}}\\
+   -\frac{2}{\sqrt{22}}
+}
+}
+</equation>
+form an orthonormal set.  You might find checking the six inner products of pairs of these vectors easier than doing the matrix product $\adjoint{U}U$.  Or, because the inner product is anti-commutative (<acroref type="theorem" acro="IPAC" />) you only need check  three inner products (see <acroref type="exercise" acro="MINM.T12" />).</p>
+
+</example>
+
+<p>When using vectors and matrices that only have real number entries, orthogonal matrices are those matrices with inverses that equal their transpose.  Similarly, the inner product is the familiar dot product.  Keep this special case in mind as you read the next theorem.</p>
+
+<theorem acro="UMPIP" index="unitary matrix!inner product">
+<title>Unitary Matrices Preserve Inner Products</title>
+<statement>
+<p>Suppose that $U$ is a unitary matrix of size $n$ and $\vect{u}$ and $\vect{v}$ are two vectors from $\complex{n}$.  Then
+<alignmath>
+<![CDATA[\innerproduct{U\vect{u}}{U\vect{v}}&=\innerproduct{\vect{u}}{\vect{v}}]]>
+<![CDATA[&]]>
+<![CDATA[&\text{and}]]>
+<![CDATA[&]]>
+<![CDATA[\norm{U\vect{v}}&=\norm{\vect{v}}]]>
+</alignmath>
+</p>
+
+</statement>
+
+<proof>
+<p><alignmath>
+\innerproduct{U\vect{u}}{U\vect{v}}
+<![CDATA[&=\transpose{\left(\conjugate{U\vect{u}}\right)}U\vect{v}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMIP" />}\\
+<![CDATA[&=\transpose{\left(\conjugate{U}\conjugate{\vect{u}}\right)}U\vect{v}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMCC" />}\\
+<![CDATA[&=\transpose{\conjugate{\vect{u}}}\transpose{\conjugate{U}}U\vect{v}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMT" />}\\
+<![CDATA[&=\transpose{\conjugate{\vect{u}}}\adjoint{U}U\vect{v}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="A" />}\\
+<![CDATA[&=\transpose{\conjugate{\vect{u}}}I_n\vect{v}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="UM" />}\\
+<![CDATA[&=\transpose{\conjugate{\vect{u}}}\vect{v}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=\innerproduct{\vect{u}}{\vect{v}}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMIP" />}
+</alignmath></p>
+
+<p>The second conclusion is just a specialization of the first conclusion.
+<alignmath>
+\norm{U\vect{v}}
+<![CDATA[&=\sqrt{\norm{U\vect{v}}^2}\\]]>
+<![CDATA[&=\sqrt{\innerproduct{U\vect{v}}{U\vect{v}}}&&]]>\text{<acroref type="theorem" acro="IPN" />}\\
+<![CDATA[&=\sqrt{\innerproduct{\vect{v}}{\vect{v}}}\\]]>
+<![CDATA[&=\sqrt{\norm{\vect{v}}^2}&&]]>\text{<acroref type="theorem" acro="IPN" />}\\
+<![CDATA[&=\norm{\vect{v}}]]>
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>Aside from the inherent interest in this theorem, it makes a bigger statement about unitary matrices.  When we view vectors geometrically as directions or forces, then the norm equates to a notion of length.  If we transform a vector by multiplication with a unitary matrix, then the length (norm) of that vector stays the same.  If we consider column vectors with two or three slots containing only real numbers, then the inner product of two such vectors is just the dot product, and this quantity can be used to compute the angle between two vectors.  When two vectors are multiplied (transformed) by the same unitary matrix, their dot product is unchanged and their individual lengths are unchanged.  This results in the angle between the two vectors remaining unchanged.</p>
+
+<p>A <q>unitary transformation</q> (matrix-vector products with unitary matrices) thus preserve geometrical relationships among vectors representing directions, forces, or other physical quantities.  In the case of a two-slot vector with real entries, this is simply a rotation.  These sorts of computations are exceedingly important in computer graphics such as games and real-time simulations, especially when increased realism is achieved by performing many such computations quickly.  We will see unitary matrices again in subsequent sections (especially <acroref type="theorem" acro="OD" />) and in each instance, consider the interpretation of the unitary matrix as a sort of geometry-preserving transformation.  Some authors use the term <define>isometry</define> to highlight this behavior.  We will speak loosely of a unitary matrix as being a sort of generalized rotation.</p>
+
+<sageadvice acro="UM" index="unitary matrices">
+<title>Unitary Matrices</title>
+No surprise about how we check if a matrix is unitary.  Here is <acroref type="example" acro="UM3" />,
+<sage>
+<input>A = matrix(QQbar, [
+    [(1+I)/sqrt(5), (3+2*I)/sqrt(55), (2+2*I)/sqrt(22)],
+    [(1-I)/sqrt(5), (2+2*I)/sqrt(55),  (-3+I)/sqrt(22)],
+    [    I/sqrt(5), (3-5*I)/sqrt(55),    (-2)/sqrt(22)]
+                  ])
+A.is_unitary()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.conjugate_transpose() == A.inverse()
+</input>
+<output>True
+</output>
+</sage>
+
+We can verify <acroref type="theorem" acro="UMPIP" />, where the vectors <code>u</code> and <code>v</code> are created randomly.  Try evaluating this compute cell with your own choices.
+<sage>
+<input>u = random_vector(QQ, 3) + QQbar(I)*random_vector(QQ, 3)
+v = random_vector(QQ, 3) + QQbar(I)*random_vector(QQ, 3)
+(A*u).hermitian_inner_product(A*v) == u.hermitian_inner_product(v)
+</input>
+<output>True
+</output>
+</sage>
+
+If you want to experiment with permutation matrices, Sage has these too.  We can create a permutation matrix from a list that indicates for each column the row with a one in it.  Notice that the product here of two permutation matrices is again a permutation matrix.
+<sage>
+<input>sigma = Permutation([2,3,1])
+S = sigma.to_matrix(); S
+</input>
+<output>[0 0 1]
+[1 0 0]
+[0 1 0]
+</output>
+</sage>
+
+<sage>
+<input>tau = Permutation([1,3,2])
+T = tau.to_matrix(); T
+</input>
+<output>[1 0 0]
+[0 0 1]
+[0 1 0]
+</output>
+</sage>
+
+<sage>
+<input>S*T
+</input>
+<output>[0 1 0]
+[1 0 0]
+[0 0 1]
+</output>
+</sage>
+
+<sage>
+<input>rho = Permutation([2, 1, 3])
+S*T == rho.to_matrix()
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+<p>A final reminder:  the terms <q>dot product,</q> <q>symmetric matrix</q> and <q>orthogonal matrix</q> used in reference to vectors or matrices with real number entries correspond to the terms <q>inner product,</q> <q>Hermitian matrix</q> and <q>unitary matrix</q> when we generalize to include complex number entries, so keep that in mind as you read elsewhere.</p>
+
+</subsection>
+
+<!--   End  MINM.tex -->
+<readingquestions>
+<ol>
+<li>Compute the inverse of the coefficient matrix of the system of
+equations below and use the inverse to solve the system.
+<alignmath>
+<![CDATA[4x_1 + 10x_2 &= 12\\]]>
+<![CDATA[2x_1 + 6x_2 &= 4]]>
+</alignmath>
+</li>
+<li> In the reading questions for <acroref type="section" acro="MISLE" /> you were asked to find the  inverse of the $3\times 3$ matrix below.
+<equation>
+\begin{bmatrix}
+<![CDATA[2 & 3 & 1\\]]>
+<![CDATA[1 & -2 & -3\\]]>
+<![CDATA[-2 & 4 & 6]]>
+\end{bmatrix}
+</equation>
+Because the matrix was not nonsingular, you had no theorems at that point that would allow you to compute the inverse.  Explain why you now know that the inverse does not exist (which is different than not being able to compute it) by quoting the relevant theorem's acronym.
+</li>
+<li> Is the matrix $A$ unitary?  Why?
+<equation>
+A=\begin{bmatrix}
+<![CDATA[\frac{1}{\sqrt{22}}\left(4+2i\right) & \frac{1}{\sqrt{374}}\left(5+3i\right) \\]]>
+<![CDATA[\frac{1}{\sqrt{22}}\left(-1-i\right) & \frac{1}{\sqrt{374}}\left(12+14i\right) \\]]>
+\end{bmatrix}
+</equation>
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="20" rough="verify Theorem NPNT through example">
+<problem contributor="chrisblack">Let
+$A =
+\begin{bmatrix}
+<![CDATA[1 & 2 & 1 \\]]>
+<![CDATA[0 & 1 & 1\\]]>
+<![CDATA[1 & 0 & 2]]>
+\end{bmatrix}$
+and
+$B =
+\begin{bmatrix}
+<![CDATA[-1 & 1 & 0\\]]>
+<![CDATA[1 & 2 & 1\\]]>
+<![CDATA[0 & 1 & 1]]>
+\end{bmatrix}$.
+Verify that $AB$ is nonsingular.
+</problem>
+</exercise>
+
+<exercise type="C" number="40" rough="4x4 system solution using inverse">
+<problem contributor="robertbeezer">Solve the system of equations below using the inverse of a matrix.
+<alignmath>
+x_1+x_2+3x_3+x_4=5\\
+-2x_1-x_2-4x_3-x_4=-7\\
+x_1+4x_2+10x_3+2x_4=9\\
+-2x_1-4x_3+5x_4=9
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">The coefficient matrix and vector of constants for the system are
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & 1 & 3 & 1\\]]>
+<![CDATA[-2 & -1 & -4 & -1\\]]>
+<![CDATA[1 & 4 & 10 & 2\\]]>
+<![CDATA[-2 & 0 & -4 & 5]]>
+<![CDATA[\end{bmatrix}&&]]>
+\vect{b}=\colvector{5\\-7\\9\\9}
+</alignmath>
+$\inverse{A}$ can be computed by using a calculator, or by the method of <acroref type="theorem" acro="CINM" />.
+Then <acroref type="theorem" acro="SNCM" /> says the unique solution is
+<equation>
+\inverse{A}\vect{b}=
+\begin{bmatrix}
+<![CDATA[38 & 18 & -5 & -2\\]]>
+<![CDATA[96 & 47 & -12 & -5\\]]>
+<![CDATA[-39 & -19 & 5 & 2\\]]>
+<![CDATA[-16 & -8 & 2 & 1]]>
+\end{bmatrix}
+\colvector{5\\-7\\9\\9}
+=
+\colvector{1\\-2\\1\\3}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="M" number="10" rough="Build a 3x3 invertible matrix">
+<problem contributor="chrisblack">Find values of $x$, $y$, $z$ so that matrix
+$A =
+\begin{bmatrix}
+<![CDATA[1 & 2 & x\\]]>
+<![CDATA[3 & 0 & y \\]]>
+<![CDATA[1 & 1 & z]]>
+\end{bmatrix}$
+is invertible.
+</problem>
+<solution contributor="chrisblack">There are an infinite number of possible answers.  We want to find a vector
+$\colvector{x \\ y \\ z}$ so that the set
+<alignmath>
+S = \set{
+\begin{bmatrix} 1 \\ 3 \\ 1 \end{bmatrix},
+\begin{bmatrix} 2 \\ 0 \\ 1 \end{bmatrix},
+\begin{bmatrix} x \\ y \\ z \end{bmatrix}
+}
+</alignmath>
+is a linearly independent set.  We need a vector not in the span of the first two columns, which geometrically means that we need it to not be in the same plane as the first two columns of $A$.  We can choose any values we want for $x$ and $y$, and then choose a value of $z$ that makes the three vectors independent.<br /><br />
+I will (arbitrarily) choose $x = 1$, $y = 1$.  Then, we have
+<alignmath>
+A = \begin{bmatrix}
+<![CDATA[1 & 2 & 1\\]]>
+<![CDATA[3 & 0 & 1 \\]]>
+<![CDATA[1 & 1 & z]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 2z-1]]>
+<![CDATA[\\ 0 & \leading{1} & 1-z]]>
+<![CDATA[\\ 0 & 0 & 4 - 6z]]>
+\end{bmatrix}
+</alignmath>
+which is invertible if and only if $4-6z \ne 0$.  Thus, we can choose any value as long as $z \ne \frac{2}{3}$, so we choose $z = 0$, and we have found a matrix
+<![CDATA[$A = \begin{bmatrix} 1 & 2 & 1\\ 3 & 0 & 1 \\ 1 & 1 & 0 \end{bmatrix}$ that is invertible.]]>
+</solution>
+</exercise>
+
+<exercise type="M" number="11" rough="Build a 3x3 noninvertible matrix">
+<problem contributor="chrisblack">Find values of $x$, $y$ $z$ so that matrix
+$A =
+\begin{bmatrix}
+<![CDATA[1 & x & 1\\]]>
+<![CDATA[1 & y & 4 \\]]>
+<![CDATA[0 & z & 5]]>
+\end{bmatrix}$ is singular.
+</problem>
+<solution contributor="chrisblack">There are an infinite number of possible answers. We need the set of vectors
+<alignmath>
+<![CDATA[S &=]]>
+\set{
+\begin{bmatrix}1 \\ 1 \\ 0 \end{bmatrix},
+\begin{bmatrix}x \\ y \\ z \end{bmatrix},
+\begin{bmatrix} 1 \\ 4 \\ 5 \end{bmatrix}
+}
+</alignmath>
+ to be linearly dependent.  One  way to do this  by inspection is to have
+$\colvector{x \\ y \\ z} =\colvector{1 \\ 4 \\ 5}$.
+Thus, if we let $x = 1$, $y = 4$, $ z = 5$, then the matrix
+<![CDATA[$A = \begin{bmatrix} 1 & 1 & 1\\ 1 & 4 & 4 \\ 0 & 5 & 5 \end{bmatrix}$ is singular.]]>
+</solution>
+</exercise>
+
+<exercise type="M" number="15" rough="Converse of Theorem NPNT">
+<problem contributor="chrisblack">If $A$ and $B$ are $n \times n$ matrices, $A$ is nonsingular, and $B$ is singular, show directly that $AB$ is singular, without using <acroref type="theorem" acro="NPNT" />.
+</problem>
+<solution contributor="chrisblack">If $B$ is singular, then there exists a vector $\vect{x}\ne\zerovector$ so that $\vect{x}\in \nsp{B}$.  Thus, $B\vect{x} = \vect{0}$, so $A(B\vect{x}) = (AB)\vect{x} = \zerovector$, so $\vect{x}\in\nsp{AB}$.  Since the null space of $AB$ is not trivial, $AB$ is a singular matrix.
+</solution>
+</exercise>
+
+<exercise type="M" number="20" rough="Build a 4x4 unitary matrix">
+<problem contributor="robertbeezer">Construct an example of a $4\times 4$ unitary matrix.
+</problem>
+<solution contributor="robertbeezer">The $4\times 4$ identity matrix, $I_4$, would be one example (<acroref type="definition" acro="IM" />).  Any of the 23 other rearrangements of the columns of $I_4$ would be a simple, but less trivial, example.  See <acroref type="example" acro="UPM" />.
+</solution>
+</exercise>
+
+<exercise type="M" number="80" rough="rref(AB) != rref(A)rref(B)">
+<problem contributor="markhamrick">Matrix multiplication interacts nicely with many operations.  But not always with transforming a matrix to reduced row-echelon form.  Suppose that $A$ is an $m\times n$ matrix and $B$ is an $n\times p$ matrix.  Let $P$ be a matrix that is row-equivalent to $A$ and in reduced row-echelon form, $Q$ be a matrix that is row-equivalent to $B$ and in reduced row-echelon form, and let $R$ be a matrix that is row-equivalent to $AB$ and in reduced row-echelon form.  Is $PQ=R$?  (In other words, with nonstandard notation, is $\text{rref}(A)\text{rref}(B)=\text{rref}(AB)$?)<br /><br />
+Construct a counterexample to show that, in general, this statement is false.  Then find a large class of matrices where if $A$ and $B$ are in the class, then the statement is true.
+</problem>
+<solution contributor="robertbeezer">Take
+<alignmath>
+<![CDATA[A&=]]>
+\begin{bmatrix}
+<![CDATA[1&0\\0&0]]>
+\end{bmatrix}
+<![CDATA[&]]>
+<![CDATA[B&=]]>
+\begin{bmatrix}
+<![CDATA[0&0\\1&0]]>
+\end{bmatrix}
+</alignmath>
+Then $A$ is already in reduced row-echelon form, and by swapping rows, $B$ row-reduces to $A$.  So the product of the row-echelon forms of $A$ is $AA=A\neq\zeromatrix$.  However, the product $AB$ is the $2\times 2$ zero matrix, which is in reduced-echelon form, and not equal to $AA$.  When you get there, <acroref type="theorem" acro="PEEF" /> or <acroref type="theorem" acro="EMDRO" /> might shed some light on why we would not expect this statement to be true in general.<br /><br />
+If $A$ and $B$ are nonsingular, then $AB$ is nonsingular (<acroref type="theorem" acro="NPNT" />), and all three matrices $A$, $B$ and $AB$ row-reduce to the identity matrix (<acroref type="theorem" acro="NMRRI" />).  By <acroref type="theorem" acro="MMIM" />, the desired relationship is true.
+</solution>
+</exercise>
+
+<exercise type="T" number="10" rough="Product of unitary is unitary">
+<problem contributor="robertbeezer">Suppose that $Q$ and $P$ are unitary matrices of size $n$.  Prove that $QP$ is a unitary matrix.
+</problem>
+</exercise>
+
+<exercise type="T" number="11" rough="Hermitian diagonal entries are real">
+<problem contributor="robertbeezer">Prove that Hermitian matrices (<acroref type="definition" acro="HM" />) have real entries on the diagonal.  More precisely, suppose that $A$ is a Hermitian matrix of size $n$.  Then $\matrixentry{A}{ii}\in\real{\null}$, $1\leq i\leq n$.
+</problem>
+</exercise>
+
+<exercise type="T" number="12" rough="n(n+1)/2 inner products in unitary check">
+<problem contributor="robertbeezer">Suppose that we are checking if a square matrix of size $n$ is unitary.  Show that a straightforward application of <acroref type="theorem" acro="CUMOS" /> requires the computation of $n^2$ inner products when the matrix is unitary, and fewer when the matrix is not orthogonal.  Then show that this maximum number of inner products can be reduced to $\frac{1}{2}n(n+1)$ in light of <acroref type="theorem" acro="IPAC" />.
+</problem>
+</exercise>
+
+<exercise type="T" number="25" rough="A nilpotent => I-A invertible">
+<problem contributor="manleyperkel">The notation $A^k$ means a repeated matrix product between $k$ copies of the square matrix $A$.
+<ol>
+<li>Assume $A$ is an $n\times n$ matrix where $A^2=\zeromatrix$ (which does not imply that $A=\zeromatrix$.)  Prove that $I_n-A$ is invertible by showing that $I_n+A$ is an inverse of $I_n-A$.</li>
+<li>Assume that $A$ is an $n\times n$ matrix where $A^3=\zeromatrix$.  Prove that $I_n-A$ is invertible.</li>
+<li>Form a general theorem based on your observations from parts (1) and (2) and provide a proof.</li>
+</ol>
+</problem>
+</exercise>
+
+</exercisesubsection>
+
+</section>

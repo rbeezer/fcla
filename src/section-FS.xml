@@ -1,0 +1,1528 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="FS">
+<title>Four Subsets</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section FS -->
+<!-- %  Four Subsets -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>There are four natural subsets associated with a matrix.  We have met three already: the null space, the column space and the row space.  In this section we will introduce a fourth, the left null space.  The objective of this section is to describe one procedure that will allow us to find linearly independent sets that span each of these four sets of column vectors.  Along the way, we will make a connection with the inverse of a matrix, so <acroref type="theorem" acro="FS" /> will tie together most all of this chapter (and the entire course so far).</p>
+
+</introduction>
+
+<subsection acro="LNS">
+<title>Left Null Space</title>
+
+<definition acro="LNS" index="left null space">
+<title>Left Null Space</title>
+<p>Suppose $A$ is an $m\times n$ matrix.  Then the <define>left null space</define> is defined as $\lns{A}=\nsp{\transpose{A}}\subseteq\complex{m}$.</p>
+
+<notation acro="LNS" index="left null space">
+<title>Left Null Space</title>
+<usage>$\lns{A}$</usage>
+</notation>
+</definition>
+
+<p>The left null space will not feature prominently in the sequel, but we can explain its name and connect it to row operations.   Suppose $\vect{y}\in\lns{A}$.  Then by <acroref type="definition" acro="LNS" />, $\transpose{A}\vect{y}=\zerovector$.  We can then write
+<alignmath>
+\transpose{\zerovector}
+<![CDATA[&=\transpose{\left(\transpose{A}\vect{y}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="LNS" />}\\
+<![CDATA[&=\transpose{\vect{y}}\transpose{\left(\transpose{A}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMT" />}\\
+<![CDATA[&=\transpose{\vect{y}}A]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="TT" />}
+</alignmath>
+</p>
+
+<p>The product $\transpose{\vect{y}}A$ can be viewed as the components of $\vect{y}$ acting as the scalars in a linear combination of the <em>rows</em> of $A$.  And the result is a <q>row vector</q>, $\transpose{\zerovector}$ that is totally zeros.  When we apply a sequence of row operations to a matrix, each row of the resulting matrix is some linear combination of the rows.  These observations tell us that the vectors in the left null space are scalars that record a sequence of row operations that result in a row of zeros in the row-reduced version of the matrix.  We will see this idea more explicitly in the course of proving <acroref type="theorem" acro="FS" />.</p>
+
+<example acro="LNS" index="left null space">
+<title>Left null space</title>
+
+<p>We will find the left null space of
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 1 & -3 & 1 \\]]>
+<![CDATA[ -2 & 1 & 1 \\]]>
+<![CDATA[ 1 & 5 & 1 \\]]>
+<![CDATA[ 9 & -4 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We transpose $A$ and row-reduce,
+<equation>
+\transpose{A}=
+\begin{bmatrix}
+<![CDATA[ 1 & -2 & 1 & 9 \\]]>
+<![CDATA[ -3 & 1 & 5 & -4 \\]]>
+<![CDATA[ 1 & 1 & 1 & 0]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & 2 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & -3 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Applying <acroref type="definition" acro="LNS" /> and <acroref type="theorem" acro="BNS" /> we have
+<equation>
+\lns{A}=\nsp{\transpose{A}}=
+\spn{\set{
+\colvector{-2\\3\\-1\\1}
+}}
+</equation>
+</p>
+
+<p>If you row-reduce $A$ you will discover one zero row in the reduced row-echelon form.  This zero row is created by a sequence of row operations, which in total amounts to a linear combination, with scalars $a_1=-2$, $a_2=3$, $a_3=-1$ and $a_4=1$, on the rows of $A$ and which results in the zero vector (check this!).  So the components of the vector describing the left null space of $A$ provide a relation of linear dependence on the rows of $A$.
+</p>
+
+</example>
+
+<sageadvice acro="LNS" index="left null space">
+<title>Left Null Spaces</title>
+Similar to (right) null spaces, a left null space can be computed in Sage with the matrix method <code>.left_kernel()</code>.  For a matrix $A$, elements of the (right) null space are vectors $\vect{x}$ such that $A\vect{x}=\zerovector$.  If we interpret a vector placed to the left of a matrix as a 1-row matrix, then the product $\vect{x}A$ can be interpreted, according to our definition of matrix multiplication (<acroref type="definition" acro="MM)" />, as the entries of the vector $\vect{x}$ providing the scalars for a linear combination of the <em>rows</em> of the matrix $A$.  So you can view each vector in the left null space naturally as the entries of a matrix with a single row, $Y$, with the property that $YA=\zeromatrix$.  <br /><br />
+Given Sage's preference for row vectors, the simpler name <code>.kernel()</code> is a synonym for <code>.left_kernel()</code>.  Given your text's preference for column vectors, we will continue to rely on the <code>.right_kernel()</code>.  Left kernels in Sage have the same options as right kernels and produce vector spaces as output in the same manner.  Once created, a vector space all by itself (with no history) is neither left or right.  Here is a quick repeat of <acroref type="example" acro="LNS" />.
+<sage>
+<input>A = matrix(QQ, [[ 1, -3, 1],
+                [-2,  1, 1],
+                [ 1,  5, 1],
+                [ 9, -4, 0]])
+A.left_kernel(basis='pivot')
+</input>
+<output>Vector space of degree 4 and dimension 1 over Rational Field
+User basis matrix:
+[-2  3 -1  1]
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="CCS">
+<title>Computing Column Spaces</title>
+
+<p>We have three ways to build the column space of a matrix.  First, we can use just the definition, <acroref type="definition" acro="CSM" />, and express the column space as a span of the columns of the matrix.  A second approach gives us the column space as the span of <em>some</em> of the columns of the matrix, but this set is linearly independent (<acroref type="theorem" acro="BCS" />).  Finally, we can transpose the matrix, row-reduce the transpose, kick out zero rows, and transpose the remaining rows back into column vectors.  <acroref type="theorem" acro="CSRST" /> and <acroref type="theorem" acro="BRS" /> tell us that the resulting vectors are linearly independent and their span is the column space of the original matrix.</p>
+
+<p>We will now demonstrate a fourth method by way of a rather complicated example.  Study this example carefully, but realize that its main purpose is to motivate a theorem that simplifies much of the apparent complexity.  So other than an instructive exercise or two, the procedure we are about to describe will not be a usual approach to computing a column space.</p>
+
+<example acro="CSANS" index="column space!as null space">
+<title>Column space as null space</title>
+
+<p>Lets find the column space of the matrix $A$ below with a new approach.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 10 & 0 & 3 & 8 & 7 \\]]>
+<![CDATA[ -16 & -1 & -4 & -10 & -13 \\]]>
+<![CDATA[ -6 & 1 & -3 & -6 & -6 \\]]>
+<![CDATA[ 0 & 2 & -2 & -3 & -2 \\]]>
+<![CDATA[ 3 & 0 & 1 & 2 & 3 \\]]>
+<![CDATA[ -1 & -1 & 1 & 1 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>By <acroref type="theorem" acro="CSCS" /> we know that the column vector $\vect{b}$ is in the column space of $A$ if and only if the linear system $\linearsystem{A}{\vect{b}}$ is consistent.  So let's try to solve this system in full generality, using a vector of variables for the vector of constants.  In other words, which vectors $\vect{b}$ lead to consistent systems?  Begin by forming the augmented matrix $\augmented{A}{\vect{b}}$ with a general version of $\vect{b}$,
+<equation>
+\augmented{A}{\vect{b}}=
+\begin{bmatrix}
+<![CDATA[ 10 & 0 & 3 & 8 & 7 & b_1 \\]]>
+<![CDATA[ -16 & -1 & -4 & -10 & -13 & b_2 \\]]>
+<![CDATA[ -6 & 1 & -3 & -6 & -6 & b_3 \\]]>
+<![CDATA[ 0 & 2 & -2 & -3 & -2 & b_4 \\]]>
+<![CDATA[ 3 & 0 & 1 & 2 & 3 & b_ 5\\]]>
+<![CDATA[ -1 & -1 & 1 & 1 & 0 & b_ 6]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>To identify solutions we will row-reduce this matrix and bring it to reduced row-echelon form.  Despite the presence of variables in the last column, there is nothing to stop us from doing this.  Except our numerical routines on calculators can't be used, and even some of the symbolic algebra routines do some unexpected maneuvers with this computation.  So do it by hand.  Yes, it is a bit of work.  But worth it.  We'll still be here when you get back.  Notice along the way that the row operations are <em>exactly</em> the same ones you would do if you were just row-reducing the coefficient matrix alone, say in connection with a homogeneous system of equations.  The column with the $b_i$ acts as a sort of bookkeeping device.  There are many different possibilities for the result, depending on what order you choose to perform the row operations, but shortly we'll all be on the same page.  Here's one possibility (you can find this same result by doing additional row operations with the fifth and sixth rows to remove any occurrences of $b_1$ and $b_2$ from the first four rows of your result):
+<alignmath>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & 0 & 2 & b_3 - b_4 + 2 b_5 - b_6\\]]>
+<![CDATA[ 0 & \leading{1} & 0 & 0 & -3 & -2 b_3 + 3 b_4 - 3 b_5 + 3 b_6\\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 0 & 1 & b_3 + b_4 + 3 b_5 + 3 b_6\\]]>
+<![CDATA[ 0 & 0 & 0 & \leading{1} & -2 & -2 b_3 + b_4 - 4 b_5\\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & b_1 + 3 b_3 - b_4 + 3 b_5 + b_6\\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & b_2 - 2 b_3 + b_4 + b_5 - b_6]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Our goal is to identify those vectors $\vect{b}$ which make $\linearsystem{A}{\vect{b}}$ consistent.  By <acroref type="theorem" acro="RCLS" /> we know that the consistent systems are precisely those without a leading 1 in the last column.  Are the expressions in the last column of rows 5 and 6 equal to zero, or are they leading 1's?  The answer is: maybe.  It depends on $\vect{b}$.  With a nonzero value for either of these expressions, we would scale the row and produce a leading 1.   So we get a consistent system, and $\vect{b}$ is in the column space, if and only if these two expressions are both simultaneously zero.  In other words, members of the column space of $A$ are exactly those vectors $\vect{b}$ that satisfy
+<alignmath>
+<![CDATA[b_1 + 3 b_3 - b_4 + 3 b_5 + b_6 & = 0\\]]>
+<![CDATA[b_2 - 2 b_3 + b_4 + b_5 - b_6 & = 0]]>
+</alignmath>
+</p>
+
+<p>Hmmm.  Looks suspiciously like a homogeneous system of two equations with six variables.  If you've been playing along (and we hope you have) then you may have a slightly different system, but you should have just two equations.  Form the coefficient matrix and row-reduce (notice that the system above has a coefficient matrix that is already in reduced row-echelon form).  We should all be together now with the same matrix,
+<equation>
+L=
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 3 & -1 & 3 & 1 \\]]>
+<![CDATA[ 0 & \leading{1} & -2 & 1 & 1 & -1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>So, $\csp{A}=\nsp{L}$ and we can apply <acroref type="theorem" acro="BNS" /> to obtain a linearly independent set to use in a span construction,
+<equation>
+\csp{A}=\nsp{L}=\spn{\set{
+\colvector{-3\\2\\1\\0\\0\\0},\,
+\colvector{1\\-1\\0\\1\\0\\0},\,
+\colvector{-3\\-1\\0\\0\\1\\0},\,
+\colvector{-1\\1\\0\\0\\0\\1}
+}}
+</equation>
+</p>
+
+<p>Whew!  As a postscript to this central example, you may wish to convince yourself that the four vectors above really are elements of the column space?  Do they create consistent systems with $A$ as coefficient matrix?  Can you recognize the constant vector in your description of these solution sets?</p>
+
+<p>OK, that was so much fun, let's do it again.  But simpler this time.  And we'll all get the same results all the way through.  Doing row operations by hand with variables can be a bit error prone, so let's see if we can improve the process some.  Rather than row-reduce a column vector $\vect{b}$ full of variables, let's write $\vect{b}=I_6\vect{b}$ and we will row-reduce the matrix $I_6$ and when we finish row-reducing, <em>then</em> we will compute the matrix-vector product.  You should first convince yourself that we can operate like this (this is the subject of a future homework exercise).
+<!-- %TODO (see <acroref type="exercise" acro="XX-commutingops-todo" /> on commuting operations). -->
+Rather than augmenting $A$ with $\vect{b}$, we will instead augment it with $I_6$ (does this feel familiar?),
+<equation>
+M=
+\begin{bmatrix}
+<![CDATA[ 10 & 0 & 3 & 8 & 7 & 1 & 0 & 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ -16 & -1 & -4 & -10 & -13 & 0 & 1 & 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ -6 & 1 & -3 & -6 & -6 & 0 & 0 & 1 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 2 & -2 & -3 & -2 & 0 & 0 & 0 & 1 & 0 & 0 \\]]>
+<![CDATA[ 3 & 0 & 1 & 2 & 3 & 0 & 0 & 0 & 0 & 1 & 0 \\]]>
+<![CDATA[ -1 & -1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We want to row-reduce the left-hand side of this matrix, but we will apply the same row operations to the right-hand side as well.  And once we get the left-hand side in reduced row-echelon form, we will continue on to put leading 1's in the final two rows, as well as clearing out the columns containing those two additional leading 1's.  It is these additional row operations that will ensure that we all get to the same place, since the reduced row-echelon form is unique (<acroref type="theorem" acro="RREFU" />),
+<equation>
+N=
+\begin{bmatrix}
+<![CDATA[ 1 & 0 & 0 & 0 & 2 & 0 & 0 & 1 & -1 & 2 & -1 \\]]>
+<![CDATA[ 0 & 1 & 0 & 0 & -3 & 0 & 0 & -2 & 3 & -3 & 3 \\]]>
+<![CDATA[ 0 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 3 & 3 \\]]>
+<![CDATA[ 0 & 0 & 0 & 1 & -2 & 0 & 0 & -2 & 1 & -4 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 1 & 0 & 3 & -1 & 3 & 1 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0 & 1 & -2 & 1 & 1 & -1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We are after the final six columns of this matrix, which we will multiply by $\vect{b}$
+<equation>
+J=
+\begin{bmatrix}
+<![CDATA[ 0 & 0 & 1 & -1 & 2 & -1 \\]]>
+<![CDATA[0 & 0 & -2 & 3 & -3 & 3 \\]]>
+<![CDATA[0 & 0 & 1 & 1 & 3 & 3 \\]]>
+<![CDATA[0 & 0 & -2 & 1 & -4 & 0 \\]]>
+<![CDATA[1 & 0 & 3 & -1 & 3 & 1 \\]]>
+<![CDATA[0 & 1 & -2 & 1 & 1 & -1]]>
+\end{bmatrix}
+</equation>
+so
+<equation>
+J\vect{b}=
+\begin{bmatrix}
+<![CDATA[0 & 0 & 1 & -1 & 2 & -1 \\]]>
+<![CDATA[0 & 0 & -2 & 3 & -3 & 3 \\]]>
+<![CDATA[0 & 0 & 1 & 1 & 3 & 3 \\]]>
+<![CDATA[0 & 0 & -2 & 1 & -4 & 0 \\]]>
+<![CDATA[1 & 0 & 3 & -1 & 3 & 1 \\]]>
+<![CDATA[0 & 1 & -2 & 1 & 1 & -1]]>
+\end{bmatrix}
+\colvector{b_1\\b_2\\b_3\\b_4\\b_5\\b_6}
+=
+\colvector{
+b_3 - b_4 + 2 b_5 - b_6\\
+-2 b_3 + 3 b_4 - 3 b_5 + 3 b_6\\
+b_3 + b_4 + 3 b_5 + 3 b_6\\
+-2 b_3 + b_4 - 4 b_5\\
+b_1 + 3 b_3 - b_4 + 3 b_5 + b_6\\
+b_2 - 2 b_3 + b_4 + b_5 - b_6\\
+}
+</equation>
+</p>
+
+<p>So by applying  the same row operations that row-reduce $A$ to the identity matrix (which we could do with a calculator once $I_6$ is placed alongside of $A$), we can then arrive at the result of row-reducing a column of symbols where the vector of constants usually resides.  Since the row-reduced version of $A$ has two zero rows, for a consistent system we require that
+<alignmath>
+<![CDATA[b_1 + 3 b_3 - b_4 + 3 b_5 + b_6 & = 0\\]]>
+<![CDATA[b_2 - 2 b_3 + b_4 + b_5 - b_6 & = 0]]>
+</alignmath>
+</p>
+
+<p>Now we are exactly back where we were on the first go-round.  Notice that we obtain the matrix $L$ as simply the last two rows and last six columns of $N$.</p>
+
+</example>
+
+<p>This example motivates the remainder of this section, so it is worth careful study.  You might attempt to mimic the second approach with the coefficient matrices of <acroref type="archetype" acro="I" /> and <acroref type="archetype" acro="J" />.  We will see shortly that the matrix $L$ contains more information about $A$ than just the column space.</p>
+
+<sageadvice acro="RRSM" index="row-reduce!symbolic matrix">
+<title>Row-Reducing a Symbolic Matrix</title>
+Sage can very nearly reproduce the reduced row-echelon form we obtained from the augmented matrix with variables present in the final column.  The first line below is a bit of advanced Sage.  It creates a number system <code>R</code> mixing the rational numbers with the variables <code>b1</code> through <code>b6</code>.  It is not important to know the details of this construction right now.  <code>B</code> is the reduced row-echelon form of <code>A</code>, as computed by Sage, where we have displayed the last column separately so it will all fit.  You will notice that <code>B</code> is different than what we used in <acroref type="example" acro="CSANS" />, where all the differences are in the final column.<br /><br />
+However, we can perform row operations on the final two rows of <code>B</code> to bring Sage's result in line with what we used above for the final two entries of the last column, which are the most critical.  Notice that since the final two rows are almost all zeros, any sequence of row operations on just these two rows will preserve the zeros (and we need only display the final column to keep track of our progress).
+<sage>
+<input><![CDATA[R.<b1,b2,b3,b4,b5,b6> = QQ[]]]>
+A = matrix(R, [[ 10,  0,  3,   8,   7, b1],
+               [-16, -1, -4, -10, -13, b2],
+               [ -6,  1, -3,  -6,  -6, b3],
+               [  0,  2, -2,  -3,  -2, b4],
+               [  3,  0,  1,   2,   3, b5],
+               [ -1, -1,  1,   1,   0, b6]])
+A
+</input>
+<output>[ 10   0   3   8   7  b1]
+[-16  -1  -4 -10 -13  b2]
+[ -6   1  -3  -6  -6  b3]
+[  0   2  -2  -3  -2  b4]
+[  3   0   1   2   3  b5]
+[ -1  -1   1   1   0  b6]
+</output>
+</sage>
+
+<sage>
+<input>B = copy(A.echelon_form())
+B[0:6,0:5]
+</input>
+<output>[ 1  0  0  0  2]
+[ 0  1  0  0 -3]
+[ 0  0  1  0  1]
+[ 0  0  0  1 -2]
+[ 0  0  0  0  0]
+[ 0  0  0  0  0]
+</output>
+</sage>
+
+<sage>
+<input>B[0:6,5]
+</input>
+<output>[ -1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+[                3*b2 - 8*b3 + 6*b4]
+[ -3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+[                 b1 + b2 - b3 + b4]
+[     1/4*b1 + 1/4*b2 + 1/4*b3 + b5]
+[1/4*b1 - 3/4*b2 + 9/4*b3 - b4 + b6]
+</output>
+</sage>
+
+<sage>
+<input>B.rescale_row(4, 4); B[0:6, 5]
+</input>
+<output>[ -1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+[                3*b2 - 8*b3 + 6*b4]
+[ -3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+[                 b1 + b2 - b3 + b4]
+[               b1 + b2 + b3 + 4*b5]
+[1/4*b1 - 3/4*b2 + 9/4*b3 - b4 + b6]
+</output>
+</sage>
+
+<sage>
+<input>B.add_multiple_of_row(5, 4, -1/4); B[0:6, 5]
+</input>
+<output>[-1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+[               3*b2 - 8*b3 + 6*b4]
+[-3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+[                b1 + b2 - b3 + b4]
+[              b1 + b2 + b3 + 4*b5]
+[        -b2 + 2*b3 - b4 - b5 + b6]
+</output>
+</sage>
+
+<sage>
+<input>B.rescale_row(5, -1); B[0:6, 5]
+</input>
+<output>[-1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+[               3*b2 - 8*b3 + 6*b4]
+[-3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+[                b1 + b2 - b3 + b4]
+[              b1 + b2 + b3 + 4*b5]
+[         b2 - 2*b3 + b4 + b5 - b6]
+</output>
+</sage>
+
+<sage>
+<input>B.add_multiple_of_row(4, 5,-1); B[0:6, 5]
+</input>
+<output>[-1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+[               3*b2 - 8*b3 + 6*b4]
+[-3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+[                b1 + b2 - b3 + b4]
+[       b1 + 3*b3 - b4 + 3*b5 + b6]
+[         b2 - 2*b3 + b4 + b5 - b6]
+</output>
+</sage>
+
+Notice that the last two entries of the final column now have just a single <code>b1</code> and a single <code>B2</code>. We could continue to perform more row operations by hand, using the last two rows to progressively eliminate <code>b1</code> and <code>b2</code> from the other four expressions of the last column.  Since the two last rows have zeros in their first five entries, only the entries in the final column would change.  You will see that much of this section is about how to automate these final calculations.
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="EEF">
+<title>Extended echelon form</title>
+
+<p>The final matrix that we row-reduced in <acroref type="example" acro="CSANS" /> should look familiar in most respects to the procedure we used to compute the inverse of a nonsingular matrix, <acroref type="theorem" acro="CINM" />.  We will now generalize that procedure to matrices that are not necessarily nonsingular, or even square.  First a definition.</p>
+
+<definition acro="EEF" index="reduced row-echelon form!extended">
+<title>Extended Echelon Form</title>
+<p>Suppose $A$ is an $m\times n$ matrix.  Extend $A$ on its right side with the addition of an $m\times m$ identity matrix to form an $m\times (n + m)$ matrix M.  Use row operations to bring $M$ to reduced row-echelon form and call the result $N$.  $N$ is the <define>extended reduced row-echelon form</define> of $A$, and we will standardize on names for five submatrices ($B$, $C$, $J$, $K$, $L$) of $N$.</p>
+
+<p>Let $B$ denote the $m\times n$ matrix formed from the first $n$ columns of $N$ and let $J$ denote the $m\times m$ matrix formed from the last $m$ columns of $N$.  Suppose that $B$ has $r$ nonzero rows.  Further partition $N$ by letting $C$ denote the $r\times n$ matrix formed from all of the non-zero rows of $B$.  Let $K$ be the $r\times m$ matrix formed from the first $r$ rows of $J$, while $L$ will be the $(m-r)\times m$ matrix formed from the bottom $m-r$ rows of $J$.  Pictorially,
+<equation>
+M=[A\vert I_m]
+\rref
+N=[B\vert J]
+=
+<![CDATA[\left[\begin{array}{cc}C&K\\0&L\end{array}\right]]]>
+</equation>
+</p>
+
+</definition>
+
+<example acro="SEEF" index="extended echelon form!submatrices">
+<title>Submatrices of extended echelon form</title>
+
+<p>We illustrate <acroref type="definition" acro="EEF" /> with the matrix $A$,
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 1 & -1 & -2 & 7 & 1 & 6 \\]]>
+<![CDATA[ -6 & 2 & -4 & -18 & -3 & -26 \\]]>
+<![CDATA[ 4 & -1 & 4 & 10 & 2 & 17 \\]]>
+<![CDATA[ 3 & -1 & 2 & 9 & 1 & 12]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Augmenting with the $4\times 4$ identity matrix,
+M=
+<equation>
+\begin{bmatrix}
+<![CDATA[ 1 & -1 & -2 & 7 & 1 & 6 & 1 & 0 & 0 & 0 \\]]>
+<![CDATA[ -6 & 2 & -4 & -18 & -3 & -26 & 0 & 1 & 0 & 0 \\]]>
+<![CDATA[ 4 & -1 & 4 & 10 & 2 & 17 & 0 & 0 & 1 & 0 \\]]>
+<![CDATA[ 3 & -1 & 2 & 9 & 1 & 12 & 0 & 0 & 0 & 1]]>
+\end{bmatrix}
+</equation>
+and row-reducing, we obtain
+<equation>
+N=
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 & 1 & 0 & 3 & 0 & 1 & 1 & 1\\]]>
+<![CDATA[ 0 & \leading{1} & 4 & -6 & 0 & -1 & 0 & 2 & 3 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & \leading{1} & 2 & 0 & -1 & 0 & -2 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0 & \leading{1} & 2 & 2 & 1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>So we then obtain
+<alignmath>
+<![CDATA[B&=]]>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 & 1 & 0 & 3 \\]]>
+<![CDATA[ 0 & \leading{1} & 4 & -6 & 0 & -1 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & \leading{1} & 2 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[C&=]]>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 & 1 & 0 & 3 \\]]>
+<![CDATA[ 0 & \leading{1} & 4 & -6 & 0 & -1 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & \leading{1} & 2]]>
+\end{bmatrix}\\
+<![CDATA[J&=]]>
+\begin{bmatrix}
+<![CDATA[0 & 1 & 1 & 1\\]]>
+<![CDATA[0 & 2 & 3 & 0 \\]]>
+<![CDATA[0 & -1 & 0 & -2 \\]]>
+<![CDATA[\leading{1} & 2 & 2 & 1]]>
+\end{bmatrix}\\
+<![CDATA[K&=]]>
+\begin{bmatrix}
+<![CDATA[0 & 1 & 1 & 1\\]]>
+<![CDATA[0 & 2 & 3 & 0 \\]]>
+<![CDATA[0 & -1 & 0 & -2]]>
+\end{bmatrix}\\
+<![CDATA[L&=]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 2 & 2 & 1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>You can observe (or verify) the properties of the following theorem with this example.</p>
+
+</example>
+
+<theorem acro="PEEF" index="extended reduced row-echelon form!properties">
+<title>Properties of Extended Echelon Form</title>
+<statement>
+<p>Suppose that $A$ is an $m\times n$ matrix and that $N$ is its extended echelon form.  Then
+<ol><li> $J$ is nonsingular.
+</li><li> $B=JA$.
+</li><li> If $\vect{x}\in\complex{n}$ and $\vect{y}\in\complex{m}$, then $A\vect{x}=\vect{y}$ if and only if $B\vect{x}=J\vect{y}$.
+</li><li> $C$ is in reduced row-echelon form, has no zero rows and has $r$ pivot columns.
+</li><li> $L$ is in reduced row-echelon form, has no zero rows and has $m-r$ pivot columns.
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>$J$ is the result of applying a sequence of row operations to $I_m$, as such $J$ and $I_m$ are row-equivalent.  $\homosystem{I_m}$ has only the zero solution, since $I_m$ is nonsingular (<acroref type="theorem" acro="NMRRI" />).  Thus, $\homosystem{J}$ also has only the zero solution (<acroref type="theorem" acro="REMES" />, <acroref type="definition" acro="ESYS" />) and $J$ is therefore nonsingular (<acroref type="definition" acro="NSM" />).</p>
+
+<p>To prove the second part of this conclusion, first convince yourself that row operations and the matrix-vector are commutative operations.  By this we mean the following.
+Suppose that $F$ is an $m\times n$ matrix that is row-equivalent to the matrix $G$.  Apply to the column vector $F\vect{w}$ the same sequence of row operations that converts $F$ to $G$.  Then the result is $G\vect{w}$.  So we can do row operations on the matrix, then do a matrix-vector product, <em>or</em> do a matrix-vector product and then do row operations on a column vector, and the result will be the same either way.  Since matrix multiplication is defined by a collection of matrix-vector products (<acroref type="definition" acro="MM" />), if we apply to the matrix product $FH$ the same sequence of row operations that converts $F$ to $G$ then the result will equal $GH$.  Now apply these observations to $A$.</p>
+
+<p>Write $AI_n=I_mA$ and apply the row operations that convert $M$ to $N$.  $A$ is converted to $B$, while $I_m$ is converted to $J$, so we have $BI_n=JA$.  Simplifying the left side gives the desired conclusion.</p>
+
+<p>For the third conclusion, we now establish the two equivalences
+<alignmath>
+<![CDATA[A\vect{x}&=\vect{y} &]]>
+<![CDATA[&\iff &]]>
+<![CDATA[JA\vect{x}&=J\vect{y} &]]>
+<![CDATA[&\iff &]]>
+<![CDATA[B\vect{x}&=J\vect{y}]]>
+</alignmath>
+</p>
+
+<p>The forward direction of the first equivalence is accomplished by multiplying both sides of the matrix equality by $J$, while the backward direction is accomplished by multiplying by the inverse of $J$ (which we know exists by <acroref type="theorem" acro="NI" /> since $J$ is nonsingular).  The second equivalence is obtained simply by the substitutions given by $JA=B$.</p>
+
+<p>The first $r$ rows of $N$ are in reduced row-echelon form, since any contiguous collection of rows taken from a matrix in reduced row-echelon form will form a matrix that is again in reduced row-echelon form.   Since the matrix $C$ is formed by removing the last $n$ entries of each these rows, the remainder is still in reduced row-echelon form.  By its construction, $C$ has no zero rows. $C$ has $r$ rows and each contains a leading 1, so there are $r$ pivot columns in $C$.</p>
+
+<p>The final $m-r$ rows of $N$ are in reduced row-echelon form, since any contiguous collection of rows taken from a matrix in reduced row-echelon form will form a matrix that is again in reduced row-echelon form.  Since the matrix $L$ is formed by removing the first $n$ entries of each these rows, and these entries are all zero (they form the zero rows of $B$), the remainder is still in reduced row-echelon form.  $L$ is the final $m-r$ rows of the nonsingular matrix $J$, so none of these rows can be totally zero, or $J$ would not row-reduce to the identity matrix.  $L$ has $m-r$ rows and each contains a leading 1, so there are $m-r$ pivot columns in $L$.</p>
+
+</proof>
+</theorem>
+
+<p>Notice that in the case where $A$ is a nonsingular matrix we know that the reduced row-echelon form of $A$ is the identity matrix (<acroref type="theorem" acro="NMRRI" />), so $B=I_n$.  Then the second conclusion above says $JA=B=I_n$, so $J$ is the inverse of $A$.  Thus this theorem generalizes <acroref type="theorem" acro="CINM" />, though the result is a <q>left-inverse</q> of $A$ rather than a <q>right-inverse.</q></p>
+
+<p>The third conclusion of <acroref type="theorem" acro="PEEF" /> is the most telling.  It says that $\vect{x}$ is a solution to the linear system $\linearsystem{A}{\vect{y}}$ if and only if $\vect{x}$ is a solution to the linear system $\linearsystem{B}{J\vect{y}}$.  Or said differently, if we row-reduce the augmented matrix $\augmented{A}{\vect{y}}$ we will get the augmented matrix $\augmented{B}{J\vect{y}}$.  The matrix $J$ tracks the cumulative effect of the row operations that converts $A$ to reduced row-echelon form, here effectively applying them to the vector of constants in a system of equations having $A$ as a coefficient matrix.  When $A$ row-reduces to a matrix with zero rows, then $J\vect{y}$ should also have zero entries in the same rows if the system is to be consistent.</p>
+
+</subsection>
+
+<subsection acro="FS">
+<title>Four Subsets</title>
+
+<p>With all the preliminaries in place we can state our main result for this section.  In essence this result will allow us to say that we can find linearly independent sets to use in span constructions for all four subsets (null space, column space, row space, left null space) by analyzing only the extended echelon form of the matrix, and specifically, just the two submatrices $C$ and $L$, which will be ripe for analysis since they are already in reduced row-echelon form (<acroref type="theorem" acro="PEEF" />).</p>
+
+<theorem acro="FS" index="column space! as null space">
+<title>Four Subsets</title>
+<statement>
+<indexlocation index="left null space!as row space" />
+<p>Suppose $A$ is an $m\times n$ matrix with extended echelon form $N$.  Suppose the reduced row-echelon form of $A$ has $r$ nonzero rows.  Then $C$ is the submatrix of $N$ formed from the first $r$ rows and the first $n$ columns and $L$ is the submatrix of $N$ formed from the last $m$ columns and the last $m-r$ rows.  Then
+<ol><li> The null space of $A$ is the null space of $C$, $\nsp{A}=\nsp{C}$.
+</li><li> The row space of $A$ is the row space of $C$, $\rsp{A}=\rsp{C}$.
+</li><li> The column space of $A$ is the null space of $L$, $\csp{A}=\nsp{L}$.
+</li><li> The left null space of $A$ is the row space of $L$, $\lns{A}=\rsp{L}$.
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>First, $\nsp{A}=\nsp{B}$ since $B$ is row-equivalent to $A$ (<acroref type="theorem" acro="REMES" />).  The zero rows of $B$ represent equations that are always true in the homogeneous system $\homosystem{B}$, so the removal of these equations will not change the solution set.  Thus, in turn, $\nsp{B}=\nsp{C}$.</p>
+
+<p>Second, $\rsp{A}=\rsp{B}$ since $B$ is row-equivalent to $A$ (<acroref type="theorem" acro="REMRS" />).  The zero rows of $B$ contribute nothing to the span that is the row space of $B$, so the removal of these rows will not change the row space.  Thus, in turn, $\rsp{B}=\rsp{C}$.</p>
+
+<p>Third, we prove the set equality $\csp{A}=\nsp{L}$ with <acroref type="definition" acro="SE" />.  Begin by showing that $\csp{A}\subseteq\nsp{L}$.  Choose $\vect{y}\in\csp{A}\subseteq\complex{m}$.  Then there exists a vector $\vect{x}\in\complex{n}$ such that $A\vect{x}=\vect{y}$ (<acroref type="theorem" acro="CSCS" />).  Then for $1\leq k\leq m-r$,
+<alignmath>
+\vectorentry{L\vect{y}}{k}
+<![CDATA[&=\vectorentry{J\vect{y}}{r+k}]]>
+<![CDATA[&&\text{$L$ a submatrix of $J$}\\]]>
+<![CDATA[&=\vectorentry{B\vect{x}}{r+k}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="PEEF" />}\\
+<![CDATA[&=\vectorentry{\zeromatrix\vect{x}}{k}]]>
+<![CDATA[&&\text{Zero matrix a submatrix of $B$}\\]]>
+<![CDATA[&=\vectorentry{\zerovector}{k}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMZM" />}
+</alignmath>
+</p>
+
+<p>So, for all $1\leq k\leq m-r$, $\vectorentry{L\vect{y}}{k}=\vectorentry{\zerovector}{k}$.  So by <acroref type="definition" acro="CVE" /> we have $L\vect{y}=\zerovector$ and thus $\vect{y}\in\nsp{L}$.</p>
+
+<p>Now, show that $\nsp{L}\subseteq\csp{A}$.  Choose $\vect{y}\in\nsp{L}\subseteq\complex{m}$.  Form the vector $K\vect{y}\in\complex{r}$.  The linear system $\linearsystem{C}{K\vect{y}}$ is consistent since $C$ is in reduced row-echelon form and has no zero rows (<acroref type="theorem" acro="PEEF" />).  Let $\vect{x}\in\complex{n}$ denote a solution to $\linearsystem{C}{K\vect{y}}$.</p>
+
+<p>Then for $1\leq j\leq r$,
+<alignmath>
+\vectorentry{B\vect{x}}{j}
+<![CDATA[&=\vectorentry{C\vect{x}}{j}]]>
+<![CDATA[&&\text{$C$ a submatrix of $B$}\\]]>
+<![CDATA[&=\vectorentry{K\vect{y}}{j}]]>
+<![CDATA[&&\text{$\vect{x}$ a solution to $\linearsystem{C}{K\vect{y}}$}\\]]>
+<![CDATA[&=\vectorentry{J\vect{y}}{j}]]>
+<![CDATA[&&\text{$K$ a submatrix of $J$}\\]]>
+</alignmath>
+</p>
+
+<p>And for $r+1\leq k\leq m$,
+<alignmath>
+\vectorentry{B\vect{x}}{k}
+<![CDATA[&=\vectorentry{\zeromatrix\vect{x}}{k-r}]]>
+<![CDATA[&&\text{Zero matrix a submatrix of $B$}\\]]>
+<![CDATA[&=\vectorentry{\zerovector}{k-r}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMZM" />}\\
+<![CDATA[&=\vectorentry{L\vect{y}}{k-r}]]>
+<![CDATA[&&\text{$\vect{y}$ in $\nsp{L}$}\\]]>
+<![CDATA[&=\vectorentry{J\vect{y}}{k}]]>
+<![CDATA[&&\text{$L$ a submatrix of $J$}\\]]>
+</alignmath>
+</p>
+
+<p>So for all $1\leq i\leq m$, $\vectorentry{B\vect{x}}{i}=\vectorentry{J\vect{y}}{i}$ and by <acroref type="definition" acro="CVE" /> we have $B\vect{x}=J\vect{y}$.  From <acroref type="theorem" acro="PEEF" /> we know then that $A\vect{x}=\vect{y}$, and therefore $\vect{y}\in\csp{A}$ (<acroref type="theorem" acro="CSCS" />).  By <acroref type="definition" acro="SE" /> we now have $\csp{A}=\nsp{L}$.</p>
+
+<p>Fourth, we prove the set equality $\lns{A}=\rsp{L}$ with <acroref type="definition" acro="SE" />.  Begin by showing that $\rsp{L}\subseteq\lns{A}$.  Choose $\vect{y}\in\rsp{L}\subseteq\complex{m}$.  Then there exists a vector $\vect{w}\in\complex{m-r}$ such that $\vect{y}=\transpose{L}\vect{w}$ (<acroref type="definition" acro="RSM" />, <acroref type="theorem" acro="CSCS" />).  Then for $1\leq i\leq n$,
+<alignmath>
+\vectorentry{\transpose{A}\vect{y}}{i}
+<![CDATA[&=\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\vectorentry{\vect{y}}{k}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\vectorentry{\transpose{L}\vect{w}}{k}]]>
+<![CDATA[&&\text{Definition of $\vect{w}$}\\]]>
+<![CDATA[&=\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\sum_{\ell=1}^{m-r}\matrixentry{\transpose{L}}{k\ell}\vectorentry{\vect{w}}{\ell}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{m}\sum_{\ell=1}^{m-r}\matrixentry{\transpose{A}}{ik}\matrixentry{\transpose{L}}{k\ell}\vectorentry{\vect{w}}{\ell}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DCN" />}\\
+<![CDATA[&=\sum_{\ell=1}^{m-r}\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\matrixentry{\transpose{L}}{k\ell}\vectorentry{\vect{w}}{\ell}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="CACN" />}\\
+<![CDATA[&=\sum_{\ell=1}^{m-r}\left(\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\matrixentry{\transpose{L}}{k\ell}\right)\vectorentry{\vect{w}}{\ell}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DCN" />}\\
+<![CDATA[&=\sum_{\ell=1}^{m-r}\left(\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\matrixentry{\transpose{J}}{k,r+\ell}\right)\vectorentry{\vect{w}}{\ell}]]>
+<![CDATA[&&\text{$L$ a submatrix of $J$}\\]]>
+<![CDATA[&=\sum_{\ell=1}^{m-r}\matrixentry{\transpose{A}\transpose{J}}{i,r+\ell}\vectorentry{\vect{w}}{\ell}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{\ell=1}^{m-r}\matrixentry{\transpose{\left(JA\right)}}{i,r+\ell}\vectorentry{\vect{w}}{\ell}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMT" />}\\
+<![CDATA[&=\sum_{\ell=1}^{m-r}\matrixentry{\transpose{B}}{i,r+\ell}\vectorentry{\vect{w}}{\ell}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="PEEF" />}\\
+<![CDATA[&=\sum_{\ell=1}^{m-r}0\vectorentry{\vect{w}}{\ell}]]>
+<![CDATA[&&\text{Zero rows in $B$}\\]]>
+<![CDATA[&=0]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="ZCN" />}\\
+<![CDATA[&=\vectorentry{\zerovector}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="ZCV" />}
+</alignmath>
+</p>
+
+<p>Since $\vectorentry{\transpose{A}\vect{y}}{i}=\vectorentry{\zerovector}{i}$ for $1\leq i\leq n$, <acroref type="definition" acro="CVE" /> implies that $\transpose{A}\vect{y}=\zerovector$.  This means that $\vect{y}\in\nsp{\transpose{A}}$.</p>
+
+<p>Now, show that $\lns{A}\subseteq\rsp{L}$.  Choose $\vect{y}\in\lns{A}\subseteq\complex{m}$.  The matrix $J$ is nonsingular (<acroref type="theorem" acro="PEEF" />), so $\transpose{J}$ is also nonsingular (<acroref type="theorem" acro="MIT" />) and therefore the linear system $\linearsystem{\transpose{J}}{\vect{y}}$ has a unique solution.  Denote this solution as $\vect{x}\in\complex{m}$.  We will need to work with two <q>halves</q> of $\vect{x}$, which we will denote as $\vect{z}$ and $\vect{w}$ with formal definitions given by
+<alignmath>
+<![CDATA[\vectorentry{z}{j}&=\vectorentry{x}{i}]]>
+<![CDATA[&]]>
+<![CDATA[&1\leq j\leq r,]]>
+<![CDATA[&&&]]>
+<![CDATA[\vectorentry{w}{k}&=\vectorentry{x}{r+k}]]>
+<![CDATA[&]]>
+<![CDATA[&1\leq k\leq m-r]]>
+</alignmath>
+</p>
+
+<p>Now, for $1\leq j\leq r$,
+<alignmath>
+\vectorentry{\transpose{C}\vect{z}}{j}
+<![CDATA[&=\sum_{k=1}^{r}\matrixentry{\transpose{C}}{jk}\vectorentry{\vect{z}}{k}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{r}\matrixentry{\transpose{C}}{jk}\vectorentry{\vect{z}}{k}+]]>
+\sum_{\ell=1}^{m-r}\matrixentry{\zeromatrix}{j\ell}\vectorentry{\vect{w}}{\ell}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="ZM" />}\\
+<![CDATA[&=\sum_{k=1}^{r}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{z}}{k}+]]>
+\sum_{\ell=1}^{m-r}\matrixentry{\transpose{B}}{j,r+\ell}\vectorentry{\vect{w}}{\ell}
+<![CDATA[&&\text{$C$, $\zeromatrix$ submatrices of $B$}\\]]>
+<![CDATA[&=\sum_{k=1}^{r}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{x}}{k}+]]>
+\sum_{\ell=1}^{m-r}\matrixentry{\transpose{B}}{j,r+\ell}\vectorentry{\vect{x}}{r+\ell}
+<![CDATA[&&\text{Definitions of $\vect{z}$ and $\vect{w}$}\\]]>
+<![CDATA[&=\sum_{k=1}^{r}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{x}}{k}+]]>
+\sum_{k=r+1}^{m}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{x}}{k}
+<![CDATA[&&\text{Re-index second sum}\\]]>
+<![CDATA[&=\sum_{k=1}^{m}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{x}}{k}]]>
+<![CDATA[&&\text{Combine sums}\\]]>
+<![CDATA[&=\sum_{k=1}^{m}\matrixentry{\transpose{\left(JA\right)}}{jk}\vectorentry{\vect{x}}{k}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="PEEF" />}\\
+<![CDATA[&=\sum_{k=1}^{m}\matrixentry{\transpose{A}\transpose{J}}{jk}\vectorentry{\vect{x}}{k}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMT" />}\\
+<![CDATA[&=\sum_{k=1}^{m}\sum_{\ell=1}^{m}\matrixentry{\transpose{A}}{j\ell}\matrixentry{\transpose{J}}{\ell k}\vectorentry{\vect{x}}{k}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{\ell=1}^{m}\sum_{k=1}^{m}\matrixentry{\transpose{A}}{j\ell}\matrixentry{\transpose{J}}{\ell k}\vectorentry{\vect{x}}{k}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="CACN" />}\\
+<![CDATA[&=\sum_{\ell=1}^{m}\matrixentry{\transpose{A}}{j\ell}\left(\sum_{k=1}^{m}\matrixentry{\transpose{J}}{\ell k}\vectorentry{\vect{x}}{k}\right)]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DCN" />}\\
+<![CDATA[&=\sum_{\ell=1}^{m}\matrixentry{\transpose{A}}{j\ell}\vectorentry{\transpose{J}\vect{x}}{\ell}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{\ell=1}^{m}\matrixentry{\transpose{A}}{j\ell}\vectorentry{\vect{y}}{\ell}]]>
+<![CDATA[&&\text{Definition of $\vect{x}$}\\]]>
+<![CDATA[&=\vectorentry{\transpose{A}\vect{y}}{j}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\vectorentry{\zerovector}{j}]]>
+<![CDATA[&&\text{$\vect{y}\in\lns{A}$}]]>
+</alignmath>
+</p>
+
+<p>So, by <acroref type="definition" acro="CVE" />, $\transpose{C}\vect{z}=\zerovector$ and the vector $\vect{z}$ gives us a linear combination of the columns of $\transpose{C}$ that equals the zero vector.  In other words, $\vect{z}$ gives a relation of linear dependence on the the rows of $C$.  However, the rows of $C$ are a linearly independent set by <acroref type="theorem" acro="BRS" />.  According to <acroref type="definition" acro="LICV" /> we must conclude that the entries of $\vect{z}$ are all zero, <ie /> $\vect{z}=\zerovector$.</p>
+
+<p>Now, for $1\leq i\leq m$, we have
+<alignmath>
+\vectorentry{\vect{y}}{i}
+<![CDATA[&=\vectorentry{\transpose{J}\vect{x}}{i}]]>
+<![CDATA[&&\text{Definition of $\vect{x}$}\\]]>
+<![CDATA[&=\sum_{k=1}^{m}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{x}}{k}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{r}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{x}}{k}+]]>
+\sum_{k=r+1}^{m}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{x}}{k}
+<![CDATA[&&\text{Break apart sum}\\]]>
+<![CDATA[&=\sum_{k=1}^{r}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{z}}{k}+]]>
+\sum_{k=r+1}^{m}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{w}}{k-r}
+<![CDATA[&&\text{Definition of $\vect{z}$ and $\vect{w}$}\\]]>
+<![CDATA[&=\sum_{k=1}^{r}\matrixentry{\transpose{J}}{ik}0+]]>
+\sum_{\ell=1}^{m-r}\matrixentry{\transpose{J}}{i,r+\ell}\vectorentry{\vect{w}}{\ell}
+<![CDATA[&&\text{$\vect{z}=\zerovector$, re-index}\\]]>
+<![CDATA[&=0+\sum_{\ell=1}^{m-r}\matrixentry{\transpose{L}}{i,\ell}\vectorentry{\vect{w}}{\ell}]]>
+<![CDATA[&&\text{$L$ a submatrix of $J$}\\]]>
+<![CDATA[&=\vectorentry{\transpose{L}\vect{w}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+</alignmath>
+</p>
+
+<p>So by <acroref type="definition" acro="CVE" />, $\vect{y}=\transpose{L}\vect{w}$.  The existence of $\vect{w}$ implies that $\vect{y}\in\rsp{L}$, and therefore $\lns{A}\subseteq\rsp{L}$.  So by <acroref type="definition" acro="SE" /> we have $\lns{A}=\rsp{L}$.</p>
+
+</proof>
+</theorem>
+
+<p>The first two conclusions of this theorem are nearly trivial.  But they set up a pattern of results for $C$ that is reflected in the latter two conclusions about $L$.  In total, they tell us that we can compute all four subsets just by finding null spaces and row spaces.  This theorem does not tell us exactly how to compute these subsets, but instead simply expresses them as null spaces and row spaces of matrices in reduced row-echelon form without any zero rows ($C$ and $L$).   A linearly independent set that spans the null space of a matrix in reduced row-echelon form can be found easily with <acroref type="theorem" acro="BNS" />.  It is an even easier matter to find a linearly independent set that spans the row space of a matrix in reduced row-echelon form with <acroref type="theorem" acro="BRS" />, especially when there are no zero rows present.  So an application of <acroref type="theorem" acro="FS" /> is typically followed by two applications each of <acroref type="theorem" acro="BNS" /> and <acroref type="theorem" acro="BRS" />.</p>
+
+<p>The situation when $r=m$ deserves comment, since now the matrix $L$ has no rows.  What is $\csp{A}$ when we try to apply <acroref type="theorem" acro="FS" /> and encounter $\nsp{L}$?  One interpretation of this situation is that $L$ is the coefficient matrix of a homogeneous system that has no equations.  How hard is it to find a solution vector to this system?  Some thought will convince you that <em>any</em> proposed vector will qualify as a solution, since it makes <em>all</em> of the equations true.  So every possible vector is in the null space of $L$ and therefore $\csp{A}=\nsp{L}=\complex{m}$.  OK, perhaps this sounds like some twisted argument from <i>Alice in Wonderland</i>.  Let us try another argument that might solidly convince you of this logic.</p>
+
+<p>If $r=m$, when we row-reduce the augmented matrix of $\linearsystem{A}{\vect{b}}$ the result will have no zero rows, and all the leading 1's will occur in first $n$ columns, so by <acroref type="theorem" acro="RCLS" /> the system will be consistent.  By <acroref type="theorem" acro="CSCS" />, $\vect{b}\in\csp{A}$.  Since $\vect{b}$ was arbitrary, every possible vector is in the column space of $A$, so we again have $\csp{A}=\complex{m}$.  The situation when a matrix has $r=m$ is known by the term <define>full rank</define>, and in the case of a square matrix coincides with nonsingularity (see <acroref type="exercise" acro="FS.M50" />).</p>
+
+<p>The properties of the matrix $L$ described by this theorem can be explained informally as follows.  A column vector $\vect{y}\in\complex{m}$ is in the column space of $A$ if the linear system $\linearsystem{A}{\vect{y}}$ is consistent (<acroref type="theorem" acro="CSCS" />).  By <acroref type="theorem" acro="RCLS" />, the reduced row-echelon form of the augmented matrix $\augmented{A}{\vect{y}}$ of a consistent system will have zeros in the bottom $m-r$ locations of the last column.  By <acroref type="theorem" acro="PEEF" /> this final column is the vector $J\vect{y}$ and so should then have zeros in the final $m-r$ locations.  But since $L$ comprises the final $m-r$ rows of $J$, this condition is expressed by saying $\vect{y}\in\nsp{L}$.</p>
+
+<p>Additionally, the rows of $J$ are the scalars in linear combinations of the rows of $A$ that create the rows of $B$.  That is, the rows of $J$ record the net effect of the sequence of row operations that takes $A$ to its reduced row-echelon form, $B$.  This can be seen in the equation $JA=B$ (<acroref type="theorem" acro="PEEF" />).  As such, the rows of $L$ are scalars for linear combinations of the rows of $A$ that yield zero rows.  But such linear combinations are precisely the elements of the left null space.  So any element of the row space of $L$ is also an element of the left null space of $A$.</p>
+
+<p>We will now illustrate <acroref type="theorem" acro="FS" /> with a few examples.</p>
+
+<example acro="FS1" index="four subsets">
+<title>Four subsets, no. 1</title>
+
+<p>In <acroref type="example" acro="SEEF" /> we found the five relevant submatrices of the matrix
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 1 & -1 & -2 & 7 & 1 & 6 \\]]>
+<![CDATA[ -6 & 2 & -4 & -18 & -3 & -26 \\]]>
+<![CDATA[ 4 & -1 & 4 & 10 & 2 & 17 \\]]>
+<![CDATA[ 3 & -1 & 2 & 9 & 1 & 12]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>To apply <acroref type="theorem" acro="FS" /> we only need $C$ and $L$,
+<alignmath>
+<![CDATA[C&=]]>
+\begin{bmatrix}
+<![CDATA[ \leading{1} &                0 & 2 & 1 &                0 & 3 \\]]>
+<![CDATA[                0 & \leading{1} & 4 & -6 &               0 & -1 \\]]>
+<![CDATA[                0 &                0 & 0 & 0 & \leading{1} & 2]]>
+\end{bmatrix}
+<![CDATA[&]]>
+<![CDATA[L&=]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 2 & 2 & 1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Then we use <acroref type="theorem" acro="FS" />  to obtain
+<alignmath>
+<![CDATA[\nsp{A}&=\nsp{C}=]]>
+\spn{\set{
+\colvector{-2\\-4\\1\\0\\0\\0},\,
+\colvector{-1\\6\\0\\1\\0\\0},\,
+\colvector{-3\\1\\0\\0\\-2\\1}
+}}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="BNS" />}\\
+<![CDATA[\rsp{A}&=\rsp{C}=]]>
+\spn{\set{
+\colvector{1\\0\\2\\1\\0\\3 },\,
+\colvector{0\\1\\4\\-6\\0\\-1},\,
+\colvector{0\\0\\0\\0\\1\\2}
+}}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="BRS" />}\\
+<![CDATA[\csp{A}&=\nsp{L}=]]>
+\spn{\set{
+\colvector{-2\\1\\0\\0},\,
+\colvector{-2\\0\\1\\0},\,
+\colvector{-1\\0\\0\\1}
+}}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="BNS" />}\\
+<![CDATA[\lns{A}&=\rsp{L}=]]>
+\spn{\set{
+\colvector{1\\2\\2\\1}
+}}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="BRS" />}
+</alignmath></p>
+
+<p>Boom!</p>
+
+</example>
+
+<example acro="FS2" index="four subsets">
+<title>Four subsets, no. 2</title>
+
+<p>Now lets return to the matrix $A$ that we used to motivate this section in <acroref type="example" acro="CSANS" />,
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 10 & 0 & 3 & 8 & 7 \\]]>
+<![CDATA[ -16 & -1 & -4 & -10 & -13 \\]]>
+<![CDATA[ -6 & 1 & -3 & -6 & -6 \\]]>
+<![CDATA[ 0 & 2 & -2 & -3 & -2 \\]]>
+<![CDATA[ 3 & 0 & 1 & 2 & 3 \\]]>
+<![CDATA[ -1 & -1 & 1 & 1 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We form the matrix $M$ by adjoining the $6\times 6$ identity matrix $I_6$,
+<equation>
+M=
+\begin{bmatrix}
+<![CDATA[ 10 & 0 & 3 & 8 & 7 & 1 & 0 & 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ -16 & -1 & -4 & -10 & -13 & 0 & 1 & 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ -6 & 1 & -3 & -6 & -6 & 0 & 0 & 1 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 2 & -2 & -3 & -2 & 0 & 0 & 0 & 1 & 0 & 0 \\]]>
+<![CDATA[ 3 & 0 & 1 & 2 & 3 & 0 & 0 & 0 & 0 & 1 & 0 \\]]>
+<![CDATA[ -1 & -1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1]]>
+\end{bmatrix}
+</equation>
+and row-reduce to obtain $N$
+<equation>
+N=
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & 0 & 2 & 0 & 0 & 1 & -1 & 2 & -1 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & 0 & -3 & 0 & 0 & -2 & 3 & -3 & 3 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 0 & 1 & 0 & 0 & 1 & 1 & 3 & 3 \\]]>
+<![CDATA[ 0 & 0 & 0 & \leading{1} & -2 & 0 & 0 & -2 & 1 & -4 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & \leading{1} & 0 & 3 & -1 & 3 & 1 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0 & \leading{1} & -2 & 1 & 1 & -1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>To find the four subsets for $A$, we only need identify the $4\times 5$ matrix $C$ and the $2\times 6$ matrix $L$,
+<alignmath>
+<![CDATA[C&=]]>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & 0 & 2\\]]>
+<![CDATA[ 0 & \leading{1} & 0 & 0 & -3\\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 0 & 1\\]]>
+<![CDATA[ 0 & 0 & 0 & \leading{1} & -2]]>
+\end{bmatrix}
+<![CDATA[&]]>
+<![CDATA[L&=]]>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 3 & -1 & 3 & 1 \\]]>
+<![CDATA[ 0 & \leading{1} & -2 & 1 & 1 & -1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Then we apply <acroref type="theorem" acro="FS" />,
+<alignmath>
+<![CDATA[\nsp{A}&=\nsp{C}=]]>
+\spn{\set{
+\colvector{-2\\3\\-1\\2\\1}
+}}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="BNS" />}\\
+<![CDATA[\rsp{A}&=\rsp{C}=]]>
+\spn{\set{
+\colvector{1 \\ 0 \\ 0 \\ 0 \\ 2},\,
+\colvector{0 \\ 1 \\ 0 \\ 0 \\ -3},\,
+\colvector{0 \\ 0 \\ 1 \\ 0 \\ 1},\,
+\colvector{0 \\ 0 \\ 0 \\ 1 \\ -2}
+}}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="BRS" />}\\
+<![CDATA[\csp{A}&=\nsp{L}=]]>
+\spn{\set{
+\colvector{-3\\2\\1\\0\\0\\0},\,
+\colvector{1\\-1\\0\\1\\0\\0},\,
+\colvector{-3\\-1\\0\\0\\1\\0},\,
+\colvector{-1\\1\\0\\0\\0\\1}
+}}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="BNS" />}\\
+<![CDATA[\lns{A}&=\rsp{L}=]]>
+\spn{\set{
+\colvector{1 \\ 0 \\ 3 \\ -1 \\ 3 \\ 1},\,
+\colvector{0 \\ 1 \\ -2 \\ 1 \\ 1 \\ -1}
+}}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="BRS" />}
+</alignmath>
+</p>
+
+</example>
+
+<p>The next example is just a bit different since the matrix has more rows than columns, and a trivial null space.</p>
+
+<example acro="FSAG" index="column space!as null space, Archetype G">
+<title>Four subsets, Archetype G</title>
+
+<p><acroref type="archetype" acro="G" /> and <acroref type="archetype" acro="H" /> are both systems of $m=5$ equations in $n=2$ variables.  They have identical coefficient matrices, which we will denote here as the matrix $G$,
+<equation>
+G=
+<archetypepart acro="G" part="purematrix" /></equation>
+</p>
+
+<p>Adjoin the $5\times 5$ identity matrix, $I_5$, to form
+<equation>
+M=
+\begin{bmatrix}
+<![CDATA[2 & 3 & 1&0&0&0&0\\]]>
+<![CDATA[-1 & 4 & 0&1&0&0&0\\]]>
+<![CDATA[3 & 10 & 0&0&1&0&0\\]]>
+<![CDATA[3 &  -1 & 0&0&0&1&0\\]]>
+<![CDATA[6 & 9 & 0&0&0&0&1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>This row-reduces to
+<equation>
+N=
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & 0 & \frac{3}{11} & \frac{1}{33}\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0 & -\frac{2}{11} & \frac{1}{11}\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0 & 0 & -\frac{1}{3}\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0 & 1 & -\frac{1}{3}\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & 1 & -1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>The first $n=2$ columns contain $r=2$ leading 1's, so we obtain $C$ as the $2\times 2$ identity matrix and extract $L$ from the final $m-r=3$ rows in the final $m=5$ columns.
+<alignmath>
+<![CDATA[C&=]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0\\]]>
+<![CDATA[0 & \leading{1}]]>
+\end{bmatrix}
+<![CDATA[&]]>
+<![CDATA[L&=]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & -\frac{1}{3}\\]]>
+<![CDATA[0 & \leading{1}  & 0 & 1 & -\frac{1}{3}\\]]>
+<![CDATA[0 & 0 & \leading{1}  & 1 & -1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Then we apply <acroref type="theorem" acro="FS" />,
+<alignmath>
+<![CDATA[\nsp{G}=\nsp{C}&=]]>
+\spn{\emptyset}
+=\set{\zerovector}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="BNS" />}\\
+<![CDATA[\rsp{G}=\rsp{C}&=]]>
+\spn{\set{
+\colvector{1 \\ 0},\,
+\colvector{0 \\ 1}
+}}
+=\complex{2}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="BRS" />}\\
+<![CDATA[\csp{G}=\nsp{L}&=]]>
+\spn{\set{
+\colvector{0\\-1\\-1\\1\\0},\,
+\colvector{\frac{1}{3}\\\frac{1}{3}\\1\\0\\1}
+<![CDATA[}}&&]]>\text{<acroref type="theorem" acro="BNS" />}\\
+<![CDATA[&=\spn{\set{]]>
+\colvector{0\\-1\\-1\\1\\0},\,
+\colvector{1\\1\\3\\0\\3}
+}}\\
+<![CDATA[\lns{G}=\rsp{L}&=]]>
+\spn{\set{
+\colvector{1 \\ 0 \\ 0 \\ 0 \\ -\frac{1}{3}},\,
+\colvector{0 \\ 1  \\ 0 \\ 1 \\ -\frac{1}{3}},\,
+\colvector{0 \\ 0 \\ 1  \\ 1 \\ -1}
+<![CDATA[}}&&]]>\text{<acroref type="theorem" acro="BRS" />}\\
+<![CDATA[&=\spn{\set{]]>
+\colvector{3 \\ 0 \\ 0 \\ 0 \\ -1},\,
+\colvector{0 \\ 3  \\ 0 \\ 3\ \\ -1},\,
+\colvector{0 \\ 0 \\ 1  \\ 1 \\ -1}
+}}
+</alignmath>
+</p>
+
+<p>As mentioned earlier, <acroref type="archetype" acro="G" /> is consistent, while <acroref type="archetype" acro="H" /> is inconsistent.  See if you can write the two different vectors of constants from these two archetypes as linear combinations of the two vectors in $\csp{G}$.  How about the two columns of $G$, can you write each individually as a linear combination of the two vectors in $\csp{G}$?  They must be in the column space of $G$ also.  Are your answers unique?  Do you notice anything about the scalars that appear in the linear combinations you are forming?</p>
+
+</example>
+
+<sageadvice acro="EEF" index="extended echelon form">
+<title>Extended Echelon Form</title>
+Sage will compute the extended echelon form, an improvement over what we did <q>by hand</q> in <acroref type="sage" acro="MISLE" />.  And the output can be requested as a <q>subdivided</q> matrix so that we can easily work with the pieces $C$ and $L$.  Pieces of subdivided matrices can be extracted with indices entirely similar to how we index the actual entries of a matrix.  We'll redo <acroref type="example" acro="FS2" /> as an illustration of <acroref type="theorem" acro="FS" /> and <acroref type="theorem" acro="PEEF" />.
+<sage>
+<input>A = matrix(QQ,[[ 10,  0,  3,   8,   7],
+               [-16, -1, -4, -10, -13],
+               [ -6,  1, -3,  -6,  -6],
+               [  0,  2, -2,  -3,  -2],
+               [  3,  0,  1,   2,   3],
+               [ -1, -1,  1,   1,   0]])
+N = A.extended_echelon_form(subdivide=True); N
+</input>
+<output>[ 1  0  0  0  2| 0  0  1 -1  2 -1]
+[ 0  1  0  0 -3| 0  0 -2  3 -3  3]
+[ 0  0  1  0  1| 0  0  1  1  3  3]
+[ 0  0  0  1 -2| 0  0 -2  1 -4  0]
+[--------------+-----------------]
+[ 0  0  0  0  0| 1  0  3 -1  3  1]
+[ 0  0  0  0  0| 0  1 -2  1  1 -1]
+</output>
+</sage>
+
+<sage>
+<input>C = N.subdivision(0,0); C
+</input>
+<output>[ 1  0  0  0  2]
+[ 0  1  0  0 -3]
+[ 0  0  1  0  1]
+[ 0  0  0  1 -2]
+</output>
+</sage>
+
+<sage>
+<input>L = N.subdivision(1,1); L
+</input>
+<output>[ 1  0  3 -1  3  1]
+[ 0  1 -2  1  1 -1]
+</output>
+</sage>
+
+<sage>
+<input>K = N.subdivision(0,1); K
+</input>
+<output>[ 0  0  1 -1  2 -1]
+[ 0  0 -2  3 -3  3]
+[ 0  0  1  1  3  3]
+[ 0  0 -2  1 -4  0]
+</output>
+</sage>
+
+<sage>
+<input>C.rref() == C
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>L.rref() == L
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.right_kernel() == C.right_kernel()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.row_space() == C.row_space()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.column_space() == L.right_kernel()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.left_kernel() == L.row_space()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>J = N.matrix_from_columns(range(5, 11)); J
+</input>
+<output>[ 0  0  1 -1  2 -1]
+[ 0  0 -2  3 -3  3]
+[ 0  0  1  1  3  3]
+[ 0  0 -2  1 -4  0]
+[ 1  0  3 -1  3  1]
+[ 0  1 -2  1  1 -1]
+</output>
+</sage>
+
+<sage>
+<input>J.is_singular()
+</input>
+<output>False
+</output>
+</sage>
+
+<sage>
+<input>J*A
+</input>
+<output>[ 1  0  0  0  2]
+[ 0  1  0  0 -3]
+[ 0  0  1  0  1]
+[ 0  0  0  1 -2]
+[ 0  0  0  0  0]
+[ 0  0  0  0  0]
+</output>
+</sage>
+
+<sage>
+<input>J*A == A.rref()
+</input>
+<output>True
+</output>
+</sage>
+
+Notice how we can employ the uniqueness of reduced row-echelon form (<acroref type="theorem" acro="RREFU" />) to verify that <code>C</code> and <code>L</code> are in reduced row-echelon form.  Realize too, that subdivided output is an optional behavior of the <code>.extended_echelon_form()</code> method and must be requested with <code>subdivide=True</code>.<br /><br />
+Additionally, it is the uniquely determined matrix <code>J</code> that provides us with a standard version of the final column of the row-reduced augmented matrix using variables in the vector of constants, as first shown back in <acroref type="example" acro="CSANS" /> and verified here with variables defined as in <acroref type="sage" acro="RRSM" />.  (The vector method <code>.column()</code> converts a vector into a 1-column matrix, used here to format the matrix-vector product nicely.)
+<sage>
+<input><![CDATA[R.<b1,b2,b3,b4,b5,b6> = QQ[]]]>
+const = vector(R, [b1, b2, b3, b4, b5, b6])
+(J*const).column()
+</input>
+<output>[       b3 - b4 + 2*b5 - b6]
+[-2*b3 + 3*b4 - 3*b5 + 3*b6]
+[     b3 + b4 + 3*b5 + 3*b6]
+[         -2*b3 + b4 - 4*b5]
+[b1 + 3*b3 - b4 + 3*b5 + b6]
+[  b2 - 2*b3 + b4 + b5 - b6]
+</output>
+</sage>
+
+
+
+</sageadvice>
+<p><acroref type="example" acro="COV" /> and <acroref type="example" acro="CSROI" /> each describes the column space of the coefficient matrix from <acroref type="archetype" acro="I" /> as the span of a set of $r=3$ linearly independent vectors.  It is no accident that these two different sets both have the same size.  If we (you?) were to calculate the column space of this matrix using the null space of the matrix $L$ from <acroref type="theorem" acro="FS" /> then we would again find a set of 3 linearly independent vectors that span the range.  More on this later.</p>
+
+<p>So we have three different methods to obtain a description of the column space of a matrix as the span of a linearly independent set.  <acroref type="theorem" acro="BCS" /> is sometimes useful since the vectors it specifies are equal to actual columns of the matrix. <acroref type="theorem" acro="BRS" /> and <acroref type="theorem" acro="CSRST" /> combine to create vectors with lots of zeros, and strategically placed 1's near the top of the vector.   <acroref type="theorem" acro="FS" /> and the matrix $L$ from the extended echelon form gives us a third method, which tends to create vectors with lots of zeros, and strategically placed 1's near the bottom of the vector.   If we don't care about linear independence we can also appeal to <acroref type="definition" acro="CSM" /> and simply express the column space as the span of all the columns of the matrix, giving us a fourth description.</p>
+
+<p>With <acroref type="theorem" acro="CSRST" /> and <acroref type="definition" acro="RSM" />, we can compute column spaces with theorems about row spaces, and we can compute row spaces with theorems about row spaces, but in each case we must transpose the matrix first.  At this point you may be overwhelmed by all the possibilities for computing column and row spaces.  <acroref type="diagram" acro="CSRST" /> is meant to help.  For both the column space and row space, it suggests four techniques.  One is to appeal to the definition, another yields a span of a linearly independent set, and a third uses <acroref type="theorem" acro="FS" />.  A fourth suggests transposing the matrix and the dashed line implies that then the companion set of techniques can be applied.  This can lead to a bit of silliness, since if you were to follow the dashed lines <em>twice</em> you would transpose the matrix twice, and by <acroref type="theorem" acro="TT" /> would accomplish nothing productive.
+<diagram acro="CSRST">
+<title>Column Space and Row Space Techniques</title>
+<tikz>
+\node (CA)  at (0em, 13em) [shape=rectangle] {$\csp{A}$};
+\node (CSM) at (6em, 16em) [shape=rectangle, anchor=west] {Definition CSM};
+\node (BCS) at (6em, 14em) [shape=rectangle, anchor=west] {Theorem BCS};
+\node (FSL) at (6em, 12em) [shape=rectangle, anchor=west] {Theorem FS, $\nsp{L}$};
+\node (CSR) at (6em, 10em) [shape=rectangle, anchor=west] {Theorem CSRST, $\rsp{\transpose{A}}$};
+\node (RA)  at (0em,  3em) [shape=rectangle] {$\rsp{A}$};
+\node (RST) at (6em,  6em) [shape=rectangle, anchor=west] {Definition RSM, $\csp{\transpose{A}}$};
+\node (FSC) at (6em,  4em) [shape=rectangle, anchor=west] {Theorem FS, $\rsp{C}$};
+\node (BRS) at (6em,  2em) [shape=rectangle, anchor=west] {Theorem BRS};
+\node (RSM) at (6em,  0em) [shape=rectangle, anchor=west] {Definition RSM};
+\draw[->,thick] (CA) to  (CSM.west);
+\draw[->,thick] (CA) to  (BCS.west);
+\draw[->,thick] (CA) to  (FSL.west);
+\draw[->,thick] (CA) to  (CSR.west);
+\draw[->,thick] (RA) to  (RST.west);
+\draw[->,thick] (RA) to  (FSC.west);
+\draw[->,thick] (RA) to  (BRS.west);
+\draw[->,thick] (RA) to  (RSM.west);
+\draw[->,densely dashed,thick]
+(RST.east) .. controls ([xshift=9em,yshift=3em]RST.east) and ([yshift=-1em]RST.west) ..  (CA.south);
+\draw[->,densely dashed,thick]
+(CSR.east) .. controls ([xshift=6.5em,yshift=-3em]CSR.east) and ([yshift=5em]RST.west) ..  (RA.north);
+</tikz>
+</diagram>
+</p>
+
+<p>Although we have many ways to describe a column space, notice that one tempting strategy will usually fail.  It is not possible to simply row-reduce a matrix directly and then use the columns of the row-reduced matrix as a set whose span equals the column space.  In other words, row operations <em>do not</em> preserve column spaces (however row operations do preserve row spaces, <acroref type="theorem" acro="REMRS" />).  See <acroref type="exercise" acro="CRS.M21" />.</p>
+
+</subsection>
+
+<!--   End  fs.tex -->
+<readingquestions>
+<ol>
+<li> Find a nontrivial element of the left null space of $A$.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[2  &  1 & -3 & 4\\]]>
+<![CDATA[-1 & -1 & 2  & -1\\]]>
+<![CDATA[0  & -1 & 1  & 2]]>
+\end{bmatrix}
+</equation>
+</li>
+<li> Find the matrices $C$ and $L$ in the extended echelon form of $A$.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ -9 & 5 & -3 \\]]>
+<![CDATA[ 2 & -1 & 1 \\]]>
+<![CDATA[ -5 & 3 & -1]]>
+\end{bmatrix}
+</equation>
+</li>
+<li> Why is <acroref type="theorem" acro="FS" /> a great conclusion to <acroref type="chapter" acro="M" />?
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="20" rough="Archetype G+F/Example FSAG questions">
+<problem contributor="robertbeezer"><acroref type="example" acro="FSAG" /> concludes with several questions.  Perform the analysis suggested by these questions.
+</problem>
+</exercise>
+
+<exercise type="C" number="25" rough="Theorem FS for 4x3 matrix with rank 2">
+<problem contributor="robertbeezer">Given the matrix $A$ below, use the extended echelon form of $A$ to answer each part of this problem.  In each part, find a linearly independent set of vectors, $S$, so that the span of $S$, $\spn{S}$, equals the specified set of vectors.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ -5 & 3 & -1 \\]]>
+<![CDATA[ -1 & 1 & 1 \\]]>
+<![CDATA[ -8 & 5 & -1 \\]]>
+<![CDATA[ 3 & -2 & 0]]>
+\end{bmatrix}
+</equation>
+<ol>
+<li>The row space of $A$, $\rsp{A}$.</li>
+<li>The column space of $A$, $\csp{A}$.</li>
+<li>The null space of $A$, $\nsp{A}$.</li>
+<li>The left null space of $A$, $\lns{A}$.</li>
+</ol>
+</problem>
+<solution contributor="robertbeezer">Add a $4\times 4$ identity matrix to the right of $A$ to form the matrix $M$ and then row-reduce to the matrix $N$,
+<equation>
+M=
+\begin{bmatrix}
+<![CDATA[ -5 & 3 & -1 & 1 & 0 & 0 & 0 \\]]>
+<![CDATA[ -1 & 1 & 1 & 0 & 1 & 0 & 0 \\]]>
+<![CDATA[ -8 & 5 & -1 & 0 & 0 & 1 & 0 \\]]>
+<![CDATA[ 3 & -2 & 0 & 0 & 0 & 0 & 1]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 & 0 & 0 & -2 & -5 \\]]>
+<![CDATA[ 0 & \leading{1} & 3 & 0 & 0 & -3 & -8 \\]]>
+<![CDATA[ 0 & 0 & 0 & \leading{1} & 0 & -1 & -1 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & \leading{1} & 1 & 3]]>
+\end{bmatrix}
+=N
+</equation>
+To apply <acroref type="theorem" acro="FS" /> in each of these four parts, we need the two matrices,
+<alignmath>
+<![CDATA[C&=]]>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 \\]]>
+<![CDATA[ 0 & \leading{1} & 3]]>
+\end{bmatrix}
+<![CDATA[&]]>
+<![CDATA[L&=]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & -1 & -1 \\]]>
+<![CDATA[0 & \leading{1} & 1 & 3]]>
+\end{bmatrix}
+</alignmath>
+(a)
+<alignmath>
+\rsp{A}
+<![CDATA[&=\rsp{C}&&]]>\text{<acroref type="theorem" acro="FS" />}\\
+<![CDATA[&=\spn{\colvector{1\\0\\2},\,\colvector{0\\1\\3}}&&]]>\text{<acroref type="theorem" acro="BRS" />}
+</alignmath>
+(b)
+<alignmath>
+\csp{A}
+<![CDATA[&=\nsp{L}&&]]>\text{<acroref type="theorem" acro="FS" />}\\
+<![CDATA[&=\spn{\colvector{1\\-1\\1\\0},\,\colvector{1\\-3\\0\\1}}&&]]>\text{<acroref type="theorem" acro="BNS" />}
+</alignmath>
+(c)
+<alignmath>
+\nsp{A}
+<![CDATA[&=\nsp{C}&&]]>\text{<acroref type="theorem" acro="FS" />}\\
+<![CDATA[&=\spn{\colvector{-2\\-3\\1}}&&]]>\text{<acroref type="theorem" acro="BNS" />}
+</alignmath>
+(d)
+<alignmath>
+\lns{A}
+<![CDATA[&=\rsp{L}&&]]>\text{<acroref type="theorem" acro="FS" />}\\
+<![CDATA[&=\spn{\colvector{1\\0\\-1\\-1},\,\colvector{0\\1\\1\\3}}&&]]>\text{<acroref type="theorem" acro="BRS" />}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="26" rough="Theorem FS for 4x4 matrix, rank 2, just work with L">
+<problem contributor="robertbeezer">For the matrix $D$ below use the extended echelon form to find
+<ol>
+<li>a linearly independent set whose span is the column space of $D$.</li>
+<li>a linearly independent set whose span is the left null space of $D$.</li>
+</ol>
+<alignmath>
+<![CDATA[D&=]]>
+\begin{bmatrix}
+<![CDATA[ -7 & -11 & -19 & -15\\]]>
+<![CDATA[ 6 & 10 & 18 & 14 \\]]>
+<![CDATA[ 3 & 5 & 9 & 7 \\]]>
+<![CDATA[-1 & -2 & -4 & -3]]>
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">For both parts, we need the extended echelon form of the matrix.
+<alignmath>
+\begin{bmatrix}
+<![CDATA[ -7 & -11 & -19 & -15 & 1 & 0 & 0 & 0\\]]>
+<![CDATA[ 6 & 10 & 18 & 14 & 0 & 1 & 0 & 0 \\]]>
+<![CDATA[ 3 & 5 & 9 & 7 & 0 & 0 & 1 & 0 \\]]>
+<![CDATA[ -1 & -2 & -4 & -3 & 0 & 0 & 0 & 1]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & -2 & -1 & 0 & 0 & 2 & 5 \\]]>
+<![CDATA[ 0 & \leading{1} & 3 & 2 & 0 & 0 & -1 & -3 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & \leading{1} & 0 & 3 & 2 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & \leading{1} & -2 & 0]]>
+\end{bmatrix}
+</alignmath>
+From this matrix we extract the last two rows, in the last four columns to form the matrix $L$,
+<alignmath>
+L
+=
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 3 & 2 \\]]>
+<![CDATA[ 0 & \leading{1} & -2 & 0]]>
+\end{bmatrix}
+</alignmath>
+By <acroref type="theorem" acro="FS" /> and <acroref type="theorem" acro="BNS" /> we have
+<alignmath>
+\csp{D}=\nsp{L}=\spn{\set{
+\colvector{-3\\2\\1\\0},\,
+\colvector{-2\\0\\0\\1}
+}}
+</alignmath>
+By <acroref type="theorem" acro="FS" /> and <acroref type="theorem" acro="BRS" /> we have
+<alignmath>
+\lns{D}=\rsp{L}=\spn{\set{
+\colvector{1\\0\\3\\2},\,
+\colvector{0\\1\\-2\\0}
+}}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="41" rough="Archetype constant vectors as lin combo of RNS">
+<problem contributor="robertbeezer">The following archetypes are systems of equations.  For each system, write the vector of constants as a linear combination of the vectors in the span construction for the column space provided by <acroref type="theorem" acro="FS" /> and <acroref type="theorem" acro="BNS" /> (these vectors are listed for each of these archetypes).<br /><br />
+<acroref type="archetype" acro="A" />,
+<acroref type="archetype" acro="B" />,
+<acroref type="archetype" acro="C" />,
+<acroref type="archetype" acro="D" />,
+<acroref type="archetype" acro="E" />,
+<acroref type="archetype" acro="F" />,
+<acroref type="archetype" acro="G" />,
+<acroref type="archetype" acro="H" />,
+<acroref type="archetype" acro="I" />,
+<acroref type="archetype" acro="J" />
+</problem>
+</exercise>
+
+<exercise type="C" number="43" rough="Theorem RNS to each archetype">
+<problem contributor="robertbeezer">The following archetypes are either matrices or systems of equations with coefficient matrices.  For each matrix, compute the extended echelon form $N$ and identify the matrices $C$ and $L$.  Using <acroref type="theorem" acro="FS" />,  <acroref type="theorem" acro="BNS" /> and <acroref type="theorem" acro="BRS" /> express the null space, the row space, the column space and left null space of each coefficient matrix as a span of a linearly independent set.<br /><br />
+<acroref type="archetype" acro="A" />,
+<acroref type="archetype" acro="B" />,
+<acroref type="archetype" acro="C" />,
+<acroref type="archetype" acro="D" />/<acroref type="archetype" acro="E" />,
+<acroref type="archetype" acro="F" />,
+<acroref type="archetype" acro="G" />/<acroref type="archetype" acro="H" />,
+<acroref type="archetype" acro="I" />,
+<acroref type="archetype" acro="J" />,
+<acroref type="archetype" acro="K" />,
+<acroref type="archetype" acro="L" />
+</problem>
+</exercise>
+
+<exercise type="C" number="60" rough="Column space 4 times, different requirements">
+<problem contributor="robertbeezer">For the matrix $B$ below, find sets of vectors whose span equals the column space of $B$ ($\csp{B}$) and which individually meet the following extra requirements.
+<ol>
+<li>The set illustrates the definition of the column space.</li>
+<li>The set is linearly independent and the members of the set are columns of $B$.</li>
+<li>The set is linearly independent with a <q>nice pattern of zeros and ones</q> at the <em>top</em> of each vector.</li>
+<li>The set is linearly independent with a <q>nice pattern of zeros and ones</q> at the bottom of each vector.</li>
+</ol>
+<equation>
+B=
+\begin{bmatrix}
+<![CDATA[2 & 3 & 1 & 1\\]]>
+<![CDATA[1 & 1 & 0 & 1\\]]>
+<![CDATA[-1 & 2 & 3 & -4]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">The definition of the column space is the span of the set of columns (<acroref type="definition" acro="CSM" />).  So the desired set is just the four columns of $B$,
+<equation>
+S=\set{
+\colvector{2\\1\\-1},\,
+\colvector{3\\1\\2},\,
+\colvector{1\\0\\3},\,
+\colvector{1\\1\\-4}
+}
+</equation>
+<acroref type="theorem" acro="BCS" /> suggests row-reducing the matrix and using the columns of $B$ that correspond to the pivot columns.
+<equation>
+B\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & -1 & 2\\]]>
+<![CDATA[0 & \leading{1} & 1 & -1\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+So the pivot columns are numbered by elements of $D=\set{1,\,2}$, so the requested set is
+<equation>
+S=\set{
+\colvector{2\\1\\-1},\,
+\colvector{3\\1\\2}}
+</equation>
+We can find this set by row-reducing the transpose of $B$, deleting the zero rows, and using the nonzero rows as column vectors in the set.  This is an application of <acroref type="theorem" acro="CSRST" /> followed by <acroref type="theorem" acro="BRS" />.
+<equation>
+\transpose{B}\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 3\\]]>
+<![CDATA[0 & \leading{1} & -7\\]]>
+<![CDATA[0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+So the requested set is
+<equation>
+S=\set{
+\colvector{1\\0\\3},\,
+\colvector{0\\1\\-7}
+}
+</equation>
+With the column space expressed as a null space, the vectors obtained via <acroref type="theorem" acro="BNS" /> will be of the desired shape.  So we first proceed with <acroref type="theorem" acro="FS" /> and create the extended echelon form,
+<equation>
+\augmented{B}{I_3}=
+\begin{bmatrix}
+<![CDATA[2 & 3 & 1 & 1 & 1 & 0 & 0\\]]>
+<![CDATA[1 & 1 & 0 & 1 & 0 & 1 & 0\\]]>
+<![CDATA[-1 & 2 & 3 & -4 & 0 & 0 & 1]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & -1 & 2 & 0 & \frac{2}{3} & \frac{-1}{3}\\]]>
+<![CDATA[0 & \leading{1} & 1 & -1 & 0 & \frac{1}{3} & \frac{1}{3}\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & \frac{-7}{3} & \frac{-1}{3}]]>
+\end{bmatrix}
+</equation>
+So, employing <acroref type="theorem" acro="FS" />, we have $\csp{B}=\nsp{L}$, where
+<equation>
+L=
+\begin{bmatrix}
+<![CDATA[\leading{1} & \frac{-7}{3} & \frac{-1}{3}]]>
+\end{bmatrix}
+</equation>
+We can find the desired set of vectors from <acroref type="theorem" acro="BNS" /> as
+<equation>
+S=\set{
+\colvector{\frac{7}{3}\\1\\0},\,
+\colvector{\frac{1}{3}\\0\\1}
+}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="C" number="61" rough="3x4 matrix, 4-parts, bases for column space, row space, etc">
+<problem contributor="robertbeezer">Let $A$ be the matrix below, and find the indicated sets with the requested properties.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[2 & -1 & 5 & -3\\]]>
+<![CDATA[-5 & 3 & -12 & 7\\]]>
+<![CDATA[1 & 1 & 4 & -3]]>
+\end{bmatrix}
+</equation>
+<ol>
+<li>A linearly independent set $S$ so that $\csp{A}=\spn{S}$ and $S$ is composed of columns of $A$.</li>
+<li>A linearly independent set $S$ so that $\csp{A}=\spn{S}$ and the vectors in $S$ have a nice pattern of zeros and ones at the top of the vectors.</li>
+<li>A linearly independent set $S$ so that $\csp{A}=\spn{S}$ and the vectors in $S$ have a nice pattern of zeros and ones at the bottom of the vectors.</li>
+<li>A linearly independent set $S$ so that $\rsp{A}=\spn{S}$.</li>
+</ol>
+</problem>
+<solution contributor="robertbeezer">First find a matrix $B$ that is row-equivalent to $A$ and in reduced row-echelon form
+<equation>
+B=
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 3 & -2\\]]>
+<![CDATA[0 & \leading{1} & 1 & -1\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+By <acroref type="theorem" acro="BCS" /> we can choose the columns of $A$ that correspond to dependent variables ($D=\set{1,2}$) as the elements of $S$ and obtain the desired properties.  So
+<equation>
+S=\set{\colvector{2\\-5\\1},\,\colvector{-1\\3\\1}}
+</equation>
+We can write the column space of $A$ as the row space of the transpose (<acroref type="theorem" acro="CSRST" />).  So we row-reduce the transpose of $A$ to obtain the row-equivalent matrix $C$ in reduced row-echelon form
+<equation>
+C=
+\begin{bmatrix}
+<![CDATA[1 & 0 & 8\\]]>
+<![CDATA[0 & 1 & 3\\]]>
+<![CDATA[0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+The nonzero rows (written as columns) will be a linearly independent set that spans the row space of $\transpose{A}$, by <acroref type="theorem" acro="BRS" />, and the zeros and ones will be at the top of the vectors,
+<equation>
+S=\set{\colvector{1\\0\\8},\,\colvector{0\\1\\3}}
+</equation>
+In preparation for <acroref type="theorem" acro="FS" />, augment $A$ with the $3\times 3$ identity matrix $I_3$ and row-reduce to obtain the extended echelon form,
+<equation>
+\begin{bmatrix}
+<![CDATA[1 & 0 & 3 & -2 & 0 & -\frac{1}{8} & \frac{3}{8}\\]]>
+<![CDATA[0 & 1 & 1 & -1 & 0 & \frac{1}{8} & \frac{5}{8}\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 1 & \frac{3}{8} & -\frac{1}{8}]]>
+\end{bmatrix}
+</equation>
+Then since the first four columns of row 3 are all zeros, we extract
+<equation>
+L=
+\begin{bmatrix}
+<![CDATA[\leading{1} & \frac{3}{8} & -\frac{1}{8}]]>
+\end{bmatrix}
+</equation>
+<acroref type="theorem" acro="FS" /> says that $\csp{A}=\nsp{L}$.  We can then use  <acroref type="theorem" acro="BNS" /> to construct the desired set $S$, based on the free variables with indices in $F=\set{2,3}$ for the homogeneous system $\homosystem{L}$, so
+<equation>
+S=\set{\colvector{-\frac{3}{8}\\1\\0},\,\colvector{\frac{1}{8}\\0\\1}}
+</equation>
+Notice that the zeros and ones are at the bottom of the vectors.<br />
+This is a straightforward application of <acroref type="theorem" acro="BRS" />.  Use the row-reduced matrix $B$ from part (a), grab the nonzero rows, and write them as column vectors,
+<equation>
+S=\set{\colvector{1\\0\\3\\-2},\,\colvector{0\\1\\1\\-1}}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="M" number="50" rough="Matrix A nonsingular, Theorem FS says?">
+<problem contributor="robertbeezer">Suppose that $A$ is a nonsingular matrix.  Extend the four conclusions of <acroref type="theorem" acro="FS" /> in this special case and discuss connections with previous results (such as <acroref type="theorem" acro="NME4" />).
+</problem>
+</exercise>
+
+<exercise type="M" number="51" rough="matrix A singular, Theorem FS says?">
+<problem contributor="robertbeezer">Suppose that $A$ is a singular matrix.  Extend the four conclusions of <acroref type="theorem" acro="FS" /> in this special case and discuss connections with previous results (such as <acroref type="theorem" acro="NME4" />).
+</problem>
+</exercise>
+
+</exercisesubsection>
+
+</section>

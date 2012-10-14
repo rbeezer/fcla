@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="D">
+<title>Dimension</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section D -->
+<!-- %  Dimension -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>Almost every vector space we have encountered has been infinite in size (an exception is <acroref type="example" acro="VSS" />).  But some are bigger and richer than others.  Dimension, once suitably defined, will be a measure of the size of a vector space, and a useful tool for studying its properties.  You probably already have a rough notion of what a mathematical definition of dimension might be <mdash /> try to forget these imprecise ideas and go with the new ones given here.</p>
+
+</introduction>
+
+<subsection acro="D">
+<title>Dimension</title>
+
+<definition acro="D" index="dimension">
+<title>Dimension</title>
+<p>Suppose that $V$ is a vector space and $\set{\vectorlist{v}{t}}$ is a basis of $V$.  Then the <define>dimension</define> of $V$ is defined by $\dimension{V}=t$.  If $V$ has no finite bases, we say $V$ has infinite dimension.</p>
+
+<notation acro="D" index="dimension">
+<title>Dimension</title>
+<usage>$\dimension{V}$</usage>
+</notation>
+</definition>
+
+<p>This is a very simple definition, which belies its power.  Grab a basis, any basis, and count up the number of vectors it contains.  That's the dimension.  However, this simplicity causes a problem.  Given a vector space, you and I could each construct different bases <mdash /> remember that a vector space might have many bases.  And what if your basis and my basis had different sizes?  Applying <acroref type="definition" acro="D" /> we would arrive at different numbers!  With our current knowledge about vector spaces, we would have to say that dimension is not <q>well-defined.</q>  Fortunately, there is a theorem that will correct this problem.</p>
+
+<p>In a strictly logical progression, the next two theorems would <em>precede</em> the definition of dimension.  Many subsequent theorems will trace their lineage back to the following fundamental result.</p>
+
+<theorem acro="SSLD" index="spanning set!more vectors">
+<title>Spanning Sets and Linear Dependence</title>
+<statement>
+<p>Suppose that $S=\set{\vectorlist{v}{t}}$ is a finite set of vectors which spans the vector space $V$.  Then any set of $t+1$ or more vectors from $V$ is linearly dependent.</p>
+
+</statement>
+
+<proof>
+<p>We want to prove that any set of $t+1$ or more vectors from $V$ is linearly dependent.  So we will begin with a totally arbitrary set of vectors from $V$, $R=\set{\vectorlist{u}{m}}$, where $m>t$.  We will now construct a nontrivial relation of linear dependence on $R$.</p>
+
+<p>Each vector $\vectorlist{u}{m}$ can be written as a linear combination of $\vectorlist{v}{t}$ since $S$ is a spanning set of $V$.  This means there exist scalars  $a_{ij}$, $1\leq i\leq t$, $1\leq j\leq m$, so that
+<alignmath>
+<![CDATA[\vect{u}_1&=a_{11}\vect{v}_1+a_{21}\vect{v}_2+a_{31}\vect{v}_3+\cdots+a_{t1}\vect{v}_t\\]]>
+<![CDATA[\vect{u}_2&=a_{12}\vect{v}_1+a_{22}\vect{v}_2+a_{32}\vect{v}_3+\cdots+a_{t2}\vect{v}_t\\]]>
+<![CDATA[\vect{u}_3&=a_{13}\vect{v}_1+a_{23}\vect{v}_2+a_{33}\vect{v}_3+\cdots+a_{t3}\vect{v}_t\\]]>
+<![CDATA[&\quad\quad\vdots\\]]>
+<![CDATA[\vect{u}_m&=a_{1m}\vect{v}_1+a_{2m}\vect{v}_2+a_{3m}\vect{v}_3+\cdots+a_{tm}\vect{v}_t]]>
+</alignmath>
+</p>
+
+<p>Now we form, unmotivated, the homogeneous system of $t$ equations in the $m$ variables, $x_1,\,x_2,\,x_3,\,\ldots,\,x_m$, where the coefficients are the just-discovered scalars $a_{ij}$,
+<alignmath>
+<![CDATA[a_{11}x_1+a_{12}x_2+a_{13}x_3+\cdots+a_{1m}x_m&=0\\]]>
+<![CDATA[a_{21}x_1+a_{22}x_2+a_{23}x_3+\cdots+a_{2m}x_m&=0\\]]>
+<![CDATA[a_{31}x_1+a_{32}x_2+a_{33}x_3+\cdots+a_{3m}x_m&=0\\]]>
+<![CDATA[\vdots\quad\quad&\\]]>
+<![CDATA[a_{t1}x_1+a_{t2}x_2+a_{t3}x_3+\cdots+a_{tm}x_m&=0\\]]>
+</alignmath>
+</p>
+
+<p>This is a homogeneous system with more variables than equations (our hypothesis is expressed as $m>t$), so by <acroref type="theorem" acro="HMVEI" /> there are infinitely many solutions.  Choose a nontrivial solution and denote it by $x_1=c_1,\,x_2=c_2,\,x_3=c_3,\,\ldots,\,x_m=c_m$.  As a solution to the homogeneous system, we then have
+<alignmath>
+<![CDATA[a_{11}c_1+a_{12}c_2+a_{13}c_3+\cdots+a_{1m}c_m&=0\\]]>
+<![CDATA[a_{21}c_1+a_{22}c_2+a_{23}c_3+\cdots+a_{2m}c_m&=0\\]]>
+<![CDATA[a_{31}c_1+a_{32}c_2+a_{33}c_3+\cdots+a_{3m}c_m&=0\\]]>
+<![CDATA[\vdots\quad\quad&\\]]>
+<![CDATA[a_{t1}c_1+a_{t2}c_2+a_{t3}c_3+\cdots+a_{tm}c_m&=0\\]]>
+</alignmath>
+</p>
+
+<p>As a collection of nontrivial scalars, $c_1,\,c_2,\,c_3,\,\dots,\,c_m$ will provide the nontrivial relation of linear dependence we desire,
+<alignmath>
+<![CDATA[&\lincombo{c}{u}{m}\\]]>
+<![CDATA[&=c_{1}\left(a_{11}\vect{v}_1+a_{21}\vect{v}_2+a_{31}\vect{v}_3+\cdots+a_{t1}\vect{v}_t\right)]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="TSVS" />}\\
+<![CDATA[&\quad\quad+c_{2}\left(a_{12}\vect{v}_1+a_{22}\vect{v}_2+a_{32}\vect{v}_3+\cdots+a_{t2}\vect{v}_t\right)\\]]>
+<![CDATA[&\quad\quad+c_{3}\left(a_{13}\vect{v}_1+a_{23}\vect{v}_2+a_{33}\vect{v}_3+\cdots+a_{t3}\vect{v}_t\right)\\]]>
+<![CDATA[&\quad\quad\quad\quad\vdots\\]]>
+<![CDATA[&\quad\quad+c_{m}\left(a_{1m}\vect{v}_1+a_{2m}\vect{v}_2+a_{3m}\vect{v}_3+\cdots+a_{tm}\vect{v}_t\right)\\]]>
+<![CDATA[&=c_{1}a_{11}\vect{v}_1+c_{1}a_{21}\vect{v}_2+c_{1}a_{31}\vect{v}_3+\cdots+c_{1}a_{t1}\vect{v}_t]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DVA" />}\\
+<![CDATA[&\quad\quad+c_{2}a_{12}\vect{v}_1+c_{2}a_{22}\vect{v}_2+c_{2}a_{32}\vect{v}_3+\cdots+c_{2}a_{t2}\vect{v}_t\\]]>
+<![CDATA[&\quad\quad+c_{3}a_{13}\vect{v}_1+c_{3}a_{23}\vect{v}_2+c_{3}a_{33}\vect{v}_3+\cdots+c_{3}a_{t3}\vect{v}_t\\]]>
+<![CDATA[&\quad\quad\quad\quad\vdots\\]]>
+<![CDATA[&\quad\quad+c_{m}a_{1m}\vect{v}_1+c_{m}a_{2m}\vect{v}_2+c_{m}a_{3m}\vect{v}_3+\cdots+c_{m}a_{tm}\vect{v}_t\\]]>
+<![CDATA[&=\left(c_{1}a_{11}+c_{2}a_{12}+c_{3}a_{13}+\cdots+c_{m}a_{1m}\right)\vect{v}_1]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DSA" />}\\
+<![CDATA[&\quad\quad+\left(c_{1}a_{21}+c_{2}a_{22}+c_{3}a_{23}+\cdots+c_{m}a_{2m}\right)\vect{v}_2\\]]>
+<![CDATA[&\quad\quad+\left(c_{1}a_{31}+c_{2}a_{32}+c_{3}a_{33}+\cdots+c_{m}a_{3m}\right)\vect{v}_3\\]]>
+<![CDATA[&\quad\quad\quad\quad\vdots\\]]>
+<![CDATA[&\quad\quad+\left(c_{1}a_{t1}+c_{2}a_{t2}+c_{3}a_{t3}+\cdots+c_{m}a_{tm}\right)\vect{v}_t\\]]>
+<![CDATA[&=\left(a_{11}c_{1}+a_{12}c_{2}+a_{13}c_{3}+\cdots+a_{1m}c_{m}\right)\vect{v}_1]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="CMCN" />}\\
+<![CDATA[&\quad\quad+\left(a_{21}c_{1}+a_{22}c_{2}+a_{23}c_{3}+\cdots+a_{2m}c_{m}\right)\vect{v}_2\\]]>
+<![CDATA[&\quad\quad+\left(a_{31}c_{1}+a_{32}c_{2}+a_{33}c_{3}+\cdots+a_{3m}c_{m}\right)\vect{v}_3\\]]>
+<![CDATA[&\quad\quad\quad\quad\vdots\\]]>
+<![CDATA[&\quad\quad+\left(a_{t1}c_{1}+a_{t2}c_{2}+a_{t3}c_{3}+\cdots+a_{tm}c_{m}\right)\vect{v}_t\\]]>
+<![CDATA[&=0\vect{v}_1+0\vect{v}_2+0\vect{v}_3+\cdots+0\vect{v}_t]]>
+<![CDATA[&&\text{$c_j$ as solution}\\]]>
+<![CDATA[&=\zerovector+\zerovector+\zerovector+\cdots+\zerovector]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="ZSSM" />}\\
+<![CDATA[&=\zerovector]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="Z" />}
+</alignmath>
+</p>
+
+<p>That does it.  $R$ has been undeniably shown to be a linearly dependent set.</p>
+
+<p>The proof just given has some monstrous expressions in it, mostly owing to the double subscripts present.  Now is a great opportunity to show the value of a more compact notation.  We will rewrite the key steps of the previous proof using summation notation, resulting in a more economical presentation, and even greater insight into the key aspects of the proof.  So here is an alternate proof <mdash /> study it carefully.</p>
+
+<p><b>Alternate Proof:</b>  We want to prove that any set of $t+1$ or more vectors from $V$ is linearly dependent.  So we will begin with a totally arbitrary set of vectors from $V$, $R=\setparts{\vect{u}_j}{1\leq j\leq m}$, where $m>t$.  We will now construct a nontrivial relation of linear dependence on $R$.</p>
+
+<p>Each vector $\vect{u_j}$, $1\leq j\leq m$ can be written as a linear combination of $\vect{v}_i$, $1\leq i\leq t$ since $S$ is a spanning set of $V$.  This means there are scalars  $a_{ij}$, $1\leq i\leq t$, $1\leq j\leq m$, so that
+<alignmath>
+<![CDATA[\vect{u}_j&=\sum_{i=1}^{t}a_{ij}\vect{v_i}&&1\leq j\leq m]]>
+</alignmath></p>
+
+<p>Now we form, unmotivated, the homogeneous system of $t$ equations in the $m$ variables, $x_j$, $1\leq j\leq m$, where the coefficients are the just-discovered scalars $a_{ij}$,
+<alignmath>
+<![CDATA[\sum_{j=1}^{m}a_{ij}x_j=0&&1\leq i\leq t]]>
+</alignmath>
+</p>
+
+<p>This is a homogeneous system with more variables than equations (our hypothesis is expressed as $m>t$), so by <acroref type="theorem" acro="HMVEI" /> there are infinitely many solutions.  Choose one of these solutions that is not trivial and denote it by $x_j=c_j$, $1\leq j\leq m$.  As a solution to the homogeneous system, we then have $\sum_{j=1}^{m}a_{ij}c_{j}=0$ for $1\leq i\leq t$.  As a collection of nontrivial scalars, $c_j$, $1\leq j\leq m$, will provide the nontrivial relation of linear dependence we desire,
+<alignmath>
+\sum_{j=1}^{m}c_{j}\vect{u}_j
+<![CDATA[&=\sum_{j=1}^{m}c_{j}\left(\sum_{i=1}^{t}a_{ij}\vect{v_i}\right)]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="TSVS" />}\\
+<![CDATA[&=\sum_{j=1}^{m}\sum_{i=1}^{t}c_{j}a_{ij}\vect{v}_i]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DVA" />}\\
+<![CDATA[&=\sum_{i=1}^{t}\sum_{j=1}^{m}c_{j}a_{ij}\vect{v}_i]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="CMCN" />}\\
+<![CDATA[&=\sum_{i=1}^{t}\sum_{j=1}^{m}a_{ij}c_{j}\vect{v}_i]]>
+<![CDATA[&&\text{Commutativity in $\complex{}$}\\]]>
+<![CDATA[&=\sum_{i=1}^{t}\left(\sum_{j=1}^{m}a_{ij}c_{j}\right)\vect{v}_i]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DSA" />}\\
+<![CDATA[&=\sum_{i=1}^{t}0\vect{v}_i]]>
+<![CDATA[&&\text{$c_j$ as solution}\\]]>
+<![CDATA[&=\sum_{i=1}^{t}\zerovector]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="ZSSM" />}\\
+<![CDATA[&=\zerovector]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="Z" />}
+</alignmath>
+</p>
+
+<p>That does it.  $R$ has been undeniably shown to be a linearly dependent set.</p>
+
+</proof>
+</theorem>
+
+<p>Notice how the swap of the two summations is so much easier in the third step above, as opposed to all the rearranging and regrouping that takes place in the previous proof.  In about half the space.  And there are no ellipses ($\ldots$).</p>
+
+<p><acroref type="theorem" acro="SSLD" /> can be viewed as a generalization of <acroref type="theorem" acro="MVSLD" />.  We know that $\complex{m}$ has a basis with $m$ vectors in it (<acroref type="theorem" acro="SUVB" />), so it is a set of $m$ vectors that spans $\complex{m}$.  By <acroref type="theorem" acro="SSLD" />, any set of more than $m$ vectors from $\complex{m}$ will be linearly dependent.  But this is exactly the conclusion we have in <acroref type="theorem" acro="MVSLD" />.  Maybe this is not a total shock, as the proofs of both theorems rely heavily on <acroref type="theorem" acro="HMVEI" />.   The beauty of <acroref type="theorem" acro="SSLD" /> is that it applies in any vector space.  We illustrate the generality of this theorem, and hint at its power, in the next example.</p>
+
+<example acro="LDP4" index="linearly dependent set!polynomials">
+<title>Linearly dependent set in $P_4$</title>
+
+<p>In <acroref type="example" acro="SSP4" /> we showed that
+<equation>
+S=\set{x-2,\,x^2-4x+4,\,x^3-6x^2+12x-8,\,x^4-8x^3+24x^2-32x+16}
+</equation>
+is a spanning set for $W=\setparts{p(x)}{p\in P_4,\ p(2)=0}$.  So we can apply <acroref type="theorem" acro="SSLD" /> to $W$ with $t=4$.  Here is a set of five vectors from $W$, as you may check by verifying that each is a polynomial of degree 4 or less and has $x=2$ as a root,
+<alignmath>
+<![CDATA[T&=\set{p_1,\,p_2,\,p_3,\,p_4,\,p_5}\subseteq W\\]]>
+<![CDATA[&\ \\]]>
+<![CDATA[p_1&=x^4-2x^3+2x^2-8x+8\\]]>
+<![CDATA[p_2&=-x^3+6x^2-5x-6\\]]>
+<![CDATA[p_3&=2x^4-5x^3+5x^2-7x+2\\]]>
+<![CDATA[p_4&=-x^4+4x^3-7x^2+6x\\]]>
+<![CDATA[p_5&=4x^3-9x^2+5x-6]]>
+</alignmath>
+</p>
+
+<p>By <acroref type="theorem" acro="SSLD" /> we conclude that $T$ is linearly dependent, with no further computations.
+</p>
+
+</example>
+
+<p><acroref type="theorem" acro="SSLD" /> is indeed powerful, but our main purpose in proving it right now was to make sure that our definition of dimension (<acroref type="definition" acro="D" />) is well-defined.  Here's the theorem.</p>
+
+<theorem acro="BIS" index="basis!common size">
+<title>Bases have Identical Sizes</title>
+<statement>
+<p>Suppose that $V$ is a vector space with a finite basis $B$ and a second basis $C$.  Then $B$ and $C$ have the same size.</p>
+
+</statement>
+
+<proof>
+<p>Suppose that $C$ has more vectors than $B$.  (Allowing for the possibility that $C$ is infinite, we can replace $C$ by a subset that has more vectors than $B$.)  As a basis, $B$ is a spanning set for $V$ (<acroref type="definition" acro="B" />), so <acroref type="theorem" acro="SSLD" /> says that $C$ is linearly dependent.  However, this contradicts the fact that as a basis $C$ is linearly independent (<acroref type="definition" acro="B" />).  So $C$ must also be a finite set, with size less than, or equal to, that of $B$.</p>
+
+<p>Suppose that $B$ has more vectors than $C$.   As a basis, $C$ is a spanning set for $V$ (<acroref type="definition" acro="B" />), so <acroref type="theorem" acro="SSLD" /> says that $B$ is linearly dependent.  However, this contradicts the fact that as a basis $B$ is linearly independent (<acroref type="definition" acro="B" />).  So $C$ cannot be strictly smaller than $B$.</p>
+
+<p>The only possibility left for the sizes of $B$ and $C$ is for them to be equal.</p>
+
+</proof>
+</theorem>
+
+<p><acroref type="theorem" acro="BIS" /> tells us that if we find one finite basis in a vector space, then they all have the same size.  This (finally) makes <acroref type="definition" acro="D" /> unambiguous.</p>
+
+</subsection>
+
+<subsection acro="DVS">
+<title>Dimension of Vector Spaces</title>
+
+<p>We can now collect the dimension of some common, and not so common, vector spaces.</p>
+
+<theorem acro="DCM" index="complex vector space!dimension">
+<title>Dimension of $\complex{m}$</title>
+<statement>
+<p>The dimension of $\complex{m}$ (<acroref type="example" acro="VSCV" />) is $m$.</p>
+
+</statement>
+
+<proof>
+<p><acroref type="theorem" acro="SUVB" /> provides a basis with $m$ vectors.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="DP" index="polynomial vector space!dimension">
+<title>Dimension of $P_n$</title>
+<statement>
+<p>The dimension of $P_{n}$  (<acroref type="example" acro="VSP" />) is $n+1$.</p>
+
+</statement>
+
+<proof>
+<p><acroref type="example" acro="BP" /> provides <em>two</em> bases with $n+1$ vectors.  Take your pick.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="DM" index="matrix vector space!dimension">
+<title>Dimension of $M_{mn}$</title>
+<statement>
+<p>The dimension of $M_{mn}$  (<acroref type="example" acro="VSM" />) is $mn$.</p>
+
+</statement>
+
+<proof>
+<p><acroref type="example" acro="BM" /> provides a basis with $mn$ vectors.</p>
+
+</proof>
+</theorem>
+
+<example acro="DSM22" index="dimension!subspace">
+<title>Dimension of a subspace of $M_{22}$</title>
+
+<p>It should now be plausible that
+<equation>
+<![CDATA[Z=\setparts{\begin{bmatrix}a&b\\c&d\end{bmatrix}}{2a+b+3c+4d=0,\,-a+3b-5c-2d=0}]]>
+</equation>
+is a subspace of the vector space $M_{22}$ (<acroref type="example" acro="VSM" />).  (It is.)  To find the dimension of $Z$ we must first find a basis, though any old basis will do.</p>
+
+<p>First concentrate on the conditions relating $a,\,b,\,c$ and $d$.  They form a homogeneous system of two equations in four variables with coefficient matrix
+<equation>
+\begin{bmatrix}
+<![CDATA[2 & 1 & 3 & 4\\]]>
+<![CDATA[-1 & 3 & -5 & -2]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We can row-reduce this matrix to obtain
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 2 & 2\\]]>
+<![CDATA[0 & \leading{1} & -1 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Rewrite the two equations represented by each row of this matrix, expressing the dependent variables ($a$ and $b$) in terms of the free variables ($c$ and $d$), and we obtain,
+<alignmath>
+<![CDATA[a&=-2c-2d\\]]>
+<![CDATA[b&=c]]>
+</alignmath>
+</p>
+
+<p>We can now write a typical entry of $Z$ strictly in terms of $c$ and $d$, and we can decompose the result,
+<equation>
+<![CDATA[\begin{bmatrix}a&b\\c&d\end{bmatrix}=]]>
+<![CDATA[\begin{bmatrix}-2c-2d&c\\c&d\end{bmatrix}=]]>
+<![CDATA[\begin{bmatrix}-2c&c\\c&0\end{bmatrix}+]]>
+<![CDATA[\begin{bmatrix}-2d&0\\0&d\end{bmatrix}=]]>
+<![CDATA[c\begin{bmatrix}-2&1\\1&0\end{bmatrix}+]]>
+<![CDATA[d\begin{bmatrix}-2&0\\0&1\end{bmatrix}]]>
+</equation>
+</p>
+
+<p>This equation says that an arbitrary matrix in $Z$ can be written as a linear combination of the two vectors in
+<equation>
+<![CDATA[S=\set{\begin{bmatrix}-2&1\\1&0\end{bmatrix},\,\begin{bmatrix}-2&0\\0&1\end{bmatrix}}]]>
+</equation>
+so we know that
+<equation>
+Z=\spn{S}=
+\spn{\set{
+<![CDATA[\begin{bmatrix}-2&1\\1&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-2&0\\0&1\end{bmatrix}]]>
+}}
+</equation>
+</p>
+
+<p>Are these two matrices (vectors) also linearly independent?  Begin with a relation of linear dependence on $S$,
+<alignmath>
+<![CDATA[a_1\begin{bmatrix}-2&1\\1&0\end{bmatrix}+]]>
+<![CDATA[a_2\begin{bmatrix}-2&0\\0&1\end{bmatrix}&=\zeromatrix\\]]>
+<![CDATA[\begin{bmatrix}-2a_1-2a_2&a_1\\a_1&a_2\end{bmatrix}&=]]>
+<![CDATA[\begin{bmatrix}0&0\\0&0\end{bmatrix}]]>
+</alignmath>
+</p>
+
+<p>From the equality of the two entries in the last row, we conclude that $a_1=0$, $a_2=0$.  Thus the only possible relation of linear dependence is the trivial one, and therefore $S$ is linearly independent (<acroref type="definition" acro="LI" />).  So $S$ is a basis for $V$ (<acroref type="definition" acro="B" />).  Finally, we can conclude that $\dimension{Z}=2$ (<acroref type="definition" acro="D" />) since $S$ has two elements.</p>
+
+</example>
+
+<example acro="DSP4" index="dimension!polynomial subspace">
+<title>Dimension of a subspace of $P_4$</title>
+
+<p>In <acroref type="example" acro="BSP4" /> we showed that
+<equation>
+S=\set{x-2,\,x^2-4x+4,\,x^3-6x^2+12x-8,\,x^4-8x^3+24x^2-32x+16}
+</equation>
+is a basis for $W=\setparts{p(x)}{p\in P_4,\ p(2)=0}$.  Thus, the dimension of $W$ is four, $\dimension{W}=4$.</p>
+
+<p>Note that $\dimension{P_4}=5$ by <acroref type="theorem" acro="DP" />, so $W$ is a subspace of dimension 4 within the vector space $P_4$ of dimension 5, illustrating the upcoming <acroref type="theorem" acro="PSSD" />.</p>
+
+</example>
+
+<example acro="DC" index="dimension!crazy vector space">
+<title>Dimension of the crazy vector space</title>
+
+<p>In <acroref type="example" acro="BC" />  we determined that the set $R=\set{(1,\,0),\,(6,\,3)}$ from the crazy vector space, $C$ (<acroref type="example" acro="CVS" />), is a basis for $C$.  By <acroref type="definition" acro="D" /> we see that $C$ has dimension 2, $\dimension{C}=2$.</p>
+
+</example>
+
+<p>It is possible for a vector space to have no finite bases, in which case we say it has infinite dimension.  Many of the best examples of this are vector spaces of functions, which lead to constructions like Hilbert spaces.  We will focus exclusively on finite-dimensional vector spaces.  OK, one infinite-dimensional example, and <em>then</em> we will focus exclusively on finite-dimensional vector spaces.</p>
+
+<example acro="VSPUD" index="vector space!infinite dimension">
+<title>Vector space of polynomials with unbounded degree</title>
+
+<p>Define the set $P$ by
+<equation>
+P=\setparts{p}{p(x)\text{ is a polynomial in }x}
+</equation></p>
+
+<p>Our operations will be the same as those defined for $P_n$ (<acroref type="example" acro="VSP" />).</p>
+
+<p>With no restrictions on the possible degrees of our polynomials, any finite set that is a candidate for spanning $P$ will come up short.  We will give a proof by contradiction (<acroref type="technique" acro="CD" />).  To this end, suppose that the dimension of $P$ is finite, say $\dimension{P}=n$.</p>
+
+<p>The set $T=\set{1,\,x,\,x^2,\,\ldots,\,x^n}$ is a linearly independent set (check this!) containing $n+1$ polynomials from $P$.  However, a basis of $P$ will be a spanning set of $P$ containing $n$ vectors.  This situation is a contradiction of <acroref type="theorem" acro="SSLD" />, so our assumption that $P$ has finite dimension is false.  Thus, we say $\dimension{P}=\infty$.</p>
+
+</example>
+
+<sageadvice acro="D" index="dimension">
+<title>Dimension</title>
+Now we recognize that every basis has the same size, even if there are many different bases for a given vector space.  The dimension is an important piece of information about a vector space, so Sage routinely provides this as part of the description of a vector space.  But it can be returned by itself with the vector space method <code>.dimension()</code>.  Here is an example of a subspace with dimension 2.
+<sage>
+<input>V = QQ^4
+v1 = vector(QQ, [2, -1, 3,  1])
+v2 = vector(QQ, [3, -3, 4,  0])
+v3 = vector(QQ, [1, -2, 1, -1])
+v4 = vector(QQ, [4, -5, 5, -1])
+W = span([v1, v2, v3, v4])
+W
+</input>
+<output>Vector space of degree 4 and dimension 2 over Rational Field
+Basis matrix:
+[  1   0 5/3   1]
+[  0   1 1/3   1]
+</output>
+</sage>
+
+<sage>
+<input>W.dimension()
+</input>
+<output>2
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="RNM">
+<title>Rank and Nullity of a Matrix</title>
+
+<p>For any matrix, we have seen that we can associate several subspaces <mdash /> the null space (<acroref type="theorem" acro="NSMS" />), the column space (<acroref type="theorem" acro="CSMS" />), row space (<acroref type="theorem" acro="RSMS" />) and the left null space  (<acroref type="theorem" acro="LNSMS" />).  As vector spaces, each of these has a dimension, and for the null space and column space, they are important enough to warrant names.</p>
+
+<definition acro="NOM" index="nullity!matrix">
+<title>Nullity Of a Matrix</title>
+<p>Suppose that $A$ is an $m\times n$ matrix.  Then the <define>nullity</define> of $A$ is the dimension of the null space of $A$, $\nullity{A}=\dimension{\nsp{A}}$.</p>
+
+<notation acro="NOM" index="nullity">
+<title>Nullity of a Matrix</title>
+<usage>$\nullity{A}$</usage>
+</notation>
+</definition>
+
+<definition acro="ROM" index="rank!matrix">
+<title>Rank Of a Matrix</title>
+<p>Suppose that $A$ is an $m\times n$ matrix.  Then the <define>rank</define> of $A$ is the dimension of the column space of $A$, $\rank{A}=\dimension{\csp{A}}$.</p>
+
+<notation acro="ROM" index="rank">
+<title>Rank of a Matrix</title>
+<usage>$\rank{A}$</usage>
+</notation>
+</definition>
+
+<example acro="RNM" index="rank!matrix">
+<title>Rank and nullity of a matrix</title>
+
+<indexlocation index="nullity!matrix" />
+<p>Let's compute the rank and nullity of
+<equation>
+A=\begin{bmatrix}
+<![CDATA[2 & -4 & -1 & 3 & 2 & 1 & -4\\]]>
+<![CDATA[1 & -2 & 0 & 0 & 4 & 0 & 1\\]]>
+<![CDATA[-2 & 4 & 1 & 0 & -5 & -4 & -8\\]]>
+<![CDATA[1 & -2 & 1 & 1 & 6 & 1 & -3\\]]>
+<![CDATA[2 & -4 & -1 & 1 & 4 & -2 & -1\\]]>
+<![CDATA[-1 & 2 & 3 & -1 & 6 & 3 & -1]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>To do this, we will first row-reduce the matrix since that will help us determine bases for the null space and column space.
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & -2 & 0 & 0 & 4 & 0 & 1\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 3 & 0 & -2\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & -1 & 0 & -3\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & \leading{1} & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>From this row-equivalent matrix in reduced row-echelon form we record $D=\set{1,\,3,\,4,\,6}$ and $F=\set{2,\,5,\,7}$.</p>
+
+<p>For each index in $D$, <acroref type="theorem" acro="BCS" /> creates a single basis vector.  In total the basis will have $4$ vectors, so the column space of $A$ will have dimension $4$ and we write $\rank{A}=4$.</p>
+
+<p>For each index in $F$, <acroref type="theorem" acro="BNS" /> creates a single basis vector.  In total the basis will have $3$ vectors, so the null space of $A$ will have dimension $3$ and we write $\nullity{A}=3$.</p>
+
+</example>
+
+<p>There were no accidents or coincidences in the previous example <mdash /> with the row-reduced version of a matrix in hand, the rank and nullity are easy to compute.</p>
+
+<theorem acro="CRN" index="rank!computing">
+<title>Computing Rank and Nullity</title>
+<statement>
+<indexlocation index="nullity!computing" />
+<p>Suppose that $A$ is an $m\times n$ matrix and $B$ is a row-equivalent matrix in reduced row-echelon form with $r$ nonzero rows.  Then $\rank{A}=r$ and $\nullity{A}=n-r$.</p>
+
+</statement>
+
+<proof>
+<p><acroref type="theorem" acro="BCS" /> provides a basis for the column space by choosing columns of $A$ that correspond to the dependent variables in a description of the solutions to $\homosystem{A}$.  In the analysis of $B$, there is one dependent variable for each leading 1, one per nonzero row, or one per pivot column.  So there are $r$ column vectors in a basis for $\csp{A}$.</p>
+
+<p><acroref type="theorem" acro="BNS" /> provide a basis for the null space by creating basis vectors of the null space of $A$ from entries of $B$, one for each independent variable, one per column with out a leading 1.  So there are $n-r$ column vectors in a basis for $\nullity{A}$.</p>
+
+</proof>
+</theorem>
+
+<p>Every archetype (<miscref type="archetype" text="Archetypes" />) that involves a matrix lists its rank and nullity.  You may have noticed as you studied the archetypes that the larger the column space is the smaller the null space is.  A simple corollary states this trade-off succinctly.    (See <acroref type="technique" acro="LC" />.)</p>
+
+<theorem acro="RPNC" index="rank+nullity">
+<title>Rank Plus Nullity is Columns</title>
+<statement>
+<p>Suppose that $A$ is an $m\times n$ matrix.  Then $\rank{A}+\nullity{A}=n$.</p>
+
+</statement>
+
+<proof>
+<p>Let $r$ be the number of nonzero rows in a row-equivalent matrix in reduced row-echelon form.
+By <acroref type="theorem" acro="CRN" />,
+<equation>
+\rank{A}+\nullity{A}= r+(n-r)=n
+</equation></p>
+
+</proof>
+</theorem>
+
+<p>When we first introduced $r$ as our standard notation for the number of nonzero rows in a matrix in reduced row-echelon form you might have thought $r$ stood for <q>rows.</q>  Not really <mdash /> it stands for <q>rank</q>!</p>
+
+<sageadvice acro="RNM" index="rank, nullity of a matrix">
+<title>Rank and Nullity of a Matrix</title>
+The rank and nullity of a matrix in Sage could be exactly what you would have guessed.  But we need to be careful.  The rank is the rank.  But nullity in Sage is the dimension of the <em>left</em> nullspace.  So we have matrix methods <code>.nullity()</code>, <code>.left_nullity()</code>, <code>.right_nullity()</code>, where the first two are equal and correspond to Sage's preference for rows, and the third is the column version used by the text.  That said, a <q>row version</q> of <acroref type="theorem" acro="RPNC" /> is also true.
+<sage>
+<input>A = matrix(QQ, [[-1, 0, -4, -3,  1, -1,  0,  1, -1],
+                [ 1, 1,  6,  6,  5,  3,  4, -5,  3],
+                [ 2, 0,  7,  5, -3,  1, -1, -1,  2],
+                [ 2, 1,  6,  6,  3,  1,  3, -3,  5],
+                [-2, 0, -1, -1,  3,  3,  1, -3, -4],
+                [-1, 1,  4,  4,  7,  5,  4, -7, -1]])
+A.rank()
+</input>
+<output>4
+</output>
+</sage>
+
+<sage>
+<input>A.right_nullity()
+</input>
+<output>5
+</output>
+</sage>
+
+<sage>
+<input>A.rank() + A.right_nullity() == A.ncols()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.rank() + A.left_nullity() == A.nrows()
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="RNNM">
+<title>Rank and Nullity of a Nonsingular Matrix</title>
+
+<p>Let's take a look at the rank and nullity of a square matrix.</p>
+
+<example acro="RNSM" index="rank!square matrix">
+<title>Rank and nullity of a square matrix</title>
+
+<indexlocation index="nullity!square matrix" />
+<p>The matrix
+<equation>
+E=\begin{bmatrix}
+<![CDATA[0 & 4 & -1 & 2 & 2 & 3 & 1\\]]>
+<![CDATA[2 & -2 & 1 & -1 & 0 & -4 & -3\\]]>
+<![CDATA[-2 & -3 & 9 & -3 & 9 & -1 & 9\\]]>
+<![CDATA[-3 & -4 & 9 & 4 & -1 & 6 & -2\\]]>
+<![CDATA[-3 & -4 & 6 & -2 & 5 & 9 & -4\\]]>
+<![CDATA[9 & -3 & 8 & -2 & -4 & 2 & 4\\]]>
+<![CDATA[8 & 2 & 2 & 9 & 3 & 0 & 9]]>
+\end{bmatrix}
+</equation>
+is row-equivalent to the matrix in reduced row-echelon form,
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & \leading{1} & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & 0 & \leading{1}]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>With $n=7$ columns and $r=7$ nonzero rows <acroref type="theorem" acro="CRN" /> tells us the rank is $\rank{E}=7$ and the nullity is $\nullity{E}=7-7=0$.</p>
+
+</example>
+
+<p>The value of either the nullity or the rank are enough to characterize a nonsingular matrix.</p>
+
+<theorem acro="RNNM" index="nonsingular matrix!rank">
+<title>Rank and Nullity of a Nonsingular Matrix</title>
+<statement>
+<indexlocation index="nonsingular matrix!nullity" />
+<p>Suppose that $A$ is a square matrix of size $n$.  The following are equivalent.
+<ol><li> A is nonsingular.
+</li><li> The rank of $A$ is $n$, $\rank{A}=n$.
+</li><li> The nullity of $A$ is zero, $\nullity{A}=0$.
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>(1 $\Rightarrow$ 2)  <acroref type="theorem" acro="CSNM" /> says that if $A$ is nonsingular then $\csp{A}=\complex{n}$.  If $\csp{A}=\complex{n}$, then the column space has dimension $n$ by <acroref type="theorem" acro="DCM" />, so the rank of $A$ is $n$.</p>
+
+<p>(2 $\Rightarrow$ 3)  Suppose $\rank{A}=n$.  Then <acroref type="theorem" acro="RPNC" /> gives
+<alignmath>
+<![CDATA[\nullity{A}&=n-\rank{A}&&]]>\text{<acroref type="theorem" acro="RPNC" />}\\
+<![CDATA[&=n-n&&\text{Hypothesis}\\]]>
+<![CDATA[&=0]]>
+</alignmath>
+</p>
+
+<p>(3 $\Rightarrow$ 1)  Suppose $\nullity{A}=0$, so a basis for the null space of $A$ is the empty set.  This implies that $\nsp{A}=\set{\zerovector}$ and <acroref type="theorem" acro="NMTNS" /> says $A$ is nonsingular.</p>
+
+</proof>
+</theorem>
+
+<p>With a new equivalence for a nonsingular matrix, we can update our list of equivalences (<acroref type="theorem" acro="NME5" />) which now becomes a list requiring double digits to number.</p>
+
+<theorem acro="NME6" index="nonsingular matrix!equivalences">
+<title>Nonsingular Matrix Equivalences, Round 6</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $n$.  The following are equivalent.
+<ol><li> $A$ is nonsingular.
+</li><li> $A$ row-reduces to the identity matrix.
+</li><li> The null space of $A$ contains only the zero vector, $\nsp{A}=\set{\zerovector}$.
+</li><li> The linear system $\linearsystem{A}{\vect{b}}$ has a unique solution for every possible choice of $\vect{b}$.
+</li><li> The columns of $A$ are a linearly independent set.
+</li><li> $A$ is invertible.
+</li><li> The column space of $A$ is $\complex{n}$, $\csp{A}=\complex{n}$.
+</li><li> The columns of $A$ are a basis for $\complex{n}$.
+</li><li> The rank of $A$ is $n$, $\rank{A}=n$.
+</li><li> The nullity of $A$ is zero, $\nullity{A}=0$.
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>Building on <acroref type="theorem" acro="NME5" /> we can add two of the statements from <acroref type="theorem" acro="RNNM" />.</p>
+
+</proof>
+</theorem>
+
+<sageadvice acro="NME6" index="nonsingular matrix equivalences!round 6">
+<title>Nonsingular Matrix Equivalences, Round 6</title>
+Recycling the nonsingular matrix from <acroref type="sage" acro="NME5" /> we can use Sage to verify the two new equivalences of <acroref type="theorem" acro="NME6" />.
+<sage>
+<input>A = matrix(QQ, [[ 2,  3, -3,  2,  8, -4],
+                [ 3,  4, -4,  4,  8,  1],
+                [-2, -2,  3, -3, -2, -7],
+                [ 0,  1, -1,  2,  3,  4],
+                [ 2,  1,  0,  1, -4,  4],
+                [ 1,  2, -2,  1,  7, -5]])
+not A.is_singular()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.rank() == A.ncols()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.right_nullity() == 0
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<!--   End  d.tex -->
+<readingquestions>
+<ol>
+<li>What is the dimension of the vector space $P_6$, the set of all polynomials of degree 6 or less?
+</li>
+<li>How are the rank and nullity of a matrix related?
+</li>
+<li>Explain why we might say that a nonsingular matrix has <q>full rank.</q>
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="20" rough="rank and nullity for archetype matrices">
+<problem contributor="robertbeezer">The archetypes listed below are matrices, or systems of equations with coefficient matrices.  For each, compute the nullity and rank of the matrix.  This information is listed for each archetype (along with the number of columns in the matrix, so as to illustrate <acroref type="theorem" acro="RPNC" />), and notice how it could have been computed immediately after the determination of the sets $D$ and $F$ associated with the reduced row-echelon form of the matrix.<br /><br />
+<acroref type="archetype" acro="A" />,
+<acroref type="archetype" acro="B" />,
+<acroref type="archetype" acro="C" />,
+<acroref type="archetype" acro="D" />/<acroref type="archetype" acro="E" />,
+<acroref type="archetype" acro="F" />,
+<acroref type="archetype" acro="G" />/<acroref type="archetype" acro="H" />,
+<acroref type="archetype" acro="I" />,
+<acroref type="archetype" acro="J" />,
+<acroref type="archetype" acro="K" />,
+<acroref type="archetype" acro="L" />
+</problem>
+</exercise>
+
+<exercise type="C" number="21" rough="Dim of subspace of R^4">
+<problem contributor="chrisblack">Find the dimension of the subspace $W = \setparts{\colvector{a + b\\ a + c\\a + d \\ d}}{a, b, c, d \in\complexes}$ of $\complex{4}$.
+</problem>
+<solution contributor="chrisblack">The subspace $W$ can be written as
+<alignmath>
+<![CDATA[W &= \setparts{\colvector{a + b\\ a + c\\a + d \\ d}}{a, b, c, d \in\complexes}\\]]>
+<![CDATA[&= \setparts{]]>
+a\colvector{1\\1\\1\\0} +
+b\colvector{1\\0\\0\\0} +
+c\colvector{0\\1\\0\\0} +
+d\colvector{0\\0\\1\\1}
+}
+{a, b, c, d \in\complexes}\\
+<![CDATA[&= \spn{\set{]]>
+\colvector{1\\1\\1\\0},
+\colvector{1\\0\\0\\0},
+\colvector{0\\1\\0\\0},
+\colvector{0\\0\\1\\1}
+}}
+</alignmath>
+Since the set of vectors
+$\set{
+\colvector{1\\1\\1\\0},\,
+\colvector{1\\0\\0\\0},\,
+\colvector{0\\1\\0\\0},\,
+\colvector{0\\0\\1\\1}
+}$
+is a linearly independent set (why?), it forms a basis of $W$.  Thus, $W$ is a subspace of $\complex{4}$ with dimension 4 (and must therefore equal $\complex{4}$).
+</solution>
+</exercise>
+
+<exercise type="C" number="22" rough="Dim of subspace of P3">
+<problem contributor="chrisblack">Find the dimension of the subspace $W = \setparts{a + bx + cx^2 + dx^3}{a + b + c + d = 0}$ of $P_3$.
+</problem>
+<solution contributor="chrisblack">The subspace $W = \setparts{a + bx + cx^2 + dx^3}{a + b + c + d = 0}$ can be written as
+<alignmath>
+W
+<![CDATA[&= \setparts{a + bx + cx^2 + (-a -b -c)x^3}{a,b,c\in\complexes}\\]]>
+<![CDATA[&= \setparts{a(1-x^3) + b(x - x^3) + c(x^2 - x^3)}{a,b,c\in\complexes}\\]]>
+<![CDATA[&= \spn{\set{1 - x^3, x - x^3, x^2 - x^3}}]]>
+</alignmath>
+Since these vectors are linearly independent (why?), $W$ is a subspace of $P_3$ with dimension 3.
+</solution>
+</exercise>
+
+<exercise type="C" number="23" rough="Dim of subspace of M22">
+<problem contributor="chrisblack">Find the dimension of the subspace
+<![CDATA[$W = \setparts{\begin{bmatrix} a & b\\c & d \end{bmatrix}}{a + b = c, b + c = d, c + d = a}$]]>
+of $M_{2,2}$.
+</problem>
+<solution contributor="chrisblack">The equations specified are equivalent to the system
+<alignmath>
+<![CDATA[a + b - c &= 0\\]]>
+<![CDATA[b + c - d &= 0\\]]>
+<![CDATA[a - c - d &= 0]]>
+</alignmath>
+The coefficient matrix of this system row-reduces to
+<alignmath>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 &  0& -3\\]]>
+<![CDATA[0 & \leading{1} & 0 & 1\\]]>
+<![CDATA[0 & 0 & \leading{1} & -2]]>
+\end{bmatrix}
+</alignmath>
+Thus, every solution can be decribed with a suitable choice of $d$, together with $a = 3d$, $b = -d$ and $c = 2d$.  Thus
+the subspace $W$ can be described as
+<alignmath>
+<![CDATA[W &= \setparts{\begin{bmatrix} 3d & -d \\ 2d & d\end{bmatrix}}{d\in\complexes}]]>
+<![CDATA[=\spn{\set{\begin{bmatrix} 3 & -1 \\ 2 & 1\end{bmatrix}}}]]>
+</alignmath>
+So, $W$ is a subspace of $M_{2,2}$ with dimension 1.
+</solution>
+</exercise>
+
+<exercise type="C" number="30" rough="nullity of 4x5 matrix">
+<problem contributor="robertbeezer">For the matrix $A$ below, compute the dimension of the null space of $A$, $\dimension{\nsp{A}}$.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 2 & -1 & -3 & 11 & 9 \\]]>
+<![CDATA[ 1 & 2 & 1 & -7 & -3 \\]]>
+<![CDATA[ 3 & 1 & -3 & 6 & 8 \\]]>
+<![CDATA[ 2 & 1 & 2 & -5 & -3]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">Row reduce $A$,
+<equation>
+A\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & 1 & 1 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & -3 & -1 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & -2 & -2 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+So $r=3$ for this matrix.  Then
+<alignmath>
+\dimension{\nsp{A}}
+<![CDATA[&=\nullity{A}&&]]>\text{<acroref type="definition" acro="NOM" />}\\
+<![CDATA[&=\left(\nullity{A}+\rank{A}\right)-\rank{A}\\]]>
+<![CDATA[&=5-\rank{A}&&]]>\text{<acroref type="theorem" acro="RPNC" />}\\
+<![CDATA[&=5-3&&]]>\text{<acroref type="theorem" acro="CRN" />}\\
+<![CDATA[&=2]]>
+</alignmath>
+We could also use <acroref type="theorem" acro="BNS" /> and create a basis for $\nsp{A}$ with $n-r=5-3=2$ vectors (because the solutions are described with 2 free variables) and arrive at the dimension as the size of this basis.
+</solution>
+</exercise>
+
+<exercise type="C" number="31" rough="dim of span of 3 C^4 vectors, dim=2">
+<problem contributor="robertbeezer">The set $W$ below is a subspace of $\complex{4}$.  Find the dimension of $W$.
+<equation>
+W=\spn{\set{
+\colvector{2\\-3\\4\\1},\,
+\colvector{3\\0\\1\\-2},\,
+\colvector{-4\\-3\\2\\5}
+}}
+</equation>
+</problem>
+<solution contributor="robertbeezer">We will appeal to <acroref type="theorem" acro="BS" /> (or you could consider this an appeal to <acroref type="theorem" acro="BCS" />).  Put the three column vectors of this spanning set into a matrix as columns and row-reduce.
+<equation>
+\begin{bmatrix}
+<![CDATA[ 2 & 3 & -4 \\]]>
+<![CDATA[ -3 & 0 & -3 \\]]>
+<![CDATA[ 4 & 1 & 2 \\]]>
+<![CDATA[ 1 & -2 & 5]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 1 \\]]>
+<![CDATA[ 0 & \leading{1} & -2 \\]]>
+<![CDATA[ 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+The pivot columns are $D=\set{1,2}$ so we can <q>keep</q> the vectors corresponding to the pivot columns and set
+<equation>
+T=\set{
+\colvector{2\\-3\\4\\1},\,
+\colvector{3\\0\\1\\-2}}
+</equation>
+and conclude that $W=\spn{T}$ and $T$ is linearly independent.  In other words, $T$ is a basis with two vectors, so $W$ has dimension 2.
+</solution>
+</exercise>
+
+<exercise type="C" number="35" rough="Rank, nullity of matrix">
+<problem contributor="chrisblack">Find the rank and nullity of the matrix
+$A = \begin{bmatrix}
+<![CDATA[1 & 0 & 1\\]]>
+<![CDATA[1 & 2 & 2\\]]>
+<![CDATA[2 & 1 & 1\\]]>
+<![CDATA[-1 & 0 & 1\\]]>
+<![CDATA[1 & 1 & 2]]>
+\end{bmatrix}$.
+</problem>
+<solution contributor="chrisblack">The row reduced form of matrix $A$ is
+$\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0\\]]>
+<![CDATA[0 & \leading{1} & 0\\]]>
+<![CDATA[0 & 0 & \leading{1}\\]]>
+<![CDATA[0  & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}$,
+so the rank of $A$ (number of columns with leading 1's) is $3$, and the nullity is $0$.
+</solution>
+</exercise>
+
+<exercise type="C" number="36" rough="Rank, nullity of matrix">
+<problem contributor="chrisblack">Find the rank and nullity of the matrix
+$A = \begin{bmatrix}
+<![CDATA[1 & 2 & 1 & 1 & 1\\]]>
+<![CDATA[1 & 3 & 2 & 0 & 4\\]]>
+<![CDATA[1 & 2 & 1 & 1 & 1]]>
+\end{bmatrix}$.
+</problem>
+<solution contributor="chrisblack">The row reduced form of matrix $A$ is
+$\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & -1 & 3 & 5\\]]>
+<![CDATA[0 & \leading{1} & 1& -1 & 3\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}$,
+so the rank of $A$ (number of columns with leading 1's) is $2$, and the nullity is $5 - 2 = 3$.
+</solution>
+</exercise>
+
+<exercise type="C" number="37" rough="Rank, nullity of matrix">
+<problem contributor="chrisblack">Find the rank and nullity of the matrix
+$A = \begin{bmatrix}
+<![CDATA[3 & 2 & 1 & 1 & 1\\]]>
+<![CDATA[2 & 3 & 0 & 1 & 1\\]]>
+<![CDATA[-1 & 1 & 2 & 1 & 0\\]]>
+<![CDATA[1 & 1 & 0 & 1 & 1\\]]>
+<![CDATA[0 & 1 & 1 & 2 & -1]]>
+\end{bmatrix}$.
+</problem>
+<solution contributor="chrisblack">This matrix $A$ row reduces to the $5\times 5$ identity matrix, so it has full rank.  The rank of $A$ is 5, and the nullity is $0$.
+</solution>
+</exercise>
+
+<exercise type="C" number="40" rough="5 polys of LDP4 are lin dep, not via SSLD">
+<problem contributor="robertbeezer">In <acroref type="example" acro="LDP4" /> we determined that the set of five polynomials, $T$, is linearly dependent by a simple invocation of <acroref type="theorem" acro="SSLD" />.  Prove that $T$ is linearly dependent from scratch, beginning with <acroref type="definition" acro="LI" />.
+</problem>
+</exercise>
+
+<exercise type="M" number="20" rough="S_22, subspace of symmetric matrices">
+<problem contributor="robertbeezer">$M_{22}$ is the vector space of $2\times 2$ matrices.  Let $S_{22}$ denote the set of all $2\times 2$ symmetric matrices.  That is
+<equation>
+S_{22}=\setparts{A\in M_{22}}{\transpose{A}=A}
+</equation>
+(a)\quad Show that $S_{22}$ is a subspace of $M_{22}$.\\
+(b)\quad Exhibit a basis for $S_{22}$ and prove that it has the required properties.\\
+(c)\quad What is the dimension of $S_{22}$?
+</problem>
+<solution contributor="robertbeezer">(a)\quad We will use the three criteria of <acroref type="theorem" acro="TSS" />.  The zero vector of $M_{22}$ is the zero matrix, $\zeromatrix$ (<acroref type="definition" acro="ZM" />), which is a symmetric matrix.  So $S_{22}$ is not empty, since $\zeromatrix\in S_{22}$.<br /><br />
+Suppose that $A$ and $B$ are two matrices in $S_{22}$.  Then we know that $\transpose{A}=A$ and $\transpose{B}=B$.  We want to know if $A+B\in S_{22}$, so test $A+B$ for membership,
+<alignmath>
+<![CDATA[\transpose{\left(A+B\right)}&=\transpose{A}+\transpose{B}&&]]>\text{<acroref type="theorem" acro="TMA" />}\\
+<![CDATA[&=A+B&&A,\,B\in S_{22}]]>
+</alignmath>
+So $A+B$ is symmetric and qualifies for membership in $S_{22}$.<br /><br />
+Suppose that $A\in S_{22}$ and $\alpha\in\complex{\null}$.  Is $\alpha A\in S_{22}$?  We know that $\transpose{A}=A$.  Now check that,
+<alignmath>
+<![CDATA[\transpose{\alpha A}&=\alpha\transpose{A}&&]]>\text{<acroref type="theorem" acro="TMSM" />}\\
+<![CDATA[&=\alpha A&&A\in S_{22}]]>
+</alignmath>
+So $\alpha A$ is also symmetric and qualifies for membership in $S_{22}$.<br /><br />
+With the three criteria of <acroref type="theorem" acro="TSS" /> fulfilled, we see that $S_{22}$ is a subspace of $M_{22}$.<br /><br />
+(b)\quad An arbitrary matrix from $S_{22}$ can be written as
+$\begin{bmatrix}
+<![CDATA[a&b\\b&d]]>
+\end{bmatrix}$.
+We can express this matrix as
+<alignmath>
+\begin{bmatrix}
+<![CDATA[a&b\\b&d]]>
+\end{bmatrix}
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[a&0\\0&0]]>
+\end{bmatrix}+
+\begin{bmatrix}
+<![CDATA[0&b\\b&0]]>
+\end{bmatrix}+
+\begin{bmatrix}
+<![CDATA[0&0\\0&d]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+a
+\begin{bmatrix}
+<![CDATA[1&0\\0&0]]>
+\end{bmatrix}+
+b
+\begin{bmatrix}
+<![CDATA[0&1\\1&0]]>
+\end{bmatrix}+
+d
+\begin{bmatrix}
+<![CDATA[0&0\\0&1]]>
+\end{bmatrix}
+</alignmath>
+this equation says that the set
+<equation>
+T=\set{
+\begin{bmatrix}
+<![CDATA[1&0\\0&0]]>
+\end{bmatrix},\,
+\begin{bmatrix}
+<![CDATA[0&1\\1&0]]>
+\end{bmatrix},\,
+\begin{bmatrix}
+<![CDATA[0&0\\0&1]]>
+\end{bmatrix}
+}
+</equation>
+spans $S_{22}$.  Is it also linearly independent?<br /><br />
+Write a relation of linear dependence on $S$,
+<alignmath>
+<![CDATA[\zeromatrix&=]]>
+a_1
+\begin{bmatrix}
+<![CDATA[1&0\\0&0]]>
+\end{bmatrix}+
+a_2
+\begin{bmatrix}
+<![CDATA[0&1\\1&0]]>
+\end{bmatrix}+
+a_3
+\begin{bmatrix}
+<![CDATA[0&0\\0&1]]>
+\end{bmatrix}\\
+\begin{bmatrix}
+<![CDATA[0&0\\0&0]]>
+\end{bmatrix}
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[a_1&a_2\\a_2&a_3]]>
+\end{bmatrix}
+</alignmath>
+The equality of these two matrices (<acroref type="definition" acro="ME" />) tells us that $a_1=a_2=a_3=0$, and the only relation of linear dependence on $T$ is trivial.  So $T$ is linearly independent, and hence is a basis of $S_{22}$.<br /><br />
+(c)\quad The basis $T$ found in part (b) has size 3.  So by <acroref type="definition" acro="D" />, $\dimension{S_{22}}=3$.
+</solution>
+</exercise>
+
+<exercise type="M" number="21" rough="U_22, dimension of 2x2 upper triangular">
+<problem contributor="robertbeezer">A $2\times 2$ matrix $B$ is upper triangular if $\matrixentry{B}{21}=0$.  Let $UT_2$ be the set of all $2\times 2$ upper triangular matrices.  Then $UT_2$ is a subspace of the vector space of all $2\times 2$ matrices, $M_{22}$ (you may assume this).  Determine the dimension of $UT_2$ providing <em>all</em> of the necessary justifications for your answer.
+</problem>
+<solution contributor="robertbeezer">A typical matrix from $UT_2$ looks like
+<equation>
+\begin{bmatrix}
+<![CDATA[a & b \\ 0 & c]]>
+\end{bmatrix}
+</equation>
+where $a,\,b,\,c\in\complex{}$ are arbitrary scalars.  Observing this we can then write
+<equation>
+\begin{bmatrix}
+<![CDATA[a & b \\ 0 & c]]>
+\end{bmatrix}
+=
+a
+\begin{bmatrix}
+<![CDATA[1 & 0 \\ 0 & 0]]>
+\end{bmatrix}
++
+b
+\begin{bmatrix}
+<![CDATA[0 & 1 \\ 0 & 0]]>
+\end{bmatrix}
++
+c
+\begin{bmatrix}
+<![CDATA[0 & 0 \\ 0 & 1]]>
+\end{bmatrix}
+</equation>
+which says that
+<equation>
+R=\set{
+\begin{bmatrix}
+<![CDATA[1 & 0 \\ 0 & 0]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[0 & 1 \\ 0 & 0]]>
+\end{bmatrix}
+,\,\begin{bmatrix}
+<![CDATA[0 & 0 \\ 0 & 1]]>
+\end{bmatrix}
+}
+</equation>
+is a spanning set for $UT_2$ (<acroref type="definition" acro="TSVS" />).  Is $R$ is linearly independent?  If so, it is a basis for $UT_2$.  So consider a relation of linear dependence on $R$,
+<equation>
+\alpha_1
+\begin{bmatrix}
+<![CDATA[1 & 0 \\ 0 & 0]]>
+\end{bmatrix}
++
+\alpha_2
+\begin{bmatrix}
+<![CDATA[0 & 1 \\ 0 & 0]]>
+\end{bmatrix}
++
+\alpha_3
+\begin{bmatrix}
+<![CDATA[0 & 0 \\ 0 & 1]]>
+\end{bmatrix}
+=
+\zeromatrix
+=
+\begin{bmatrix}
+<![CDATA[0 & 0 \\ 0 & 0]]>
+\end{bmatrix}
+</equation>
+From this equation, one rapidly arrives at the conclusion that $\alpha_1=\alpha_2=\alpha_3=0$.  So $R$ is a linearly independent set (<acroref type="definition" acro="LI" />), and hence is a basis (<acroref type="definition" acro="B" />) for $UT_2$.  Now, we simply count up the size of the set $R$ to see that the dimension of $UT_2$ is $\dimension{UT_2}=3$.
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

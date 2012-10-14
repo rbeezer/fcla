@@ -1,0 +1,1850 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="EE">
+<title>Eigenvalues and Eigenvectors</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section EE -->
+<!-- %  Eigenvalues and Eigenvectors -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>In this section, we will define ethe eigenvalues and eigenvectors of a matrix, and see how to compute them.  More theoretical properties will be taken up in the next section.</p>
+
+</introduction>
+
+<subsection acro="EEM">
+<title>Eigenvalues and Eigenvectors of a Matrix</title>
+
+<p>We start with the principal definition for this chapter.</p>
+
+<definition acro="EEM" index="eigenvalue">
+<title>Eigenvalues and Eigenvectors of a Matrix</title><indexlocation index="eigenvector" />
+<p>Suppose that $A$ is a square matrix of size $n$, $\vect{x}\neq\zerovector$ is a vector in $\complex{n}$, and $\lambda$ is a scalar in $\complex{\null}$.   Then we say $\vect{x}$ is an <define>eigenvector</define> of $A$ with <define>eigenvalue</define> $\lambda$ if
+<equation>
+A\vect{x}=\lambda\vect{x}
+</equation>
+</p>
+
+</definition>
+
+<p>Before going any further, perhaps we should convince you that such things ever happen at all.  Understand the next example, but do not concern yourself with where the pieces come from.  We will have methods soon enough to be able to discover these eigenvectors ourselves.</p>
+
+<example acro="SEE" index="eigenvalues}\index{eigenvectors">
+<title>Some eigenvalues and eigenvectors</title>
+
+<p>Consider the matrix
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[204 & 98 & -26 & -10\\]]>
+<![CDATA[-280 & -134 & 36 & 14\\]]>
+<![CDATA[716 & 348 & -90 & -36\\]]>
+<![CDATA[-472 & -232 & 60 & 28]]>
+\end{bmatrix}
+</equation>
+and the vectors
+<alignmath>
+<![CDATA[\vect{x}=\colvector{1\\-1\\2\\5}&&     % ev=4]]>
+<![CDATA[\vect{y}=\colvector{-3\\4\\-10\\4}&&  % ev = 0]]>
+<![CDATA[\vect{z}=\colvector{-3\\7\\0\\8}&&     % ev=2]]>
+\vect{w}=\colvector{1\\-1\\4\\0}        % ev=2
+</alignmath>
+</p>
+
+<p>Then
+<equation>
+A\vect{x}=
+\begin{bmatrix}
+<![CDATA[204 & 98 & -26 & -10\\]]>
+<![CDATA[-280 & -134 & 36 & 14\\]]>
+<![CDATA[716 & 348 & -90 & -36\\]]>
+<![CDATA[-472 & -232 & 60 & 28]]>
+\end{bmatrix}
+\colvector{1\\-1\\2\\5}=
+\colvector{4\\-4\\8\\20}=
+4\colvector{1\\-1\\2\\5}=4\vect{x}
+</equation>
+so $\vect{x}$ is an eigenvector of $A$ with eigenvalue $\lambda=4$.</p>
+
+<p>Also,
+<equation>
+A\vect{y}=
+\begin{bmatrix}
+<![CDATA[204 & 98 & -26 & -10\\]]>
+<![CDATA[-280 & -134 & 36 & 14\\]]>
+<![CDATA[716 & 348 & -90 & -36\\]]>
+<![CDATA[-472 & -232 & 60 & 28]]>
+\end{bmatrix}
+\colvector{-3\\4\\-10\\4}=
+\colvector{0\\0\\0\\0}=
+0\colvector{-3\\4\\-10\\4}=0\vect{y}
+</equation>
+so $\vect{y}$ is an eigenvector of $A$ with eigenvalue $\lambda=0$.</p>
+
+<p>Also,
+<equation>
+A\vect{z}=
+\begin{bmatrix}
+<![CDATA[204 & 98 & -26 & -10\\]]>
+<![CDATA[-280 & -134 & 36 & 14\\]]>
+<![CDATA[716 & 348 & -90 & -36\\]]>
+<![CDATA[-472 & -232 & 60 & 28]]>
+\end{bmatrix}
+\colvector{-3\\7\\0\\8}=
+\colvector{-6\\14\\0\\16}=
+2\colvector{-3\\7\\0\\8}=2\vect{z}
+</equation>
+so $\vect{z}$ is an eigenvector of $A$ with eigenvalue $\lambda=2$.</p>
+
+<p>Also,
+<equation>
+A\vect{w}=
+\begin{bmatrix}
+<![CDATA[204 & 98 & -26 & -10\\]]>
+<![CDATA[-280 & -134 & 36 & 14\\]]>
+<![CDATA[716 & 348 & -90 & -36\\]]>
+<![CDATA[-472 & -232 & 60 & 28]]>
+\end{bmatrix}
+\colvector{1\\-1\\4\\0}=
+\colvector{2\\-2\\8\\0}=
+2\colvector{1\\-1\\4\\0}=2\vect{w}
+</equation>
+so $\vect{w}$ is an eigenvector of $A$ with eigenvalue $\lambda=2$.</p>
+
+<p>So we have demonstrated four eigenvectors of $A$.  Are there more?  Yes, any nonzero scalar multiple of an eigenvector is again an eigenvector.  In this example, set $\vect{u}=30\vect{x}$.  Then
+<alignmath>
+A\vect{u}
+<![CDATA[&=A(30\vect{x})\\]]>
+<![CDATA[&=30A\vect{x}&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=30(4\vect{x})&&\text{$\vect{x}$ an eigenvector of $A$}\\]]>
+<![CDATA[&=4(30\vect{x})&&]]>\text{<acroref type="property" acro="SMAM" />}\\
+<![CDATA[&=4\vect{u}]]>
+</alignmath>
+so that $\vect{u}$ is also an eigenvector of $A$ for the same eigenvalue, $\lambda=4$.</p>
+
+<p>The vectors $\vect{z}$ and $\vect{w}$ are both eigenvectors of $A$ for the same eigenvalue $\lambda=2$, yet this is not as simple as the two vectors just being scalar multiples of each other (they aren't).  Look what happens when we add them together, to form $\vect{v}=\vect{z}+\vect{w}$, and multiply by $A$,
+<alignmath>
+A\vect{v}
+<![CDATA[&=A(\vect{z}+\vect{w})\\]]>
+<![CDATA[&=A\vect{z}+A\vect{w}&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=2\vect{z}+2\vect{w}&&\text{$\vect{z}$, $\vect{w}$ eigenvectors of $A$}\\]]>
+<![CDATA[&=2(\vect{z}+\vect{w})&&]]>\text{<acroref type="property" acro="DVAC" />}\\
+<![CDATA[&=2\vect{v}]]>
+</alignmath>
+so that $\vect{v}$ is also an eigenvector of $A$ for the eigenvalue $\lambda=2$.  So it would appear that the set of eigenvectors that are associated with a fixed eigenvalue is closed under the vector space operations of $\complex{n}$.  Hmmm.</p>
+
+<p>The vector $\vect{y}$ is an eigenvector of $A$ for the eigenvalue $\lambda=0$, so we can use <acroref type="theorem" acro="ZSSM" /> to write $A\vect{y}=0\vect{y}=\zerovector$.  But this also means that $\vect{y}\in\nsp{A}$.  There would appear to be a connection here also.</p>
+
+</example>
+
+<sageadvice acro="EE" index="eigenvalues and eigenvectors">
+<title>Eigenvalues and Eigenvectors</title>
+Sage can compute eigenvalues and eigenvectors of matrices.  We will see shortly that there are subtleties involved with using these routines, but here is a quick example to begin with.  These two commands should be enough to get you started with most of the early examples in this section.  See the end of the section for more comprehensive advice.<br /><br />
+For a square matrix, the methods <code>.eigenvalues()</code> and <code>.eigenvectors_right()</code> will produce what you expect, though the format of the eigenvector output requires some explanation.  Here is <acroref type="example" acro="SEE" /> from the start of this chapter.
+<sage>
+<input>A = matrix(QQ, [[ 204,   98, -26, -10],
+                [-280, -134,  36,  14],
+                [ 716,  348, -90, -36],
+                [-472, -232,  60,  28]])
+A.eigenvalues()
+</input>
+<output>[4, 0, 2, 2]
+</output>
+</sage>
+
+<sage>
+<input>A.eigenvectors_right()
+</input>
+<output>[(4, [
+(1, -1, 2, 5)
+], 1), (0, [
+(1, -4/3, 10/3, -4/3)
+], 1), (2, [
+(1, 0, 7, 2),
+(0, 1, 3, 2)
+], 2)]
+</output>
+</sage>
+
+The three eigenvalues we know are included in the output of <code>eigenvalues()</code>, though for some reason the eigenvalue $\lambda=2$ shows up twice.<br /><br />
+The output of the <code>eigenvectors_right()</code> method is a list of triples.  Each triple begins with an eigenvalue.  This is followed by a list of eigenvectors for that eigenvalue.  Notice the first eigenvector is identical to the one we described in <acroref type="example" acro="SEE" />.  The eigenvector for $\lambda=0$ is different, but is just a scalar multiple of the one from <acroref type="example" acro="SEE" />.  For $\lambda=2$, we now get two eigenvectors, and neither looks like either of the ones from <acroref type="example" acro="SEE" />.  (Hint: try writing the eigenvectors from the example as linear combinations of the two in the Sage output.)  An explanation of the the third part of each triple (an integer) will have to wait, though it can be optionally surpressed if desired.<br /><br />
+One cautionary note:  The word <code>lambda</code> has a special purpose in Sage, so do not try to use this as a name for your eigenvalues.
+
+
+</sageadvice>
+<p><acroref type="example" acro="SEE" /> hints at a number of intriguing properties, and there are many more.  We will explore the general properties of eigenvalues and eigenvectors in <acroref type="section" acro="PEE" />, but in this section we will concern ourselves with the question of actually computing eigenvalues and eigenvectors.  First we need a bit of background material on polynomials and matrices.</p>
+
+</subsection>
+
+<subsection acro="PM">
+<title>Polynomials and Matrices</title>
+
+<p>A polynomial is a combination of powers, multiplication by scalar coefficients, and addition (with subtraction just being the inverse of addition).  We never have occasion to divide when computing the value of a polynomial.  So it is with matrices.  We can add and subtract matrices, we can multiply matrices by scalars, and we can form powers of square matrices by repeated applications of matrix multiplication.  We do not normally divide matrices (though sometimes we can multiply by an inverse).  If a matrix is square, all the operations constituting a polynomial will preserve the size of the matrix.  So it is natural to consider evaluating a polynomial with a matrix, effectively replacing the variable of the polynomial by a matrix.  We'll demonstrate with an example.</p>
+
+<example acro="PM" index="polynomial!of a matrix">
+<title>Polynomial of a matrix</title>
+
+<p>Let
+<alignmath>
+p(x)=14+19x-3x^2-7x^3+x^4
+<![CDATA[&&]]>
+<![CDATA[D=\begin{bmatrix}-1 & 3 & 2\\1 & 0 & -2\\-3 & 1 & 1\end{bmatrix}]]>
+</alignmath>
+and we will compute $p(D)$.</p>
+
+<p>First, the necessary powers of $D$.  Notice that $D^0$ is defined to be the multiplicative identity, $I_3$, as will be the case in general.
+<alignmath>
+<![CDATA[D^0&=I_3=\begin{bmatrix}1 & 0 & 0\\0 & 1 & 0\\0 & 0 & 1\end{bmatrix}\\]]>
+<![CDATA[D^1&=D=\begin{bmatrix}-1 & 3 & 2\\1 & 0 & -2\\-3 & 1 & 1\end{bmatrix}\\]]>
+<![CDATA[D^2&=DD^1=]]>
+<![CDATA[\begin{bmatrix}-1 & 3 & 2\\1 & 0 & -2\\-3 & 1 & 1\end{bmatrix}]]>
+<![CDATA[\begin{bmatrix}-1 & 3 & 2\\1 & 0 & -2\\-3 & 1 & 1\end{bmatrix}]]>
+=
+<![CDATA[\begin{bmatrix}-2 & -1 & -6\\5 & 1 & 0\\1 & -8 & -7\end{bmatrix}\\]]>
+<![CDATA[D^3&=DD^2=]]>
+<![CDATA[\begin{bmatrix}-1 & 3 & 2\\1 & 0 & -2\\-3 & 1 & 1\end{bmatrix}]]>
+<![CDATA[\begin{bmatrix}-2 & -1 & -6\\5 & 1 & 0\\1 & -8 & -7\end{bmatrix}]]>
+=
+<![CDATA[\begin{bmatrix}19 & -12 & -8\\-4 & 15 & 8\\12 & -4 & 11\end{bmatrix}\\]]>
+<![CDATA[D^4&=DD^3=]]>
+<![CDATA[\begin{bmatrix}-1 & 3 & 2\\1 & 0 & -2\\-3 & 1 & 1\end{bmatrix}]]>
+<![CDATA[\begin{bmatrix}19 & -12 & -8\\-4 & 15 & 8\\12 & -4 & 11\end{bmatrix}]]>
+=
+<![CDATA[\begin{bmatrix}-7 & 49 & 54\\-5 & -4 & -30\\-49 & 47 & 43\end{bmatrix}\\]]>
+</alignmath>
+</p>
+
+<p>Then
+<alignmath>
+<![CDATA[p(D)&=14+19D-3D^2-7D^3+D^4\\]]>
+<![CDATA[&=]]>
+<![CDATA[  14\begin{bmatrix}1 & 0 & 0\\0 & 1 & 0\\0 & 0 & 1\end{bmatrix}]]>
+<![CDATA[+19\begin{bmatrix}-1 & 3 & 2\\1 & 0 & -2\\-3 & 1 & 1\end{bmatrix}]]>
+<![CDATA[   -3\begin{bmatrix}-2 & -1 & -6\\5 & 1 & 0\\1 & -8 & -7\end{bmatrix}\\]]>
+<![CDATA[&\quad\quad]]>
+<![CDATA[   -7\begin{bmatrix}19 & -12 & -8\\-4 & 15 & 8\\12 & -4 & 11\end{bmatrix}]]>
+<![CDATA[    +\begin{bmatrix}-7 & 49 & 54\\-5 & -4 & -30\\-49 & 47 & 43\end{bmatrix}\\]]>
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[-139 & 193 & 166\\]]>
+<![CDATA[27 & -98 & -124\\]]>
+<![CDATA[-193 & 118 & 20]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Notice that $p(x)$ factors as
+<equation>
+p(x)=14+19x-3x^2-7x^3+x^4=(x-2)(x-7)(x+1)^2
+</equation>
+</p>
+
+<p>Because $D$ commutes with itself ($DD=DD$), we can use distributivity of matrix multiplication across matrix addition (<acroref type="theorem" acro="MMDAA" />) without being careful with any of the matrix products, and just as easily evaluate $p(D)$ using the factored form of $p(x)$,
+<alignmath>
+<![CDATA[p(D)&=14+19D-3D^2-7D^3+D^4=(D-2I_3)(D-7I_3)(D+I_3)^2\\]]>
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[-3 & 3 & 2\\ 1 & -2 & -2\\ -3 & 1 & -1]]>
+\end{bmatrix}\,
+\begin{bmatrix}
+<![CDATA[-8 & 3 & 2\\ 1 & -7 & -2\\ -3 & 1 & -6]]>
+\end{bmatrix}\,
+\begin{bmatrix}
+<![CDATA[0 & 3 & 2\\ 1 & 1 & -2\\ -3 & 1 & 2]]>
+\end{bmatrix}^2\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[-139 & 193 & 166\\]]>
+<![CDATA[27 & -98 & -124\\]]>
+<![CDATA[-193 & 118 & 20]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>This example is not meant to be too profound.  It <em>is</em> meant to show you that it is natural to evaluate a polynomial with a matrix, and that the factored form of the polynomial is as good as (or maybe better than) the expanded form.  And do not forget that constant terms in polynomials are really multiples of the identity matrix when we are evaluating the polynomial with a matrix.</p>
+
+</example>
+
+</subsection>
+
+<subsection acro="EEE">
+<title>Existence of Eigenvalues and Eigenvectors</title>
+
+<p>Before we embark on computing eigenvalues and eigenvectors, we will prove that every matrix has at least one eigenvalue (and an eigenvector to go with it).  Later, in <acroref type="theorem" acro="MNEM" />, we will determine the maximum number of eigenvalues a matrix may have.</p>
+
+<p>The determinant (<acroref type="definition" acro="DM" />) will be a powerful tool in <acroref type="subsection" acro="EE.CEE" /> when it comes time to compute eigenvalues.  However, it is possible, with some more advanced machinery, to compute eigenvalues without ever making use of the determinant.  Sheldon Axler does just that in his book, <i>Linear Algebra Done Right</i>.  Here and now, we give Axler's <q>determinant-free</q> proof that every matrix has an eigenvalue.  The result is not too startling, but the proof is most enjoyable.</p>
+
+<theorem acro="EMHE" index="eigenvalue!existence">
+<title>Every Matrix Has an Eigenvalue</title>
+<statement>
+<p>Suppose $A$ is a square matrix.  Then $A$ has at least one eigenvalue.</p>
+
+</statement>
+
+<proof>
+<p>Suppose that $A$ has size $n$, and choose $\vect{x}$ as <em>any</em> nonzero vector from $\complex{n}$.  (Notice how much latitude we have in our choice of $\vect{x}$.  Only the zero vector is off-limits.)  Consider the set
+<equation>
+S=\set{\vect{x},\,A\vect{x},\,A^2\vect{x},\,A^3\vect{x},\,\ldots,\,A^n\vect{x}}
+</equation>
+</p>
+
+<p>This is a set of $n+1$ vectors from $\complex{n}$, so by <acroref type="theorem" acro="MVSLD" />, $S$ is linearly dependent.  Let $a_0,\,a_1,\,a_2,\,\ldots,\,a_n$ be a collection of $n+1$ scalars from $\complex{\null}$, not all zero, that provide a relation of linear dependence on $S$.  In other words,
+<equation>
+a_0\vect{x}+a_1A\vect{x}+a_2A^2\vect{x}+a_3A^3\vect{x}+\cdots+a_nA^n\vect{x}=\zerovector
+</equation>
+</p>
+
+<p>Some of the $a_i$ are nonzero.  Suppose that just $a_0\neq 0$, and $a_1=a_2=a_3=\cdots=a_n=0$.  Then $a_0\vect{x}=\zerovector$ and by <acroref type="theorem" acro="SMEZV" />, either $a_0=0$ or $\vect{x}=\zerovector$, which are both contradictions.  So $a_i\neq 0$ for some $i\geq 1$.  Let $m$ be the largest integer such that $a_m\neq 0$.  From this discussion we know that $m\geq 1$.  We can also assume that $a_m=1$, for if not, replace each $a_i$ by $a_i/a_m$ to obtain scalars that serve equally well in providing a relation of linear dependence on $S$.</p>
+
+<p>Define the polynomial
+<equation>
+p(x)=a_0+a_1x+a_2x^2+a_3x^3+\cdots+a_mx^m
+</equation>
+</p>
+
+<p>Because we have consistently used $\complex{\null}$ as our set of scalars (rather than ${\mathbb R}$), we know that we can factor $p(x)$ into linear factors of the form $(x-b_i)$, where $b_i\in\complex{\null}$.  So there are scalars, $\scalarlist{b}{m}$, from $\complex{\null}$ so that,
+<equation>
+p(x)=(x-b_m)(x-b_{m-1})\cdots(x-b_3)(x-b_2)(x-b_1)
+</equation>
+</p>
+
+<p>Put it all together and
+<alignmath>
+<![CDATA[\zerovector&=a_0\vect{x}+a_1A\vect{x}+a_2A^2\vect{x}+a_3A^3\vect{x}+\cdots+a_nA^n\vect{x}\\]]>
+<![CDATA[&=a_0\vect{x}+a_1A\vect{x}+a_2A^2\vect{x}+a_3A^3\vect{x}+\cdots+a_mA^m\vect{x}&&\text{$a_i=0$ for $i>m$}\\]]>
+<![CDATA[&=\left(a_0I_n+a_1A+a_2A^2+a_3A^3+\cdots+a_mA^m\right)\vect{x}&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=p(A)\vect{x}&&\text{Definition of $p(x)$}\\]]>
+<![CDATA[&=(A-b_mI_n)(A-b_{m-1}I_n)\cdots(A-b_3I_n)(A-b_2I_n)(A-b_1I_n)\vect{x}]]>
+</alignmath>
+</p>
+
+<p>Let $k$ be the smallest integer such that
+<equation>
+(A-b_kI_n)(A-b_{k-1}I_n)\cdots(A-b_3I_n)(A-b_2I_n)(A-b_1I_n)\vect{x}=\zerovector.
+</equation>
+</p>
+
+<p>From the preceding equation, we know that $k\leq m$.  Define the vector $\vect{z}$ by
+<equation>
+\vect{z}=(A-b_{k-1}I_n)\cdots(A-b_3I_n)(A-b_2I_n)(A-b_1I_n)\vect{x}
+</equation>
+</p>
+
+<p>Notice that by the definition of $k$, the vector $\vect{z}$ must be nonzero.  In the case where $k=1$, we understand that $\vect{z}$ is defined by $\vect{z}=\vect{x}$, and $\vect{z}$ is still nonzero.  Now
+<equation>
+(A-b_kI_n)\vect{z}=(A-b_kI_n)(A-b_{k-1}I_n)\cdots(A-b_3I_n)(A-b_2I_n)(A-b_1I_n)\vect{x}=\zerovector
+</equation>
+which allows us to write
+<alignmath>
+A\vect{z}
+<![CDATA[&=(A+\zeromatrix)\vect{z}&&]]>\text{<acroref type="property" acro="ZM" />}\\
+<![CDATA[&=(A-b_kI_n+b_kI_n)\vect{z}&&]]>\text{<acroref type="property" acro="AIM" />}\\
+<![CDATA[&=(A-b_kI_n)\vect{z}+b_kI_n\vect{z}&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=\zerovector+b_kI_n\vect{z}&&\text{Defining property of $\vect{z}$}\\]]>
+<![CDATA[&=b_kI_n\vect{z}&&]]>\text{<acroref type="property" acro="ZM" />}\\
+<![CDATA[&=b_k\vect{z}&&]]>\text{<acroref type="theorem" acro="MMIM" />}
+</alignmath>
+</p>
+
+<p>Since $\vect{z}\neq\zerovector$, this equation says that $\vect{z}$ is an eigenvector of $A$ for the eigenvalue $\lambda=b_k$ (<acroref type="definition" acro="EEM" />), so we have shown that any square matrix $A$ does have at least one eigenvalue.</p>
+
+</proof>
+</theorem>
+
+<p>The proof of <acroref type="theorem" acro="EMHE" /> is constructive (it contains an unambiguous procedure that leads to an eigenvalue), but it is not meant to be practical.  We will illustrate the theorem with an example, the purpose being to provide a companion for studying the proof and not to suggest this is the best procedure for computing an eigenvalue.</p>
+
+<example acro="CAEHW" index="eigenvalue!existence">
+<title>Computing an eigenvalue the hard way</title>
+
+<p>This example illustrates the proof of <acroref type="theorem" acro="EMHE" />, so will employ the same notation as the proof <mdash /> look there for full explanations.  It is <em>not</em> meant to be an example of a reasonable computational approach to finding eigenvalues and eigenvectors.  OK, warnings in place, here we go.</p>
+
+<p>Let
+<equation>
+A=\begin{bmatrix}
+<![CDATA[-7 & -1 & 11 & 0 & -4\\]]>
+<![CDATA[4 & 1 & 0 & 2 & 0\\]]>
+<![CDATA[-10 & -1 & 14 & 0 & -4\\]]>
+<![CDATA[8 & 2 & -15 & -1 & 5\\]]>
+<![CDATA[-10 & -1 & 16 & 0 & -6]]>
+\end{bmatrix}
+</equation>
+and choose
+<equation>
+\vect{x}=\colvector{3\\0\\3\\-5\\4}
+</equation>
+</p>
+
+<p>It is important to notice that the choice of $\vect{x}$ could be <em>anything</em>, so long as it is <em>not</em> the zero vector.  We have not chosen $\vect{x}$ totally at random, but so as to make our illustration of the theorem as general as possible.  You could replicate this example with your own choice and the computations are guaranteed to be reasonable, provided you have a computational tool that will factor a fifth degree polynomial for you.</p>
+
+<p>The set
+<alignmath>
+<![CDATA[S&=\set{\vect{x},\,A\vect{x},\,A^2\vect{x},\,A^3\vect{x},\,A^4\vect{x},\,A^5\vect{x}}\\]]>
+<![CDATA[&=]]>
+\set{
+\colvector{3\\0\\3\\-5\\4},\,
+\colvector{-4\\2\\-4\\4\\-6},\,
+\colvector{6\\-6\\6\\-2\\10},\,
+\colvector{-10\\14\\-10\\-2\\-18},\,
+\colvector{18\\-30\\18\\10\\34},\,
+\colvector{-34\\62\\-34\\-26\\-66}
+}
+</alignmath>
+is guaranteed to be linearly dependent, as it has six vectors from $\complex{5}$ (<acroref type="theorem" acro="MVSLD" />).</p>
+
+<p>We will search for a non-trivial relation of linear dependence by solving a homogeneous system of equations whose coefficient matrix has the vectors of $S$ as columns through row operations,
+<equation>
+\begin{bmatrix}
+<![CDATA[3 & -4 & 6 & -10 & 18 & -34\\]]>
+<![CDATA[0 & 2 & -6 & 14 & -30 & 62\\]]>
+<![CDATA[3 & -4 & 6 & -10 & 18 & -34\\]]>
+<![CDATA[-5 & 4 & -2 & -2 & 10 & -26\\]]>
+<![CDATA[4 & -6 & 10 & -18 & 34 & -66]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & -2 & 6 & -14 & 30\\]]>
+<![CDATA[0 & \leading{1} & -3 & 7 & -15 & 31\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>There are four free variables for describing solutions to this homogeneous system, so we have our pick of solutions.  The most expedient choice would be to set $x_3=1$ and $x_4=x_5=x_6=0$.  However, we will again opt to maximize the generality of our illustration of <acroref type="theorem" acro="EMHE" /> and choose $x_3=-8$, $x_4=-3$, $x_5=1$ and $x_6=0$.  The leads to a solution with $x_1=16$ and $x_2=12$.</p>
+
+<p>This relation of linear dependence then says that
+<alignmath>
+<![CDATA[\zerovector&=16\vect{x}+12A\vect{x}-8A^2\vect{x}-3A^3\vect{x}+A^4\vect{x}+0A^5\vect{x}\\]]>
+<![CDATA[\zerovector&=\left(16+12A-8A^2-3A^3+A^4\right)\vect{x}]]>
+</alignmath>
+</p>
+
+<p>So we define $p(x)=16+12x-8x^2-3x^3+x^4$, and as advertised in the proof of <acroref type="theorem" acro="EMHE" />, we have a polynomial of degree $m=4>1$ such that $p(A)\vect{x}=\zerovector$.  Now we need to factor $p(x)$ over $\complex{\null}$.  If you made your own choice of $\vect{x}$ at the start, this is where you might have a fifth degree polynomial, and where you might need to use a computational tool to find roots and factors.  We have
+<equation>
+p(x)=16+12x-8x^2-3x^3+x^4=(x-4)(x+2)(x-2)(x+1)
+</equation>
+</p>
+
+<p>So we know that
+<equation>
+\zerovector=p(A)\vect{x}=(A-4I_5)(A+2I_5)(A-2I_5)(A+1I_5)\vect{x}
+</equation>
+</p>
+
+<p>We apply one factor at a time, until we get the zero vector, so as to determine the value of $k$ described in the proof of <acroref type="theorem" acro="EMHE" />,
+<alignmath>
+<![CDATA[(A+1I_5)\vect{x}&=]]>
+\begin{bmatrix}
+<![CDATA[-6 & -1 & 11 & 0 & -4\\]]>
+<![CDATA[4 & 2 & 0 & 2 & 0\\]]>
+<![CDATA[-10 & -1 & 15 & 0 & -4\\]]>
+<![CDATA[8 & 2 & -15 & 0 & 5\\]]>
+<![CDATA[-10 & -1 & 16 & 0 & -5]]>
+\end{bmatrix}
+\colvector{3\\0\\3\\-5\\4}
+=
+\colvector{-1\\2\\-1\\-1\\-2}\\
+<![CDATA[(A-2I_5)(A+1I_5)\vect{x}&=]]>
+\begin{bmatrix}
+<![CDATA[-9 & -1 & 11 & 0 & -4\\]]>
+<![CDATA[4 & -1 & 0 & 2 & 0\\]]>
+<![CDATA[-10 & -1 & 12 & 0 & -4\\]]>
+<![CDATA[8 & 2 & -15 & -3 & 5\\]]>
+<![CDATA[-10 & -1 & 16 & 0 & -8]]>
+\end{bmatrix}
+\colvector{-1\\2\\-1\\-1\\-2}
+=
+\colvector{4\\-8\\4\\4\\8}\\
+<![CDATA[(A+2I_5)(A-2I_5)(A+1I_5)\vect{x}&=]]>
+\begin{bmatrix}
+<![CDATA[-5 & -1 & 11 & 0 & -4\\]]>
+<![CDATA[4 & 3 & 0 & 2 & 0\\]]>
+<![CDATA[-10 & -1 & 16 & 0 & -4\\]]>
+<![CDATA[8 & 2 & -15 & 1 & 5\\]]>
+<![CDATA[-10 & -1 & 16 & 0 & -4]]>
+\end{bmatrix}
+\colvector{4\\-8\\4\\4\\8}
+=
+\colvector{0\\0\\0\\0\\0}\\
+</alignmath>
+</p>
+
+<p>So $k=3$ and
+<equation>
+\vect{z}=(A-2I_5)(A+1I_5)\vect{x}=\colvector{4\\-8\\4\\4\\8}
+</equation>
+is an eigenvector of $A$ for the eigenvalue $\lambda=-2$, as you can check by doing the computation $A\vect{z}$.  If you work through this example with your own choice of the vector $\vect{x}$ (strongly recommended) then the  eigenvalue you will find may be different, but will be in the set $\set{3,\,0,\,1,\,-1,\,-2}$.  See <acroref type="exercise" acro="EE.M60" /> for a suggested starting vector.
+</p>
+
+</example>
+
+</subsection>
+
+<subsection acro="CEE">
+<title>Computing Eigenvalues and Eigenvectors</title>
+
+<p>Fortunately, we need not rely on the procedure of <acroref type="theorem" acro="EMHE" /> each time we need an eigenvalue.  It is the determinant, and specifically <acroref type="theorem" acro="SMZD" />, that provides the main tool for computing eigenvalues.  Here is an informal sequence of equivalences that is the key to determining the eigenvalues and eigenvectors of a matrix,
+<equation>
+A\vect{x}=\lambda\vect{x}\iff
+A\vect{x}-\lambda I_n\vect{x}=\zerovector\iff
+\left(A-\lambda I_n\right)\vect{x}=\zerovector
+</equation>
+</p>
+
+<p>So, for an eigenvalue $\lambda$ and associated eigenvector $\vect{x}\neq\zerovector$, the vector $\vect{x}$ will be a nonzero element of the null space of $A-\lambda I_n$, while the matrix $A-\lambda I_n$ will be singular and therefore have zero determinant.  These ideas are made precise in <acroref type="theorem" acro="EMRCP" /> and <acroref type="theorem" acro="EMNS" />, but for now this brief discussion should suffice as motivation for the following definition and example.</p>
+
+<definition acro="CP" index="characteristic polynomial">
+<title>Characteristic Polynomial</title>
+<p>Suppose that $A$ is a square matrix of size $n$.  Then the <define>characteristic polynomial</define> of $A$ is the polynomial $\charpoly{A}{x}$ defined by
+<equation>
+\charpoly{A}{x}=\detname{A-xI_n}
+</equation>
+</p>
+
+</definition>
+
+<example acro="CPMS3" index="characteristic polynomial!size 3 matrix">
+<title>Characteristic polynomial of a matrix, size 3</title>
+
+<p>Consider
+<equation>
+F=
+\begin{bmatrix}
+<![CDATA[-13 & -8 & -4\\]]>
+<![CDATA[12 & 7 & 4\\]]>
+<![CDATA[24 & 16 & 7]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Then
+<alignmath>
+<![CDATA[\charpoly{F}{x}&=\detname{F-xI_3}\\]]>
+<![CDATA[&=]]>
+\begin{vmatrix}
+<![CDATA[-13-x & -8 & -4\\]]>
+<![CDATA[12 & 7-x & 4\\]]>
+<![CDATA[24 & 16 & 7-x]]>
+<![CDATA[\end{vmatrix}&&]]>\text{<acroref type="definition" acro="CP" />}\\
+<![CDATA[&=]]>
+(-13-x)
+\begin{vmatrix}
+<![CDATA[7-x & 4\\]]>
+<![CDATA[16 & 7-x]]>
+\end{vmatrix}
++(-8)(-1)
+\begin{vmatrix}
+<![CDATA[12  & 4\\]]>
+<![CDATA[24  & 7-x]]>
+<![CDATA[\end{vmatrix}&&]]>\text{<acroref type="definition" acro="DM" />}\\
+<![CDATA[&\quad\quad]]>
++(-4)
+\begin{vmatrix}
+<![CDATA[12 & 7-x\\]]>
+<![CDATA[24 & 16]]>
+\end{vmatrix}\\
+<![CDATA[&=(-13-x)((7-x)(7-x)-4(16))&&]]>\text{<acroref type="theorem" acro="DMST" />}\\
+<![CDATA[&\quad\quad +(-8)(-1)(12(7-x)-4(24))\\]]>
+<![CDATA[&\quad\quad +(-4)(12(16)-(7-x)(24))\\]]>
+<![CDATA[&=3+5x+x^2-x^3\\]]>
+<![CDATA[&=-(x-3)(x+1)^2]]>
+</alignmath>
+</p>
+
+</example>
+
+<p>The characteristic polynomial is our main computational tool for finding eigenvalues, and will sometimes be used to aid us in determining the properties of eigenvalues.</p>
+
+<theorem acro="EMRCP" index="eigenvalue!root of characteristic polynomial">
+<title>Eigenvalues of a Matrix are Roots of Characteristic Polynomials</title>
+<statement>
+<p>Suppose $A$ is a square matrix.
+Then $\lambda$ is an eigenvalue of $A$ if and only if $\charpoly{A}{\lambda}=0$.</p>
+
+</statement>
+
+<proof>
+<p>Suppose $A$ has size $n$.
+<alignmath>
+<![CDATA[&\text{$\lambda$ is an eigenvalue of $A$}\\]]>
+<![CDATA[&\iff\text{ there exists $\vect{x}\neq\zerovector$ so that $A\vect{x}=\lambda\vect{x}$}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="EEM" />}\\
+<![CDATA[&\iff \text{ there exists $\vect{x}\neq\zerovector$ so that $A\vect{x}-\lambda\vect{x}=\zerovector$}\\]]>
+<![CDATA[&\iff \text{ there exists $\vect{x}\neq\zerovector$ so that $A\vect{x}-\lambda I_n\vect{x}=\zerovector$}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&\iff\text{ there exists $\vect{x}\neq\zerovector$ so that $(A-\lambda I_n)\vect{x}=\zerovector$}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&\iff A-\lambda I_n\text{ is singular}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="NM" />}\\
+<![CDATA[&\iff\detname{A-\lambda I_n}=0]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="SMZD" />}\\
+<![CDATA[&\iff\charpoly{A}{\lambda}=0]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CP" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<example acro="EMS3" index="eigenvalues!size 3 matrix">
+<title>Eigenvalues of a matrix, size 3</title>
+
+<p>In <acroref type="example" acro="CPMS3" /> we found the characteristic polynomial of
+<equation>
+F=
+\begin{bmatrix}
+<![CDATA[-13 & -8 & -4\\]]>
+<![CDATA[12 & 7 & 4\\]]>
+<![CDATA[24 & 16 & 7]]>
+\end{bmatrix}
+</equation>
+to be  $\charpoly{F}{x}=-(x-3)(x+1)^2$.  Factored, we can find all of its roots easily, they are $x=3$ and $x=-1$.  By <acroref type="theorem" acro="EMRCP" />, $\lambda=3$ and $\lambda=-1$ are both eigenvalues of $F$, and these are the only eigenvalues of $F$.  We've found them all.</p>
+
+</example>
+
+<p>Let us now turn our attention to the computation of eigenvectors.</p>
+
+<definition acro="EM" index="eigenspace">
+<title>Eigenspace of a Matrix</title>
+<p>Suppose that $A$ is a square matrix and $\lambda$ is an eigenvalue of $A$.  Then the <define>eigenspace</define> of $A$ for $\lambda$, $\eigenspace{A}{\lambda}$, is the set of all the eigenvectors of $A$ for $\lambda$, together with the inclusion of the zero vector.</p>
+
+</definition>
+
+<p><acroref type="example" acro="SEE" /> hinted that the set of eigenvectors for a single eigenvalue might have some closure properties, and with the addition of the non-eigenvector, $\zerovector$, we indeed get a whole subspace.</p>
+
+<theorem acro="EMS" index="eigenspace!subspace">
+<title>Eigenspace for a Matrix is a Subspace</title>
+<statement>
+<p>Suppose  $A$ is a square matrix of size $n$ and $\lambda$ is an eigenvalue of $A$.  Then the eigenspace $\eigenspace{A}{\lambda}$ is a subspace of the vector space $\complex{n}$.</p>
+
+</statement>
+
+<proof>
+<p>We will check the three conditions of <acroref type="theorem" acro="TSS" />.  First, <acroref type="definition" acro="EM" /> explicitly includes the zero vector in $\eigenspace{A}{\lambda}$, so the set is non-empty.</p>
+
+<p>Suppose that $\vect{x},\,\vect{y}\in\eigenspace{A}{\lambda}$, that is, $\vect{x}$ and $\vect{y}$ are two eigenvectors of $A$ for $\lambda$.  Then
+<alignmath>
+<![CDATA[A\left(\vect{x}+\vect{y}\right)&=A\vect{x}+A\vect{y}&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=\lambda\vect{x}+\lambda\vect{y}&&\text{$\vect{x},\,\vect{y}$ eigenvectors of $A$}\\]]>
+<![CDATA[&=\lambda\left(\vect{x}+\vect{y}\right)&&]]>\text{<acroref type="property" acro="DVAC" />}
+</alignmath>
+</p>
+
+<p>So either $\vect{x}+\vect{y}=\zerovector$,  or $\vect{x}+\vect{y}$ is an eigenvector of $A$ for $\lambda$ (<acroref type="definition" acro="EEM" />). So, in either event, $\vect{x}+\vect{y}\in\eigenspace{A}{\lambda}$, and we have additive closure.</p>
+
+<p>Suppose that $\alpha\in\complex{\null}$, and that $\vect{x}\in\eigenspace{A}{\lambda}$, that is, $\vect{x}$ is an eigenvector of $A$ for $\lambda$.  Then
+<alignmath>
+<![CDATA[A\left(\alpha\vect{x}\right)&=\alpha\left(A\vect{x}\right)&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=\alpha\lambda\vect{x}&&\text{$\vect{x}$ an eigenvector of $A$}\\]]>
+<![CDATA[&=\lambda\left(\alpha\vect{x}\right)&&]]>\text{<acroref type="property" acro="SMAC" />}
+</alignmath></p>
+
+<p>So either $\alpha\vect{x}=\zerovector$, or $\alpha\vect{x}$ is an eigenvector of $A$ for $\lambda$ (<acroref type="definition" acro="EEM" />).  So, in either event,  $\alpha\vect{x}\in\eigenspace{A}{\lambda}$, and we have scalar closure.</p>
+
+<p>With the three conditions of <acroref type="theorem" acro="TSS" /> met, we know $\eigenspace{A}{\lambda}$ is a subspace.</p>
+
+</proof>
+</theorem>
+
+<p><acroref type="theorem" acro="EMS" /> tells us that an eigenspace is a subspace (and hence a vector space in its own right).  Our next theorem tells us how to quickly construct this subspace.</p>
+
+<theorem acro="EMNS" index="eigenspace! as null space">
+<title>Eigenspace of a Matrix is a Null Space</title>
+<statement>
+<p>Suppose  $A$ is a square matrix of size $n$ and $\lambda$ is an eigenvalue of $A$.  Then
+<equation>
+\eigenspace{A}{\lambda}=\nsp{A-\lambda I_n}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>The conclusion of this theorem is an equality of sets, so normally we would follow the advice of <acroref type="definition" acro="SE" />.  However, in this case we can construct a sequence of equivalences which will together provide the two subset inclusions we need.  First, notice that $\zerovector\in\eigenspace{A}{\lambda}$ by <acroref type="definition" acro="EM" /> and $\zerovector\in\nsp{A-\lambda I_n}$ by <acroref type="theorem" acro="HSC" />.  Now consider any nonzero vector $\vect{x}\in\complex{n}$,
+<alignmath>
+<![CDATA[\vect{x}\in\eigenspace{A}{\lambda}&\iff A\vect{x}=\lambda\vect{x}&&]]>\text{<acroref type="definition" acro="EM" />}\\
+<![CDATA[&\iff A\vect{x}-\lambda\vect{x}=\zerovector\\]]>
+<![CDATA[&\iff A\vect{x}-\lambda I_n\vect{x}=\zerovector&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&\iff\left(A-\lambda I_n\right)\vect{x}=\zerovector&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&\iff\vect{x}\in\nsp{A-\lambda I_n}&&]]>\text{<acroref type="definition" acro="NSM" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>You might notice the close parallels (and differences) between the proofs of <acroref type="theorem" acro="EMRCP" /> and <acroref type="theorem" acro="EMNS" />.  Since <acroref type="theorem" acro="EMNS" /> describes the set of all the eigenvectors of $A$ as a null space we can use techniques such as <acroref type="theorem" acro="BNS" /> to provide concise descriptions of eigenspaces.  <acroref type="theorem" acro="EMNS" /> also provides a trivial proof for <acroref type="theorem" acro="EMS" />.</p>
+
+<example acro="ESMS3" index="eigenvalues!size 3 matrix">
+<title>Eigenspaces of a matrix, size 3</title>
+
+<p><acroref type="example" acro="CPMS3" /> and <acroref type="example" acro="EMS3" /> describe the characteristic polynomial and eigenvalues of the $3\times 3$ matrix
+<equation>
+F=
+\begin{bmatrix}
+<![CDATA[-13 & -8 & -4\\]]>
+<![CDATA[12 & 7 & 4\\]]>
+<![CDATA[24 & 16 & 7]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We will now take each eigenvalue in turn and compute its eigenspace.  To do this, we row-reduce the matrix
+$F-\lambda I_3$ in order to determine solutions to the homogeneous system $\homosystem{F-\lambda I_3}$ and then express the eigenspace as the null space of $F-\lambda I_3$ (<acroref type="theorem" acro="EMNS" />).  <acroref type="theorem" acro="BNS" /> then tells us how to write the null space as the span of a basis.
+<alignmath>
+<![CDATA[\lambda&=3&F-3I_3&=]]>
+\begin{bmatrix}
+<![CDATA[-16 & -8 & -4\\]]>
+<![CDATA[12 & 4 & 4\\]]>
+<![CDATA[24 & 16 & 4]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & \frac{1}{2}\\]]>
+<![CDATA[0 & \leading{1} & -\frac{1}{2}\\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{F}{3}&=\nsp{F-3I_3}]]>
+=\spn{\set{\colvector{-\frac{1}{2}\\\frac{1}{2}\\1}}}
+=\spn{\set{\colvector{-1\\1\\2}}}\\
+<![CDATA[\lambda&=-1&F+1I_3&=]]>
+\begin{bmatrix}
+<![CDATA[-12 & -8 & -4\\]]>
+<![CDATA[12 & 8 & 4\\]]>
+<![CDATA[24 & 16 & 8]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & \frac{2}{3} & \frac{1}{3}\\]]>
+<![CDATA[0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{F}{-1}&=\nsp{F+1I_3}]]>
+=\spn{\set{\colvector{-\frac{2}{3}\\1\\0},\,\colvector{-\frac{1}{3}\\0\\1}}}
+=\spn{\set{\colvector{-2\\3\\0},\,\colvector{-1\\0\\3}}}
+</alignmath>
+</p>
+
+<p>Eigenspaces in hand, we can easily compute eigenvectors by forming nontrivial linear combinations of the basis vectors describing each eigenspace.  In particular, notice that we can <q>pretty up</q> our basis vectors by using scalar multiples to clear out fractions.</p>
+
+</example>
+
+</subsection>
+
+<subsection acro="ECEE">
+<title>Examples of Computing Eigenvalues and Eigenvectors</title>
+
+<p>No theorems in this section, just a selection of examples meant to illustrate the range of possibilities for the eigenvalues and eigenvectors of a matrix.  These examples can all be done by hand, though the computation of the characteristic polynomial would be very time-consuming and error-prone.  It can also be difficult to factor an arbitrary polynomial, though if we were to suggest that most of our eigenvalues are going to be integers, then it can be easier to hunt for roots.  These examples are meant to look similar to a concatenation of <acroref type="example" acro="CPMS3" />, <acroref type="example" acro="EMS3" /> and <acroref type="example" acro="ESMS3" />.  First, we will sneak in a pair of definitions so we can illustrate them throughout this sequence of examples.</p>
+
+<definition acro="AME" index="eigenvalue!algebraic multiplicity">
+<title>Algebraic Multiplicity of an Eigenvalue</title>
+<p>Suppose that $A$ is a square matrix and $\lambda$ is an eigenvalue of $A$.  Then the <define>algebraic multiplicity</define> of $\lambda$, $\algmult{A}{\lambda}$, is the highest power of $(x-\lambda)$ that divides the characteristic polynomial, $\charpoly{A}{x}$.</p>
+
+<notation acro="AME" index="eigenvalue!algebraic multiplicity">
+<title>Algebraic Multiplicity of an Eigenvalue</title>
+<usage>$\algmult{A}{\lambda}$</usage>
+</notation>
+</definition>
+
+<p>Since an eigenvalue $\lambda$ is a root of the characteristic polynomial, there is always a factor of $(x-\lambda)$, and the algebraic multiplicity is just the power of this factor in a factorization of $\charpoly{A}{x}$.  So in particular, $\algmult{A}{\lambda}\geq 1$.  Compare the definition of algebraic multiplicity with the next definition.</p>
+
+<definition acro="GME" index="eigenvalue!geometric multiplicity">
+<title>Geometric Multiplicity of an Eigenvalue</title>
+<p>Suppose that $A$ is a square matrix and $\lambda$ is an eigenvalue of $A$.  Then the <define>geometric multiplicity</define> of $\lambda$, $\geomult{A}{\lambda}$, is the dimension of the eigenspace $\eigenspace{A}{\lambda}$.</p>
+
+<notation acro="GME" index="eigenvalue!geometric multiplicity">
+<title>Geometric Multiplicity of an Eigenvalue</title>
+<usage>$\geomult{A}{\lambda}$</usage>
+</notation>
+</definition>
+
+<p>Since every eigenvalue must have at least one eigenvector, the associated eigenspace cannot be trivial, and so $\geomult{A}{\lambda}\geq 1$.</p>
+
+<example acro="EMMS4" index="eigenvalue!multiplicities">
+<title>Eigenvalue multiplicities, matrix of size 4</title>
+
+<p>Consider the matrix
+<equation>
+B=
+\begin{bmatrix}
+<![CDATA[-2 & 1 & -2 & -4\\]]>
+<![CDATA[12 & 1 & 4 & 9\\]]>
+<![CDATA[6 & 5 & -2 & -4\\]]>
+<![CDATA[3 & -4 & 5 & 10]]>
+\end{bmatrix}
+</equation>
+then
+<equation>
+\charpoly{B}{x}=8-20x+18x^2-7x^3+x^4=(x-1)(x-2)^3
+</equation>
+So the eigenvalues are $\lambda=1,\,2$ with algebraic multiplicities $\algmult{B}{1}=1$ and $\algmult{B}{2}=3$.</p>
+
+<p>Computing eigenvectors,
+<alignmath>
+<![CDATA[\lambda&=1&B- 1I_4&=]]>
+\begin{bmatrix}
+<![CDATA[-3 & 1 & -2 & -4\\]]>
+<![CDATA[12 & 0 & 4 & 9\\]]>
+<![CDATA[6 & 5 & -3 & -4\\]]>
+<![CDATA[3 & -4 & 5 & 9]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & \frac{1}{3} & 0\\]]>
+<![CDATA[0 & \leading{1} & -1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1}\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{B}{1}&=\nsp{B-1I_4}]]>
+=\spn{\set{\colvector{-\frac{1}{3}\\1\\1\\0}}}
+=\spn{\set{\colvector{-1\\3\\3\\0}}}\\
+<![CDATA[\lambda&=2&B-2I_4&=]]>
+\begin{bmatrix}
+<![CDATA[-4 & 1 & -2 & -4\\]]>
+<![CDATA[12 & -1 & 4 & 9\\]]>
+<![CDATA[6 & 5 & -4 & -4\\]]>
+<![CDATA[3 & -4 & 5 & 8]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 1/2\\]]>
+<![CDATA[0 & \leading{1} & 0 & -1\\]]>
+<![CDATA[0 & 0 & \leading{1} & 1/2\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{B}{2}&=\nsp{B-2I_4}]]>
+=\spn{\set{\colvector{-\frac{1}{2}\\1\\-\frac{1}{2}\\1}}}
+=\spn{\set{\colvector{-1\\2\\-1\\2}}}\\
+</alignmath>
+</p>
+
+<p>So each eigenspace has dimension 1 and so $\geomult{B}{1}=1$ and $\geomult{B}{2}=1$.  This example is of interest because of the discrepancy between the two multiplicities for $\lambda=2$.  In many of our examples the algebraic and geometric multiplicities will be equal for all of the eigenvalues (as it was for $\lambda=1$ in this example), so keep this example in mind.  We will have some explanations for this phenomenon later  (see <acroref type="example" acro="NDMS4" />).</p>
+
+</example>
+
+<example acro="ESMS4" index="eigenvalue!symmetric matrix">
+<title>Eigenvalues, symmetric matrix of size 4</title>
+
+<p>Consider the matrix
+<equation>
+C=
+\begin{bmatrix}
+<![CDATA[1 &  0 &  1 &  1\\]]>
+<![CDATA[0 &  1 &  1 &  1\\]]>
+<![CDATA[1 &  1 &  1 &  0\\]]>
+<![CDATA[1 &  1 &  0 &  1]]>
+\end{bmatrix}
+</equation>
+then
+<equation>
+\charpoly{C}{x}=-3+4x+2x^2-4x^3+x^4=(x-3)(x-1)^2(x+1)
+</equation>
+So the eigenvalues are $\lambda=3,\,1,\,-1$ with algebraic multiplicities $\algmult{C}{3}=1$, $\algmult{C}{1}=2$ and $\algmult{C}{-1}=1$.</p>
+
+<p>Computing eigenvectors,
+<alignmath>
+<![CDATA[\lambda&=3&C- 3I_4&=]]>
+\begin{bmatrix}
+<![CDATA[-2 & 0 & 1 & 1\\]]>
+<![CDATA[0 & -2 & 1 & 1\\]]>
+<![CDATA[1 & 1 & -2 & 0\\]]>
+<![CDATA[1 & 1 & 0 & -2]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & -1\\]]>
+<![CDATA[0 & \leading{1} & 0 & -1\\]]>
+<![CDATA[0 & 0 & \leading{1} & -1\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{C}{3}&=\nsp{C-3I_4}]]>
+=\spn{\set{\colvector{1\\1\\1\\1}}}\\
+<![CDATA[\lambda&=1&C-1I_4&=]]>
+\begin{bmatrix}
+<![CDATA[0 & 0 & 1 & 1\\]]>
+<![CDATA[0 & 0 & 1 & 1\\]]>
+<![CDATA[1 & 1 & 0 & 0\\]]>
+<![CDATA[1 & 1 & 0 & 0]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 1 & 0 & 0\\]]>
+<![CDATA[0 & 0 & \leading{1} & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{C}{1}&=\nsp{C-1I_4}]]>
+=\spn{\set{\colvector{-1\\1\\0\\0},\,\colvector{0\\0\\-1\\1}}}\\
+<![CDATA[\lambda&=-1&C+1I_4&=]]>
+\begin{bmatrix}
+<![CDATA[2 & 0 & 1 & 1\\]]>
+<![CDATA[0 & 2 & 1 & 1\\]]>
+<![CDATA[1 & 1 & 2 & 0\\]]>
+<![CDATA[1 & 1 & 0 & 2]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 1\\]]>
+<![CDATA[0 & \leading{1} & 0 & 1\\]]>
+<![CDATA[0 & 0 & \leading{1} & -1\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{C}{-1}&=\nsp{C+1I_4}]]>
+=\spn{\set{\colvector{-1\\-1\\1\\1}}}\\
+</alignmath>
+</p>
+
+<p>So the eigenspace dimensions yield geometric multiplicities $\geomult{C}{3}=1$, $\geomult{C}{1}=2$ and $\geomult{C}{-1}=1$, the same as for the algebraic multiplicities.  This example is of interest because $A$ is a symmetric matrix, and will be the subject of <acroref type="theorem" acro="HMRE" />.</p>
+
+</example>
+
+<example acro="HMEM5" index="eigenvalues!multiplicities">
+<title>High multiplicity eigenvalues, matrix of size 5</title>
+
+<p>Consider the matrix
+<equation>
+E=
+\begin{bmatrix}
+<![CDATA[29 & 14 & 2 & 6 & -9\\]]>
+<![CDATA[-47 & -22 & -1 & -11 & 13\\]]>
+<![CDATA[19 & 10 & 5 & 4 & -8\\]]>
+<![CDATA[-19 & -10 & -3 & -2 & 8\\]]>
+<![CDATA[7 & 4 & 3 & 1 & -3]]>
+\end{bmatrix}
+</equation>
+then
+<equation>
+\charpoly{E}{x}=-16+16x+8x^2-16x^3+7x^4-x^5=-(x-2)^4(x+1)
+</equation>
+So the eigenvalues are $\lambda=2,\,-1$ with algebraic multiplicities $\algmult{E}{2}=4$  and $\algmult{E}{-1}=1$.</p>
+
+<p>Computing eigenvectors,
+<alignmath>
+<![CDATA[\lambda&=2&E-2I_5&=]]>
+\begin{bmatrix}
+<![CDATA[27 & 14 & 2 & 6 & -9\\]]>
+<![CDATA[-47 & -24 & -1 & -11 & 13\\]]>
+<![CDATA[19 & 10 & 3 & 4 & -8\\]]>
+<![CDATA[-19 & -10 & -3 & -4 & 8\\]]>
+<![CDATA[7 & 4 & 3 & 1 & -5]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 1 & 0\\]]>
+<![CDATA[0 & \leading{1} & 0 & -\frac{3}{2} & -\frac{1}{2}\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & -1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{E}{2}&=\nsp{E-2I_5}]]>
+=\spn{\set{\colvector{-1\\\frac{3}{2}\\0\\1\\0},\,\colvector{0\\\frac{1}{2}\\1\\0\\1}}}
+=\spn{\set{\colvector{-2\\3\\0\\2\\0},\,\colvector{0\\1\\2\\0\\2}}}\\
+<![CDATA[\lambda&=-1&E+1I_5&=]]>
+\begin{bmatrix}
+<![CDATA[30 & 14 & 2 & 6 & -9\\]]>
+<![CDATA[-47 & -21 & -1 & -11 & 13\\]]>
+<![CDATA[19 & 10 & 6 & 4 & -8\\]]>
+<![CDATA[-19 & -10 & -3 & -1 & 8\\]]>
+<![CDATA[7 & 4 & 3 & 1 & -2]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 2 & 0\\]]>
+<![CDATA[0 & \leading{1} & 0 & -4 & 0\\]]>
+<![CDATA[0 & 0 & \leading{1} & 1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1}\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{E}{-1}&=\nsp{E+1I_5}=\spn{\set{\colvector{-2\\4\\-1\\1\\0}}}\\]]>
+</alignmath>
+</p>
+
+<p>So the eigenspace dimensions yield geometric multiplicities $\geomult{E}{2}=2$ and $\geomult{E}{-1}=1$.  This example is of interest because $\lambda=2$ has such a large algebraic multiplicity, which is also not equal to its geometric multiplicity.</p>
+
+</example>
+
+<example acro="CEMS6" index="eigenvalue!complex">
+<title>Complex eigenvalues, matrix of size 6</title>
+
+<p>Consider the matrix
+<equation>
+F=
+\begin{bmatrix}
+<![CDATA[-59 & -34 & 41 & 12 & 25 & 30\\]]>
+<![CDATA[1 & 7 & -46 & -36 & -11 & -29\\]]>
+<![CDATA[-233 & -119 & 58 & -35 & 75 & 54\\]]>
+<![CDATA[157 & 81 & -43 & 21 & -51 & -39\\]]>
+<![CDATA[-91 & -48 & 32 & -5 & 32 & 26\\]]>
+<![CDATA[209 & 107 & -55 & 28 & -69 & -50]]>
+\end{bmatrix}
+</equation>
+then
+<alignmath>
+<![CDATA[\charpoly{F}{x}&=-50+55x+13x^2-50x^3+32x^4-9x^5+x^6\\]]>
+<![CDATA[ &=(x-2)(x+1)(x^2-4x+5)^2\\]]>
+<![CDATA[ &=(x-2)(x+1)((x-(2+i))(x-(2-i)))^2\\]]>
+<![CDATA[ &=(x-2)(x+1)(x-(2+i))^2(x-(2-i))^2\\]]>
+</alignmath>
+So the eigenvalues are $\lambda=2,\,-1,2+i,\,2-i$ with algebraic multiplicities $\algmult{F}{2}=1$, $\algmult{F}{-1}=1$, $\algmult{F}{2+i}=2$ and $\algmult{F}{2-i}=2$.</p>
+
+<p>Computing eigenvectors,
+<alignmath>
+<![CDATA[\lambda&=2\\]]>
+<![CDATA[F-2I_6&=]]>
+\begin{bmatrix}
+<![CDATA[-61 & -34 & 41 & 12 & 25 & 30\\]]>
+<![CDATA[1 & 5 & -46 & -36 & -11 & -29\\]]>
+<![CDATA[-233 & -119 & 56 & -35 & 75 & 54\\]]>
+<![CDATA[157 & 81 & -43 & 19 & -51 & -39\\]]>
+<![CDATA[-91 & -48 & 32 & -5 & 30 & 26\\]]>
+<![CDATA[209 & 107 & -55 & 28 & -69 & -52]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & 0 & \frac{1}{5}\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0 & \frac{3}{5}\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0 & -\frac{1}{5}\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & \frac{4}{5}\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{F}{2}&=\nsp{F-2I_6}]]>
+=\spn{\set{\colvector{-\frac{1}{5}\\0\\-\frac{3}{5}\\\frac{1}{5}\\-\frac{4}{5}\\1}}}
+=\spn{\set{\colvector{-1\\0\\-3\\1\\-4\\5}}}\\
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=-1\\]]>
+<![CDATA[F+1I_6&=]]>
+\begin{bmatrix}
+<![CDATA[-58 & -34 & 41 & 12 & 25 & 30\\]]>
+<![CDATA[1 & 8 & -46 & -36 & -11 & -29\\]]>
+<![CDATA[-233 & -119 & 59 & -35 & 75 & 54\\]]>
+<![CDATA[157 & 81 & -43 & 22 & -51 & -39\\]]>
+<![CDATA[-91 & -48 & 32 & -5 & 33 & 26\\]]>
+<![CDATA[209 & 107 & -55 & 28 & -69 & -49]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & 0 & \frac{1}{2}\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0 & -\frac{3}{2}\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0 & \frac{1}{2}\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & -\frac{1}{2}\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{F}{-1}&=\nsp{F+I_6}]]>
+=\spn{\set{\colvector{-\frac{1}{2}\\\frac{3}{2}\\-\frac{1}{2}\\0\\\frac{1}{2}\\1}}}
+=\spn{\set{\colvector{-1\\3\\-1\\0\\1\\2}}}\\
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=2+i\\]]>
+<![CDATA[F-(2+i)I_6&=]]>
+\begin{bmatrix}
+<![CDATA[-61-i & -34 & 41 & 12 & 25 & 30\\]]>
+<![CDATA[1 & 5-i & -46 & -36 & -11 & -29\\]]>
+<![CDATA[-233 & -119 & 56-i & -35 & 75 & 54\\]]>
+<![CDATA[157 & 81 & -43 & 19-i & -51 & -39\\]]>
+<![CDATA[-91 & -48 & 32 & -5 & 30-i & 26\\]]>
+<![CDATA[209 & 107 & -55 & 28 & -69 & -52-i]]>
+\end{bmatrix}\\
+<![CDATA[&]]>
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & 0 & \frac{1}{5}(7+ i)\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0 & \frac{1}{5}(-9-2i)\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0 & 1\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0 & -1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{F}{2+i}&=\nsp{F-(2+i)I_6}]]>
+=\spn{\set{\colvector{-\frac{1}{5}(7+i)\\\frac{1}{5}(9+2i)\\-1\\1\\-1\\1}}}
+=\spn{\set{\colvector{-7-i\\9+2i\\-5\\5\\-5\\5}}}\\
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=2-i\\]]>
+<![CDATA[F-(2-i)I_6&=]]>
+\begin{bmatrix}
+<![CDATA[-61+i & -34 & 41 & 12 & 25 & 30\\]]>
+<![CDATA[1 & 5+i & -46 & -36 & -11 & -29\\]]>
+<![CDATA[-233 & -119 & 56+i & -35 & 75 & 54\\]]>
+<![CDATA[157 & 81 & -43 & 19+i & -51 & -39\\]]>
+<![CDATA[-91 & -48 & 32 & -5 & 30+i & 26\\]]>
+<![CDATA[209 & 107 & -55 & 28 & -69 & -52+i]]>
+\end{bmatrix}\\
+<![CDATA[&]]>
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & 0 & \frac{1}{5}(7-i)\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0 & \frac{1}{5}(-9+2i)\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0 & 1\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0 & -1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & \leading{1} & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{F}{2-i}&=\nsp{F-(2-i)I_6}]]>
+=\spn{\set{\colvector{\frac{1}{5}(-7+i)\\\frac{1}{5}(9-2i)\\-1\\1\\-1\\1}}}
+=\spn{\set{\colvector{-7+i\\9-2i\\-5\\5\\-5\\5}}}\\
+</alignmath>
+</p>
+
+<p>So the eigenspace dimensions yield geometric multiplicities $\geomult{F}{2}=1$, $\geomult{F}{-1}=1$, $\geomult{F}{2+i}=1$ and $\geomult{F}{2-i}=1$.  This example demonstrates some of the possibilities for the appearance of complex eigenvalues, even when all the entries of the matrix are real.  Notice how all the numbers in the analysis of $\lambda=2-i$ are conjugates of the corresponding number in the analysis of $\lambda=2+i$.  This is the content of the upcoming <acroref type="theorem" acro="ERMCP" />.</p>
+
+</example>
+
+<example acro="DEMS5" index="eigenvalues!distinct">
+<title>Distinct eigenvalues, matrix of size 5</title>
+
+<p>Consider the matrix
+<equation>
+H=
+\begin{bmatrix}
+<![CDATA[15 & 18 & -8 & 6 & -5\\]]>
+<![CDATA[5 & 3 & 1 & -1 & -3\\]]>
+<![CDATA[0 & -4 & 5 & -4 & -2\\]]>
+<![CDATA[-43 & -46 & 17 & -14 & 15\\]]>
+<![CDATA[26 & 30 & -12 & 8 & -10]]>
+\end{bmatrix}
+</equation>
+then
+<equation>
+\charpoly{H}{x}=-6x+x^2+7x^3-x^4-x^5=x(x-2)(x-1)(x+1)(x+3)
+</equation>
+So the eigenvalues are $\lambda=2,\,1,\,0,\,-1,\,-3$ with algebraic multiplicities $\algmult{H}{2}=1$,  $\algmult{H}{1}=1$,  $\algmult{H}{0}=1$,  $\algmult{H}{-1}=1$ and $\algmult{H}{-3}=1$.</p>
+
+<p>Computing eigenvectors,
+<alignmath>
+<![CDATA[\lambda&=2&H-2I_5&=]]>
+\begin{bmatrix}
+<![CDATA[13 & 18 & -8 & 6 & -5\\]]>
+<![CDATA[5 & 1 & 1 & -1 & -3\\]]>
+<![CDATA[0 & -4 & 3 & -4 & -2\\]]>
+<![CDATA[-43 & -46 & 17 & -16 & 15\\]]>
+<![CDATA[26 & 30 & -12 & 8 & -12]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & -1\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 1\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 2\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{H}{2}&=\nsp{H-2I_5}]]>
+=\spn{\set{\colvector{1\\-1\\-2\\-1\\1}}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=1&H-1I_5&=]]>
+\begin{bmatrix}
+<![CDATA[14 & 18 & -8 & 6 & -5\\]]>
+<![CDATA[5 & 2 & 1 & -1 & -3\\]]>
+<![CDATA[0 & -4 & 4 & -4 & -2\\]]>
+<![CDATA[-43 & -46 & 17 & -15 & 15\\]]>
+<![CDATA[26 & 30 & -12 & 8 & -11]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & -\frac{1}{2}\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & \frac{1}{2}\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{H}{1}&=\nsp{H-1I_5}]]>
+=\spn{\set{\colvector{\frac{1}{2}\\0\\-\frac{1}{2}\\-1\\1}}}
+=\spn{\set{\colvector{1\\0\\-1\\-2\\2}}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=0&H-0I_5&=]]>
+\begin{bmatrix}
+<![CDATA[15 & 18 & -8 & 6 & -5\\]]>
+<![CDATA[5 & 3 & 1 & -1 & -3\\]]>
+<![CDATA[0 & -4 & 5 & -4 & -2\\]]>
+<![CDATA[-43 & -46 & 17 & -14 & 15\\]]>
+<![CDATA[26 & 30 & -12 & 8 & -10]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & 1\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & -2\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & -2\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{H}{0}&=\nsp{H-0I_5}]]>
+=\spn{\set{\colvector{-1\\2\\2\\0\\1}}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=-1&H+1I_5&=]]>
+\begin{bmatrix}
+<![CDATA[16 & 18 & -8 & 6 & -5\\]]>
+<![CDATA[5 & 4 & 1 & -1 & -3\\]]>
+<![CDATA[0 & -4 & 6 & -4 & -2\\]]>
+<![CDATA[-43 & -46 & 17 & -13 & 15\\]]>
+<![CDATA[26 & 30 & -12 & 8 & -9]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & -1/2\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 1/2\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{H}{-1}&=\nsp{H+1I_5}]]>
+=\spn{\set{\colvector{\frac{1}{2}\\0\\0\\-\frac{1}{2}\\1}}}
+=\spn{\set{\colvector{1\\0\\0\\-1\\2}}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=-3&H+3I_5&=]]>
+\begin{bmatrix}
+<![CDATA[18 & 18 & -8 & 6 & -5\\]]>
+<![CDATA[5 & 6 & 1 & -1 & -3\\]]>
+<![CDATA[0 & -4 & 8 & -4 & -2\\]]>
+<![CDATA[-43 & -46 & 17 & -11 & 15\\]]>
+<![CDATA[26 & 30 & -12 & 8 & -7]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0 & -1\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & \frac{1}{2}\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 1\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 2\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{H}{-3}&=\nsp{H+3I_5}]]>
+=\spn{\set{\colvector{1\\-\frac{1}{2}\\-1\\-2\\1}}}
+=\spn{\set{\colvector{-2\\1\\2\\4\\-2}}}
+</alignmath>
+</p>
+
+<p>So the eigenspace dimensions yield geometric multiplicities $\geomult{H}{2}=1$,  $\geomult{H}{1}=1$,  $\geomult{H}{0}=1$,  $\geomult{H}{-1}=1$ and $\geomult{H}{-3}=1$, identical to the algebraic multiplicities.  This example is of interest for two reasons.  First, $\lambda=0$ is an eigenvalue, illustrating the upcoming <acroref type="theorem" acro="SMZE" />.  Second, all the eigenvalues are distinct, yielding algebraic and geometric multiplicities of 1 for each eigenvalue, illustrating <acroref type="theorem" acro="DED" />.</p>
+
+</example>
+
+<sageadvice acro="CEVAL" index="eigenvalues!computing">
+<title>Computing Eigenvalues</title>
+We can now give a more careful explantion about eigenvalues in Sage.  Sage will compute the characteristic polynomial of a matrix, with amazing ease (in other words, quite quickly, even for large matrices).  The two matrix methods <code>.charpoly()</code> and <code>.characteristic_polynomial()</code> do exactly the same thing.  We will use the longer name just to be more readable, you may prefer the shorter.<br /><br />
+We now can appreciate a very fundamental obstacle to determining the eigenvalues of a matrix, which is a theme that will run through any advanced study of linear algebra.  Study this example carefully before reading the discussion that follows.
+<sage>
+<input>A = matrix(QQ, [[-24,   6,  0,  -1,  31,   7],
+                [ -9,  -2, -8, -17,  24, -29],
+                [  4, -10,  1,   1, -12, -36],
+                [-19,  11, -1,  -4,  33,  29],
+                [-11,   6,  2,   3,  14,  21],
+                [  5,  -1,  2,   5, -11,   4]])
+A.characteristic_polynomial()
+</input>
+<output>x^6 + 11*x^5 + 15*x^4 - 84*x^3 - 157*x^2 + 124*x + 246
+</output>
+</sage>
+
+<sage>
+<input>A.characteristic_polynomial().factor()
+</input>
+<output>(x + 3) * (x^2 - 2) * (x^3 + 8*x^2 - 7*x - 41)
+</output>
+</sage>
+
+<sage>
+<input>B = A.change_ring(QQbar)
+B.characteristic_polynomial()
+</input>
+<output>x^6 + 11*x^5 + 15*x^4 - 84*x^3 - 157*x^2 + 124*x + 246
+</output>
+</sage>
+
+<sage>
+<input>B.characteristic_polynomial().factor()
+</input>
+<output>(x - 2.356181157637288?) * (x - 1.414213562373095?) *
+(x + 1.414213562373095?) * (x + 2.110260216209409?) *
+(x + 3) * (x + 8.24592094142788?)
+</output>
+</sage>
+
+We know by <acroref type="theorem" acro="EMRCP" /> that to compute eigenvalues, we need the roots of the characteristic polynomial, and from basic algebra, we know these correspond to linear factors.  However, with our matrix defined with entries from <code>QQ</code>, the factorization of the characteristic polynomial does not <q>leave</q> that number system, only factoring <q>far enough</q> to retain factors with rational coefficients.  The solutions to $x^2 - 2 = 0$ are somewhat obvious ($\pm\sqrt{2}\approx\pm 1.414213$), but the roots of the cubic factor are more obscure.<br /><br />
+But then we have <code>QQbar</code> to the rescue.  Since this number system contains the roots of every possible polynomial with integer coefficients, we can totally factor any characteristic polynomial that results from a matrix with entries from <code>QQbar</code>.  A common situation will be to begin with a matrix having rational entries, yet the matrix has a characteristic polynomial with roots that are complex numbers.<br /><br />
+We can demonstrate this behavior with the <code>extend</code> keyword option, which tells Sage whether or not to expand the number system to contain the eigenvalues.
+<sage>
+<input>A.eigenvalues(extend=False)
+</input>
+<output>[-3]
+</output>
+</sage>
+
+<sage>
+<input>A.eigenvalues(extend=True)
+</input>
+<output>[-3, -1.414213562373095?, 1.414213562373095?,
+ -8.24592094142788?, -2.110260216209409?, 2.356181157637288?]
+</output>
+</sage>
+
+For matrices with entries from <code>QQ</code>, the default behavior is to extend to <code>QQbar</code> when necessary.  But for other number systems, you may need to explicitly use the <code>extend=True</code> option.<br /><br />
+From a factorization of the characteristic polynomial, we can see the algebraic multiplicity of each eigenvalue as the second entry of the each pair returned in the list.  We demonstrate with <acroref type="example" acro="SEE" />, extending to <code>QQbar</code>, which is not strictly necessary for this simple matrix.
+<sage>
+<input>A = matrix(QQ, [[204, 98, -26, -10],
+                [-280, -134, 36, 14],
+                [716, 348, -90, -36],
+                [-472, -232, 60, 28]])
+A.characteristic_polynomial().roots(QQbar)
+</input>
+<output>[(0, 1), (2, 2), (4, 1)]
+</output>
+</sage>
+
+One more example, which illustrates the behavior when we use floating-point approximations as entries (in other words, we use <code>CDF</code> as our number system).  This is <acroref type="example" acro="EMMS4" />, both as an exact matrix with entries from <code>QQbar</code> and as an approximate matrix with entries from <code>CDF</code>.
+<sage>
+<input>A = matrix(QQ, [[-2,  1, -2, -4],
+                [12,  1,  4,  9],
+                [ 6,  5, -2, -4],
+                [ 3, -4,  5, 10]])
+A.eigenvalues()
+</input>
+<output>[1, 2, 2, 2]
+</output>
+</sage>
+
+<sage>
+<input>B = A.change_ring(CDF)
+B.eigenvalues()
+</input>
+<output>[1.99998924414 - 1.50843558717e-05*I,
+ 2.00001844133 - 1.77259686257e-06*I,
+ 1.99999231453 + 1.68569527354e-05*I,
+ 1.0]
+</output>
+</sage>
+
+So, we see $\lambda=2$ as an eigenvalue with algebraic multiplicity 3, while the numerical results contain three complex numbers, each very, very close to 2.  The approximate nature of these eigenvalues may be disturbing (or alarming).  However, their computation, as floating-point numbers, can be incredibly fast with sophisticated algorithms allowing the analysis of huge matrices with millions of entries.  And perhaps your original matrix includes data from an experiment, and is not even exact in the first place.  Designing and analyzing algorithms to perform these computations quickly and accurately is part of the field known as numerical linear algebra.<br /><br />
+One cautionary note: Sage uses a definition of the characteristic polynomial slightly different than ours, namely $\detname{xI_n-A}$.  This has the advantage that the $x^n$ term always has a positive one as the leading coefficient.  For even values of $n$ the two definitions create the identical polynomial, and for odd values of $n$, the two polynomials differ only be a multiple of $-1$.  The reason this is not very critical is that <acroref type="theorem" acro="EMRCP" /> is true in either case, and this is a principal use of the characteristic polynomial.  Our definition is more amenable to computations by hand.<br /><br />
+
+
+</sageadvice>
+<sageadvice acro="CEVEC" index="eigenvectors!computing">
+<title>Computing Eigenvectors</title>
+There are three ways to get eigenvectors in Sage.  For each eigenvalue, the method <code>.eigenvectors_right()</code> will return a list of eigenvectors that is a basis for the associated eigenspace.  The method <code>.eigenspaces_right()</code> will return an eigenspace (in other words, a vector space, rather than a list of vectors) for each eigenvalue.  There are also <code>eigenmatrix</code> methods which we will describe at the end of the chapter in <acroref type="sage" acro="MD" />.<br /><br />
+The matrix method <code>.eigenvectors_right()</code> (or equivalently the matrix method <code>.right_eigenvectors()</code>) produces a list of triples, one triple per eigenvalue.  Each triple has an eigenvalue, a list, and then the algebraic multiplicity of the eigenvalue.  The list contains vectors forming a basis for the eigenspace.  Notice that the length of the list of eigenvectors will be the geometric multiplicity (and there is no easier way to get this information).<br /><br />
+<sage>
+<input>A = matrix(QQ, [[-5,  1, 7, -15],
+                [-2,  0, 5,  -7],
+                [ 1, -5, 7,  -3],
+                [ 4, -7, 3,   4]])
+A.eigenvectors_right()
+</input>
+<output>[(3, [
+(1, 0, -1, -1),
+(0, 1, 2, 1)
+], 2),
+(-2*I, [(1, 0.3513513513513514? + 0.10810810810810811?*I,
+0.02702702702702703? + 0.1621621621621622?*I,
+-0.2972972972972973? + 0.2162162162162163?*I)], 1),
+(2*I, [(1, 0.3513513513513514? - 0.10810810810810811?*I,
+0.02702702702702703? - 0.1621621621621622?*I,
+-0.2972972972972973? - 0.2162162162162163?*I)], 1)]
+</output>
+</sage>
+
+Note that this is a good place to practice burrowing down into Sage output that is full of lists (and lists of lists).  See if you can extract just the second eigenvector for $\lambda=3$ using a single statement.  Or perhaps try obtaining the geometric multiplicity of $\lambda=-2i$.  Notice, too, that Sage has automatically upgraded to <code>QQbar</code> to get the complex eigenvalues.<br /><br />
+The matrix method <code>.eigenspaces_right()</code> (equal to <code>.right_eigenspaces()</code>) produces a list of pairs, one pair per eigenvalue.  Each pair has an eigenvalue, followed by the eigenvalue's eigenspace.  Notice that the basis matrix of the eigenspace may not have the same eigenvectors you might get from other methods.  Similar to the <code>eigenvectors</code> method, the dimension of the eigenspace will yield the geometric multiplicity (and there is no easier way to get this information).   If you need the algebraic multiplicities, you can supply the keyword option <code>algebraic_multiplicity=True</code> to get back triples with the algebraic multiplicity in the third entry of the triple.  We will recycle the example above, and not demonstrate the algebraic multiplicity option.  (We have formatted the one-row  basis matrices over <code>QQbar</code> across several lines.)
+<sage>
+<input>A.eigenspaces_right()
+</input>
+<output>[
+(3, Vector space of degree 4 and dimension 2 over Rational Field
+User basis matrix:
+[ 1  0 -1 -1]
+[ 0  1  2  1]),
+(-2*I, Vector space of degree 4 and dimension 1 over Algebraic Field
+User basis matrix:
+[                                           1
+ 0.3513513513513514?  + 0.10810810810810811?*I
+ 0.02702702702702703? +  0.1621621621621622?*I
+ -0.2972972972972973? +  0.2162162162162163?*I]),
+(2*I, Vector space of degree 4 and dimension 1 over Algebraic Field
+User basis matrix:
+[                                           1
+ 0.3513513513513514?  - 0.10810810810810811?*I
+ 0.02702702702702703? -  0.1621621621621622?*I
+-0.2972972972972973?  -  0.2162162162162163?*I])
+]
+</output>
+</sage>
+
+Notice how the output includes a subspace of dimension two over the rationals, and two subspaces of dimension one over the algebraic numbers.<br /><br />
+The upcoming <acroref type="subsection" acro="EE.ECEE" /> has many examples, which mostly reflect techniques that might be possible to verify by hand.  Here is the same matrix as above, analyzed in a similar way.  Practicing the examples in this subsection, either directly with the higher-level Sage commands, and/or with more primitive commands (as below) would be an extremely  good exercise at this point.
+<sage>
+<input>A = matrix(QQ, [[-5,  1, 7, -15],
+                [-2,  0, 5, -7],
+                [ 1, -5, 7, -3],
+                [ 4, -7, 3, 4]])
+# eigenvalues
+A.characteristic_polynomial()
+</input>
+<output>x^4 - 6*x^3 + 13*x^2 - 24*x + 36
+</output>
+</sage>
+
+<sage>
+<input>A.characteristic_polynomial().factor()
+</input>
+<output>(x - 3)^2 * (x^2 + 4)
+</output>
+</sage>
+
+<sage>
+<input>A.characteristic_polynomial().roots(QQbar)
+</input>
+<output>[(3, 2), (-2*I, 1), (2*I, 1)]
+</output>
+</sage>
+
+<sage>
+<input># eigenspaces, rational
+(A-3*identity_matrix(4)).right_kernel(basis='pivot')
+</input>
+<output>Vector space of degree 4 and dimension 2 over Rational Field
+User basis matrix:
+[ 1  1  1  0]
+[-2 -1  0  1]
+</output>
+</sage>
+
+<sage>
+<input># eigenspaces, complex
+B = A.change_ring(QQbar)
+(B-(2*I)*identity_matrix(4)).right_kernel(basis='pivot')
+</input>
+<output>Vector space of degree 4 and dimension 1 over Algebraic Field
+User basis matrix:
+[8/5*I - 11/5  4/5*I - 3/5  2/5*I + 1/5            1]
+</output>
+</sage>
+
+<sage>
+<input>(B-(-2*I)*identity_matrix(4)).right_kernel(basis='pivot')
+</input>
+<output>Vector space of degree 4 and dimension 1 over Algebraic Field
+User basis matrix:
+[-8/5*I - 11/5  -4/5*I - 3/5  -2/5*I + 1/5             1]
+</output>
+</sage>
+
+Notice how we changed the number system to the algebraic numbers before working with the complex eigenvalues.  Also, we are using the <code>basis='pivot'</code> keyword option so that bases for the eigenspaces look more like the bases described in <acroref type="theorem" acro="BNS" />.<br /><br />
+By now, it should be clear why we keep using the <q>right</q> variants of these methods.  Eigenvectors can be defined <q>on the right</q>, $A\vect{x}=\lambda\vect{x}$ as we have done, or <q>on the left,</q>  $\vect{x}A=\lambda\vect{x}$.  So use the <q>right</q> versions of the eigenvalue and eigenvector commands to stay consistent with the text.  Recognize, too, that eigenspaces may be computed with different bases than those given in the text (typically like those for null spaces with the <code>basis='echelon'</code> option).<br /><br />
+Why doesn't the <code>.eigenvalues()</code> method come in left and right versions?  The upcoming <acroref type="theorem" acro="ETM" /> can be used to show that the two versions would have identical output, so there is no need.
+</sageadvice>
+</subsection>
+
+<!--   End of  ee.tex -->
+<readingquestions>
+<ol>
+<li>Suppose $A$ is the $2\times 2$ matrix
+<equation>
+A=\begin{bmatrix}
+<![CDATA[-5 & 8\\-4 & 7]]>
+\end{bmatrix}
+</equation>
+Find the eigenvalues of $A$.
+</li>
+<li>For each eigenvalue of $A$, find the corresponding eigenspace.
+</li>
+<li>For the polynomial $p(x)=3x^2-x+2$ and $A$ from above, compute $p(A)$.
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="10" rough="Find characteristic polynomial 2x2">
+<problem contributor="chrisblack">Find the characteristic polynomial of the matrix
+$A = \begin{bmatrix}
+<![CDATA[1 & 2\\]]>
+<![CDATA[3 & 4]]>
+\end{bmatrix}$.
+</problem>
+<solution contributor="chrisblack">Answer: $\charpoly{A}{x} = -2 - 5x + x^2$
+</solution>
+</exercise>
+
+<exercise type="C" number="11" rough="Find characteristic polynomial 3x3">
+<problem contributor="chrisblack">Find the characteristic polynomial of the matrix
+$A = \begin{bmatrix}
+<![CDATA[3 & 2 & 1\\]]>
+<![CDATA[0 & 1 & 1\\]]>
+<![CDATA[1 & 2 & 0]]>
+\end{bmatrix}$.
+</problem>
+<solution contributor="chrisblack">Answer: $\charpoly{A}{x} = -5 + 4x^2 - x^3$.
+</solution>
+</exercise>
+
+<exercise type="C" number="12" rough="Find characteristic polynomial 4x4">
+<problem contributor="chrisblack">Find the characteristic polynomial of the matrix
+$A = \begin{bmatrix}
+<![CDATA[1 & 2 & 1 & 0\\]]>
+<![CDATA[1 & 0 & 1 & 0\\]]>
+<![CDATA[2 & 1 & 1 & 0\\]]>
+<![CDATA[3 & 1 & 0 & 1]]>
+\end{bmatrix}$.
+</problem>
+<solution contributor="chrisblack">Answer: $\charpoly{A}{x} = 2 + 2x - 2x^2 - 3x^3 + x^4$.
+</solution>
+</exercise>
+
+<exercise type="C" number="19" rough="eigen-info of a 2x2 by hand">
+<problem contributor="robertbeezer">Find the eigenvalues, eigenspaces, algebraic multiplicities and geometric multiplicities for the matrix below.  It is possible to do all these computations by hand, and it would be instructive to do so.
+<equation>
+C=
+\begin{bmatrix}
+<![CDATA[ -1 & 2 \\]]>
+<![CDATA[ -6 & 6]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">First compute the characteristic polynomial,
+<alignmath>
+\charpoly{C}{x}
+<![CDATA[&=\detname{C-xI_2}&&]]>\text{<acroref type="definition" acro="CP" />}\\
+<![CDATA[&=]]>
+\begin{vmatrix}
+<![CDATA[ -1-x & 2 \\]]>
+<![CDATA[ -6    & 6-x]]>
+\end{vmatrix}\\
+<![CDATA[&=(-1-x)(6-x)-(2)(-6)\\]]>
+<![CDATA[&=x^2-5x+6\\]]>
+<![CDATA[&=(x-3)(x-2)]]>
+</alignmath>
+So the eigenvalues of $C$ are the solutions to $\charpoly{C}{x}=0$, namely, $\lambda=2$ and $\lambda=3$.<br /><br />
+To obtain the eigenspaces, construct the appropriate singular matrices and find expressions for the null spaces of these matrices.
+<alignmath>
+<![CDATA[\lambda&=2\\]]>
+<![CDATA[C-(2)I_2&=]]>
+\begin{bmatrix}
+<![CDATA[-3 & 2\\]]>
+<![CDATA[-6 & 4]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & -\frac{2}{3}\\]]>
+<![CDATA[0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{C}{2}&=\nsp{C-(2)I_2}=]]>
+\spn{\set{\colvector{\frac{2}{3}\\1}}}
+=
+\spn{\set{\colvector{2\\3}}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=3\\]]>
+<![CDATA[C-(3)I_2&=]]>
+\begin{bmatrix}
+<![CDATA[-4 & 2\\]]>
+<![CDATA[-6 & 3]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & -\frac{1}{2}\\]]>
+<![CDATA[0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{C}{3}&=\nsp{C-(3)I_2}=]]>
+\spn{\set{\colvector{\frac{1}{2}\\1}}}
+=
+\spn{\set{\colvector{1\\2}}}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="20" rough="eigen-info of a 2x2 by hand">
+<problem contributor="robertbeezer">Find the eigenvalues, eigenspaces, algebraic multiplicities and geometric multiplicities for the matrix below.  It is possible to do all these computations by hand, and it would be instructive to do so.
+<equation>
+B=
+\begin{bmatrix}
+<![CDATA[-12&30\\-5&13]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">The characteristic polynomial of $B$ is
+<alignmath>
+<![CDATA[\charpoly{B}{x}&=\detname{B-xI_2}&&]]>\text{<acroref type="definition" acro="CP" />}\\
+<![CDATA[&=]]>
+\begin{vmatrix}
+<![CDATA[-12-x&30\\-5&13-x]]>
+\end{vmatrix}\\
+<![CDATA[&=(-12-x)(13-x)-(30)(-5)&&]]>\text{<acroref type="theorem" acro="DMST" />}\\
+<![CDATA[&=x^2-x-6\\]]>
+<![CDATA[&=(x-3)(x+2)]]>
+</alignmath>
+From this we find eigenvalues $\lambda=3,\,-2$ with algebraic multiplicities $\algmult{B}{3}=1$ and $\algmult{B}{-2}=1$.<br /><br />
+For eigenvectors and geometric multiplicities, we study the null spaces of $B-\lambda I_2$ (<acroref type="theorem" acro="EMNS" />).
+<alignmath>
+<![CDATA[\lambda&=3&B-3I_2&=]]>
+\begin{bmatrix}
+<![CDATA[-15&30\\-5&10]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & -2 \\]]>
+<![CDATA[0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{B}{3}&=\nsp{B-3I_2}=\spn{\set{\colvector{2\\1}}}]]>
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=-2&B+2I_2&=]]>
+\begin{bmatrix}
+<![CDATA[-10&30\\-5&15]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & -3 \\]]>
+<![CDATA[0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{B}{-2}&=\nsp{B+2I_2}=\spn{\set{\colvector{3\\1}}}]]>
+</alignmath>
+Each eigenspace has dimension one, so we have geometric multiplicities $\geomult{B}{3}=1$ and $\geomult{B}{-2}=1$.
+</solution>
+</exercise>
+
+<exercise type="C" number="21" rough="geom mult of one eigenvalue of a 4x4">
+<problem contributor="robertbeezer">The matrix $A$ below has $\lambda=2$ as an eigenvalue.  Find the geometric multiplicity of $\lambda=2$ using your calculator only for row-reducing matrices.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[18 & -15 & 33 & -15\\]]>
+<![CDATA[-4 & 8 & -6 & 6\\]]>
+<![CDATA[-9 & 9 & -16 & 9\\]]>
+<![CDATA[5 & -6 & 9 & -4]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">If $\lambda=2$ is an eigenvalue of $A$, the matrix $A-2I_4$ will be singular, and its null space will be the eigenspace of $A$.  So we form this matrix and row-reduce,
+<equation>
+A-2I_4=
+\begin{bmatrix}
+<![CDATA[16 & -15 & 33 & -15\\]]>
+<![CDATA[-4 & 6 & -6 & 6\\]]>
+<![CDATA[-9 & 9 & -18 & 9\\]]>
+<![CDATA[5 & -6 & 9 & -6]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 3 & 0\\]]>
+<![CDATA[0 & \leading{1} & 1 & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+With two free variables, we know a basis of the null space (<acroref type="theorem" acro="BNS" />) will contain two vectors.  Thus the null space of $A-2I_4$ has dimension two, and so the eigenspace of $\lambda=2$ has dimension two also (<acroref type="theorem" acro="EMNS" />), $\geomult{A}{2}=2$.
+</solution>
+</exercise>
+
+<exercise type="C" number="22" rough="eigen-info of a 2x2, complex evalues">
+<problem contributor="robertbeezer">Without using a calculator, find the eigenvalues of the matrix $B$.
+<equation>
+B=
+\begin{bmatrix}
+<![CDATA[ 2 & -1 \\]]>
+<![CDATA[ 1 & 1]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">The characteristic polynomial (<acroref type="definition" acro="CP" />) is
+<alignmath>
+\charpoly{B}{x}
+<![CDATA[&=\detname{B-xI_2}\\]]>
+<![CDATA[&=]]>
+\begin{vmatrix}
+<![CDATA[2-x & -1\\]]>
+<![CDATA[1 & 1-x]]>
+\end{vmatrix}\\
+<![CDATA[&=(2-x)(1-x)-(1)(-1)&&]]>\text{<acroref type="theorem" acro="DMST" />}\\
+<![CDATA[&=x^2-3x+3\\]]>
+<![CDATA[&=\left(x-\frac{3+\sqrt{3}i}{2}\right)\left(x-\frac{3-\sqrt{3}i}{2}\right)]]>
+</alignmath>
+where the factorization can be obtained by finding the roots of $\charpoly{B}{x}=0$ with the quadratic equation.  By <acroref type="theorem" acro="EMRCP" /> the eigenvalues of $B$ are the complex numbers $\lambda_1=\frac{3+\sqrt{3}i}{2}$ and $\lambda_2=\frac{3-\sqrt{3}i}{2}$.
+</solution>
+</exercise>
+
+<exercise type="C" number="23" rough="eigen-info of 2x2">
+<problem contributor="chrisblack">Find the eigenvalues, eigenspaces, algebraic and geometric multiplicities for
+$A = \begin{bmatrix}
+<![CDATA[1 & 1\\]]>
+<![CDATA[1 & 1]]>
+\end{bmatrix}.$
+</problem>
+<solution contributor="chrisblack">Eigenvalue: $\lambda = 0$\\
+$\eigenspace{A}{0} = \spn{\colvector{-1\\1}}$, $\algmult{A}{0} = 1$, $\geomult{A}{0} = 1$\\
+Eigenvalue: $\lambda = 2$\\
+$\eigenspace{A}{2} = \spn{\colvector{1\\1}}$, $\algmult{A}{2} = 1$, $ \geomult{A}{2} = 1$
+</solution>
+</exercise>
+
+<exercise type="C" number="24" rough="eigen-info of 3x3, repeated evalues">
+<problem contributor="chrisblack">Find the eigenvalues, eigenspaces, algebraic and geometric multiplicities for
+$A = \begin{bmatrix}
+<![CDATA[1 & -1 & 1\\]]>
+<![CDATA[-1 & 1 & -1\\]]>
+<![CDATA[1 & -1 & 1]]>
+\end{bmatrix}$.
+</problem>
+<solution contributor="chrisblack">Eigenvalue: $\lambda = 0$\\
+$\eigenspace{A}{0} = \spn{\colvector{1\\1\\0},\colvector{-1\\0\\1}}$, $\algmult{A}{0} = 2$, $\geomult{A}{0} = 2$\\
+Eigenvalue: $\lambda = 3$\\
+$\eigenspace{A}{3} =\spn{\colvector{1\\-1\\1}}$, $\algmult{A}{3} = 1$, $\geomult{A}{3} = 1$
+</solution>
+</exercise>
+
+<exercise type="C" number="25" rough="eigen-info of I3">
+<problem contributor="chrisblack">Find the eigenvalues, eigenspaces, algebraic and geometric multiplicities for the $3\times 3$ identity matrix $I_3$.  Do your results make sense?
+</problem>
+<solution contributor="chrisblack">The characteristic polynomial for $A = I_3$ is $\charpoly{I_3}{x} = (1-x)^3$, which has eigenvalue $\lambda = 1$ with algebraic multiplicity $\algmult{A}{1} = 3$.
+Looking for eigenvectors, we find that
+<![CDATA[$A - \lambda I = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0\\ 0 & 0 & 0\end{bmatrix}$.]]>
+The nullspace of this matrix is all of $\complex{3}$, so that the eigenspace is
+$\eigenspace{I_3}{1} = \spn{\colvector{1\\0\\0},\colvector{0\\1\\0}, \colvector{0\\0\\1}}$, and the geometric multiplicity is $\gamma_A(1) = 3$.  \\
+Does this make sense?  Yes!  Every vector $\vect{x}$ is a solution to $I_3\vect{x} = 1\vect{x}$, so every nonzero vector is an eigenvector with eigenvalue 1.  Since every vector is unchanged when multiplied by $I_3$, it makes sense that $\lambda = 1$ is the only eigenvalue.
+</solution>
+</exercise>
+
+<exercise type="C" number="26" rough="e-values and e-spaces given char poly 3x3">
+<problem contributor="chrisblack">For matrix
+$A = \begin{bmatrix}
+<![CDATA[2 & 1 & 1\\]]>
+<![CDATA[1 & 2 & 1\\]]>
+<![CDATA[1 & 1 & 2]]>
+\end{bmatrix}$, the characteristic polynomial of $A$ is $\charpoly{A}{\lambda} = (4-x)(1-x)^2$.
+Find the eigenvalues and corresponding eigenspaces of $A$.
+</problem>
+<solution contributor="chrisblack">Since we are given that the characteristic polynomial of $A$ is $\charpoly{A}{x} = (4-x)(1-x)^2$, we see that the eigenvalues are
+$\lambda = 4$ with algebraic multiplicity $\algmult{A}{4} = 1$ and
+$\lambda = 1$ with algebraic multiplicity $\algmult{A}{1} = 2$.
+The corresponding eigenspaces are
+<alignmath>
+<![CDATA[\eigenspace{A}{4} &= \spn{\colvector{1\\1\\1}}]]>
+<![CDATA[&]]>
+<![CDATA[\eigenspace{A}{1} &= \spn{\colvector{1\\-1\\0},\colvector{1\\0\\-1}}]]>
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="27" rough="e-values and e-spaces given char poly, 4x4">
+<problem contributor="chrisblack"><![CDATA[For matrix $A = \begin{bmatrix} 0 & 4 & -1 & 1\\-2 & 6 & -1 & 1\\-2 & 8 & -1 & -1\\-2 & 8 & -3 & 1 \end{bmatrix}$, the characteristic polynomial of $A$ is \[p_A(\lambda) = (x+2)(x-2)^2(x-4).\]  Find the eigenvalues and  corresponding eigenspaces of $A$.]]>
+</problem>
+<solution contributor="chrisblack">Since we are given that the characteristic polynomial of $A$ is $\charpoly{A}{x} = (x+2)(x-2)^2(x-4)$, we see that the eigenvalues are
+$\lambda = -2$, $\lambda = 2$ and $\lambda = 4$.  The eigenspaces are
+<alignmath>
+<![CDATA[\eigenspace{A}{-2}&= \spn{\colvector{0\\0\\1\\1}}\\]]>
+<![CDATA[\eigenspace{A}{2} &= \spn{\colvector{1\\1\\2\\0},\colvector{3\\1\\0\\2}}\\]]>
+<![CDATA[\eigenspace{A}{4} &= \spn{\colvector{1\\1\\1\\1}}]]>
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="M" number="60" rough="Repeat, an eigenvalue the hard way">
+<problem contributor="robertbeezer">Repeat <acroref type="example" acro="CAEHW" /> by choosing $\vect{x}=\colvector{0\\8\\2\\1\\2}$ and then arrive at an eigenvalue and eigenvector of the matrix $A$.  The hard way.
+</problem>
+<solution contributor="robertbeezer">Form the matrix $C$ whose columns are $\vect{x},\,A\vect{x},\,A^2\vect{x},\,A^3\vect{x},\,A^4\vect{x},\,A^5\vect{x}$ and row-reduce the matrix,
+<equation>
+\begin{bmatrix}
+<![CDATA[ 0 & 6 & 32 & 102 & 320 & 966 \\]]>
+<![CDATA[ 8 & 10 & 24 & 58 & 168 & 490 \\]]>
+<![CDATA[ 2 & 12 & 50 & 156 & 482 & 1452 \\]]>
+<![CDATA[ 1 & -5 & -47 & -149 & -479 & -1445 \\]]>
+<![CDATA[ 2 & 12 & 50 & 156 & 482 & 1452]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & -3 & -9 & -30 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & 1 & 0 & 1 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 3 & 10 & 30 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+The simplest possible relation of linear dependence on the columns of $C$ comes from using scalars $\alpha_4=1$ and $\alpha_5=\alpha_6=0$ for the free variables in a solution to $\homosystem{C}$.  The remainder of this solution is $\alpha_1=3$, $\alpha_2=-1$, $\alpha_3=-3$.  This solution gives rise to the polynomial
+<equation>
+p(x)=3-x-3x^2+x^3=(x-3)(x-1)(x+1)
+</equation>
+which then has the property that $p(A)\vect{x}=\zerovector$.<br /><br />
+No matter how you choose to order the factors of $p(x)$, the value of $k$ (in the language of <acroref type="theorem" acro="EMHE" /> and <acroref type="example" acro="CAEHW" />) is $k=2$.  For each of the  three possibilities, we list the resulting eigenvector and the associated eigenvalue:
+<alignmath>
+<![CDATA[(C-3I_5)(C-I_5)\vect{z}&=\colvector{8\\8\\8\\-24\\8}&\lambda&=-1\\]]>
+<![CDATA[(C-3I_5)(C+I_5)\vect{z}&=\colvector{20\\-20\\20\\-40\\20}&\lambda&=1\\]]>
+<![CDATA[(C+I_5)(C-I_5)\vect{z}&=\colvector{32\\16\\48\\-48\\48}&\lambda&=3]]>
+</alignmath>
+Note that each of these eigenvectors can be simplified by an appropriate scalar multiple, but we have shown here the actual vector obtained by the product specified in the theorem.
+</solution>
+</exercise>
+
+<exercise type="T" number="10" rough="eigenvalues of idempotent">
+<problem contributor="robertbeezer">A matrix $A$ is idempotent if $A^2=A$.  Show that the only possible eigenvalues of an idempotent matrix are $\lambda=0$ and $\lambda=1$.  Then give an example of a matrix that is idempotent and has both of these two values as eigenvalues.
+</problem>
+<solution contributor="robertbeezer">Suppose that $\lambda$ is an eigenvalue of $A$.  Then there is an eigenvector $\vect{x}$, such that $A\vect{x}=\lambda\vect{x}$.  We have,
+<alignmath>
+<![CDATA[\lambda\vect{x}&=A\vect{x}&&\text{$\vect{x}$ eigenvector of $A$}\\]]>
+<![CDATA[&=A^2\vect{x}&&\text{$A$ is idempotent}\\]]>
+<![CDATA[&=A(A\vect{x})\\]]>
+<![CDATA[&=A(\lambda\vect{x})&&\text{$\vect{x}$ eigenvector of $A$}\\]]>
+<![CDATA[&=\lambda(A\vect{x})&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=\lambda(\lambda\vect{x})&&\text{$\vect{x}$ eigenvector of $A$}\\]]>
+<![CDATA[&=\lambda^2\vect{x}]]>
+<intertext>From this we get</intertext>
+<![CDATA[\zerovector&=\lambda^2\vect{x}-\lambda\vect{x}\\]]>
+<![CDATA[&=(\lambda^2-\lambda)\vect{x}&&]]>\text{<acroref type="property" acro="DSAC" />}\\
+</alignmath>
+Since $\vect{x}$ is an eigenvector, it is nonzero, and <acroref type="theorem" acro="SMEZV" /> leaves us with the conclusion that $\lambda^2-\lambda=0$, and the solutions to this quadratic polynomial equation in $\lambda$ are $\lambda=0$ and $\lambda=1$.<br /><br />
+The matrix
+<equation>
+\begin{bmatrix}
+<![CDATA[1&0\\0&0]]>
+\end{bmatrix}
+</equation>
+is idempotent (check this!) and since it is a diagonal matrix, its eigenvalues are the diagonal entries,
+$\lambda=0$ and $\lambda=1$, so each of these possible values for an eigenvalue of an idempotent matrix actually occurs as an eigenvalue of some idempotent matrix.  So we cannot state any stronger conclusion about the eigenvalues of an idempotent matrix, and we can say that this theorem is the <q>best possible.</q>
+</solution>
+</exercise>
+
+<exercise type="T" number="15" rough="two definitions of characteristic polynomial">
+<problem contributor="robertbeezer">The characteristic polynomial of the square matrix $A$ is usually defined as $r_A(x)=\detname{xI_n-A}$.  Find a specific relationship between our characteristic polynomial, $\charpoly{A}{x}$, and $r_A(x)$, give a proof of your relationship, and use this to explain why <acroref type="theorem" acro="EMRCP" /> can remain essentially unchanged with either definition.  Explain the advantages of each definition over the other.  (Computing with both definitions, for a $2\times 2$ and a $3\times 3$ matrix, might be a good way to start.)
+</problem>
+<solution contributor="robertbeezer">Note in the following that the scalar multiple of a matrix is equivalent to multiplying each of the rows by that scalar, so we actually apply <acroref type="theorem" acro="DRCM" /> multiple times below (and are passing up an opportunity to do a proof by induction in the process, which maybe you'd like to do yourself?).
+<alignmath>
+\charpoly{A}{x}
+<![CDATA[&=\detname{A-xI_n}&&]]>\text{<acroref type="definition" acro="CP" />}\\
+<![CDATA[&=\detname{(-1)(xI_n-A)}&&]]>\text{<acroref type="definition" acro="MSM" />}\\
+<![CDATA[&=(-1)^{n}\detname{xI_n-A}&&]]>\text{<acroref type="theorem" acro="DRCM" />}\\
+<![CDATA[&=(-1)^{n}r_A(x)]]>
+</alignmath>
+Since the polynomials are scalar multiples of each other, their roots will be identical, so either polynomial could be used in <acroref type="theorem" acro="EMRCP" />.<br /><br />
+Computing by hand, our definition of the characteristic polynomial is easier to use, as you only need to subtract $x$ down the diagonal of the matrix before computing the determinant.  However, the price to be paid is that for odd values of $n$, the coefficient of $x^{n}$ is $-1$, while $r_A(x)$ always has the coefficient $1$ for $x^{n}$ (we say $r_A(x)$ is <q>monic.</q>)
+</solution>
+</exercise>
+
+<exercise type="T" number="20" rough="one eigenvector for two eigenvalues?">
+<problem contributor="robertbeezer">Suppose that $\lambda$ and $\rho$ are two different eigenvalues of the square matrix $A$.   Prove that the intersection of the eigenspaces for these two eigenvalues is trivial.  That is, $\eigenspace{A}{\lambda}\cap\eigenspace{A}{\rho}=\set{\zerovector}$.
+</problem>
+<solution contributor="robertbeezer">This problem asks you to prove that two sets are equal, so use <acroref type="definition" acro="SE" />.<br /><br />
+First show that $\set{\zerovector}\subseteq\eigenspace{A}{\lambda}\cap\eigenspace{A}{\rho}$.  Choose $\vect{x}\in\set{\zerovector}$.  Then $\vect{x}=\zerovector$.   Eigenspaces are subspaces (<acroref type="theorem" acro="EMS" />), so both $\eigenspace{A}{\lambda}$ and $\eigenspace{A}{\rho}$ contain the zero vector, and therefore $\vect{x}\in\eigenspace{A}{\lambda}\cap\eigenspace{A}{\rho}$ (<acroref type="definition" acro="SI" />).<br /><br />
+To show that $\eigenspace{A}{\lambda}\cap\eigenspace{A}{\rho}\subseteq\set{\zerovector}$, suppose that $\vect{x}\in\eigenspace{A}{\lambda}\cap\eigenspace{A}{\rho}$.  Then $\vect{x}$ is an eigenvector of $A$ for both $\lambda$ and $\rho$ (<acroref type="definition" acro="SI" />) and so
+<alignmath>
+\vect{x}
+<![CDATA[&=1\vect{x}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="O" />}\\
+<![CDATA[&=\frac{1}{\lambda-\rho}\left(\lambda-\rho\right)\vect{x}]]>
+<![CDATA[&&\lambda\neq\rho,\ \lambda-\rho\neq 0\\]]>
+<![CDATA[&=\frac{1}{\lambda-\rho}\left(\lambda\vect{x}-\rho\vect{x}\right)]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DSAC" />}\\
+<![CDATA[&=\frac{1}{\lambda-\rho}\left(A\vect{x}-A\vect{x}\right)]]>
+<![CDATA[&&\text{$\vect{x}$ eigenvector of $A$ for $\lambda$, $\rho$}\\]]>
+<![CDATA[&=\frac{1}{\lambda-\rho}\left(\zerovector\right)\\]]>
+<![CDATA[&=\zerovector]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="ZVSM" />}\\
+</alignmath>
+So $\vect{x}=\zerovector$, and trivially, $\vect{x}\in\set{\zerovector}$.
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

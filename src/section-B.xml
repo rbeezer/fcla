@@ -1,0 +1,1241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="B">
+<title>Bases</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section B -->
+<!-- %  Bases -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>A basis of a vector space is one of the most useful concepts in linear algebra.  It often provides a concise, finite description of an infinite vector space.</p>
+
+</introduction>
+
+<subsection acro="B">
+<title>Bases</title>
+
+<p>We now have all the tools in place to define a basis of a vector space.</p>
+
+<definition acro="B" index="basis">
+<title>Basis</title>
+<p>Suppose $V$ is a vector space.  Then a subset $S\subseteq V$ is a <define>basis</define> of $V$ if it is linearly independent and spans $V$.</p>
+
+</definition>
+
+<p>So, a basis is a linearly independent spanning set for a vector space.  The requirement that the set spans $V$ insures that $S$ has enough raw material to build $V$, while the linear independence requirement insures that we do not have any more raw material than we need.  As we shall see soon in <acroref type="section" acro="D" />, a basis is a minimal spanning set.</p>
+
+<p>You may have noticed that we used the term basis for some of the titles of previous theorems (<eg /> <acroref type="theorem" acro="BNS" />, <acroref type="theorem" acro="BCS" />, <acroref type="theorem" acro="BRS" />) and if you review each of these theorems you will see that their conclusions provide linearly independent spanning sets for sets that we now recognize as subspaces of $\complex{m}$.  Examples associated with these theorems include <acroref type="example" acro="NSLIL" />, <acroref type="example" acro="CSOCD" /> and <acroref type="example" acro="IAS" />.  As we will see, these three theorems will continue to be powerful tools, even in the setting of more general vector spaces.</p>
+
+<p>Furthermore, the archetypes contain an abundance of bases.  For each coefficient matrix of a system of equations, and for each archetype defined simply as a matrix, there is a basis for the null space, <em>three</em> bases for the column space, and a basis for the row space.  For this reason, our subsequent examples will concentrate on bases for vector spaces other than $\complex{m}$.</p>
+
+<p>Notice that <acroref type="definition" acro="B" /> does not preclude a vector space from having many bases, and this is the case, as hinted above by the statement that the archetypes contain three bases for the column space of a matrix.  More generally, we can grab any basis for a vector space, multiply any one basis vector by a non-zero scalar and create a slightly different set that is still a basis.  For <q>important</q> vector spaces, it will be convenient to have a collection of <q>nice</q> bases.  When a vector space has a single particularly nice basis, it is sometimes called the <define>standard basis</define> though there is nothing precise enough about this term to allow us to define it formally <mdash /> it is a question of style.  Here are some nice bases for important vector spaces.</p>
+
+<theorem acro="SUVB" index="unit vectors!basis">
+<title>Standard Unit Vectors are a Basis</title>
+<statement>
+<p>The set of standard unit vectors for $\complex{m}$ (<acroref type="definition" acro="SUV" />), $B=\set{\vectorlist{e}{m}}=\setparts{\vect{e}_i}{1\leq i\leq m}$ is a basis for the vector space $\complex{m}$.</p>
+
+</statement>
+
+<proof>
+<p>We must show that the set $B$ is both linearly independent and a spanning set for
+$\complex{m}$.  First, the vectors in $B$ are, by <acroref type="definition" acro="SUV" />, the columns of the identity matrix, which we know is nonsingular (since it row-reduces to the identity matrix, <acroref type="theorem" acro="NMRRI" />).  And the columns of a nonsingular matrix are linearly independent by <acroref type="theorem" acro="NMLIC" />.</p>
+
+<p>Suppose we grab an arbitrary vector from $\complex{m}$, say
+<equation>
+\vect{v}=\colvector{v_1\\v_2\\v_3\\\vdots\\v_m}.
+</equation>
+</p>
+
+<p>Can we write $\vect{v}$ as a linear combination of the vectors in $B$?  Yes, and quite simply.
+<alignmath>
+<![CDATA[\colvector{v_1\\v_2\\v_3\\\vdots\\v_m}&=]]>
+v_1\colvector{1\\0\\0\\\vdots\\0}+
+v_2\colvector{0\\1\\0\\\vdots\\0}+
+v_3\colvector{0\\0\\1\\\vdots\\0}+
+\cdots+
+v_m\colvector{0\\0\\0\\\vdots\\1}\\
+<![CDATA[\vect{v}&=v_1\vect{e}_1+v_2\vect{e}_2+v_3\vect{e}_3+\cdots+v_m\vect{e}_m]]>
+</alignmath>
+</p>
+
+<p>This shows that $\complex{m}\subseteq\spn{B}$, which is sufficient to show that $B$ is a spanning set for $\complex{m}$.</p>
+
+</proof>
+</theorem>
+
+<example acro="BP" index="basis!polynomials">
+<title>Bases for $P_n$</title>
+
+<p>The vector space of polynomials with degree at most $n$, $P_n$, has the basis
+<equation>
+B=\set{1,\,x,\,x^2,\,x^3,\,\ldots,\,x^n}.
+</equation></p>
+
+<p>Another nice basis for $P_n$ is
+<equation>
+C=\set{1,\,1+x,\,1+x+x^2,\,1+x+x^2+x^3,\,\ldots,\,1+x+x^2+x^3+\cdots+x^n}.
+</equation></p>
+
+<p>Checking that each of $B$ and $C$ is a linearly independent spanning set are good exercises.</p>
+
+</example>
+
+<example acro="BM" index="basis!matrices">
+<title>A basis for the vector space of matrices</title>
+
+<p>In the vector space $M_{mn}$ of matrices (<acroref type="example" acro="VSM" />)  define the matrices $B_{k\ell}$, $1\leq k\leq m$, $1\leq\ell\leq n$ by
+<equation>
+\matrixentry{B_{k\ell}}{ij}=\begin{cases}
+<![CDATA[1&\text{if }k=i,\,\ell=j\\]]>
+<![CDATA[0&\text{otherwise}]]>
+\end{cases}
+</equation>
+</p>
+
+<p>So these matrices have entries that are all zeros, with the exception of a lone entry that is one.  The set of all $mn$ of them,
+<equation>
+B=\setparts{B_{k\ell}}{1\leq k\leq m,\ 1\leq\ell\leq n}
+</equation>
+forms a basis for $M_{mn}$.  See <acroref type="exercise" acro="B.M20" />.
+</p>
+
+</example>
+
+<p>The bases described above will often be convenient ones to work with.  However a basis doesn't have to obviously look like a basis.</p>
+
+<example acro="BSP4" index="basis!polynomials">
+<title>A basis for a subspace of $P_4$</title>
+
+<p>In <acroref type="example" acro="SSP4" /> we showed that
+<equation>
+S=\set{x-2,\,x^2-4x+4,\,x^3-6x^2+12x-8,\,x^4-8x^3+24x^2-32x+16}
+</equation>
+is a spanning set for $W=\setparts{p(x)}{p\in P_4,\ p(2)=0}$.  We will now show that $S$ is also linearly independent in $W$.  Begin with a relation of linear dependence,
+<alignmath>
+0+0x+0x^2+0x^3+0x^4
+<![CDATA[&=\alpha_1\left(x-2\right)+\alpha_2\left(x^2-4x+4\right)\\]]>
+<![CDATA[&\quad +\alpha_3\left(x^3-6x^2+12x-8\right)+\alpha_4\left(x^4-8x^3+24x^2-32x+16\right)\\]]>
+<![CDATA[&=\alpha_4x^4+]]>
+\left(\alpha_3-8\alpha_4\right)x^3+
+\left(\alpha_2-6\alpha_3+24\alpha_4\right)x^2\\
+<![CDATA[&\quad +]]>
+\left(\alpha_1-4\alpha_2+12\alpha_3-32\alpha_4\right)x+
+\left(-2\alpha_1+4\alpha_2-8\alpha_3+16\alpha_4\right)
+</alignmath>
+</p>
+
+<p>Equating coefficients (vector equality in $P_4$) gives the homogeneous system of five equations in four variables,
+<alignmath>
+<![CDATA[\alpha_4&=0\\]]>
+<![CDATA[\alpha_3-8\alpha_4&=0\\]]>
+<![CDATA[\alpha_2-6\alpha_3+24\alpha_4&=0\\]]>
+<![CDATA[\alpha_1-4\alpha_2+12\alpha_3-32\alpha_4&=0\\]]>
+<![CDATA[-2\alpha_1+4\alpha_2-8\alpha_3+16\alpha_4&=0\\]]>
+</alignmath>
+</p>
+
+<p>We form the coefficient matrix, and row-reduce to obtain a matrix in reduced row-echelon form
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1}&0&0&0\\]]>
+<![CDATA[0&\leading{1}&0&0\\]]>
+<![CDATA[0&0&\leading{1}&0\\]]>
+<![CDATA[0&0&0&\leading{1}\\]]>
+<![CDATA[0&0&0&0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>With <em>only</em> the trivial solution to this homogeneous system, we conclude that only scalars that will form a relation of linear dependence are the trivial ones, and therefore the set $S$ is linearly independent (<acroref type="definition" acro="LI" />).  Finally, $S$ has earned the right to be called a basis for $W$ (<acroref type="definition" acro="B" />).
+</p>
+
+</example>
+
+<example acro="BSM22" index="basis!matrices">
+<title>A basis for a subspace of $M_{22}$</title>
+
+<p>In <acroref type="example" acro="SSM22" /> we discovered that
+<equation>
+Q=\set{
+<![CDATA[\begin{bmatrix}-3&1\\0&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}1&0\\-4&1\end{bmatrix}]]>
+}
+</equation>
+is a spanning set for the subspace
+<equation>
+<![CDATA[Z=\setparts{\begin{bmatrix}a&b\\c&d\end{bmatrix}}{a+3b-c-5d=0,\ -2a-6b+3c+14d=0}]]>
+</equation>
+of the vector space of all $2\times 2$ matrices, $M_{22}$.  If we can also determine that $Q$ is linearly independent in $Z$ (or in $M_{22}$), then it will qualify as a basis for $Z$.</p>
+
+<p>Let's begin with a relation of linear dependence.
+<alignmath>
+<![CDATA[\begin{bmatrix}0&0\\0&0\end{bmatrix}]]>
+<![CDATA[&=]]>
+<![CDATA[\alpha_1\begin{bmatrix}-3&1\\0&0\end{bmatrix}+]]>
+<![CDATA[\alpha_2\begin{bmatrix}1&0\\-4&1\end{bmatrix}\\]]>
+<![CDATA[&=\begin{bmatrix}]]>
+<![CDATA[-3\alpha_1 +\alpha_2  & \alpha_1\\]]>
+<![CDATA[-4\alpha_2 & \alpha_2]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Using our definition of matrix equality (<acroref type="definition" acro="ME" />) we equate corresponding entries and get a homogeneous system of four equations in two variables,
+<alignmath>
+<![CDATA[-3\alpha_1 +\alpha_2&=0\\]]>
+<![CDATA[\alpha_1&=0\\]]>
+<![CDATA[-4\alpha_2&=0\\]]>
+<![CDATA[\alpha_2&=0]]>
+</alignmath>
+</p>
+
+<p>We could row-reduce the coefficient matrix of this homogeneous system, but it is not necessary.  The second and fourth equations tell us that $\alpha_1=0$, $\alpha_2=0$ is the <em>only</em> solution to this homogeneous system.  This qualifies the set $Q$ as being linearly independent, since the only relation of linear dependence is trivial (<acroref type="definition" acro="LI" />).  Therefore $Q$ is a basis for $Z$ (<acroref type="definition" acro="B" />).</p>
+
+</example>
+
+<example acro="BC" index="basis!crazy vector apace">
+<title>Basis for the crazy vector space</title>
+
+<p>In <acroref type="example" acro="LIC" /> and <acroref type="example" acro="SSC" /> we determined that the set $R=\set{(1,\,0),\,(6,\,3)}$ from the crazy vector space, $C$ (<acroref type="example" acro="CVS" />), is linearly independent and is a spanning set for $C$.  By <acroref type="definition" acro="B" /> we see that $R$ is a basis for $C$.</p>
+
+</example>
+
+<p>We have seen that several of the sets associated with a matrix are subspaces of vector spaces of column vectors.  Specifically these are the null space (<acroref type="theorem" acro="NSMS" />), column space (<acroref type="theorem" acro="CSMS" />), row space  (<acroref type="theorem" acro="RSMS" />) and left null space (<acroref type="theorem" acro="LNSMS" />).  As subspaces they are vector spaces (<acroref type="definition" acro="S" />) and it is natural to ask about bases for these vector spaces.  <acroref type="theorem" acro="BNS" />, <acroref type="theorem" acro="BCS" />, <acroref type="theorem" acro="BRS" /> each have conclusions that provide linearly independent spanning sets for (respectively) the null space, column space, and row space.  Notice that each of these theorems contains the word <q>basis</q> in its title, even though we did not know the precise meaning of the word at the time.  To find a basis for a left null space we can use the definition of this subspace as a null space (<acroref type="definition" acro="LNS" />) and  apply <acroref type="theorem" acro="BNS" />.  Or <acroref type="theorem" acro="FS" /> tells us that the left null space can be expressed as a row space and we can then use <acroref type="theorem" acro="BRS" />.</p>
+
+<p><acroref type="theorem" acro="BS" /> is another early result that provides a linearly independent spanning set (<ie /> a basis) as its conclusion.  If a vector space of column vectors can be expressed as a span of a set of column vectors, then <acroref type="theorem" acro="BS" /> can be employed in a straightforward manner to quickly yield a basis.</p>
+
+</subsection>
+
+<subsection acro="BSCV">
+<title>Bases for Spans of Column Vectors</title>
+
+<p>We have seen several examples of bases in different vector spaces.  In this subsection, and the next (<acroref type="subsection" acro="B.BNM" />), we will consider building bases for $\complex{m}$ and its subspaces.</p>
+
+<p>Suppose we have a subspace of $\complex{m}$ that is expressed as the span of a set of vectors, $S$, and $S$ is not necessarily linearly independent, or perhaps not very attractive.  <acroref type="theorem" acro="REMRS" /> says that row-equivalent matrices have identical row spaces, while <acroref type="theorem" acro="BRS" /> says the nonzero rows of a matrix in reduced row-echelon form are a basis for the row space.  These theorems together give us a great computational tool for quickly finding a basis for a subspace that is expressed originally as a span.</p>
+
+<example acro="RSB" index="row space!basis">
+<title>Row space basis</title>
+
+<p>When we first defined the span of a set of column vectors, in <acroref type="example" acro="SCAD" /> we looked at the set
+<equation>
+W=\spn{\set{
+\colvector{2\\-3\\1},\,
+\colvector{1\\4\\1},\,
+\colvector{7\\-5\\4},\,
+\colvector{-7\\-6\\-5}
+}}
+</equation>
+with an eye towards realizing $W$ as the span of a smaller set.  By building relations of linear dependence (though we did not know them by that name then) we were able to remove two vectors and write $W$ as the span of the other two vectors.  These two remaining vectors formed a linearly independent set, even though we did not know that at the time.</p>
+
+<p>Now we know that $W$ is a subspace and must have a basis.  Consider the matrix, $C$, whose rows are the vectors in the spanning set for $W$,
+<equation>
+C=\begin{bmatrix}
+<![CDATA[2 & -3 & 1\\]]>
+<![CDATA[1 & 4 & 1\\]]>
+<![CDATA[7 & -5 & 4\\]]>
+<![CDATA[-7 & -6 & -5]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Then, by <acroref type="definition" acro="RSM" />, the row space of $C$ will be $W$, $\rsp{C}=W$.
+<acroref type="theorem" acro="BRS" /> tells us that if we row-reduce $C$, the nonzero rows of the row-equivalent matrix in reduced row-echelon form will be a basis for $\rsp{C}$, and hence a basis for $W$.  Let's do it <mdash /> $C$ row-reduces to
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & \frac{7}{11}\\]]>
+<![CDATA[0 & \leading{1} & \frac{1}{11}\\]]>
+<![CDATA[0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>If we convert the two nonzero rows to column vectors then we have a basis,
+<equation>
+B=\set{\colvector{1\\0\\\frac{7}{11}},\,\colvector{0\\1\\\frac{1}{11}}}
+</equation>
+and
+<equation>
+W=\spn{\set{\colvector{1\\0\\\frac{7}{11}},\,\colvector{0\\1\\\frac{1}{11}}}}
+</equation>
+</p>
+
+<p>For aesthetic reasons, we might wish to multiply each vector in $B$ by $11$, which will not change the spanning or linear independence properties of $B$ as a basis.  Then we can also write
+<equation>
+W=\spn{\set{\colvector{11\\0\\7},\,\colvector{0\\11\\1}}}
+</equation>
+</p>
+
+</example>
+
+<p><acroref type="example" acro="IAS" /> provides another example of this flavor, though now we can notice that $X$ is a subspace, and that the resulting set of three vectors is a basis.  This is such a powerful technique that we should do one more example.</p>
+
+<example acro="RS" index="span!reduction">
+<title>Reducing a span</title>
+
+<p>In <acroref type="example" acro="RSC5" /> we began with a set of $n=4$ vectors from $\complex{5}$,
+<equation>
+R=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}
+=
+\set{
+\colvector{1\\2\\-1\\3\\2},\,
+\colvector{2\\1\\3\\1\\2},\,
+\colvector{0\\-7\\6\\-11\\-2},\,
+\colvector{4\\1\\2\\1\\6}
+}\\
+</equation>
+and defined $V=\spn{R}$.  Our goal in that problem was to find a relation of linear dependence on the vectors in $R$, solve the resulting equation for one of the vectors, and re-express $V$ as the span of a set of three vectors.</p>
+
+<p>Here is another way to accomplish something similar.  The row space of the matrix
+<equation>
+A=\begin{bmatrix}
+<![CDATA[1 & 2 & -1 & 3 & 2\\]]>
+<![CDATA[2 & 1 & 3 & 1 & 2\\]]>
+<![CDATA[0 & -7 & 6 & -11 & -2\\]]>
+<![CDATA[4 & 1 & 2 & 1 & 6]]>
+\end{bmatrix}
+</equation>
+is equal to $\spn{R}$.  By <acroref type="theorem" acro="BRS" /> we can row-reduce this matrix, ignore any zero rows, and use the non-zero rows as column vectors that are a basis for the row space of $A$.  Row-reducing $A$ creates the matrix
+<equation>
+\begin{bmatrix}
+<![CDATA[1 & 0 & 0 & -\frac{1}{17} & \frac{30}{17}\\]]>
+<![CDATA[0 & 1 & 0 & \frac{25}{17} & -\frac{2}{17}\\]]>
+<![CDATA[0 & 0 & 1 & -\frac{2}{17} & -\frac{8}{17}\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>So
+<equation>
+\set{
+\colvector{1\\0\\0\\-\frac{1}{17}\\\frac{30}{17}},\,
+\colvector{0\\1\\0\\\frac{25}{17}\\-\frac{2}{17}},\,
+\colvector{0\\0\\1\\-\frac{2}{17}\\-\frac{8}{17}}
+}
+</equation>
+is a basis for $V$.  Our theorem tells us this is a basis, there is no need to verify that the subspace spanned by three vectors (rather than four) is the identical subspace, and there is no need to verify that we have reached the limit in reducing the set, since the set of three vectors is guaranteed to be linearly independent.</p>
+
+</example>
+
+<sageadvice acro="B" index="bases">
+<title>Bases</title>
+Every vector space in Sage has a basis <mdash /> you can obtain this with the vector space method <code>.basis()</code>, and the result is a list of vectors.  Another method for a vector space is <code>.basis_matrix()</code> which outputs a matrix whose rows are the vectors of a basis.  Sometimes one form is more convenient that the other, but notice that the description of a vector space chooses to print the basis matrix (since its display is just a bit easier to read).  A vector space typically has many bases (infinitely many), so which one does Sage use?  You will notice that the basis matrices displayed are in reduced row-echelon form <mdash /> this is the defining property of the basis chosen by Sage.<br /><br />
+Here is <acroref type="example" acro="RSB" /> again as an example of how bases are provided in Sage.
+<sage>
+<input>V = QQ^3
+v1 = vector(QQ, [ 2, -3,  1])
+v2 = vector(QQ, [ 1,  4,  1])
+v3 = vector(QQ, [ 7, -5,  4])
+v4 = vector(QQ, [-7, -6, -5])
+W = V.span([v1, v2, v3, v4])
+W
+</input>
+<output>Vector space of degree 3 and dimension 2 over Rational Field
+Basis matrix:
+[   1    0 7/11]
+[   0    1 1/11]
+</output>
+</sage>
+
+<sage>
+<input>W.basis()
+</input>
+<output>[
+(1, 0, 7/11),
+(0, 1, 1/11)
+]
+</output>
+</sage>
+
+<sage>
+<input>W.basis_matrix()
+</input>
+<output>[   1    0 7/11]
+[   0    1 1/11]
+</output>
+</sage>
+
+
+
+</sageadvice>
+<sageadvice acro="SUTH0" index="sage under the hood!round 0">
+<title>Sage Under The Hood, Round 0</title>
+Or perhaps, <q>under the bonnet</q> if you learned your English in the Commonwealth.  This is the first in a series that aims to explain how our knowledge of linear algebra <em>theory</em> helps us understand the design, construction and informed use of Sage.<br /><br />
+How does Sage determine if two vector spaces are equal?  Especially since these are infinite sets?  One approach would be to take a spanning set for the first vector space (maybe a minimal spanning set), and ask if each element of the spanning set is an element of the second vector space.  If so, the first vector space is a subset of the second.  Then we could turn it around, and determine if the second vector space is a subset of the first.  By <acroref type="definition" acro="SE" />, the two vector spaces would be equal if both subset tests succeeded.<br /><br />
+However, each time we would test if an element of a spanning set lives in a second vector space, we would need to solve a linear system.  So for two large vector spaces, this could take a noticeable amount of time.  There is a better way, made possible by exploiting two important theorems.<br /><br />
+For every vector space, Sage creates a basis that uniquely identifies the vector space.  We could call this a <q>canonical basis.</q>  By <acroref type="theorem" acro="REMRS" /> we can span the row space of matrix by the rows of any row-equivalent matrix.  So if we begin with a vector space described by any basis (or any spanning set, for that matter), we can make a matrix with these rows as vectors, and the vector space is now the row space of the matrix.  Of all the possible row-equivalent matrices, which would you pick?  Of course, the reduced row-echelon version is useful, and here it is critical to realize this version is unique (<acroref type="theorem" acro="RREFU" />).<br /><br />
+So for every vector space, Sage takes a spanning set, makes its vectors the rows of a matrix, row-reduces the matrix and tosses out the zero rows.  The result is what Sage calls an <q>echelonized basis.</q>  Now, two vector spaces are equal if, and only if, they have equal <q>echelonized basis matrices.</q>  It takes some computation to form the echelonized basis, but once built, the comparison of two echelonized bases can proceed very quickly by perhaps just comparing entries of the echelonized basis matrices.<br /><br />
+You might create a vector space with a basis you prefer (a <q>user basis</q>), but Sage always has an echelonized basis at hand.  If you do not specify some alternate basis, this is the basis Sage will create and provide for you.  We can now continue a discussion we began back in <acroref type="sage" acro="SSNS" />.  We have consistently used the <code>basis='pivot'</code> keyword when we construct null spaces.  This is because we initially prefer to see the basis described in <acroref type="theorem" acro="BNS" />, rather than Sage's default basis, the echelonized version.  But the echelonized version is always present and available.
+<sage>
+<input>A = matrix(QQ, [[14, -42, -2, -44, -42, 100, -18],
+                [-40, 120, -6, 129, 135, -304, 28],
+                [11, -33, 0, -35, -35, 81, -11],
+                [-21, 63, -4, 68, 72, -161, 13],
+                [-4, 12, -1, 13, 14, -31, 2]])
+K = A.right_kernel(basis='pivot')
+K.basis_matrix()
+</input>
+<output>[ 3  1  0  0  0  0  0]
+[ 0  0  1 -1  1  0  0]
+[-1  0 -1  2  0  1  0]
+[ 1  0 -2  0  0  0  1]
+</output>
+</sage>
+
+<sage>
+<input>K.echelonized_basis_matrix()
+</input>
+<output>[ 1  0  0  0 -4 -2 -1]
+[ 0  1  0  0 12  6  3]
+[ 0  0  1  0 -2 -1 -1]
+[ 0  0  0  1 -3 -1 -1]
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="BNM">
+<title>Bases and Nonsingular Matrices</title>
+
+<p>A quick source of diverse bases for $\complex{m}$ is the set of columns of a nonsingular matrix.</p>
+
+<theorem acro="CNMB" index="nonsingular! columns as basis">
+<title>Columns of Nonsingular Matrix are a Basis</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $m$.  Then the columns of $A$ are a basis of $\complex{m}$ if and only if $A$ is nonsingular.</p>
+
+</statement>
+
+<proof>
+<p><implyforward />  Suppose that the columns of $A$ are a basis for $\complex{m}$.  Then <acroref type="definition" acro="B" /> says the set of columns is linearly independent.  <acroref type="theorem" acro="NMLIC" /> then says that $A$ is nonsingular.</p>
+
+<p><implyreverse />  Suppose that $A$ is nonsingular.  Then by <acroref type="theorem" acro="NMLIC" /> this set of columns is linearly independent.  <acroref type="theorem" acro="CSNM" /> says that for a nonsingular matrix, $\csp{A}=\complex{m}$.  This is equivalent to saying that the columns of $A$ are a spanning set for the vector space $\complex{m}$.  As a linearly independent spanning set, the columns of $A$ qualify as a basis for $\complex{m}$ (<acroref type="definition" acro="B" />).</p>
+
+</proof>
+</theorem>
+
+<example acro="CABAK" index="basis!columns nonsingular matrix">
+<title>Columns as Basis, Archetype K</title>
+
+<p><acroref type="archetype" acro="K" /> is the $5\times 5$ matrix
+<equation>
+K=<archetypepart acro="K" part="matrixdefn" /></equation>
+which is row-equivalent to the $5\times 5$ identity matrix $I_5$.  So by <acroref type="theorem" acro="NMRRI" />, $K$ is nonsingular.  Then <acroref type="theorem" acro="CNMB" /> says the set
+<equation>
+<archetypepart acro="K" part="rangebasisoriginal" /></equation>
+is a (novel) basis of $\complex{5}$.</p>
+
+</example>
+
+<p>Perhaps we should view the fact that the standard unit vectors are a basis (<acroref type="theorem" acro="SUVB" />) as just a simple corollary of <acroref type="theorem" acro="CNMB" />?  (See <acroref type="technique" acro="LC" />.)</p>
+
+<p>With a new equivalence for a nonsingular matrix, we can update our list of equivalences.</p>
+
+<theorem acro="NME5" index="nonsingular matrix!equivalences">
+<title>Nonsingular Matrix Equivalences, Round 5</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $n$.  The following are equivalent.
+<ol><li> $A$ is nonsingular.
+</li><li> $A$ row-reduces to the identity matrix.
+</li><li> The null space of $A$ contains only the zero vector, $\nsp{A}=\set{\zerovector}$.
+</li><li> The linear system $\linearsystem{A}{\vect{b}}$ has a unique solution for every possible choice of $\vect{b}$.
+</li><li> The columns of $A$ are a linearly independent set.
+</li><li> $A$ is invertible.
+</li><li> The column space of $A$ is $\complex{n}$, $\csp{A}=\complex{n}$.
+</li><li> The columns of $A$ are a basis for $\complex{n}$.
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>With a new equivalence for a nonsingular matrix in <acroref type="theorem" acro="CNMB" /> we can expand <acroref type="theorem" acro="NME4" />.</p>
+
+</proof>
+</theorem>
+
+<sageadvice acro="NME5" index="nonsingular matrix equivalences!round 5">
+<title>Nonsingular Matrix Equivalences, Round 5</title>
+We can easily illustrate our latest equivalence for nonsingular matrices.
+<sage>
+<input>A = matrix(QQ, [[ 2,  3, -3,  2,  8, -4],
+                [ 3,  4, -4,  4,  8,  1],
+                [-2, -2,  3, -3, -2, -7],
+                [ 0,  1, -1,  2,  3,  4],
+                [ 2,  1,  0,  1, -4,  4],
+                [ 1,  2, -2,  1,  7, -5]])
+not A.is_singular()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>V = QQ^6
+cols = A.columns()
+V == V.span(cols)
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>V.linear_dependence(cols) == []
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="OBC">
+<title>Orthonormal Bases and Coordinates</title>
+
+<p>We learned about orthogonal sets of vectors in $\complex{m}$ back in <acroref type="section" acro="O" />, and we also learned that orthogonal sets are automatically linearly independent (<acroref type="theorem" acro="OSLI" />).  When an orthogonal set also spans a subspace of $\complex{m}$, then the set is a basis.  And when the set is orthonormal, then the set is an incredibly nice basis.  We will back up this claim with a theorem, but first consider how you might manufacture such a set.</p>
+
+<p>Suppose that $W$ is a subspace of $\complex{m}$ with basis $B$.  Then $B$ spans $W$ and is a linearly independent set of nonzero vectors.  We can apply the Gram-Schmidt Procedure (<acroref type="theorem" acro="GSP" />) and obtain a linearly independent set $T$ such that $\spn{T}=\spn{B}=W$ and $T$ is orthogonal.  In other words, $T$ is a basis for $W$, and is an orthogonal set.  By scaling each vector of $T$ to norm 1, we can convert $T$ into an orthonormal set, without destroying the properties that make it a basis of $W$.  In short, we can convert any basis into an orthonormal basis.  <acroref type="example" acro="GSTV" />, followed by <acroref type="example" acro="ONTV" />, illustrates this process.</p>
+
+<p>Unitary matrices (<acroref type="definition" acro="UM" />) are another good source of orthonormal bases (and vice versa).  Suppose that $Q$ is a unitary matrix of size $n$.  Then the $n$ columns of $Q$ form an orthonormal set (<acroref type="theorem" acro="CUMOS" />) that is therefore linearly independent (<acroref type="theorem" acro="OSLI" />).  Since $Q$ is invertible (<acroref type="theorem" acro="UMI" />), we know $Q$ is nonsingular (<acroref type="theorem" acro="NI" />), and then the columns of $Q$ span $\complex{n}$ (<acroref type="theorem" acro="CSNM" />).  So the columns of a unitary matrix of size $n$ are an orthonormal basis for $\complex{n}$.</p>
+
+<p>Why all the fuss about orthonormal bases?  <acroref type="theorem" acro="VRRB" /> told us that any vector in a vector space could be written, uniquely, as a linear combination of basis vectors.  For an orthonormal basis, finding the scalars for this linear combination is extremely easy, and this is the content of the next theorem.  Furthermore, with vectors written this way (as linear combinations of the elements of an orthonormal set) certain computations and analysis become much easier.  Here's the promised theorem.</p>
+
+<theorem acro="COB" index="coordinates!orthonormal basis">
+<title>Coordinates and Orthonormal Bases</title>
+<statement>
+<p>Suppose that $B=\set{\vectorlist{v}{p}}$ is an orthonormal basis of the subspace $W$ of $\complex{m}$.  For any $\vect{w}\in W$,
+<equation>
+\vect{w}=
+\innerproduct{\vect{v}_1}{\vect{w}}\vect{v}_1+
+\innerproduct{\vect{v}_2}{\vect{w}}\vect{v}_2+
+\innerproduct{\vect{v}_3}{\vect{w}}\vect{v}_3+
+\cdots+
+\innerproduct{\vect{v}_p}{\vect{w}}\vect{v}_p
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>Because $B$ is a basis of $W$, <acroref type="theorem" acro="VRRB" /> tells us that we can write $\vect{w}$ uniquely as a linear combination of the vectors in $B$.  So it is not this aspect of the conclusion that makes this theorem interesting.  What is interesting is that the particular scalars are so easy to compute.  No need to solve big systems of equations <mdash /> just do an inner product of $\vect{w}$ with $\vect{v}_i$ to arrive at the coefficient of $\vect{v}_i$ in the linear combination.</p>
+
+<p>So begin the proof by writing $\vect{w}$ as a linear combination of the vectors in $B$, using unknown scalars,
+<equation>
+\vect{w}=\lincombo{a}{v}{p}
+</equation>
+and compute,
+<alignmath>
+\innerproduct{\vect{v}_i}{\vect{w}}
+<![CDATA[&=\innerproduct{\vect{v}_i}{\sum_{k=1}^{p}a_k\vect{v}_k}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="VRRB" />}\\
+<![CDATA[&=\sum_{k=1}^{p}\innerproduct{\vect{v}_i}{a_k\vect{v}_k}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="IPVA" />}\\
+<![CDATA[&=\sum_{k=1}^{p}a_k\innerproduct{\vect{v}_i}{\vect{v}_k}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="IPSM" />}\\
+<![CDATA[&=a_i\innerproduct{\vect{v}_i}{\vect{v}_i}+]]>
+\sum_{\substack{k=1\\k\neq i}}^{p}a_k\innerproduct{\vect{v}_i}{\vect{v}_k}
+<![CDATA[&&]]>\text{<acroref type="property" acro="C" />}\\
+<![CDATA[&=a_i(1)+\sum_{\substack{k=1\\k\neq i}}^{p}a_k(0)]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="ONS" />}\\
+<![CDATA[&=a_i]]>
+</alignmath>
+</p>
+
+<p>So the (unique) scalars for the linear combination are indeed the inner products advertised in the conclusion of the theorem's statement.</p>
+
+</proof>
+</theorem>
+
+<example acro="CROB4" index="coordinatization!orthonormal basis">
+<title>Coordinatization relative to an orthonormal basis, $\complex{4}$</title>
+
+<p>The set
+<equation>
+\set{\vect{x}_1,\,\vect{x}_2,\,\vect{x}_3,\,\vect{x}_4}=
+\set{
+\colvector{1+i\\1\\1-i\\i},\,
+\colvector{1+5i\\6+5i\\-7-i\\1-6i},\,
+\colvector{-7+34i\\-8-23i\\-10+22i\\30+13i},\,
+\colvector{-2-4i\\6+i\\4+3i\\6-i}
+}
+</equation>
+was proposed, and partially verified, as an orthogonal set in <acroref type="example" acro="AOS" />.  Let's scale each vector to norm 1, so as to form an orthonormal set in $\complex{4}$.  Then by <acroref type="theorem" acro="OSLI" /> the set will be linearly independent, and by <acroref type="theorem" acro="NME5" /> the set will be a basis for $\complex{4}$.  So, once scaled to norm 1, the adjusted set will be an orthonormal basis of $\complex{4}$.  The norms are,
+<alignmath>
+\norm{\vect{x}_1}=\sqrt{6}
+<![CDATA[&&]]>
+\norm{\vect{x}_2}=\sqrt{174}
+<![CDATA[&&]]>
+\norm{\vect{x}_3}=\sqrt{3451}
+<![CDATA[&&]]>
+\norm{\vect{x}_4}=\sqrt{119}
+</alignmath>
+</p>
+
+<p>So an orthonormal basis is
+<alignmath>
+<![CDATA[B&=]]>
+\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}\\
+<![CDATA[&=\set{]]>
+\frac{1}{\sqrt{6}}\colvector{1+i\\1\\1-i\\i},\,
+\frac{1}{\sqrt{174}}\colvector{1+5i\\6+5i\\-7-i\\1-6i},\,
+\frac{1}{\sqrt{3451}}\colvector{-7+34i\\-8-23i\\-10+22i\\30+13i},\,
+\frac{1}{\sqrt{119}}\colvector{-2-4i\\6+i\\4+3i\\6-i}
+}
+</alignmath>
+</p>
+
+<p>Now, to illustrate <acroref type="theorem" acro="COB" />, choose any vector from $\complex{4}$, say $\vect{w}=\colvector{2\\-3\\1\\4}$, and compute
+<alignmath>
+<![CDATA[\innerproduct{\vect{w}}{\vect{v}_1}=\frac{-5i}{\sqrt{6}},&&]]>
+<![CDATA[\innerproduct{\vect{w}}{\vect{v}_2}=\frac{-19+30i}{\sqrt{174}},&&]]>
+<![CDATA[\innerproduct{\vect{w}}{\vect{v}_3}=\frac{120-211i}{\sqrt{3451}},&&]]>
+\innerproduct{\vect{w}}{\vect{v}_4}=\frac{6+12i}{\sqrt{119}}
+</alignmath>
+</p>
+
+<p>Then <acroref type="theorem" acro="COB" /> guarantees that
+<alignmath>
+<![CDATA[\colvector{2\\-3\\1\\4}&=]]>
+\frac{-5i}{\sqrt{6}}\left(\frac{1}{\sqrt{6}}\colvector{1+i\\1\\1-i\\i}\right)+
+\frac{-19+30i}{\sqrt{174}}\left(\frac{1}{\sqrt{174}}\colvector{1+5i\\6+5i\\-7-i\\1-6i}\right)\\
+<![CDATA[&\quad\quad+]]>
+\frac{120-211i}{\sqrt{3451}}\left(\frac{1}{\sqrt{3451}}\colvector{-7+34i\\-8-23i\\-10+22i\\30+13i}\right)+
+\frac{6+12i}{\sqrt{119}}\left(\frac{1}{\sqrt{119}}\colvector{-2-4i\\6+i\\4+3i\\6-i}\right)
+</alignmath>
+as you might want to check (if you have unlimited patience).</p>
+
+</example>
+
+<p>A slightly less intimidating example follows, in three dimensions and with just real numbers.</p>
+
+<example acro="CROB3" index="coordinatization!orthonormal basis">
+<title>Coordinatization relative to an orthonormal basis, $\complex{3}$</title>
+
+<p>The set
+<equation>
+\set{\vect{x}_1,\,\vect{x}_2,\,\vect{x}_3}
+=\set{
+\colvector{1\\2\\1},\,
+\colvector{-1\\0\\1},\,
+\colvector{2\\1\\1}
+}
+</equation>
+is a linearly independent set, which the Gram-Schmidt Process (<acroref type="theorem" acro="GSP" />) converts to an orthogonal set, and which can then be converted to the orthonormal set,
+<equation>
+B=
+\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3}
+=\set{
+\frac{1}{\sqrt{6}}\colvector{1\\2\\1},\,
+\frac{1}{\sqrt{2}}\colvector{-1\\0\\1},\,
+\frac{1}{\sqrt{3}}\colvector{1\\-1\\1}
+}
+</equation>
+which is therefore an orthonormal basis of $\complex{3}$.  With three vectors in $\complex{3}$, all with real number entries, the inner product (<acroref type="definition" acro="IP" />) reduces to the usual <q>dot product</q> (or scalar product) and the orthogonal pairs of vectors can be interpreted as perpendicular pairs of directions.  So the vectors in $B$ serve as replacements for our usual 3-D axes, or the usual 3-D unit vectors $\vec{i},\vec{j}$ and $\vec{k}$.  We would like to decompose arbitrary vectors into <q>components</q> in the directions of each of these basis vectors.  It is <acroref type="theorem" acro="COB" /> that tells us how to do this.</p>
+
+<p>Suppose that we choose $\vect{w}=\colvector{2\\-1\\5}$.  Compute
+<alignmath>
+<![CDATA[\innerproduct{\vect{w}}{\vect{v}_1}=\frac{5}{\sqrt{6}}&&]]>
+<![CDATA[\innerproduct{\vect{w}}{\vect{v}_2}=\frac{3}{\sqrt{2}}&&]]>
+\innerproduct{\vect{w}}{\vect{v}_3}=\frac{8}{\sqrt{3}}
+</alignmath>
+then <acroref type="theorem" acro="COB" /> guarantees that
+<equation>
+\colvector{2\\-1\\5}=
+\frac{5}{\sqrt{6}}\left(\frac{1}{\sqrt{6}}\colvector{1\\2\\1}\right)+
+\frac{3}{\sqrt{2}}\left(\frac{1}{\sqrt{2}}\colvector{-1\\0\\1}\right)+
+\frac{8}{\sqrt{3}}\left(\frac{1}{\sqrt{3}}\colvector{1\\-1\\1}\right)
+</equation>
+which you should be able to check easily, even if you do not have much patience.</p>
+
+</example>
+
+<p>Not only do the columns of a unitary matrix form an orthonormal basis, but there is a deeper connection between orthonormal bases and unitary matrices.  Informally, the next theorem says that if we transform each vector of an orthonormal basis by multiplying it by a unitary matrix, then the resulting set will be another orthonormal basis.  And more remarkably, any matrix with this property must be unitary!  As an equivalence (<acroref type="technique" acro="E" />) we could take this as our defining property of a unitary matrix, though it might not have the same utility as <acroref type="definition" acro="UM" />.</p>
+
+<theorem acro="UMCOB" index="indexstring">
+<title>Unitary Matrices Convert Orthonormal Bases</title>
+<statement>
+<p>Let $A$ be an $n\times n$ matrix and $B=\set{\vectorlist{x}{n}}$ be an orthonormal basis of $\complex{n}$.  Define
+<alignmath>
+<![CDATA[C&=\set{A\vect{x}_1,\,A\vect{x}_2,\,A\vect{x}_3,\,\dots,\,A\vect{x}_n}]]>
+</alignmath></p>
+
+<p>Then $A$ is a unitary matrix if and only if $C$ is an orthonormal basis of $\complex{n}$.</p>
+
+</statement>
+
+<proof>
+<p>$\left(\Rightarrow\right)$\quad
+Assume $A$ is a unitary matrix and establish several facts about $C$.  First we check that $C$ is an orthonormal set (<acroref type="definition" acro="ONS" />).  By <acroref type="theorem" acro="UMPIP" />, for $i\neq j$,
+<alignmath>
+<![CDATA[\innerproduct{A\vect{x}_i}{A\vect{x}_j}&]]>
+=\innerproduct{\vect{x}_i}{\vect{x}_j}=0
+</alignmath>
+</p>
+
+<p>Similarly, <acroref type="theorem" acro="UMPIP" /> also gives, for $1\leq i\leq n$,
+<alignmath>
+\norm{A\vect{x}_i}=\norm{\vect{x}_i}=1
+</alignmath>
+</p>
+
+<p>As $C$ is an orthogonal set (<acroref type="definition" acro="OSV" />), <acroref type="theorem" acro="OSLI" /> yields the linear independence of $C$.  Having established that the column vectors on $C$ form a linearly independent set, a matrix whose columns are the vectors of $C$ is nonsingular (<acroref type="theorem" acro="NMLIC" />), and hence these vectors form a basis of $\complex{n}$ by <acroref type="theorem" acro="CNMB" />.</p>
+
+<p>$\left(\Leftarrow\right)$\quad
+Now assume that $C$ is an orthonormal set.  Let $\vect{y}$ be an arbitrary vector from $\complex{n}$.  Since $B$ spans $\complex{n}$, there are scalars, $\scalarlist{a}{n}$, such that
+<alignmath>
+<![CDATA[\vect{y}&=a_1\vect{x}_1+a_2\vect{x}_2+a_3\vect{x}_3+\cdots+a_n\vect{x}_n]]>
+</alignmath>
+</p>
+
+<p>Now
+<alignmath>
+\adjoint{A}A\vect{y}
+<![CDATA[&=\sum_{i=1}^{n}\innerproduct{\vect{x}_i}{\adjoint{A}A\vect{y}}\vect{x}_i]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="COB" />}\\
+<![CDATA[&=\sum_{i=1}^{n}\innerproduct{\vect{x}_i}{\adjoint{A}A\sum_{j=1}^{n}a_j\vect{x}_j}\vect{x}_i]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="TSVS" />}\\
+<![CDATA[&=\sum_{i=1}^{n}\innerproduct{\vect{x}_i}{\sum_{j=1}^{n}\adjoint{A}Aa_j\vect{x}_j}\vect{x}_i]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=\sum_{i=1}^{n}\innerproduct{\vect{x}_i}{\sum_{j=1}^{n}a_j\adjoint{A}A\vect{x}_j}\vect{x}_i]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=\sum_{i=1}^{n}\sum_{j=1}^{n}\innerproduct{\vect{x}_i}{a_j\adjoint{A}A\vect{x}_j}\vect{x}_i]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="IPVA" />}\\
+<![CDATA[&=\sum_{i=1}^{n}\sum_{j=1}^{n}a_j\innerproduct{\vect{x}_i}{\adjoint{A}A\vect{x}_j}\vect{x}_i]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="IPSM" />}\\
+<![CDATA[&=\sum_{i=1}^{n}\sum_{j=1}^{n}a_j\innerproduct{A\vect{x}_i}{A\vect{x}_j}\vect{x}_i]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="AIP" />}\\
+<![CDATA[&=]]>
+\sum_{i=1}^{n}\sum_{\substack{j=1\\j\neq i}}^{n}a_j\innerproduct{A\vect{x}_i}{A\vect{x}_j}\vect{x}_i
++
+\sum_{\ell=1}^{n}a_\ell\innerproduct{A\vect{x}_\ell}{A\vect{x}_\ell}\vect{x}_\ell
+<![CDATA[&&]]>\text{<acroref type="property" acro="C" />}\\
+<![CDATA[&=]]>
+\sum_{i=1}^{n}\sum_{\substack{j=1\\j\neq i}}^{n}a_j(0)\vect{x}_i
++
+\sum_{\ell=1}^{n}a_\ell(1)\vect{x}_\ell
+<![CDATA[&&]]>\text{<acroref type="definition" acro="ONS" />}\\
+<![CDATA[&=]]>
+\sum_{i=1}^{n}\sum_{\substack{j=1\\j\neq i}}^{n}\zerovector
++
+\sum_{\ell=1}^{n}a_\ell\vect{x}_\ell
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="ZSSM" />}\\
+<![CDATA[&=\sum_{\ell=1}^{n}a_\ell\vect{x}_\ell]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="Z" />}\\
+<![CDATA[&=\vect{y}\\]]>
+<![CDATA[&=I_n\vect{y}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMIM" />}
+</alignmath>
+</p>
+
+<p>Since the choice of $\vect{y}$ was arbitrary, <acroref type="theorem" acro="EMMVP" /> tells us that $\adjoint{A}A=I_n$, so $A$ is unitary (<acroref type="definition" acro="UM" />).</p>
+
+</proof>
+</theorem>
+
+<sageadvice acro="C" index="coordinates">
+<title>Coordinates</title>
+For vector spaces of column vectors, Sage can quickly determine the coordinates of a vector relative to a basis, as guaranteed by <acroref type="theorem" acro="VRRB" />.  We illustrate some new Sage commands with a simple example and then apply them to orthonormal bases.  The vectors <code>v1</code> and <code>v2</code> are linearly independent and thus span a subspace with a basis of size 2.  We first create this subspace and let Sage determine the basis, then we illustrate a new vector space method, <code>.subspace_with_basis()</code>, that allows us to specify the basis.  (This method is very similar to <code>.span_of_basis()</code>, except it preserves a subspace relationship with the original vector space.)  Notice how the description of the vector space makes it clear that <code>W</code> has a user-specified basis.  Notice too that the actual subspace created is the same in both cases.
+<sage>
+<input>V = QQ^3
+v1 = vector(QQ,[ 2, 1, 3])
+v2 = vector(QQ,[-1, 1, 4])
+U=V.span([v1,v2])
+U
+</input>
+<output>Vector space of degree 3 and dimension 2 over Rational Field
+Basis matrix:
+[   1    0 -1/3]
+[   0    1 11/3]
+</output>
+</sage>
+
+<sage>
+<input>W = V.subspace_with_basis([v1, v2])
+W
+</input>
+<output>Vector space of degree 3 and dimension 2 over Rational Field
+User basis matrix:
+[ 2  1  3]
+[-1  1  4]
+</output>
+</sage>
+
+<sage>
+<input>U == W
+</input>
+<output>True
+</output>
+</sage>
+
+Now we manufacture a third vector in the subspace, and request a coordinatization in each vector space, which has the effect of using a different basis in each case.  The vector space method <code>.coordinate_vector(v)</code> computes a vector whose entries express <code>v</code> as a linear combination of basis vectors.
+Verify for yourself in each case below that the components of the vector returned really give a linear combination of the basis vectors that equals <code>v3</code>.
+<sage>
+<input>v3 = 4*v1 + v2; v3
+</input>
+<output>(7, 5, 16)
+</output>
+</sage>
+
+<sage>
+<input>U.coordinate_vector(v3)
+</input>
+<output>(7, 5)
+</output>
+</sage>
+
+<sage>
+<input>W.coordinate_vector(v3)
+</input>
+<output>(4, 1)
+</output>
+</sage>
+
+Now we can construct a more complicated example using an orthonormal basis, specifically the one from <acroref type="example" acro="CROB4" />, but we will compute over <code>QQbar</code>, the field of algebraic numbers.  We form the four vectors of the orthonormal basis, install them as the basis of a vector space and then ask for the coordinates.  Sage treats the square roots in the scalars as <q>symbolic</q> expressions, so we need to explicitly coerce them into <code>QQbar</code> before computing the scalar multiples.
+<sage>
+<input>V = QQbar^4
+x1 = vector(QQbar, [    1+I,       1,      1-I,       I])
+x2 = vector(QQbar, [  1+5*I,   6+5*I,     -7-I,   1-6*I])
+x3 = vector(QQbar, [-7+34*I, -8-23*I, -10+22*I, 30+13*I])
+x4 = vector(QQbar, [ -2-4*I,     6+I,    4+3*I,     6-I])
+v1 = QQbar(1/sqrt(6))   * x1
+v2 = QQbar(1/sqrt(174)) * x2
+v3 = QQbar(1/sqrt(3451))* x3
+v4 = QQbar(1/sqrt(119)) * x4
+W = V.subspace_with_basis([v1, v2, v3, v4])
+w = vector(QQbar, [2, -3, 1, 4])
+c = W.coordinate_vector(w); c
+</input>
+<output>(0.?e-14           - 2.04124145231932?*I,
+-1.44038628279992? + 2.27429413073671?*I,
+ 2.04271964894459? - 3.59178204939423?*I,
+ 0.55001909821693? + 1.10003819643386?*I)
+</output>
+</sage>
+
+Is this right?  Our exact coordinates in the text are printed differently, but we can check that they are the same numbers:
+<sage>
+<input>c[0] == 1/sqrt(6)*(-5*I)
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>c[1] == 1/sqrt(174)*(-19+30*I)
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>c[2] == 1/sqrt(3451)*(120-211*I)
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>c[3] == 1/sqrt(119)*(6+12*I)
+</input>
+<output>True
+</output>
+</sage>
+
+With an orthonormal basis, we can illustrate <acroref type="theorem" acro="CUMOS" /> by making the four vectors the columns of $4\times 4$ matrix and verifying the result is a unitary matrix.
+<sage>
+<input>U = column_matrix([v1, v2, v3, v4])
+U.is_unitary()
+</input>
+<output>True
+</output>
+</sage>
+
+We will see coordinate vectors again, in a more formal setting, in <acroref type="sage" acro="VR" />.
+
+
+</sageadvice>
+</subsection>
+
+<!--   End  b.tex -->
+<readingquestions>
+<ol>
+<li>The matrix below is nonsingular.  What can you now say about its columns?
+<equation>
+A= \begin{bmatrix}
+<![CDATA[-3 & 0 & 1\\]]>
+<![CDATA[1 & 2 & 1\\]]>
+<![CDATA[5 & 1 & 6]]>
+\end{bmatrix}
+</equation>
+</li>
+<li>Write the vector $\vect{w}=\colvector{6\\6\\15}$ as a linear combination of the columns of the matrix $A$ above.  How many ways are there to answer this question?
+</li>
+<li>Why is an orthonormal basis desirable?
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="10" rough="Linear dependence in a set of two vectors">
+<problem contributor="chrisblack">Find a basis for $\spn{S}$, where
+<alignmath>
+<![CDATA[S &= \set{]]>
+\colvector{1\\3\\2\\1},
+\colvector{1\\2\\1\\1},
+\colvector{1\\1\\0\\1},
+\colvector{1\\2\\2\\1},
+\colvector{3\\4\\1\\3}
+}.
+</alignmath>
+</problem>
+<solution contributor="chrisblack"><acroref type="theorem" acro="BS" /> says that if we take these 5 vectors, put them into a matrix, and row-reduce to discover the pivot columns, then the corresponding vectors in $S$ will be linearly independent and span $S$, and thus will form a basis of $S$.
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & 1 & 1 & 1 & 3\\]]>
+<![CDATA[3 & 2 & 1 & 2 & 4\\]]>
+<![CDATA[2 & 1 & 0 & 2 & 1\\]]>
+<![CDATA[1 & 1 & 1 & 1 & 3]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & -1 & 0 & -2\\]]>
+<![CDATA[0 & \leading{1} & 2 & 0 & 5\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 &0]]>
+\end{bmatrix}
+</alignmath>
+Thus, the independent vectors that span $S$ are the first, second and fourth of the set, so a basis of $S$ is
+<alignmath>
+<![CDATA[B &= \set{]]>
+\colvector{1\\3\\2\\1},
+\colvector{1\\2\\1\\1},
+\colvector{1\\2\\2\\1}
+}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="11" rough="Linear dependence in a set of two vectors">
+<problem contributor="chrisblack">Find a basis for the subspace $W$ of $\complex{4}$,
+<alignmath>
+<![CDATA[W &=]]>
+\setparts{\colvector{a + b - 2c\\a + b - 2c + d\\ -2a + 2b + 4c - d\\ b + d}}
+{a, b, c, d \in\complexes}
+</alignmath>
+</problem>
+<solution contributor="chrisblack">We can rewrite an arbitrary vector of $W$ as
+<alignmath>
+\colvector{a + b - 2c\\ a + b - 2c + d\\ -2a + 2b + 4c - d\\ b + d}
+<![CDATA[& = \colvector{a\\a\\-2a\\0} +]]>
+\colvector{b\\b\\2b\\b} +
+\colvector{-2c\\-2c\\4c\\0} +
+\colvector{0\\d\\-d\\d}\\
+<![CDATA[&= a\colvector{1\\1\\-2\\0} +]]>
+b\colvector{1\\1\\2\\1} +
+c\colvector{-2\\-2\\4\\0} +
+d\colvector{0\\1\\-1\\1}
+</alignmath>
+Thus, we can write $W$ as
+<alignmath>
+<![CDATA[W &= \spn{\set{]]>
+\colvector{1\\1\\-2\\0},
+\colvector{1\\1\\2\\1},
+\colvector{-2\\-2\\4\\0},
+\colvector{0\\1\\-1\\1}
+}}
+</alignmath>
+These four vectors span $W$, but we also need to determine if they are linearly independent (turns out they are not).  With an application of <acroref type="theorem" acro="BS" /> we can see that the arrive at a basis employing three of these vectors,
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & 1 & -2 & 0\\]]>
+<![CDATA[1 & 1 & -2 & 1\\]]>
+<![CDATA[-2 & 2 & 4 & -1\\]]>
+<![CDATA[0 & 1 & 0 & 1]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\framebox{1} & 0 & -2 & 0\\]]>
+<![CDATA[0 & \framebox{1} & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & \framebox{1}\\]]>
+<![CDATA[0 & 0 & 0 &0]]>
+\end{bmatrix}
+</alignmath>
+Thus, we have the following basis of $W$,
+<alignmath>
+<![CDATA[B &= \set{]]>
+\colvector{1\\1\\-2\\0},
+\colvector{1\\1\\2\\1},
+\colvector{0\\1\\-1\\1}
+}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="12" rough="Linear dependence in a set of two vectors">
+<problem contributor="chrisblack">Find a basis for the vector space $T$ of lower triangular $3 \times 3$ matrices;
+that is, matrices of the form
+<![CDATA[$\begin{bmatrix} * & 0 & 0\\ * & * & 0\\ * & * & *\end{bmatrix}$]]>
+where an asterisk represents any complex number.
+</problem>
+<solution contributor="chrisblack">Let $A$ be an arbitrary element of the specified vector space $T$.  Then there exist $a$, $b$, $c$, $d$, $e$ and $f$ so that
+<![CDATA[$A = \begin{bmatrix} a & 0 & 0\\ b &  c & 0\\ d & e & f \end{bmatrix}$.]]>
+Then
+<alignmath>
+<![CDATA[A &=]]>
+<![CDATA[a\begin{bmatrix} 1 & 0 & 0 \\ 0 & 0 & 0\\ 0  & 0 & 0 \end{bmatrix} +]]>
+<![CDATA[b\begin{bmatrix} 0 & 0 & 0 \\ 1 & 0 & 0\\ 0  & 0 & 0 \end{bmatrix} +]]>
+<![CDATA[c\begin{bmatrix} 0 & 0 & 0 \\ 0 & 1 & 0\\ 0  & 0 & 0 \end{bmatrix} +]]>
+<![CDATA[d\begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0\\ 1  & 0 & 0 \end{bmatrix} +]]>
+<![CDATA[e\begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0\\ 0  & 1 & 0 \end{bmatrix} +]]>
+<![CDATA[f\begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0\\ 0  & 0 & 1 \end{bmatrix}]]>
+</alignmath>
+Consider the set
+<alignmath>
+<![CDATA[B &= \set{]]>
+<![CDATA[\begin{bmatrix} 1 & 0 & 0 \\ 0 & 0 & 0\\ 0  & 0 & 0 \end{bmatrix},]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0 \\ 1 & 0 & 0\\ 0  & 0 & 0 \end{bmatrix},]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0 \\ 0 & 1 & 0\\ 0  & 0 & 0 \end{bmatrix},]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0\\ 1  & 0 & 0 \end{bmatrix},]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0\\ 0  & 1 & 0 \end{bmatrix},]]>
+<![CDATA[\begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0\\ 0  & 0 & 1 \end{bmatrix}]]>
+}
+</alignmath>
+The six vectors in $B$ span the  vector space $T$, and we can check rather simply that they are also linearly independent.  Thus, $B$ is a basis of $T$.
+</solution>
+</exercise>
+
+<exercise type="C" number="13" rough="Linear dependence in a set of two vectors">
+<problem contributor="chrisblack">Find a basis for the subspace $Q$ of $P_2$, defined by $Q = \setparts{p(x) = a + bx + cx^2}{p(0) = 0}$.
+</problem>
+<solution contributor="chrisblack">If $p(0) = 0$, then $a + b(0) + c(0^2) = 0$, so $a = 0$.
+Thus, we can write $Q = \setparts{p(x) = bx + cx^2}{b, c\in\complexes}$.
+A linearly independent set that spans $Q$ is $B=\set{x, x^2}$, and this set forms a basis of $Q$.
+</solution>
+</exercise>
+
+<exercise type="C" number="14" rough="Linear dependence in a set of two vectors">
+<problem contributor="chrisblack">Find a basis for the subspace $R$ of $P_2$ defined by $R = \setparts{p(x) = a + bx + cx^2}{p'(0) = 0}$, where $p'$ denotes the derivative.
+</problem>
+<solution contributor="chrisblack">The derivative of $p(x) = a + bx + cx^2$ is $p^\prime(x) = b + 2cx$.
+Thus, if $p \in R$, then $p^\prime(0) = b + 2c(0) = 0$,
+so we must have $b = 0$.  We see that we can rewrite $R$ as
+$R = \setparts{p(x) = a + cx^2}{a, c\in\complexes}$.
+A linearly independent set that spans $R$ is $B = \set{1,x^2}$, and $B$ is a basis of $R$.
+</solution>
+</exercise>
+
+<exercise type="C" number="40" rough="Linear combination two ways in Example RSB">
+<problem contributor="robertbeezer">From <acroref type="example" acro="RSB" />, form an arbitrary (and nontrivial) linear combination of the four vectors in the original spanning set for $W$.  So the result of this computation is of course an element of $W$.  As such, this vector should be a linear combination of the basis vectors in $B$.  Find the (unique) scalars that provide this linear combination.  Repeat with another linear combination of the original four vectors.
+</problem>
+<solution contributor="robertbeezer">An arbitrary linear combination is
+<equation>
+\vect{y}=
+3\colvector{2\\-3\\1}+
+(-2)\colvector{1\\4\\1}+
+1\colvector{7\\-5\\4}+
+(-2)\colvector{-7\\-6\\-5}
+=
+\colvector{25\\-10\\15}
+</equation>
+(You probably used a different collection of scalars.)  We want to write $\vect{y}$ as a linear combination of
+<equation>
+B=\set{\colvector{1\\0\\\frac{7}{11}},\,\colvector{0\\1\\\frac{1}{11}}}
+</equation>
+We could set this up as vector equation with variables as scalars in a linear combination of the vectors in $B$, but since the first two slots of $B$ have such a nice pattern of zeros and ones, we can determine the necessary scalars easily and then double-check our answer with a computation in the third slot,
+<equation>
+25\colvector{1\\0\\\frac{7}{11}}+(-10)\colvector{0\\1\\\frac{1}{11}}
+=
+\colvector{25\\-10\\(25)\frac{7}{11}+(-10)\frac{1}{11}}
+=
+\colvector{25\\-10\\15}=\vect{y}
+</equation>
+Notice how the uniqueness of these scalars arises.  They are <em>forced</em> to be $25$ and $-10$.
+</solution>
+</exercise>
+
+<exercise type="C" number="80" rough="Non-obvious basis for crazy vector space">
+<problem contributor="robertbeezer">Prove that $\set{(1,\,2),\,(2,\,3)}$ is a basis for the crazy vector space $C$ (<acroref type="example" acro="CVS" />).
+</problem>
+</exercise>
+
+<exercise type="M" number="20" rough="Standard basis for M_mn">
+<problem contributor="robertbeezer">In <acroref type="example" acro="BM" /> provide the verifications (linear independence and spanning) to show that $B$ is a basis of $M_{mn}$.
+</problem>
+<solution contributor="robertbeezer">We need to establish the linear independence and spanning properties of the set
+<equation>
+B=\setparts{B_{k\ell}}{1\leq k\leq m,\ 1\leq\ell\leq n}
+</equation>
+relative to the vector space $M_{mn}$.<br /><br />
+This proof is more transparent if you write out individual matrices in the basis with lots of zeros and dots and a lone one.  But we don't have room for that here, so we will use summation notation.  Think carefully about each step, especially when the double summations seem to <q>disappear.</q>  Begin with a relation of linear dependence, using double subscripts on the scalars to align with the basis elements.
+<equation>
+\zeromatrix=\sum_{k=1}^{m}\sum_{\ell=1}^{n}\alpha_{k\ell}B_{k\ell}
+</equation>
+Now consider the entry in row $i$ and column $j$ for these equal matrices,
+<alignmath>
+0
+<![CDATA[&=\matrixentry{\zeromatrix}{ij}&&]]>\text{<acroref type="definition" acro="ZM" />}\\
+<![CDATA[&=\matrixentry{\sum_{k=1}^{m}\sum_{\ell=1}^{n}\alpha_{k\ell}B_{k\ell}}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="ME" />}\\
+<![CDATA[&=\sum_{k=1}^{m}\sum_{\ell=1}^{n}\matrixentry{\alpha_{k\ell}B_{k\ell}}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MA" />}\\
+<![CDATA[&=\sum_{k=1}^{m}\sum_{\ell=1}^{n}\alpha_{k\ell}\matrixentry{B_{k\ell}}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MSM" />}\\
+<![CDATA[&=\alpha_{ij}\matrixentry{B_{ij}}{ij}&&]]>
+\text{$\matrixentry{B_{k\ell}}{ij}=0$ when $(k,\ell)\neq(i,j)$}\\
+<![CDATA[&=\alpha_{ij}(1)&&\text{$\matrixentry{B_{ij}}{ij}=1$}\\]]>
+<![CDATA[&=\alpha_{ij}]]>
+</alignmath>
+Since $i$ and $j$ were arbitrary, we find that each scalar is zero and so $B$ is linearly independent (<acroref type="definition" acro="LI" />).<br /><br />
+To establish the spanning property of $B$ we need only show that an arbitrary matrix $A$ can be written as a linear combination of the elements of $B$.  So suppose that $A$ is an arbitrary $m\times n$ matrix and consider the matrix $C$ defined as a linear combination of the elements of $B$ by
+<equation>
+C=\sum_{k=1}^{m}\sum_{\ell=1}^{n}\matrixentry{A}{k\ell}B_{k\ell}
+</equation>
+Then,
+<alignmath>
+\matrixentry{C}{ij}
+<![CDATA[&=\matrixentry{\sum_{k=1}^{m}\sum_{\ell=1}^{n}\matrixentry{A}{k\ell}B_{k\ell}}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="ME" />}\\
+<![CDATA[&=\sum_{k=1}^{m}\sum_{\ell=1}^{n}\matrixentry{\matrixentry{A}{k\ell}B_{k\ell}}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MA" />}\\
+<![CDATA[&=\sum_{k=1}^{m}\sum_{\ell=1}^{n}\matrixentry{A}{k\ell}\matrixentry{B_{k\ell}}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MSM" />}\\
+<![CDATA[&=\matrixentry{A}{ij}\matrixentry{B_{ij}}{ij}]]>
+<![CDATA[&&\text{$\matrixentry{B_{k\ell}}{ij}=0$ when $(k,\ell)\neq(i,j)$}\\]]>
+<![CDATA[&=\matrixentry{A}{ij}(1)&&\text{$\matrixentry{B_{ij}}{ij}=1$}\\]]>
+<![CDATA[&=\matrixentry{A}{ij}]]>
+</alignmath>
+So by <acroref type="definition" acro="ME" />, $A=C$, and therefore $A\in\spn{B}$.  By <acroref type="definition" acro="B" />, the set $B$ is a basis of the vector space $M_{mn}$.
+</solution>
+</exercise>
+
+<exercise type="T" number="50" rough="Nonsingular (only) take bases to bases">
+<problem contributor="robertbeezer"><acroref type="theorem" acro="UMCOB" /> says that unitary matrices are characterized as those matrices that <q>carry</q> orthonormal bases to orthonormal bases.  This problem asks you to prove a similar result:  nonsingular matrices are characterized as those matrices that <q>carry</q> bases to bases.<br /><br />
+More precisely, suppose that $A$ is a square matrix of size $n$ and $B=\set{\vectorlist{x}{n}}$ is a basis of $\complex{n}$.  Prove that $A$ is nonsingular if and only if $C=\set{A\vect{x}_1,\,A\vect{x}_2,\,A\vect{x}_3,\,\dots,\,A\vect{x}_n}$ is a basis of $\complex{n}$.  (See also <acroref type="exercise" acro="PD.T33" />, <acroref type="exercise" acro="MR.T20" />.)
+</problem>
+<solution contributor="robertbeezer">Our first proof relies mostly on definitions of linear independence and spanning, which is a good exercise.  The second proof is shorter and turns on a technical result from our work with matrix inverses, <acroref type="theorem" acro="NPNT" />.<br /><br />
+$\left(\Rightarrow\right)$\quad  Assume that $A$ is nonsingular and prove that $C$ is a basis of $\complex{n}$.  First show that $C$ is linearly independent.  Work on a relation of linear dependence on $C$,
+<alignmath>
+\zerovector
+<![CDATA[&=]]>
+a_1A\vect{x}_1+
+a_2A\vect{x}_2+
+a_3A\vect{x}_3+
+\cdots+
+a_nA\vect{x}_n
+<![CDATA[&&]]>\text{<acroref type="definition" acro="RLD" />}\\
+<![CDATA[&=]]>
+Aa_1\vect{x}_1+
+Aa_2\vect{x}_2+
+Aa_3\vect{x}_3+
+\cdots+
+Aa_n\vect{x}_n
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=]]>
+A\left(
+a_1\vect{x}_1+
+a_2\vect{x}_2+
+a_3\vect{x}_3+
+\cdots+
+a_n\vect{x}_n
+\right)
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMDAA" />}
+</alignmath>
+Since $A$ is nonsingular, <acroref type="definition" acro="NM" /> and <acroref type="theorem" acro="SLEMM" /> allows us to conclude that
+<alignmath>
+a_1\vect{x}_1+
+a_2\vect{x}_2+
+\cdots+
+a_n\vect{x}_n
+<![CDATA[&=\zerovector]]>
+</alignmath>
+But this is a relation of linear dependence of the linearly independent set $B$, so the scalars are trivial, $a_1=a_2=a_3=\cdots=a_n=0$.  By <acroref type="definition" acro="LI" />, the set $C$ is linearly independent.<br /><br />
+Now prove that $C$ spans $\complex{n}$.  Given an arbitrary vector $\vect{y}\in\complex{n}$, can it be expressed as a linear combination of the vectors in $C$?  Since $A$ is a nonsingular matrix we can define the vector $\vect{w}$ to be the unique solution of the system $\linearsystem{A}{\vect{y}}$ (<acroref type="theorem" acro="NMUS" />).  Since $\vect{w}\in\complex{n}$ we can write $\vect{w}$ as a linear combination of the vectors in the basis $B$.  So there are scalars, $\scalarlist{b}{n}$ such that
+<alignmath>
+<![CDATA[\vect{w}&=\lincombo{b}{x}{n}]]>
+</alignmath>
+Then,
+<alignmath>
+\vect{y}
+<![CDATA[&=A\vect{w}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="SLEMM" />}\\
+<![CDATA[&=A\left(\lincombo{b}{x}{n}\right)]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="TSVS" />}\\
+<![CDATA[&=]]>
+Ab_1\vect{x}_1+
+Ab_2\vect{x}_2+
+Ab_3\vect{x}_3+
+\cdots+
+Ab_n\vect{x}_n
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=]]>
+b_1A\vect{x}_1+
+b_2A\vect{x}_2+
+b_3A\vect{x}_3+
+\cdots+
+b_nA\vect{x}_n
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMSMM" />}
+</alignmath>
+So we can write an arbitrary vector of $\complex{n}$ as a linear combination of the elements of $C$.  In other words, $C$ spans $\complex{n}$ (<acroref type="definition" acro="TSVS" />).  By <acroref type="definition" acro="B" />, the set $C$ is a basis for $\complex{n}$.<br /><br />
+$\left(\Leftarrow\right)$\quad  Assume that $C$ is a basis and prove that $A$ is nonsingular.  Let $\vect{x}$ be a solution to the homogeneous system $\homosystem{A}$.  Since $B$ is a basis of $\complex{n}$ there are  scalars, $\scalarlist{a}{n}$, such that
+<alignmath>
+<![CDATA[\vect{x}&=\lincombo{a}{x}{n}]]>
+</alignmath>
+Then
+<alignmath>
+\zerovector
+<![CDATA[&=A\vect{x}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="SLEMM" />}\\
+<![CDATA[&=A\left(\lincombo{a}{x}{n}\right)]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="TSVS" />}\\
+<![CDATA[&=]]>
+Aa_1\vect{x}_1+
+Aa_2\vect{x}_2+
+Aa_3\vect{x}_3+
+\cdots+
+Aa_n\vect{x}_n
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=]]>
+a_1A\vect{x}_1+
+a_2A\vect{x}_2+
+a_3A\vect{x}_3+
+\cdots+
+a_nA\vect{x}_n
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMSMM" />}
+</alignmath>
+This is a relation of linear dependence on the linearly independent set $C$, so the scalars must all be zero, $a_1=a_2=a_3=\cdots=a_n=0$.  Thus,
+<alignmath>
+<![CDATA[\vect{x}&=\lincombo{a}{x}{n}=0\vect{x}_1+0\vect{x}_2+0\vect{x}_3+\cdots+0\vect{x}_n=\zerovector.]]>
+</alignmath>
+By <acroref type="definition" acro="NM" /> we see that $A$ is nonsingular.<br /><br />
+\medskip
+Now for a second proof.  Take the vectors for $B$ and use them as the columns of a matrix, $G=\matrixcolumns{x}{n}$.  By <acroref type="theorem" acro="CNMB" />, because we have the hypothesis that $B$ is a basis of $\complex{n}$, $G$ is a nonsingular matrix.  Notice that the columns of $AG$ are exactly the vectors in the set $C$, by <acroref type="definition" acro="MM" />.
+<alignmath>
+A\text{ nonsingular}
+<![CDATA[&\iff AG\text{ nonsingular}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="NPNT" />}\\
+<![CDATA[&\iff C\text{ basis for }\complex{n}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="CNMB" />}\\
+</alignmath>
+That was easy!
+</solution>
+</exercise>
+
+<exercise type="T" number="51" rough="T50 gives ez proof columns of nonsingular are basis">
+<problem contributor="robertbeezer">Use the result of <acroref type="exercise" acro="B.T50" /> to build a very concise proof of <acroref type="theorem" acro="CNMB" />.  (Hint: make a judicious choice for the basis $B$.)
+</problem>
+<solution contributor="robertbeezer">Choose $B$ to be the set of standard unit vectors, a particularly nice basis of $\complex{n}$ (<acroref type="theorem" acro="SUVB" />).  For a vector $\vect{e}_j$ (<acroref type="definition" acro="SUV" />) from this basis, what is $A\vect{e}_j$?
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

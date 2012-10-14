@@ -1,0 +1,1301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="ILT">
+<title>Injective Linear Transformations</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section ILT -->
+<!-- %  Injective Linear Transformations -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>Some linear transformations possess one, or both, of two key properties, which go by the names injective and surjective.  We will see that they are closely related to ideas like linear independence and spanning, and subspaces like the null space and the column space.  In this section we will define an injective linear transformation and analyze the resulting consequences.  The next section will do the same for the surjective property.  In the final section of this chapter we will see what happens when we have the two properties simultaneously.</p>
+
+</introduction>
+
+<subsection acro="ILT">
+<title>Injective Linear Transformations</title>
+
+<p>As usual, we lead with a definition.</p>
+
+<definition acro="ILT" index="linear transformation!injection">
+<title>Injective Linear Transformation</title>
+<p>Suppose $\ltdefn{T}{U}{V}$ is a linear transformation.  Then $T$ is <define>injective</define> if whenever $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$, then $\vect{x}=\vect{y}$.</p>
+
+</definition>
+
+<p>Given an arbitrary function, it is possible for two different inputs to yield the same output (think about the function $f(x)=x^2$ and the inputs $x=3$ and $x=-3$).  For an injective function, this never happens.  If we have equal outputs ($\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$) then we must have achieved those equal outputs by employing equal inputs ($\vect{x}=\vect{y}$).  Some authors prefer the term <define>one-to-one</define> where we use injective, and we will sometimes refer to an injective linear transformation as an <define>injection</define>.</p>
+
+</subsection>
+
+<subsection acro="EILT">
+<title>Examples of Injective Linear Transformations</title>
+
+<p>It is perhaps most instructive to examine a linear transformation that is not injective first.</p>
+
+<example acro="NIAQ" index="injective!not">
+<title>Not injective, Archetype Q</title>
+
+<p><acroref type="archetype" acro="Q" /> is the linear transformation
+<equation>
+<archetypepart acro="Q" part="ltdefn" /></equation>
+</p>
+
+<p>Notice that for
+<alignmath>
+<![CDATA[\vect{x}&=\colvector{1\\3\\-1\\2\\4}&]]>
+<![CDATA[\vect{y}&=\colvector{4\\7\\0\\5\\7}]]>
+<intertext>we have</intertext>
+<![CDATA[\lt{T}{\colvector{1\\3\\-1\\2\\4}}&=\colvector{4\\55\\72\\77\\31}&]]>
+<![CDATA[\lt{T}{\colvector{4\\7\\0\\5\\7}}&=\colvector{4\\55\\72\\77\\31}]]>
+</alignmath>
+</p>
+
+<p>So we have two vectors from the domain, $\vect{x}\neq\vect{y}$, yet $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$, in violation of <acroref type="definition" acro="ILT" />.  This is another example where you should not concern yourself with how $\vect{x}$ and $\vect{y}$ were selected, as this will be explained shortly.  However, do understand <em>why</em> these two vectors provide enough evidence to conclude that $T$ is not injective.</p>
+
+</example>
+
+<p>Here's a cartoon of a non-injective linear transformation.  Notice that the central feature of this cartoon is that $\lt{T}{\vect{u}}=\vect{v}=\lt{T}{\vect{w}}$.  Even though this happens again with some unnamed vectors, it only takes one occurrence to destroy the possibility of injectivity.  Note also that the two vectors displayed in the bottom of $V$ have no bearing, either way, on the injectivity of $T$.
+<diagram acro="NILT">
+<title>Non-Injective Linear Transformation</title>
+<tikz>
+\tikzset{ltvect/.style={shape=circle, minimum size=0.30em, inner sep=0pt, draw, fill=black}}
+<![CDATA[\tikzset{ltedge/.style={->, bend left=20, thick, shorten <=0.1em, shorten >=0.1em}}]]>
+<!--  base generic picture -->
+\draw ( 5em, 8em) circle [x radius=5em, y radius=8em, thick];
+\draw (20em, 8em) circle [x radius=5em, y radius=8em, thick];
+\node (U) at ( 5em, -1em) {$U$};
+\node (V) at (20em, -1em) {$V$};
+\draw[->, thick, draw] (U) to node[auto] {$T$} (V);
+<!--  inputs -->
+\node (u1) [ltvect]                         at (5em, 13em) {};
+\node (u2) [ltvect]                         at (5em, 11em) {};
+\node (u)  [ltvect, label=left:$\vect{u}$]  at (5em,  8em) {};
+\node (w)  [ltvect, label=left:$\vect{w}$]  at (5em,  6em) {};
+<!--  outputs -->
+\node (v1) [ltvect]                         at (20em, 12em) {};
+\node (v)  [ltvect, label=right:$\vect{v}$] at (20em,  7em) {};
+\node (v2) [ltvect]                         at (19em,  3em) {};
+\node (v3) [ltvect]                         at (21em,  3em) {};
+<!--  associations -->
+\draw[ltedge] (u1) to (v1);
+\draw[ltedge] (u2) to (v1);
+\draw[ltedge] (u)  to (v);
+\draw[ltedge] (w)  to (v);
+</tikz>
+</diagram>
+</p>
+
+<p>To show that a linear transformation is not injective, it is enough to find a single pair of inputs that get sent to the identical output, as in <acroref type="example" acro="NIAQ" />.  However, to show that a linear transformation is injective we must establish that this coincidence of outputs <em>never</em> occurs.  Here is an example that shows how to establish this.</p>
+
+<example acro="IAR" index="injective">
+<title>Injective, Archetype R</title>
+
+<p><acroref type="archetype" acro="R" /> is the linear transformation
+<equation>
+<archetypepart acro="R" part="ltdefn" /></equation>
+</p>
+
+<p>To establish that $R$ is injective we must begin with the assumption that $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$ and somehow arrive from this at the conclusion that $\vect{x}=\vect{y}$.  Here we go,
+<!--was a gather-->
+<alignmath>
+\lt{T}{\vect{x}}=\lt{T}{\vect{y}}\\
+\lt{T}{\colvector{x_1\\x_2\\x_3\\x_4\\x_5}}=\lt{T}{\colvector{y_1\\y_2\\y_3\\y_4\\y_5}}\\
+\colvector{-65 x_1 + 128 x_2 + 10 x_3 - 262 x_4 + 40 x_5\\
+36 x_1 - 73 x_2 - x_3 + 151 x_4 - 16 x_5\\
+-44 x_1 + 88 x_2 + 5 x_3 - 180 x_4 + 24 x_5\\
+34 x_1 - 68 x_2 - 3 x_3 + 140 x_4 - 18 x_5\\
+12 x_1 - 24 x_2 - x_3 + 49 x_4 - 5 x_5}
+=
+\colvector{-65 y_1 + 128 y_2 + 10 y_3 - 262 y_4 + 40 y_5\\
+36 y_1 - 73 y_2 - y_3 + 151 y_4 - 16 y_5\\
+-44 y_1 + 88 y_2 + 5 y_3 - 180 y_4 + 24 y_5\\
+34 y_1 - 68 y_2 - 3 y_3 + 140 y_4 - 18 y_5\\
+12 y_1 - 24 y_2 - y_3 + 49 y_4 - 5 y_5}\\
+\colvector{-65 x_1 + 128 x_2 + 10 x_3 - 262 x_4 + 40 x_5\\
+36 x_1 - 73 x_2 - x_3 + 151 x_4 - 16 x_5\\
+-44 x_1 + 88 x_2 + 5 x_3 - 180 x_4 + 24 x_5\\
+34 x_1 - 68 x_2 - 3 x_3 + 140 x_4 - 18 x_5\\
+12 x_1 - 24 x_2 - x_3 + 49 x_4 - 5 x_5}
+-
+\colvector{-65 y_1 + 128 y_2 + 10 y_3 - 262 y_4 + 40 y_5\\
+36 y_1 - 73 y_2 - y_3 + 151 y_4 - 16 y_5\\
+-44 y_1 + 88 y_2 + 5 y_3 - 180 y_4 + 24 y_5\\
+34 y_1 - 68 y_2 - 3 y_3 + 140 y_4 - 18 y_5\\
+12 y_1 - 24 y_2 - y_3 + 49 y_4 - 5 y_5}
+=
+\colvector{0\\0\\0\\0\\0}\\
+\colvector{-65 (x_1-y_1) + 128 (x_2-y_2) + 10 (x_3-y_3) - 262 (x_4-y_4) + 40 (x_5-y_5)\\
+36 (x_1-y_1) - 73 (x_2-y_2) - (x_3-y_3) + 151 (x_4-y_4) - 16 (x_5-y_5)\\
+-44 (x_1-y_1) + 88 (x_2-y_2) + 5 (x_3-y_3) - 180 (x_4-y_4) + 24 (x_5-y_5)\\
+34 (x_1-y_1) - 68 (x_2-y_2) - 3 (x_3-y_3) + 140 (x_4-y_4) - 18 (x_5-y_5)\\
+12 (x_1-y_1) - 24 (x_2-y_2) - (x_3-y_3) + 49 (x_4-y_4) - 5 (x_5-y_5)}
+=
+\colvector{0\\0\\0\\0\\0}\\
+\begin{bmatrix}
+<![CDATA[-65&128&10&-262&40\\]]>
+<![CDATA[36&-73&-1&151&-16\\]]>
+<![CDATA[-44&88&5&-180&24\\]]>
+<![CDATA[34&-68&-3&140&-18\\]]>
+<![CDATA[12&-24&-1&49&-5]]>
+\end{bmatrix}
+\colvector{x_1-y_1\\x_2-y_2\\x_3-y_3\\x_4-y_4\\x_5-y_5}
+=
+\colvector{0\\0\\0\\0\\0}
+</alignmath>
+</p>
+
+<p>Now we recognize that we have a homogeneous system of 5 equations in 5 variables (the terms $x_i-y_i$ are the variables), so we row-reduce the coefficient matrix to
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1}&0&0&0&0\\]]>
+<![CDATA[0&\leading{1}&0&0&0\\]]>
+<![CDATA[0&0&\leading{1}&0&0\\]]>
+<![CDATA[0&0&0&\leading{1}&0\\]]>
+<![CDATA[0&0&0&0&\leading{1}]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>So the only solution is the trivial solution
+<alignmath>
+<![CDATA[x_1-y_1&=0&x_2-y_2&=0&x_3-y_3&=0&x_4-y_4&=0&x_5-y_5&=0]]>
+</alignmath>
+and we conclude that indeed $\vect{x}=\vect{y}$.  By <acroref type="definition" acro="ILT" />, $T$ is injective.</p>
+
+</example>
+
+<p>Here's the cartoon for an injective linear transformation.  It is meant to suggest that we never have two inputs associated with a single output.  Again, the two lonely vectors at the bottom of $V$ have no bearing either way on the injectivity of $T$.
+<diagram acro="ILT">
+<title>Injective Linear Transformation</title>
+<tikz>
+\tikzset{ltvect/.style={shape=circle, minimum size=0.30em, inner sep=0pt, draw, fill=black}}
+<![CDATA[\tikzset{ltedge/.style={->, bend left=20, thick, shorten <=0.1em, shorten >=0.1em}}]]>
+<!--  base generic picture -->
+\draw ( 5em, 8em) circle [x radius=4em, y radius=7em, thick];
+\draw (20em, 8em) circle [x radius=5em, y radius=8em, thick];
+\node (U) at ( 5em, -1em) {$U$};
+\node (V) at (20em, -1em) {$V$};
+\draw[->, thick, draw] (U) to node[auto] {$T$} (V);
+<!--  inputs -->
+\node (u1) [ltvect] at (5em, 13em) {};
+\node (u2) [ltvect] at (5em, 10em) {};
+\node (u3) [ltvect] at (5em,  7em) {};
+<!--  outputs -->
+\node (v1) [ltvect] at (20em, 13em) {};
+\node (v2) [ltvect] at (20em, 10em) {};
+\node (v3) [ltvect] at (20em,  7em) {};
+\node (v4) [ltvect] at (19em,  3em) {};
+\node (v5) [ltvect] at (21em,  3em) {};
+<!--  associations -->
+\draw[ltedge] (u1) to (v1);
+\draw[ltedge] (u2) to (v2);
+\draw[ltedge] (u3) to (v3);
+</tikz>
+</diagram>
+</p>
+
+<p>Let's now examine an injective linear transformation between abstract vector spaces.</p>
+
+<example acro="IAV" index="injective!polynomials to matrices">
+<title>Injective, Archetype V</title>
+
+<p><acroref type="archetype" acro="V" /> is defined by
+<equation>
+<archetypepart acro="V" part="ltdefn" /></equation>
+</p>
+
+<p>To establish that the linear transformation is injective, begin by supposing that two polynomial inputs yield the same output matrix,
+<equation>
+\lt{T}{a_1+b_1x+c_1x^2+d_1x^3}=\lt{T}{a_2+b_2x+c_2x^2+d_2x^3}
+</equation>
+</p>
+
+<p>Then
+<alignmath>
+\zeromatrix
+<![CDATA[&=\begin{bmatrix}]]>
+<![CDATA[0&0\\0&0]]>
+\end{bmatrix}\\
+<![CDATA[&=\lt{T}{a_1+b_1x+c_1x^2+d_1x^3}-\lt{T}{a_2+b_2x+c_2x^2+d_2x^3}&&\text{Hypothesis}\\]]>
+<![CDATA[&=\lt{T}{(a_1+b_1x+c_1x^2+d_1x^3)-(a_2+b_2x+c_2x^2+d_2x^3)}&&]]>\text{<acroref type="definition" acro="LT" />}\\
+<![CDATA[&=\lt{T}{(a_1-a_2)+(b_1-b_2)x+(c_1-c_2)x^2+(d_1-d_2)x^3}&&\text{Operations in $P_3$}\\]]>
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[(a_1-a_2)+(b_1-b_2) & (a_1-a_2)-2(c_1-c_2)\\]]>
+<![CDATA[(d_1-d_2) & (b_1-b_2)-(d_1-d_2)]]>
+<![CDATA[\end{bmatrix}&&\text{Definition of $T$}]]>
+</alignmath></p>
+
+<p>This single matrix equality translates to the homogeneous system of equations in the variables $a_i-b_i$,
+<alignmath>
+<![CDATA[(a_1-a_2)+(b_1-b_2)&=0\\]]>
+<![CDATA[(a_1-a_2)-2(c_1-c_2)&=0\\]]>
+<![CDATA[(d_1-d_2)&=0\\]]>
+<![CDATA[(b_1-b_2)-(d_1-d_2)&=0]]>
+</alignmath>
+</p>
+
+<p>This system of equations can be rewritten as the matrix equation
+<equation>
+\begin{bmatrix}
+<![CDATA[1&1&0&0\\1&0&-2&0\\0&0&0&1\\0&1&0&-1]]>
+\end{bmatrix}
+\colvector{(a_1-a_2)\\(b_1-b_2)\\(c_1-c_2)\\(d_1-d_2)}=\colvector{0\\0\\0\\0}
+</equation>
+</p>
+
+<p>Since the coefficient matrix is nonsingular (check this) the only solution is trivial, i.e.
+<alignmath>
+<![CDATA[a_1-a_2&=0&b_1-b_2&=0&c_1-c_2&=0&d_1-d_2&=0]]>
+<intertext>so that</intertext>
+<![CDATA[a_1&=a_2&b_1&=b_2&c_1&=c_2&d_1&=d_2]]>
+</alignmath>
+so the two inputs must be equal polynomials.  By <acroref type="definition" acro="ILT" />, $T$ is injective.
+</p>
+
+</example>
+
+</subsection>
+
+<subsection acro="KLT">
+<title>Kernel of a Linear Transformation</title>
+
+<p>For a linear transformation $\ltdefn{T}{U}{V}$, the kernel is a subset of the domain $U$.  Informally, it is the set of all inputs that the transformation sends to the zero vector of the codomain.  It will have some natural connections with the null space of a matrix, so we will keep the same notation, and if you think about your objects, then there should be little confusion.  Here's the careful definition.</p>
+
+<definition acro="KLT" index="kernel!of a linear transformation">
+<title>Kernel of a Linear Transformation</title>
+<p>Suppose $\ltdefn{T}{U}{V}$ is a linear transformation.  Then the <define>kernel</define> of $T$ is the set
+<equation>
+\krn{T}=\setparts{\vect{u}\in U}{\lt{T}{\vect{u}}=\zerovector}
+</equation>
+</p>
+
+<notation acro="KLT" index="kernel">
+<title>Kernel of a Linear Transformation</title>
+<usage>$\krn{T}$</usage>
+</notation>
+</definition>
+
+<p>Notice that the kernel of $T$ is just the preimage of $\zerovector$, $\preimage{T}{\zerovector}$ (<acroref type="definition" acro="PI" />).  Here's an example.</p>
+
+<example acro="NKAO" index="kernel!linear transformation">
+<title>Nontrivial kernel, Archetype O</title>
+
+<p><acroref type="archetype" acro="O" /> is the linear transformation
+<equation>
+<archetypepart acro="O" part="ltdefn" /></equation>
+</p>
+
+<p>To determine the elements of $\complex{3}$ in $\krn{T}$, find those vectors $\vect{u}$ such that $\lt{T}{\vect{u}}=\zerovector$, that is,
+<alignmath>
+<![CDATA[\lt{T}{\vect{u}}&=\zerovector\\]]>
+\colvector{-u_1 + u_2 - 3 u_3\\
+-u_1 + 2 u_2 - 4 u_3\\
+u_1 + u_2 + u_3\\
+2 u_1 + 3 u_2 + u_3\\
+u_1 + 2 u_3
+}
+<![CDATA[&=]]>
+\colvector{0\\0\\0\\0\\0}
+</alignmath>
+</p>
+
+<p>Vector equality (<acroref type="definition" acro="CVE" />) leads us to a homogeneous system of 5 equations in the variables $u_i$,
+<alignmath>
+<![CDATA[-u_1 + u_2 - 3 u_3&=0\\]]>
+<![CDATA[-u_1 + 2 u_2 - 4 u_3&=0\\]]>
+<![CDATA[u_1 + u_2 + u_3&=0\\]]>
+<![CDATA[2 u_1 + 3 u_2 + u_3&=0\\]]>
+<![CDATA[u_1 + 2 u_3&=0]]>
+</alignmath>
+</p>
+
+<p>Row-reducing the coefficient matrix gives
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 2\\]]>
+<![CDATA[0 & \leading{1} & -1\\]]>
+<![CDATA[0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>The kernel of $T$ is the set of solutions to this homogeneous system of equations, which by <acroref type="theorem" acro="BNS" /> can be expressed as
+<equation>
+\krn{T}=\spn{<archetypepart acro="O" part="ltnullspacebasis" />}</equation>
+</p>
+
+</example>
+
+<p>We know that the span of a set of vectors is always a subspace (<acroref type="theorem" acro="SSS" />), so the kernel computed in <acroref type="example" acro="NKAO" /> is also a subspace.  This is no accident, the kernel of a linear transformation is <em>always</em> a subspace.</p>
+
+<theorem acro="KLTS" index="kernel!subspace">
+<title>Kernel of a Linear Transformation is a Subspace</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation.  Then the kernel of $T$, $\krn{T}$, is a subspace of $U$.</p>
+
+</statement>
+
+<proof>
+<p>We can apply the three-part test of <acroref type="theorem" acro="TSS" />.  First $\lt{T}{\zerovector_U}=\zerovector_V$ by <acroref type="theorem" acro="LTTZZ" />, so $\zerovector_U\in\krn{T}$ and we know that the kernel is non-empty.</p>
+
+<p>Suppose we assume that $\vect{x},\,\vect{y}\in\krn{T}$.  Is $\vect{x}+\vect{y}\in\krn{T}$?
+<alignmath>
+<![CDATA[\lt{T}{\vect{x}+\vect{y}}&=\lt{T}{\vect{x}}+\lt{T}{\vect{y}}&&]]>\text{<acroref type="definition" acro="LT" />}\\
+<![CDATA[&=\zerovector+\zerovector&&\vect{x},\,\vect{y}\in\krn{T}\\]]>
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="property" acro="Z" />}
+</alignmath></p>
+
+<p>This qualifies $\vect{x}+\vect{y}$ for membership in $\krn{T}$.  So we have additive closure.</p>
+
+<p>Suppose we assume that $\alpha\in\complex{\null}$ and $\vect{x}\in\krn{T}$.  Is $\alpha\vect{x}\in\krn{T}$?
+<alignmath>
+<![CDATA[\lt{T}{\alpha\vect{x}}&=\alpha\lt{T}{\vect{x}}&&]]>\text{<acroref type="definition" acro="LT" />}\\
+<![CDATA[&=\alpha\zerovector&&\vect{x}\in\krn{T}\\]]>
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="theorem" acro="ZVSM" />}
+</alignmath>
+</p>
+
+<p>This qualifies $\alpha\vect{x}$ for membership in $\krn{T}$.  So we have scalar closure and <acroref type="theorem" acro="TSS" /> tells us that $\krn{T}$ is a subspace of $U$.</p>
+
+</proof>
+</theorem>
+
+<p>Let's compute another kernel, now that we know in advance that it will be a subspace.</p>
+
+<example acro="TKAP" index="kernel!trivial">
+<title>Trivial kernel, Archetype P</title>
+
+<p><acroref type="archetype" acro="P" /> is the linear transformation
+<equation>
+<archetypepart acro="P" part="ltdefn" /></equation>
+</p>
+
+<p>To determine the elements of $\complex{3}$ in $\krn{T}$, find those vectors $\vect{u}$ such that $\lt{T}{\vect{u}}=\zerovector$, that is,
+<alignmath>
+<![CDATA[\lt{T}{\vect{u}}&=\zerovector\\]]>
+\colvector{
+-u_1 + u_2 + u_3\\
+-u_1 + 2 u_2 + 2 u_3\\
+u_1 + u_2 + 3 u_3\\
+2 u_1 + 3 u_2 + u_3\\
+-2 u_1 + u_2 + 3 u_3
+}
+<![CDATA[&=]]>
+\colvector{0\\0\\0\\0\\0}
+</alignmath>
+</p>
+
+<p>Vector equality (<acroref type="definition" acro="CVE" />) leads us to a homogeneous system of 5 equations in the variables $u_i$,
+<alignmath>
+<![CDATA[-u_1 + u_2 + u_3&=0\\]]>
+<![CDATA[-u_1 + 2 u_2 + 2 u_3&=0\\]]>
+<![CDATA[u_1 + u_2 + 3 u_3&=0\\]]>
+<![CDATA[2 u_1 + 3 u_2 + u_3&=0\\]]>
+<![CDATA[-2 u_1 + u_2 + 3 u_3&=0]]>
+</alignmath>
+</p>
+
+<p>Row-reducing the coefficient matrix gives
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0\\]]>
+<![CDATA[0 & \leading{1} & 0\\]]>
+<![CDATA[0 & 0 & \leading{1}\\]]>
+<![CDATA[0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>The kernel of $T$ is the set of solutions to this homogeneous system of equations, which is simply the trivial solution $\vect{u}=\zerovector$, so
+<equation>
+\krn{T}=\set{\zerovector}=\spn{<archetypepart acro="P" part="ltnullspacebasis" />}</equation>
+</p>
+
+</example>
+
+<!--  Example:  null spaces on Archetype S-W, one of consequence, one trivial? -->
+<!--   Cannibal? -->
+<p>Our next theorem says that if a preimage is a non-empty set then we can construct it by picking any one element and adding on elements of the kernel.</p>
+
+<theorem acro="KPI" index="pre-image!kernel">
+<title>Kernel and Pre-Image</title>
+<statement>
+<indexlocation index="kernel!pre-image" />
+<p>Suppose $\ltdefn{T}{U}{V}$ is a linear transformation and $\vect{v}\in V$.  If the preimage $\preimage{T}{\vect{v}}$ is non-empty, and $\vect{u}\in\preimage{T}{\vect{v}}$  then
+<equation>
+\preimage{T}{\vect{v}}=
+\setparts{\vect{u}+\vect{z}}{\vect{z}\in\krn{T}}
+=\vect{u}+\krn{T}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>Let $M=\setparts{\vect{u}+\vect{z}}{\vect{z}\in\krn{T}}$.  First, we show that $M\subseteq\preimage{T}{\vect{v}}$.  Suppose that $\vect{w}\in M$, so $\vect{w}$ has the form $\vect{w}=\vect{u}+\vect{z}$, where $\vect{z}\in\krn{T}$.  Then
+<alignmath>
+<![CDATA[\lt{T}{\vect{w}}&=\lt{T}{\vect{u}+\vect{z}}\\]]>
+<![CDATA[&=\lt{T}{\vect{u}}+\lt{T}{\vect{z}}&&]]>\text{<acroref type="definition" acro="LT" />}\\
+<![CDATA[&=\vect{v}+\zerovector&&\vect{u}\in\preimage{T}{\vect{v}},\ \vect{z}\in\krn{T}\\]]>
+<![CDATA[&=\vect{v}&&]]>\text{<acroref type="property" acro="Z" />}
+</alignmath>
+which qualifies $\vect{w}$ for membership in the preimage of $\vect{v}$, $\vect{w}\in\preimage{T}{\vect{v}}$.</p>
+
+<p>For the opposite inclusion, suppose $\vect{x}\in\preimage{T}{\vect{v}}$.  Then,
+<alignmath>
+<![CDATA[\lt{T}{\vect{x}-\vect{u}}&=\lt{T}{\vect{x}}-\lt{T}{\vect{u}}&&]]>\text{<acroref type="definition" acro="LT" />}\\
+<![CDATA[&=\vect{v}-\vect{v}&&\vect{x},\,\vect{u}\in\preimage{T}{\vect{v}}\\]]>
+<![CDATA[&=\zerovector]]>
+</alignmath>
+</p>
+
+<p>This qualifies $\vect{x}-\vect{u}$ for membership in the kernel of $T$, $\krn{T}$.  So there is a vector $\vect{z}\in\krn{T}$ such that $\vect{x}-\vect{u}=\vect{z}$.  Rearranging this equation gives $\vect{x}=\vect{u}+\vect{z}$ and so $\vect{x}\in M$.  So $\preimage{T}{\vect{v}}\subseteq M$ and we see that $M=\preimage{T}{\vect{v}}$, as desired.</p>
+
+</proof>
+</theorem>
+
+<p>This theorem, and its proof, should remind you very much of <acroref type="theorem" acro="PSPHS" />.  Additionally, you might go back and review <acroref type="example" acro="SPIAS" />.  Can you tell now which is the only preimage to be a subspace?</p>
+
+<p>The next theorem is one we will cite frequently, as it characterizes injections by the size of the kernel.</p>
+
+<theorem acro="KILT" index="kernel!injective linear transformation">
+<title>Kernel of an Injective Linear Transformation</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation.  Then $T$ is injective if and only if the kernel of $T$ is trivial, $\krn{T}=\set{\zerovector}$.</p>
+
+</statement>
+
+<proof>
+<p><implyforward /> We assume $T$ is injective and we need to establish that two sets are equal (<acroref type="definition" acro="SE" />).  Since the kernel is a subspace (<acroref type="theorem" acro="KLTS" />), $\set{\zerovector}\subseteq\krn{T}$.  To establish the opposite inclusion, suppose $\vect{x}\in\krn{T}$.
+<alignmath>
+\lt{T}{\vect{x}}
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="definition" acro="KLT" />}\\
+<![CDATA[&=\lt{T}{\zerovector}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="LTTZZ" />}
+</alignmath>
+</p>
+
+<p>We can apply <acroref type="definition" acro="ILT" /> to conclude that $\vect{x}=\zerovector$.  Therefore $\krn{T}\subseteq\set{\zerovector}$ and by <acroref type="definition" acro="SE" />, $\krn{T}=\set{\zerovector}$.</p>
+
+<p><implyreverse />  To establish that $T$ is injective, appeal to <acroref type="definition" acro="ILT" /> and begin with the assumption that $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$.  Then
+<alignmath>
+\lt{T}{\vect{x}-\vect{y}}
+<![CDATA[&=\lt{T}{\vect{x}}-\lt{T}{\vect{y}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="LT" />}\\
+<![CDATA[&=\zerovector]]>
+<![CDATA[&&\text{Hypothesis}]]>
+</alignmath>
+</p>
+
+<p>So $\vect{x}-\vect{y}\in\krn{T}$ by <acroref type="definition" acro="KLT" /> and with the hypothesis that the kernel is trivial we conclude that $\vect{x}-\vect{y}=\zerovector$.  Then
+<alignmath>
+\vect{y}
+=\vect{y}+\zerovector
+=\vect{y}+\left(\vect{x}-\vect{y}\right)
+=\vect{x}
+</alignmath>
+thus establishing that $T$ is injective by <acroref type="definition" acro="ILT" />.</p>
+
+</proof>
+</theorem>
+
+<example acro="NIAQR" index="injective!not">
+<title>Not injective, Archetype Q, revisited</title>
+
+<p>We are now in a position to revisit our first example in this section, <acroref type="example" acro="NIAQ" />.  In that example, we showed that <acroref type="archetype" acro="Q" /> is not injective by constructing two vectors, which when used to evaluate the linear transformation provided the same output, thus violating <acroref type="definition" acro="ILT" />.  Just where did those two vectors come from?</p>
+
+<p>The key is the vector
+<equation>
+\vect{z}=\colvector{3\\4\\1\\3\\3}
+</equation>
+which you can check is an element of $\krn{T}$ for <acroref type="archetype" acro="Q" />.  Choose a vector $\vect{x}$ at random, and then compute $\vect{y}=\vect{x}+\vect{z}$ (verify this computation back in <acroref type="example" acro="NIAQ" />).  Then
+<alignmath>
+<![CDATA[\lt{T}{\vect{y}}&=\lt{T}{\vect{x}+\vect{z}}\\]]>
+<![CDATA[&=\lt{T}{\vect{x}}+\lt{T}{\vect{z}}&&]]>\text{<acroref type="definition" acro="LT" />}\\
+<![CDATA[&=\lt{T}{\vect{x}}+\zerovector&&\vect{z}\in\krn{T}\\]]>
+<![CDATA[&=\lt{T}{\vect{x}}&&]]>\text{<acroref type="property" acro="Z" />}
+</alignmath>
+</p>
+
+<p>Whenever the kernel of a linear transformation is non-trivial, we can employ this device and conclude that the linear transformation is not injective.  This is another way of viewing <acroref type="theorem" acro="KILT" />.  For an injective linear transformation, the kernel is trivial and our only choice for $\vect{z}$ is the zero vector, which will not help us create two <em>different</em> inputs for $T$ that yield identical outputs.  For every one of the archetypes that is not injective, there is an example presented of exactly this form.</p>
+
+</example>
+
+<example acro="NIAO" index="injective!not">
+<title>Not injective, Archetype O</title>
+
+<p>In <acroref type="example" acro="NKAO" /> the kernel of <acroref type="archetype" acro="O" /> was determined to be
+<equation>
+\spn{<archetypepart acro="O" part="ltnullspacebasis" />}</equation>
+a subspace of $\complex{3}$ with dimension 1.  Since the kernel is not trivial, <acroref type="theorem" acro="KILT" /> tells us that $T$ is not injective.</p>
+
+</example>
+
+<example acro="IAP" index="injective">
+<title>Injective, Archetype P</title>
+
+<p>In <acroref type="example" acro="TKAP" /> it was shown that the linear transformation in <acroref type="archetype" acro="P" /> has a trivial kernel.  So by <acroref type="theorem" acro="KILT" />, $T$ is injective.</p>
+
+</example>
+
+<sageadvice acro="ILT" index="linear transformation!injective">
+<title>Injective Linear Transformations</title>
+By now, you have probably already figured out how to determine if a linear transformation is injective, and what its kernel is.  You may also now begin to understand why Sage calls the null space of a matrix a kernel.  Here are two examples, first a reprise of <acroref type="example" acro="NKAO" />.
+<sage>
+<input>U = QQ^3
+V = QQ^5
+x1, x2, x3 = var('x1, x2, x3')
+outputs = [ -x1 +   x2 - 3*x3,
+            -x1 + 2*x2 - 4*x3,
+             x1 +   x2 +   x3,
+           2*x1 + 3*x2 +   x3,
+             x1        + 2*x3]
+T_symbolic(x1, x2, x3) = outputs
+T = linear_transformation(U, V, T_symbolic)
+T.is_injective()
+</input>
+<output>False
+</output>
+</sage>
+
+<sage>
+<input>T.kernel()
+</input>
+<output>Vector space of degree 3 and dimension 1 over Rational Field
+Basis matrix:
+[   1 -1/2 -1/2]
+</output>
+</sage>
+
+So we have a concrete demonstration of one half of <acroref type="theorem" acro="KILT" />.  Here is the second example, a do-over for <acroref type="example" acro="TKAP" />, but renamed as S.
+<sage>
+<input>U = QQ^3
+V = QQ^5
+x1, x2, x3 = var('x1, x2, x3')
+outputs = [  -x1 +   x2 +   x3,
+             -x1 + 2*x2 + 2*x3,
+              x1 +   x2 + 3*x3,
+            2*x1 + 3*x2 +   x3,
+           -2*x1 +   x2 + 3*x3]
+S_symbolic(x1, x2, x3) = outputs
+S = linear_transformation(U, V, S_symbolic)
+S.is_injective()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>S.kernel()
+</input>
+<output>Vector space of degree 3 and dimension 0 over Rational Field
+Basis matrix:
+[]
+</output>
+</sage>
+
+<sage>
+<input>S.kernel() == U.subspace([])
+</input>
+<output>True
+</output>
+</sage>
+
+And so we have a concrete demonstration of the other half of <acroref type="theorem" acro="KILT" />.<br /><br />
+Now that we have <acroref type="theorem" acro="KPI" />, we can return to our discussion from <acroref type="sage" acro="PI" />.  The <code>.preimage_representative()</code> method of a linear transformation will give us a <em>single</em> element of the pre-image, with no other guarantee about the nature of that element.  That is fine, since this is all <acroref type="theorem" acro="KPI" /> requires (in addition to the kernel).  Remember that not every element of the codomain may have a non-empty pre-image (as indicated in the hypotheses of <acroref type="theorem" acro="KPI" />).  Here is an example using <code>T</code> from above, with a choice of a codomain element that has a non-empty pre-image.
+<sage>
+<input>TK = T.kernel()
+v = vector(QQ, [2, 3, 0, 1, -1])
+u = T.preimage_representative(v)
+u
+</input>
+<output>(-1, 1, 0)
+</output>
+</sage>
+
+Now the following will create random elements of the preimage of <code>v</code>, which can be verified by the test always returning <code>True</code>.  Use the compute cell just below if you are curious what <code>p</code> looks like.
+<sage>
+<input>p = u + TK.random_element()
+T(p) == v
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>p                 # random
+</input>
+<output>(-13/10, 23/20, 3/20)
+</output>
+</sage>
+
+As suggested, some choices of <code>v</code> can lead to empty pre-images, in which case <acroref type="theorem" acro="KPI" /> does not even apply.
+<sage>
+<input>v = vector(QQ, [4, 6, 3, 1, -2])
+u = T.preimage_representative(v)
+</input>
+<output>Traceback (most recent call last):
+...
+ValueError: element is not in the image
+</output>
+</sage>
+
+The situation is less interesting for an injective linear transformation.  Still, pre-images may be empty, but when they are non-empty, they are just singletons (a single element) since the kernel is empty.  So a repeat of the above example, with <code>S</code> rather than <code>T</code>, would not be very informative.
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="ILTLI">
+<title>Injective Linear Transformations and Linear Independence</title>
+
+<p>There is a connection between injective linear transformations and linearly independent sets that we will make precise in the next two theorems.  However, more informally, we can get a feel for this connection when we think about how each property is defined.  A set of vectors is linearly independent if the <b>only</b> relation of linear dependence is the trivial one.  A linear transformation is injective if the <b>only</b> way two input vectors can produce the same output is in the trivial way, when both input vectors are equal.</p>
+
+<theorem acro="ILTLI" index="linear independence!injective linear transformation">
+<title>Injective Linear Transformations and Linear Independence</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{U}{V}$ is an injective linear transformation and $S=\set{\vectorlist{u}{t}}$ is a linearly independent subset of $U$.  Then $R=\set{\lt{T}{\vect{u}_1},\,\lt{T}{\vect{u}_2},\,\lt{T}{\vect{u}_3},\,\ldots,\,\lt{T}{\vect{u}_t}}$ is a linearly independent subset of $V$.</p>
+
+</statement>
+
+<proof>
+<p>Begin with a relation of linear dependence on $R$ (<acroref type="definition" acro="RLD" />, <acroref type="definition" acro="LI" />),
+<alignmath>
+<![CDATA[a_1\lt{T}{\vect{u}_1}+a_2\lt{T}{\vect{u}_2}+a_3\lt{T}{\vect{u}_3}+\ldots+a_t\lt{T}{\vect{u}_t}&=\zerovector\\]]>
+<![CDATA[\lt{T}{\lincombo{a}{u}{t}}&=\zerovector&&]]>\text{<acroref type="theorem" acro="LTLC" />}\\
+<![CDATA[\lincombo{a}{u}{t}&\in\krn{T}&&]]>\text{<acroref type="definition" acro="KLT" />}\\
+<![CDATA[\lincombo{a}{u}{t}&\in\set{\zerovector}&&]]>\text{<acroref type="theorem" acro="KILT" />}\\
+<![CDATA[\lincombo{a}{u}{t}&=\zerovector&&]]>\text{<acroref type="definition" acro="SET" />}\\
+</alignmath>
+</p>
+
+<p>Since this is a relation of linear dependence on the linearly independent set $S$, we can conclude that
+<alignmath>
+<![CDATA[a_1&=0&a_2&=0&a_3&=0&\ldots&&a_t&=0]]>
+</alignmath>
+and this establishes that $R$ is a linearly independent set.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="ILTB" index="injective linear transformation!bases">
+<title>Injective Linear Transformations and Bases</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation and $B=\set{\vectorlist{u}{m}}$ is a basis of $U$.  Then $T$ is injective if and only if $C=\set{\lt{T}{\vect{u}_1},\,\lt{T}{\vect{u}_2},\,\lt{T}{\vect{u}_3},\,\ldots,\,\lt{T}{\vect{u}_m}}$ is a linearly independent subset of $V$.</p>
+
+</statement>
+
+<proof>
+<p><implyforward />  Assume $T$ is injective.  Since $B$ is a basis, we know $B$ is linearly independent (<acroref type="definition" acro="B" />).  Then <acroref type="theorem" acro="ILTLI" /> says that $C$ is a linearly independent subset of $V$.</p>
+
+<p><implyreverse />  Assume that $C$ is linearly independent.  To establish that $T$ is injective, we will show that the kernel of $T$ is trivial (<acroref type="theorem" acro="KILT" />).  Suppose that $\vect{u}\in\krn{T}$.  As an element of $U$, we can write $\vect{u}$ as a linear combination of the basis vectors in $B$ (uniquely).  So there are are scalars, $\scalarlist{a}{m}$, such that
+<equation>
+\vect{u}=\lincombo{a}{u}{m}
+</equation>
+</p>
+
+<p>Then,
+<alignmath>
+\zerovector
+<![CDATA[&=\lt{T}{\vect{u}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="KLT" />}\\
+<![CDATA[&=\lt{T}{\lincombo{a}{u}{m}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="TSVS" />}\\
+<![CDATA[&=a_1\lt{T}{\vect{u}_1}+a_2\lt{T}{\vect{u}_2}+a_3\lt{T}{\vect{u}_3}+\cdots+a_m\lt{T}{\vect{u}_m}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="LTLC" />}
+</alignmath>
+</p>
+
+<p>This is a relation of linear dependence (<acroref type="definition" acro="RLD" />) on the linearly independent set $C$, so the scalars are all zero:  $a_1=a_2=a_3=\cdots=a_m=0$.  Then
+<alignmath>
+<![CDATA[\vect{u}&=\lincombo{a}{u}{m}\\]]>
+<![CDATA[&=0\vect{u}_1+0\vect{u}_2+0\vect{u}_3+\cdots+0\vect{u}_m&&]]>\text{<acroref type="theorem" acro="ZSSM" />}\\
+<![CDATA[&=\zerovector+\zerovector+\zerovector+\cdots+\zerovector&&]]>\text{<acroref type="theorem" acro="ZSSM" />}\\
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="property" acro="Z" />}
+</alignmath>
+</p>
+
+<p>Since $\vect{u}$ was chosen as an arbitrary vector from $\krn{T}$, we have $\krn{T}=\set{\zerovector}$ and <acroref type="theorem" acro="KILT" /> tells us that $T$ is injective.</p>
+
+</proof>
+</theorem>
+
+</subsection>
+
+<subsection acro="ILTD">
+<title>Injective Linear Transformations and Dimension</title>
+
+<theorem acro="ILTD" index="injective linear transformations!dimension">
+<title>Injective Linear Transformations and Dimension</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{U}{V}$ is an injective linear transformation.  Then $\dimension{U}\leq\dimension{V}$.</p>
+
+</statement>
+
+<proof>
+<p>Suppose to the contrary that $m=\dimension{U}>\dimension{V}=t$.  Let $B$ be  a basis of $U$, which will then contain $m$ vectors.  Apply $T$ to each element of $B$ to form a set $C$ that is a subset of $V$.  By <acroref type="theorem" acro="ILTB" />, $C$ is linearly independent and therefore must contain $m$ distinct vectors.  So we have found a set of $m$ linearly independent vectors in $V$, a vector space of dimension $t$, with $m>t$.  However, this contradicts <acroref type="theorem" acro="G" />, so our assumption is false and $\dimension{U}\leq\dimension{V}$.</p>
+
+</proof>
+</theorem>
+
+<example acro="NIDAU" index="injective!not, by dimension">
+<title>Not injective by dimension, Archetype U</title>
+
+<p>The linear transformation in <acroref type="archetype" acro="U" /> is
+<equation>
+<archetypepart acro="U" part="ltdefn" /></equation>
+</p>
+
+<p>Since $\dimension{M_{23}}=6>4=\dimension{\complex{4}}$, $T$ cannot be injective for then $T$ would violate <acroref type="theorem" acro="ILTD" />.</p>
+
+</example>
+
+<p>Notice that the previous example made no use of the actual formula defining the function.  Merely a comparison of the dimensions of the domain and codomain are enough to conclude that the linear transformation is not injective.  <acroref type="archetype" acro="M" /> and <acroref type="archetype" acro="N" /> are two more examples of linear transformations that have <q>big</q> domains and <q>small</q> codomains, resulting in <q>collisions</q> of outputs and thus are non-injective linear transformations.</p>
+
+</subsection>
+
+<subsection acro="CILT">
+<title>Composition of Injective Linear Transformations</title>
+
+<p>In <acroref type="subsection" acro="LT.NLTFO" /> we saw how to combine linear transformations to build new linear transformations, specifically, how to build the composition of two linear transformations (<acroref type="definition" acro="LTC" />).  It will be useful later to know that the composition of injective linear transformations is again injective, so we prove that here.</p>
+
+<theorem acro="CILTI" index="composition!injective linear transformations">
+<title>Composition of Injective Linear Transformations is Injective</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{U}{V}$ and $\ltdefn{S}{V}{W}$ are injective linear transformations.  Then $\ltdefn{(\compose{S}{T})}{U}{W}$ is an injective linear transformation.</p>
+
+</statement>
+
+<proof>
+<p>That the composition is a linear transformation was established in <acroref type="theorem" acro="CLTLT" />, so we need only establish that the composition is injective.  Applying <acroref type="definition" acro="ILT" />, choose $\vect{x}$, $\vect{y}$ from $U$.  Then if $\lt{\left(\compose{S}{T}\right)}{\vect{x}}=\lt{\left(\compose{S}{T}\right)}{\vect{y}}$,
+<alignmath>
+<![CDATA[&\Rightarrow&\lt{S}{\lt{T}{\vect{x}}}&=\lt{S}{\lt{T}{\vect{y}}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="LTC" />}\\
+<![CDATA[&\Rightarrow&\lt{T}{\vect{x}}&=\lt{T}{\vect{y}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="ILT" /> for $S$}\\
+<![CDATA[&\Rightarrow&\vect{x}&=\vect{y}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="ILT" /> for $T$}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<sageadvice acro="CILT" index="linear transformation!composition">
+<title>Composition of Injective Linear Transformations</title>
+One way to use Sage is to construct examples of theorems and verify the conclusions.  Sometimes you will get this wrong: you might build an example that does not satisfy the hypotheses, or your example may not satisfy the conclusions.  This may be because you are not using Sage properly, or because you do not understand a definition or a theorem, or in very limited cases you may have uncovered a bug in Sage (which is always the preferred explanation!).  But in the process of trying to understand a discrepancy or unexpected result, you will learn much more, both about linear algebra and about Sage.  And Sage is incredibly patient <mdash /> it will stay up with you all night to help you through a rough patch.<br /><br />
+Let's illustrate the above in the context of <acroref type="theorem" acro="CILTI" />.  The hypotheses indicate we need two injective linear transformations.  Where will get two such linear transformations?  Well, the contrapositive of <acroref type="theorem" acro="ILTD" /> tells us that if the dimension of the domain exceeds the dimension of the codomain, we will never be injective.  So we should at a minimum avoid this scenario.  We can build two linear transformations from matrices created randomly, and just hope that they lead to injective linear transformations.  Here is an example of how we create examples like this.  The random matrix has single-digit entries, and almost always will lead to an injective linear transformtion, though we cannot be 100\% certain.  Evaluate this cell repeatedly, to see how rarely the result is not injective.
+<sage>
+<input>E = random_matrix(ZZ, 3, 2, x=-9, y=9)
+T = linear_transformation(QQ^2, QQ^3, E, side='right')
+T.is_injective()                              # random
+</input>
+<output>True
+</output>
+</sage>
+
+Our concrete example below was created this way, so here we go.
+<sage>
+<input>U = QQ^2
+V = QQ^3
+W = QQ^4
+A = matrix(QQ, 3, 2, [[-4, -1],
+                      [-3,  3],
+                      [ 7, -6]])
+B = matrix(QQ, 4, 3, [[ 7,  0, -1],
+                      [ 6,  2,  7],
+                      [ 3, -1,  2],
+                      [-6, -1,  1]])
+T = linear_transformation(U, V, A, side='right')
+T.is_injective()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>S = linear_transformation(V, W, B, side='right')
+S.is_injective()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>C = S*T
+C.is_injective()
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<!--   End of  ilt.tex -->
+<readingquestions>
+<ol>
+<li>Suppose $\ltdefn{T}{\complex{8}}{\complex{5}}$ is a linear transformation.  Why can't $T$ be injective?
+</li>
+<li>Describe the kernel of an injective linear transformation.
+</li>
+<li><acroref type="theorem" acro="KPI" /> should remind you of <acroref type="theorem" acro="PSPHS" />.  Why do we say this?
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="10" rough="kernels of archetypes">
+<problem contributor="robertbeezer">Each archetype below is a linear transformation.  Compute the kernel for each.<br /><br />
+<acroref type="archetype" acro="M" />,
+<acroref type="archetype" acro="N" />,
+<acroref type="archetype" acro="O" />,
+<acroref type="archetype" acro="P" />,
+<acroref type="archetype" acro="Q" />,
+<acroref type="archetype" acro="R" />,
+<acroref type="archetype" acro="S" />,
+<acroref type="archetype" acro="T" />,
+<acroref type="archetype" acro="U" />,
+<acroref type="archetype" acro="V" />,
+<acroref type="archetype" acro="W" />,
+<acroref type="archetype" acro="X" />
+<!-- % TODO:  Check competeness when Y,Z appear. -->
+</problem>
+</exercise>
+
+<exercise type="C" number="20" rough="Two inputs, one output for non-injective">
+<problem contributor="robertbeezer">The linear transformation $\ltdefn{T}{\complex{4}}{\complex{3}}$ is not injective.  Find two inputs $\vect{x},\,\vect{y}\in\complex{4}$ that yield the same output (that is $\lt{T}{\vect{x}}=\lt{T}{\vect{y}}$).
+<equation>
+\lt{T}{\colvector{x_1\\x_2\\x_3\\x_4}}=
+\colvector{
+2x_1+x_2+x_3\\
+-x_1+3x_2+x_3-x_4\\
+3x_1+x_2+2x_3-2x_4
+}
+</equation>
+</problem>
+<solution contributor="robertbeezer">A linear transformation that is not injective will have a non-trivial kernel (<acroref type="theorem" acro="KILT" />), and this is the key to finding the desired inputs.  We need one non-trivial element of the kernel, so suppose that $\vect{z}\in\complex{4}$ is an element of the kernel,
+<equation>
+\colvector{0\\0\\0}
+=\zerovector
+=\lt{T}{\vect{z}}
+=\colvector{
+2z_1+z_2+z_3\\
+-z_1+3z_2+z_3-z_4\\
+3z_1+z_2+2z_3-2z_4
+}
+</equation>
+Vector equality <acroref type="definition" acro="CVE" /> leads to the homogeneous system of three equations in four variables,
+<alignmath>
+<![CDATA[2z_1+z_2+z_3&=0\\]]>
+<![CDATA[-z_1+3z_2+z_3-z_4&=0\\]]>
+<![CDATA[3z_1+z_2+2z_3-2z_4&=0]]>
+</alignmath>
+The coefficient matrix of this system row-reduces as
+<equation>
+\begin{bmatrix}
+<![CDATA[ 2 & 1 & 1 & 0 \\]]>
+<![CDATA[ -1 & 3 & 1 & -1 \\]]>
+<![CDATA[ 3 & 1 & 2 & -2]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & 1 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & 1 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & -3]]>
+\end{bmatrix}
+</equation>
+From this we can find a solution (we only need one), that is an element of $\krn{T}$,
+<equation>
+\vect{z}=\colvector{-1\\-1\\3\\1}
+</equation>
+Now, we choose a vector $\vect{x}$ at random and set $\vect{y}=\vect{x}+\vect{z}$,
+<alignmath>
+\vect{x}
+<![CDATA[&=\colvector{2\\3\\4\\-2}]]>
+<![CDATA[&]]>
+<![CDATA[\vect{y}&=\vect{x}+\vect{z}=]]>
+\colvector{2\\3\\4\\-2}+\colvector{-1\\-1\\3\\1}
+=\colvector{1\\2\\7\\-1}
+</alignmath>
+and you can check that
+<equation>
+\lt{T}{\vect{x}}
+=\colvector{11\\13\\21}
+=\lt{T}{\vect{y}}
+</equation>
+A quicker solution is to take two elements of the kernel (in this case, scalar multiples of $\vect{z}$) which both get sent to $\zerovector$ by $T$.  Quicker yet, take $\zerovector$ and $\vect{z}$ as $\vect{x}$ and $\vect{y}$, which also both get sent to $\zerovector$ by $T$.
+</solution>
+</exercise>
+
+<exercise type="C" number="25" rough="kernel, etc for lin trans">
+<problem contributor="robertbeezer">Define the linear transformation
+<equation>
+\ltdefn{T}{\complex{3}}{\complex{2}},\quad
+\lt{T}{\colvector{x_1\\x_2\\x_3}}=\colvector{2x_1-x_2+5x_3\\-4x_1+2x_2-10x_3}
+</equation>
+Find a basis for the kernel of $T$, $\krn{T}$.  Is $T$ injective?
+</problem>
+<solution contributor="robertbeezer">To find the kernel, we require all $\vect{x}\in\complex{3}$ such that $\lt{T}{\vect{x}}=\zerovector$.  This condition is
+<equation>
+\colvector{2x_1-x_2+5x_3\\-4x_1+2x_2-10x_3}=\colvector{0\\0}
+</equation>
+This leads to a homogeneous system of two linear equations in three variables, whose coefficient matrix row-reduces to
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & -\frac{1}{2} & \frac{5}{2}\\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+With two free variables <acroref type="theorem" acro="BNS" /> yields the basis for the null space
+<equation>
+\set{
+\colvector{-\frac{5}{2}\\0\\1},\,
+\colvector{\frac{1}{2}\\1\\0}
+}
+</equation>
+<br /><br />
+With $\nullity{T}\neq 0$, $\krn{T}\neq\set{\zerovector}$, so <acroref type="theorem" acro="KILT" /> says $T$ is not injective.
+</solution>
+</exercise>
+
+<exercise type="C" number="26" rough="injective? (no calc nec)">
+<problem contributor="chrisblack">Let
+$A =
+\begin{bmatrix}
+<![CDATA[1 & 2 & 3 & 1 & 0\\]]>
+<![CDATA[2 & -1 & 1 & 0 & 1\\]]>
+<![CDATA[1 & 2 & -1 & -2 & 1\\]]>
+<![CDATA[1 & 3 & 2 & 1 & 2]]>
+\end{bmatrix}$
+and let
+$\ltdefn{T}{\complex{5}}{\complex{4}}$ be given by
+$\lt{T}{\vect{x}}=A\vect{x}$.
+Is $T$ injective?  (Hint:  No calculation is required.)
+</problem>
+<solution contributor="chrisblack">By <acroref type="theorem" acro="ILTD" />, if a linear transformation $\ltdefn{T}{U}{V}$ is injective, then $\dim(U)\le\dim(V)$.  In this case, $\ltdefn{T}{\complex{5}}{\complex{4}}$, and $5=\dimension{\complex{5}} > \dimension{\complex{4}}=4$.  Thus, $T$ cannot possibly be injective.
+</solution>
+</exercise>
+
+<exercise type="C" number="27" rough="Injective? find kernel.">
+<problem contributor="chrisblack">Let $\ltdefn{T}{\complex{3}}{\complex{3}}$ be given by
+$\lt{T}{\colvector{x\\y\\z}} = \colvector{2x + y + z\\ x - y + 2z\\ x + 2y - z}$.
+Find $\krn{T}$.
+Is $T$ injective?
+</problem>
+<solution contributor="chrisblack">If $\lt{T}{\colvector{x\\y\\z}} = \zerovector$, then $\colvector{2x + y + z\\x - y + 2z\\x + 2y - z} = \zerovector$.  Thus, we have the system
+<alignmath>
+<![CDATA[2x + y + z &= 0\\]]>
+<![CDATA[x - y + 2z &= 0\\]]>
+<![CDATA[x + 2y - z &= 0]]>
+</alignmath>.
+Thus, we are looking for the nullspace of the matrix
+$A_T =
+\begin{bmatrix}
+<![CDATA[2& 1 & 1\\]]>
+<![CDATA[1 & -1 & 2\\]]>
+<![CDATA[1 & 2 & -1]]>
+\end{bmatrix}$.
+Since $A_T$ row-reduces to
+$\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 1\\]]>
+<![CDATA[0 & \leading{1} & -1 \\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}$,
+the kernel of $T$ is all vectors where $x = -z$ and $y = z$.
+Thus, $\krn{T} = \spn{\set{\colvector{ -1\\1\\1}}}$.
+</solution>
+</exercise>
+
+<exercise type="C" number="28" rough="Injective?  find kernel.">
+<problem contributor="chrisblack">Let
+$A =
+\begin{bmatrix}
+<![CDATA[1 & 2 & 3 & 1 \\]]>
+<![CDATA[2 & -1 & 1 & 0 \\]]>
+<![CDATA[1 & 2 & -1 & -2 \\]]>
+<![CDATA[1 & 3 & 2 & 1]]>
+\end{bmatrix}$
+and let
+$\ltdefn{T}{\complex{4}}{\complex{4}}$ be given by $\lt{T}{\vect{x}}=A\vect{x}$.
+Find $\krn{T}$.
+Is $T$ injective?
+</problem>
+<solution contributor="chrisblack">Since $T$ is given by matrix multiplication, $\krn{T} = \nsp{A}$.  We have
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & 2 & 3 & 1\\]]>
+<![CDATA[2 & -1 & 1 & 0\\]]>
+<![CDATA[1 & 2 & -1 & -2 \\]]>
+<![CDATA[1 & 3 & 2 & 1]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1}]]>
+\end{bmatrix}
+</alignmath>
+The nullspace of $A$ is $\set{\zerovector}$, so the kernel of $T$ is also trivial:  $\krn{T} = \set{\zerovector}$.
+</solution>
+</exercise>
+
+<exercise type="C" number="29" rough="Injective?  find kernel.">
+<problem contributor="chrisblack">Let
+$A =
+\begin{bmatrix}
+<![CDATA[1 & 2 & 1 & 1 \\]]>
+<![CDATA[2 & 1 & 1 & 0 \\]]>
+<![CDATA[1 & 2 & 1 & 2 \\]]>
+<![CDATA[1 & 2 & 1 & 1]]>
+\end{bmatrix}$
+and let
+$\ltdefn{T}{\complex{4}}{\complex{4}}$ be given by
+$\lt{T}{\vect{x}}=A\vect{x}$.
+Find $\krn{T}$.
+Is $T$ injective?
+</problem>
+<solution contributor="chrisblack">Since $T$ is given by matrix multiplication, $\krn{T} = \nsp{A}$.  We have
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & 2 & 1 & 1\\]]>
+<![CDATA[2 & 1 & 1 & 0\\]]>
+<![CDATA[1 & 2 & 1 & 2 \\]]>
+<![CDATA[1 & 2 & 1 & 1]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 1/3 & 0\\]]>
+<![CDATA[0 & \leading{1} & 1/3 & 0\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1}\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</alignmath>
+Thus, a basis for the nullspace of $A$ is $\set{\colvector{-1\\-1\\3\\0}}$, and the kernel is $\krn{T} = \spn{\spn{\colvector{-1\\-1\\3\\0}}}$.  Since the kernel is nontrivial, this linear transformation is not injective.
+</solution>
+</exercise>
+
+<exercise type="C" number="30" rough="Injective?  find kernel.">
+<problem contributor="chrisblack"><![CDATA[Let $T : M_{2,2} \rightarrow P_2$ be given by $T\left(\begin{bmatrix} a & b \\ c & d \end{bmatrix}\right) = (a + b) + (a + c)x + (a + d)x^2$.  Is $T$ injective?  Find $\krn{T}$.]]>
+</problem>
+<solution contributor="chrisblack"><![CDATA[We can see without computing that $T$ is not injective, since the degree of $M_{2,2}$ is larger than the degree of $P_2$.  However, that doesn't address the question of the kernel of $T$.  We need to find all matrices $\begin{bmatrix} a & b \\ c & d \end{bmatrix}$ so that $(a + b) + (a + c)x + (a + d)x^2 = 0$.  This means $a + b = 0$, $a + c = 0$, and $a + d = 0$, or equivalently, $b = d = c = -a$.  Thus, the kernel is a one-dimensional subspace of $M_{2,2}$ spanned by $\begin{bmatrix} 1 & -1\\-1&-1 \end{bmatrix}$.  Symbolically, we have $\krn{T} = \spn{\begin{bmatrix} 1 & -1\\-1&-1 \end{bmatrix}}$.]]>
+</solution>
+</exercise>
+
+<exercise type="C" number="31" rough="show that T(basis) --> lin indep.">
+<problem contributor="chrisblack">Given that the linear transformation $\ltdefn{T}{\complex{3}}{\complex{3}}$,
+$\lt{T}{\colvector{x\\y\\z}} = \colvector{2x + y\\2y + z\\x + 2z}$
+is injective, show directly that
+$\set{
+\lt{T}{\vect{e}_1},\,
+\lt{T}{\vect{e}_2},\,
+\lt{T}{\vect{e}_3}
+}$
+is a linearly independent set.
+</problem>
+<solution contributor="chrisblack">We have
+<alignmath>
+<![CDATA[\lt{T}{\vect{e}_1} &= \colvector{2\\0\\1}]]>
+<![CDATA[&]]>
+<![CDATA[\lt{T}{\vect{e}_2} &= \colvector{1\\2\\0}]]>
+<![CDATA[&]]>
+<![CDATA[\lt{T}{\vect{e}_3} &= \colvector{0\\1\\2}]]>
+</alignmath>
+Let's put these vectors into a matrix and row reduce to test their linear independence.
+<alignmath>
+\begin{bmatrix}
+<![CDATA[2 & 1 & 0\\]]>
+<![CDATA[0 & 2 & 1\\]]>
+<![CDATA[1 & 0 & 2]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0\\]]>
+<![CDATA[0 & \leading{1} & 0\\]]>
+<![CDATA[0 & 0 & \leading{1}]]>
+\end{bmatrix}
+</alignmath>
+so the set of vectors
+$\set{\lt{T}{\vect{e}_1},\, \lt{T}{\vect{e}_1},\,\lt{T}{\vect{e}_1}}$
+is linearly independent.
+</solution>
+</exercise>
+
+<exercise type="C" number="32" rough="show that T(basis) --> lin indep.">
+<problem contributor="chrisblack">Given that the linear transformation $\ltdefn{T}{\complex{2}}{\complex{3}}$,
+$\lt{T}{\colvector{x\\y}} = \colvector{x+y\\2x + y\\x + 2y}$ is injective, show directly that
+$\set{
+\lt{T}{\vect{e}_1},\,
+\lt{T}{\vect{e}_2}
+}$
+is a linearly independent set.
+</problem>
+<solution contributor="chrisblack">We have $\lt{T}{\vect{e}_1} = \colvector{1\\2\\1}$ and $\lt{T}{\vect{e}_2} = \colvector{1\\1\\2}$.  Putting these into a matrix as columns and row-reducing, we have
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & 1\\]]>
+<![CDATA[2 & 1\\]]>
+<![CDATA[1 & 2]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 \\]]>
+<![CDATA[0 & \leading{1}\\]]>
+<![CDATA[0 & 0]]>
+\end{bmatrix}
+</alignmath>
+Thus, the set of vectors $\set{\lt{T}{\vect{e}_1},\,\lt{T}{\vect{e}_2}}$ is linearly independent.
+</solution>
+</exercise>
+
+<exercise type="C" number="33" rough="show that T(basis) --> lin indep.">
+<problem contributor="chrisblack">Given that the linear transformation $\ltdefn{T}{\complex{3}}{\complex{5}}$,
+$\lt{T}{\colvector{x\\y\\z}} =
+\begin{bmatrix}
+<![CDATA[1 & 3 & 2\\]]>
+<![CDATA[0 & 1 & 1\\]]>
+<![CDATA[1 & 2 & 1\\]]>
+<![CDATA[1 & 0 & 1\\]]>
+<![CDATA[3 & 1 & 2]]>
+\end{bmatrix}
+\colvector{x\\y\\z}$
+is injective, show directly that
+$\set{
+\lt{T}{\vect{e}_1},\,
+\lt{T}{\vect{e}_2},\,
+\lt{T}{\vect{e}_3}
+}$
+is a linearly independent set.
+</problem>
+<solution contributor="chrisblack">We have
+<alignmath>
+<![CDATA[\lt{T}{\vect{e}_1} &= \colvector{1\\0\\1\\1\\3}]]>
+<![CDATA[&]]>
+<![CDATA[\lt{T}{\vect{e}_2} &= \colvector{3\\1\\2\\0\\1}]]>
+<![CDATA[&]]>
+<![CDATA[\lt{T}{\vect{e}_3} &= \colvector{2\\1\\1\\1\\2}]]>
+</alignmath>
+Let's row reduce the matrix of $T$  to test linear independence.
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & 3 & 2\\]]>
+<![CDATA[0 & 1 & 1\\]]>
+<![CDATA[1 & 2 & 1\\]]>
+<![CDATA[1 & 0 & 1\\]]>
+<![CDATA[3 & 1 & 2]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0\\]]>
+<![CDATA[0 & \leading{1} & 0\\]]>
+<![CDATA[0 & 0 & \leading{1} \\]]>
+<![CDATA[0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0]]>
+\end{bmatrix}
+</alignmath>
+so the set of vectors $\set{\lt{T}{\vect{e}_1},\,\lt{T}{\vect{e}_2},\,\lt{T}{\vect{e}_3}}$ is linearly independent.
+</solution>
+</exercise>
+
+<exercise type="C" number="40" rough="non-injective by demonstration">
+<problem contributor="robertbeezer">Show that the linear transformation $R$ is not injective by finding two different elements of the domain, $\vect{x}$ and $\vect{y}$, such that $\lt{R}{\vect{x}}=\lt{R}{\vect{y}}$.  ($S_{22}$ is the vector space of symmetric $2\times 2$ matrices.)
+<equation>
+\ltdefn{R}{S_{22}}{P_1}\quad
+<![CDATA[\lt{R}{\begin{bmatrix}a&b\\b&c\end{bmatrix}}=(2a-b+c)+(a+b+2c)x]]>
+</equation>
+</problem>
+<solution contributor="robertbeezer">We choose $\vect{x}$ to be any vector we like.  A particularly cocky choice would be to choose $\vect{x}=\zerovector$, but we will instead choose
+<equation>
+<![CDATA[\vect{x}= \begin{bmatrix} 2 & -1 \\ -1 & 4 \end{bmatrix}]]>
+</equation>
+<![CDATA[Then $\lt{R}{\vect{x}}=9+9x$.  Now compute the kernel of $R$, which by <acroref type="theorem" acro="KILT" /> we expect to be nontrivial.  Setting $\lt{R}{\begin{bmatrix}a&b\\b&c\end{bmatrix}}$ equal to the zero vector, $\zerovector=0+0x$, and equating coefficients leads to a homogeneous system of equations.  Row-reducing the coefficient matrix of this system will allow us to determine the values of $a$, $b$ and $c$ that create elements of the null space of $R$,]]>
+<equation>
+\begin{bmatrix}
+<![CDATA[ 2 & -1 & 1 \\]]>
+<![CDATA[ 1 & 1 & 2]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 1 \\]]>
+<![CDATA[ 0 & \leading{1} & 1]]>
+\end{bmatrix}
+</equation>
+We only need a single element of the null space of this coefficient matrix, so we will not compute a precise description of the whole null space.  Instead, choose the free variable $c=2$.  Then
+<equation>
+<![CDATA[\vect{z}=\begin{bmatrix} -2 & -2 \\ -2 & 2\end{bmatrix}]]>
+</equation>
+is the corresponding element of the kernel.  We compute the desired $\vect{y}$ as
+<equation>
+\vect{y}=\vect{x}+\vect{z}=
+<![CDATA[\begin{bmatrix} 2 & -1 \\ -1 & 4 \end{bmatrix}]]>
++
+<![CDATA[\begin{bmatrix} -2 & -2 \\ -2 & 2\end{bmatrix}]]>
+=
+<![CDATA[\begin{bmatrix}  0 & -3 \\ -3 & 6 \end{bmatrix}]]>
+</equation>
+Then check that $\lt{R}{\vect{y}}=9+9x$.
+</solution>
+</exercise>
+
+<exercise type="M" number="60" rough="zero linear transformation">
+<problem contributor="robertbeezer">Suppose $U$ and $V$ are vector spaces.  Define the function $\ltdefn{Z}{U}{V}$ by $\lt{T}{\vect{u}}=\zerovector_{V}$ for every $\vect{u}\in U$.  Then by <acroref type="exercise" acro="LT.M60" />, $Z$ is a linear transformation.  Formulate a condition on $U$ that is equivalent to $Z$ being an injective linear transformation.   In other words, fill in the blank to complete the following statement (and then give a proof):  $Z$ is injective if and only if $U$ is \rule{1in}{1pt}. (See <acroref type="exercise" acro="SLT.M60" />, <acroref type="exercise" acro="IVLT.M60" />.)
+</problem>
+</exercise>
+
+<exercise type="T" number="10" rough="when is pre-image a subspace">
+<problem contributor="robertbeezer">Suppose $\ltdefn{T}{U}{V}$ is a linear transformation.  For which vectors $\vect{v}\in V$ is $\preimage{T}{\vect{v}}$ a subspace of $U$?
+</problem>
+</exercise>
+
+<exercise type="T" number="15" rough="kernels and compositions">
+<problem contributor="robertbeezer">Suppose that that $\ltdefn{T}{U}{V}$ and $\ltdefn{S}{V}{W}$ are linear transformations.  Prove the following relationship between kernels.
+<equation>
+\krn{T}\subseteq\krn{\compose{S}{T}}
+</equation>
+</problem>
+<solution contributor="robertbeezer">We are asked to prove that $\krn{T}$ is a subset of $\krn{\compose{S}{T}}$.  Employing <acroref type="definition" acro="SSET" />, choose $\vect{x}\in\krn{T}$.  Then we know that $\lt{T}{\vect{x}}=\zerovector$.  So
+<alignmath>
+<![CDATA[\lt{\left(\compose{S}{T}\right)}{\vect{x}}&=\lt{S}{\lt{T}{\vect{x}}}&&]]>\text{<acroref type="definition" acro="LTC" />}\\
+<![CDATA[&=\lt{S}{\zerovector}&&\vect{x}\in\krn{T}\\]]>
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="theorem" acro="LTTZZ" />}
+</alignmath>
+This qualifies $\vect{x}$ for membership in $\krn{\compose{S}{T}}$.
+</solution>
+</exercise>
+
+<exercise type="T" number="20" rough="kernel is null space for lt defined with a matrix">
+<problem contributor="andyzimmer">Suppose that $A$ is an $m\times n$ matrix.  Define the linear transformation $T$ by
+<equation>
+\ltdefn{T}{\complex{n}}{\complex{m}},\quad \lt{T}{\vect{x}}=A\vect{x}
+</equation>
+Prove that the kernel of $T$ equals the null space of $A$, $\krn{T}=\nsp{A}$.
+</problem>
+<solution contributor="andyzimmer">This is an equality of sets, so we want to establish two subset conditions (<acroref type="definition" acro="SE" />).<br /><br />
+First, show $\nsp{A}\subseteq\krn{T}$.  Choose $\vect{x}\in\nsp{A}$.  Check to see if $\vect{x}\in\krn{T}$,
+<alignmath>
+\lt{T}{\vect{x}}
+<![CDATA[&=A\vect{x}&&\text{Definition of $T$}\\]]>
+<![CDATA[&=\zerovector&&\text{$\vect{x}\in\nsp{A}$}]]>
+</alignmath>
+So by <acroref type="definition" acro="KLT" />, $\vect{x}\in\krn{T}$ and thus $\nsp{A}\subseteq\krn{T}$.<br /><br />
+Now, show $\krn{T}\subseteq\nsp{A}$.  Choose $\vect{x}\in\krn{T}$.  Check to see if $\vect{x}\in\nsp{A}$,
+<alignmath>
+A\vect{x}
+<![CDATA[&=\lt{T}{\vect{x}}&&\text{Definition of $T$}\\]]>
+<![CDATA[&=\zerovector&&\text{$\vect{x}\in\krn{T}$}]]>
+</alignmath>
+So by <acroref type="definition" acro="NSM" />, $\vect{x}\in\nsp{A}$ and thus $\krn{T}\subseteq\nsp{A}$.<br /><br />
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

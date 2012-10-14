@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="OD">
+<title>Orthonormal Diagonalization</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section OD -->
+<!-- %  Orthonormal Diagonalization -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<!--  TODO:  Diagonalize the 2x2 in Example ANM -->
+<!--  TODO:  Reference symmetric matrix diagonalization back in eigenvalue section -->
+<!--  TODO:  Diagonalize a big, interesting normal matix (skew symmetric?) -->
+<introduction>
+<p>We have seen in <acroref type="section" acro="SD" /> that under the right conditions a square matrix is similar to a diagonal matrix.  We recognize now, via <acroref type="theorem" acro="SCB" />, that a similarity transformation is a change of basis on a matrix representation.  So we can now discuss the choice of a basis used to build a matrix representation, and decide if some bases are better than others for this purpose.  This will be the tone of this section.  We will also see that every matrix has a reasonably useful matrix representation, and we will discover a new class of diagonalizable linear transformations.  First we need some basic facts about triangular matrices.</p>
+
+<p><b>Note:</b> This section is not as complete as the previous ones.  It would benefit from more examples, Sage explanations, and the inclusion of some reading questions and exercises.  Furthermore, it is possible that applications of results about orthogonality make use of previous versions based on an inner product that is the <q>reverse</q> of the current version.  That said, the definitions, theorems and proofs are accurate and complete.</p>
+
+</introduction>
+
+<subsection acro="TM">
+<title>Triangular Matrices</title>
+
+<p>An upper, or lower, triangular matrix is exactly what it sounds like it should be, but here are the two relevant definitions.</p>
+
+<definition acro="UTM" index="upper triangular matrix">
+<title>Upper Triangular Matrix</title>
+<p>The $n\times n$ square matrix $A$ is <define>upper triangular</define> if $\matrixentry{A}{ij} =0$ whenever $i>j$.</p>
+
+</definition>
+
+<definition acro="LTM" index="lower triangular matrix">
+<title>Lower Triangular Matrix</title>
+<p>The $n\times n$ square matrix $A$ is <define>lower triangular</define> if $\matrixentry{A}{ij} =0$ whenever
+<![CDATA[$i<j$.]]>
+</p>
+
+</definition>
+
+<p>Obviously, properties of a lower triangular matrices will have analogues for upper triangular matrices.  Rather than stating two very similar theorems, we will say that matrices are <q>triangular of the same type</q> as a convenient shorthand to cover both possibilities and then give a proof for just one type.</p>
+
+<theorem acro="PTMT" index="product of triangular matrices">
+<title>Product of Triangular Matrices is Triangular</title>
+<statement>
+<p>Suppose that $A$ and $B$ are square matrices of size $n$ that are triangular of the same type.  Then $AB$ is also triangular of that type.</p>
+
+</statement>
+
+<proof>
+<p>We prove this for lower triangular matrices and leave the proof for upper triangular matrices to you.  Suppose that $A$ and $B$ are both lower triangular.  We need only establish that certain entries of the product $AB$ are zero.  Suppose that
+<![CDATA[$i<j$,]]>
+then
+<!--  extra column of explantions, to make LaTeX-XML parsing go -->
+<!--  could revert with hand-adjusted CDATA sections -->
+<alignmath>
+\matrixentry{AB}{ij}
+<![CDATA[&=]]>
+\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}
+<![CDATA[&&&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=]]>
+\sum_{k=1}^{j-1}\matrixentry{A}{ik}\matrixentry{B}{kj}
++
+\sum_{k=j}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}
+<![CDATA[&&&&]]>\text{<acroref type="property" acro="AACN" />}\\
+<![CDATA[&=]]>
+\sum_{k=1}^{j-1}\matrixentry{A}{ik}0
++
+\sum_{k=j}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}
+<![CDATA[&k&<j\text{,}&&]]>\text{<acroref type="definition" acro="LTM" />}\\
+<![CDATA[&=]]>
+\sum_{k=1}^{j-1}\matrixentry{A}{ik}0
++
+\sum_{k=j}^{n}0\matrixentry{B}{kj}
+<![CDATA[&i&<j\leq k\text{,}&&]]>\text{<acroref type="definition" acro="LTM" />}\\
+<![CDATA[&=]]>
+\sum_{k=1}^{j-1}0+\sum_{k=j}^{n}0\\
+<![CDATA[&=]]>
+0
+</alignmath>
+</p>
+
+<p>Since $\matrixentry{AB}{ij}=0$ whenever
+<![CDATA[$i<j$,]]>
+by <acroref type="definition" acro="LTM" />, $AB$ is lower triangular.</p>
+
+</proof>
+</theorem>
+
+<p>The inverse of a triangular matrix is triangular, of the same type.</p>
+
+<theorem acro="ITMT" index="triangular matrix!inverse">
+<title>Inverse of a Triangular Matrix is Triangular</title>
+<statement>
+<p>Suppose that $A$ is a nonsingular matrix of size $n$ that is triangular.  Then the inverse of $A$, $\inverse{A}$, is triangular of the same type.  Furthermore, the diagonal entries of $\inverse{A}$ are the reciprocals of the corresponding diagonal entries of $A$.  More precisely, $\matrixentry{\inverse{A}}{ii}=\matrixentry{A}{ii}^{-1}$.</p>
+
+</statement>
+
+<proof>
+<p>We give the proof for the case when $A$ is lower triangular, and leave the case when $A$ is upper triangular for you.  Consider the process for computing the inverse of a matrix that is outlined in the proof of <acroref type="theorem" acro="CINM" />.  We augment $A$ with the size $n$ identity matrix, $I_n$, and row-reduce the $n\times 2n$ matrix to reduced row-echelon form via the algorithm in <acroref type="theorem" acro="REMEF" />.  The proof involves tracking the peculiarities of this process in the case of a lower triangular matrix.  Let $M=\augmented{A}{I_n}$.</p>
+
+<p>First, none of the diagonal elements of $A$ are zero.  By repeated expansion about the first row, the determinant of a lower triangular matrix can be seen to be the product of the diagonal entries (<acroref type="theorem" acro="DER" />).  If just one of these diagonal elements was zero, then the determinant of $A$ is zero and $A$ is singular by <acroref type="theorem" acro="SMZD" />.   Slightly violating the exact algorithm for row reduction we can form a matrix, $M^\prime$, that is row-equivalent to $M$, by multiplying row $i$ by the nonzero scalar $\matrixentry{A}{ii}^{-1}$, for $1\leq i\leq n$.  This sets $\matrixentry{M^\prime}{ii}=1$ and $\matrixentry{M^\prime}{i,n+1}=\matrixentry{A}{ii}^{-1}$, and leaves every zero entry of $M$ unchanged.</p>
+
+<p>Let $M_j$ denote the matrix obtained form $M^\prime$ after converting column $j$ to a pivot column.  We can convert column $j$ of $M_{j-1}$ into a pivot column with a set of $n-j-1$ row operations of the form $\rowopadd{\alpha}{j}{k}$ with $j+1\leq k\leq n$.  The key observation here is that we add multiples of row $j$ only to higher-numbered rows.  This means that none of the entries in rows $1$ through $j-1$ is changed, and since row $j$ has zeros in columns $j+1$ through $n$, none of the entries in rows $j+1$ through $n$ is changed in columns $j+1$ through $n$.  The first $n$ columns of $M^\prime$ form a lower triangular matrix with 1's on the diagonal.  In its conversion to the identity matrix through this sequence of row operations, it remains lower triangular with 1's on the diagonal.</p>
+
+<p>What happens in columns $n+1$ through $2n$ of $M^\prime$?  These columns began in $M$ as the identity matrix, and in $M^\prime$ each diagonal entry was scaled to a reciprocal of the corresponding diagonal entry of $A$.  Notice that trivially, these final $n$ columns of $M^\prime$ form a lower triangular matrix.  Just as we argued for the first $n$ columns, the row operations that convert $M_{j-1}$ into $M_j$ will preserve the lower triangular form in the final $n$ columns and preserve the exact values of the diagonal entries.  By <acroref type="theorem" acro="CINM" />, the final $n$ columns of $M_n$ is the inverse of $A$, and this matrix has the necessary properties advertised in the conclusion of this theorem.</p>
+
+</proof>
+</theorem>
+
+<!--  TODO: hermitian, inner-product stuff -->
+</subsection>
+
+<subsection acro="UTMR">
+<title>Upper Triangular Matrix Representation</title>
+
+<p>Not every matrix is diagonalizable, but every linear transformation has a matrix representation that is an upper triangular matrix, and the basis that achieves this representation is especially pleasing.  Here's the theorem.</p>
+
+<theorem acro="UTMR" index="matrix representation!upper triangular">
+<title>Upper Triangular Matrix Representation</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation.  Then there is a basis $B$ for $V$ such that the matrix representation of $T$ relative to $B$, $\matrixrep{T}{B}{B}$, is an upper triangular matrix.  Each diagonal entry is an eigenvalue of $T$, and if $\lambda$ is an eigenvalue of $T$, then $\lambda$ occurs $\algmult{T}{\lambda}$ times on the diagonal.</p>
+
+</statement>
+
+<proof>
+<p>We begin with a proof by induction (<acroref type="technique" acro="I" />) of the first statement in the conclusion of the theorem.  We use induction on the dimension of $V$ to show that if $\ltdefn{T}{V}{V}$ is a linear transformation,  then there is a basis $B$ for $V$ such that the matrix representation of $T$ relative to $B$, $\matrixrep{T}{B}{B}$, is an upper triangular matrix.</p>
+
+<p>To start suppose that $\dimension{V}=1$.  Choose any nonzero vector $\vect{v}\in V$ and realize that $V=\spn{\set{\vect{v}}}$.  Then we can determine $T$ uniquely by $\lt{T}{\vect{v}}=\beta\vect{v}$ for some $\beta\in\complexes$ (<acroref type="theorem" acro="LTDB" />).  This description of $T$ also gives us a matrix representation relative to the  basis $B=\set{\vect{v}}$ as the $1\times 1$ matrix with lone entry equal to $\beta$.  And this matrix representation is upper triangular (<acroref type="definition" acro="UTM" />).</p>
+
+<p>For the induction step let $\dimension{V}=m$, and assume the theorem is true for every linear transformation defined on a vector space of dimension less than $m$.  By <acroref type="theorem" acro="EMHE" /> (suitably converted to the setting of a linear transformation), $T$ has at least one eigenvalue, and we denote this eigenvalue as $\lambda$.  (We will remark later about how critical this step is.)  We now consider properties of the linear transformation $\ltdefn{T-\lambda I_V}{V}{V}$.</p>
+
+<p>Let $\vect{x}$ be an eigenvector of $T$ for $\lambda$.  By definition $\vect{x}\neq\zerovector$.  Then
+<alignmath>
+\lt{\left(T-\lambda I_V\right)}{\vect{x}}
+<![CDATA[&=\lt{T}{\vect{x}}-\lambda\lt{I_V}{\vect{x}}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="VSLT" />}\\
+<![CDATA[&=\lt{T}{\vect{x}}-\lambda\vect{x}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IDLT" />}\\
+<![CDATA[&=\lambda\vect{x}-\lambda\vect{x}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="EELT" />}\\
+<![CDATA[&=\zerovector]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="AI" />}
+</alignmath>
+</p>
+
+<p>So $T-\lambda I_V$ is not injective, as it has a nontrivial kernel (<acroref type="theorem" acro="KILT" />).  With an application of <acroref type="theorem" acro="RPNDD" /> we bound the rank of $T-\lambda I_V$,
+<alignmath>
+<![CDATA[\rank{T-\lambda I_V}&=\dimension{V}-\nullity{T-\lambda I_V}\leq m-1]]>
+</alignmath>
+</p>
+
+<p>Define $W$ to be the subspace of $V$ that is the range of $T-\lambda I_V$, $W=\rng{T-\lambda I_V}$.   We define a new linear transformation $S$, on $W$,
+<alignmath>
+<![CDATA[&\ltdefn{S}{W}{W}]]>
+<![CDATA[&]]>
+<![CDATA[\lt{S}{\vect{w}}&=\lt{T}{\vect{w}}]]>
+</alignmath>
+</p>
+
+<p>This does not look we have accomplished much, since the action of $S$ is identical to the action of $T$.  For our purposes this will be a good thing.  What is different is the domain and codomain.  $S$ is defined on $W$, a vector space with dimension less than $m$, and so is susceptible to our induction hypothesis.  Verifying that $S$ is really a linear transformation is almost entirely routine, with one exception.  Employing $T$ in our definition of $S$ raises the possibility that the outputs of $S$ will not be contained within $W$ (but instead will lie inside $V$, but outside $W$).  To examine this possibility, suppose that $\vect{w}\in W$.
+<alignmath>
+\lt{S}{\vect{w}}
+<![CDATA[&=\lt{T}{\vect{w}}\\]]>
+<![CDATA[&=\lt{T}{\vect{w}}+\zerovector&&]]>\text{<acroref type="property" acro="Z" />}\\
+<![CDATA[&=\lt{T}{\vect{w}}+\left(\lambda\lt{I_V}{\vect{w}}-\lambda\lt{I_V}{\vect{w}}\right)&&]]>\text{<acroref type="property" acro="AI" />}\\
+<![CDATA[&=\left(\lt{T}{\vect{w}}-\lambda\lt{I_V}{\vect{w}}\right)+\lambda\lt{I_V}{\vect{w}}&&]]>\text{<acroref type="property" acro="AA" />}\\
+<![CDATA[&=\left(\lt{T}{\vect{w}}-\lambda\lt{I_V}{\vect{w}}\right)+\lambda\vect{w}&&]]>\text{<acroref type="definition" acro="IDLT" />}\\
+<![CDATA[&=\lt{\left(T-\lambda I_V\right)}{\vect{w}}+\lambda\vect{w}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="VSLT" />}
+</alignmath>
+</p>
+
+<p>Since $W$ is the range of $T-\lambda I_V$, $\lt{\left(T-\lambda I_V\right)}{\vect{w}}\in W$.  And by <acroref type="property" acro="SC" />, $\lambda\vect{w}\in W$.  Finally, applying <acroref type="property" acro="AC" /> we see by closure that the sum is in $W$ and so we conclude that $\lt{S}{\vect{w}}\in W$.  This argument convinces us that it is legitimate to define $S$ as we did with $W$ as the codomain.</p>
+
+<p>$S$ is a linear transformation defined on a vector space with dimension less than $m$, so we can apply the induction hypothesis and conclude that $W$ has a basis, $C=\set{\vectorlist{w}{k}}$, such that the matrix representation of $S$ relative to $C$ is an upper triangular matrix.</p>
+
+<p>By <acroref type="theorem" acro="DSFOS" /> there exists a second subspace of $V$, which we will call $U$, so that $V$ is a direct sum of $W$ and $U$, $V=W\ds U$.  Choose a basis $D=\set{\vectorlist{u}{\ell}}$ for $U$.  So  $m=k+\ell$ by <acroref type="theorem" acro="DSD" />, and $B=C\cup D$ is basis for $V$ by <acroref type="theorem" acro="DSLI" /> and <acroref type="theorem" acro="G" />.  $B$ is the basis we desire.  What does a matrix representation of $T$ look like, relative to $B$?</p>
+
+<p>Since the definition of $T$ and $S$ agree on $W$,  the first $k$ columns of $\matrixrep{T}{B}{B}$ will have the upper triangular matrix representation of $S$ in the first $k$ rows.  The remaining $\ell=m-k$ rows of these first $k$ columns will be all zeros since the outputs of $T$ on $C$ are all contained in $W$.  The situation for $T$ on $D$ is not quite as pretty, but it is close.</p>
+
+<p>For $1\leq i\leq\ell$, consider
+<alignmath>
+\vectrep{B}{\lt{T}{\vect{u}_i}}
+<![CDATA[&=\vectrep{B}{\lt{T}{\vect{u}_i}+\zerovector}&&]]>\text{<acroref type="property" acro="Z" />}\\
+<![CDATA[&=\vectrep{B}{\lt{T}{\vect{u}_i}+\left(\lambda\lt{I_V}{\vect{u}_i}-\lambda\lt{I_V}{\vect{u}_i}\right)}&&]]>\text{<acroref type="property" acro="AI" />}\\
+<![CDATA[&=\vectrep{B}{\left(\lt{T}{\vect{u}_i}-\lambda\lt{I_V}{\vect{u}_i}\right)+\lambda\lt{I_V}{\vect{u}_i}}&&]]>\text{<acroref type="property" acro="AA" />}\\
+<![CDATA[&=\vectrep{B}{\left(\lt{T}{\vect{u}_i}-\lambda\lt{I_V}{\vect{u}_i}\right)+\lambda\vect{u}_i}&&]]>\text{<acroref type="definition" acro="IDLT" />}\\
+<![CDATA[&=\vectrep{B}{\lt{\left(T-\lambda I_V\right)}{\vect{u}_i}+\lambda\vect{u}_i}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="VSLT" />}\\
+<![CDATA[&=\vectrep{B}{\lincombo{a}{w}{k}+\lambda\vect{u}_i}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="RLT" />}\\
+<![CDATA[&=\colvector{a_1\\a_2\\\vdots\\a_k\\0\\\vdots\\0\\\lambda\\0\\\vdots\\0}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="VR" />}
+</alignmath>
+</p>
+
+<p>In the penultimate step of this proof, we have rewritten an element of the range of $T-\lambda I_V$ as a linear combination of the basis vectors, $C$, for the range of $T-\lambda I_V$, $W$, using the scalars $\scalarlist{a}{k}$.  If we incorporate these $\ell$ column vectors into the matrix representation $\matrixrep{T}{B}{B}$ we find $\ell$ occurrences of $\lambda$ on the diagonal, and any nonzero entries lying only in the first $k$ rows.  Together with the $k\times k$ upper triangular representation in the upper left-hand corner, the entire matrix representation is now clearly upper triangular.  This completes the induction step, so for any linear transformation there is a basis that creates an upper triangular matrix representation.</p>
+
+<p>We have one more statement in the conclusion of the theorem to verify.  The eigenvalues of $T$, and their multiplicities, can be computed with the techniques of <acroref type="chapter" acro="E" /> relative to any matrix representation (<acroref type="theorem" acro="EER" />). We take this approach with our upper triangular matrix representation $\matrixrep{T}{B}{B}$.  Let $d_i$ be the diagonal entry of $\matrixrep{T}{B}{B}$ in row $i$ and column $i$.  Then the characteristic polynomial, computed as a determinant (<acroref type="definition" acro="CP" />) with repeated expansions about the first column, is
+<alignmath>
+<![CDATA[\charpoly{\matrixrep{T}{B}{B}}{x}&=]]>
+\left(d_1-x\right)
+\left(d_2-x\right)
+\left(d_3-x\right)
+\cdots
+\left(d_m-x\right)
+</alignmath>
+</p>
+
+<p>The roots of the polynomial equation $\charpoly{\matrixrep{T}{B}{B}}{x}=0$ are the eigenvalues of the linear transformation (<acroref type="theorem" acro="EMRCP" />).  So each diagonal entry is an eigenvalue, and is repeated on the diagonal exactly $\algmult{T}{\lambda}$ times (<acroref type="definition" acro="AME" />).</p>
+
+</proof>
+</theorem>
+
+<p>A key step in this proof was the construction of the subspace $W$ with dimension strictly less than that of $V$.  This required an eigenvalue/eigenvector pair, which was guaranteed to us by <acroref type="theorem" acro="EMHE" />.  Digging deeper, the proof of <acroref type="theorem" acro="EMHE" /> requires that we can factor polynomials completely, into linear factors.  This will not always happen if our set of scalars is the reals, $\real{\null}$.  So this is our final explanation of our choice of the complex numbers, $\complexes$, as our set of scalars.  In $\complexes$ polynomials factor completely, so every matrix has at least one eigenvalue, and an inductive argument will get us to upper triangular matrix representations.</p>
+
+<p>In the case of linear transformations defined on $\complex{m}$, we can use the inner product (<acroref type="definition" acro="IP" />) profitably to fine-tune the basis that yields an upper triangular matrix representation.  Recall that the adjoint of matrix $A$ (<acroref type="definition" acro="A" />) is written as $\adjoint{A}$.</p>
+
+<theorem acro="OBUTR" index="indexstring">
+<title>Orthonormal Basis for Upper Triangular Representation</title>
+<statement>
+<p>Suppose that $A$ is a square matrix.  Then there is a unitary matrix $U$, and an upper triangular matrix $T$, such that
+<alignmath>
+\adjoint{U}AU=T
+</alignmath>
+and $T$ has the eigenvalues of $A$ as the entries of the diagonal.</p>
+
+</statement>
+
+<proof>
+<p>This theorem is a statement about matrices and similarity.  We can convert it to a statement about linear transformations, matrix representations and bases (<acroref type="theorem" acro="SCB" />).  Suppose that $A$ is an $n\times n$ matrix, and define the linear transformation $\ltdefn{S}{\complex{n}}{\complex{n}}$ by $\lt{S}{\vect{x}}=A\vect{x}$.  Then <acroref type="theorem" acro="UTMR" /> gives us a basis $B=\set{\vectorlist{v}{n}}$ for $\complex{n}$ such that a matrix representation of $S$ relative to $B$, \matrixrep{S}{B}{B}, is upper triangular.</p>
+
+<p>Now convert the basis $B$ into an orthogonal basis, $C$, by an application of the Gram-Schmidt procedure (<acroref type="theorem" acro="GSP" />).  This is a messy business computationally, but here we have an excellent illustration of the power of the Gram-Schmidt procedure.  We need only be sure that $B$ is linearly independent and spans $\complex{n}$, and then we know that $C$ is linearly independent, spans $\complex{n}$ and is also an orthogonal set.  We will now consider the matrix representation of $S$ relative to $C$ (rather than $B$).  Write the new basis as $C=\set{\vectorlist{y}{n}}$.  The application of the Gram-Schmidt procedure creates each vector of $C$, say $\vect{y}_j$, as the difference of $\vect{v}_j$ and a linear combination of $\vectorlist{y}{j-1}$.  We are not concerned here with the actual values of the scalars in this linear combination, so we will write
+<alignmath>
+\vect{y}_j
+<![CDATA[&=\vect{v}_j-\sum_{k=1}^{j-1}b_{jk}\vect{y}_k]]>
+</alignmath>
+where the $b_{jk}$ are shorthand for the scalars.  The equation above is in a form useful for creating the basis $C$ from $B$.  To better understand the relationship between $B$ and $C$ convert it to read
+<alignmath>
+\vect{v}_j
+<![CDATA[&=\vect{y}_j+\sum_{k=1}^{j-1}b_{jk}\vect{y}_k]]>
+</alignmath>
+</p>
+
+<p>In this form, we recognize that the change-of-basis matrix $\cbm{B}{C}=\matrixrep{I_{\complex{n}}}{B}{C}$ (<acroref type="definition" acro="CBM" />) is an upper triangular matrix.  By <acroref type="theorem" acro="SCB" /> we have
+<alignmath>
+<![CDATA[\matrixrep{S}{C}{C}&=\cbm{B}{C}\matrixrep{S}{B}{B}\inverse{\cbm{B}{C}}]]>
+</alignmath>
+The inverse of an upper triangular matrix is upper triangular (<acroref type="theorem" acro="ITMT" />), and the product of two upper triangular matrices is again upper triangular (<acroref type="theorem" acro="PTMT" />).  So $\matrixrep{S}{C}{C}$ is an upper triangular matrix.</p>
+
+<p>Now, multiply each vector of $C$ by a nonzero scalar, so that the result has norm 1.  In this way we create a new basis $D$ which is an orthonormal set (<acroref type="definition" acro="ONS" />).  Note that the change-of-basis matrix $\cbm{C}{D}$ is a diagonal matrix with nonzero entries equal to the norms of the vectors in $C$.</p>
+
+<p>Now we can convert our results into the language of matrices.  Let $E$ be the basis of $\complex{n}$ formed with the standard unit vectors (<acroref type="definition" acro="SUV" />).  Then the matrix representation of $S$ relative to $E$ is simply $A$, $A=\matrixrep{S}{E}{E}$.  The change-of-basis matrix $\cbm{D}{E}$ has columns that are simply the vectors in $D$, the orthonormal basis.  As such, <acroref type="theorem" acro="CUMOS" /> tells us that $\cbm{D}{E}$ is a unitary matrix, and by <acroref type="definition" acro="UM" /> has an inverse equal to its adjoint.  Write $U=\cbm{D}{E}$.  We have
+<alignmath>
+\adjoint{U}AU
+<![CDATA[&=\inverse{U}AU&&]]>\text{<acroref type="theorem" acro="UMI" />}\\
+<![CDATA[&=\inverse{\cbm{D}{E}}\matrixrep{S}{E}{E}\cbm{D}{E}\\]]>
+<![CDATA[&=\matrixrep{S}{D}{D}&&]]>\text{<acroref type="theorem" acro="SCB" />}\\
+<![CDATA[&=\cbm{C}{D}\matrixrep{S}{C}{C}\inverse{\cbm{C}{D}}&&]]>\text{<acroref type="theorem" acro="SCB" />}
+</alignmath>
+</p>
+
+<p>The inverse of a diagonal matrix is also a diagonal matrix, and so this final expression is the product of three upper triangular matrices, and so is again upper triangular (<acroref type="theorem" acro="PTMT" />).  Thus the desired upper triangular matrix, $T$, is the matrix representation of $S$ relative to the orthonormal basis $D$, $\matrixrep{S}{D}{D}$.</p>
+
+</proof>
+</theorem>
+
+</subsection>
+
+<subsection acro="NM">
+<title>Normal Matrices</title>
+
+<p>Normal matrices comprise a broad class of interesting matrices, many of which we have met already.  But they are most interesting since they define exactly which matrices we can diagonalize via a unitary matrix.  This is the upcoming <acroref type="theorem" acro="OD" />.  Here's the definition.</p>
+
+<definition acro="NRML" index="normal matrix">
+<title>Normal Matrix</title>
+<p>The square matrix $A$ is normal if $\adjoint{A}A=A\adjoint{A}$.</p>
+
+</definition>
+
+<p>So a normal matrix commutes with its adjoint.  Part of the beauty of this definition is that it includes many other types of matrices.  A diagonal matrix will commute with its adjoint, since the adjoint is again diagonal and the entries are just conjugates of the entries of the original diagonal matrix.  A Hermitian (self-adjoint) matrix (<acroref type="definition" acro="HM" />) will trivially commute with its adjoint, since the two matrices are the same.  A real, symmetric matrix is Hermitian, so these matrices are also normal.  A unitary matrix (<acroref type="definition" acro="UM" />) has its adjoint as its inverse, and inverses commute (<acroref type="theorem" acro="OSIS" />), so unitary matrices are normal.  Another class of normal matrices is the skew-symmetric matrices.  However, these broad descriptions still do not capture all of the normal matrices, as the next example shows.</p>
+
+<example acro="ANM" index="normal matrix">
+<title>A normal matrix</title>
+
+<p>Let
+<alignmath>
+<![CDATA[A&=]]>
+\begin{bmatrix}
+<![CDATA[1 & -1\\1 & 1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Then
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & -1\\1 & 1]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[1 & 1\\-1 & 1]]>
+\end{bmatrix}
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[2 & 0\\0 & 2]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[1 & 1\\-1 & 1]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[1 & -1\\1 & 1]]>
+\end{bmatrix}
+</alignmath>
+so we see by <acroref type="definition" acro="NRML" /> that $A$ is normal.  However, $A$ is not symmetric (hence, as a real matrix, not Hermitian), not unitary, and not skew-symmetric.</p>
+
+</example>
+
+</subsection>
+
+<subsection acro="OD">
+<title>Orthonormal Diagonalization</title>
+
+<p>A diagonal matrix is very easy to work with in matrix multiplication (<acroref type="example" acro="HPDM" />) and an orthonormal basis also has many advantages (<acroref type="theorem" acro="COB" />).  How about converting a matrix to a diagonal matrix through a similarity transformation using a unitary matrix (<ie /> build a diagonal matrix representation with an orthonormal matrix)?  That'd be fantastic!  When can we do this?  We can always accomplish this feat when the matrix is normal, and normal matrices are the only ones that behave this way.  Here's the theorem.</p>
+
+<theorem acro="OD" index="orthonormal diagonalization">
+<title>Orthonormal Diagonalization</title>
+<statement>
+<p>Suppose that $A$ is a square matrix.   Then there is a unitary matrix $U$ and a diagonal matrix $D$, with diagonal entries equal to the eigenvalues of $A$, such that $\adjoint{U}AU=D$ if and only if $A$ is a normal matrix.</p>
+
+</statement>
+
+<!--   TODO:  Proof needs some results, like adjoint of a product -->
+<proof>
+<p><implyforward /> Suppose there is a unitary matrix $U$ that diagonalizes $A$, resulting in $D$, <ie /> $\adjoint{U}AU=D$.  We check the normality of $A$,
+<alignmath>
+\adjoint{A}A
+<![CDATA[&=I_n   \adjoint{A}   I_n   A  I_n&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=U\adjoint{U}   \adjoint{A}   U\adjoint{U}   A    U\adjoint{U}&&]]>\text{<acroref type="definition" acro="UM" />}\\
+<![CDATA[&=U  \adjoint{U}\adjoint{A}U    D    \adjoint{U}\\]]>
+<![CDATA[&=U  \adjoint{U}\adjoint{A}\adjoint{\left(\adjoint{U}\right)}    D    \adjoint{U}&&]]>\text{<acroref type="theorem" acro="AA" />}\\
+<![CDATA[&=U  \adjoint{\left(\adjoint{U}AU\right)}    D    \adjoint{U}&&\text{Adjoint of a product}\\]]>
+<![CDATA[&=U  \adjoint{D}    D    \adjoint{U}\\]]>
+<![CDATA[&=U  \transpose{\left(\conjugate{D}\right)}    D    \adjoint{U}&&]]>\text{<acroref type="definition" acro="A" />}\\
+<![CDATA[&=U  \conjugate{D}    D    \adjoint{U}&&\text{Diagonal matrix}\\]]>
+<![CDATA[&=U  D    \conjugate{D}    \adjoint{U}&&]]>\text{<acroref type="property" acro="CMCN" />}\\
+<![CDATA[&=U  D    \transpose{\left(\conjugate{D}\right)}    \adjoint{U}&&\text{Diagonal matrix}\\]]>
+<![CDATA[&=U  D    \adjoint{D}    \adjoint{U}&&]]>\text{<acroref type="definition" acro="A" />}\\
+<![CDATA[&=U  D    \adjoint{\left(\adjoint{U}AU\right)}    \adjoint{U}\\]]>
+<![CDATA[&=U  D    \adjoint{U}\adjoint{A}\adjoint{\left(\adjoint{U}\right)}    \adjoint{U}&&\text{Adjoint of a product}\\]]>
+<![CDATA[&=U  D    \adjoint{U}\adjoint{A}U    \adjoint{U}&&]]>\text{<acroref type="theorem" acro="AA" />}\\
+<![CDATA[&=U  \adjoint{U}AU    \adjoint{U}\adjoint{A}U    \adjoint{U}\\]]>
+<![CDATA[&=I_n A I_n \adjoint{A} I_n&&]]>\text{<acroref type="definition" acro="UM" />}\\
+<![CDATA[&=A\adjoint{A}&&]]>\text{<acroref type="theorem" acro="MMIM" />}
+</alignmath>
+</p>
+
+<p>So by <acroref type="definition" acro="NRML" />, $A$ is a normal matrix.</p>
+
+<p><implyreverse /> For the converse, suppose that $A$ is a normal matrix.   Whether or not $A$ is normal, <acroref type="theorem" acro="OBUTR" /> provides a unitary matrix $U$ and an upper triangular matrix $T$, whose diagonal entries are the eigenvalues of $A$, and such that $\adjoint{U}AU=T$.  With the added condition that $A$ is normal, we will determine that the entries of $T$ above the diagonal must be all zero.  Here we go.  First we show that $T$ is normal.</p>
+
+<p>
+<alignmath>
+\adjoint{T}T
+<![CDATA[&=\adjoint{\left(\adjoint{U}AU\right)}\adjoint{U}AU\\]]>
+<![CDATA[&=\adjoint{U}\adjoint{A}\adjoint{\left(\adjoint{U}\right)}\adjoint{U}AU&&\text{Adjoint of a product}\\]]>
+<![CDATA[&=\adjoint{U}\adjoint{A}U\adjoint{U}AU&&]]>\text{<acroref type="theorem" acro="AA" />}\\
+<![CDATA[&=\adjoint{U}\adjoint{A}I_nAU&&]]>\text{<acroref type="definition" acro="UM" />}\\
+<![CDATA[&=\adjoint{U}\adjoint{A}AU&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=\adjoint{U}A\adjoint{A}U&&]]>\text{<acroref type="definition" acro="NRML" />}\\
+<![CDATA[&=\adjoint{U}AI_n\adjoint{A}U&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=\adjoint{U}AU\adjoint{U}\adjoint{A}U&&]]>\text{<acroref type="definition" acro="UM" />}\\
+<![CDATA[&=\adjoint{U}AU\adjoint{U}\adjoint{A}\adjoint{\left(\adjoint{U}\right)}&&]]>\text{<acroref type="theorem" acro="AA" />}\\
+<![CDATA[&=\adjoint{U}AU\adjoint{\left(\adjoint{U}AU\right)}&&\text{Adjoint of a product}\\]]>
+<![CDATA[&=T\adjoint{T}]]>
+</alignmath>
+</p>
+
+<p>So by <acroref type="definition" acro="NRML" />, $T$ is a normal matrix.</p>
+
+<p>We can translate the normality of $T$ into the statement $T\adjoint{T}-\adjoint{T}T=\zeromatrix$.  We now establish an equality we will use repeatedly.  For $1\leq i\leq n$,
+<alignmath>
+0
+<![CDATA[&=\matrixentry{\zeromatrix}{ii}&&]]>\text{<acroref type="definition" acro="ZM" />}\\
+<![CDATA[&=\matrixentry{T\adjoint{T}-\adjoint{T}T}{ii}&&]]>\text{<acroref type="definition" acro="NRML" />}\\
+<![CDATA[&=\matrixentry{T\adjoint{T}}{ii}-\matrixentry{\adjoint{T}T}{ii}&&]]>\text{<acroref type="definition" acro="MA" />}\\
+<![CDATA[&=]]>
+ \sum_{k=1}^{n}\matrixentry{T}{ik}\matrixentry{\adjoint{T}}{ki}
+-\sum_{k=1}^{n}\matrixentry{\adjoint{T}}{ik}\matrixentry{T}{ki}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=]]>
+ \sum_{k=1}^{n}\matrixentry{T}{ik}\conjugate{\matrixentry{T}{ik}}
+-\sum_{k=1}^{n}\conjugate{\matrixentry{T}{ki}}\matrixentry{T}{ki}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="A" />}\\
+<![CDATA[&=]]>
+ \sum_{k=i}^{n}\matrixentry{T}{ik}\conjugate{\matrixentry{T}{ik}}
+-\sum_{k=1}^{i}\conjugate{\matrixentry{T}{ki}}\matrixentry{T}{ki}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="UTM" />}\\
+<![CDATA[&=]]>
+ \sum_{k=i}^{n}\modulus{\matrixentry{T}{ik}}^2
+-\sum_{k=1}^{i}\modulus{\matrixentry{T}{ki}}^2
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MCN" />}
+</alignmath>
+</p>
+
+<p>To conclude, we use the above equality repeatedly, beginning with $i=1$, and discover, row by row, that the entries above the diagonal of $T$ are all zero.  The key observation is that a sum of squares can only equal zero when each term of the sum is zero.  For $i=1$ we have
+<alignmath>
+<![CDATA[0&=]]>
+ \sum_{k=1}^{n}\modulus{\matrixentry{T}{1k}}^2
+-\sum_{k=1}^{1}\modulus{\matrixentry{T}{k1}}^2
+=\sum_{k=2}^{n}\modulus{\matrixentry{T}{1k}}^2
+</alignmath>
+which forces the conclusions
+<alignmath>
+<![CDATA[\matrixentry{T}{12}&=0]]>
+<![CDATA[&]]>
+<![CDATA[\matrixentry{T}{13}&=0]]>
+<![CDATA[&]]>
+<![CDATA[\matrixentry{T}{14}&=0]]>
+<![CDATA[&]]>
+<![CDATA[\cdots&]]>
+<![CDATA[&]]>
+<![CDATA[\matrixentry{T}{1n}&=0]]>
+<![CDATA[&]]>
+</alignmath>
+</p>
+
+<p>For $i=2$ we use the same equality, but also incorporate the portion of the above conclusions that says $\matrixentry{T}{12}=0$,
+<alignmath>
+<![CDATA[0&=]]>
+ \sum_{k=2}^{n}\modulus{\matrixentry{T}{2k}}^2
+-\sum_{k=1}^{2}\modulus{\matrixentry{T}{k2}}^2
+ =
+ \sum_{k=2}^{n}\modulus{\matrixentry{T}{2k}}^2
+-\sum_{k=2}^{2}\modulus{\matrixentry{T}{k2}}^2
+=
+\sum_{k=3}^{n}\modulus{\matrixentry{T}{2k}}^2
+</alignmath>
+which forces the conclusions
+<alignmath>
+<![CDATA[\matrixentry{T}{23}&=0]]>
+<![CDATA[&]]>
+<![CDATA[\matrixentry{T}{24}&=0]]>
+<![CDATA[&]]>
+<![CDATA[\matrixentry{T}{25}&=0]]>
+<![CDATA[&]]>
+<![CDATA[\cdots&]]>
+<![CDATA[&]]>
+<![CDATA[\matrixentry{T}{2n}&=0]]>
+<![CDATA[&]]>
+</alignmath>
+</p>
+
+<p>We can repeat this process for the subsequent values of $i=3,\,4,\,5\ldots,\,n-1$.  Notice that it is critical we do this in order, since we need to employ portions of each of the previous conclusions about rows having zero entries in order to successfully get the same conclusion for later rows.  Eventually, we conclude that all of the nondiagonal entries of $T$ are zero, so the extra assumption of normality forces $T$ to be diagonal.</p>
+
+</proof>
+</theorem>
+
+<p>We can rearrange the conclusion of this theorem to read $A=UD\adjoint{U}$.  Recall that a unitary matrix can be viewed as a geometry-preserving transformation (isometry), or more loosely as a rotation of sorts.  Then a matrix-vector product, $A\vect{x}$, can be viewed instead as a sequence of three transformations.  $\adjoint{U}$ is unitary, so is a rotation.  Since $D$ is diagonal, it just multiplies each entry of a vector by a scalar.  Diagonal entries that are positive or negative, with absolute values bigger or smaller than 1 evoke descriptions like reflection, expansion and contraction.  Generally we can say that $D$ <q>stretches</q> a vector in each component.  Final multiplication by $U$ undoes (inverts) the rotation performed by $\adjoint{U}$.  So a normal matrix is a rotation-stretch-rotation transformation.</p>
+
+<p>The orthonormal basis formed from the columns of $U$ can be viewed as a system of mutually perpendicular axes.  The rotation by $\adjoint{U}$ allows the transformation by $A$ to be replaced by the simple transformation $D$ along these axes, and then $D$ brings the result back to the original coordinate system.  For this reason <acroref type="theorem" acro="OD" /> is known as the <define>Principal Axis Theorem</define>.</p>
+
+<!--  TODO: make "principal axis theorem" more prominent, mention in Introduction -->
+<p>The columns of the unitary matrix in <acroref type="theorem" acro="OD" /> create an especially nice basis for use with the normal matrix.  We record this observation as a theorem.</p>
+
+<theorem acro="OBNM" index="orthonormal basis!normal matrix}\index{normal matrix!orthonormal basis">
+<title>Orthonormal Bases and Normal Matrices</title>
+<statement>
+<p>Suppose that $A$ is a normal matrix of size $n$.  Then there is an orthonormal basis of $\complex{n}$ composed of eigenvectors of $A$.</p>
+
+</statement>
+
+<proof>
+<p>Let $U$ be the unitary matrix promised by <acroref type="theorem" acro="OD" /> and let $D$ be the resulting diagonal matrix.  The desired set of vectors is formed by collecting the columns of $U$ into a set.  <acroref type="theorem" acro="CUMOS" /> says this set of columns is orthonormal.  Since $U$ is nonsingular (<acroref type="theorem" acro="UMI" />), <acroref type="theorem" acro="CNMB" /> says the set is a basis.</p>
+
+<p>Since $A$ is diagonalized by $U$, the diagonal entries of the matrix $D$ are the eigenvalues of $A$.  An argument exactly like the second half of the proof of <acroref type="theorem" acro="DC" /> shows that each vector of the basis is an eigenvector of $A$.</p>
+
+</proof>
+</theorem>
+
+<p>In a vague way <acroref type="theorem" acro="OBNM" /> is an improvement on <acroref type="theorem" acro="HMOE" /> which said that eigenvectors of a Hermitian matrix for different eigenvalues are always orthogonal.  Hermitian matrices are normal and we see that we can find at least one basis where <em>every</em> pair of eigenvectors is orthogonal.  Notice that this is not a generalization, since <acroref type="theorem" acro="HMOE" /> states a weak result which applies to many (but not all) pairs of eigenvectors, while <acroref type="theorem" acro="OBNM" /> is a seemingly stronger result, but only asserts that there is one collection of eigenvectors with the stronger property.</p>
+
+</subsection>
+
+<!--   End  OD.tex -->
+<readingquestions>
+<ol>
+<li>Reading questions needed here.  Soon.</li>
+</ol>
+</readingquestions>
+
+<!-- Just a place holder so it is obvious there are no problems yet. -->
+<exercisesubsection>
+<exercise type="C" number="00" rough=" totally bogus">
+<problem contributor="robertbeezer">
+This problem left intentionally blank.
+</problem>
+</exercise>
+</exercisesubsection>
+
+
+</section>

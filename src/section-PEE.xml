@@ -1,0 +1,801 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="PEE">
+<title>Properties of Eigenvalues and Eigenvectors</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section PEE -->
+<!-- %  Properties of Eigenvalues and Eigenvectors -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>The previous section introduced eigenvalues and eigenvectors, and concentrated on their existence and determination.  This section will be more about theorems, and the various properties eigenvalues and eigenvectors enjoy.  Like a good $4\times 100\text{ meter}$ relay, we will lead-off with one of our better theorems and save the very best for the anchor leg.</p>
+
+</introduction>
+
+<subsection acro="BPE">
+<title>Basic Properties of Eigenvalues</title>
+
+<theorem acro="EDELI" index="eigenvectors!linearly independent">
+<title>Eigenvectors with Distinct Eigenvalues are Linearly Independent</title>
+<statement>
+<p>Suppose that $A$ is an $n\times n$ square matrix and $S=\set{\vectorlist{x}{p}}$ is a set of eigenvectors with eigenvalues $\scalarlist{\lambda}{p}$ such that $\lambda_i\neq\lambda_j$ whenever $i\neq j$.  Then $S$ is a linearly independent set.</p>
+
+</statement>
+
+<proof>
+<p>If $p=1$, then the set $S=\set{\vect{x}_1}$ is linearly independent since eigenvectors are nonzero (<acroref type="definition" acro="EEM" />), so assume for the remainder that $p\geq 2$.</p>
+
+<p>We will prove this result by contradiction (<acroref type="technique" acro="CD" />).  Suppose to the contrary that $S$ is a linearly dependent set.  Define $S_i=\set{\vectorlist{x}{i}}$ and let
+$k$ be an integer such that $S_{k-1}=\set{\vectorlist{x}{k-1}}$ is linearly independent and $S_k=\set{\vectorlist{x}{k}}$ is linearly dependent.  We have to ask if there is even such an integer $k$?  First, since eigenvectors are nonzero, the set $\set{\vect{x}_1}$ is linearly independent.  Since we are assuming that $S=S_p$ is linearly dependent, there must be an integer $k$, $2\leq k\leq p$, where the sets $S_i$ transition from linear independence to linear dependence (and stay that way). In other words, $\vect{x}_k$ is the vector with the smallest index that is a linear combination of just vectors with smaller indices.</p>
+
+<p>Since $\set{\vectorlist{x}{k}}$ is linearly dependent there are scalars, $\scalarlist{a}{k}$, some non-zero (<acroref type="definition" acro="LI" />), so that
+<alignmath>
+\zerovector=\lincombo{a}{x}{k}
+</alignmath>
+</p>
+
+<p>Then,
+<alignmath>
+\zerovector
+<![CDATA[&=\left(A-\lambda_kI_n\right)\zerovector]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="ZVSM" />}\\
+<![CDATA[&=\left(A-\lambda_kI_n\right)\left(\lincombo{a}{x}{k}\right)]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="RLD" />}\\
+<![CDATA[&=\left(A-\lambda_kI_n\right)a_1\vect{x}_1+]]>
+\left(A-\lambda_kI_n\right)a_2\vect{x}_2+
+\cdots+
+\left(A-\lambda_kI_n\right)a_k\vect{x}_k
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=a_1\left(A-\lambda_kI_n\right)\vect{x}_1+]]>
+a_2\left(A-\lambda_kI_n\right)\vect{x}_2+
+\cdots+
+a_k\left(A-\lambda_kI_n\right)\vect{x}_k
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=a_1\left(A\vect{x}_1-\lambda_kI_n\vect{x}_1\right)+]]>
+a_2\left(A\vect{x}_2-\lambda_kI_n\vect{x}_2\right)+
+\cdots+
+a_k\left(A\vect{x}_k-\lambda_kI_n\vect{x}_k\right)
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=a_1\left(A\vect{x}_1-\lambda_k\vect{x}_1\right)+]]>
+a_2\left(A\vect{x}_2-\lambda_k\vect{x}_2\right)+
+\cdots+
+a_k\left(A\vect{x}_k-\lambda_k\vect{x}_k\right)
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=a_1\left(\lambda_1\vect{x}_1-\lambda_k\vect{x}_1\right)+]]>
+a_2\left(\lambda_2\vect{x}_2-\lambda_k\vect{x}_2\right)+
+\cdots+
+a_k\left(\lambda_k\vect{x}_k-\lambda_k\vect{x}_k\right)
+<![CDATA[&&]]>\text{<acroref type="definition" acro="EEM" />}\\
+<![CDATA[&=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+]]>
+a_2\left(\lambda_2-\lambda_k\right)\vect{x}_2+
+\cdots+
+a_k\left(\lambda_k-\lambda_k\right)\vect{x}_k
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+]]>
+a_2\left(\lambda_2-\lambda_k\right)\vect{x}_2+
+\cdots+
+a_k\left(0\right)\vect{x}_k
+<![CDATA[&&]]>\text{<acroref type="property" acro="AICN" />}\\
+<![CDATA[&=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+]]>
+a_2\left(\lambda_2-\lambda_k\right)\vect{x}_2+
+\cdots+
+a_{k-1}\left(\lambda_{k-1}-\lambda_k\right)\vect{x}_{k-1}+
+\zerovector
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="ZSSM" />}\\
+<![CDATA[&=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+]]>
+a_2\left(\lambda_2-\lambda_k\right)\vect{x}_2+
+\cdots+
+a_{k-1}\left(\lambda_{k-1}-\lambda_k\right)\vect{x}_{k-1}
+<![CDATA[&&]]>\text{<acroref type="property" acro="Z" />}
+</alignmath>
+</p>
+
+<p>This is a relation of linear dependence on the linearly independent set $\set{\vectorlist{x}{k-1}}$, so the scalars must all be zero.  That is, $a_i\left(\lambda_i-\lambda_k\right)=0$ for $1\leq i\leq k-1$.  However, we have the hypothesis that the eigenvalues are distinct, so $\lambda_i\neq\lambda_k$ for $1\leq i\leq k-1$.  Thus $a_i=0$ for $1\leq i\leq k-1$.</p>
+
+<p>This reduces the original relation of linear dependence on $\set{\vectorlist{x}{k}}$ to the simpler equation $a_k\vect{x}_k=\zerovector$.  By <acroref type="theorem" acro="SMEZV" /> we conclude that $a_k=0$ or $\vect{x}_k=\zerovector$.  Eigenvectors are never the zero vector (<acroref type="definition" acro="EEM" />), so $a_k=0$.  So all of the scalars $a_i$, $1\leq i\leq k$ are zero, contradicting their introduction as the scalars creating a nontrivial relation of linear dependence on the set $\set{\vectorlist{x}{k}}$.  With a contradiction in hand, we conclude that $S$ must be linearly independent.</p>
+
+</proof>
+</theorem>
+
+<p>There is a simple connection between the eigenvalues of a matrix and whether or not the matrix is nonsingular.</p>
+
+<theorem acro="SMZE" index="eigenvalue!zero">
+<title>Singular Matrices have Zero Eigenvalues</title>
+<statement>
+<p>Suppose $A$ is a square matrix.  Then $A$ is singular if and only if $\lambda=0$ is an eigenvalue of $A$.</p>
+
+</statement>
+
+<proof>
+<p>We have the following equivalences:
+<alignmath>
+<![CDATA[\text{$A$ is singular}&\iff\text{there exists $\vect{x}\neq\zerovector$, $A\vect{x}=\zerovector$}&&]]>\text{<acroref type="definition" acro="NSM" />}\\
+<![CDATA[&\iff\text{there exists $\vect{x}\neq\zerovector$, $A\vect{x}=0\vect{x}$}&&]]>\text{<acroref type="theorem" acro="ZSSM" />}\\
+<![CDATA[&\iff\text{$\lambda=0$ is an eigenvalue of $A$}&&]]>\text{<acroref type="definition" acro="EEM" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>With an equivalence about singular matrices we can update our list of equivalences about nonsingular matrices.</p>
+
+<theorem acro="NME8" index="nonsingular matrix!equivalences">
+<title>Nonsingular Matrix Equivalences, Round 8</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $n$.  The following are equivalent.
+<ol><li> $A$ is nonsingular.
+</li><li> $A$ row-reduces to the identity matrix.
+</li><li> The null space of $A$ contains only the zero vector, $\nsp{A}=\set{\zerovector}$.
+</li><li> The linear system $\linearsystem{A}{\vect{b}}$ has a unique solution for every possible choice of $\vect{b}$.
+</li><li> The columns of $A$ are a linearly independent set.
+</li><li> $A$ is invertible.
+</li><li> The column space of $A$ is $\complex{n}$, $\csp{A}=\complex{n}$.
+</li><li> The columns of $A$ are a basis for $\complex{n}$.
+</li><li> The rank of $A$ is $n$, $\rank{A}=n$.
+</li><li> The nullity of $A$ is zero, $\nullity{A}=0$.
+</li><li> The determinant of $A$ is nonzero, $\detname{A}\neq 0$.
+</li><li> $\lambda=0$ is not an eigenvalue of $A$.
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>The equivalence of the first and last statements is the contrapositive of <acroref type="theorem" acro="SMZE" />, so we are able to improve on <acroref type="theorem" acro="NME7" />.</p>
+
+</proof>
+</theorem>
+
+<sageadvice acro="NME8" index="nonsingular matrices!round 8">
+<title>Nonsingular Matrices, Round 8</title>
+Zero eigenvalues are another marker of singular matrices.  We illustrate with two matrices, the first nonsingular, the second not.
+<sage>
+<input>A = matrix(QQ, [[ 1,  0,  2,  1,  1, -3,  4, -6],
+                [ 0,  1,  0,  5,  3, -8,  0,  6],
+                [ 1,  1,  4,  4,  2, -8,  4, -2],
+                [ 0,  1,  6,  0, -2, -1,  1,  0],
+                [-1,  1,  0,  1,  0, -2, -1,  5],
+                [ 0, -1, -6, -3,  1,  4,  1, -5],
+                [-1, -1, -2, -3, -2,  7, -4,  2],
+                [ 0,  2,  0,  0, -2, -2,  0,  6]])
+A.is_singular()
+</input>
+<output>False
+</output>
+</sage>
+
+<sage>
+<input>0 in A.eigenvalues()
+</input>
+<output>False
+</output>
+</sage>
+
+<sage>
+<input>B = matrix(QQ, [[ 2, -1,  0,  4, -6, -2,  8, -2],
+                [-1,  1, -1, -4, -1,  7, -7, -2],
+                [-1,  1,  1,  0,  7, -5, -6,  7],
+                [ 2, -1, -1,  3, -5, -2,  5,  2],
+                [ 1, -2,  0,  2, -1, -3,  8,  0],
+                [-1,  1,  0, -2,  6, -1, -8,  5],
+                [ 2, -1, -1,  2, -7,  1,  7, -3],
+                [-1,  0,  1,  0,  6, -4, -2,  4]])
+B.is_singular()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>0 in B.eigenvalues()
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+<p>Certain changes to a matrix change its eigenvalues in a predictable way.</p>
+
+<theorem acro="ESMM" index="eigenvalue!scalar multiple">
+<title>Eigenvalues of a Scalar Multiple of a Matrix</title>
+<statement>
+<p>Suppose $A$ is a square matrix and $\lambda$ is an eigenvalue of $A$.  Then $\alpha\lambda$ is an eigenvalue of $\alpha A$.</p>
+
+</statement>
+
+<proof>
+<p>Let $\vect{x}\neq\zerovector$ be one eigenvector of $A$ for $\lambda$.  Then
+<alignmath>
+<![CDATA[\left(\alpha A\right)\vect{x}&=\alpha\left(A\vect{x}\right)&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=\alpha\left(\lambda\vect{x}\right)&&\text{$\vect{x}$ eigenvector of $A$}\\]]>
+<![CDATA[&=\left(\alpha\lambda\right)\vect{x}&&]]>\text{<acroref type="property" acro="SMAC" />}
+</alignmath>
+</p>
+
+<p>So $\vect{x}\neq\zerovector$ is an eigenvector of $\alpha A$ for the eigenvalue $\alpha\lambda$.</p>
+
+</proof>
+</theorem>
+
+<p>Unfortunately, there are not parallel theorems about the sum or product of arbitrary matrices.  But we can prove a similar result for powers of a matrix.</p>
+
+<theorem acro="EOMP" index="eigenvalue!power">
+<title>Eigenvalues Of Matrix Powers</title>
+<statement>
+<p>Suppose $A$ is a square matrix, $\lambda$ is an eigenvalue of $A$, and $s\geq 0$ is an integer.  Then $\lambda^s$ is an eigenvalue of $A^s$.</p>
+
+</statement>
+
+<proof>
+<p>Let $\vect{x}\neq\zerovector$ be one eigenvector of $A$ for $\lambda$.  Suppose $A$ has size $n$.  Then we proceed by induction on $s$ (<acroref type="technique" acro="I" />).  First, for $s=0$,
+<alignmath>
+<![CDATA[A^s\vect{x}&=A^0\vect{x}\\]]>
+<![CDATA[&=I_n\vect{x}\\]]>
+<![CDATA[&=\vect{x}&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=1\vect{x}&&]]>\text{<acroref type="property" acro="OC" />}\\
+<![CDATA[&=\lambda^0\vect{x}\\]]>
+<![CDATA[&=\lambda^s\vect{x}\\]]>
+</alignmath>
+so $\lambda^s$ is an eigenvalue of $A^s$ in this special case.  If we assume the theorem is true for $s$, then we find
+<alignmath>
+<![CDATA[A^{s+1}\vect{x}&=A^sA\vect{x}\\]]>
+<![CDATA[&=A^s\left(\lambda\vect{x}\right)&&\text{$\vect{x}$ eigenvector of $A$ for $\lambda$}\\]]>
+<![CDATA[&=\lambda\left(A^s\vect{x}\right)&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=\lambda\left(\lambda^s\vect{x}\right)&&\text{Induction hypothesis}\\]]>
+<![CDATA[&=\left(\lambda\lambda^s\right)\vect{x}&&]]>\text{<acroref type="property" acro="SMAC" />}\\
+<![CDATA[&=\lambda^{s+1}\vect{x}]]>
+</alignmath>
+</p>
+
+<p>So $\vect{x}\neq\zerovector$ is an eigenvector of $A^{s+1}$ for $\lambda^{s+1}$, and induction tells us the theorem is true for all $s\geq 0$.</p>
+
+</proof>
+</theorem>
+
+<p>While we cannot prove that the sum of two arbitrary matrices behaves in any reasonable way with regard to eigenvalues, we can work with the sum of dissimilar powers of the <em>same</em> matrix.  We have already seen two connections between eigenvalues and polynomials, in the proof of <acroref type="theorem" acro="EMHE" /> and the characteristic polynomial (<acroref type="definition" acro="CP" />).  Our next theorem strengthens this connection.</p>
+
+<theorem acro="EPM" index="eigenvalues!of a polynomial">
+<title>Eigenvalues of the Polynomial of a Matrix</title>
+<statement>
+<p>Suppose $A$ is a square matrix and $\lambda$ is an eigenvalue of $A$.  Let $q(x)$ be a polynomial in the variable $x$.  Then $q(\lambda)$ is an eigenvalue of the matrix $q(A)$.</p>
+
+</statement>
+
+<proof>
+<p>Let $\vect{x}\neq\zerovector$ be one eigenvector of $A$ for $\lambda$, and write $q(x)=a_0+a_1x+a_2x^2+\cdots+a_mx^m$.  Then
+<alignmath>
+<![CDATA[q(A)\vect{x}&=\left(a_0A^0+a_1A^1+a_2A^2+\cdots+a_mA^m\right)\vect{x}\\]]>
+<![CDATA[&=(a_0A^0)\vect{x}+(a_1A^1)\vect{x}+(a_2A^2)\vect{x}+\cdots+(a_mA^m)\vect{x}&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=a_0(A^0\vect{x})+a_1(A^1\vect{x})+a_2(A^2\vect{x})+\cdots+a_m(A^m\vect{x})&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=a_0(\lambda^0\vect{x})+a_1(\lambda^1\vect{x})+a_2(\lambda^2\vect{x})+\cdots+a_m(\lambda^m\vect{x})&&]]>\text{<acroref type="theorem" acro="EOMP" />}\\
+<![CDATA[&=(a_0\lambda^0)\vect{x}+(a_1\lambda^1)\vect{x}+(a_2\lambda^2)\vect{x}+\cdots+(a_m\lambda^m)\vect{x}&&]]>\text{<acroref type="property" acro="SMAC" />}\\
+<![CDATA[&=\left(a_0\lambda^0+a_1\lambda^1+a_2\lambda^2+\cdots+a_m\lambda^m\right)\vect{x}&&]]>\text{<acroref type="property" acro="DSAC" />}\\
+<![CDATA[&=q(\lambda)\vect{x}]]>
+</alignmath>
+</p>
+
+<p>So $\vect{x}\neq 0$ is an eigenvector of $q(A)$ for the eigenvalue $q(\lambda)$.</p>
+
+</proof>
+</theorem>
+
+<example acro="BDE" index="eigenvalues!building desired">
+<title>Building desired eigenvalues</title>
+
+<p>In <acroref type="example" acro="ESMS4" /> the $4\times 4$ symmetric matrix
+<equation>
+C=
+\begin{bmatrix}
+<![CDATA[1 &  0 &  1 &  1\\]]>
+<![CDATA[0 &  1 &  1 &  1\\]]>
+<![CDATA[1 &  1 &  1 &  0\\]]>
+<![CDATA[1 &  1 &  0 &  1]]>
+\end{bmatrix}
+</equation>
+is shown to have the three eigenvalues $\lambda=3,\,1,\,-1$.  Suppose we wanted a $4\times 4$ matrix that has the three eigenvalues $\lambda=4,\,0,\,-2$.  We can employ <acroref type="theorem" acro="EPM" /> by finding a polynomial that converts $3$ to $4$, $1$ to $0$, and $-1$ to $-2$.  Such a polynomial is called an <define>interpolating polynomial</define>, and in this example we can use
+<equation>
+r(x)=\frac{1}{4}x^2+x-\frac{5}{4}
+</equation>
+</p>
+
+<p>We will not discuss how to concoct this polynomial, but a text on numerical analysis should provide the details or see <acroref type="section" acro="CF" />.  For now, simply verify that $r(3)=4$, $r(1)=0$ and $r(-1)=-2$.</p>
+
+<p>Now compute
+<alignmath>
+<![CDATA[r(C)&=\frac{1}{4}C^2+C-\frac{5}{4}I_4\\]]>
+<![CDATA[&=]]>
+\frac{1}{4}
+\begin{bmatrix}
+<![CDATA[3 &  2 &  2 &  2\\]]>
+<![CDATA[2 &  3 &  2 &  2\\]]>
+<![CDATA[2 &  2 &  3 &  2\\]]>
+<![CDATA[2 &  2 &  2 &  3]]>
+\end{bmatrix}
++
+\begin{bmatrix}
+<![CDATA[1 &  0 &  1 &  1\\]]>
+<![CDATA[0 &  1 &  1 &  1\\]]>
+<![CDATA[1 &  1 &  1 &  0\\]]>
+<![CDATA[1 &  1 &  0 &  1]]>
+\end{bmatrix}
+-\frac{5}{4}
+\begin{bmatrix}
+<![CDATA[1 &  0 &  0 &  0\\]]>
+<![CDATA[0 &  1 &  0 &  0\\]]>
+<![CDATA[0 &  0 &  1 &  0\\]]>
+<![CDATA[0 &  0 &  0 &  1]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\frac{1}{2}
+\begin{bmatrix}
+<![CDATA[1 &  1 &  3 &  3\\]]>
+<![CDATA[1 &  1 &  3 &  3\\]]>
+<![CDATA[3 &  3 &  1 &  1\\]]>
+<![CDATA[3 &  3 &  1 &  1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p><acroref type="theorem" acro="EPM" /> tells us that if $r(x)$ transforms the eigenvalues in the desired manner, then $r(C)$ will have the desired eigenvalues.  You can check this by computing the eigenvalues of $r(C)$ directly.  Furthermore, notice that the multiplicities are the same, and the eigenspaces of $C$ and $r(C)$ are identical.</p>
+
+</example>
+
+<p>Inverses and transposes also behave predictably with regard to their eigenvalues.</p>
+
+<theorem acro="EIM" index="eigenvalues!inverse">
+<title>Eigenvalues of the Inverse of a Matrix</title>
+<statement>
+<p>Suppose $A$ is a square nonsingular matrix and $\lambda$ is an eigenvalue of $A$.  Then $\frac{1}{\lambda}$ is an eigenvalue of the matrix $\inverse{A}$.</p>
+
+</statement>
+
+<proof>
+<p>Notice that since $A$ is assumed nonsingular, $\inverse{A}$ exists by <acroref type="theorem" acro="NI" />, but more importantly, $\frac{1}{\lambda}$  does not involve division by zero since <acroref type="theorem" acro="SMZE" /> prohibits this possibility.</p>
+
+<p>Let $\vect{x}\neq\zerovector$ be one eigenvector of $A$ for $\lambda$. Suppose $A$ has size $n$.  Then
+<alignmath>
+<![CDATA[\inverse{A}\vect{x}&=\inverse{A}(1\vect{x})&&]]>\text{<acroref type="property" acro="OC" />}\\
+<![CDATA[&=\inverse{A}(\frac{1}{\lambda}\lambda\vect{x})&&]]>\text{<acroref type="property" acro="MICN" />}\\
+<![CDATA[&=\frac{1}{\lambda}\inverse{A}(\lambda\vect{x})&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=\frac{1}{\lambda}\inverse{A}(A\vect{x})&&]]>\text{<acroref type="definition" acro="EEM" />}\\
+<![CDATA[&=\frac{1}{\lambda}(\inverse{A}A)\vect{x}&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=\frac{1}{\lambda}I_n\vect{x}&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=\frac{1}{\lambda}\vect{x}&&]]>\text{<acroref type="theorem" acro="MMIM" />}
+</alignmath>
+</p>
+
+<p>So $\vect{x}\neq 0$ is an eigenvector of $\inverse{A}$ for the eigenvalue $\frac{1}{\lambda}$.</p>
+
+</proof>
+</theorem>
+
+<p>The theorems above have a similar style to them, a style you should consider using when confronted with a need to prove a theorem about eigenvalues and eigenvectors.  So far we have been able to reserve the characteristic polynomial for strictly computational purposes.  However, the next theorem, whose statement resembles the preceding theorems, has an easier proof if we employ the characteristic polynomial and results about determinants.</p>
+
+<theorem acro="ETM" index="eigenvalues!transpose">
+<title>Eigenvalues of the Transpose of a Matrix</title>
+<statement>
+<p>Suppose $A$ is a square matrix and $\lambda$ is an eigenvalue of $A$.  Then $\lambda$ is an eigenvalue of the matrix $\transpose{A}$.</p>
+
+</statement>
+
+<proof>
+<p>Suppose $A$ has size $n$.  Then
+<alignmath>
+\charpoly{A}{x}
+<![CDATA[&=\detname{A-xI_n}&&]]>\text{<acroref type="definition" acro="CP" />}\\
+<![CDATA[&=\detname{\transpose{\left(A-xI_n\right)}}&&]]>\text{<acroref type="theorem" acro="DT" />}\\
+<![CDATA[&=\detname{\transpose{A}-\transpose{\left(xI_n\right)}}&&]]>\text{<acroref type="theorem" acro="TMA" />}\\
+<![CDATA[&=\detname{\transpose{A}-x\transpose{I_n}}&&]]>\text{<acroref type="theorem" acro="TMSM" />}\\
+<![CDATA[&=\detname{\transpose{A}-xI_n}&&]]>\text{<acroref type="definition" acro="IM" />}\\
+<![CDATA[&=\charpoly{\transpose{A}}{x}&&]]>\text{<acroref type="definition" acro="CP" />}\\
+</alignmath>
+</p>
+
+<p>So $A$ and $\transpose{A}$ have the same characteristic polynomial, and by <acroref type="theorem" acro="EMRCP" />, their eigenvalues are identical and have equal algebraic multiplicities.  Notice that what we have proved here is a bit stronger than the stated conclusion in the theorem.</p>
+
+</proof>
+</theorem>
+
+<p>If a matrix has only real entries, then the computation of the characteristic polynomial (<acroref type="definition" acro="CP" />) will result in a polynomial with coefficients that are real numbers.  Complex numbers could result as roots of this polynomial, but they are roots of quadratic factors with real coefficients, and as such, come in conjugate pairs.  The next theorem proves this, and a bit more, without mentioning the characteristic polynomial.</p>
+
+<theorem acro="ERMCP" index="eigenvalues!conjugate pairs">
+<title>Eigenvalues of Real Matrices come in Conjugate Pairs</title>
+<statement>
+<indexlocation index="eigenvectors!conjugate pairs" />
+<p>Suppose $A$ is a square matrix with real entries and $\vect{x}$ is an eigenvector of $A$ for the eigenvalue $\lambda$.  Then $\conjugate{\vect{x}}$ is an eigenvector of $A$ for the eigenvalue $\conjugate{\lambda}$.</p>
+
+</statement>
+
+<proof>
+<p>
+<alignmath>
+<![CDATA[A\conjugate{\vect{x}}&=\conjugate{A}\conjugate{\vect{x}}&&\text{$A$ has real entries}\\]]>
+<![CDATA[&=\conjugate{A\vect{x}}&&]]>\text{<acroref type="theorem" acro="MMCC" />}\\
+<![CDATA[&=\conjugate{\lambda\vect{x}}&&\text{$\vect{x}$ eigenvector of $A$}\\]]>
+<![CDATA[&=\conjugate{\lambda}\conjugate{\vect{x}}&&]]>\text{<acroref type="theorem" acro="CRSM" />}
+</alignmath>
+</p>
+
+<p>So $\conjugate{\vect{x}}$ is an eigenvector of $A$ for the eigenvalue $\conjugate{\lambda}$.</p>
+
+</proof>
+</theorem>
+
+<p>This phenomenon is amply illustrated in <acroref type="example" acro="CEMS6" />, where the four complex eigenvalues come in two pairs, and the two basis vectors of the eigenspaces are complex conjugates of each other.  <acroref type="theorem" acro="ERMCP" /> can be a time-saver for computing eigenvalues and eigenvectors of real matrices with complex eigenvalues, since the conjugate eigenvalue and eigenspace can be inferred from the theorem rather than computed.</p>
+
+</subsection>
+
+<subsection acro="ME">
+<title>Multiplicities of Eigenvalues</title>
+
+<p>A polynomial of degree $n$ will have exactly $n$ roots.  From this fact about polynomial equations we can say more about the algebraic multiplicities of eigenvalues.</p>
+
+<theorem acro="DCP" index="characteristic polynomial!degree">
+<title>Degree of the Characteristic Polynomial</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $n$.  Then the characteristic polynomial of $A$, $\charpoly{A}{x}$, has degree $n$.</p>
+
+</statement>
+
+<proof>
+<p>We will prove a more general result by induction (<acroref type="technique" acro="I" />).  Then the theorem will be true as a special case.  We will carefully state this result as a proposition indexed by $m$, $m\geq 1$.</p>
+
+<p>$P(m)$:  Suppose that $A$ is an $m\times m$ matrix whose entries are complex numbers or linear polynomials in the variable $x$ of the form $c-x$, where $c$ is a complex number.  Suppose further that there are exactly $k$ entries that contain $x$ and that no row or column contains more than one such entry.  Then, when $k=m$, $\detname{A}$ is a polynomial in $x$ of degree $m$, with leading coefficient $\pm 1$,
+<![CDATA[and when $k<m$,]]>
+$\detname{A}$ is a polynomial in $x$ of degree $k$ or less.</p>
+
+<p>Base Case:  Suppose $A$ is a $1\times 1$ matrix.  Then its determinant is equal to the lone entry (<acroref type="definition" acro="DM" />).  When $k=m=1$, the entry is of the form $c-x$, a polynomial in $x$ of degree $m=1$ with leading coefficient $-1$.
+<![CDATA[When $k<m$,]]>
+then $k=0$ and the entry is simply a complex number, a polynomial of degree $0\leq k$.  So $P(1)$ is true.</p>
+
+<p>Induction Step: Assume $P(m)$ is true, and that $A$ is an $(m+1)\times(m+1)$ matrix with $k$ entries of the form $c-x$.  There are two cases to consider.</p>
+
+<p>Suppose $k=m+1$.  Then every row and every column will contain an entry of the form $c-x$.  Suppose that for the first row, this entry is in column $t$.  Compute the determinant of $A$ by an expansion about this first row (<acroref type="definition" acro="DM" />).  The term associated with entry $t$ of this row will be of the form
+<equation>
+(c-x)(-1)^{1+t}\detname{\submatrix{A}{1}{t}}
+</equation>
+</p>
+
+<p>The submatrix $\submatrix{A}{1}{t}$ is an $m\times m$ matrix with $k=m$ terms of the form $c-x$, no more than one per row or column.  By the induction hypothesis, $\detname{\submatrix{A}{1}{t}}$ will be a polynomial in $x$ of degree $m$ with coefficient $\pm 1$.  So this entire term is then a polynomial of degree $m+1$ with leading coefficient $\pm 1$.</p>
+
+<p>The remaining terms (which constitute the sum that is the determinant of $A$) are products of complex numbers from the first row with cofactors built from submatrices that lack the first row of $A$ and lack some column of $A$, other than column $t$.  As such, these submatrices are
+<![CDATA[$m\times m$ matrices with $k=m-1<m$ entries]]>
+of the form $c-x$, no more than one per row or column.  Applying the induction hypothesis, we see that these terms are polynomials in $x$ of degree $m-1$ or less.  Adding the single term from the entry in column $t$ with all these others, we see that $\detname{A}$ is a polynomial in $x$ of degree $m+1$ and leading coefficient $\pm 1$.</p>
+
+<p>
+<![CDATA[The second case occurs when $k<m+1$.]]>
+Now there is a row of $A$ that does not contain an entry of the form $c-x$.  We consider the determinant of $A$ by expanding about this row (<acroref type="theorem" acro="DER" />), whose entries are all complex numbers.  The cofactors employed are built from submatrices that are $m\times m$ matrices with either $k$ or $k-1$ entries of the form $c-x$, no more than one per row or column.  In either case, $k\leq m$, and we can apply the induction hypothesis to see that the determinants computed for the cofactors are all polynomials of degree $k$ or less.  Summing these contributions to the determinant of $A$ yields a polynomial in $x$ of degree $k$ or less, as desired.</p>
+
+<p><acroref type="definition" acro="CP" /> tells us that the characteristic polynomial of an $n\times n$ matrix is the determinant of a matrix having exactly $n$ entries of the form $c-x$, no more than one per row or column.  As such we can apply $P(n)$ to see that the characteristic polynomial has degree $n$.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="NEM" index="eigenvalues!number">
+<title>Number of Eigenvalues of a Matrix</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $n$ with distinct eigenvalues $\scalarlist{\lambda}{k}$.  Then
+<equation>
+\sum_{i=1}^{k}\algmult{A}{\lambda_i}=n
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>By the definition of the algebraic multiplicity (<acroref type="definition" acro="AME" />), we can factor the characteristic polynomial as
+<equation>
+\charpoly{A}{x}=c(x-\lambda_1)^{\algmult{A}{\lambda_1}}(x-\lambda_2)^{\algmult{A}{\lambda_2}}(x-\lambda_3)^{\algmult{A}{\lambda_3}}\cdots(x-\lambda_k)^{\algmult{A}{\lambda_k}}
+</equation>
+where $c$ is a nonzero constant.  (We could prove that $c=(-1)^{n}$, but we do not need that specificity right now.  See <acroref type="exercise" acro="PEE.T30" />)  The left-hand side is a polynomial of degree $n$ by <acroref type="theorem" acro="DCP" /> and the right-hand side is a polynomial of degree $\sum_{i=1}^{k}\algmult{A}{\lambda_i}$.  So the equality of the polynomials' degrees gives the equality $\sum_{i=1}^{k}\algmult{A}{\lambda_i}=n$.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="ME" index="eigenvalues!multiplicities">
+<title>Multiplicities of an Eigenvalue</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $n$ and $\lambda$ is an eigenvalue.  Then
+<equation>
+1\leq\geomult{A}{\lambda}\leq\algmult{A}{\lambda}\leq n
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>Since $\lambda$ is an eigenvalue of $A$, there is an eigenvector of $A$ for $\lambda$, $\vect{x}$.  Then $\vect{x}\in\eigenspace{A}{\lambda}$, so $\geomult{A}{\lambda}\geq 1$, since we can extend $\set{\vect{x}}$ into a basis of $\eigenspace{A}{\lambda}$ (<acroref type="theorem" acro="ELIS" />).</p>
+
+<p>To show that $\geomult{A}{\lambda}\leq\algmult{A}{\lambda}$ is the most involved portion of this proof.  To this end, let $g=\geomult{A}{\lambda}$ and let $\vectorlist{x}{g}$ be a basis for the eigenspace of $\lambda$, $\eigenspace{A}{\lambda}$.  Construct another $n-g$ vectors, $\vectorlist{y}{n-g}$, so that
+<equation>
+\set{\vectorlist{x}{g},\,\vectorlist{y}{n-g}}
+</equation>
+is a basis of $\complex{n}$.  This can be done by repeated applications of <acroref type="theorem" acro="ELIS" />.</p>
+
+<p>Finally, define a matrix $S$ by
+<equation>
+S=[\vect{x}_1|\vect{x}_2|\vect{x}_3|\ldots|\vect{x}_g|\vect{y}_1|\vect{y}_2|\vect{y}_3|\ldots|\vect{y}_{n-g}]
+=[\vect{x}_1|\vect{x}_2|\vect{x}_3|\ldots|\vect{x}_g|R]
+</equation>
+where $R$ is an $n\times(n-g)$ matrix whose columns are $\vectorlist{y}{n-g}$.  The columns of $S$ are linearly independent by design, so $S$ is nonsingular (<acroref type="theorem" acro="NMLIC" />) and therefore invertible (<acroref type="theorem" acro="NI" />).</p>
+
+<p>Then,
+<alignmath>
+<![CDATA[\matrixcolumns{e}{n}&=I_n\\]]>
+<![CDATA[&=\inverse{S}S\\]]>
+<![CDATA[&=\inverse{S}[\vect{x}_1|\vect{x}_2|\vect{x}_3|\ldots|\vect{x}_g|R]\\]]>
+<![CDATA[&=[\inverse{S}\vect{x}_1|\inverse{S}\vect{x}_2|\inverse{S}\vect{x}_3|\ldots|\inverse{S}\vect{x}_g|\inverse{S}R]]]>
+</alignmath>
+</p>
+
+<p>So
+<equation>
+\inverse{S}\vect{x}_i=\vect{e}_i\quad 1\leq i\leq g\tag{$*$}
+</equation>
+</p>
+
+<p>Preparations in place, we compute the characteristic polynomial of $A$,
+<alignmath>
+<![CDATA[\charpoly{A}{x}&=\detname{A-xI_n}&&]]>\text{<acroref type="definition" acro="CP" />}\\
+<![CDATA[&=1\detname{A-xI_n}&&]]>\text{<acroref type="property" acro="OCN" />}\\
+<![CDATA[&=\detname{I_n}\detname{A-xI_n}&&]]>\text{<acroref type="definition" acro="DM" />}\\
+<![CDATA[&=\detname{\inverse{S}S}\detname{A-xI_n}&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=\detname{\inverse{S}}\detname{S}\detname{A-xI_n}&&]]>\text{<acroref type="theorem" acro="DRMM" />}\\
+<![CDATA[&=\detname{\inverse{S}}\detname{A-xI_n}\detname{S}&&]]>\text{<acroref type="property" acro="CMCN" />}\\
+<![CDATA[&=\detname{\inverse{S}\left(A-xI_n\right)S}&&]]>\text{<acroref type="theorem" acro="DRMM" />}\\
+<![CDATA[&=\detname{\inverse{S}AS-\inverse{S}xI_nS}&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=\detname{\inverse{S}AS-x\inverse{S}I_nS}&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=\detname{\inverse{S}AS-x\inverse{S}S}&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=\detname{\inverse{S}AS-xI_n}&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=\charpoly{\inverse{S}AS}{x}&&]]>\text{<acroref type="definition" acro="CP" />}
+</alignmath>
+</p>
+
+<p>What can we learn then about the matrix $\inverse{S}AS$?
+<alignmath>
+<![CDATA[\inverse{S}AS&=\inverse{S}A[\vect{x}_1|\vect{x}_2|\vect{x}_3|\ldots|\vect{x}_g|R]\\]]>
+<![CDATA[&=\inverse{S}[A\vect{x}_1|A\vect{x}_2|A\vect{x}_3|\ldots|A\vect{x}_g|AR]&&]]>\text{<acroref type="definition" acro="MM" />}\\
+<![CDATA[&=\inverse{S}[\lambda\vect{x}_1|\lambda\vect{x}_2|\lambda\vect{x}_3|\ldots|\lambda\vect{x}_g|AR]&&]]>\text{<acroref type="definition" acro="EEM" />}\\
+<![CDATA[&=[\inverse{S}\lambda\vect{x}_1|\inverse{S}\lambda\vect{x}_2|\inverse{S}\lambda\vect{x}_3|\ldots|\inverse{S}\lambda\vect{x}_g|\inverse{S}AR]&&]]>\text{<acroref type="definition" acro="MM" />}\\
+<![CDATA[&=[\lambda\inverse{S}\vect{x}_1|\lambda\inverse{S}\vect{x}_2|\lambda\inverse{S}\vect{x}_3|\ldots|\lambda\inverse{S}\vect{x}_g|\inverse{S}AR]&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=[\lambda\vect{e}_1|\lambda\vect{e}_2|\lambda\vect{e}_3|\ldots|\lambda\vect{e}_g|\inverse{S}AR]&&\text{$\inverse{S}S=I_n$, (($*$) above)}]]>
+</alignmath>
+</p>
+
+<p>Now imagine computing the characteristic polynomial of $A$ by computing the characteristic polynomial of $\inverse{S}AS$ using the form just obtained.  The first $g$ columns of $\inverse{S}AS$ are all zero, save for a $\lambda$ on the diagonal.  So if we compute the determinant by expanding about the first column, successively, we will get successive factors of $(\lambda-x)$.  More precisely, let $T$ be the square matrix of size $n-g$ that is formed from the last $n-g$ rows and last $n-g$ columns of $\inverse{S}AR$.  Then
+<equation>
+\charpoly{A}{x}=\charpoly{\inverse{S}AS}{x}=(\lambda-x)^g\charpoly{T}{x}.
+</equation>
+</p>
+
+<p>This says that $(x-\lambda)$ is a factor of the characteristic polynomial <em>at least</em> $g$ times, so the algebraic multiplicity of $\lambda$ as an eigenvalue of $A$ is greater than or equal to $g$ (<acroref type="definition" acro="AME" />).  In other words,
+<equation>
+\geomult{A}{\lambda}=g\leq\algmult{A}{\lambda}
+</equation>
+as desired.</p>
+
+<p><acroref type="theorem" acro="NEM" /> says that the sum of the algebraic multiplicities for <em>all</em> the eigenvalues of $A$ is equal to $n$.  Since the algebraic multiplicity is a positive quantity, no single algebraic multiplicity can exceed $n$ without the sum of all of the algebraic multiplicities doing the same.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="MNEM" index="eigenvalues!maximum number">
+<title>Maximum Number of Eigenvalues of a Matrix</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $n$.  Then $A$ cannot have more than $n$ distinct eigenvalues.</p>
+
+</statement>
+
+<proof>
+<p>Suppose that $A$ has $k$ distinct eigenvalues, $\scalarlist{\lambda}{k}$.  Then
+<alignmath>
+<![CDATA[k&=\sum_{i=1}^{k}1\\]]>
+<![CDATA[&\leq\sum_{i=1}^{k}\algmult{A}{\lambda_i}&&]]>\text{<acroref type="theorem" acro="ME" />}\\
+<![CDATA[&=n&&]]>\text{<acroref type="theorem" acro="NEM" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+</subsection>
+
+<subsection acro="EHM">
+<title>Eigenvalues of Hermitian Matrices</title>
+
+<p>Recall that a matrix is Hermitian (or self-adjoint) if $A=\adjoint{A}$ (<acroref type="definition" acro="HM" />).  In the case where $A$ is a matrix whose entries are all real numbers, being Hermitian is identical to being symmetric (<acroref type="definition" acro="SYM" />).  Keep this in mind as you read the next two theorems.  Their hypotheses could be changed to <q>suppose $A$ is a real symmetric matrix.</q></p>
+
+<theorem acro="HMRE" index="eigenvalues!Hermitian matrices">
+<title>Hermitian Matrices have Real Eigenvalues</title>
+<statement>
+<p>Suppose that $A$ is a Hermitian matrix and $\lambda$ is an eigenvalue of $A$.  Then $\lambda\in{\mathbb R}$.</p>
+
+</statement>
+
+<proof>
+<p>Let $\vect{x}\neq\zerovector$ be one eigenvector of $A$ for the eigenvalue $\lambda$.   Then by <acroref type="theorem" acro="PIP" /> we know $\innerproduct{\vect{x}}{\vect{x}}\neq 0$.  So
+<alignmath>
+\lambda
+<![CDATA[&=\frac{1}{\innerproduct{\vect{x}}{\vect{x}}}\lambda\innerproduct{\vect{x}}{\vect{x}}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="MICN" />}\\
+<![CDATA[&=\frac{1}{\innerproduct{\vect{x}}{\vect{x}}}\innerproduct{\vect{x}}{\lambda\vect{x}}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="IPSM" />}\\
+<![CDATA[&=\frac{1}{\innerproduct{\vect{x}}{\vect{x}}}\innerproduct{\vect{x}}{A\vect{x}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="EEM" />}\\
+<![CDATA[&=\frac{1}{\innerproduct{\vect{x}}{\vect{x}}}\innerproduct{A\vect{x}}{\vect{x}}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="HMIP" />}\\
+<![CDATA[&=\frac{1}{\innerproduct{\vect{x}}{\vect{x}}}\innerproduct{\lambda\vect{x}}{\vect{x}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="EEM" />}\\
+<![CDATA[&=\frac{1}{\innerproduct{\vect{x}}{\vect{x}}}\conjugate{\lambda}\innerproduct{\vect{x}}{\vect{x}}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="IPSM" />}\\
+<![CDATA[&=\conjugate{\lambda}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="MICN" />}
+</alignmath>
+</p>
+
+<p>If a complex number is equal to its conjugate, then it has a complex part equal to zero, and therefore is a real number.</p>
+
+</proof>
+</theorem>
+
+<p>Notice the appealing symmetry to the justifications given for the steps of this proof.  In the center is the ability to pitch a Hermitian matrix from one side of the inner product to the other.</p>
+
+<p>Look back and compare <acroref type="example" acro="ESMS4" /> and <acroref type="example" acro="CEMS6" />.   In <acroref type="example" acro="CEMS6" /> the matrix has only real entries, yet the characteristic polynomial has roots that are complex numbers, and so the matrix has complex eigenvalues.  However, in <acroref type="example" acro="ESMS4" />, the matrix has only real entries, but is also symmetric, and hence Hermitian.  So by <acroref type="theorem" acro="HMRE" />, we were guaranteed eigenvalues that are real numbers.</p>
+
+<p>In many physical problems, a matrix of interest will be real and symmetric, or Hermitian.  Then if the eigenvalues are to represent physical quantities of interest, <acroref type="theorem" acro="HMRE" /> guarantees that these values will not be complex numbers.</p>
+
+<p>The eigenvectors of a Hermitian matrix also enjoy a pleasing property that we will exploit later.</p>
+
+<theorem acro="HMOE" index="eigenvectors!Hermitian matrices">
+<title>Hermitian Matrices have Orthogonal Eigenvectors</title>
+<statement>
+<p>Suppose that $A$ is a Hermitian matrix and $\vect{x}$ and $\vect{y}$ are two eigenvectors of $A$ for different eigenvalues.  Then $\vect{x}$ and $\vect{y}$ are orthogonal vectors.</p>
+
+</statement>
+
+<proof>
+<p>Let $\vect{x}$ be an eigenvector of $A$ for $\lambda$ and let $\vect{y}$ be an eigenvector of $A$ for a different eigenvalue $\rho$.   So we have $\lambda-\rho\neq 0$.  Then
+<alignmath>
+\innerproduct{\vect{x}}{\vect{y}}
+<![CDATA[&=\frac{1}{\lambda-\rho}\left(\lambda-\rho\right)\innerproduct{\vect{x}}{\vect{y}}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="MICN" />}\\
+<![CDATA[&=\frac{1}{\lambda-\rho}]]>
+\left(\lambda\innerproduct{\vect{x}}{\vect{y}}-\rho\innerproduct{\vect{x}}{\vect{y}}\right)
+<![CDATA[&&]]>\text{<acroref type="property" acro="MICN" />}\\
+<![CDATA[&=\frac{1}{\lambda-\rho}]]>
+\left(\innerproduct{\conjugate{\lambda}\vect{x}}{\vect{y}}-\innerproduct{\vect{x}}{\rho\vect{y}}\right)
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="IPSM" />}\\
+<![CDATA[&=\frac{1}{\lambda-\rho}]]>
+\left(\innerproduct{\lambda\vect{x}}{\vect{y}}-\innerproduct{\vect{x}}{\rho\vect{y}}\right)
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="HMRE" />}\\
+<![CDATA[&=\frac{1}{\lambda-\rho}]]>
+\left(\innerproduct{A\vect{x}}{\vect{y}}-\innerproduct{\vect{x}}{A\vect{y}}\right)
+<![CDATA[&&]]>\text{<acroref type="definition" acro="EEM" />}\\
+<![CDATA[&=\frac{1}{\lambda-\rho}]]>
+\left(\innerproduct{A\vect{x}}{\vect{y}}-\innerproduct{A\vect{x}}{\vect{y}}\right)
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="HMIP" />}\\
+<![CDATA[&=\frac{1}{\lambda-\rho}\left(0\right)]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="AICN" />}\\
+<![CDATA[&=0]]>
+</alignmath>
+</p>
+
+<p>This equality says that $\vect{x}$ and $\vect{y}$ are orthogonal vectors (<acroref type="definition" acro="OV" />).</p>
+
+</proof>
+</theorem>
+
+<p>Notice again how the key step in this proof is the fundamental property of a Hermitian matrix (<acroref type="theorem" acro="HMIP" />) <mdash /> the ability to swap $A$ across the two arguments of the inner product.  We'll build on these results and continue to see some more interesting properties in <acroref type="section" acro="OD" />.</p>
+
+<!--  TODO:  cite positive definite stuff as well -->
+</subsection>
+
+<!--   End of  pee.tex -->
+<readingquestions>
+<ol>
+<li>How can you identify a nonsingular matrix just by looking at its eigenvalues?
+</li>
+<li>How many different eigenvalues may a square matrix of size $n$ have?
+</li>
+<li>What is amazing about the eigenvalues of a Hermitian matrix and why is it amazing?
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="T" number="10" rough="constant term of char poly is det(A)">
+<problem contributor="robertbeezer">Suppose that $A$ is a square matrix.  Prove that the constant term of the characteristic polynomial of $A$ is equal to the determinant of $A$.
+</problem>
+<solution contributor="robertbeezer">Suppose that the characteristic polynomial of $A$ is
+<equation>
+\charpoly{A}{x}=a_0+a_1x+a_2x^2+\dots+a_nx^n
+</equation>
+Then
+<alignmath>
+a_0
+<![CDATA[&=a_0+a_1(0)+a_2(0)^2+\dots+a_n(0)^n\\]]>
+<![CDATA[&=\charpoly{A}{0}\\]]>
+<![CDATA[&=\detname{A-0I_n}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CP" />}\\
+<![CDATA[&=\detname{A}]]>
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="T" number="20" rough="Eigenspaces are disjoint sets">
+<problem contributor="robertbeezer">Suppose that $A$ is a square matrix.  Prove that a single vector may not be an eigenvector of $A$ for two different eigenvalues.
+</problem>
+<solution contributor="robertbeezer">Suppose that the vector $\vect{x}\neq\zerovector$ is an eigenvector of $A$ for the two eigenvalues $\lambda$ and $\rho$, where $\lambda\neq\rho$.  Then $\lambda-\rho\neq 0$, and we also have
+<alignmath>
+\zerovector
+<![CDATA[&=A\vect{x}-A\vect{x}&&]]>\text{<acroref type="property" acro="AIC" />}\\
+<![CDATA[&=\lambda\vect{x}-\rho\vect{x}&&]]>\text{<acroref type="definition" acro="EEM" />}\\
+<![CDATA[&=(\lambda-\rho)\vect{x}&&]]>\text{<acroref type="property" acro="DSAC" />}
+</alignmath>
+By <acroref type="theorem" acro="SMEZV" />, either $\lambda-\rho=0$ or $\vect{x}=\zerovector$, which are both contradictions.
+</solution>
+</exercise>
+
+<exercise type="T" number="22" rough="Unitary matrix eigenvalues of modulus 1">
+<problem contributor="robertbeezer">Suppose that $U$ is a unitary matrix with eigenvalue $\lambda$.  Prove that $\lambda$ had modulus 1, <ie /> $\modulus{\lambda}=1$.  This says that all of the eigenvalues of a unitary matrix lie on the unit circle of the complex plane.
+</problem>
+</exercise>
+
+<exercise type="T" number="30" rough="Leading coefficient of char poly is (-1)^n">
+<problem contributor="robertbeezer"><acroref type="theorem" acro="DCP" /> tells us that the characteristic polynomial of a square matrix of size $n$ has degree $n$.  By suitably augmenting the proof of <acroref type="theorem" acro="DCP" /> prove that the coefficient of $x^n$ in the characteristic polynomial is $(-1)^n$.
+</problem>
+</exercise>
+
+<exercise type="T" number="50" rough="Char poly proof of Theorem EMI">
+<problem contributor="robertbeezer"><acroref type="theorem" acro="EIM" /> says that if $\lambda$ is an eigenvalue of the nonsingular matrix $A$, then $\frac{1}{\lambda}$ is an eigenvalue of $\inverse{A}$.  Write an alternate proof of this theorem using the characteristic polynomial and without making reference to an eigenvector of $A$ for $\lambda$.
+</problem>
+<solution contributor="robertbeezer">Since $\lambda$ is an eigenvalue of a nonsingular matrix, $\lambda\neq 0$ (<acroref type="theorem" acro="SMZE" />).  $A$ is invertible (<acroref type="theorem" acro="NI" />), and so $-\lambda A$ is invertible (<acroref type="theorem" acro="MISM" />). Thus $-\lambda A$ is nonsingular (<acroref type="theorem" acro="NI" />) and $\detname{-\lambda A}\neq 0$ (<acroref type="theorem" acro="SMZD" />).
+<alignmath>
+\charpoly{\inverse{A}}{\frac{1}{\lambda}}
+<![CDATA[&=\detname{\inverse{A}-\frac{1}{\lambda}I_n}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CP" />}\\
+<![CDATA[&=1\detname{\inverse{A}-\frac{1}{\lambda}I_n}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="OCN" />}\\
+<![CDATA[&=\frac{1}{\detname{-\lambda A}}]]>
+\detname{-\lambda A}\detname{\inverse{A}-\frac{1}{\lambda}I_n}
+<![CDATA[&&]]>\text{<acroref type="property" acro="MICN" />}\\
+<![CDATA[&=\frac{1}{\detname{-\lambda A}}]]>
+\detname{\left(-\lambda A\right)\left(\inverse{A}-\frac{1}{\lambda}I_n\right)}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="DRMM" />}\\
+<![CDATA[&=\frac{1}{\detname{-\lambda A}}]]>
+\detname{-\lambda A\inverse{A}-\left(-\lambda A\right)\frac{1}{\lambda}I_n}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=\frac{1}{\detname{-\lambda A}}]]>
+\detname{-\lambda I_n-\left(-\lambda A\right)\frac{1}{\lambda}I_n}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="MI" />}\\
+<![CDATA[&=\frac{1}{\detname{-\lambda A}}]]>
+\detname{-\lambda I_n+\lambda\frac{1}{\lambda}AI_n}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
+<![CDATA[&=\frac{1}{\detname{-\lambda A}}]]>
+\detname{-\lambda I_n+1AI_n}
+<![CDATA[&&]]>\text{<acroref type="property" acro="MICN" />}\\
+<![CDATA[&=\frac{1}{\detname{-\lambda A}}]]>
+\detname{-\lambda I_n+AI_n}
+<![CDATA[&&]]>\text{<acroref type="property" acro="OCN" />}\\
+<![CDATA[&=\frac{1}{\detname{-\lambda A}}]]>
+\detname{-\lambda I_n+A}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=\frac{1}{\detname{-\lambda A}}]]>
+\detname{A-\lambda I_n}
+<![CDATA[&&]]>\text{<acroref type="property" acro="ACM" />}\\
+<![CDATA[&=\frac{1}{\detname{-\lambda A}}]]>
+<![CDATA[\charpoly{A}{\lambda}&&]]>\text{<acroref type="definition" acro="CP" />}\\
+<![CDATA[&=\frac{1}{\detname{-\lambda A}}\,0&&]]>\text{<acroref type="theorem" acro="EMRCP" />}\\
+<![CDATA[&=0&&]]>\text{<acroref type="property" acro="ZCN" />}
+</alignmath>
+So $\frac{1}{\lambda}$ is a root of the characteristic polynomial of $\inverse{A}$ and so is an eigenvalue of $\inverse{A}$.  This proof is due to \sarabucht.
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

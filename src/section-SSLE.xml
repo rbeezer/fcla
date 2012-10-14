@@ -1,0 +1,819 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="SSLE">
+<title>Solving Systems of Linear Equations</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section SSLE -->
+<!-- %  Solving Systems of Linear Equations -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>We will motivate our study of linear algebra by considering the problem of solving several linear equations simultaneously.  The word <q>solve</q> tends to get abused somewhat, as in <q>solve this problem.</q>  When talking about equations we understand a more precise meaning:  find <em>all</em> of the values of some variable quantities that make an equation, or several equations, true.</p>
+
+</introduction>
+
+<subsection acro="SLE">
+<title>Systems of Linear Equations</title>
+
+<example acro="STNE" index="solving nonlinear equations">
+<title>Solving two (nonlinear) equations</title>
+
+<p>Suppose we desire the simultaneous solutions of the two equations,
+<alignmath>
+<![CDATA[x^2+y^2&=1\\]]>
+<![CDATA[-x+\sqrt{3}y&=0\\]]>
+</alignmath>
+</p>
+
+<p>You can easily check by substitution that $x=\tfrac{\sqrt{3}}{2},\;y=\tfrac{1}{2}$ and $x=-\tfrac{\sqrt{3}}{2},\;y=-\tfrac{1}{2}$ are both solutions.  We need to also convince ourselves that these are the <em>only</em> solutions.  To see this, plot each equation on the $xy$-plane, which means to plot $(x,\,y)$ pairs that make an individual equation true.  In this case we get a circle centered at the origin with radius 1 and a straight line through the origin with slope $\tfrac{1}{\sqrt{3}}$.  The intersections of these two curves are our desired simultaneous solutions, and so we believe from our plot that the two solutions we know already are indeed the only ones.  We like to write solutions as sets, so in this case we write the set of solutions as
+<alignmath>
+<![CDATA[S&=\set{\left(\tfrac{\sqrt{3}}{2},\,\tfrac{1}{2}\right),\,\left(-\tfrac{\sqrt{3}}{2},\,-\tfrac{1}{2}\right)}]]>
+</alignmath>
+</p>
+
+</example>
+
+<p>In order to discuss systems of linear equations carefully, we need a precise definition.  And before we do that, we will introduce our periodic discussions about <q>Proof Techniques.</q> Linear algebra is an excellent setting for learning how to read, understand and formulate proofs.  But this is a difficult step in your development as a mathematician, so we have included a series of short essays containing advice and explanations to help you along.  These will be referenced in the text as needed, and are also collected as a list you can consult when you want to return to re-read them. (Which is strongly encouraged!)</p>
+
+<p>With a definition next, now is the time for the first of our proof techniques.
+So study <acroref type="technique" acro="D" />.  We'll be right here when you get back.  See you in a bit.</p>
+
+<definition acro="SLE" index="system of linear equations">
+<title>System of Linear Equations</title>
+<p>A <define>system of linear equations</define> is a collection of $m$ equations in the variable quantities $x_1,\,x_2,\,x_3,\ldots,x_n$ of the form,
+<alignmath>
+<![CDATA[a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&=b_1\\]]>
+<![CDATA[a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&=b_2\\]]>
+<![CDATA[a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&=b_3\\]]>
+<![CDATA[&\vdots\\]]>
+<![CDATA[a_{m1}x_1+a_{m2}x_2+a_{m3}x_3+\dots+a_{mn}x_n&=b_m]]>
+</alignmath>
+where the values of $a_{ij}$, $b_i$ and $x_j$ are from the set of complex numbers, $\complex{\null}$.</p>
+
+</definition>
+
+<p>Don't let the mention of the complex numbers, $\complex{\null}$, rattle you.  We will stick with real numbers exclusively for many more sections, and it will sometimes seem like we only work with integers!  However, we want to leave the possibility of complex numbers open, and there will be occasions in subsequent sections where they are necessary.  You can review the basic properties of complex numbers in <acroref type="section" acro="CNO" />, but these facts will not be critical until we reach <acroref type="section" acro="O" />.</p>
+
+<p>Now we make the notion of a solution to a linear system precise.</p>
+
+<definition acro="SSLE" index="solution to a linear system">
+<title>Solution of a System of Linear Equations</title>
+<p>A <define>solution</define> of a system of linear equations in $n$ variables, $\scalarlist{x}{n}$ (such as the system given in <acroref type="definition" acro="SLE" />, is an ordered list of $n$ complex numbers, $\scalarlist{s}{n}$ such that if we substitute $s_1$ for $x_1$, $s_2$ for $x_2$, $s_3$ for $x_3$, <ellipsis />, $s_n$ for $x_n$,  then for every equation of the system the left side will equal the right side, <ie /> each equation is true simultaneously.</p>
+
+</definition>
+
+<p>More typically, we will write a solution in a form like $x_1=12$, $x_2=-7$, $x_3=2$ to mean that $s_1=12$, $s_2=-7$, $s_3=2$ in the notation of <acroref type="definition" acro="SSLE" />.  To discuss <em>all</em> of the possible solutions to a system of linear equations, we now define the set of all solutions.  (So <acroref type="section" acro="SET" /> is now applicable, and you may want to go and familiarize yourself with what is there.)</p>
+
+<definition acro="SSSLE" index="solution set of a linear system">
+<title>Solution Set of a System of Linear Equations</title>
+<p>The <define>solution set</define> of a linear system of equations is the set which contains every solution to the system, and nothing more.</p>
+
+</definition>
+
+<p>Be aware that a solution set can be infinite, or there can be no solutions, in which case we write the solution set as the empty set, $\emptyset=\set{}$ (<acroref type="definition" acro="ES" />).  Here is an example to illustrate using the notation introduced in <acroref type="definition" acro="SLE" /> and the notion of a solution (<acroref type="definition" acro="SSLE" />).</p>
+
+<example acro="NSE" index="notation for a linear system">
+<title>Notation for a system of equations</title>
+
+<p>Given the system of linear equations,
+<alignmath>
+<![CDATA[x_1+2x_2 +\quad x_4&= 7\\]]>
+<![CDATA[x_1+x_2+x_3-x_4&=3\\]]>
+<![CDATA[3x_1+x_2+5x_3-7x_4&=1]]>
+</alignmath>
+we have $n=4$ variables and $m=3$ equations.  Also,
+<alignmath>
+<![CDATA[a_{11}&=1 & a_{12}&=2 & a_{13}&=0 & a_{14}&=1 & b_{1}&=7\\]]>
+<![CDATA[a_{21}&=1 & a_{22}&=1 & a_{23}&=1 & a_{24}&=-1 & b_{2}&=3\\]]>
+<![CDATA[a_{31}&=3 & a_{32}&=1 & a_{33}&=5 & a_{34}&=-7 & b_{3}&=1]]>
+</alignmath></p>
+
+<p>Additionally, convince yourself that $x_{1}=-2$, $x_{2}=4$, $x_{3}=2$, $x_{4}=1$ is one solution (<acroref type="definition" acro="SSLE" />), but it is not the only one!  For example, another solution is $x_{1}=-12$, $x_{2}=11$, $x_{3}=1$, $x_{4}=-3$, and there are more to be found.  So the solution set contains at least two elements.</p>
+
+</example>
+
+<p>We will often shorten the term  <q>system of linear equations</q> to <q>system of equations</q> leaving the linear aspect implied.  After all, this is a book about <em>linear</em> algebra.</p>
+
+</subsection>
+
+<subsection acro="PSS">
+<title>Possibilities for Solution Sets</title>
+
+<p>The next example illustrates the possibilities for the solution set of a system of linear equations.  We will not be too formal here, and the necessary theorems to back up our claims will come in subsequent sections.  So read for feeling and come back later to revisit this example.</p>
+
+<example acro="TTS" index="typical systems, $2\times 2$">
+<title>Three typical systems</title>
+
+<p>Consider the system of two equations with two variables,
+<alignmath>
+<![CDATA[2x_1+3x_2&=3\\]]>
+<![CDATA[x_1-x_2&=4]]>
+</alignmath>
+</p>
+
+<p>If we plot the solutions to each of these equations separately on the $x_{1}x_{2}$-plane, we get two lines, one with negative slope, the other with positive slope.  They have exactly one point in common, $(x_1,\,x_2)=(3,\,-1)$, which is the solution $x_1=3$, $x_2=-1$.  From the geometry, we believe that this is the only solution to the system of equations, and so we say it is unique.</p>
+
+<p>Now adjust the system with a different second equation,
+<alignmath>
+<![CDATA[2x_1+3x_2&=3\\]]>
+<![CDATA[4x_1+6x_2&=6]]>
+</alignmath>
+</p>
+
+<p>A plot of the solutions to these equations individually results in two lines, one on top of the other!  There are infinitely many pairs of points that make both equations true.  We will learn shortly how to describe this infinite solution set precisely (see <acroref type="example" acro="SAA" />, <acroref type="theorem" acro="VFSLS" />).  Notice now how the second equation is just a multiple of the first.</p>
+
+<p>One more minor adjustment provides a third system of linear equations,
+<alignmath>
+<![CDATA[2x_1+3x_2&=3\\]]>
+<![CDATA[4x_1+6x_2&=10]]>
+</alignmath>
+</p>
+
+<p>A plot now reveals two lines with identical slopes, <ie /> parallel lines.  They have no points in common, and so the system has a solution set that is empty, $S=\emptyset$.</p>
+
+</example>
+
+<p>This example exhibits all of the typical behaviors of a system of equations.  A subsequent theorem will tell us that every system of linear equations has a solution set that is empty, contains a single solution or contains infinitely many solutions (<acroref type="theorem" acro="PSSLS" />).  <acroref type="example" acro="STNE" /> yielded exactly two solutions, but this does not contradict the forthcoming theorem.  The equations in <acroref type="example" acro="STNE" /> are not linear because they do not match the form of <acroref type="definition" acro="SLE" />, and so we cannot apply <acroref type="theorem" acro="PSSLS" /> in this case.</p>
+
+</subsection>
+
+<subsection acro="ESEO">
+<title>Equivalent Systems and Equation Operations</title>
+
+<p>With all this talk about finding solution sets for systems of linear equations, you might be ready to begin learning how to find these solution sets yourself.  We begin with our first definition that takes a common word and gives it a very precise meaning in the context of systems of linear equations.</p>
+
+<definition acro="ESYS" index="equivalent systems">
+<title>Equivalent Systems</title>
+<p>Two systems of linear equations are <define>equivalent</define> if their solution sets are equal.</p>
+
+</definition>
+
+<p>Notice here that the two systems of equations could <em>look</em> very different (<ie /> not be equal), but still have equal solution sets, and we would then call the systems equivalent.   Two linear equations in two variables might be plotted as two lines that intersect in a single point.  A different system, with three equations in two variables might have a plot that is three lines, all intersecting at a common point, with this common point identical to the intersection point for the first system.  By our definition, we could then say these two very different looking systems of equations are equivalent, since they have identical solution sets.   It is really like a weaker form of equality, where we allow the systems to be different in some respects, but we use the term equivalent to highlight the situation when their solution sets are equal.</p>
+
+<p>With this definition, we can begin to describe our strategy for solving linear systems.  Given a system of linear equations that looks difficult to solve, we would like to have an <em>equivalent</em> system that is easy to solve.  Since the systems will have equal solution sets, we can solve the <q>easy</q> system and get the solution set to the <q>difficult</q> system.  Here come the tools for making this strategy viable.</p>
+
+<definition acro="EO" index="equation operations">
+<title>Equation Operations</title>
+<p>Given a system of linear equations, the following three operations will transform the system into a different one, and each operation is known as an <define>equation operation</define>.
+<ol><li> Swap the locations of two equations in the list of equations.
+</li><li> Multiply each term of an equation by a nonzero quantity.
+</li><li> Multiply each term of one equation by some quantity, and add these terms to a second equation, on both sides of the equality.  Leave the first equation the same after this operation, but replace the second equation by the new one.
+</li></ol>
+</p>
+
+</definition>
+
+<p>These descriptions might seem a bit vague, but the proof or the examples that follow should make it clear what is meant by each.  We will shortly prove a key theorem about equation operations and solutions to linear systems of equations.</p>
+
+<p>We are about to give a rather involved proof, so a discussion about just what a theorem really is would be timely.  Stop and read <acroref type="technique" acro="T" /> first.</p>
+
+<p>In the theorem we are about to prove, the conclusion is that two systems are equivalent.  By <acroref type="definition" acro="ESYS" /> this translates to requiring that solution sets be equal for the two systems.  So we are being asked to show <em>that two sets are equal</em>.  How do we do this?  Well, there is a very standard technique, and we will use it repeatedly through the course.  If you have not done so already, head to <acroref type="section" acro="SET" /> and familiarize yourself with sets, their operations, and especially the notion of set equality, <acroref type="definition" acro="SE" /> and the nearby discussion about its use.</p>
+
+<theorem acro="EOPSS" index="equation operations">
+<title>Equation Operations Preserve Solution Sets</title>
+<statement>
+<p>If we apply one of the three equation operations of <acroref type="definition" acro="EO" /> to a system of linear equations  (<acroref type="definition" acro="SLE" />), then the original system and the transformed system are equivalent.
+</p>
+</statement>
+
+<proof>
+<p>We take each equation operation in turn and show that the solution sets of the two systems are equal, using the definition of set equality (<acroref type="definition" acro="SE" />).
+<ol>
+<!-- % -->
+<!-- % Swapping rows -->
+<!-- % -->
+<li>  It will not be our habit in proofs to resort to saying statements are <q>obvious,</q> but in this case, it should be.  There is nothing about the <em>order</em> in which we write linear equations that affects their solutions, so the solution set will be equal if the systems only differ by a rearrangement of the order of the equations.</li>
+<!-- % -->
+<!-- % One row by nonzero scalar -->
+<!-- % -->
+<li>  Suppose $\alpha\neq 0$ is a number.  Let's choose to multiply the terms of equation $i$ by $\alpha$ to build the new system of equations,
+<alignmath>
+<![CDATA[a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&=b_1\\]]>
+<![CDATA[a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&=b_2\\]]>
+<![CDATA[a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&=b_3\\]]>
+<![CDATA[&\vdots\\]]>
+<![CDATA[\alpha a_{i1}x_1+\alpha a_{i2}x_2+\alpha a_{i3}x_3+\dots+\alpha a_{in}x_n&=\alpha b_i\\]]>
+<![CDATA[&\vdots\\]]>
+<![CDATA[a_{m1}x_1+a_{m2}x_2+a_{m3}x_3+\dots+a_{mn}x_n&=b_m]]>
+</alignmath>
+Let $S$ denote the solutions to the system in the statement of the theorem, and let $T$ denote the solutions to the transformed system.
+<ol><li> Show $S\subseteq T$.  Suppose $(x_1,\,x_2,\,\,x_3,\,\ldots,x_n)=(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in S$ is a solution to the original system.  Ignoring the $i$-th equation for a moment, we know it makes all the other equations of the transformed system true.  We also know that
+<alignmath>
+<![CDATA[a_{i1}\beta_1+a_{i2}\beta_2+a_{i3}\beta_3+\dots+a_{in}\beta_n&=b_i\\]]>
+<intertext>which we can multiply by $\alpha$ to get</intertext>
+<![CDATA[\alpha a_{i1}\beta_1+\alpha a_{i2}\beta_2+\alpha a_{i3}\beta_3+\dots+\alpha a_{in}\beta_n&=\alpha b_i]]>
+</alignmath>
+This says that the $i$-th equation of the transformed system is also true, so we have established that $(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in T$, and therefore $S\subseteq T$.
+</li><li> Now show $T\subseteq S$.  Suppose $(x_1,\,x_2,\,\,x_3,\,\ldots,x_n)=(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in T$ is a solution to the transformed system.  Ignoring the $i$-th equation for a moment, we know it makes all the other equations of the original system true.  We also know that
+<alignmath>
+<![CDATA[\alpha a_{i1}\beta_1+\alpha a_{i2}\beta_2+\alpha a_{i3}\beta_3+\dots+\alpha a_{in}\beta_n&=\alpha b_i]]>
+<intertext>which we can multiply by $\tfrac{1}{\alpha}$, since $\alpha\neq 0$, to get</intertext>
+<![CDATA[a_{i1}\beta_1+a_{i2}\beta_2+a_{i3}\beta_3+\dots+a_{in}\beta_n&=b_i\\]]>
+</alignmath>
+This says that the $i$-th equation of the original system is also true, so we have established that $(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in S$, and therefore $T\subseteq S$.  Locate the key point where we required that $\alpha\neq 0$, and consider what would happen if $\alpha=0$.
+</li></ol>
+</li>
+<!-- % -->
+<!-- % One row by scalar, added to another -->
+<!-- % -->
+<li>Suppose $\alpha$ is a number.  Let's choose to multiply the terms of equation $i$ by $\alpha$ and add them to equation $j$ in order to build the new system of equations,
+<alignmath>
+<![CDATA[a_{11}x_1+a_{12}x_2+\dots+a_{1n}x_n&=b_1\\]]>
+<![CDATA[a_{21}x_1+a_{22}x_2+\dots+a_{2n}x_n&=b_2\\]]>
+<![CDATA[a_{31}x_1+a_{32}x_2+\dots+a_{3n}x_n&=b_3\\]]>
+<![CDATA[&\vdots\\]]>
+<![CDATA[(\alpha a_{i1}+a_{j1})x_1+(\alpha a_{i2}+a_{j2})x_2+\dots+(\alpha a_{in}+a_{jn})x_n&=\alpha b_i+b_{j}\\]]>
+<![CDATA[&\vdots\\]]>
+<![CDATA[a_{m1}x_1+a_{m2}x_2+\dots+a_{mn}x_n&=b_m]]>
+</alignmath>
+Let $S$ denote the solutions to the system in the statement of the theorem, and let $T$ denote the solutions to the transformed system.
+<ol><li> Show $S\subseteq T$.  Suppose $(x_1,\,x_2,\,\,x_3,\,\ldots,x_n)=(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in S$ is a solution to the original system.  Ignoring the $j$-th equation for a moment, we know this solution makes all the other equations of the transformed system true.  Using the fact that the solution makes the $i$-th and $j$-th equations of the original system true, we find
+<alignmath>
+<![CDATA[&(\alpha a_{i1}+a_{j1})\beta_1+(\alpha a_{i2}+a_{j2})\beta_2+\dots+(\alpha a_{in}+a_{jn})\beta_n\\]]>
+<![CDATA[&\quad\quad=(\alpha a_{i1}\beta_1+\alpha a_{i2}\beta_2+\dots+\alpha a_{in}\beta_n)+]]>
+(a_{j1}\beta_1+a_{j2}\beta_2+\dots+a_{jn}\beta_n)\\
+<![CDATA[&\quad\quad=\alpha(a_{i1}\beta_1+a_{i2}\beta_2+\dots+a_{in}\beta_n)+]]>
+(a_{j1}\beta_1+a_{j2}\beta_2+\dots+a_{jn}\beta_n)\\
+<![CDATA[&\quad\quad=\alpha b_i+b_j.]]>
+</alignmath>
+This says that the $j$-th equation of the transformed system is also true, so we have established that $(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in T$, and therefore $S\subseteq T$.
+</li><li> Now show $T\subseteq S$.  Suppose $(x_1,\,x_2,\,\,x_3,\,\ldots,x_n)=(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in T$ is a solution to the transformed system.  Ignoring the $j$-th equation for a moment, we know it makes all the other equations of the original system true.  We then find
+<alignmath>
+<![CDATA[&a_{j1}\beta_1+a_{j2}\beta_2+\dots+a_{jn}\beta_n\\]]>
+<![CDATA[&\quad\quad=a_{j1}\beta_1+a_{j2}\beta_2+\dots+a_{jn}\beta_n +\alpha b_i -\alpha b_i\\]]>
+<![CDATA[&\quad\quad=a_{j1}\beta_1+a_{j2}\beta_2+\dots+a_{jn}\beta_n +(\alpha a_{i1}\beta_1+\alpha a_{i2}\beta_2+\dots+\alpha a_{in}\beta_n) -\alpha b_i\\]]>
+<![CDATA[&\quad\quad=a_{j1}\beta_1+\alpha a_{i1}\beta_1+ a_{j2}\beta_2+\alpha a_{i2}\beta_2+ \dots+ a_{jn}\beta_n+\alpha a_{in}\beta_n-\alpha b_i\\]]>
+<![CDATA[&\quad\quad=(\alpha a_{i1}+a_{j1})\beta_1+(\alpha a_{i2}+a_{j2})\beta_2+\dots+(\alpha a_{in}+a_{jn})\beta_n -\alpha b_i\\]]>
+<![CDATA[&\quad\quad=\alpha b_i + b_j -\alpha b_i\\]]>
+<![CDATA[&\quad\quad=b_j]]>
+</alignmath>
+This says that the $j$-th equation of the original system is also true, so we have established that $(\beta_1,\,\beta_2,\,\,\beta_3,\,\ldots,\beta_n)\in S$, and therefore $T\subseteq S$.
+</li></ol>
+Why didn't we need to require that $\alpha\neq 0$ for this row operation?  In other words, how does the third statement of the theorem read when $\alpha=0$?  Does our proof require some extra care when $\alpha=0$?  Compare your answers with the similar situation for the second row operation.  (See <acroref type="exercise" acro="SSLE.T20" />.)
+</li></ol>
+</p>
+
+</proof>
+</theorem>
+
+<p><acroref type="theorem" acro="EOPSS" /> is the necessary tool to complete our strategy for solving systems of equations.  We will use equation operations to move from one system to another, all the while keeping the solution set the same.  With the right sequence of operations, we will arrive at a simpler equation to solve.  The next two examples illustrate this idea, while saving some of the details for later.</p>
+
+<example acro="US" index="unique solution, $3\times 3$">
+<title>Three equations, one solution</title>
+
+<p>We solve the following system by a sequence of equation operations.
+<alignmath>
+<![CDATA[x_1+2x_2+2x_3&=4\\]]>
+<![CDATA[x_1+3x_2+3x_3&=5\\]]>
+<![CDATA[2x_1+6x_2+5x_3&=6]]>
+<intertext>$\alpha=-1$ times equation 1, add to equation 2:</intertext>
+<![CDATA[x_1+2x_2+2x_3&=4\\]]>
+<![CDATA[0x_1+1x_2+ 1x_3&=1\\]]>
+<![CDATA[2x_1+6x_2+5x_3&=6]]>
+<intertext>$\alpha=-2$ times equation 1, add to equation 3:</intertext>
+<![CDATA[x_1+2x_2+2x_3&=4\\]]>
+<![CDATA[0x_1+1x_2+ 1x_3&=1\\]]>
+<![CDATA[0x_1+2x_2+1x_3&=-2]]>
+<intertext>$\alpha=-2$ times equation 2, add to equation 3:</intertext>
+<![CDATA[x_1+2x_2+2x_3&=4\\]]>
+<![CDATA[0x_1+1x_2+ 1x_3&=1\\]]>
+<![CDATA[0x_1+0x_2-1x_3&=-4]]>
+<intertext>$\alpha=-1$ times equation 3:</intertext>
+<![CDATA[x_1+2x_2+2x_3&=4\\]]>
+<![CDATA[0x_1+1x_2+ 1x_3&=1\\]]>
+<![CDATA[0x_1+0x_2+1x_3&=4]]>
+<intertext>which can be written more clearly as</intertext>
+<![CDATA[x_1+2x_2+2x_3&=4\\]]>
+<![CDATA[x_2+ x_3&=1\\]]>
+<![CDATA[x_3&=4]]>
+</alignmath></p>
+
+<p>This is now a very easy system of equations to solve.  The third equation requires that $x_3=4$ to be true.  Making this substitution into equation 2 we arrive at $x_2=-3$, and finally, substituting these values of $x_2$ and $x_3$ into the first equation, we find that $x_1=2$.  Note too that this is the only solution to this final system of equations, since we were forced to choose these values to make the equations true.  Since we performed equation operations on each system to obtain the next one in the list, all of the systems listed here are all equivalent to each other by <acroref type="theorem" acro="EOPSS" />.  Thus $(x_1,\,x_2,\,x_3)=(2,-3,4)$ is the unique solution to the <em>original</em> system of equations (and all of the other intermediate systems of equations listed as we transformed one into another).</p>
+
+</example>
+
+<example acro="IS" index="infinite solutions, $3\times 4$">
+<title>Three equations, infinitely many solutions</title>
+
+<p>The following system of equations made an appearance earlier in this section (<acroref type="example" acro="NSE" />), where we listed <em>one</em> of its solutions.  Now, we will try to find all of the solutions to this system.  Don't concern yourself too much about why we choose this particular sequence of equation operations, just believe that the work we do is all correct.
+<alignmath>
+<![CDATA[x_1+2x_2 +0x_3+ x_4&= 7\\]]>
+<![CDATA[x_1+x_2+x_3-x_4&=3\\]]>
+<![CDATA[3x_1+x_2+5x_3-7x_4&=1]]>
+<intertext>$\alpha=-1$ times equation 1, add to equation 2:</intertext>
+<![CDATA[x_1+2x_2 +0x_3+ x_4&= 7\\]]>
+<![CDATA[0x_1-x_2+x_3-2x_4&=-4\\]]>
+<![CDATA[3x_1+x_2+5x_3-7x_4&=1]]>
+<intertext>$\alpha=-3$ times equation 1, add to equation 3:</intertext>
+<![CDATA[x_1+2x_2 +0x_3+ x_4&= 7\\]]>
+<![CDATA[0x_1-x_2+x_3-2x_4&=-4\\]]>
+<![CDATA[0x_1-5x_2+5x_3-10x_4&=-20]]>
+<intertext>$\alpha=-5$ times equation 2, add to equation 3:</intertext>
+<![CDATA[x_1+2x_2 +0x_3+ x_4&= 7\\]]>
+<![CDATA[0x_1-x_2+x_3-2x_4&=-4\\]]>
+<![CDATA[0x_1+0x_2+0x_3+0x_4&=0]]>
+<intertext>$\alpha=-1$ times equation 2:</intertext>
+<![CDATA[x_1+2x_2 +0x_3+ x_4&= 7\\]]>
+<![CDATA[0x_1+x_2-x_3+2x_4&=4\\]]>
+<![CDATA[0x_1+0x_2+0x_3+0x_4&=0]]>
+<intertext>$\alpha=-2$ times equation 2, add to equation 1:</intertext>
+<![CDATA[x_1+0x_2 +2x_3-3x_4&= -1\\]]>
+<![CDATA[0x_1+x_2-x_3+2x_4&=4\\]]>
+<![CDATA[0x_1+0x_2+0x_3+0x_4&=0]]>
+<intertext>which can be written more clearly as</intertext>
+<![CDATA[x_1+2x_3 - 3x_4&= -1\\]]>
+<![CDATA[x_2-x_3+2x_4&=4\\]]>
+<![CDATA[0&=0]]>
+</alignmath></p>
+
+<p>What does the equation $0=0$ mean?  We can choose <em>any</em> values for $x_1,\,x_2,\,x_3,\,x_4$ and this equation will be true, so we only need to consider further the first two equations, since the third is true no matter what.  We can analyze the second equation without consideration of the variable $x_1$.  It would appear that there is considerable latitude in how we can choose $x_2,\,x_3,\,x_4$ and make this equation true.  Let's choose $x_3$ and $x_4$ to be <em>anything</em> we please, say $x_3=a$ and $x_4=b$.</p>
+
+<p>Now we can take these arbitrary values for $x_3$ and $x_4$, substitute them in equation 1,
+to obtain
+<alignmath>
+<![CDATA[x_1+2a - 3b&= -1\\]]>
+<![CDATA[x_1&=-1-2a+3b]]>
+<intertext>Similarly, equation 2 becomes</intertext>
+<![CDATA[x_2-a+2b&=4\\]]>
+<![CDATA[x_2&=4 +a-2b]]>
+</alignmath>
+</p>
+
+<p>So our arbitrary choices of values for $x_3$ and $x_4$ ($a$ and $b$) translate into specific values of $x_1$ and $x_2$.  The lone solution given in <acroref type="example" acro="NSE" /> was obtained by choosing $a=2$ and $b=1$.  Now we can easily and quickly find many more (infinitely more).   Suppose we choose $a=5$ and $b=-2$, then we compute
+<alignmath>
+<![CDATA[x_1&=-1-2(5)+3(-2)=-17\\]]>
+<![CDATA[x_2&=4+5-2(-2)=13]]>
+</alignmath>
+and you can verify that $(x_1,\,x_2,\,x_3,\,x_4)=(-17,\,13,\,5,\,-2)$ makes all three equations true.  The entire solution set is written as
+<equation>
+S=\setparts{(-1-2a+3b,\,4 +a-2b,\,a,\,b)}{ a\in\complex{\null},\,b\in\complex{\null}}
+</equation>
+</p>
+
+<p>It would be instructive to finish off your study of this example by taking the general form of the solutions given in this set and substituting them into each of the three equations and verify that they are true in each case (<acroref type="exercise" acro="SSLE.M40" />).</p>
+
+</example>
+
+<p>In the next section we will describe how to use equation operations to systematically solve any system of linear equations.  But first, read one of our more important pieces of advice about speaking and writing mathematics.  See <acroref type="technique" acro="L" />.</p>
+
+<p>Before attacking the exercises in this section, it will be helpful to read some advice on getting started on the construction of a proof.  See <acroref type="technique" acro="GS" />.</p>
+
+<sageadvice acro="GS" index="sage!getting started">
+<title>Getting Started</title>
+Sage is a powerful system for studying and exploring many different areas of mathematics.  In the next section, and the majority of the remaining section, we will inslude short descriptions and examples using Sage.  You can read a bit more about Sage in the Preface.  If you are not already reading this in an electronic version, you may want to investigate obtaining the worksheet version of this book, where the examples are <q>live</q> and editable.
+Most of your interaction with Sage will be by typing commands into a <em>compute cell</em>.  That's a compute cell just below this paragraph.  Click once inside the compute cell and you will get a more distinctive border around it, a blinking cursor inside, plus a cute little <q>evaluate</q> link below it.<br /><br />
+<sage>
+<input></input>
+</sage>
+
+At the cursor, type <code>2+2</code> and then click on the evaluate link.  Did a <code>4</code> appear below the cell?  If so, you've successfully sent a command off for Sage to evaluate and you've received back the (correct) answer.<br /><br />
+Here's another compute cell.  Try evaluating the command <code>factorial(300)</code>.
+<sage>
+<input></input>
+</sage>
+
+Hmmmmm.  That is quite a big integer!  The slashes you see at the end of each line mean the result is continued onto the next line, since there are 615 digits in the result.<br /><br />
+To make new compute cells, hover your mouse just above another compute cell, or just below some output from a compute cell.  When you see a skinny blue bar across the width of your worksheet, click and you will open up a new compute cell, ready for input.  Note that your worksheet will remember any calculations you make, in the order you make them, no matter where you put the cells, so it is best to stay organized and add new cells at the bottom.<br /><br />
+Try placing your cursor just below the monstrous value of $300!$ that you have.  Click on the blue bar and try another factorial computation in the new compute cell.<br /><br />
+Each compute cell will show output due to only the very last command in the cell.  Try to predict the following output before evaluating the cell.
+<sage>
+<input></input>
+<output>a = 10
+b = 6
+b
+a = a + 20
+a
+</output>
+</sage>
+
+The following compute cell will not print anything since the one command does not create output.  But it will have an effect, as you can see when you execute the subsequent cell.  Notice how this uses the value of <code>b</code> from above.  Execute this compute cell <em>once</em>.  Exactly once.  Even if it <em>appears</em> to do nothing.  If you execute the cell twice, your credit card may be charged twice.
+<sage>
+<input></input>
+<output>b = b + 50
+</output>
+</sage>
+
+Now execute this cell, which will produce some output.
+<sage>
+<input></input>
+<output>b + 20
+</output>
+</sage>
+
+So <code>b</code> came into existence as <code>6</code>.  Then a cell added <code>50</code>.  This assumes you only executed this cell once!  In the last cell we create <code>b+20</code> (but do not save it) and it is this value that is output.<br /><br />
+You can combine several commands on one line with a semi-colon.  This is a great way to get multiple outputs from a compute cell.  The syntax for building a matrix should be somewhat obvious when you see the output, but if not, it is not particularly important to understand now.
+<sage>
+<input>f(x) = x^8 - 7*x^4; f
+</input>
+</sage>
+
+<sage>
+<input>f; print ; f.derivative()
+</input>
+</sage>
+
+<sage>
+<input>g = f.derivative()
+g.factor()
+</input>
+</sage>
+
+Some commands in Sage are <q>functions,</q> an example is <code>factorial()</code> above.  Other commands are <q>methods</q> of an object and are like characteristics of objects, examples are <code>.factor()</code> and <code>.derivative()</code> as methods of a function.
+To comment on your work, you can open up a small word-processor.  Hover your mouse until you get the skinny blue bar again, but now when you click, also hold the SHIFT key at the same time.  Experiment with fonts, colors, bullet lists, etc and then click the <q>Save changes</q> button to exit.  Double-click on your text if you need to go back and edit it later.<br /><br />
+Open the word-processor again to create a new bit of text (maybe next to the empty compute cell just below).  Type all of the following <em>exactly</em>, but do not include any backslashes that might precede the dollar signs in the print version:
+<!--  Need something different for PDF version? -->
+
+<code>Pythagorean Theorem: \$c^2=a^2+b^2\$</code>
+
+and save your changes.  The symbols between the dollar signs are written according to the mathematical typesetting language known as \TeX\ <mdash /> cruise the internet to learn more about this very popular tool. (Well, it is extremely popular among mathematicians and physical scientists.)<br /><br />
+<sage>
+<input></input>
+</sage>
+
+Much of our interaction with sets will be through Sage lists.  These are not really sets <mdash /> they allow duplicates, and order matters.  But they are so close to sets, and so easy and powerful to use that we will use them regularly.  We will use a fun made-up list for practice, the quote marks mean the items are just text, with no special mathematical meaning.  Execute these compute cells as we work through them.
+<sage>
+<input>zoo = ['snake', 'parrot', 'elephant', 'baboon', 'beetle']
+zoo
+</input>
+<output>['snake', 'parrot', 'elephant', 'baboon', 'beetle']
+</output>
+</sage>
+
+So the square brackets define the boundaries of our list, commas separate items, and we can give the list a name.  To work with just one element of the list, we use the name and a pair of brackets with an index.  Notice that lists have indices that <em>begin counting at zero</em>.  This will seem odd at first and will seem very natural later.
+<sage>
+<input>zoo[2]
+</input>
+<output>'elephant'
+</output>
+</sage>
+
+We can add a new creature to the zoo, it is joined up at the far right end.
+<sage>
+<input>zoo.append('ostrich'); zoo
+</input>
+<output>['snake', 'parrot', 'elephant', 'baboon', 'beetle', 'ostrich']
+</output>
+</sage>
+
+We can remove a creature.
+<sage>
+<input>zoo.remove('parrot')
+zoo
+</input>
+<output>['snake', 'elephant', 'baboon', 'beetle', 'ostrich']
+</output>
+</sage>
+
+We can extract a sublist.  Here we start with element 1 (the elephant) and go all the way up to, <em>but not including</em>, element 3 (the beetle).  Again a bit odd, but it will feel natural later.  For now, notice that we are extracting two elements of the lists, exactly $3-1=2$ elements.
+<sage>
+<input>mammals = zoo[1:3]
+mammals
+</input>
+<output>['elephant', 'baboon']
+</output>
+</sage>
+
+Often we will want to see if two lists are equal.  To do that we will need to sort a list first.  A function creates a new, sorted list, leaving the original alone.  So we need to save the new one with a new name.
+<sage>
+<input>newzoo = sorted(zoo)
+newzoo
+</input>
+<output>['baboon', 'beetle', 'elephant', 'ostrich', 'snake']
+</output>
+</sage>
+
+<sage>
+<input>zoo.sort()
+zoo
+</input>
+<output>['baboon', 'beetle', 'elephant', 'ostrich', 'snake']
+</output>
+</sage>
+
+Notice that if you run this last compute cell your zoo has changed and some commands above will not necessarily execute the same way.  If you want to experiment, go all the way back to the first creation of the zoo and start executing cells again from there with a fresh zoo.<br /><br />
+A construction called a <q>list comprehension</q> is especially powerful, especially since it almost exactly mirrors notation we use to describe sets.  Suppose we want to form the plural of the names of the creatures in our zoo.  We build a new list, based on all of the elements of our old list.
+<sage>
+<input>plurality_zoo = [animal+'s' for animal in zoo]
+plurality_zoo
+</input>
+<output>['baboons', 'beetles', 'elephants', 'ostrichs', 'snakes']
+</output>
+</sage>
+
+Almost like it says: we add an <q>s</q> to each animal name, for each animal in the zoo, and place them in a new list.  Perfect.  (Except for getting the plural of <q>ostrich</q> wrong.)<br /><br />
+One final type of list, with numbers this time.  The <code>range()</code> function will create lists of integers.  In its simplest form an invocation like <code>range(12)</code> will create a list of 12 integers, <em>starting at zero</em> and working up to, <em>but not including</em>, 12.  Does this sound familiar?
+<sage>
+<input>dozen = range(12); dozen
+</input>
+<output>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+</output>
+</sage>
+
+Here are two other forms, that you should be able to understand by studying the examples.
+<sage>
+<input>teens = range(13, 20); teens
+</input>
+<output>[13, 14, 15, 16, 17, 18, 19]
+</output>
+</sage>
+
+<sage>
+<input>decades = range(1900, 2000, 10); decades
+</input>
+<output>[1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990]
+</output>
+</sage>
+
+There is a <q>Save</q> button in the upper-right corner of your worksheet.  This will save a current copy of your worksheet that you can retrieve from within your notebook again later, though you have to re-execute all the cells when you re-open the worksheet later.<br /><br />
+There is also a <q>File</q> drop-down list, on the left, just above your very top compute cell (not be confused with your browser's File menu item!).  You will see a choice here labeled  <q>Save worksheet to a file...</q>  When you do this, you are creating a copy of your worksheet in the <q>sws</q> format (short for <q>Sage WorkSheet</q>).  You can email this file, or post it on a website, for other Sage users and they can use the <q>Upload</q> link on their main notebook page to incorporate a copy of your worksheet into their notebook.<br /><br />
+There are other ways to share worksheets that you can experiment with, but this gives you one way to share any worksheet with anybody almost anywhere.<br /><br />
+We have covered a lot here in this section, so come back later to pick up tidbits you might have missed.  There are also many more features in the notebook that we have not covered.
+
+
+</sageadvice>
+</subsection>
+
+<!--   End  ssle.tex -->
+<readingquestions>
+<ol>
+<li>How many solutions does the  system of equations  $3x + 2y  = 4$, $6x + 4y = 8$  have?  Explain your answer.
+</li>
+<li>How many solutions does the  system of equations  $3x + 2y  = 4$, $6x + 4y = -2$  have?  Explain your answer.
+</li>
+<li>What do we mean when we say mathematics is a language?
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="10" rough="Specific solutions in Example IS">
+<problem contributor="robertbeezer">Find a solution to the system in <acroref type="example" acro="IS" /> where $x_3=6$ and $x_4=2$.  Find two other solutions to the system.  Find a solution where $x_1=-17$ and $x_2=14$.  How many possible answers are there to each of these questions?
+</problem>
+</exercise>
+
+<exercise type="C" number="20" rough="Specific solutions in Archetypes">
+<problem contributor="robertbeezer">Each archetype (<miscref type="archetype" text="Archetypes" />) that is a system of equations begins by listing some specific solutions.  Verify the specific solutions listed in the following archetypes by evaluating the system of equations with the solutions listed.<br /><br />
+<acroref type="archetype" acro="A" />,
+<acroref type="archetype" acro="B" />,
+<acroref type="archetype" acro="C" />,
+<acroref type="archetype" acro="D" />,
+<acroref type="archetype" acro="E" />,
+<acroref type="archetype" acro="F" />,
+<acroref type="archetype" acro="G" />,
+<acroref type="archetype" acro="H" />,
+<acroref type="archetype" acro="I" />,
+<acroref type="archetype" acro="J" />
+</problem>
+</exercise>
+
+<exercise type="C" number="30" rough="Standard 3x3 linear system, no solution">
+<problem contributor="chrisblack">Find all solutions to the linear system:
+<alignmath>
+<![CDATA[ x + y &= 5\\]]>
+<![CDATA[ 2x - y &= 3]]>
+</alignmath>
+</problem>
+<solution contributor="chrisblack">Solving each equation for $y$, we have the equivalent system
+<alignmath>
+<![CDATA[y &= 5 - x\\]]>
+<![CDATA[y &= 2x - 3.]]>
+</alignmath>
+Setting these expressions for $y$ equal, we  have the equation
+$5 - x = 2x - 3$, which quickly leads to
+ $x = \frac{8}{3}$.  Substituting for $x$ in the first equation, we have $y = 5 - x = 5 - \frac{8}{3} = \frac{7}{3}$.
+Thus, the solution is $x = \frac{8}{3}$, $y = \frac{7}{3}$.
+</solution>
+</exercise>
+
+<exercise type="C" number="31" rough="Standard 2x2 linear system, 1 solution">
+<problem contributor="chrisblack">Find all solutions to the linear system:
+<alignmath>
+<![CDATA[3x + 2y &= 1\\]]>
+<![CDATA[x - y &= 2\\]]>
+<![CDATA[4x + 2y &= 2]]>
+</alignmath>
+</problem>
+</exercise>
+
+<exercise type="C" number="32" rough="Standard 3x2 linear system, 1 solution">
+<problem contributor="chrisblack">Find all solutions to the linear system:
+<alignmath>
+<![CDATA[x + 2y &= 8\\]]>
+<![CDATA[x - y &= 2\\]]>
+<![CDATA[x + y &= 4]]>
+</alignmath>
+</problem>
+</exercise>
+
+<exercise type="C" number="33" rough="Standard 3x2 linear system, no solution">
+<problem contributor="chrisblack">Find all solutions to the linear system:
+<alignmath>
+<![CDATA[x + y - z &= -1\\]]>
+<![CDATA[x - y - z &= -1\\]]>
+<![CDATA[z &= 2]]>
+</alignmath>
+</problem>
+</exercise>
+
+<exercise type="C" number="34" rough="Standard 3x3 linear system, 1 solution">
+<problem contributor="chrisblack">Find all solutions to the linear system:
+<alignmath>
+<![CDATA[ x + y - z &= -5\\]]>
+<![CDATA[ x - y - z &= -3\\]]>
+<![CDATA[ x + y - z &= 0]]>
+</alignmath>
+</problem>
+</exercise>
+
+<exercise type="C" number="50" rough="Three-digit numbers with specific properties">
+<problem contributor="robertbeezer">A three-digit number has two properties.  The tens-digit and the ones-digit add up to 5.  If the number is written with the digits in the reverse order, and then subtracted from the original number, the result is $792$.  Use a system of equations to find all of the three-digit numbers with these properties.
+</problem>
+<solution contributor="robertbeezer">Let $a$ be the hundreds digit, $b$ the tens digit, and $c$ the ones digit.  Then the first condition says that $b+c=5$.  The original number is $100a+10b+c$, while the reversed number is $100c+10b+a$.  So the second condition is
+<equation>
+792=\left(100a+10b+c\right)-\left(100c+10b+a\right)=99a-99c
+</equation>
+So we arrive at the system of equations
+<alignmath>
+<![CDATA[b+c&=5\\]]>
+<![CDATA[99a-99c&=792]]>
+</alignmath>
+Using equation operations, we arrive at the equivalent system
+<alignmath>
+<![CDATA[a-c&=8\\]]>
+<![CDATA[b+c&=5]]>
+</alignmath>
+We can vary $c$ and obtain infinitely many solutions.  However, $c$ must be a digit, restricting us to ten values (0 <ndash /> 9).  Furthermore, if $c>1$, then the first equation forces $a>9$, an impossibility.    Setting $c=0$, yields $850$ as a solution, and setting $c=1$ yields $941$ as another solution.
+</solution>
+</exercise>
+
+<exercise type="C" number="51" rough="Six-digit MENSA puzzle">
+<problem contributor="robertbeezer">Find all of the six-digit numbers in which the first digit is one less than the second, the third digit is half the second, the fourth digit is three times the third and the last two digits form a number that equals the sum of the fourth and fifth.  The sum of all the digits is 24.  (From <i>The MENSA Puzzle Calendar</i> for January 9, 2006.)
+</problem>
+<solution contributor="robertbeezer">Let $abcdef$ denote any such six-digit number and convert each requirement in the problem statement into an equation.
+<alignmath>
+<![CDATA[a&=b-1\\]]>
+<![CDATA[c&=\frac{1}{2}b\\]]>
+<![CDATA[d&=3c\\]]>
+<![CDATA[10e+f&=d+e\\]]>
+<![CDATA[24&=a+b+c+d+e+f]]>
+</alignmath>
+In a more standard form this becomes
+<alignmath>
+<![CDATA[a-b&=-1\\]]>
+<![CDATA[-b+2c&=0\\]]>
+<![CDATA[-3c+d&=0\\]]>
+<![CDATA[-d+9e+f&=0\\]]>
+<![CDATA[a+b+c+d+e+f&=24]]>
+</alignmath>
+Using equation operations (or the techniques of the upcoming <acroref type="section" acro="RREF" />), this system can be converted to the equivalent system
+<alignmath>
+<![CDATA[a+\frac{16}{75}f &= 5\\]]>
+<![CDATA[b+\frac{16}{75}f &= 6\\]]>
+<![CDATA[c+ \frac{8}{75}f &= 3\\]]>
+<![CDATA[d+ \frac{8}{25}f &= 9\\]]>
+<![CDATA[e+\frac{11}{75}f &= 1]]>
+</alignmath>
+Clearly, choosing $f=0$ will yield the solution $abcde=563910$.  Furthermore, to have the variables result in single-digit numbers, none of the other choices for $f$ ($1,\,2,\,\ldots,\,9$) will yield a solution.
+</solution>
+</exercise>
+
+<exercise type="C" number="52" rough="Car Talk's palindromic odometer">
+<problem contributor="robertbeezer">Driving along, Terry notices that the last four digits on his car's odometer are palindromic. A mile later, the last five digits are palindromic. After driving another mile, the middle four digits are palindromic. One more mile, and all six are palindromic. What was the odometer reading when Terry first looked at it?  Form a linear system of equations that expresses the requirements of this puzzle.  (<i>Car Talk</i> Puzzler,  National Public Radio, Week of January 21, 2008)  (A car odometer displays six digits and a sequence is a <define>palindrome</define> if it reads the same left-to-right as right-to-left.)
+</problem>
+<solution contributor="robertbeezer">198888 is one solution, and David Braithwaite found 199999 as another.
+</solution>
+</exercise>
+
+<exercise type="M" number="10" rough="4 ambiguous sentences">
+<problem contributor="robertbeezer">Each sentence below has at least two meanings.  Identify the source of the double meaning, and rewrite the sentence (at least twice) to clearly convey each meaning.
+<ol><li> They are baking potatoes.
+</li><li> He bought many ripe pears and apricots.
+</li><li> She likes his sculpture.
+</li><li> I decided on the bus.
+</li></ol>
+</problem>
+<solution contributor="robertbeezer"><ol>
+<li> Does <q>baking</q> describe the potato or what is happening to the potato?\\
+Those are potatoes that are used for baking.\\
+The potatoes are being baked.
+</li><li> Are the apricots ripe, or just the pears?  Parentheses could indicate just what the adjective <q>ripe</q> is meant to modify.  Were there many apricots as well, or just many pears?\\
+He bought many pears and many ripe apricots.\\
+He bought apricots and many ripe pears.
+</li><li> Is <q>sculpture</q> a single physical object, or the sculptor's style expressed over many pieces and many years?\\
+She likes his sculpture of the girl.\\
+She likes his sculptural style.
+</li><li> Was a decision made while in the bus, or was the outcome of a decision to choose the bus.  Would the sentence <q>I decided on the car,</q> have a similar double meaning?\\
+I made my decision while on the bus.\\
+I decided to ride the bus.
+</li></ol>
+</solution>
+</exercise>
+
+<exercise type="M" number="11" rough="3 similar sentences with different meanings">
+<problem contributor="robertbeezer">Discuss the difference in meaning of each of the following three almost identical sentences, which all have the same grammatical structure.  (These are due to Keith Devlin.)
+<ol><li> She saw him in the park with a dog.
+</li><li> She saw him in the park with a fountain.
+</li><li> She saw him in the park with a telescope.
+</li></ol>
+</problem>
+<solution contributor="robertbeezer">We know the dog belongs to the man, and the fountain belongs to the park.  It is not clear if the telescope belongs to the man, the woman, or the park.
+</solution>
+</exercise>
+
+<exercise type="M" number="12" rough="Noam Chomsky green sentence">
+<problem contributor="robertbeezer">The following sentence, due to Noam Chomsky,  has a correct grammatical structure, but is meaningless.  Critique its faults.  <q>Colorless green ideas sleep furiously.</q>  (Chomsky, Noam. <i>Syntactic Structures</i>, The Hague/Paris: Mouton, 1957. p. 15.)
+</problem>
+<solution contributor="robertbeezer">In adjacent pairs the words are contradictory or inappropriate.  Something cannot be both green and colorless, ideas do not have color, ideas do not sleep, and it is hard to sleep furiously.
+</solution>
+</exercise>
+
+<exercise type="M" number="13" rough="Crying baby situation">
+<problem contributor="robertbeezer">Read the following sentence and form a mental picture of the situation.
+
+The baby cried and the mother picked it up.
+
+What <em>assumptions</em> did you make about the situation?
+</problem>
+<solution contributor="robertbeezer">Did you assume that the baby and mother are human?<br />
+Did you assume that the baby is the child of the mother?<br />
+Did you assume that the mother picked up the baby as an attempt to stop the crying?
+</solution>
+</exercise>
+
+<exercise type="M" number="14" rough="Time flies like an arrow">
+<problem contributor="robertbeezer">Discuss the difference in meaning of the following two almost identical sentences, which have nearly identical grammatical structure.  (This antanaclasis is often attributed to the comedian Groucho Marx, but has earlier roots.)
+<ol><li> Time flies like an arrow.
+</li><li> Fruit flies like a banana.
+</li></ol>
+</problem>
+</exercise>
+
+<exercise type="M" number="30" rough="Three D's with \$35">
+<problem contributor="davidbeezer">This problem appears in a middle-school mathematics textbook:  Together Dan and Diane have \$20. Together Diane and Donna have \$15.  How much do the three of them have in total?   (<i>Transition Mathematics</i>, Second Edition, Scott Foresman Addison Wesley, 1998. Problem 5<ndash />1.19.)
+</problem>
+<solution contributor="robertbeezer">If $x$, $y$ and $z$ represent the money held by Dan, Diane and Donna, then $y=15-z$ and $x=20-y=20-(15-z)=5+z$.  We can let $z$ take on any value from $0$ to $15$ without any of the three amounts being negative, since presumably middle-schoolers are too young to assume debt.<br /><br />
+Then the total capital held by the three is $x+y+z=(5+z)+(15-z)+z=20+z$.  So their combined holdings can range anywhere from \$20 (Donna is broke) to \$35 (Donna is flush).<br /><br />
+We will have more to say about this situation in <acroref type="section" acro="TSS" />, and specifically <acroref type="theorem" acro="CMVEI" />.
+</solution>
+</exercise>
+
+<exercise type="M" number="40" rough="Evaluate Example IS with general solution">
+<problem contributor="robertbeezer">Solutions to the system in <acroref type="example" acro="IS" /> are given as
+<equation>
+(x_1,\,x_2,\,x_3,\,x_4)=(-1-2a+3b,\,4+a-2b,\,a,\,b)
+</equation>
+Evaluate the three equations of the original system with these expressions in  $a$ and $b$ and verify that each equation is true, no matter what values are chosen for $a$ and $b$.
+</problem>
+</exercise>
+
+<exercise type="M" number="70" rough="Hyperbola intersecting a circle">
+<problem contributor="robertbeezer">We have seen in this section that systems of linear equations have limited possibilities for solution sets, and we will shortly prove <acroref type="theorem" acro="PSSLS" /> that describes these possibilities exactly.  This exercise will show that if we relax the requirement that our equations be linear, then the possibilities expand greatly.  Consider a system of two equations in the two variables $x$ and $y$, where the departure from linearity involves simply squaring the variables.
+<alignmath>
+<![CDATA[x^2-y^2&=1\\]]>
+<![CDATA[x^2+y^2&=4]]>
+</alignmath>
+After solving this system of <em>non-linear</em> equations, replace the second equation in turn by $x^2+2x+y^2=3$, $x^2+y^2=1$, $x^2-4x+y^2=-3$, $-x^2+y^2=1$ and solve each resulting system of two equations in two variables.  (This exercise includes suggestions from <contributorname code="donkreher" />.)
+</problem>
+<solution contributor="robertbeezer">The equation $x^2-y^2=1$ has a solution set by itself that has the shape of a hyperbola when plotted.  Four of the  five different second equations have solution sets that are circles when plotted individually (the last is another hyperbola).  Where the hyperbola and circles intersect are the solutions to the system of two equations.  As the size and location of the circles vary, the number of intersections varies from four to one (in the order given).  The last equation is a hyperbola that <q>opens</q> in the other direction.  Sketching the relevant equations would be instructive, as was discussed in <acroref type="example" acro="STNE" />.<br /><br />
+The exact solution sets are (according to the choice of the second equation),
+<alignmath>
+<![CDATA[x^2+y^2&=4:]]>
+<![CDATA[&&]]>
+\set{\left(\sqrt{\frac{5}{2}},\sqrt{\frac{3}{2}}\right),\,\left(-\sqrt{\frac{5}{2}},\sqrt{\frac{3}{2}}\right),\,\left(\sqrt{\frac{5}{2}},-\sqrt{\frac{3}{2}}\right),\,\left(-\sqrt{\frac{5}{2}},-\sqrt{\frac{3}{2}}\right)}\\
+<![CDATA[x^2+2x+y^2&=3:]]>
+<![CDATA[&&]]>
+\set{(1,0),\,(-2,\sqrt{3}),\,(-2,-\sqrt{3})}\\
+<![CDATA[x^2+y^2&=1:]]>
+<![CDATA[&&]]>
+\set{(1,0),\,(-1,0)}\\
+<![CDATA[x^2-4x+y^2&=-3:]]>
+<![CDATA[&&]]>
+\set{(1,0)}\\
+<![CDATA[-x^2+y^2&=1:]]>
+<![CDATA[&&]]>
+\set{}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="T" number="10" rough="">
+<problem contributor="robertbeezer"><acroref type="technique" acro="D" /> asks you to formulate a definition of what it means for a whole number to be odd.  What is your definition?  (Don't say <q>the opposite of even.</q>)  Is $6$ odd?  Is $11$ odd?  Justify your answers by using your definition.
+</problem>
+<solution contributor="robertbeezer">We can say that an integer is <define>odd</define> if when it is divided by $2$ there is a remainder of 1.  So $6$ is not odd since $6=3\times 2+0$, while $11$ is odd since $11=5\times 2 + 1$.
+</solution>
+</exercise>
+
+<exercise type="T" number="20" rough="Zero/Nonzero scalars in eqn operations">
+<problem contributor="robertbeezer">Explain why the second equation operation in <acroref type="definition" acro="EO" /> requires that the scalar be nonzero, while in the third equation operation this restriction on the scalar is not present.
+</problem>
+<solution contributor="robertbeezer"><acroref type="definition" acro="EO" /> is engineered to make <acroref type="theorem" acro="EOPSS" /> true.  If we were to allow a zero scalar to multiply an equation then that equation would be transformed to the equation $0=0$, which is true for any possible values of the variables.  Any restrictions on the solution set imposed by the original equation would be lost.<br /><br />
+However, in the third operation, it is allowed to choose a zero scalar, multiply an equation by this scalar and add the transformed equation to a second equation (leaving the first unchanged).  The result?  Nothing.  The second equation is the same as it was before.  So the theorem is true in this case, the two systems are equivalent.  But in practice, this would be a silly thing to actually ever do!  We still allow it though, in order to keep our theorem as general as possible.<br /><br />
+Notice the location in the proof of <acroref type="theorem" acro="EOPSS" /> where the expression $\frac{1}{\alpha}$ appears <mdash /> this explains the prohibition on $\alpha=0$ in the second equation operation.
+</solution>
+</exercise>
+
+<!--  End of exercises/ssle.tex -->
+</exercisesubsection>
+
+</section>

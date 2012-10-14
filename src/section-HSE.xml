@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="HSE">
+<title>Homogeneous Systems of Equations</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section HSE -->
+<!-- %  Homogenous Systems of Equations -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>In this section we specialize to systems of linear equations where every equation has a zero as its constant term.  Along the way, we will begin to express more and more ideas in the language of matrices and begin a move away from writing out whole systems of equations.  The ideas initiated in this section will carry through the remainder of the course.</p>
+
+</introduction>
+
+<subsection acro="SHS">
+<title>Solutions of Homogeneous Systems</title>
+
+<p>As usual, we begin with a definition.</p>
+
+<definition acro="HS" index="homogeneous system">
+<title>Homogeneous System</title>
+<p>A system of linear equations, $\linearsystem{A}{\vect{b}}$ is <define>homogeneous</define> if the vector of constants is the zero vector, in other words, if $\vect{b}=\zerovector$.</p>
+
+</definition>
+
+<example acro="AHSAC" index="homogeneous system!Archetype C">
+<title>Archetype C as a homogeneous system</title>
+
+<indexlocation index="Archetype C!homogeneous system" />
+<p>For each archetype that is a system of equations, we have formulated a similar, yet different, homogeneous system of equations by replacing each equation's constant term with a zero.  To wit, for <acroref type="archetype" acro="C" />, we can convert the original system of equations into the homogeneous system,
+<archetypepart acro="C" part="homosystem" /></p>
+
+<p>Can you quickly find a solution to this system without row-reducing the augmented matrix?</p>
+
+</example>
+
+<p>As you might have discovered by studying <acroref type="example" acro="AHSAC" />, setting each variable to zero will <em>always</em> be a solution of a homogeneous system.  This is the substance of the following theorem.</p>
+
+<theorem acro="HSC" index="homogeneous system!consistent">
+<title>Homogeneous Systems are Consistent</title>
+<statement>
+<p>Suppose that a system of linear equations is homogeneous.  Then the system is consistent.</p>
+
+</statement>
+
+<proof>
+<p>Set each variable of the system to zero.  When substituting these values into each equation, the left-hand side evaluates to zero, no matter what the coefficients are.  Since a homogeneous system has zero on the right-hand side of each equation as the constant term, each equation is true.  With one demonstrated solution, we can call the system consistent.</p>
+
+</proof>
+</theorem>
+
+<p>Since this solution is so obvious, we now define it as the trivial solution.</p>
+
+<definition acro="TSHSE" index="trivial solution!system of equations">
+<title>Trivial Solution to Homogeneous Systems of Equations</title>
+<p>Suppose a homogeneous system of linear equations has $n$ variables.  The solution $x_1=0$, $x_2=0$, <ellipsis />, $x_n=0$ (<ie /> $\vect{x}=\zerovector$) is called the <define>trivial solution</define>.</p>
+
+</definition>
+
+<p>Here are three typical examples, which we will reference throughout this section.  Work through the row operations as we bring each to reduced row-echelon form.  Also notice what is similar in each example, and what differs.</p>
+
+<example acro="HUSAB" index="solving homogeneous system!Archetype B">
+<title>Homogeneous, unique solution, Archetype B</title>
+
+<indexlocation index="Archetype B!solving homogeneous system" />
+<p>Archetype B can be converted to the homogeneous system,
+<archetypepart acro="B" part="homosystem" />
+whose augmented matrix row-reduces to
+<equation>
+<archetypepart acro="B" part="homoaugmentedreduced" /></equation>
+</p>
+
+<p>By <acroref type="theorem" acro="HSC" />, the system is consistent, and so the computation $n-r=3-3=0$ means the solution set contains just a single solution.  Then, this lone solution must be the trivial solution.</p>
+
+</example>
+
+<example acro="HISAA" index="solving homogeneous system!Archetype A">
+<title>Homogeneous, infinite solutions, Archetype A</title>
+
+<indexlocation index="Archetype A!solving homogeneous system" />
+<p><acroref type="archetype" acro="A" /> can be converted to the homogeneous system,
+<archetypepart acro="A" part="homosystem" />
+whose augmented matrix row-reduces to
+<equation>
+<archetypepart acro="A" part="homoaugmentedreduced" /></equation>
+</p>
+
+<p>By <acroref type="theorem" acro="HSC" />, the system is consistent, and so the computation $n-r=3-2=1$ means the solution set contains one free variable by <acroref type="theorem" acro="FVCS" />, and hence has infinitely many solutions.  We can describe this solution set using the free variable $x_3$,
+<equation>
+S=\setparts{\colvector{x_1\\x_2\\x_3}}{x_1=-x_3,\,x_2=x_3}
+=\setparts{\colvector{-x_3\\x_3\\x_3}}{x_3\in\complex{\null}}
+</equation>
+</p>
+
+<p>Geometrically, these are points in three dimensions that lie on a line through the origin.</p>
+
+</example>
+
+<example acro="HISAD" index="solving homogeneous system!Archetype D">
+<title>Homogeneous, infinite solutions, Archetype D</title>
+
+<indexlocation index="Archetype D!solving homogeneous system" />
+<p><acroref type="archetype" acro="D" /> (and identically, <acroref type="archetype" acro="E" />) can be converted to the homogeneous system,
+<archetypepart acro="D" part="homosystem" />
+whose augmented matrix row-reduces to
+<equation>
+<archetypepart acro="D" part="homoaugmentedreduced" /></equation></p>
+
+<p>By <acroref type="theorem" acro="HSC" />, the system is consistent, and so the computation $n-r=4-2=2$ means the solution set contains two free variables by <acroref type="theorem" acro="FVCS" />, and hence has infinitely many solutions.  We can describe this solution set using the free variables $x_3$ and $x_4$,
+<alignmath>
+<![CDATA[S&=\setparts{\colvector{x_1\\x_2\\x_3\\x_4}}{x_1=-3x_3+2x_4,\,x_2=-x_3+3x_4}\\]]>
+<![CDATA[ &=\setparts{\colvector{-3x_3+2x_4\\-x_3+3x_4\\x_3\\x_4}}{ x_3,\,x_4\in\complex{\null}}\\]]>
+</alignmath>
+</p>
+
+</example>
+
+<p>After working through these examples, you might perform the same computations for the slightly larger example, <acroref type="archetype" acro="J" />.</p>
+
+<p>Notice that when we do row operations on the augmented matrix of a homogeneous system of linear equations the last column of the matrix is all zeros.  Any one of the three allowable row operations will convert zeros to zeros and thus, the final column of the matrix in reduced row-echelon form will also be all zeros.  So in this case, we may be as likely to reference only the coefficient matrix and presume that we remember that the final column begins with zeros, and after any number of row operations is still zero.</p>
+
+<p><acroref type="example" acro="HISAD" /> suggests the following theorem.</p>
+
+<theorem acro="HMVEI" index="homogeneous system!infinitely many solutions">
+<title>Homogeneous, More Variables than Equations, Infinite solutions</title>
+<statement>
+<p>Suppose that a homogeneous system of linear equations has $m$ equations and $n$ variables with $n>m$.  Then the system has infinitely many solutions.</p>
+
+</statement>
+
+<proof>
+<p>We are assuming the system is homogeneous, so <acroref type="theorem" acro="HSC" /> says it is consistent.  Then the hypothesis that $n>m$, together with <acroref type="theorem" acro="CMVEI" />, gives infinitely many solutions.</p>
+
+</proof>
+</theorem>
+
+<p><acroref type="example" acro="HUSAB" /> and <acroref type="example" acro="HISAA" /> are concerned with homogeneous systems where $n=m$ and expose a fundamental distinction between the two examples.  One has a unique solution, while the other has infinitely many.  These are exactly the only two possibilities for a homogeneous system and illustrate that each is possible
+(unlike the case when $n>m$
+where <acroref type="theorem" acro="HMVEI" /> tells us that there is only one possibility for a homogeneous system).</p>
+
+<sageadvice acro="SHS" index="homogeneous systems!solving">
+<title>Solving Homogeneous Systems</title>
+We can explore homogeneous systems easily in Sage with commands we have already learned.  Notably, the <code>zero_vector()</code> constructor will quickly create the necessary vector of constants (<acroref type="sage" acro="V" />).<br /><br />
+You could try defining a function to accept a matrix as input, augment the matrix with a zero vector having the right number of entries, and then return the reduced row-echelon form of the augmented matrix, or maybe you could return the number of free variables. (See <acroref type="sage" acro="RCLS" /> for a refresher on how to do this).  It is also interesting to see how <code>.solve_right()</code> behaves on homogeneous systems, since in particular we know it will never give us an error.  (Why not? Hint: <acroref type="theorem" acro="HSC" />.)
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="NSM">
+<title>Null Space of a Matrix</title>
+
+<p>The set of solutions to a homogeneous system (which by <acroref type="theorem" acro="HSC" /> is never empty) is of enough interest to warrant its own name.  However, we define it as a property of the coefficient matrix, not as a property of some system of equations.</p>
+
+<definition acro="NSM" index="null space!matrix">
+<title>Null Space of a Matrix</title>
+<p>The <define>null space</define> of a matrix $A$, denoted $\nsp{A}$, is the set of all the vectors that are solutions to the homogeneous system $\homosystem{A}$.</p>
+
+<notation acro="NSM" index="null space">
+<title>Null Space of a Matrix</title>
+<usage>$\nsp{A}$</usage>
+</notation>
+</definition>
+
+<p>In the Archetypes (<miscref type="archetype" text="Archetypes" />) each example that is a system of equations also has a corresponding homogeneous system of equations listed, and several sample solutions are given.  These solutions will be elements of the null space of the coefficient matrix.  We'll look at one example.</p>
+
+<example acro="NSEAI" index="null space!Archetype I">
+<title>Null space elements of Archetype I</title>
+
+<indexlocation index="Archetype I!null space" />
+<p>The write-up for <acroref type="archetype" acro="I" /> lists several solutions of the corresponding homogeneous system.  Here are two, written as solution vectors.  We can say that they are in the null space of the coefficient matrix for the system of equations in <acroref type="archetype" acro="I" />.
+<alignmath>
+<![CDATA[\vect{x}=\colvector{3\\0\\-5\\-6\\0\\0\\1}&&]]>
+\vect{y}=\colvector{-4\\1\\-3\\-2\\1\\1\\1}
+</alignmath>
+</p>
+
+<p>However, the vector
+<equation>
+\vect{z}=\colvector{1\\0\\0\\0\\0\\0\\2}
+</equation>
+is not in the null space, since it is not a solution to the homogeneous system.  For example, it fails to even make the first equation true.</p>
+
+</example>
+
+<p>Here are two (prototypical) examples of the computation of the null space of a matrix.</p>
+
+<example acro="CNS1" index="null space!computation">
+<title>Computing a null space, no. 1</title>
+
+<p>Let's compute the null space of
+<equation>
+A=\begin{bmatrix}
+<![CDATA[ 2 & -1 & 7 & -3 & -8 \\]]>
+<![CDATA[ 1 & 0 & 2 & 4 & 9 \\]]>
+<![CDATA[ 2 & 2 & -2 & -1 & 8]]>
+\end{bmatrix}
+</equation>
+which we write as $\nsp{A}$.   Translating <acroref type="definition" acro="NSM" />, we simply desire to solve the homogeneous system $\homosystem{A}$.  So we row-reduce the augmented matrix to obtain
+<equation>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 & 0 & 1 & 0 \\]]>
+<![CDATA[ 0 & \leading{1} & -3 & 0 & 4 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & \leading{1} & 2 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>The variables (of the homogeneous system) $x_3$ and $x_5$ are free (since columns 1, 2 and 4 are pivot columns), so we arrange the equations represented by the matrix in reduced row-echelon form to
+<alignmath>
+<![CDATA[x_1&=-2x_3-x_5\\]]>
+<![CDATA[x_2&=3x_3-4x_5\\]]>
+<![CDATA[x_4&=-2x_5\\]]>
+</alignmath>
+</p>
+
+<p>So we can write the infinite solution set as sets using column vectors,
+<equation>
+\nsp{A}=\setparts{
+\colvector{-2x_3-x_5\\3x_3-4x_5\\x_3\\-2x_5\\x_5}
+}{
+x_3,\,x_5\in\complex{\null}
+}
+</equation>
+</p>
+
+</example>
+
+<example acro="CNS2" index="null space!computation">
+<title>Computing a null space, no. 2</title>
+
+<p>Let's compute the null space of
+<equation>
+C=\begin{bmatrix}
+<![CDATA[ -4 & 6 & 1 \\]]>
+<![CDATA[ -1 & 4 & 1 \\]]>
+<![CDATA[ 5 & 6 & 7 \\]]>
+<![CDATA[ 4 & 7 & 1]]>
+\end{bmatrix}
+</equation>
+which we write as $\nsp{C}$.   Translating <acroref type="definition" acro="NSM" />, we simply desire to solve the homogeneous system $\homosystem{C}$.  So we row-reduce the augmented matrix to obtain
+<equation>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>There are no free variables in the homogeneous system represented by the row-reduced matrix, so there is only the trivial solution, the zero vector, $\zerovector$.  So we can write the (trivial) solution set as
+<equation>
+\nsp{C}=\set{\zerovector}=\set{\colvector{0\\0\\0}}
+</equation></p>
+
+</example>
+
+<sageadvice acro="NS" index="null space">
+<title>Null Space</title>
+Sage will compute a null space for us.  Which is rather remarkable, as it is an infinite set!  Again, this is a powerful command, and there is lots of associated theory, so we will not understand everything about it right away, and it also has a radically different name in Sage.  But we will find it useful immediately.  Lets reprise <acroref type="example" acro="NSEAI" />.  The relevant command to build the null space of a matrix is <code>.right_kernel()</code>, where again, we will rely exclusively on the <q>right</q> version.  Also, to match our work in the text, and make the results more recognizable, we will consistently us the keyword option <code>basis='pivot'</code>, which we will be able to explain once we have more theory (<acroref type="sage" acro="SSNS" />, <acroref type="sage" acro="SUTH0" />).  Note too, that this is a place where it is critical that matrices are defined to use the rationals as their number system (<code>QQ</code>).
+<sage>
+<input>I = matrix(QQ, [[ 1,  4,  0, -1,  0,   7, -9],
+                [ 2,  8, -1,  3,  9, -13,  7],
+                [ 0,  0,  2, -3, -4,  12, -8],
+                [-1, -4,  2,  4,  8, -31, 37]])
+nsp = I.right_kernel(basis='pivot')
+nsp
+</input>
+<output>Vector space of degree 7 and dimension 4 over Rational Field
+User basis matrix:
+[-4  1  0  0  0  0  0]
+[-2  0 -1 -2  1  0  0]
+[-1  0  3  6  0  1  0]
+[ 3  0 -5 -6  0  0  1]
+</output>
+</sage>
+
+As we said, <code>nsp</code> contains a lot of unfamiliar information.  Ignore most of it for now.  But as a set, we can test membership in <code>nsp</code>.
+<sage>
+<input>x = vector(QQ, [3, 0, -5, -6, 0, 0, 1])
+x in nsp
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>y = vector(QQ, [-4, 1, -3, -2, 1, 1, 1])
+y in nsp
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>z = vector(QQ, [1, 0, 0, 0, 0, 0, 2])
+z in nsp
+</input>
+<output>False
+</output>
+</sage>
+
+We did a bad thing above, as Sage likes to use <code>I</code> for the imaginary number $i=\sqrt{-1}$ and we just clobbered that.  We won't do it again.  See below how to fix this.
+<code>nsp</code> is an infinite set.  Since we know the null space is defined as solution to a system of equations, and the work above shows it has at least two elements, we are not surprised to discover that the set is infinite (<acroref type="theorem" acro="PSSLS" />).
+<sage>
+<input>nsp.is_finite()
+</input>
+<output>False
+</output>
+</sage>
+
+If we want an element of the null space to experiment with, we can get a <q>random</q> element easily.  Evaluate the following compute cell repeatedly to get a feel for the variety of the different output.  You will see a different result each time, and the result supplied in your downloaded worksheet is very unlikely to be a result you will ever see again.  The bit of text, <code># random</code>, is technically a <q>comment</q>, but we are using it as a signal to our automatic testing of the Sage examples that this example should be skipped.  You <em>do not</em> need to use this device in your own work, though you may use the comment syntax if you wish.
+<sage>
+<input>z = nsp.random_element()
+z                       # random
+</input>
+<output>(21/5, 1, -102/5, -204/5, -3/5, -7, 0)
+</output>
+</sage>
+
+<sage>
+<input>z in nsp
+</input>
+<output>True
+</output>
+</sage>
+
+Sometimes, just sometimes, the null space is finite, and we can list its elements.  This is from <acroref type="example" acro="CNS2" />.
+<sage>
+<input>C = matrix(QQ, [[-4, 6, 1],
+                [-1, 4, 1],
+                [ 5, 6, 7],
+                [ 4, 7, 1]])
+Cnsp = C.right_kernel(basis='pivot')
+Cnsp.is_finite()
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>Cnsp.list()
+</input>
+<output>[(0, 0, 0)]
+</output>
+</sage>
+
+Notice that we get back a list (which mathematically is really a set), and it has one element, the three-entry zero vector.<br /><br />
+There is more to learn about exploring the null space with Sage's <code>.right_kernel()</code> so we will see more of this matrix method.  In the meantime, if you are done experimenting with the matrix <code>I</code> we can restore the variable <code>I</code> back to being the imaginary number $i = \sqrt{-1}$ with the Sage <code>restore()</code> command.
+<sage>
+<input>restore()
+I^2
+</input>
+<output>-1
+</output>
+</sage>
+
+
+
+</sageadvice>
+<sageadvice acro="SH" index="help">
+<title>Sage Help</title>
+There are many ways to learn about, or remind yourself of, how various Sage commands behave.  Now that we have learned a few, it is a good time to show you the most direct methods of obtaining help.  These work throughout Sage, so can be useful if you want to apply Sage to other areas of mathematics.<br /><br />
+The first hurdle is to learn how to make a mathematical object in Sage.  We know now how to make matrices and vectors (and null spaces).  This is enough to help us explore relevant commands in Sage for linear algebra.  First, define a very simple matrix <code>A</code>, with maybe one with one row and two columns.  The number system you choose will have some effect on the results, so use <code>QQ</code> for now.  In the notebook, enter <code>A.</code> (assuming you called your matrix <code>A</code>, and be sure to include the period).  Now hit the <q>tab</q> key and you will get a long list of all the possible methods you can apply to <code>A</code> using the dot notation.<br /><br />
+You can click directly on one of these commands (the word, not the blue highlight) to enter it into the cell.  Now instead of adding parentheses to the command, place a single question mark (<code>?</code>) on the end and hit the tab key again.  You should get some nicely formatted documentation, along with example uses.  (Try <code>A.rref?</code> below for a good example of this.)  You can replace the single question mark by two question marks, and as Sage is an open source program you can see the actual computer instructions for the method, which at first includes all the documentation again.  Note that now the documentation is enclosed in a pair of triple quotation marks (<code>""","""</code>) as part of the source code, and is not specially formatted.<br /><br />
+These methods of learning about Sage are generally referred to as <q>tab-completion</q> and we will use this term going forward.  To learn about the use of Sage in other areas of mathematics, you just need to find out how to create the relevant objects via a <q>constructor</q> function, such as <code>matrix()</code> and <code>vector()</code> for linear algebra.
+Sage has a comprehensive Reference Manual and there is a Linear Algebra Quick Reference sheet.  These should be easily located online via \url{sagemath.org} or with an internet search leading with the terms <q>sage math</q> (use <q>math</q> to avoid confusion with other websites for things named <q>Sage</q>).
+
+
+</sageadvice>
+</subsection>
+
+<!--   End  hse.tex -->
+<readingquestions>
+<ol>
+<li>What is <em>always</em> true of the solution set for a homogeneous system of equations?
+</li>
+<li>Suppose a homogeneous system of equations has 13 variables and 8 equations.  How many solutions will it have?  Why?
+</li>
+<li>Describe in words (not symbols) the null space of a matrix.
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="10" rough="All system archetypes, compute solutions">
+<problem contributor="robertbeezer">Each Archetype (<miscref type="archetype" text="Archetypes" />) that is a system of equations has a corresponding homogeneous system with the same coefficient matrix.  Compute the set of solutions for each.  Notice that these solution sets are the null spaces of the coefficient matrices.<br /><br />
+<acroref type="archetype" acro="A" />,
+<acroref type="archetype" acro="B" />,
+<acroref type="archetype" acro="C" />,
+<acroref type="archetype" acro="D" />/<acroref type="archetype" acro="E" />,
+<acroref type="archetype" acro="F" />,
+<acroref type="archetype" acro="G" />/<acroref type="archetype" acro="H" />,
+<acroref type="archetype" acro="I" />,
+<acroref type="archetype" acro="J" />
+</problem>
+</exercise>
+
+<exercise type="C" number="20" rough="Matrix archetypes, compute null spaces">
+<problem contributor="robertbeezer"><acroref type="archetype" acro="K" /> and
+<acroref type="archetype" acro="L" /> are simply $5\times 5$ matrices (i.e. they are not systems of equations).  Compute the null space of each matrix.
+</problem>
+</exercise>
+
+<exercisegroup>
+<p>For Exercises C21-C23, solve the given homogeneous linear system.  Compare your results to the results of the corresponding exercise in <acroref type="section" acro="TSS" />.</p>
+
+<exercise type="C" number="21" rough="3 x 4 system; infinite solutions">
+<problem contributor="chrisblack"><alignmath>
+<![CDATA[x_1 + 4x_2 + 3x_3 - x_4 &= 0\\]]>
+<![CDATA[x_1 - x_2 + x_3 + 2x_4 &= 0\\]]>
+<![CDATA[4x_1 + x_2 + 6x_3 + 5x_4 &= 0]]>
+</alignmath>
+</problem>
+<solution contributor="chrisblack">The augmented matrix for the given linear system and its row-reduced form are:
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & 4 & 3 & -1 & 0\\]]>
+<![CDATA[1 & -1 & 1 & 2 & 0\\]]>
+<![CDATA[4 & 1 & 6 & 5 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 7/5 & 7/5 & 0\\]]>
+<![CDATA[0 & \leading{1} & 2/5 & -3/5 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}.
+</alignmath>
+Thus, we see that the system is consistent (as predicted by <acroref type="theorem" acro="HSC" />) and has an infinite number of solutions (as predicted by <acroref type="theorem" acro="HMVEI" />).  With suitable choices of $x_3$ and $x_4$, each solution can be written as
+<alignmath>
+\colvector{-\frac{7}{5} x_3 - \frac{7}{5} x_4 \\ -\frac{2}{5} x_3 + \frac{3}{5} x_4 \\ x_3 \\ x_4}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="22" rough="3 x 4 system; infinite solutions">
+<problem contributor="chrisblack"><alignmath>
+<![CDATA[x_1 - 2x_2 + x_3 - x_4 &= 0\\]]>
+<![CDATA[2x_1 - 4x_2 + x_3 + x_4 &= 0\\]]>
+<![CDATA[x_1 - 2x_2 - 2x_3 + 3x_4 &= 0]]>
+</alignmath>
+</problem>
+<solution contributor="chrisblack">The augmented matrix for the given linear system and its row-reduced form are:
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & -2 & 1 & -1 & 0\\]]>
+<![CDATA[2 & -4 & 1 & 1 & 0\\]]>
+<![CDATA[1 & -2 & -2 & 3 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & -2 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & \leading{1} & 0]]>
+\end{bmatrix}.
+</alignmath>
+Thus, we see that the system is consistent (as predicted by <acroref type="theorem" acro="HSC" />) and has an infinite number of solutions (as predicted by <acroref type="theorem" acro="HMVEI" />).  With a suitable choice of $x_2$, each solution can be written as
+<alignmath>
+\colvector{2x_2\\ x_2 \\ 0 \\ 0}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="23" rough="3 x 4 system; infinite solutions">
+<problem contributor="chrisblack"><alignmath>
+<![CDATA[x_1 - 2x_2 + x_3 - x_4 &= 0\\]]>
+<![CDATA[x_1 + x_2 + x_3 - x_4 &= 0\\]]>
+<![CDATA[x_1 \quad + x_3 - x_4 &= 0]]>
+</alignmath>
+</problem>
+<solution contributor="chrisblack">The augmented matrix for the given linear system and its row-reduced form are:
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & -2 & 1 & -1 & 0\\]]>
+<![CDATA[1 & 1 & 1 & -1 & 0\\]]>
+<![CDATA[1 & 0 & 1 & -1 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 1 & -1 & 0\\]]>
+<![CDATA[0 & \leading{1} & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0  & 0 & 0 & 0]]>
+\end{bmatrix}.
+</alignmath>
+Thus, we see that the system is consistent (as predicted by <acroref type="theorem" acro="HSC" />) and has an infinite number of solutions (as predicted by <acroref type="theorem" acro="HMVEI" />).  With suitable choices of $x_3$ and $x_4$, each solution can be written as
+<alignmath>
+\colvector{-x_3 + x_4 \\ 0 \\ x_3 \\ x_4}
+</alignmath>
+</solution>
+</exercise>
+
+</exercisegroup>
+
+<exercisegroup>
+<p>For Exercises C25-C27, solve the given homogeneous linear system.  Compare your results to the results of the corresponding exercise in <acroref type="section" acro="TSS" />.</p>
+
+<exercise type="C" number="25" rough="4 x 3 system; one solutions">
+<problem contributor="chrisblack"><alignmath>
+<![CDATA[x_1 + 2x_2 + 3x_3 &= 0\\]]>
+<![CDATA[2x_1 - x_2 + x_3 &= 0\\]]>
+<![CDATA[3x_1 + x_2 + x_3 &= 0\\]]>
+<![CDATA[\quad x_2 + 2x_3 &= 0]]>
+</alignmath>
+</problem>
+<solution contributor="chrisblack">The augmented matrix for the given linear system and its row-reduced form are:
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & 2 & 3 & 0\\]]>
+<![CDATA[2 & -1 & 1 & 0\\]]>
+<![CDATA[3 & 1 & 1 & 0\\]]>
+<![CDATA[0 & 1 & 2 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & 0\\]]>
+<![CDATA[0 & \leading{1} & 0  & 0\\]]>
+<![CDATA[0 & 0 & \leading{1} & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}.
+</alignmath>
+An homogeneous system is always consistent (<acroref type="theorem" acro="HSC" />) and with $n=r=3$ an application of <acroref type="theorem" acro="FVCS" /> yields zero free variables. Thus the only solution to the given system is the trivial solution, $\vect{x} = \zerovector$.
+</solution>
+</exercise>
+
+<exercise type="C" number="26" rough="4 x 3 system; one solution">
+<problem contributor="chrisblack"><alignmath>
+<![CDATA[x_1 + 2x_2 + 3x_3 &= 0\\]]>
+<![CDATA[2x_1 - x_2 + x_3 &= 0\\]]>
+<![CDATA[3x_1 + x_2 + x_3 &= 0\\]]>
+<![CDATA[\quad 5x_2 + 2x_3 &= 0]]>
+</alignmath>
+</problem>
+<solution contributor="chrisblack">The augmented matrix for the given linear system and its row-reduced form are:
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & 2 & 3 & 0\\]]>
+<![CDATA[2 & -1 & 1 & 0\\]]>
+<![CDATA[3 & 1 & 1 & 0\\]]>
+<![CDATA[0 & 5 & 2 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[1 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 1 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}.
+</alignmath>
+An homogeneous system is always consistent (<acroref type="theorem" acro="HSC" />) and with $n=r=3$ an application of <acroref type="theorem" acro="FVCS" /> yields zero free variables. Thus the only solution to the given system is the trivial solution, $\vect{x} = \zerovector$.
+</solution>
+</exercise>
+
+<exercise type="C" number="27" rough="4 x 3 system; infinite solutions">
+<problem contributor="chrisblack"><alignmath>
+<![CDATA[x_1 + 2x_2 + 3x_3 &= 0\\]]>
+<![CDATA[2x_1 - x_2 + x_3 &= 0\\]]>
+<![CDATA[x_1 - 8x_2 - 7x_3 &= 0\\]]>
+<![CDATA[\quad x_2 + x_3 &= 0]]>
+</alignmath>
+</problem>
+<solution contributor="chrisblack">The augmented matrix for the given linear system and its row-reduced form are:
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1 & 2 & 3 & 0\\]]>
+<![CDATA[2 & -1 & 1 & 0\\]]>
+<![CDATA[1 & -8 & -7 & 0\\]]>
+<![CDATA[0 & 1 & 1 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 1 & 0\\]]>
+<![CDATA[0 & \leading{1} & 1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}.
+</alignmath>
+An homogeneous system is always consistent (<acroref type="theorem" acro="HSC" />) and with $n=3$, $r=2$ an application of <acroref type="theorem" acro="FVCS" /> yields one free variable. With a suitable choice of $x_3$ each solution can be written in the form
+<alignmath>
+\colvector{-x_3 \\ -x_3 \\ x_3}
+</alignmath>
+</solution>
+</exercise>
+
+</exercisegroup>
+
+<exercise type="C" number="30" rough="Null space of 4x5, nullity 2">
+<problem contributor="robertbeezer">Compute the null space of the matrix $A$, $\nsp{A}$.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 2 & 4 & 1 & 3 & 8 \\]]>
+<![CDATA[ -1 & -2 & -1 & -1 & 1 \\]]>
+<![CDATA[ 2 & 4 & 0 & -3 & 4 \\]]>
+<![CDATA[ 2 & 4 & -1 & -7 & 4]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer"><acroref type="definition" acro="NSM" /> tells us that the null space of $A$ is the solution set to the homogeneous system $\homosystem{A}$.  The augmented matrix of this system is
+<equation>
+\begin{bmatrix}
+<![CDATA[ 2 & 4 & 1 & 3 & 8 & 0 \\]]>
+<![CDATA[ -1 & -2 & -1 & -1 & 1 & 0 \\]]>
+<![CDATA[ 2 & 4 & 0 & -3 & 4 & 0 \\]]>
+<![CDATA[ 2 & 4 & -1 & -7 & 4 & 0]]>
+\end{bmatrix}
+</equation>
+To solve the system, we row-reduce the augmented matrix and obtain,
+<equation>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 2 & 0 & 0 & 5 & 0 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 0 & -8 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & \leading{1} & 2 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</equation>
+This matrix represents a system with equations having three dependent variables ($x_1$, $x_3$,  and $x_4$) and two independent variables ($x_2$ and $x_5$).  These equations rearrange  to
+<alignmath>
+<![CDATA[x_1&=-2x_2-5x_5]]>
+<![CDATA[&]]>
+<![CDATA[x_3&=8x_5]]>
+<![CDATA[&]]>
+<![CDATA[x_4&=-2x_5]]>
+</alignmath>
+So we can write the solution set (which is the requested null space) as
+<equation>
+\nsp{A}=\setparts{
+\colvector{-2x_2-5x_5\\x_2\\8x_5\\-2x_5\\x_5}
+}{
+x_2, x_5\in\complex{\null}
+}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="C" number="31" rough="Null space of 3x4, nullity 2">
+<problem contributor="robertbeezer">Find the null space of the matrix $B$, $\nsp{B}$.
+<alignmath>
+<![CDATA[B&=]]>
+\begin{bmatrix}
+<![CDATA[ -6 & 4 & -36 & 6 \\]]>
+<![CDATA[ 2 & -1 & 10 & -1 \\]]>
+<![CDATA[ -3 & 2 & -18 & 3]]>
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">We form the augmented matrix of the homogeneous system $\linearsystem{B}{\zerovector}$ and row-reduce the matrix,
+<alignmath>
+\begin{bmatrix}
+<![CDATA[ -6 & 4 & -36 & 6 & 0 \\]]>
+<![CDATA[ 2 & -1 & 10 & -1 & 0 \\]]>
+<![CDATA[ -3 & 2 & -18 & 3 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 2 & 1 & 0 \\]]>
+<![CDATA[ 0 & \leading{1} & -6 & 3 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}
+</alignmath>
+We knew ahead of time that this system would be consistent (<acroref type="theorem" acro="HSC" />), but we can now see there are $n-r=4-2=2$ free variables, namely $x_3$ and $x_4$ (<acroref type="theorem" acro="FVCS" />).  Based on this analysis, we can rearrange the equations associated with each nonzero row of the reduced row-echelon form into an expression for the lone dependent variable as a function of the free variables.  We arrive at the solution set to the homogeneous system, which is the null space of the matrix by <acroref type="definition" acro="NSM" />,
+<alignmath>
+\nsp{B}=\setparts{\colvector{-2x_3-x_4\\6x_3-3x_4\\x_3\\x_4}}{x_3,\,x_4\in\complexes}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="M" number="45" rough="Categorize solutions to homo archetypes">
+<problem contributor="robertbeezer">Without doing any computations, and without examining any solutions, say as much as possible about the form of the solution set for corresponding homogeneous system of equations of each archetype that is a system of equations.<br /><br />
+<acroref type="archetype" acro="A" />,
+<acroref type="archetype" acro="B" />,
+<acroref type="archetype" acro="C" />,
+<acroref type="archetype" acro="D" />/<acroref type="archetype" acro="E" />,
+<acroref type="archetype" acro="F" />,
+<acroref type="archetype" acro="G" />/<acroref type="archetype" acro="H" />,
+<acroref type="archetype" acro="I" />,
+<acroref type="archetype" acro="J" />
+</problem>
+</exercise>
+
+<exercisegroup>
+<p>For Exercises M50<ndash />M52  say <b>as much as possible</b> about each system's solution set.  Be sure to make it clear which theorems you are using to reach your conclusions.</p>
+
+<exercise type="M" number="50" rough="Vars + equations + extra, what can be said??">
+<problem contributor="robertbeezer">A homogeneous system of 8 equations in 8 variables.
+</problem>
+<solution contributor="robertbeezer">Since the system is homogeneous, we know it has the trivial solution (<acroref type="theorem" acro="HSC" />).  We cannot say anymore based on the information provided, except to say that there is either a unique solution or infinitely many solutions (<acroref type="theorem" acro="PSSLS" />). See <acroref type="archetype" acro="A" /> and <acroref type="archetype" acro="B" /> to understand the possibilities.
+</solution>
+</exercise>
+
+<exercise type="M" number="51" rough="Vars + equations + extra, what can be said??">
+<problem contributor="robertbeezer">A homogeneous system of 8 equations in 9 variables.
+</problem>
+<solution contributor="robertbeezer">Since there are more variables than equations, <acroref type="theorem" acro="HMVEI" /> applies and tells us that the solution set is infinite.  From the proof of <acroref type="theorem" acro="HSC" /> we know that the zero vector is one solution.
+</solution>
+</exercise>
+
+<exercise type="M" number="52" rough="Vars + equations + extra, what can be said??">
+<problem contributor="robertbeezer">A homogeneous system of 8 equations in 7 variables.
+</problem>
+<solution contributor="robertbeezer">By <acroref type="theorem" acro="HSC" />, we know the system is consistent because the zero vector is always a solution of a homogeneous system.  There is no more that we can say, since both a unique solution and infinitely many solutions are possibilities.
+</solution>
+</exercise>
+
+</exercisegroup>
+
+<exercise type="T" number="10" rough="Homogeneous iff has zero solution">
+<problem contributor="martinjackson">Prove or disprove:  A system of linear equations is homogeneous if and only if the system has the zero vector as a solution.
+</problem>
+<solution contributor="robertbeezer">This is a true statement.  A proof is:<br /><br />
+<implyforward />  Suppose we have a homogeneous system $\homosystem{A}$.  Then by substituting the scalar zero for each variable, we arrive at true statements for each equation.  So the zero vector is a solution.  This is the content of <acroref type="theorem" acro="HSC" />.<br /><br />
+<implyreverse />  Suppose now that we have a generic (<ie /> not necessarily homogeneous) system of equations, $\linearsystem{A}{\vect{b}}$ that has the zero vector as a solution.  Upon substituting this solution into the system, we discover that each component of $\vect{b}$ must also be zero.  So $\vect{b}=\zerovector$.
+</solution>
+</exercise>
+
+<exercise type="T" number="11" rough="Equivalent systems, both homogeneous or both not">
+<problem contributor="robertbeezer">Suppose that two systems of linear equations are equivalent.  Prove that if the first system is homogeneous, then the second system is homogeneous.  Notice that this will allow us to conclude that two equivalent systems are either both homogeneous or both not homogeneous.
+</problem>
+<solution contributor="robertbeezer">If the first system is homogeneous, then the zero vector is in the solution set of the system.  (See the proof of <acroref type="theorem" acro="HSC" />.)<br /><br />
+Since the two systems are equivalent, they have equal solutions sets (<acroref type="definition" acro="ESYS" />).  So the zero vector is in the solution set of the second system.  By <acroref type="exercise" acro="HSE.T10" /> the presence of the zero vector in the solution set implies that the system is homogeneous.<br /><br />
+So if any one of two equivalent systems is homogeneous, then they both are homogeneous.
+</solution>
+</exercise>
+
+<exercise type="T" number="12" rough="Alternate proof of HSC with RCLS">
+<problem contributor="ivankessler">Give an alternate proof of <acroref type="theorem" acro="HSC" /> that uses <acroref type="theorem" acro="RCLS" />.
+</problem>
+</exercise>
+
+<exercise type="T" number="20" rough="4u is solution to homo system">
+<problem contributor="robertbeezer">Consider the homogeneous system of linear equations $\homosystem{A}$, and suppose that
+$\vect{u}=\colvector{u_1\\u_2\\u_3\\\vdots\\u_n}$
+is one solution to the system of equations.  Prove that
+$\vect{v}=\colvector{4u_1\\4u_2\\4u_3\\\vdots\\4u_n}$ is also a solution to $\homosystem{A}$.
+</problem>
+<solution contributor="robertbeezer">Suppose that a single equation from this system  (the $i$-th one) has the form,
+<equation>
+a_{i1}x_1+a_{i2}x_2+a_{i3}x_3+\dots+a_{in}x_n=0
+</equation>
+Evaluate the left-hand side of this equation with the components of the proposed solution vector $\vect{v}$,
+<alignmath>
+<![CDATA[a_{i1}\left(4u_1\right)&+a_{i2}\left(4u_2\right)+a_{i3}\left(4u_3\right)+\dots+a_{in}\left(4u_n\right)\\]]>
+<![CDATA[&=4a_{i1}u_1+4a_{i2}u_2+4a_{i3}u_3+\dots+4a_{in}u_n&&\text{Commutativity}\\]]>
+<![CDATA[&=4\left(a_{i1}u_1+a_{i2}u_2+a_{i3}u_3+\dots+a_{in}u_n\right)&&\text{Distributivity}\\]]>
+<![CDATA[&=4(0)&&\text{$\vect{u}$ solution to $\homosystem{A}$}\\]]>
+<![CDATA[&=0]]>
+</alignmath>
+So $\vect{v}$ makes each equation true, and so is a solution to the system.<br /><br />
+Notice that this result is not true if we change $\homosystem{A}$ from a homogeneous system to a non-homogeneous system.  Can you create an example of a (non-homogeneous) system with a solution $\vect{u}$ such that $\vect{v}$ is not a solution?
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

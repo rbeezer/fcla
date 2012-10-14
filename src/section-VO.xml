@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="VO">
+<title>Vector Operations</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section VO -->
+<!-- %  Vector Operations -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>In this section we define some new operations involving vectors, and collect some basic properties of these operations.  Begin by recalling our definition of a column vector as an ordered list of complex numbers, written vertically (<acroref type="definition" acro="CV" />).  The collection of all possible vectors of a fixed size is a commonly used set, so we start with its definition.</p>
+
+</introduction>
+
+<subsection acro="CV">
+<title>Column Vectors</title>
+
+<definition acro="VSCV" index="vector space!column vectors">
+<title>Vector Space of Column Vectors</title>
+<p>The vector space $\complex{m}$ is the set of all column vectors (<acroref type="definition" acro="CV" />) of size $m$ with entries from the set of complex numbers, $\complex{\null}$.</p>
+
+<notation acro="VSCV" index="vector space of column vectors">
+<title>Vector Space of Column Vectors</title>
+<usage>$\complex{m}$</usage>
+</notation>
+</definition>
+
+<p>When a set similar to this is defined using only column vectors where all the entries are from the real numbers, it is written as ${\mathbb R}^m$ and is known as <define>Euclidean $m$-space</define>.</p>
+
+<p>The term <q>vector</q> is used in a variety of different ways.  We have defined it as an ordered list written vertically.  It could simply be an ordered list of numbers, and written as $\left(2,\,3,\,-1,\,6\right)$.  Or it could be interpreted as a point in $m$ dimensions, such as $\left(3,\,4,\,-2\right)$ representing a point in three dimensions relative to $x$, $y$ and $z$ axes.  With an interpretation as a point, we can construct an arrow from the origin to the point which is consistent with the notion that a vector has direction and magnitude.</p>
+
+<p>All of these ideas can be shown to be related and equivalent, so keep that in mind as you connect the ideas of this course with ideas from other disciplines.  For now, we'll stick with the idea that a vector is just a list of numbers, in some particular order.</p>
+
+<sageadvice acro="VSCV" index="vector spaces!column vectors">
+<title>Vector Spaces of Column Vectors</title>
+It is possible to construct vector spaces several ways in Sage.  For now, we will show you two basic ways.  Remember that while our theory is all developed over the complex numbers, $\complexes$, it is better to initially illustrate these ideas in Sage using the rationals, <code>QQ</code>.<br /><br />
+To create a vector space, we use the <code>VectorSpace()</code> constructor, which requires the name of the number system for the entries and the number of entries in each vector.  We can display some information about the vector space, and with tab-completion you can see what functions are available.  We will not do too much with these methods immediately, but instead learn about them as we progress through the theory.
+<sage>
+<input>V = VectorSpace(QQ, 8)
+V
+</input>
+<output>Vector space of dimension 8 over Rational Field
+</output>
+</sage>
+
+Notice that the word <q>dimension</q> is used to refer to the number of entries in a vector contained in the vector space, whereas we have used the word <q>degree</q> before.  Try pressing the Tab key while in the next cell to see the range of methods you can use on a vector space.
+<sage>
+<input>V.
+</input>
+</sage>
+
+We can easily create <q>random</q> elements of any vector space, much as we did earlier for the kernel of a matrix.  Try executing the next compute cell several times.
+<sage>
+<input>w = V.random_element()
+w             # random
+</input>
+<output>(2, -1/9, 0, 2, 2/3, 0, -1/3, 1)
+</output>
+</sage>
+
+Vector spaces are a fundamental objects in Sage and in mathematics, and Sage has a nice compact way to create them, mimicking the notation we use when working on paper.
+<sage>
+<input>U = CC^5
+U
+</input>
+<output>Vector space of dimension 5 over
+Complex Field with 53 bits of precision
+</output>
+</sage>
+
+<sage>
+<input>W = QQ^3
+W
+</input>
+<output>Vector space of dimension 3 over Rational Field
+</output>
+</sage>
+
+Sage can determine if two vector spaces are the same.  Notice that we use two equals sign to test equality, since we use a single equals sign to make assignments.
+<sage>
+<input>X = VectorSpace(QQ, 3)
+W = QQ^3
+X == W
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="VEASM">
+<title>Vector Equality, Addition, Scalar Multiplication</title>
+
+<p>We start our study of this set by first defining what it means for two vectors to be the same.</p>
+
+<definition acro="CVE" index="vector!equality">
+<title>Column Vector Equality</title>
+<p>Suppose that $\vect{u},\,\vect{v}\in\complex{m}$.  Then $\vect{u}$ and $\vect{v}$ are <define>equal</define>, written $\vect{u}=\vect{v}$ if
+<alignmath>
+<![CDATA[\vectorentry{\vect{u}}{i}&=\vectorentry{\vect{v}}{i}]]>
+<![CDATA[&&1\leq i\leq m]]>
+</alignmath></p>
+
+<notation acro="CVE" index="vector!equality">
+<title>Column Vector Equality</title>
+<usage>$\vect{u}=\vect{v}$</usage>
+</notation>
+</definition>
+
+<p>Now this may seem like a silly (or even stupid) thing to say so carefully.  Of course two vectors are equal if they are equal for each corresponding entry!  Well, this is not as silly as it appears.  We will see a few occasions later where the obvious definition is <em>not</em> the right one.  And besides, in doing mathematics we need to be very careful about making all the necessary definitions and making them unambiguous.  And we've done that here.</p>
+
+<p>Notice now that the symbol <q>=</q> is now doing triple-duty.  We know from our earlier education what it means for two numbers (real or complex) to be equal, and we take this for granted.  In <acroref type="definition" acro="SE" /> we defined what it meant for two sets to be equal.  Now we have defined what it means for two vectors to be equal, and that definition builds on our definition for when two numbers are equal when we use the condition $u_i=v_i$ for all $1\leq i\leq m$.  So think carefully about your objects when you see an equal sign and think about just which notion of equality you have encountered.  This will be especially important when you are asked to construct proofs whose conclusion states that two objects are equal.</p>
+
+<p>OK, let's do an example of vector equality that begins to hint at the utility of this definition.</p>
+
+<example acro="VESE" index="system of equations!vector equality">
+<title>Vector equality for a system of equations</title>
+
+<indexlocation index="Archetype B!vector equality" />
+<p>Consider the system of linear equations in <acroref type="archetype" acro="B" />,
+<archetypepart acro="B" part="systemdefn" />
+</p>
+
+<p>Note the use of three equals signs <mdash /> each indicates an equality of numbers (the linear expressions are numbers when we evaluate them with fixed values of the variable quantities).  Now write the vector equality,
+<equation>
+\colvector{-7x_1 -6 x_2 - 12x_3\\ 5x_1  + 5x_2 + 7x_3\\ x_1 +4x_3}
+=
+\colvector{-33\\24\\5}.
+</equation>
+By <acroref type="definition" acro="CVE" />, this <em>single</em> equality (of two column vectors) translates into <em>three</em> simultaneous equalities of numbers that form the system of equations.  So with this new notion of vector equality we can become less reliant on referring to <em>systems</em> of <em>simultaneous</em> equations.  There's more to vector equality than just this, but this is a good example for starters and we will develop it further.</p>
+
+</example>
+
+<p>We will now define two operations on the set $\complex{m}$.  By this we mean well-defined procedures that somehow convert vectors into other vectors.  Here are two of the most basic definitions of the entire course.</p>
+
+<definition acro="CVA" index="vector!addition">
+<title>Column Vector Addition</title>
+<p>Suppose that $\vect{u},\,\vect{v}\in\complex{m}$. The <define>sum</define> of $\vect{u}$ and $\vect{v}$ is the vector $\vect{u}+\vect{v}$ defined by
+<alignmath>
+\vectorentry{\vect{u}+\vect{v}}{i}
+<![CDATA[&=\vectorentry{\vect{u}}{i}+\vectorentry{\vect{v}}{i}]]>
+<![CDATA[&&1\leq i\leq m]]>
+</alignmath></p>
+
+<notation acro="CVA" index="column vector addition">
+<title>Column Vector Addition</title>
+<usage>$\vect{u}+\vect{v}$</usage>
+</notation>
+</definition>
+
+<p>So vector addition takes two vectors of the same size and combines them (in a natural way!) to create a new vector of the same size.  Notice that this definition is required, even if we agree that this is the obvious, right, natural or correct way to do it.  Notice too that the symbol `+' is being recycled.  We all know how to add <em>numbers</em>, but now we have the same symbol extended to double-duty and we use it to indicate how to add two new objects, vectors.  And this definition of our new meaning is built on our previous meaning of addition via the expressions $u_i+v_i$.  Think about your objects, especially when doing proofs.  Vector addition is easy, here's an example from $\complex{4}$.</p>
+
+<example acro="VA" index="vector addition">
+<title>Addition of two vectors in $\complex{4}$</title>
+
+<p>If
+<alignmath>
+<![CDATA[\vect{u}=\colvector{2\\-3\\4\\2}&&\vect{v}=\colvector{-1\\5\\2\\-7}]]>
+</alignmath>
+then
+<equation>
+\vect{u}+\vect{v}=
+\colvector{2\\-3\\4\\2}+\colvector{-1\\5\\2\\-7}=
+\colvector{2+(-1)\\-3+5\\4+2\\2+(-7)}=
+\colvector{1\\2\\6\\-5}.
+</equation>
+</p>
+
+</example>
+
+<p>Our second operation takes two objects of different types, specifically a number and a vector, and combines them to create another vector.  In this context we call a number a <define>scalar</define> in order to emphasize that it is not a vector.</p>
+
+<definition acro="CVSM" index="vector!scalar multiplication">
+<title>Column Vector Scalar Multiplication</title>
+<p>Suppose $\vect{u}\in\complex{m}$ and $\alpha\in\complex{\null}$, then the <define>scalar multiple</define> of $\vect{u}$ by $\alpha$ is the vector $\alpha\vect{u}$ defined by
+<alignmath>
+\vectorentry{\alpha\vect{u}}{i}
+<![CDATA[&=\alpha\vectorentry{\vect{u}}{i}]]>
+<![CDATA[&&1\leq i\leq m]]>
+</alignmath>
+</p>
+
+<notation acro="CVSM" index="column vector scalar multiplication">
+<title>Column Vector Scalar Multiplication</title>
+<usage>$\alpha\vect{u}$</usage>
+</notation>
+</definition>
+
+<p>Notice that we are doing a kind of multiplication here, but we are <em>defining</em> a new type, perhaps in what appears to be a natural way.  We use juxtaposition (smashing two symbols together side-by-side) to denote this operation rather than using a symbol like we did with vector addition.  So this can be another source of confusion.  When two symbols are next to each other, are we doing regular old multiplication, the kind we've done for years, or are we doing scalar vector multiplication, the operation we just defined?  Think about your objects <mdash /> if the first object is a scalar, and the second is a vector, then it <em>must</em> be that we are doing our new operation, and the <em>result</em> of this operation will be another vector.</p>
+
+<p>Notice how consistency in notation can be an aid here.  If we write scalars as lower case Greek letters from the start of the alphabet (such as $\alpha$, $\beta$, <ellipsis />) and write vectors in bold Latin letters from the end of the alphabet ($\vect{u}$, $\vect{v}$,  <ellipsis />), then we have some hints about what type of objects we are working with.  This can be a blessing <em>and</em> a curse, since when we go read another book about linear algebra, or read an application in another discipline (physics, economics,  <ellipsis />) the types of notation employed may be very different and hence unfamiliar.</p>
+
+<p>Again, computationally, vector scalar multiplication is very easy.</p>
+
+<example acro="CVSM" index="vector scalar multiplication">
+<title>Scalar multiplication in $\complex{5}$</title>
+
+<p>If
+<equation>
+\vect{u}=\colvector{3\\1\\-2\\4\\-1}
+</equation>
+and $\alpha=6$, then
+<equation>
+\alpha\vect{u}=
+6\colvector{3\\1\\-2\\4\\-1}=
+\colvector{6(3)\\6(1)\\6(-2)\\6(4)\\6(-1)}=
+\colvector{18\\6\\-12\\24\\-6}.
+</equation>
+</p>
+
+</example>
+
+<sageadvice acro="VO" index="vector operations">
+<title>Vector Operations</title>
+Sage can easily perform the two basic operations with vectors, vector addition, <code>+</code>,  and scalar vector multiplication, <code>*</code>.  Notice that Sage is not confused by an ambiguity due to multiple meanings for the symbols <code>+</code> and <code>*</code> <mdash /> for example, Sage knows that <code>3 + 12</code> is different than the vector additions below.
+<sage>
+<input>x = vector(QQ, [1, 2, 3])
+y = vector(QQ, [10, 20, 30])
+5*x
+</input>
+<output>(5, 10, 15)
+</output>
+</sage>
+
+<sage>
+<input>x + y
+</input>
+<output>(11, 22, 33)
+</output>
+</sage>
+
+<sage>
+<input>3*x + 4*y
+</input>
+<output>(43, 86, 129)
+</output>
+</sage>
+
+<sage>
+<input>-y
+</input>
+<output>(-10, -20, -30)
+</output>
+</sage>
+
+<sage>
+<input>w = (-4/3)*x - (1/10)*y
+w
+</input>
+<output>(-7/3, -14/3, -7)
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="VSP">
+<title>Vector Space Properties</title>
+
+<p>With definitions of vector addition and scalar multiplication we can state, and prove, several properties of each operation, and some properties that involve their interplay.  We now collect ten of them here for later reference.</p>
+
+<theorem acro="VSPCV" index="vector space properties!column vectors">
+<title>Vector Space Properties of Column Vectors</title>
+<statement>
+<p>Suppose that $\complex{m}$ is the set of column vectors of size $m$ (<acroref type="definition" acro="VSCV" />) with addition and scalar multiplication as defined in <acroref type="definition" acro="CVA" /> and <acroref type="definition" acro="CVSM" />.  Then
+<propertylist>
+<property acro="ACC" index="additive closure!column vectors">
+<title>Additive Closure, Column Vectors</title><content>
+If $\vect{u},\,\vect{v}\in\complex{m}$, then $\vect{u}+\vect{v}\in\complex{m}$.</content></property>
+
+<property acro="SCC" index="scalar closure!column vectors">
+<title>Scalar Closure, Column Vectors</title><content>
+If $\alpha\in\complex{\null}$ and $\vect{u}\in\complex{m}$, then $\alpha\vect{u}\in\complex{m}$.</content></property>
+
+<property acro="CC" index="commutativity!column vectors">
+<title>Commutativity, Column Vectors</title><content>
+If $\vect{u},\,\vect{v}\in\complex{m}$, then $\vect{u}+\vect{v}=\vect{v}+\vect{u}$.</content></property>
+
+<property acro="AAC" index="additive associativity!column vectors">
+<title>Additive Associativity, Column Vectors</title><content>
+If $\vect{u},\,\vect{v},\,\vect{w}\in\complex{m}$, then $\vect{u}+\left(\vect{v}+\vect{w}\right)=\left(\vect{u}+\vect{v}\right)+\vect{w}$.</content></property>
+
+<property acro="ZC" index="zero vector!column vectors">
+<title>Zero Vector, Column Vectors</title><content>
+There is a vector, $\zerovector$, called the <define>zero vector</define>, such that  $\vect{u}+\zerovector=\vect{u}$  for all $\vect{u}\in\complex{m}$.</content></property>
+
+<property acro="AIC" index="additive inverses!column vectors">
+<title>Additive Inverses, Column Vectors</title><content>
+If  $\vect{u}\in\complex{m}$, then there exists a vector $\vect{-u}\in\complex{m}$ so that $\vect{u}+ (\vect{-u})=\zerovector$.</content></property>
+
+<property acro="SMAC" index="scalar multiplication associativity!column vectors">
+<title>Scalar Multiplication Associativity, Column Vectors</title><content>
+If $\alpha,\,\beta\in\complex{\null}$ and $\vect{u}\in\complex{m}$, then $\alpha(\beta\vect{u})=(\alpha\beta)\vect{u}$.</content></property>
+
+<property acro="DVAC" index="distributivity, vector addition!column vectors">
+<title>Distributivity across Vector Addition, Column Vectors</title><content>
+If $\alpha\in\complex{\null}$ and $\vect{u},\,\vect{v}\in\complex{m}$, then $\alpha(\vect{u}+\vect{v})=\alpha\vect{u}+\alpha\vect{v}$.</content></property>
+
+<property acro="DSAC" index="distributivity, scalar addition!column vectors">
+<title>Distributivity across Scalar Addition, Column Vectors</title><content>
+If $\alpha,\,\beta\in\complex{\null}$ and $\vect{u}\in\complex{m}$, then
+$(\alpha+\beta)\vect{u}=\alpha\vect{u}+\beta\vect{u}$.</content></property>
+
+<property acro="OC" index="one!column vectors">
+<title>One, Column Vectors</title><content>
+If $\vect{u}\in\complex{m}$, then $1\vect{u}=\vect{u}$.</content></property>
+
+</propertylist>
+
+</p>
+
+</statement>
+
+<proof>
+<p>
+While some of these properties seem very obvious, they all require proof.  However, the proofs are not very interesting, and border on tedious. We'll prove one version of distributivity very carefully, and you can test your proof-building skills on some of the others.  We need to establish an equality, so we will do so by beginning with one side of the equality, apply various definitions and theorems (listed to the right of each step) to massage the expression from the left into the expression on the right.   Here we go with a proof of <acroref type="property" acro="DSAC" />.</p>
+
+<p>For $1\leq i\leq m$,
+<alignmath>
+\vectorentry{(\alpha+\beta)\vect{u}}{i}
+<![CDATA[&=(\alpha+\beta)\vectorentry{\vect{u}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVSM" />}\\
+<![CDATA[&=\alpha\vectorentry{\vect{u}}{i}+\beta\vectorentry{\vect{u}}{i}]]>
+<![CDATA[&&\text{Distributivity in $\complex{\null}$}\\]]>
+<![CDATA[&=\vectorentry{\alpha\vect{u}}{i}+\vectorentry{\beta\vect{u}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVSM" />}\\
+<![CDATA[&=\vectorentry{\alpha\vect{u}+\beta\vect{u}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVA" />}\\
+</alignmath>
+</p>
+
+<p>Since the individual components of the vectors $(\alpha+\beta)\vect{u}$ and $\alpha\vect{u}+\beta\vect{u}$ are equal for <em>all</em> $i$, $1\leq i\leq m$, <acroref type="definition" acro="CVE" /> tells us the vectors are equal.</p>
+
+</proof>
+</theorem>
+
+<p>Many of the conclusions of our theorems can be characterized as <q>identities,</q>  especially when we are establishing basic properties of operations such as those in this section.  Most of the properties listed in <acroref type="theorem" acro="VSPCV" /> are examples.  So some advice about the style we use for proving identities is appropriate right now.  Have a look at <acroref type="technique" acro="PI" />.</p>
+
+<p>Be careful with the notion of the vector $\vect{-u}$.  This is a vector that we add to $\vect{u}$ so that the result is the particular vector $\zerovector$.  This is basically a property of vector addition.  It happens that we can compute $\vect{-u}$ using the <em>other</em> operation, scalar multiplication.  We can prove this directly by writing that
+<equation>
+\vectorentry{\vect{-u}}{i}
+=-\vectorentry{\vect{u}}{i}
+=(-1)\vectorentry{\vect{u}}{i}
+=\vectorentry{(-1)\vect{u}}{i}
+</equation>
+We will see later how to derive this property as a <em>consequence</em> of several of the ten properties listed in <acroref type="theorem" acro="VSPCV" />.
+</p>
+
+<p>Similarly, we will often write something you would immediately recognize as <q>vector subtraction.</q>  This could be placed on a firm theoretical foundation <mdash /> as you can do yourself with <acroref type="exercise" acro="VO.T30" />.</p>
+
+<p>A final note.  <acroref type="property" acro="AAC" /> implies that we do not have to be careful about how we <q>parenthesize</q> the addition of vectors.  In other words, there is nothing to be gained by writing
+$\left(\vect{u}+\vect{v}\right)+\left(\vect{w}+\left(\vect{x}+\vect{y}\right)\right)$
+rather than
+$\vect{u}+\vect{v}+\vect{w}+\vect{x}+\vect{y}$, since we get the same result no matter which order we choose to perform the four additions.  So we won't be careful about using parentheses this way.</p>
+
+<sageadvice acro="ANC" index="coercion">
+<title>A Note on Coercion</title>
+Study the following sequence of commands, while cognizant of the failure to specify a number system for <code>x</code>.
+<sage>
+<input>x = vector([1, 2, 3])
+u = 3*x
+u
+</input>
+<output>(3, 6, 9)
+</output>
+</sage>
+
+<sage>
+<input>v = (1/3)*x
+v
+</input>
+<output>(1/3, 2/3, 1)
+</output>
+</sage>
+
+<sage>
+<input>y = vector(QQ, [4, 5, 6])
+w = 8*y
+w
+</input>
+<output>(32, 40, 48)
+</output>
+</sage>
+
+<sage>
+<input>z = x + y
+z
+</input>
+<output>(5, 7, 9)
+</output>
+</sage>
+
+None of this should be too much of a surprise, and the results should be what we would have expected.  Though for <code>x</code> we never specified if <code>1, 2, 3</code> are integers, rationals, reals, complexes, or <ellipsis />?  Let's dig a little deeper and examine the parents of the five vectors involved.
+<sage>
+<input>x.parent()
+</input>
+<output>Ambient free module of rank 3 over
+the principal ideal domain Integer Ring
+</output>
+</sage>
+
+<sage>
+<input>u.parent()
+</input>
+<output>Ambient free module of rank 3 over
+the principal ideal domain Integer Ring
+</output>
+</sage>
+
+<sage>
+<input>v.parent()
+</input>
+<output>Vector space of dimension 3 over Rational Field
+</output>
+</sage>
+
+<sage>
+<input>y.parent()
+</input>
+<output>Vector space of dimension 3 over Rational Field
+</output>
+</sage>
+
+<sage>
+<input>w.parent()
+</input>
+<output>Vector space of dimension 3 over Rational Field
+</output>
+</sage>
+
+<sage>
+<input>z.parent()
+</input>
+<output>Vector space of dimension 3 over Rational Field
+</output>
+</sage>
+
+So <code>x</code> and <code>u</code> belong to something called an <q>ambient free module,</q> whatever that is.  What is important here is that the parent of <code>x</code> uses the integers as its number system.  How about <code>u</code>, <code>v</code>, <code>y</code>, <code>w</code>, <code>z</code>?  All but the first has a parent that uses the rationals for its number system.<br /><br />
+Three of the final four vectors are examples of a process that Sage calls <q>coercion.</q>  Mathematical elements get converted to a new parent, as necessary, when the conversion is totally unambiguous.  In the examples above:
+<ul><li> <code>u</code> is the result of scalar multiplication by an integer, so the computation and result can all be accommodated within the integers as the number system.
+</li><li> <code>v</code> involves scalar multiplication by what a scalr that is not an integer, and could be construed as a rational number.  So the result needs to have a parent whose number system is the rationals.
+</li><li> <code>y</code> is created <em>explicitly</em> as a vector whose entries are rational numbers.
+</li><li> Even though <code>w</code> is created only with products of integers, the fact that <code>y</code> has entries considered as rational numbers, so too does the result.
+</li><li> The creation of <code>z</code> is the result of adding a vector of integers to a vector of rationals.  This is the best example of coercion <mdash /> Sage promotes <code>x</code> to a vector of rationals and therefore returns a result that is a vector of rationals.  Notice that there is no ambiguity and no argument about how to promote <code>x</code>, and the same would be true for any vector full of integers.
+</li></ul>
+The coercion above is automatic, but we can also usually force it to happen without employing an operation.
+<sage>
+<input>t = vector([10, 20, 30])
+t.parent()
+</input>
+<output>Ambient free module of rank 3 over
+the principal ideal domain Integer Ring
+</output>
+</sage>
+
+<sage>
+<input>V = QQ^3
+t_rational = V(t)
+t_rational
+</input>
+<output>(10, 20, 30)
+</output>
+</sage>
+
+<sage>
+<input>t_rational.parent()
+</input>
+<output>Vector space of dimension 3 over Rational Field
+</output>
+</sage>
+
+<sage>
+<input>W = CC^3
+t_complex = W(t)
+t_complex
+</input>
+<output>(10.0000000000000, 20.0000000000000, 30.0000000000000)
+</output>
+</sage>
+
+<sage>
+<input>t_complex.parent()
+</input>
+<output>Vector space of dimension 3 over
+Complex Field with 53 bits of precision
+</output>
+</sage>
+
+So the syntax is to use the name of the parent like a function and <em>coerce</em> the element into the new parent.  This can fail if there is no natural way to make the conversion.
+<sage>
+<input>u = vector(CC, [5*I, 4-I])
+u
+</input>
+<output>(5.00000000000000*I, 4.00000000000000 - 1.00000000000000*I)
+</output>
+</sage>
+
+<sage>
+<input>V = QQ^2
+V(u)
+</input>
+<output>Traceback (most recent call last):
+...
+TypeError: Unable to coerce 5.00000000000000*I
+<![CDATA[(<type 'sage.rings.complex_number.ComplexNumber'>) to Rational]]>
+</output>
+</sage>
+
+Coercion is one of the more mysterious aspects of Sage, and the above discussion may not be very clear the first time though.  But if you get an error (like the one above) talking about coercion, you know to come back here and have another read through.  For now, be sure to create all your vectors and matrices over <code>QQ</code> and you should not have any difficulties.
+
+
+</sageadvice>
+</subsection>
+
+<!--   End  vo.tex -->
+<readingquestions>
+<ol>
+<li> Where have you seen vectors used before in other courses?  How were they different?
+</li>
+<li>In words, when are two vectors equal?
+</li>
+<li>Perform the following computation with vector operations
+<equation>
+2\colvector{1\\5\\0} + (-3)\colvector{7\\6\\5}
+</equation>
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="10" rough="Simple linear combination">
+<problem contributor="robertbeezer">Compute
+<equation>
+    4\colvector{2\\-3\\4\\1\\0}+
+(-2)\colvector{1\\2\\-5\\2\\4}+
+      \colvector{-1\\3\\0\\1\\2}
+</equation>
+</problem>
+<solution contributor="robertbeezer">$\colvector{5\\-13\\26\\1\\-6}$
+</solution>
+</exercise>
+
+<exercise type="C" number="11" rough="Solve vector equation">
+<problem contributor="chrisblack">Solve the given vector equation for $x$, or explain why no solution exists:
+<equation>
+    3\colvector{1\\2\\-1}+
+   4\colvector{2\\0\\x}=
+      \colvector{11\\6\\17}
+</equation>
+</problem>
+<solution contributor="chrisblack">Performing the indicated operations (<acroref type="definition" acro="CVA" />, <acroref type="definition" acro="CVSM" />), we obtain the vector equations
+<alignmath>
+\colvector{11\\6\\17}
+<![CDATA[&= 3\colvector{1\\2\\-1} + 4\colvector{2 \\ 0 \\ x}]]>
+= \colvector{11\\6\\ -3 + 4x}
+</alignmath>
+Since the entries of the vectors must be equal by <acroref type="definition" acro="CVE" />, we have $-3 + 4x = 17$, which leads to $x = 5$.
+</solution>
+</exercise>
+
+<exercise type="C" number="12" rough="Solve vector equation">
+<problem contributor="chrisblack">Solve the given vector equation for $\alpha$, or explain why no solution exists:
+<equation>
+\alpha\colvector{1\\2\\-1}+
+4\colvector{3\\4\\2}
+=
+\colvector{-1\\0\\4}
+</equation>
+</problem>
+<solution contributor="chrisblack">Performing the indicated operations (<acroref type="definition" acro="CVA" />, <acroref type="definition" acro="CVSM" />), we obtain the vector equations
+<alignmath>
+\colvector{\alpha \\ 2\alpha\\ -\alpha} + \colvector{12\\16\\8}
+<![CDATA[&=\colvector{\alpha + 12 \\ 2\alpha + 16\\ -\alpha + 8}]]>
+=\colvector{-1\\0\\4}
+</alignmath>
+Thus, if a solution $\alpha$ exists, by <acroref type="definition" acro="CVE" /> then $\alpha$ must satisfy the three equations:
+<alignmath>
+<![CDATA[\alpha + 12 &= -1\\]]>
+<![CDATA[2\alpha + 16 &= 0\\]]>
+<![CDATA[-\alpha + 8 &= 4]]>
+</alignmath>
+which leads to $\alpha = -13$, $\alpha = -8$ and $\alpha = 4$.
+Since $\alpha$ cannot simultaneously have three different values, there is no solution to the original vector equation.
+</solution>
+</exercise>
+
+<exercise type="C" number="13" rough="Solve vector equation">
+<problem contributor="chrisblack">Solve the given vector equation for $\alpha$, or explain why no solution exists:
+<equation>
+\alpha\colvector{3\\2\\-2}+
+\colvector{6\\1\\2}
+=
+\colvector{0\\-3\\6}
+</equation>
+</problem>
+<solution contributor="chrisblack">Performing the indicated operations (<acroref type="definition" acro="CVA" />, <acroref type="definition" acro="CVSM" />), we obtain the vector equations
+<alignmath>
+\colvector{3\alpha \\ 2\alpha\\ - 2\alpha} + \colvector{6\\1\\2}
+<![CDATA[&= \colvector{3\alpha + 6 \\ 2\alpha + 1\\ -2\alpha + 2}]]>
+ = \colvector{0\\-3\\6}
+</alignmath>
+Thus, if a solution $\alpha$ exists, by <acroref type="definition" acro="CVE" /> then $\alpha$ must satisfy the three equations:
+<alignmath>
+<![CDATA[3\alpha + 6 &= 0\\]]>
+<![CDATA[2\alpha + 1 &= -3\\]]>
+<![CDATA[-2 \alpha + 2 &= 6]]>
+</alignmath>
+which leads to $3\alpha = -6$, $2\alpha = -4$ and $-2\alpha = 4$.
+And thus, the solution to the given vector equation is $\alpha = -2$.
+</solution>
+</exercise>
+
+<exercise type="C" number="14" rough="Solve vector equation">
+<problem contributor="chrisblack">Find $\alpha$ and $\beta$ that solve the vector equation.
+<equation>
+\alpha\colvector{1\\0}+
+\beta\colvector{0\\1}
+=
+\colvector{3\\2}
+</equation>
+</problem>
+<solution contributor="chrisblack">Performing the indicated operations (<acroref type="definition" acro="CVA" />, <acroref type="definition" acro="CVSM" />), we obtain the vector equations
+<alignmath>
+\colvector{3\\2}
+<![CDATA[&=\alpha\colvector{1\\0} + \beta\colvector{0\\1}]]>
+=\colvector{\alpha + 0 \\ 0 + \beta}
+=\colvector{\alpha\\ \beta}
+</alignmath>
+Since the entries of the vectors must be equal by <acroref type="definition" acro="CVE" />, we have $\alpha = 3$ and $\beta = 2$.
+</solution>
+</exercise>
+
+<exercise type="C" number="15" rough="Solve vector equation, intuition required">
+<problem contributor="chrisblack">Find $\alpha$ and $\beta$ that solve the vector equation.
+<equation>
+\alpha\colvector{2\\1}+
+\beta\colvector{1\\3
+}=
+\colvector{5\\0}
+</equation>
+</problem>
+<solution contributor="chrisblack">Performing the indicated operations (<acroref type="definition" acro="CVA" />, <acroref type="definition" acro="CVSM" />), we obtain the vector equations
+<alignmath>
+\colvector{5\\0}
+<![CDATA[&= \alpha\colvector{2\\1} + \beta\colvector{1\\3}]]>
+= \colvector{2\alpha + \beta \\ \alpha + 3\beta}
+</alignmath>
+Since the entries of the vectors must be equal by <acroref type="definition" acro="CVE" />, we obtain the system of equations
+<alignmath>
+<![CDATA[2\alpha + \beta &= 5\\]]>
+<![CDATA[\alpha + 3\beta &= 0.]]>
+</alignmath>
+which we can solve by row-reducing the augmented matrix of the system,
+<alignmath>
+\begin{bmatrix}
+<![CDATA[2 & 1 & 5\\]]>
+<![CDATA[1 & 3 & 0]]>
+\end{bmatrix}
+<![CDATA[&\rref]]>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 3\\]]>
+<![CDATA[0 & \leading{1} & -1]]>
+\end{bmatrix}
+</alignmath>
+Thus, the only solution is $\alpha = 3$, $\beta = -1$.
+</solution>
+</exercise>
+
+<exercise type="T" number="05" rough="fill-in-the blank proof outline">
+<problem contributor="chrisblack">Provide reasons (mostly vector space properties) as justification for each of the seven steps of the following proof.<br /><br />
+<b>Theorem</b>
+For any vectors $\vect{u},\,\vect{v},\,\vect{w}\in\complex{m}$,
+if $\vect{u} + \vect{v} = \vect{u} + \vect{w}$, then $\vect{v} = \vect{w}$.<br /><br />
+<b>Proof</b>: Let $\vect{u},\,\vect{v},\,\vect{w}\in\complex{m}$,
+and suppose $\vect{u} + \vect{v} = \vect{u} + \vect{w}$.
+<alignmath>
+\vect{v}
+<![CDATA[&= \zerovector + \vect{v}\\]]>
+<![CDATA[&= (-\vect{u} + \vect{u}) + \vect{v}\\]]>
+<![CDATA[&= -\vect{u} + (\vect{u} + \vect{v})\\]]>
+<![CDATA[&= -\vect{u} + (\vect{u} + \vect{w})\\]]>
+<![CDATA[&= (-\vect{u} + \vect{u}) + \vect{w}\\]]>
+<![CDATA[&= \zerovector + \vect{w}\\]]>
+<![CDATA[&= \vect{w}]]>
+</alignmath>
+</problem>
+<solution contributor="chrisblack"><alignmath>
+\vect{v}
+<![CDATA[&= \zerovector + \vect{v}&&]]>\text{<acroref type="property" acro="ZC" />}\\
+<![CDATA[&= (-\vect{u} + \vect{u}) + \vect{v}&&]]>\text{<acroref type="property" acro="AIC" />}\\
+<![CDATA[&= -\vect{u} + (\vect{u} + \vect{v})&&]]>\text{<acroref type="property" acro="AAC" />}\\
+<![CDATA[&= -\vect{u} + (\vect{u} + \vect{w})&&\text{Hypothesis}\\]]>
+<![CDATA[&= (-\vect{u} + \vect{u}) + \vect{w}&&]]>\text{<acroref type="property" acro="AAC" />}\\
+<![CDATA[&= \zerovector + \vect{w}&&]]>\text{<acroref type="property" acro="AIC" />}\\
+<![CDATA[&= \vect{w}&&]]>\text{<acroref type="property" acro="ZC" />}\\
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="T" number="06" rough="fill-in-the blank proof outline">
+<problem contributor="chrisblack">Provide reasons (mostly vector space properties) as justification for each of the six steps of the following proof.<br /><br />
+<b>Theorem</b>
+For any vector $\vect{u}\in\complex{m}$, $0\vect{u}=\zerovector.$<br /><br />
+<b>Proof</b>: Let $\vect{u}\in\complex{m}$.<br /><br />
+<alignmath>
+\zerovector
+<![CDATA[&= 0\vect{u} +(-0\vect{u})\\]]>
+<![CDATA[&= (0+0)\vect{u} + (-0\vect{u})\\]]>
+<![CDATA[&= (0\vect{u}+0\vect{u}) + (-0\vect{u})\\]]>
+<![CDATA[&= 0\vect{u} + (0\vect{u} + (-0\vect{u}))\\]]>
+<![CDATA[&= 0\vect{u} + \zerovector\\]]>
+<![CDATA[&= 0\vect{u}]]>
+</alignmath>
+</problem>
+<solution contributor="chrisblack"><alignmath>
+\zerovector
+<![CDATA[&= 0\vect{u} +(-0\vect{u})&&]]>\text{<acroref type="property" acro="AIC" />}\\
+<![CDATA[&= (0+0)\vect{u} + (-0\vect{u})&&]]>\text{<acroref type="property" acro="ZCN" />}\\
+<![CDATA[&= (0\vect{u}+0\vect{u}) + (-0\vect{u})&&]]>\text{<acroref type="property" acro="DVAC" />}\\
+<![CDATA[&= 0\vect{u} + (0\vect{u} + (-0\vect{u}))&&]]>\text{<acroref type="property" acro="AAC" />}\\
+<![CDATA[&= 0\vect{u} + \zerovector&&]]>\text{<acroref type="property" acro="AIC" />}\\
+<![CDATA[&= 0\vect{u}&&]]>\text{<acroref type="property" acro="ZC" />}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="T" number="07" rough="fill-in-the blank proof outline">
+<problem contributor="chrisblack">Provide reasons (mostly vector space properties) as justification for each of the six steps of the following proof.<br /><br />
+<b>Theorem</b>
+For any scalar $c$,  $c\,\zerovector = \zerovector$.<br /><br />
+<b>Proof</b>: Let $c$ be an arbitrary scalar.<br /><br />
+<alignmath>
+\zerovector
+<![CDATA[&= c\zerovector + (-c\zerovector)\\]]>
+<![CDATA[&= c(\zerovector + \zerovector) + (-c\zerovector)\\]]>
+<![CDATA[&= (c\zerovector + c\zerovector) + (-c\zerovector)\\]]>
+<![CDATA[&= c\zerovector + (c\zerovector + (-c\zerovector))\\]]>
+<![CDATA[&= c\zerovector + \zerovector\\]]>
+<![CDATA[&= c\zerovector]]>
+</alignmath>
+</problem>
+<solution contributor="chrisblack"><alignmath>
+\zerovector
+<![CDATA[&= c\zerovector + (-c\zerovector)&&]]>\text{<acroref type="property" acro="AIC" />}\\
+<![CDATA[&= c(\zerovector + \zerovector) + (-c\zerovector)&&]]>\text{<acroref type="property" acro="ZC" />}\\
+<![CDATA[&= (c\zerovector + c\zerovector) + (-c\zerovector)&&]]>\text{<acroref type="property" acro="DVAC" />}\\
+<![CDATA[&= c\zerovector + (c\zerovector + (-c\zerovector))&&]]>\text{<acroref type="property" acro="AAC" />}\\
+<![CDATA[&= c\zerovector + \zerovector&&]]>\text{<acroref type="property" acro="AIC" />}\\
+<![CDATA[&= c\zerovector&&]]>\text{<acroref type="property" acro="ZC" />}
+</alignmath>
+</solution>
+</exercise>
+
+<!--                                  % 10 axioms to prove, number consecutively -->
+<exercise type="T" number="13" rough="CC">
+<problem contributor="robertbeezer">Prove <acroref type="property" acro="CC" /> of <acroref type="theorem" acro="VSPCV" />.  Write your proof in the style of the proof of <acroref type="property" acro="DSAC" /> given in this section.
+</problem>
+<solution contributor="robertbeezer">For all $1\leq i\leq m$,
+<alignmath>
+\vectorentry{\vect{u}+\vect{v}}{i}
+<![CDATA[&=\vectorentry{\vect{u}}{i}+\vectorentry{\vect{v}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVA" />}\\
+<![CDATA[&=\vectorentry{\vect{v}}{i}+\vectorentry{\vect{u}}{i}]]>
+<![CDATA[&&\text{Commutativity in $\complex{\null}$}\\]]>
+<![CDATA[&=\vectorentry{\vect{v}+\vect{u}}{i}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVA" />}
+</alignmath>
+With equality of each component of the vectors $\vect{u}+\vect{v}$ and $\vect{v}+\vect{u}$ being equal <acroref type="definition" acro="CVE" /> tells us the two vectors are equal.
+</solution>
+</exercise>
+
+<exercise type="T" number="17" rough="SMAC">
+<problem contributor="robertbeezer">Prove <acroref type="property" acro="SMAC" /> of <acroref type="theorem" acro="VSPCV" />.    Write your proof in the style of the proof of <acroref type="property" acro="DSAC" /> given in this section.
+</problem>
+</exercise>
+
+<exercise type="T" number="18" rough="DVAC">
+<problem contributor="robertbeezer">Prove <acroref type="property" acro="DVAC" /> of <acroref type="theorem" acro="VSPCV" />.    Write your proof in the style of the proof of <acroref type="property" acro="DSAC" /> given in this section.
+</problem>
+</exercise>
+
+<exercise type="T" number="30" rough="A definition of vector subtraction">
+<problem contributor="robertbeezer">Suppose $\vect{u}$ and $\vect{v}$ are two vectors in $\complex{m}$.  Define a new operation, called <q>subtraction,</q> as the new vector denoted $\vect{u}-\vect{v}$ and defined by
+<alignmath>
+<![CDATA[\vectorentry{\vect{u}-\vect{v}}{i}=\vectorentry{\vect{u}}{i}-\vectorentry{\vect{v}}{i}&&1\leq i\leq m]]>
+</alignmath>
+Prove that we can express the subtraction of two vectors in terms of our two basic operations.  More precisely, prove that $\vect{u}-\vect{v}=\vect{u}+(-1)\vect{v}$.  So in a sense, subtraction is not something new and different, but is just a convenience.  Mimic the style of similar proofs in this section.
+</problem>
+</exercise>
+
+<exercise type="T" number="31" rough="Subtraction not commutative nor associative">
+<problem contributor="robertbeezer">Review the definition of vector subtraction in <acroref type="exercise" acro="VO.T30" />.  Prove, by using counterexamples, that vector subtraction is  not commutative and not associative.
+</problem>
+</exercise>
+
+<exercise type="T" number="32" rough="Scalar multiplication distributes over subtraction">
+<problem contributor="robertbeezer">Review the definition of vector subtraction in <acroref type="exercise" acro="VO.T30" />.  Prove that vector subtraction obeys a distributive property.  Specifically, prove that $\alpha\left(\vect{u}-\vect{v}\right)=\alpha\vect{u}-\alpha\vect{v}$.<br /><br />
+Can you give two different proofs? Base one on the definition given in <acroref type="exercise" acro="VO.T30" /> and base the other on the equivalent formulation proved in <acroref type="exercise" acro="VO.T30" />.
+</problem>
+</exercise>
+
+</exercisesubsection>
+
+</section>

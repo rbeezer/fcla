@@ -1,0 +1,2359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="CB">
+<title>Change of Basis</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section CB -->
+<!-- %  Change of Basis -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>We have seen in <acroref type="section" acro="MR" /> that a linear transformation can be represented by a matrix, once we pick bases for the domain and codomain.  How does the matrix representation change if we choose different bases?  Which bases lead to especially nice representations?  From the infinite possibilities, what is the best possible representation?  This section will begin to answer these questions.  But first we need to define eigenvalues for linear transformations and the change-of-basis matrix.</p>
+
+</introduction>
+
+<subsection acro="EELT">
+<title>Eigenvalues and Eigenvectors of Linear Transformations</title>
+
+<p>We now define the notion of an eigenvalue and eigenvector of a linear transformation.  It should not be too surprising, especially if you remind yourself of the close relationship between matrices and linear transformations.</p>
+
+<definition acro="EELT" index="eigenvalue!linear transformation">
+<title>Eigenvalue and Eigenvector of a Linear Transformation</title>
+<indexlocation index="eigenvector!linear transformation" />
+<p>Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation.  Then a nonzero vector $\vect{v}\in V$ is an <define>eigenvector</define> of $T$ for the <define>eigenvalue</define> $\lambda$ if $\lt{T}{\vect{v}}=\lambda\vect{v}$.</p>
+
+</definition>
+
+<p>We will see shortly the best method for computing the eigenvalues and eigenvectors of a linear transformation, but for now, here are some examples to verify that such things really do exist.</p>
+
+<example acro="ELTBM" index="eigenvectors!linear transformation">
+<title>Eigenvectors of linear transformation between matrices</title>
+
+<p>Consider the linear transformation $\ltdefn{T}{M_{22}}{M_{22}}$ defined by
+<equation>
+<![CDATA[\lt{T}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}]]>
+=
+\begin{bmatrix}
+-17a+11b+8c-11d
+<![CDATA[&]]>
+-57a+35b+24c-33d
+\\
+-14a+10b+6c-10d
+<![CDATA[&]]>
+-41a+25b+16c-23d
+\end{bmatrix}
+</equation>
+and the vectors
+<alignmath>
+\vect{x}_1
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ 0 & 1 \\ 0 & 1]]>
+\end{bmatrix}
+<![CDATA[&]]>
+\vect{x}_2
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ 1 & 1 \\ 1 & 0]]>
+\end{bmatrix}
+<![CDATA[&]]>
+\vect{x}_3
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ 1 & 3 \\ 2 & 3]]>
+\end{bmatrix}
+<![CDATA[&]]>
+\vect{x}_4
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ 2 & 6 \\ 1 & 4]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Then compute
+<alignmath>
+\lt{T}{\vect{x}_1}
+<![CDATA[&=]]>
+<![CDATA[\lt{T}{\begin{bmatrix} 0 & 1 \\ 0 & 1\end{bmatrix}}]]>
+=
+\begin{bmatrix}
+<![CDATA[ 0 & 2 \\ 0 & 2]]>
+\end{bmatrix}
+=
+2\vect{x}_1\\
+\lt{T}{\vect{x}_2}
+<![CDATA[&=]]>
+<![CDATA[\lt{T}{\begin{bmatrix} 1 & 1 \\ 1 & 0\end{bmatrix}}]]>
+=
+\begin{bmatrix}
+<![CDATA[ 2 & 2 \\ 2 & 0]]>
+\end{bmatrix}
+=
+2\vect{x}_2\\
+\lt{T}{\vect{x}_3}
+<![CDATA[&=]]>
+<![CDATA[\lt{T}{\begin{bmatrix} 1 & 3 \\ 2 & 3\end{bmatrix}}]]>
+=
+\begin{bmatrix}
+<![CDATA[ -1 & -3 \\ -2 & -3]]>
+\end{bmatrix}
+=
+(-1)\vect{x}_3\\
+\lt{T}{\vect{x}_4}
+<![CDATA[&=]]>
+<![CDATA[\lt{T}{\begin{bmatrix} 2 & 6 \\ 1 & 4\end{bmatrix}}]]>
+=
+\begin{bmatrix}
+<![CDATA[ -4 & -12 \\ -2 & -8]]>
+\end{bmatrix}
+=
+(-2)\vect{x}_4\\
+</alignmath>
+</p>
+
+<p>So $\vect{x}_1$, $\vect{x}_2$, $\vect{x}_3$, $\vect{x}_4$ are eigenvectors of $T$ with eigenvalues (respectively) $\lambda_1=2$, $\lambda_2=2$, $\lambda_3=-1$, $\lambda_4=-2$.</p>
+
+</example>
+
+<p>Here's another.</p>
+
+<example acro="ELTBP" index="eigenvectors!linear transformation">
+<title>Eigenvectors of linear transformation between polynomials</title>
+
+<p>Consider the linear transformation $\ltdefn{R}{P_2}{P_2}$ defined by
+<equation>
+\lt{R}{a+bx+cx^2}=
+(15a+8b-4c)+(-12a-6b+3c)x+(24a+14b-7c)x^2
+</equation>
+and the vectors
+<alignmath>
+\vect{w}_1
+<![CDATA[&=1-x+x^2]]>
+<![CDATA[&]]>
+\vect{w}_2
+<![CDATA[&=x+2x^2]]>
+<![CDATA[&]]>
+\vect{w}_3
+<![CDATA[&=1+4x^2]]>
+<![CDATA[&]]>
+</alignmath>
+</p>
+
+<p>Then compute
+<alignmath>
+\lt{R}{\vect{w}_1}
+<![CDATA[&=]]>
+\lt{R}{1-x+x^2}
+=
+3-3x+3x^2
+=3\vect{w}_1\\
+\lt{R}{\vect{w}_2}
+<![CDATA[&=]]>
+\lt{R}{x+2x^2}
+=
+0+0x+0x^2
+=0\vect{w}_2\\
+\lt{R}{\vect{w}_3}
+<![CDATA[&=]]>
+\lt{R}{1+4x^2}
+=
+-1-4x^2
+=(-1)\vect{w}_3\\
+</alignmath>
+</p>
+
+<p>So $\vect{w}_1$, $\vect{w}_2$, $\vect{w}_3$ are eigenvectors of $R$ with eigenvalues (respectively) $\lambda_1=3$, $\lambda_2=0$, $\lambda_3=-1$.  Notice how the eigenvalue $\lambda_2=0$ indicates that the eigenvector $\vect{w}_2$ is a non-trivial element of the kernel of $R$, and therefore $R$ is not injective (<acroref type="exercise" acro="CB.T15" />).</p>
+
+</example>
+
+<p>Of course, these examples are meant only to illustrate the definition of eigenvectors and eigenvalues for linear transformations, and therefore beg the question, <q>How would I <em>find</em> eigenvectors?</q>  We'll have an answer before we finish this section.  We need one more construction first.</p>
+
+<sageadvice acro="ENDO" index="endomorphisms">
+<title>Endomorphisms</title>
+An <define>endomorphism</define> is an <q>operation-preserving</q> function (a <q>morphism</q>) whose domain and codomain are equal.  Sage takes this definition one step further for linear transformations and requires that the domain and codomain have the same bases (either a default echelonized basis or the same user basis).  When a linear transformation meets this extra requirement, several natural methods become available.<br /><br />
+Principally, we can compute the eigenvalues provided by <acroref type="definition" acro="EELT" />.  We also get a natural notion of a characteristic polynomial.
+<sage>
+<input>x1, x2, x3, x4 = var('x1, x2, x3, x4')
+outputs = [ 4*x1 + 2*x2 -   x3 + 8*x4,
+            3*x1 - 5*x2 - 9*x3       ,
+                   6*x2 + 7*x3 + 6*x4,
+           -3*x1 + 2*x2 + 5*x3 - 3*x4]
+T_symbolic(x1, x2, x3, x4) = outputs
+T = linear_transformation(QQ^4, QQ^4, T_symbolic)
+T.eigenvalues()
+</input>
+<output>[3, -2, 1, 1]
+</output>
+</sage>
+
+<sage>
+<input>cp = T.characteristic_polynomial()
+cp
+</input>
+<output>x^4 - 3*x^3 - 3*x^2 + 11*x - 6
+</output>
+</sage>
+
+<sage>
+<input>cp.factor()
+</input>
+<output>(x - 3) * (x + 2) * (x - 1)^2
+</output>
+</sage>
+
+Now the question of eigenvalues being elements of the set of scalars used for the vector space becomes even more obvious.  If we define an endomorphism on a vector space whose scalars are the rational numbers, should we <q>allow</q> irrational or complex eigenvalues?  You will now recognize our use of the complex numbers in the text for the gross convenience that it is.
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="CBM">
+<title>Change-of-Basis Matrix</title>
+
+<p>Given a vector space, we know we can usually find many different bases for the vector space, some nice, some nasty.  If we choose a single vector from this vector space, we can build many different representations of the vector by constructing the representations relative to different bases.  How are these different representations related to each other?  A change-of-basis matrix answers this question.</p>
+
+<definition acro="CBM" index="change-of-basis matrix">
+<title>Change-of-Basis Matrix</title>
+<p>Suppose that $V$ is a vector space, and $\ltdefn{I_V}{V}{V}$ is the identity linear transformation on $V$.  Let $B=\set{\vectorlist{v}{n}}$ and $C$ be two bases of $V$.  Then the <define>change-of-basis matrix</define> from $B$ to $C$ is the matrix representation of $I_V$ relative to $B$ and $C$,
+<alignmath>
+<![CDATA[\cbm{B}{C}&=\matrixrep{I_V}{B}{C}\\]]>
+<![CDATA[&=\matrixrepcolumns{I_V}{C}{v}{n}\\]]>
+<![CDATA[&=\left\lbrack]]>
+\left.\vectrep{C}{\vect{v}_1}\right|
+\left.\vectrep{C}{\vect{v}_2}\right|
+\left.\vectrep{C}{\vect{v}_3}\right|
+\ldots
+\left|\vectrep{C}{\vect{v}_n}\right.
+\right\rbrack
+</alignmath>
+</p>
+
+</definition>
+
+<p>Notice that this definition is primarily about a single vector space ($V$) and two bases of $V$ ($B$, $C$).  The linear transformation ($I_V$) is necessary but not critical.  As you might expect, this matrix has something to do with changing bases.  Here is the theorem that gives the matrix its name (not the other way around).</p>
+
+<theorem acro="CB" index="change-of-basis">
+<title>Change-of-Basis</title>
+<statement>
+<p>Suppose that $\vect{v}$ is a vector in the vector space $V$ and $B$ and $C$ are bases of $V$.  Then
+<equation>
+\vectrep{C}{\vect{v}}=\cbm{B}{C}\vectrep{B}{\vect{v}}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>
+<alignmath>
+\vectrep{C}{\vect{v}}
+<![CDATA[&=\vectrep{C}{\lt{I_V}{\vect{v}}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IDLT" />}\\
+<![CDATA[&=\matrixrep{I_V}{B}{C}\vectrep{B}{\vect{v}}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\cbm{B}{C}\vectrep{B}{\vect{v}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CBM" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>So the change-of-basis matrix can be used with matrix multiplication to convert a vector representation of a vector ($\vect{v}$) relative to one basis ($\vectrep{B}{\vect{v}}$) to a representation of the same vector relative to a second basis ($\vectrep{C}{\vect{v}}$).</p>
+
+<theorem acro="ICBM" index="change-of-basis matrix!inverse">
+<title>Inverse of Change-of-Basis Matrix</title>
+<statement>
+<p>Suppose that $V$ is a vector space, and $B$ and $C$ are bases of $V$.
+Then the change-of-basis matrix $\cbm{B}{C}$ is nonsingular and
+<equation>
+\inverse{\cbm{B}{C}}=\cbm{C}{B}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>The linear transformation $\ltdefn{I_V}{V}{V}$ is invertible, and its inverse is itself, $I_V$ (check this!). So by <acroref type="theorem" acro="IMR" />, the matrix $\matrixrep{I_V}{B}{C}=\cbm{B}{C}$ is invertible.  <acroref type="theorem" acro="NI" /> says an invertible matrix is nonsingular.</p>
+
+<p>Then
+<alignmath>
+\inverse{\cbm{B}{C}}
+<![CDATA[&=\inverse{\left(\matrixrep{I_V}{B}{C}\right)}&&]]>\text{<acroref type="definition" acro="CBM" />}\\
+<![CDATA[&=\matrixrep{\ltinverse{I_V}}{C}{B}&&]]>\text{<acroref type="theorem" acro="IMR" />}\\
+<![CDATA[&=\matrixrep{I_V}{C}{B}&&]]>\text{<acroref type="definition" acro="IDLT" />}\\
+<![CDATA[&=\cbm{C}{B}&&]]>\text{<acroref type="definition" acro="CBM" />}\\
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<example acro="CBP" index="change of basis!between polynomials">
+<title>Change of basis with polynomials</title>
+
+<p>The vector space $P_4$ (<acroref type="example" acro="VSP" />) has two nice bases (<acroref type="example" acro="BP" />),
+<alignmath>
+<![CDATA[B&=\set{1,x,x^2,x^3,x^4}]]>
+<![CDATA[&]]>
+<![CDATA[C&=\set{1,1+x,1+x+x^2,1+x+x^2+x^3,1+x+x^2+x^3+x^4}]]>
+</alignmath>
+</p>
+
+<p>To build the change-of-basis matrix between $B$ and $C$, we must first build a vector representation of each vector in $B$ relative to $C$,
+<alignmath>
+\vectrep{C}{1}
+<![CDATA[&=\vectrep{C}{(1)\left(1\right)}]]>
+=\colvector{1\\0\\0\\0\\0}\\
+\vectrep{C}{x}
+<![CDATA[&=\vectrep{C}{(-1)\left(1\right)+(1)\left(1+x\right)}]]>
+=\colvector{-1\\1\\0\\0\\0}\\
+\vectrep{C}{x^2}
+<![CDATA[&=\vectrep{C}{(-1)\left(1+x\right)+(1)\left(1+x+x^2\right)}]]>
+=\colvector{0\\-1\\1\\0\\0}\\
+\vectrep{C}{x^3}
+<![CDATA[&=\vectrep{C}{(-1)\left(1+x+x^2\right)+(1)\left(1+x+x^2+x^3\right)}]]>
+=\colvector{0\\0\\-1\\1\\0}\\
+\vectrep{C}{x^4}
+<![CDATA[&=\vectrep{C}{(-1)\left(1+x+x^2+x^3\right)+(1)\left(1+x+x^2+x^3+x^4\right)}]]>
+=\colvector{0\\0\\0\\-1\\1}
+</alignmath>
+</p>
+
+<p>Then we package up these vectors as the columns of a matrix,
+<equation>
+\cbm{B}{C}=
+\begin{bmatrix}
+<![CDATA[1 &-1 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 1 &-1 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 1 &-1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 1 &-1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 1\\]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Now, to illustrate <acroref type="theorem" acro="CB" />, consider the vector $\vect{u}=5-3x+2x^2+8x^3-3x^4$.  We can build the representation of $\vect{u}$ relative to $B$ easily,
+<equation>
+\vectrep{B}{\vect{u}}=
+\vectrep{B}{5-3x+2x^2+8x^3-3x^4}=
+\colvector{5\\-3\\2\\8\\-3}
+</equation>
+</p>
+
+<p>Applying <acroref type="theorem" acro="CB" />, we obtain a second representation of $\vect{u}$, but now relative to $C$,
+<alignmath>
+\vectrep{C}{\vect{u}}
+<![CDATA[&=\cbm{B}{C}\vectrep{B}{\vect{u}}&&]]>\text{<acroref type="theorem" acro="CB" />}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[1 &-1 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 1 &-1 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 1 &-1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 1 &-1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 1\\]]>
+\end{bmatrix}
+\colvector{5\\-3\\2\\8\\-3}\\
+<![CDATA[&=\colvector{8\\-5\\-6\\11\\-3}&&]]>\text{<acroref type="definition" acro="MVP" />}
+</alignmath>
+</p>
+
+<p>We can check our work by unraveling this second representation,
+<alignmath>
+\vect{u}
+<![CDATA[&=\vectrepinv{C}{\vectrep{C}{\vect{u}}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IVLT" />}\\
+<![CDATA[&=\vectrepinv{C}{\colvector{8\\-5\\-6\\11\\-3}}\\]]>
+<![CDATA[&=8(1)+(-5)(1+x)+(-6)(1+x+x^2)\\]]>
+<![CDATA[&\quad\quad+(11)(1+x+x^2+x^3)+(-3)(1+x+x^2+x^3+x^4)]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="VR" />}\\
+<![CDATA[&=5-3x+2x^2+8x^3-3x^4]]>
+</alignmath>
+</p>
+
+<p>The change-of-basis matrix from $C$ to $B$ is actually easier to build.  Grab each vector in the basis $C$ and form its representation relative to $B$
+<alignmath>
+\vectrep{B}{1}
+=\vectrep{B}{(1)1}
+<![CDATA[&=\colvector{1\\0\\0\\0\\0}\\]]>
+\vectrep{B}{1+x}
+=\vectrep{B}{(1)1+(1)x}
+<![CDATA[&=\colvector{1\\1\\0\\0\\0}\\]]>
+\vectrep{B}{1+x+x^2}
+=\vectrep{B}{(1)1+(1)x+(1)x^2}
+<![CDATA[&=\colvector{1\\1\\1\\0\\0}\\]]>
+\vectrep{B}{1+x+x^2+x^3}
+=\vectrep{B}{(1)1+(1)x+(1)x^2+(1)x^3}
+<![CDATA[&=\colvector{1\\1\\1\\1\\0}\\]]>
+\vectrep{B}{1+x+x^2+x^3+x^4}
+=\vectrep{B}{(1)1+(1)x+(1)x^2+(1)x^3+(1)x^4}
+<![CDATA[&=\colvector{1\\1\\1\\1\\1}\\]]>
+</alignmath>
+</p>
+
+<p>Then we package up these vectors as the columns of a matrix,
+<equation>
+\cbm{C}{B}=
+\begin{bmatrix}
+<![CDATA[1 & 1 & 1 & 1 & 1\\]]>
+<![CDATA[0 & 1 & 1 & 1 & 1\\]]>
+<![CDATA[0 & 0 & 1 & 1 & 1\\]]>
+<![CDATA[0 & 0 & 0 & 1 & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 1\\]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>We formed two representations of the vector $\vect{u}$ above, so we can again provide a check on our computations by converting from the representation of $\vect{u}$ relative to $C$ to the representation of $\vect{u}$ relative to $B$,
+<alignmath>
+\vectrep{B}{\vect{u}}
+<![CDATA[&=\cbm{C}{B}\vectrep{C}{\vect{u}}&&]]>\text{<acroref type="theorem" acro="CB" />}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[1 & 1 & 1 & 1 & 1\\]]>
+<![CDATA[0 & 1 & 1 & 1 & 1\\]]>
+<![CDATA[0 & 0 & 1 & 1 & 1\\]]>
+<![CDATA[0 & 0 & 0 & 1 & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 1\\]]>
+\end{bmatrix}
+\colvector{8\\-5\\-6\\11\\-3}\\
+<![CDATA[&=\colvector{5\\-3\\2\\8\\-3}&&]]>\text{<acroref type="definition" acro="MVP" />}\\
+</alignmath>
+</p>
+
+<p>One more computation that is either a check on our work, or an illustration of a theorem.  The two change-of-basis matrices, $\cbm{B}{C}$ and $\cbm{C}{B}$, should be inverses of each other, according to <acroref type="theorem" acro="ICBM" />.  Here we go,
+<equation>
+\cbm{B}{C}\cbm{C}{B}=
+\begin{bmatrix}
+<![CDATA[1 &-1 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 1 &-1 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 1 &-1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 1 &-1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 1\\]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[1 & 1 & 1 & 1 & 1\\]]>
+<![CDATA[0 & 1 & 1 & 1 & 1\\]]>
+<![CDATA[0 & 0 & 1 & 1 & 1\\]]>
+<![CDATA[0 & 0 & 0 & 1 & 1\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 1\\]]>
+\end{bmatrix}
+=
+\begin{bmatrix}
+<![CDATA[1 & 0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 1 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 1 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0 & 1\\]]>
+\end{bmatrix}
+</equation>
+</p>
+
+</example>
+
+<p>The computations of the previous example are not meant to present any labor-saving devices, but instead are meant to illustrate the <em>utility</em> of the change-of-basis matrix.  However, you might have noticed that $\cbm{C}{B}$ was easier to compute than $\cbm{B}{C}$.  If you needed $\cbm{B}{C}$, then you could first compute $\cbm{C}{B}$ and then compute its inverse, which by <acroref type="theorem" acro="ICBM" />, would equal $\cbm{B}{C}$.</p>
+
+<p>Here's another illustrative example.  We have been concentrating on working with abstract vector spaces, but all of our theorems and techniques apply just as well to $\complex{m}$, the vector space of column vectors.  We only need to use more complicated bases than the standard unit vectors (<acroref type="theorem" acro="SUVB" />) to make things interesting.</p>
+
+<example acro="CBCV" index="change-of-basis!between column vectors">
+<title>Change of basis with column vectors</title>
+
+<p>For the vector space $\complex{4}$ we have the two bases,
+<alignmath>
+<![CDATA[B&=\set{]]>
+\colvector{1 \\ -2 \\ 1 \\ -2},\,
+\colvector{-1 \\ 3 \\ 1 \\ 1},\,
+\colvector{2 \\ -3 \\ 3 \\ -4},\,
+\colvector{-1 \\ 3 \\ 3 \\ 0}
+}
+<![CDATA[&]]>
+<![CDATA[C&=\set{]]>
+\colvector{1 \\ -6 \\ -4 \\ -1},\,
+\colvector{-4 \\ 8 \\ -5 \\ 8},\,
+\colvector{-5 \\ 13 \\ -2 \\ 9},\,
+\colvector{3 \\ -7 \\ 3 \\ -6}
+}
+</alignmath>
+</p>
+
+<p>The change-of-basis matrix from $B$ to $C$ requires writing each vector of $B$ as a linear combination the vectors in $C$,
+<alignmath>
+\vectrep{C}{\colvector{1 \\ -2 \\ 1 \\ -2}}
+<![CDATA[&=\vectrep{C}{]]>
+(1)\colvector{1 \\ -6 \\ -4 \\ -1}+
+(-2)\colvector{-4 \\ 8 \\ -5 \\ 8}+
+(1)\colvector{-5 \\ 13 \\ -2 \\ 9}+
+(-1)\colvector{3 \\ -7 \\ 3 \\ -6}
+}
+=\colvector{1\\-2\\1\\-1}\\
+\vectrep{C}{\colvector{-1 \\ 3 \\ 1 \\ 1}}
+<![CDATA[&=\vectrep{C}{]]>
+(2)\colvector{1 \\ -6 \\ -4 \\ -1}+
+(-3)\colvector{-4 \\ 8 \\ -5 \\ 8}+
+(3)\colvector{-5 \\ 13 \\ -2 \\ 9}+
+(0)\colvector{3 \\ -7 \\ 3 \\ -6}
+}
+=\colvector{2\\-3\\3\\0}\\
+\vectrep{C}{\colvector{2 \\ -3 \\ 3 \\ -4}}
+<![CDATA[&=\vectrep{C}{]]>
+(1)\colvector{1 \\ -6 \\ -4 \\ -1}+
+(-3)\colvector{-4 \\ 8 \\ -5 \\ 8}+
+(1)\colvector{-5 \\ 13 \\ -2 \\ 9}+
+(-2)\colvector{3 \\ -7 \\ 3 \\ -6}
+}
+=\colvector{1\\-3\\1\\-2}\\
+\vectrep{C}{\colvector{-1 \\ 3 \\ 3 \\ 0}}
+<![CDATA[&=\vectrep{C}{]]>
+(2)\colvector{1 \\ -6 \\ -4 \\ -1}+
+(-2)\colvector{-4 \\ 8 \\ -5 \\ 8}+
+(4)\colvector{-5 \\ 13 \\ -2 \\ 9}+
+(3)\colvector{3 \\ -7 \\ 3 \\ -6}
+}
+=\colvector{2\\-2\\4\\3}\\
+</alignmath>
+</p>
+
+<p>Then we package these vectors up as the change-of-basis matrix,
+<equation>
+\cbm{B}{C}=
+\begin{bmatrix}
+<![CDATA[ 1 & 2 & 1 & 2 \\]]>
+<![CDATA[ -2 & -3 & -3 & -2 \\]]>
+<![CDATA[ 1 & 3 & 1 & 4 \\]]>
+<![CDATA[ -1 & 0 & -2 & 3]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Now consider a single (arbitrary) vector $\vect{y}=\colvector{2\\6\\-3\\4}$.  First, build the vector representation of $\vect{y}$ relative to $B$.  This will require writing $\vect{y}$ as a linear combination of the vectors in $B$,
+<alignmath>
+\vectrep{B}{\vect{y}}
+<![CDATA[&=\vectrep{B}{\colvector{2\\6\\-3\\4}}\\]]>
+<![CDATA[&=\vectrep{B}{]]>
+(-21)\colvector{1 \\ -2 \\ 1 \\ -2}+
+(6)\colvector{-1 \\ 3 \\ 1 \\ 1}+
+(11)\colvector{2 \\ -3 \\ 3 \\ -4}+
+(-7)\colvector{-1 \\ 3 \\ 3 \\ 0}
+}
+<![CDATA[&=\colvector{-21\\6\\11\\-7}]]>
+</alignmath>
+</p>
+
+<p>Now, applying <acroref type="theorem" acro="CB" /> we can convert the representation of $\vect{y}$ relative to $B$ into a representation relative to $C$,
+<alignmath>
+\vectrep{C}{\vect{y}}
+<![CDATA[&=\cbm{B}{C}\vectrep{B}{\vect{y}}&&]]>\text{<acroref type="theorem" acro="CB" />}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[1 & 2 & 1 & 2 \\]]>
+<![CDATA[-2 & -3 & -3 & -2 \\]]>
+<![CDATA[1 & 3 & 1 & 4 \\]]>
+<![CDATA[-1 & 0 & -2 & 3]]>
+\end{bmatrix}
+\colvector{-21\\6\\11\\-7}\\
+<![CDATA[&=\colvector{-12\\5\\-20\\-22}&&]]>\text{<acroref type="definition" acro="MVP" />}
+</alignmath>
+</p>
+
+<p>We could continue further with this example, perhaps by computing the representation of $\vect{y}$ relative to the basis $C$ directly as a check on our work (<acroref type="exercise" acro="CB.C20" />).  Or we could choose another vector to play the role of $\vect{y}$ and compute two different representations of this vector relative to the two bases $B$ and $C$.</p>
+
+</example>
+
+<sageadvice acro="CBM" index="change-of-basis matrix">
+<title>Change-of-Basis Matrix</title>
+To create a change-of-basis matrix, it is enough to construct an identity linear transformation relative to a domain and codomain with the specified user bases, which is simply a straight application of <acroref type="definition" acro="CBM" />.  Here we go with two arbitrary bases.
+<sage>
+<input>b0 = vector(QQ, [-5, 8,  0, 4])
+b1 = vector(QQ, [-3, 9, -2, 4])
+b2 = vector(QQ, [-1, 4, -1, 2])
+b3 = vector(QQ, [-1, 2,  0, 1])
+B = [b0, b1, b2, b3]
+U = (QQ^4).subspace_with_basis(B)
+c0 = vector(QQ, [ 0,  2, -7,  5])
+c1 = vector(QQ, [-1,  2, -1,  4])
+c2 = vector(QQ, [ 1, -3,  5, -7])
+c3 = vector(QQ, [ 1,  1, -8,  3])
+C = [c0, c1, c2, c3]
+V = (QQ^4).subspace_with_basis(C)
+x1, x2, x3, x4 = var('x1, x2, x3, x4')
+id_symbolic(x1, x2, x3, x4) = [x1, x2, x3, x4]
+S = linear_transformation(U, V, id_symbolic)
+CB = S.matrix(side='right')
+CB
+</input>
+<output>[ 36  25   8   7]
+[ 27  34  15   7]
+[ 35  35  14   8]
+[-13  -4   0  -2]
+</output>
+</sage>
+
+<sage>
+<input>S.is_invertible()
+</input>
+<output>True
+</output>
+</sage>
+
+We can demonstrate that <code>CB</code> is indeed the change-of-basis matrix from <code>B</code> to <code>C</code>, converting vector representations relative to <code>B</code> into vector representations relative to <code>C</code>.  We choose an arbitrary vector, <code>x</code>, to experiment with (you could experiment with other possibilities).  We use the Sage conveniences to create vector representations relative to the two bases, and then verify <acroref type="theorem" acro="CBM" />.  Recognize that <code>x</code>, <code>u</code> and <code>v</code> are all the same vector.
+<sage>
+<input>x = vector(QQ, [-45, 62, 171, 85])
+u = U.coordinate_vector(x)
+u
+</input>
+<output>(-103, -108, 45, 839)
+</output>
+</sage>
+
+<sage>
+<input>v = V.coordinate_vector(x)
+v
+</input>
+<output>(-175, 95, -43, 93)
+</output>
+</sage>
+
+<sage>
+<input>v == CB*u
+</input>
+<output>True
+</output>
+</sage>
+
+We can also verify the construction above by building the change-of-basis matrix directly (i.e., without constructing a linear transformation).
+<sage>
+<input>cols = [V.coordinate_vector(u) for u in U.basis()]
+M = column_matrix(cols)
+M
+</input>
+<output>[ 36  25   8   7]
+[ 27  34  15   7]
+[ 35  35  14   8]
+[-13  -4   0  -2]
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="MRS">
+<title>Matrix Representations and Similarity</title>
+
+<p>Here is the main theorem of this section.  It looks a bit involved at first glance, but the proof should make you realize it is not all that complicated.  In any event, we are more interested in a special case.</p>
+
+<theorem acro="MRCB" index="change-of-basis!matrix representation">
+<title>Matrix Representation and Change of Basis</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation, $B$ and $C$ are bases for $U$, and $D$ and $E$ are bases for $V$.  Then
+<equation>
+\matrixrep{T}{B}{D}=\cbm{E}{D}\matrixrep{T}{C}{E}\cbm{B}{C}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>
+<alignmath>
+\cbm{E}{D}\matrixrep{T}{C}{E}\cbm{B}{C}
+<![CDATA[&=\matrixrep{I_V}{E}{D}\matrixrep{T}{C}{E}\matrixrep{I_U}{B}{C}&&]]>\text{<acroref type="definition" acro="CBM" />}\\
+<![CDATA[&=\matrixrep{I_V}{E}{D}\matrixrep{\compose{T}{I_U}}{B}{E}&&]]>\text{<acroref type="theorem" acro="MRCLT" />}\\
+<![CDATA[&=\matrixrep{I_V}{E}{D}\matrixrep{T}{B}{E}&&]]>\text{<acroref type="definition" acro="IDLT" />}\\
+<![CDATA[&=\matrixrep{\compose{I_V}{T}}{B}{D}&&]]>\text{<acroref type="theorem" acro="MRCLT" />}\\
+<![CDATA[&=\matrixrep{T}{B}{D}&&]]>\text{<acroref type="definition" acro="IDLT" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>We will be most interested in a special case of this theorem (<acroref type="theorem" acro="SCB" />), but here's an example that illustrates the full generality of <acroref type="theorem" acro="MRCB" />.</p>
+
+<example acro="MRCM" index="matrix representations!converting with change-of-basis">
+<title>Matrix representations and change-of-basis matrices</title>
+
+<p>Begin with two vector spaces, $S_2$, the subspace of $M_{22}$ containing all $2\times 2$ symmetric matrices, and $P_3$ (<acroref type="example" acro="VSP" />), the vector space of all polynomials of degree 3 or less.  Then define the linear transformation $\ltdefn{Q}{S_2}{P_3}$ by
+<equation>
+<![CDATA[\lt{Q}{\begin{bmatrix}a&b\\b&c\end{bmatrix}}]]>
+=
+(5a-2b+6c)+(3a-b+2c)x+(a+3b-c)x^2+(-4a+2b+c)x^3
+</equation>
+</p>
+
+<p>Here are two bases for each vector space, one nice, one nasty.  First for $S_2$,
+<alignmath>
+<![CDATA[B&=]]>
+\set{
+<![CDATA[\begin{bmatrix}5&-3\\-3&-2\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}2&-3\\-3&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}1&2\\2&4\end{bmatrix}]]>
+}
+<![CDATA[&]]>
+<![CDATA[C&=]]>
+\set{
+<![CDATA[\begin{bmatrix}1&0\\0&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&1\\1&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+</alignmath>
+and then for $P_3$,
+<alignmath>
+<![CDATA[D&=\set{]]>
+2+x-2x^2+3x^3,\,
+-1-2x^2+3x^3,\,
+-3-x+x^3,\,
+-x^2+x^3
+}
+<![CDATA[&]]>
+<![CDATA[E&=\set{1,\,x,\,x^2,\,x^3}]]>
+</alignmath>
+</p>
+
+<p>We'll begin with a matrix representation of $Q$ relative to $C$ and $E$.  We first find vector representations of the elements of $C$ relative to $E$,
+<alignmath>
+<![CDATA[\vectrep{E}{\lt{Q}{\begin{bmatrix}1&0\\0&0\end{bmatrix}}}]]>
+<![CDATA[&=\vectrep{E}{5+3x+x^2-4x^3}=\colvector{5\\3\\1\\-4}\\]]>
+<![CDATA[\vectrep{E}{\lt{Q}{\begin{bmatrix}0&1\\1&0\end{bmatrix}}}]]>
+<![CDATA[&=\vectrep{E}{-2-x+3x^2+2x^3}=\colvector{-2\\-1\\3\\2}\\]]>
+<![CDATA[\vectrep{E}{\lt{Q}{\begin{bmatrix}0&0\\0&1\end{bmatrix}}}]]>
+<![CDATA[&=\vectrep{E}{6+2x-x^2+x^3}=\colvector{6\\2\\-1\\1}\\]]>
+</alignmath>
+</p>
+
+<p>So
+<alignmath>
+\matrixrep{Q}{C}{E}
+=
+\begin{bmatrix}
+<![CDATA[5 & -2 & 6\\]]>
+<![CDATA[3 & -1 & 2\\]]>
+<![CDATA[1 & 3 & -1\\]]>
+<![CDATA[-4 & 2 & 1]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Now we construct two change-of-basis matrices.  First, $\cbm{B}{C}$ requires vector representations of the elements of $B$, relative to $C$.  Since $C$ is a nice basis, this is straightforward,
+<alignmath>
+<![CDATA[\vectrep{C}{\begin{bmatrix}5&-3\\-3&-2\end{bmatrix}}]]>
+<![CDATA[&=\vectrep{C}{]]>
+<![CDATA[(5)\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[(-3)\begin{bmatrix}0&1\\1&0\end{bmatrix}+]]>
+<![CDATA[(-2)\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{5\\-3\\-2}\\
+<![CDATA[\vectrep{C}{\begin{bmatrix}2&-3\\-3&0\end{bmatrix}}]]>
+<![CDATA[&=\vectrep{C}{]]>
+<![CDATA[(2)\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[(-3)\begin{bmatrix}0&1\\1&0\end{bmatrix}+]]>
+<![CDATA[(0)\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{2\\-3\\0}\\
+<![CDATA[\vectrep{C}{\begin{bmatrix}1&2\\2&4\end{bmatrix}}]]>
+<![CDATA[&=\vectrep{C}{]]>
+<![CDATA[(1)\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[(2)\begin{bmatrix}0&1\\1&0\end{bmatrix}+]]>
+<![CDATA[(4)\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{1\\2\\4}
+</alignmath>
+</p>
+
+<p>So
+<alignmath>
+<![CDATA[\cbm{B}{C}&=]]>
+\begin{bmatrix}
+<![CDATA[5 & 2 & 1\\]]>
+<![CDATA[-3 & -3 & 2\\]]>
+<![CDATA[-2 & 0 & 4]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>The other change-of-basis matrix we'll compute is $\cbm{E}{D}$.  However, since
+$E$ is a nice basis (and $D$ is not) we'll turn it around and instead compute $\cbm{D}{E}$ and apply <acroref type="theorem" acro="ICBM" /> to use an inverse to compute $\cbm{E}{D}$.
+<alignmath>
+\vectrep{E}{2+x-2x^2+3x^3}
+<![CDATA[&=\vectrep{E}{(2)1+(1)x+(-2)x^2+(3)x^3}]]>
+=\colvector{2\\1\\-2\\3}\\
+\vectrep{E}{-1-2x^2+3x^3}
+<![CDATA[&=\vectrep{E}{(-1)1+(0)x+(-2)x^2+(3)x^3}]]>
+=\colvector{-1\\0\\-2\\3}\\
+\vectrep{E}{-3-x+x^3}
+<![CDATA[&=\vectrep{E}{(-3)1+(-1)x+(0)x^2+(1)x^3}]]>
+=\colvector{-3\\-1\\0\\1}\\
+\vectrep{E}{-x^2+x^3}
+<![CDATA[&=\vectrep{E}{(0)1+(0)x+(-1)x^2+(1)x^3}]]>
+=\colvector{0\\0\\-1\\1}
+</alignmath>
+</p>
+
+<p>So, we can package these column vectors up as a matrix to obtain $\cbm{D}{E}$ and then,
+<alignmath>
+\cbm{E}{D}
+<![CDATA[&=\inverse{\left(\cbm{D}{E}\right)}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="ICBM" />}\\
+<![CDATA[&=\inverse{]]>
+\begin{bmatrix}
+<![CDATA[ 2 & -1 & -3 & 0 \\]]>
+<![CDATA[ 1 & 0 & -1 & 0 \\]]>
+<![CDATA[ -2 & -2 & 0 & -1 \\]]>
+<![CDATA[ 3 & 3 & 1 & 1]]>
+\end{bmatrix}
+}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ 1 & -2 & 1 & 1 \\]]>
+<![CDATA[ -2 & 5 & -1 & -1 \\]]>
+<![CDATA[ 1 & -3 & 1 & 1 \\]]>
+<![CDATA[ 2 & -6 & -1 & 0]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>We are now in a position to apply <acroref type="theorem" acro="MRCB" />.  The matrix representation of $Q$ relative to $B$ and $D$ can be obtained as follows,
+<alignmath>
+\matrixrep{Q}{B}{D}
+<![CDATA[&=\cbm{E}{D}\matrixrep{Q}{C}{E}\cbm{B}{C}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MRCB" />}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ 1 & -2 & 1 & 1 \\]]>
+<![CDATA[ -2 & 5 & -1 & -1 \\]]>
+<![CDATA[ 1 & -3 & 1 & 1 \\]]>
+<![CDATA[ 2 & -6 & -1 & 0]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[5 & -2 & 6\\]]>
+<![CDATA[3 & -1 & 2\\]]>
+<![CDATA[1 & 3 & -1\\]]>
+<![CDATA[-4 & 2 & 1]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[5 & 2 & 1\\]]>
+<![CDATA[-3 & -3 & 2\\]]>
+<![CDATA[-2 & 0 & 4]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ 1 & -2 & 1 & 1 \\]]>
+<![CDATA[ -2 & 5 & -1 & -1 \\]]>
+<![CDATA[ 1 & -3 & 1 & 1 \\]]>
+<![CDATA[ 2 & -6 & -1 & 0]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[ 19 & 16 & 25 \\]]>
+<![CDATA[ 14 & 9 & 9 \\]]>
+<![CDATA[ -2 & -7 & 3 \\]]>
+<![CDATA[ -28 & -14 & 4]]>
+\end{bmatrix}\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[ -39 & -23 & 14 \\]]>
+<![CDATA[ 62 & 34 & -12 \\]]>
+<![CDATA[ -53 & -32 & 5 \\]]>
+<![CDATA[ -44 & -15 & -7]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Now check our work by computing $\matrixrep{Q}{B}{D}$ directly (<acroref type="exercise" acro="CB.C21" />).</p>
+
+</example>
+
+<p>Here is a special case of the previous theorem, where we choose $U$ and $V$ to be the same vector space, so the matrix representations and the change-of-basis matrices are all square of the same size.</p>
+
+<theorem acro="SCB" index="change-of-basis!similarity">
+<title>Similarity and Change of Basis</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation and $B$ and $C$ are bases of $V$.  Then
+<equation>
+\matrixrep{T}{B}{B}=\inverse{\cbm{B}{C}}\matrixrep{T}{C}{C}\cbm{B}{C}
+</equation>
+</p>
+
+</statement>
+
+<proof>
+<p>In the conclusion of <acroref type="theorem" acro="MRCB" />, replace $D$ by $B$, and replace $E$ by $C$,
+<alignmath>
+\matrixrep{T}{B}{B}
+<![CDATA[&=\cbm{C}{B}\matrixrep{T}{C}{C}\cbm{B}{C}&&]]>\text{<acroref type="theorem" acro="MRCB" />}\\
+<![CDATA[&=\inverse{\cbm{B}{C}}\matrixrep{T}{C}{C}\cbm{B}{C}&&]]>\text{<acroref type="theorem" acro="ICBM" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>This is the third surprise of this chapter.  <acroref type="theorem" acro="SCB" /> considers the special case where a linear transformation has the same vector space for the domain and codomain ($V$).  We build a matrix representation of $T$ using the basis $B$ simultaneously for both the domain and codomain ($\matrixrep{T}{B}{B}$), and then we build a second matrix representation of $T$, now using the basis $C$ for both the domain and codomain ($\matrixrep{T}{C}{C}$).  Then these two representations are related via a similarity transformation (<acroref type="definition" acro="SIM" />) using a change-of-basis matrix ($\cbm{B}{C}$)!</p>
+
+<example acro="MRBE" index="matrix representation!basis of eigenvectors">
+<title>Matrix representation with basis of eigenvectors</title>
+
+<p>We return to the linear transformation $\ltdefn{T}{M_{22}}{M_{22}}$ of <acroref type="example" acro="ELTBM" /> defined by
+<equation>
+<![CDATA[\lt{T}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}]]>
+=
+\begin{bmatrix}
+-17a+11b+8c-11d
+<![CDATA[&]]>
+-57a+35b+24c-33d
+\\
+-14a+10b+6c-10d
+<![CDATA[&]]>
+-41a+25b+16c-23d
+\end{bmatrix}
+</equation>
+</p>
+
+<p>In <acroref type="example" acro="ELTBM" /> we showcased four eigenvectors of $T$.  We will now put these four vectors in a set,
+<equation>
+B=\set{\vect{x}_1,\,\vect{x}_2,\,\vect{x}_3,\,\vect{x}_4}
+=\set{
+\begin{bmatrix}
+<![CDATA[ 0 & 1 \\ 0 & 1]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[ 1 & 1 \\ 1 & 0]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[ 1 & 3 \\ 2 & 3]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[ 2 & 6 \\ 1 & 4]]>
+\end{bmatrix}
+}
+</equation>
+</p>
+
+<p>Check that $B$ is a basis of $M_{22}$ by first establishing the linear independence of $B$ and then employing <acroref type="theorem" acro="G" /> to get the spanning property easily.  Here is a second set of $2\times 2$ matrices, which also forms a basis of $M_{22}$ (<acroref type="example" acro="BM" />),
+<equation>
+C=\set{\vect{y}_1,\,\vect{y}_2,\,\vect{y}_3,\,\vect{y}_4}
+=\set{
+\begin{bmatrix}
+<![CDATA[ 1 & 0 \\ 0 & 0]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[ 0 & 1 \\ 0 & 0]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[ 0 & 0 \\ 1 & 0]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[ 0 & 0 \\ 0 & 1]]>
+\end{bmatrix}
+}
+</equation>
+</p>
+
+<p>We can build two matrix representations of $T$, one relative to $B$ and one relative to $C$.  Each is easy, but for wildly different reasons.  In our computation of the matrix representation relative to $B$ we borrow some of our work in <acroref type="example" acro="ELTBM" />.  Here are the representations, then the explanation.
+<alignmath>
+\vectrep{B}{\lt{T}{\vect{x}_1}}
+<![CDATA[&=]]>
+\vectrep{B}{2\vect{x}_1}
+=\vectrep{B}{2\vect{x}_1+0\vect{x}_2+0\vect{x}_3+0\vect{x}_4}
+=\colvector{2\\0\\0\\0}\\
+\vectrep{B}{\lt{T}{\vect{x}_2}}
+<![CDATA[&=]]>
+\vectrep{B}{2\vect{x}_2}
+=\vectrep{B}{0\vect{x}_1+2\vect{x}_2+0\vect{x}_3+0\vect{x}_4}
+=\colvector{0\\2\\0\\0}\\
+\vectrep{B}{\lt{T}{\vect{x}_3}}
+<![CDATA[&=]]>
+\vectrep{B}{(-1)\vect{x}_3}
+=\vectrep{B}{0\vect{x}_1+0\vect{x}_2+(-1)\vect{x}_3+0\vect{x}_4}
+=\colvector{0\\0\\-1\\0}\\
+\vectrep{B}{\lt{T}{\vect{x}_4}}
+<![CDATA[&=]]>
+\vectrep{B}{(-2)\vect{x}_4}
+=\vectrep{B}{0\vect{x}_1+0\vect{x}_2+0\vect{x}_3+(-2)\vect{x}_4}
+=\colvector{0\\0\\0\\-2}
+</alignmath>
+</p>
+
+<p>So the resulting representation is
+<alignmath>
+\matrixrep{T}{B}{B}
+=
+\begin{bmatrix}
+<![CDATA[2 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 2 & 0 & 0\\]]>
+<![CDATA[0 & 0 & -1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & -2\\]]>
+\end{bmatrix}
+</alignmath></p>
+
+<p>Very pretty.</p>
+
+<p>Now for the matrix representation relative to $C$ first compute,
+<alignmath>
+\vectrep{C}{\lt{T}{\vect{y}_1}}
+<![CDATA[&=\vectrep{C}{\begin{bmatrix}-17&-57\\-14&-41\end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{C}{]]>
+<![CDATA[(-17)\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[(-57)\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[(-14)\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[(-41)\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{-17\\-57\\-14\\-41}\\
+\vectrep{C}{\lt{T}{\vect{y}_2}}
+<![CDATA[&=\vectrep{C}{\begin{bmatrix}11&35\\10&25\end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{C}{]]>
+<![CDATA[11\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[35\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[10\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[25\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{11\\35\\10\\25}\\
+\vectrep{C}{\lt{T}{\vect{y}_3}}
+<![CDATA[&=\vectrep{C}{\begin{bmatrix}8&24\\6&16\end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{C}{]]>
+<![CDATA[8\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[24\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[6\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[16\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{8\\24\\6\\16}\\
+\vectrep{C}{\lt{T}{\vect{y}_4}}
+<![CDATA[&=\vectrep{C}{\begin{bmatrix}-11&-33\\-10&-23\end{bmatrix}}\\]]>
+<![CDATA[&=\vectrep{C}{]]>
+<![CDATA[(-11)\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[(-33)\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[(-10)\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[(-23)\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{-11\\-33\\-10\\-23}\\
+</alignmath>
+</p>
+
+<p>So the resulting representation is
+<alignmath>
+\matrixrep{T}{C}{C}
+=
+\begin{bmatrix}
+<![CDATA[ -17 & 11 & 8 & -11 \\]]>
+<![CDATA[ -57 & 35 & 24 & -33 \\]]>
+<![CDATA[ -14 & 10 & 6 & -10 \\]]>
+<![CDATA[ -41 & 25 & 16 & -23]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>Not quite as pretty.</p>
+
+<p>The purpose of this example is to illustrate <acroref type="theorem" acro="SCB" />.  This theorem says that the two matrix representations, $\matrixrep{T}{B}{B}$ and $\matrixrep{T}{C}{C}$, of the one linear transformation, $T$, are related by a similarity transformation using the change-of-basis matrix $\cbm{B}{C}$.  Lets compute this change-of-basis matrix.  Notice that since $C$ is such a nice basis, this is fairly straightforward,
+<alignmath>
+\vectrep{C}{\vect{x}_1}
+<![CDATA[&=\vectrep{C}{\begin{bmatrix}0 & 1 \\ 0 & 1\end{bmatrix}}]]>
+=\vectrep{C}{
+<![CDATA[0\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{0\\1\\0\\1}\\
+\vectrep{C}{\vect{x}_2}
+<![CDATA[&=\vectrep{C}{\begin{bmatrix}1 & 1 \\ 1 & 0\end{bmatrix}}]]>
+=\vectrep{C}{
+<![CDATA[1\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{1\\1\\1\\0}\\
+\vectrep{C}{\vect{x}_3}
+<![CDATA[&=\vectrep{C}{\begin{bmatrix}1 & 3 \\ 2 & 3\end{bmatrix}}]]>
+=\vectrep{C}{
+<![CDATA[1\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[3\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[2\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[3\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{1\\3\\2\\3}\\
+\vectrep{C}{\vect{x}_4}
+<![CDATA[&=\vectrep{C}{\begin{bmatrix}2 & 6 \\ 1 & 4\end{bmatrix}}]]>
+=\vectrep{C}{
+<![CDATA[2\begin{bmatrix}1&0\\0&0\end{bmatrix}+]]>
+<![CDATA[6\begin{bmatrix}0&1\\0&0\end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix}0&0\\1&0\end{bmatrix}+]]>
+<![CDATA[4\begin{bmatrix}0&0\\0&1\end{bmatrix}]]>
+}
+=\colvector{2\\6\\1\\4}
+</alignmath>
+</p>
+
+<p>So we have,
+<equation>
+\cbm{B}{C}
+=
+\begin{bmatrix}
+<![CDATA[ 0 & 1 & 1 & 2 \\]]>
+<![CDATA[ 1 & 1 & 3 & 6 \\]]>
+<![CDATA[ 0 & 1 & 2 & 1 \\]]>
+<![CDATA[ 1 & 0 & 3 & 4]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Now, according to <acroref type="theorem" acro="SCB" /> we can write,
+<alignmath>
+<![CDATA[\matrixrep{T}{B}{B}&=\inverse{\cbm{B}{C}}\matrixrep{T}{C}{C}\cbm{B}{C}\\]]>
+\begin{bmatrix}
+<![CDATA[2 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 2 & 0 & 0\\]]>
+<![CDATA[0 & 0 & -1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & -2\\]]>
+\end{bmatrix}
+<![CDATA[&=]]>
+\inverse{
+\begin{bmatrix}
+<![CDATA[ 0 & 1 & 1 & 2 \\]]>
+<![CDATA[ 1 & 1 & 3 & 6 \\]]>
+<![CDATA[ 0 & 1 & 2 & 1 \\]]>
+<![CDATA[ 1 & 0 & 3 & 4]]>
+\end{bmatrix}
+}
+\begin{bmatrix}
+<![CDATA[ -17 & 11 & 8 & -11 \\]]>
+<![CDATA[ -57 & 35 & 24 & -33 \\]]>
+<![CDATA[ -14 & 10 & 6 & -10 \\]]>
+<![CDATA[ -41 & 25 & 16 & -23]]>
+\end{bmatrix}
+\begin{bmatrix}
+<![CDATA[ 0 & 1 & 1 & 2 \\]]>
+<![CDATA[ 1 & 1 & 3 & 6 \\]]>
+<![CDATA[ 0 & 1 & 2 & 1 \\]]>
+<![CDATA[ 1 & 0 & 3 & 4]]>
+\end{bmatrix}
+</alignmath>
+</p>
+
+<p>This should look and feel exactly like the process for diagonalizing a matrix, as was described in <acroref type="section" acro="SD" />.  And it is.</p>
+
+</example>
+
+<sageadvice acro="MRCB" index="matrix representation!change-of-basis">
+<title>Matrix Representation and Change-of-Basis</title>
+In <acroref type="sage" acro="MR" /> we built two matrix representations of one linear transformation, relative to two different pairs of bases.  We now understand how these two matrix representations are related <mdash /> <acroref type="theorem" acro="MRCB" /> gives the precise relationship with change-of-basis matrices, one converting vector representations on the domain, the other converting vector representations on the codomain.  Here is the demonstration.  We use <code>MT</code> as the prefix of names for matrix representations, <code>CB</code> as the prefix for change-of-basis matrices, and numerals to distinguish the two domain-codomain pairs.
+<sage>
+<input>x1, x2, x3, x4 = var('x1, x2, x3, x4')
+outputs = [3*x1 + 7*x2 + x3 - 4*x4,
+           2*x1 + 5*x2 + x3 - 3*x4,
+            -x1 - 2*x2      +   x4]
+T_symbolic(x1, x2, x3, x4) = outputs
+U = QQ^4
+V = QQ^3
+b0 = vector(QQ, [ 1, 1, -1, 0])
+b1 = vector(QQ, [-1, 0, -2, 7])
+b2 = vector(QQ, [ 0, 1, -2, 4])
+b3 = vector(QQ, [-2, 0, -1, 6])
+B = [b0, b1, b2, b3]
+c0 = vector(QQ, [ 1,  6, -6])
+c1 = vector(QQ, [ 0,  1, -1])
+c2 = vector(QQ, [-2, -3,  4])
+C = [c0, c1, c2]
+d0 = vector(QQ, [ 1, -3,  2, -1])
+d1 = vector(QQ, [ 0,  1,  0,  1])
+d2 = vector(QQ, [-1,  2, -1, -1])
+d3 = vector(QQ, [ 2, -8,  4, -3])
+D = [d0, d1, d2, d3]
+e0 = vector(QQ, [ 0,  1, -3])
+e1 = vector(QQ, [-1,  2, -1])
+e2 = vector(QQ, [ 2, -4,  3])
+E = [e0, e1, e2]
+U1 = U.subspace_with_basis(B)
+V1 = V.subspace_with_basis(C)
+T1 = linear_transformation(U1, V1, T_symbolic)
+MTBC =T1.matrix(side='right')
+MTBC
+</input>
+<output>[ 15 -67 -25 -61]
+[-75 326 120 298]
+[  3 -17  -7 -15]
+</output>
+</sage>
+
+<sage>
+<input>U2 = U.subspace_with_basis(D)
+V2 = V.subspace_with_basis(E)
+T2 = linear_transformation(U2, V2, T_symbolic)
+MTDE = T2.matrix(side='right')
+MTDE
+</input>
+<output>[ -32    8   38  -91]
+[-148   37  178 -422]
+[ -80   20   96 -228]
+</output>
+</sage>
+
+This is as far as we could go back in <acroref type="section" acro="MR" />.  These two matrices represent the same linear transformation (namely <code>T_symbolic</code>), but the question now is <q>how are these representations related?</q>  We need two change-of-basis matrices.  Notice that with different dimensions for the domain and codomain, we get square matrices of different sizes.
+<sage>
+<input>identity4(x1, x2, x3, x4) = [x1, x2, x3, x4]
+CU = linear_transformation(U2, U1, identity4)
+CBDB = CU.matrix(side='right')
+CBDB
+</input>
+<output>[ 6  7 -8  1]
+[ 5  1 -5  9]
+[-9 -6 10 -9]
+[ 0  3 -1 -5]
+</output>
+</sage>
+
+<sage>
+<input>identity3(x1, x2, x3) = [x1, x2, x3]
+CV = linear_transformation(V1, V2, identity3)
+CBCE = CV.matrix(side='right')
+CBCE
+</input>
+<output>[  8   1  -7]
+[ 33   4 -28]
+[ 17   2 -15]
+</output>
+</sage>
+
+Finally, here is <acroref type="theorem" acro="MRCB" />, relating the the two matrix representations via the change-of-basis matrices.
+<sage>
+<input>MTDE == CBCE * MTBC * CBDB
+</input>
+<output>True
+</output>
+</sage>
+
+We can walk through this theorem just a bit more carefully, step-by-step.  We will compute three matrix-vector products, using three vector representations, to demonstrate the equality above.  To prepare, we choose the vector <code>x</code> arbitrarily, and we compute its value when evaluted by <code>T_symbolic</code>, and then verify the vector and matrix representations relative to <code>D</code> and <code>E</code>.
+<sage>
+<input>T_symbolic(34, -61, 55, 18)
+</input>
+<output>(-342, -236, 106)
+</output>
+</sage>
+
+<sage>
+<input>x = vector(QQ, [34, -61, 55, 18])
+u_D = U2.coordinate_vector(x)
+u_D
+</input>
+<output>(25, 24, -13, -2)
+</output>
+</sage>
+
+<sage>
+<input>v_E = V2.coordinate_vector(vector(QQ, [-342, -236, 106]))
+v_E
+</input>
+<output>(-920, -4282, -2312)
+</output>
+</sage>
+
+<sage>
+<input>v_E == MTDE*u_D
+</input>
+<output>True
+</output>
+</sage>
+
+So far this is not really new, we have just verified the representation <code>MTDE</code> in the case of one input vector (<code>x</code>), but now we will use the alternate version of this matrix representation, <code>CBCE * MTBC * CBDB</code>, in steps.<br /><br />
+First, convert the input vector from a representation relative to <code>D</code> to a representation relative to <code>B</code>.
+<sage>
+<input>u_B = CBDB*u_D
+u_B
+</input>
+<output>(420, 196, -481, 95)
+</output>
+</sage>
+
+Now apply the matrix representation, which expects <q>input</q> coordinatized relative to <code>B</code> and produces <q>output</q> coordinatized relative to <code>C</code>.
+<sage>
+<input>v_C = MTBC*u_B
+v_C
+</input>
+<output>(-602, 2986, -130)
+</output>
+</sage>
+
+Now convert the output vector from a representation relative to <code>C</code> to a representation relative to <code>E</code>.
+<sage>
+<input>v_E = CBCE*v_C
+v_E
+</input>
+<output>(-920, -4282, -2312)
+</output>
+</sage>
+
+It is no surprise that this version of <code>v_E</code> equals the previous one, since we have checked the equality of the matrices earlier.  But it may be instructive to see the input converted by change-of-basis matrices before and after being hit by the linear transformation (as a matrix representation).
+Now we will perform another example, but this time using Sage endomorphisms, linear transformations with equal bases for the domain and codomain.  This will allow us to illustrate <acroref type="theorem" acro="SCB" />.  Just for fun, we will do something large. Notice the labor-saving device for manufacturing many symbolic variables at once.
+<sage>
+<input>[var('x{0}'.format(i)) for i in range(1, 12)]
+</input>
+<output>[x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11]
+</output>
+</sage>
+
+<sage>
+<input>x = vector(SR, [x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11])
+A = matrix(QQ, 11, [
+[ 146, -225, -10,  212,  419, -123, -73,  3,  219, -100, -57],
+[ -24,   32,   1,  -33,  -66,   13,  16,  1,  -33,   18,   3],
+[  79, -131, -15,  124,  235,  -74, -33, -3,  128,  -57, -29],
+[  -1,   13, -16,   -1,  -27,    3,  -5, -4,   -9,    6,   2],
+[-104,  170,  20, -162, -307,   95,  45,  3, -167,   75,  37],
+[ -16,   59, -19,  -34, -103,   27, -10, -1,  -51,   27,   8],
+[  36,  -41,  -7,   46,   80,  -25, -26,  2,   42,  -18, -16],
+[  -5,    0,   1,   -4,   -3,    2,   6, -1,    0,   -2,   3],
+[ 105, -176, -28,  168,  310, -103, -41, -4,  172,  -73, -40],
+[   1,    7,   0,   -3,   -9,    5,  -6, -2,   -7,    3,   2],
+[  74, -141,   4,  118,  255,  -72, -23, -1,  133,  -63, -26]
+                   ])
+out = (A*x).list()
+T_symbolic(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11) = out
+V1 = QQ^11
+C = V1.basis()
+T1 = linear_transformation(V1, V1, T_symbolic)
+MC = T1.matrix(side='right')
+MC
+</input>
+<output>[ 146 -225  -10  212  419 -123  -73    3  219 -100  -57]
+[ -24   32    1  -33  -66   13   16    1  -33   18    3]
+[  79 -131  -15  124  235  -74  -33   -3  128  -57  -29]
+[  -1   13  -16   -1  -27    3   -5   -4   -9    6    2]
+[-104  170   20 -162 -307   95   45    3 -167   75   37]
+[ -16   59  -19  -34 -103   27  -10   -1  -51   27    8]
+[  36  -41   -7   46   80  -25  -26    2   42  -18  -16]
+[  -5    0    1   -4   -3    2    6   -1    0   -2    3]
+[ 105 -176  -28  168  310 -103  -41   -4  172  -73  -40]
+[   1    7    0   -3   -9    5   -6   -2   -7    3    2]
+[  74 -141    4  118  255  -72  -23   -1  133  -63  -26]
+</output>
+</sage>
+
+Not very interesting, and perhaps even transparent, with a definiton from a matrix and with the standard basis attached to <code>V1 == QQ^11</code>.  Let's use a different basis to obtain a more interesting representation.  We will input the basis compactly as the columns of a nonsingular matrix.
+<sage>
+<input>D = matrix(QQ, 11,
+    [[ 1,  2, -1, -2,  4,  2,  2, -2,  4,  4,  8],
+     [ 0,  1,  0,  2, -2,  1,  1, -1, -7,  5,  3],
+     [ 1,  0,  0, -2,  3,  0, -1, -1,  6, -1, -1],
+     [ 0, -1,  1, -1,  3, -2, -3,  0,  5, -8,  2],
+     [-1,  0,  0,  3, -4,  0,  1,  1, -8,  1,  2],
+     [-1, -1,  1,  0,  3, -3, -4, -1,  0, -7,  3],
+     [ 0,  1,  0,  0,  2,  0,  0, -1,  0, -1,  8],
+     [ 0,  0,  0, -1,  0,  0,  0,  1,  5, -4,  1],
+     [ 1,  0,  0, -2,  3,  0, -2, -3,  3,  3, -4],
+     [ 0, -1,  0,  0,  1, -1, -2, -1,  2, -4,  0],
+     [ 1,  0, -1, -2,  0,  2,  2,  0,  5,  3, -1]])
+E = D.columns()
+V2 = (QQ^11).subspace_with_basis(E)
+T2 = linear_transformation(V2, V2, T_symbolic)
+MB = T2.matrix(side='right')
+MB
+</input>
+<output>[ 2  1  0  0  0  0  0  0  0  0  0]
+[ 0  2  1  0  0  0  0  0  0  0  0]
+[ 0  0  2  0  0  0  0  0  0  0  0]
+[ 0  0  0  2  1  0  0  0  0  0  0]
+[ 0  0  0  0  2  0  0  0  0  0  0]
+[ 0  0  0  0  0 -1  1  0  0  0  0]
+[ 0  0  0  0  0  0 -1  1  0  0  0]
+[ 0  0  0  0  0  0  0 -1  1  0  0]
+[ 0  0  0  0  0  0  0  0 -1  1  0]
+[ 0  0  0  0  0  0  0  0  0 -1  1]
+[ 0  0  0  0  0  0  0  0  0  0 -1]
+</output>
+</sage>
+
+Well, now <em>that</em> is interesting!  What a nice representation.  Of course, it is all due to the choice of the basis (which we have not explained).  To explain the relationship between the two matrix representations, we need a change-of-basis-matrix, and its inverse.  <acroref type="theorem" acro="SCB" /> says we need the matrix that converts vector representations relative to <code>B</code> into vector representations relative to <code>C</code>.
+<sage>
+<input>out = [x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11]
+id11(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11) = out
+L = linear_transformation(V2, V1, id11)
+CB = L.matrix(side='right')
+CB
+</input>
+<output>[ 1  2 -1 -2  4  2  2 -2  4  4  8]
+[ 0  1  0  2 -2  1  1 -1 -7  5  3]
+[ 1  0  0 -2  3  0 -1 -1  6 -1 -1]
+[ 0 -1  1 -1  3 -2 -3  0  5 -8  2]
+[-1  0  0  3 -4  0  1  1 -8  1  2]
+[-1 -1  1  0  3 -3 -4 -1  0 -7  3]
+[ 0  1  0  0  2  0  0 -1  0 -1  8]
+[ 0  0  0 -1  0  0  0  1  5 -4  1]
+[ 1  0  0 -2  3  0 -2 -3  3  3 -4]
+[ 0 -1  0  0  1 -1 -2 -1  2 -4  0]
+[ 1  0 -1 -2  0  2  2  0  5  3 -1]
+</output>
+</sage>
+
+OK, all set.
+<sage>
+<input>CB^-1*MC*CB
+</input>
+<output>[ 2  1  0  0  0  0  0  0  0  0  0]
+[ 0  2  1  0  0  0  0  0  0  0  0]
+[ 0  0  2  0  0  0  0  0  0  0  0]
+[ 0  0  0  2  1  0  0  0  0  0  0]
+[ 0  0  0  0  2  0  0  0  0  0  0]
+[ 0  0  0  0  0 -1  1  0  0  0  0]
+[ 0  0  0  0  0  0 -1  1  0  0  0]
+[ 0  0  0  0  0  0  0 -1  1  0  0]
+[ 0  0  0  0  0  0  0  0 -1  1  0]
+[ 0  0  0  0  0  0  0  0  0 -1  1]
+[ 0  0  0  0  0  0  0  0  0  0 -1]
+</output>
+</sage>
+
+Which is <code>MB</code>.  So the conversion from a <q>messy</q> matrix representation relative to a standard basis to a <q>clean</q> representation relative to some other basis is just a similarity transformation by a change-of-basis matrix.  Oh, I almost forgot.  Where did that basis come from?  Hint: work your way up to <acroref type="section" acro="JCF" />.
+
+
+</sageadvice>
+<p>We can now return to the question of computing an eigenvalue or eigenvector of a linear transformation.  For a linear transformation of the form $\ltdefn{T}{V}{V}$, we know that representations relative to different bases are similar matrices.  We also know that similar matrices have equal characteristic polynomials by <acroref type="theorem" acro="SMEE" />.   We will now show that eigenvalues of a linear transformation $T$ are precisely the eigenvalues of <em>any</em> matrix representation of $T$.  Since the choice of a different matrix representation leads to a similar matrix, there will be no <q>new</q> eigenvalues obtained from this second representation.  Similarly, the change-of-basis matrix can be used to show that eigenvectors obtained from one matrix representation will be precisely those obtained from any other representation.  So we can determine the eigenvalues and eigenvectors of a linear transformation by forming one matrix representation, using <em>any</em> basis we please, and analyzing the matrix in the manner of <acroref type="chapter" acro="E" />.</p>
+
+<theorem acro="EER" index="eigenvalues, eigenvectors!vector, matrix representations">
+<title>Eigenvalues, Eigenvectors, Representations</title>
+<statement>
+<p>Suppose that $\ltdefn{T}{V}{V}$ is a linear transformation and $B$ is a basis of $V$.  Then $\vect{v}\in V$ is an eigenvector of $T$ for the eigenvalue $\lambda$ if and only if $\vectrep{B}{\vect{v}}$ is an eigenvector of $\matrixrep{T}{B}{B}$ for the eigenvalue $\lambda$.</p>
+
+</statement>
+
+<proof>
+<p><implyforward /> Assume that $\vect{v}\in V$ is an eigenvector of $T$ for the eigenvalue $\lambda$.  Then
+<alignmath>
+\matrixrep{T}{B}{B}\vectrep{B}{\vect{v}}
+<![CDATA[&=\vectrep{B}{\lt{T}{\vect{v}}}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\vectrep{B}{\lambda\vect{v}}&&]]>\text{<acroref type="definition" acro="EELT" />}\\
+<![CDATA[&=\lambda\vectrep{B}{\vect{v}}&&]]>\text{<acroref type="theorem" acro="VRLT" />}
+</alignmath>
+which by <acroref type="definition" acro="EEM" /> says that $\vectrep{B}{\vect{v}}$ is an eigenvector of the matrix $\matrixrep{T}{B}{B}$ for the eigenvalue $\lambda$.</p>
+
+<p><implyreverse />  Assume that $\vectrep{B}{\vect{v}}$ is an eigenvector of $\matrixrep{T}{B}{B}$ for the eigenvalue $\lambda$.  Then
+<alignmath>
+\lt{T}{\vect{v}}
+<![CDATA[&=\vectrepinv{B}{\vectrep{B}{\lt{T}{\vect{v}}}}&&]]>\text{<acroref type="definition" acro="IVLT" />}\\
+<![CDATA[&=\vectrepinv{B}{\matrixrep{T}{B}{B}\vectrep{B}{\vect{v}}}&&]]>\text{<acroref type="theorem" acro="FTMR" />}\\
+<![CDATA[&=\vectrepinv{B}{\lambda\vectrep{B}{\vect{v}}}&&]]>\text{<acroref type="definition" acro="EEM" />}\\
+<![CDATA[&=\lambda\vectrepinv{B}{\vectrep{B}{\vect{v}}}&&]]>\text{<acroref type="theorem" acro="ILTLT" />}\\
+<![CDATA[&=\lambda\vect{v}&&]]>\text{<acroref type="definition" acro="IVLT" />}
+</alignmath>
+which by <acroref type="definition" acro="EELT" /> says $\vect{v}$ is an eigenvector of $T$ for the eigenvalue $\lambda$.</p>
+
+</proof>
+</theorem>
+
+</subsection>
+
+<subsection acro="CELT">
+<title>Computing Eigenvectors of Linear Transformations</title>
+
+<p>Knowing that the eigenvalues of a linear transformation are the eigenvalues of any representation, no matter what the choice of the basis $B$ might be, we could now unambiguously define items such as the characteristic polynomial of a linear transformation, rather than a matrix.  We'll say that again <mdash /> eigenvalues, eigenvectors, and characteristic polynomials are intrinsic properties of a linear transformation, independent of the choice of a basis used to construct a matrix representation.</p>
+
+<p>As a practical matter, how does one compute the eigenvalues and eigenvectors of a linear transformation of the form $\ltdefn{T}{V}{V}$?  Choose a nice basis $B$ for $V$, one where the vector representations of the values of the linear transformations necessary for the matrix representation are easy to compute.  Construct the matrix representation relative to this basis, and find the eigenvalues and eigenvectors of this matrix using the techniques of <acroref type="chapter" acro="E" />.  The resulting eigenvalues of the matrix are precisely the eigenvalues of the linear transformation.  The eigenvectors of the matrix are column vectors that need to be converted to vectors in $V$ through application of $\ltinverse{\vectrepname{B}}$.</p>
+
+<p>Now consider the case where the matrix representation of a linear transformation is diagonalizable.  The $n$ linearly independent eigenvectors that must exist for the matrix (<acroref type="theorem" acro="DC" />) can be converted (via $\ltinverse{\vectrepname{B}}$) into eigenvectors of the linear transformation.  A matrix representation of the linear transformation relative to a basis of eigenvectors will be a diagonal matrix <mdash /> an especially nice representation!  Though we did not know it at the time, the diagonalizations of <acroref type="section" acro="SD" /> were really finding especially pleasing matrix representations of linear transformations.</p>
+
+<p>Here are some examples.</p>
+
+<example acro="ELTT" index="eigenvectors!of a linear transformation">
+<title>Eigenvectors of a linear transformation, twice</title>
+
+<p>Consider the linear transformation $\ltdefn{S}{M_{22}}{M_{22}}$ defined by
+<equation>
+<![CDATA[\lt{S}{\begin{bmatrix}a&b\\c&d\end{bmatrix}}=]]>
+\begin{bmatrix}
+<![CDATA[-b - c - 3d & -14a - 15b - 13c + d\\]]>
+<![CDATA[18a + 21b + 19c + 3d &  -6a - 7b - 7c - 3d]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>To find the eigenvalues and eigenvectors of $S$ we will build a matrix representation and analyze the matrix.  Since <acroref type="theorem" acro="EER" /> places no restriction on the choice of the basis $B$, we may as well use a basis that is easy to work with.  So set
+<equation>
+B=\set{\vect{x}_1,\,\vect{x}_2,\,\vect{x}_3,\,\vect{x}_4}
+=\set{
+\begin{bmatrix}
+<![CDATA[ 1 & 0 \\ 0 & 0]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[ 0 & 1 \\ 0 & 0]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[ 0 & 0 \\ 1 & 0]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[ 0 & 0 \\ 0 & 1]]>
+\end{bmatrix}
+}
+</equation>
+</p>
+
+<p>Then to build the matrix representation of $S$ relative to $B$ compute,
+<alignmath>
+<![CDATA[\vectrep{B}{\lt{S}{\vect{x}_1}}&=]]>
+<![CDATA[\vectrep{B}{\begin{bmatrix}0 & -14 \\ 18 & -6\end{bmatrix}}=]]>
+\vectrep{B}{0\vect{x}_1+(-14)\vect{x}_2+18\vect{x}_3+(-6)\vect{x}_4}=
+\colvector{0\\-14\\18\\-6}\\
+<![CDATA[\vectrep{B}{\lt{S}{\vect{x}_2}}&=]]>
+<![CDATA[\vectrep{B}{\begin{bmatrix}-1 & -15\\21 & -7\end{bmatrix}}=]]>
+\vectrep{B}{(-1)\vect{x}_1+(-15)\vect{x}_2+21\vect{x}_3+(-7)\vect{x}_4}=
+\colvector{-1\\-15\\21\\-7}\\
+<![CDATA[\vectrep{B}{\lt{S}{\vect{x}_3}}&=]]>
+<![CDATA[\vectrep{B}{\begin{bmatrix}-1 & -13\\19 & -7\end{bmatrix}}=]]>
+\vectrep{B}{(-1)\vect{x}_1+(-13)\vect{x}_2+19\vect{x}_3+(-7)\vect{x}_4}=
+\colvector{-1\\-13\\19\\-7}\\
+<![CDATA[\vectrep{B}{\lt{S}{\vect{x}_4}}&=]]>
+<![CDATA[\vectrep{B}{\begin{bmatrix}-3 & 1\\3 & -3\end{bmatrix}}=]]>
+\vectrep{B}{(-3)\vect{x}_1+1\vect{x}_2+3\vect{x}_3+(-3)\vect{x}_4}=
+\colvector{-3\\1\\3\\-3}
+</alignmath>
+</p>
+
+<p>So by <acroref type="definition" acro="MR" /> we have
+<equation>
+M=\matrixrep{S}{B}{B}=
+\begin{bmatrix}
+<![CDATA[ 0 & -1 & -1 & -3 \\]]>
+<![CDATA[ -14 & -15 & -13 & 1 \\]]>
+<![CDATA[ 18 & 21 & 19 & 3 \\]]>
+<![CDATA[ -6 & -7 & -7 & -3]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Now compute eigenvalues and eigenvectors of the matrix representation of $M$ with the techniques of <acroref type="section" acro="EE" />.  First the characteristic polynomial,
+<equation>
+\charpoly{M}{x}=\detname{M-xI_4}=x^4-x^3-10 x^2+4 x+24=(x-3) (x-2) (x+2)^2
+</equation>
+</p>
+
+<p>We could now make statements about the eigenvalues of $M$, but in light of <acroref type="theorem" acro="EER" /> we can refer to the eigenvalues of $S$ and mildly abuse (or extend) our notation for multiplicities to write
+<alignmath>
+<![CDATA[\algmult{S}{3}&=1]]>
+<![CDATA[&]]>
+<![CDATA[\algmult{S}{2}&=1]]>
+<![CDATA[&]]>
+<![CDATA[\algmult{S}{-2}&=2]]>
+</alignmath>
+</p>
+
+<p>Now compute the eigenvectors of $M$,
+<alignmath>
+<![CDATA[\lambda&=3&M-3I_4&=]]>
+\begin{bmatrix}
+<![CDATA[ -3 & -1 & -1 & -3 \\]]>
+<![CDATA[ -14 & -18 & -13 & 1 \\]]>
+<![CDATA[ 18 & 21 & 16 & 3 \\]]>
+<![CDATA[ -6 & -7 & -7 & -6]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & 1 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & -3 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 3 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{M}{3}&=\nsp{M-3I_4}]]>
+=\spn{\set{\colvector{-1\\3\\-3\\1}}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=2&M-2I_4&=]]>
+\begin{bmatrix}
+<![CDATA[ -2 & -1 & -1 & -3 \\]]>
+<![CDATA[ -14 & -17 & -13 & 1 \\]]>
+<![CDATA[ 18 & 21 & 17 & 3 \\]]>
+<![CDATA[ -6 & -7 & -7 & -5]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & 2 \\]]>
+<![CDATA[ 0 & \leading{1} & 0 & -4 \\]]>
+<![CDATA[ 0 & 0 & \leading{1} & 3 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{M}{2}&=\nsp{M-2I_4}]]>
+=\spn{\set{\colvector{-2\\4\\-3\\1}}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=-2&M-(-2)I_4&=]]>
+\begin{bmatrix}
+<![CDATA[ 2 & -1 & -1 & -3 \\]]>
+<![CDATA[ -14 & -13 & -13 & 1 \\]]>
+<![CDATA[ 18 & 21 & 21 & 3 \\]]>
+<![CDATA[ -6 & -7 & -7 & -1]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ \leading{1} & 0 & 0 & -1 \\]]>
+<![CDATA[ 0 & \leading{1} & 1 & 1 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{M}{-2}&=\nsp{M-(-2)I_4}]]>
+=\spn{\set{\colvector{0\\-1\\1\\0},\,\colvector{1\\-1\\0\\1}}}
+</alignmath>
+</p>
+
+<p>According to <acroref type="theorem" acro="EER" /> the eigenvectors just listed as basis vectors for the eigenspaces of $M$ are vector representations (relative to $B$) of eigenvectors for $S$.  So the application if the inverse function $\vectrepinvname{B}$ will convert these column vectors into elements of the vector space $M_{22}$ ($2\times 2$ matrices) that are eigenvectors of $S$.  Since $\vectrepname{B}$ is an isomorphism (<acroref type="theorem" acro="VRILT" />), so is $\vectrepinvname{B}$.  Applying the inverse function will then preserve linear independence and spanning properties, so with a sweeping application of the <miscref type="principle" text="Coordinatization Principle" /> and some extensions of our previous notation for eigenspaces and geometric multiplicities, we can write,
+<alignmath>
+\vectrepinv{B}{\colvector{-1\\3\\-3\\1}}
+<![CDATA[&=]]>
+(-1)\vect{x}_1+3\vect{x}_2+(-3)\vect{x}_3+1\vect{x}_4=
+<![CDATA[\begin{bmatrix}-1 & 3\\-3 & 1\end{bmatrix}\\]]>
+\vectrepinv{B}{\colvector{-2\\4\\-3\\1}}
+<![CDATA[&=]]>
+(-2)\vect{x}_1+4\vect{x}_2+(-3)\vect{x}_3+1\vect{x}_4=
+<![CDATA[\begin{bmatrix}-2 & 4\\-3 & 1\end{bmatrix}\\]]>
+\vectrepinv{B}{\colvector{0\\-1\\1\\0}}
+<![CDATA[&=]]>
+0\vect{x}_1+(-1)\vect{x}_2+1\vect{x}_3+0\vect{x}_4=
+<![CDATA[\begin{bmatrix}0 & -1\\1 & 0\end{bmatrix}\\]]>
+\vectrepinv{B}{\colvector{1\\-1\\0\\1}}
+<![CDATA[&=]]>
+1\vect{x}_1+(-1)\vect{x}_2+0\vect{x}_3+1\vect{x}_4=
+<![CDATA[\begin{bmatrix}1 & -1\\0 & 1\end{bmatrix}\\]]>
+</alignmath>
+</p>
+
+<p>So
+<alignmath>
+<![CDATA[\eigenspace{S}{3}&=]]>
+<![CDATA[\spn{\set{\begin{bmatrix}-1 & 3\\-3 & 1\end{bmatrix}}}\\]]>
+<![CDATA[\eigenspace{S}{2}&=]]>
+<![CDATA[\spn{\set{\begin{bmatrix}-2 & 4\\-3 & 1\end{bmatrix}}}\\]]>
+<![CDATA[\eigenspace{S}{-2}&=]]>
+<![CDATA[\spn{\set{\begin{bmatrix}0 & -1\\1 & 0\end{bmatrix},\,\begin{bmatrix}1 & -1\\0 & 1\end{bmatrix}}}]]>
+</alignmath>
+with geometric multiplicities given by
+<alignmath>
+<![CDATA[\geomult{S}{3}&=1]]>
+<![CDATA[&]]>
+<![CDATA[\geomult{S}{2}&=1]]>
+<![CDATA[&]]>
+<![CDATA[\geomult{S}{-2}&=2]]>
+</alignmath>
+</p>
+
+<p>Suppose we now decided to build another matrix representation of $S$, only now relative to a linearly independent set of eigenvectors of $S$, such as
+<equation>
+C=
+\set{
+<![CDATA[\begin{bmatrix}-1 & 3\\-3 & 1\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-2 & 4\\-3 & 1\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0 & -1\\1 & 0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}1 & -1\\0 & 1\end{bmatrix}]]>
+}
+</equation>
+</p>
+
+<p>At this point you should have computed enough matrix representations to predict that the result of representing $S$ relative to $C$ will be a diagonal matrix.  Computing this representation is an example of how <acroref type="theorem" acro="SCB" /> generalizes the diagonalizations from <acroref type="section" acro="SD" />.  For the record, here is the diagonal representation,
+<equation>
+\matrixrep{S}{C}{C}
+=
+\begin{bmatrix}
+<![CDATA[ 3 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 2 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & -2 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & -2]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Our interest in this example is not necessarily building nice representations, but instead we want to demonstrate how eigenvalues and eigenvectors are an intrinsic property of a linear transformation, independent of any particular representation.  To this end, we will repeat the foregoing, but replace $B$ by another basis.  We will make this basis different, but not extremely so,
+<equation>
+D=\set{\vect{y}_1,\,\vect{y}_2,\,\vect{y}_3,\,\vect{y}_4}
+=\set{
+\begin{bmatrix}
+<![CDATA[ 1 & 0 \\ 0 & 0]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[ 1 & 1 \\ 0 & 0]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[ 1 & 1 \\ 1 & 0]]>
+\end{bmatrix}
+,\,
+\begin{bmatrix}
+<![CDATA[ 1 & 1 \\ 1 & 1]]>
+\end{bmatrix}
+}
+</equation>
+</p>
+
+<p>Then to build the matrix representation of $S$ relative to $D$ compute,
+<alignmath>
+<![CDATA[\vectrep{D}{\lt{S}{\vect{y}_1}}&=]]>
+<![CDATA[\vectrep{D}{\begin{bmatrix}0 & -14\\18 & -6\end{bmatrix}}=]]>
+\vectrep{D}{14\vect{y}_1+(-32)\vect{y}_2+24\vect{y}_3+(-6)\vect{y}_4}=
+\colvector{14\\-32\\24\\-6}\\
+<![CDATA[\vectrep{D}{\lt{S}{\vect{y}_2}}&=]]>
+<![CDATA[\vectrep{D}{\begin{bmatrix}-1 & -29 \\ 39 & -13\end{bmatrix}}=]]>
+\vectrep{D}{28\vect{y}_1+(-68)\vect{y}_2+52\vect{y}_3+(-13)\vect{y}_4}=
+\colvector{28\\-68\\52\\-13}\\
+<![CDATA[\vectrep{D}{\lt{S}{\vect{y}_3}}&=]]>
+<![CDATA[\vectrep{D}{\begin{bmatrix}-2 & -42 \\ 58 & -20\end{bmatrix}}=]]>
+\vectrep{D}{40\vect{y}_1+(-100)\vect{y}_2+78\vect{y}_3+(-20)\vect{y}_4}=
+\colvector{40\\-100\\78\\-20}\\
+<![CDATA[\vectrep{D}{\lt{S}{\vect{y}_4}}&=]]>
+<![CDATA[\vectrep{D}{\begin{bmatrix}-5 & -41 \\ 61 & -23\end{bmatrix}}=]]>
+\vectrep{D}{36\vect{y}_1+(-102)\vect{y}_2+84\vect{y}_3+(-23)\vect{y}_4}=
+\colvector{36\\-102\\84\\-23}\\
+</alignmath>
+</p>
+
+<p>So by <acroref type="definition" acro="MR" /> we have
+<equation>
+N=\matrixrep{S}{D}{D}=
+\begin{bmatrix}
+<![CDATA[ 14 & 28 & 40 & 36 \\]]>
+<![CDATA[ -32 & -68 & -100 & -102 \\]]>
+<![CDATA[ 24 & 52 & 78 & 84 \\]]>
+<![CDATA[ -6 & -13 & -20 & -23]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Now compute eigenvalues and eigenvectors of the matrix representation of $N$ with the techniques of <acroref type="section" acro="EE" />.  First the characteristic polynomial,
+<equation>
+\charpoly{N}{x}=\detname{N-xI_4}=x^4-x^3-10 x^2+4 x+24=(x-3) (x-2) (x+2)^2
+</equation>
+</p>
+
+<p>Of course this is not news.  We now know that $M=\matrixrep{S}{B}{B}$ and $N=\matrixrep{S}{D}{D}$ are similar matrices (<acroref type="theorem" acro="SCB" />).  But <acroref type="theorem" acro="SMEE" /> told us long ago that similar matrices have identical characteristic polynomials.  Now compute eigenvectors for the matrix representation,  which will be different than what we found for $M$,
+<alignmath>
+<![CDATA[\lambda&=3&N-3I_4&=]]>
+\begin{bmatrix}
+<![CDATA[ 11 & 28 & 40 & 36 \\]]>
+<![CDATA[ -32 & -71 & -100 & -102 \\]]>
+<![CDATA[ 24 & 52 & 75 & 84 \\]]>
+<![CDATA[ -6 & -13 & -20 & -26]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ 1 & 0 & 0 & 4 \\]]>
+<![CDATA[ 0 & 1 & 0 & -6 \\]]>
+<![CDATA[ 0 & 0 & 1 & 4 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{N}{3}&=\nsp{N-3I_4}]]>
+=\spn{\set{\colvector{-4\\6\\-4\\1}}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=2&N-2I_4&=]]>
+\begin{bmatrix}
+<![CDATA[ 12 & 28 & 40 & 36 \\]]>
+<![CDATA[ -32 & -70 & -100 & -102 \\]]>
+<![CDATA[ 24 & 52 & 76 & 84 \\]]>
+<![CDATA[ -6 & -13 & -20 & -25]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ 1 & 0 & 0 & 6 \\]]>
+<![CDATA[ 0 & 1 & 0 & -7 \\]]>
+<![CDATA[ 0 & 0 & 1 & 4 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{N}{2}&=\nsp{N-2I_4}]]>
+=\spn{\set{\colvector{-6\\7\\-4\\1}}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=-2&N-(-2)I_4&=]]>
+\begin{bmatrix}
+<![CDATA[ 16 & 28 & 40 & 36 \\]]>
+<![CDATA[ -32 & -66 & -100 & -102 \\]]>
+<![CDATA[ 24 & 52 & 80 & 84 \\]]>
+<![CDATA[ -6 & -13 & -20 & -21]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ 1 & 0 & -1 & -3 \\]]>
+<![CDATA[ 0 & 1 & 2 & 3 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[&&\eigenspace{N}{-2}&=\nsp{N-(-2)I_4}]]>
+=\spn{\set{\colvector{1\\-2\\1\\0},\,\colvector{3\\-3\\0\\1}}}
+</alignmath>
+</p>
+
+<p>Employing <acroref type="theorem" acro="EER" /> we can apply $\vectrepinvname{D}$ to each of the basis vectors of the eigenspaces of $N$ to obtain eigenvectors for $S$ that also form bases for eigenspaces of $S$,
+<alignmath>
+\vectrepinv{D}{\colvector{-4\\6\\-4\\1}}
+<![CDATA[&=]]>
+(-4)\vect{y}_1+6\vect{y}_2+(-4)\vect{y}_3+1\vect{y}_4=
+<![CDATA[\begin{bmatrix}-1 & 3\\-3 & 1\end{bmatrix}\\]]>
+\vectrepinv{D}{\colvector{-6\\7\\-4\\1}}
+<![CDATA[&=]]>
+(-6)\vect{y}_1+7\vect{y}_2+(-4)\vect{y}_3+1\vect{y}_4=
+<![CDATA[\begin{bmatrix}-2 & 4\\-3 & 1\end{bmatrix}\\]]>
+\vectrepinv{D}{\colvector{1\\-2\\1\\0}}
+<![CDATA[&=]]>
+1\vect{y}_1+(-2)\vect{y}_2+1\vect{y}_3+0\vect{y}_4=
+<![CDATA[\begin{bmatrix}0 & -1\\1 & 0\end{bmatrix}\\]]>
+\vectrepinv{D}{\colvector{3\\-3\\0\\1}}
+<![CDATA[&=]]>
+3\vect{y}_1+(-3)\vect{y}_2+0\vect{y}_3+1\vect{y}_4=
+<![CDATA[\begin{bmatrix}1 & -2\\1 & 1\end{bmatrix}\\]]>
+</alignmath>
+</p>
+
+<p>The eigenspaces for the eigenvalues of algebraic multiplicity 1 are exactly as before,
+<alignmath>
+<![CDATA[\eigenspace{S}{3}&=]]>
+<![CDATA[\spn{\set{\begin{bmatrix}-1 & 3\\-3 & 1\end{bmatrix}}}\\]]>
+<![CDATA[\eigenspace{S}{2}&=]]>
+<![CDATA[\spn{\set{\begin{bmatrix}-2 & 4\\-3 & 1\end{bmatrix}}}]]>
+</alignmath>
+</p>
+
+<p>However, the eigenspace for $\lambda=-2$ would at first glance appear to be different.  Here are the two eigenspaces for $\lambda=-2$, first the eigenspace obtained from $M=\matrixrep{S}{B}{B}$, then followed by the eigenspace obtained from $M=\matrixrep{S}{D}{D}$.
+<alignmath>
+<![CDATA[\eigenspace{S}{-2}&=]]>
+<![CDATA[\spn{\set{\begin{bmatrix}0 & -1\\1 & 0\end{bmatrix},\,\begin{bmatrix}1 & -1\\0 & 1\end{bmatrix}}}]]>
+<![CDATA[&]]>
+<![CDATA[\eigenspace{S}{-2}&=]]>
+<![CDATA[\spn{\set{\begin{bmatrix}0 & -1\\1 & 0\end{bmatrix},\,\begin{bmatrix}1 & -2\\1 & 1\end{bmatrix}}}]]>
+</alignmath>
+</p>
+
+<p>Subspaces generally have many bases, and that is the situation here.  With a careful proof of set equality, you can show that these two eigenspaces are equal sets.  The key observation to make such a proof go is that
+<equation>
+<![CDATA[\begin{bmatrix}1 & -2\\1 & 1\end{bmatrix}]]>
+=
+<![CDATA[\begin{bmatrix}0 & -1\\1 & 0\end{bmatrix}+\begin{bmatrix}1 & -1\\0 & 1\end{bmatrix}]]>
+</equation>
+which will establish that the second set is a subset of the first.  With equal dimensions, <acroref type="theorem" acro="EDYES" /> will finish the task.</p>
+
+<p>So the eigenvalues of a linear transformation are independent of the matrix representation employed to compute them!</p>
+
+</example>
+
+<p>Another example, this time a bit larger and with complex eigenvalues.</p>
+
+<example acro="CELT" index="eigenvalues!complex, of a linear transformation">
+<title>Complex eigenvectors of a linear transformation</title>
+
+<p>Consider the linear transformation $\ltdefn{Q}{P_4}{P_4}$ defined by
+<alignmath>
+<![CDATA[&\lt{Q}{a+bx+cx^2+dx^3+ex^4}\\]]>
+<![CDATA[&=(-46a-22b+13c+5d+e)+(117a+57b-32c-15d-4e) x+\\]]>
+<![CDATA[&\quad\quad (-69a-29b+21c-7e)x^2+(159a+73b-44c-13d+2e)x^3+\\]]>
+<![CDATA[&\quad\quad (-195a-87b+55c+10d-13e)x^4]]>
+</alignmath>
+</p>
+
+<p>Choose a simple basis to compute with, say
+<equation>
+B=\set{1,\,x,\,x^2,\,x^3,\,x^4}
+</equation>
+</p>
+
+<p>Then it should be apparent that the matrix representation of $Q$ relative to $B$ is
+<equation>
+M=\matrixrep{Q}{B}{B}=
+\begin{bmatrix}
+<![CDATA[ -46 & -22 & 13 & 5 & 1 \\]]>
+<![CDATA[ 117 & 57 & -32 & -15 & -4 \\]]>
+<![CDATA[ -69 & -29 & 21 & 0 & -7 \\]]>
+<![CDATA[ 159 & 73 & -44 & -13 & 2 \\]]>
+<![CDATA[ -195 & -87 & 55 & 10 & -13]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>Compute the characteristic polynomial, eigenvalues and eigenvectors according to the techniques of <acroref type="section" acro="EE" />,
+<alignmath>
+\charpoly{Q}{x}
+<![CDATA[&=-x^5+6 x^4-x^3-88 x^2+252 x-208\\]]>
+<![CDATA[&=-(x-2)^2 (x+4) \left(x^2-6x+13\right)\\]]>
+<![CDATA[&=-(x-2)^2 (x+4) \left(x-(3+2i)\right) \left(x-(3-2i)\right)\\]]>
+</alignmath>
+<alignmath>
+<![CDATA[\algmult{Q}{2}&=2]]>
+<![CDATA[&]]>
+<![CDATA[\algmult{Q}{-4}&=1]]>
+<![CDATA[&]]>
+<![CDATA[\algmult{Q}{3+2i}&=1]]>
+<![CDATA[&]]>
+<![CDATA[\algmult{Q}{3-2i}&=1]]>
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=2\\]]>
+<![CDATA[M-(2)I_5&=]]>
+\begin{bmatrix}
+<![CDATA[ -48 & -22 & 13 & 5 & 1 \\]]>
+<![CDATA[ 117 & 55 & -32 & -15 & -4 \\]]>
+<![CDATA[ -69 & -29 & 19 & 0 & -7 \\]]>
+<![CDATA[ 159 & 73 & -44 & -15 & 2 \\]]>
+<![CDATA[ -195 & -87 & 55 & 10 & -15]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ 1 & 0 & 0 & \frac{1}{2} & -\frac{1}{2} \\]]>
+<![CDATA[ 0 & 1 & 0 & -\frac{5}{2} & -\frac{5}{2} \\]]>
+<![CDATA[ 0 & 0 & 1 & -2 & -6 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{M}{2}&=\nsp{M-(2)I_5}]]>
+=\spn{\set{
+\colvector{-\frac{1}{2}\\\frac{5}{2}\\2\\1\\0},\,
+\colvector{\frac{1}{2}\\\frac{5}{2}\\6\\0\\1}
+}}
+=\spn{\set{
+\colvector{-1\\5\\4\\2\\0},\,
+\colvector{1\\5\\12\\0\\2}
+}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=-4\\]]>
+<![CDATA[M-(-4)I_5&=]]>
+\begin{bmatrix}
+<![CDATA[ -42 & -22 & 13 & 5 & 1 \\]]>
+<![CDATA[ 117 & 61 & -32 & -15 & -4 \\]]>
+<![CDATA[ -69 & -29 & 25 & 0 & -7 \\]]>
+<![CDATA[ 159 & 73 & -44 & -9 & 2 \\]]>
+<![CDATA[ -195 & -87 & 55 & 10 & -9]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ 1 & 0 & 0 & 0 & 1 \\]]>
+<![CDATA[ 0 & 1 & 0 & 0 & -3 \\]]>
+<![CDATA[ 0 & 0 & 1 & 0 & -1 \\]]>
+<![CDATA[ 0 & 0 & 0 & 1 & -2 \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{M}{-4}&=\nsp{M-(-4)I_5}]]>
+=\spn{\set{\colvector{-1\\3\\1\\2\\1}}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=3+2i\\]]>
+<![CDATA[M-(3+2i)I_5&=]]>
+\begin{bmatrix}
+<![CDATA[ -49-2 i & -22 & 13 & 5 & 1 \\]]>
+<![CDATA[ 117 & 54-2 i & -32 & -15 & -4\\]]>
+<![CDATA[ -69 & -29 & 18-2 i & 0 & -7 \\]]>
+<![CDATA[ 159 & 73 & -44 & -16-2 i & 2 \\]]>
+<![CDATA[ -195 & -87 & 55 & 10 & -16-2 i]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ 1 & 0 & 0 & 0 &  -\frac{3}{4}+\frac{i}{4} \\]]>
+<![CDATA[ 0 & 1 & 0 & 0 &  \frac{7}{4}-\frac{i}{4} \\]]>
+<![CDATA[ 0 & 0 & 1 & 0 &  -\frac{1}{2}+\frac{i}{2} \\]]>
+<![CDATA[ 0 & 0 & 0 & 1 &  \frac{7}{4}-\frac{i}{4} \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{M}{3+2i}&=\nsp{M-(3+2i)I_5}]]>
+=\spn{\set{\colvector{\frac{3}{4}-\frac{i}{4} \\ -\frac{7}{4}+\frac{i}{4} \\  \frac{1}{2}-\frac{i}{2}  \\  -\frac{7}{4}+\frac{i}{4} \\ 1}}}
+=\spn{\set{\colvector{3-i\\-7+i\\2-2i\\-7+i\\4}}}
+</alignmath>
+<alignmath>
+<![CDATA[\lambda&=3-2i\\]]>
+<![CDATA[M-(3-2i)I_5&=]]>
+\begin{bmatrix}
+<![CDATA[ -49+2 i & -22 & 13 & 5 & 1 \\]]>
+<![CDATA[ 117 & 54+2 i & -32 & -15 & -4 \\]]>
+<![CDATA[ -69 & -29 & 18+2 i & 0 & -7 \\]]>
+<![CDATA[ 159 & 73 & -44 & -16+2 i & 2 \\]]>
+<![CDATA[ -195 & -87 & 55 & 10 & -16+2 i]]>
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+<![CDATA[ 1 & 0 & 0 & 0 &  -\frac{3}{4}-\frac{i}{4} \\]]>
+<![CDATA[ 0 & 1 & 0 & 0 &  \frac{7}{4}+\frac{i}{4} \\]]>
+<![CDATA[ 0 & 0 & 1 & 0 &  -\frac{1}{2}-\frac{i}{2} \\]]>
+<![CDATA[ 0 & 0 & 0 & 1 &  \frac{7}{4}+\frac{i}{4} \\]]>
+<![CDATA[ 0 & 0 & 0 & 0 & 0]]>
+\end{bmatrix}\\
+<![CDATA[\eigenspace{M}{3-2i}&=\nsp{M-(3-2i)I_5}]]>
+=\spn{\set{\colvector{\frac{3}{4}+\frac{i}{4} \\ -\frac{7}{4}-\frac{i}{4} \\  \frac{1}{2}+\frac{i}{2}  \\  -\frac{7}{4}-\frac{i}{4} \\ 1}}}
+=\spn{\set{\colvector{3+i\\-7-i\\2+2i\\-7-i\\4}}}
+</alignmath>
+</p>
+
+<p>It is straightforward to convert each of these basis vectors for eigenspaces of $M$ back to elements of $P_4$ by applying the isomorphism $\vectrepinvname{B}$,
+<alignmath>
+<![CDATA[\vectrepinv{B}{\colvector{-1\\5\\4\\2\\0}}&=-1+5x+4x^2+2x^3\\]]>
+<![CDATA[\vectrepinv{B}{\colvector{1\\5\\12\\0\\2}}&=1+5x+12x^2+2x^4\\]]>
+<![CDATA[\vectrepinv{B}{\colvector{-1\\3\\1\\2\\1}}&=-1+3x+x^2+2x^3+x^4\\]]>
+<![CDATA[\vectrepinv{B}{\colvector{3-i\\-7+i\\2-2i\\-7+i\\4}}&=(3-i)+(-7+i)x+(2-2i)x^2+(-7+i)x^3+4x^4\\]]>
+<![CDATA[\vectrepinv{B}{\colvector{3+i\\-7-i\\2+2i\\-7-i\\4}}&=(3+i)+(-7-i)x+(2+2i)x^2+(-7-i)x^3+4x^4\\]]>
+</alignmath>
+</p>
+
+<p>So we apply <acroref type="theorem" acro="EER" /> and the <miscref type="principle" text="Coordinatization Principle" /> to get the eigenspaces for $Q$,
+<alignmath>
+<![CDATA[\eigenspace{Q}{2}&=\spn{\set{-1+5x+4x^2+2x^3,\,1+5x+12x^2+2x^4}}\\]]>
+<![CDATA[\eigenspace{Q}{-4}&=\spn{\set{-1+3x+x^2+2x^3+x^4}}\\]]>
+<![CDATA[\eigenspace{Q}{3+2i}&=\spn{\set{(3-i)+(-7+i)x+(2-2i)x^2+(-7+i)x^3+4x^4}}\\]]>
+<![CDATA[\eigenspace{Q}{3-2i}&=\spn{\set{(3+i)+(-7-i)x+(2+2i)x^2+(-7-i)x^3+4x^4}}]]>
+</alignmath>
+with geometric multiplicities
+<alignmath>
+<![CDATA[\geomult{Q}{2}&=2]]>
+<![CDATA[&]]>
+<![CDATA[\geomult{Q}{-4}&=1]]>
+<![CDATA[&]]>
+<![CDATA[\geomult{Q}{3+2i}&=1]]>
+<![CDATA[&]]>
+<![CDATA[\geomult{Q}{3-2i}&=1]]>
+</alignmath>
+</p>
+
+</example>
+
+<sageadvice acro="CELT" index="matrix representation!designing">
+<title>Designing Matrix Representations</title>
+How do we find the eigenvectors of a linear transformation?  How do we find pleasing (or computationally simple) matrix representations of linear transformations.  <acroref type="theorem" acro="EER" /> and <acroref type="theorem" acro="SCB" /> applied in the context of <acroref type="theorem" acro="DC" /> can answer both questions.  Here is an example.
+<sage>
+<input>outputs = [  9*x1 - 15*x2 - 7*x3 + 15*x4 - 36*x5 - 53*x6,
+            24*x1 - 20*x2 - 9*x3 + 18*x4 - 24*x5 - 78*x6,
+             8*x1 -  6*x2 - 3*x3 +  6*x4 -  6*x5 - 26*x6,
+           -12*x1 -  9*x2 - 3*x3 + 13*x4 - 54*x5 - 24*x6,
+            -8*x1 +  6*x2 + 3*x3 -  6*x4 +  6*x5 + 26*x6,
+            -4*x1 -  3*x2 -   x3 +  3*x4 - 18*x5 -  4*x6]
+T_symbolic(x1, x2, x3, x4, x5, x6) = outputs
+T1 = linear_transformation(QQ^6, QQ^6, T_symbolic)
+M1 = T1.matrix(side='right')
+M1
+</input>
+<output>[  9 -15  -7  15 -36 -53]
+[ 24 -20  -9  18 -24 -78]
+[  8  -6  -3   6  -6 -26]
+[-12  -9  -3  13 -54 -24]
+[ -8   6   3  -6   6  26]
+[ -4  -3  -1   3 -18  -4]
+</output>
+</sage>
+
+Now we compute the eigenvalues and eigenvectors of <code>M1</code>.  Since <code>M1</code> is diagonalizable, we can find a basis of eigenvectors for use as the basis for a new representation.
+<sage>
+<input>ev = M1.eigenvectors_right()
+ev
+</input>
+<output>[(4, [
+(1, 6/5, 2/5, 4/5, -2/5, 1/5)
+], 1), (0, [
+(1, 9/7, 4/7, 3/7, -3/7, 1/7)
+], 1), (-2, [
+(1, 7/5, 2/5, 3/5, -2/5, 1/5)
+], 1), (-3, [
+(1, 3, 1, -3/2, -1, -1/2)
+], 1), (1, [
+(1, 0, 0, 3, 0, 1),
+(0, 1, 1/3, -2, -1/3, -2/3)
+], 2)]
+</output>
+</sage>
+
+<sage>
+<input>evalues, evectors = M1.eigenmatrix_right()
+B = evectors.columns()
+V = (QQ^6).subspace_with_basis(B)
+T2 = linear_transformation(V, V, T_symbolic)
+M2 = T2.matrix('right')
+M2
+</input>
+<output>[ 4  0  0  0  0  0]
+[ 0  0  0  0  0  0]
+[ 0  0 -2  0  0  0]
+[ 0  0  0 -3  0  0]
+[ 0  0  0  0  1  0]
+[ 0  0  0  0  0  1]
+</output>
+</sage>
+
+The eigenvectors that are the basis elements in B are the eigenvectors of the linear transformation, <em>relative</em> to the standard basis.  For different representations the eigenvectors tke different forms, relative to other bases.  What are the eigenvctors of the matrix representation M2?<br /><br />
+Notice that the eigenvalues of the linear transformation are totally independent of the representation.  So in a sense, they are an inherent property of the linear transformation.<br /><br />
+You should be able to use these techniques with linear transformations on abstract vector spaces <mdash /> just use a mental linear transformation transforming the abstract vector space back-and-forth between a vector space of column vectors of the right size.
+
+
+</sageadvice>
+<sageadvice acro="SUTH4" index="sage under the hood!round 4">
+<title>Sage Under The Hood, Round 4</title>
+We finally have enough theorems to understand how Sage creates and manages linear transformations.  With a choice of bases for the domain and codomain, a linear transformation can be represented by a matrix.  Every interesting property of the linear transformation can be computed from the matrix representation, and we can convert between representations (of vectors and linear transformations) with change-of-basis matrices, similarity and matrix multiplication.<br /><br />
+So we can understand the theory of linear algebra better by experimenting with the assistance of Sage, and the theory of linear algebra helps us understand how Sage is designed and functions.  A virtuous cycle, if there ever was one.  Keep it going.
+
+
+</sageadvice>
+</subsection>
+
+<!--   End of  cb.tex -->
+<readingquestions>
+<ol>
+<li>The change-of-basis matrix is a matrix representation of which linear transformation?
+</li>
+<li>Find the change-of-basis matrix, $\cbm{B}{C}$, for the two bases of $\complex{2}$
+<alignmath>
+<![CDATA[B&=\set{\colvector{2\\3},\,\colvector{-1\\2}}&]]>
+<![CDATA[C&=\set{\colvector{1\\0},\,\colvector{1\\1}}]]>
+</alignmath>
+</li>
+<li>What is the third <q>surprise,</q> and why is it surprising?
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="20" rough="Vector representation from Example CBCV">
+<problem contributor="robertbeezer">In <acroref type="example" acro="CBCV" /> we computed the vector representation of $\vect{y}$ relative to $C$, $\vectrep{C}{\vect{y}}$, as an example of <acroref type="theorem" acro="CB" />.  Compute this same representation directly.  In other words, apply <acroref type="definition" acro="VR" /> rather than <acroref type="theorem" acro="CB" />.
+</problem>
+</exercise>
+
+<exercise type="C" number="21" rough="Matrix representation from Example MRCM">
+<problem contributor="robertbeezer">Perform a check on <acroref type="example" acro="MRCM" /> by computing $\matrixrep{Q}{B}{D}$ directly.  In other words, apply <acroref type="definition" acro="MR" /> rather than <acroref type="theorem" acro="MRCB" />.
+</problem>
+<solution contributor="robertbeezer">Apply <acroref type="definition" acro="MR" />,
+<alignmath>
+<![CDATA[&\vectrep{D}{\lt{Q}{\begin{bmatrix}5&-3\\-3&-2\end{bmatrix}}}]]>
+=\vectrep{D}{19+14x-2x^2-28x^3}\\
+<![CDATA[&=\vectrep{D}{(-39)(2+x-2x^2+3x^3)+62(-1-2x^2+3x^3)+(-53)(-3-x+x^3)+(-44)(-x^2+x^3)}\\]]>
+<![CDATA[&=\colvector{-39\\62\\-53\\-44}\\]]>
+<![CDATA[&\vectrep{D}{\lt{Q}{\begin{bmatrix}2&-3\\-3&0\end{bmatrix}}}]]>
+=\vectrep{D}{16+9x-7x^2-14x^3}\\
+<![CDATA[&=\vectrep{D}{(-23)(2+x-2x^2+3x^3)+(34)(-1-2x^2+3x^3)+(-32)(-3-x+x^3)+(-15)(-x^2+x^3)}\\]]>
+<![CDATA[&=\colvector{-23\\34\\-32\\-15}\\]]>
+<![CDATA[&\vectrep{D}{\lt{Q}{\begin{bmatrix}1&2\\2&4\end{bmatrix}}}]]>
+=\vectrep{D}{25+9x+3x^2+4x^3}\\
+<![CDATA[&=\vectrep{D}{(14)(2+x-2x^2+3x^3)+(-12)(-1-2x^2+3x^3)+5(-3-x+x^3)+(-7)(-x^2+x^3)}\\]]>
+<![CDATA[&=\colvector{14\\-12\\5\\-7}\\]]>
+</alignmath>
+These three vectors are the columns of the matrix representation,
+<equation>
+\matrixrep{Q}{B}{D}=
+\begin{bmatrix}
+<![CDATA[ -39 & -23 & 14 \\]]>
+<![CDATA[ 62 & 34 & -12 \\]]>
+<![CDATA[ -53 & -32 & 5 \\]]>
+<![CDATA[ -44 & -15 & -7]]>
+\end{bmatrix}
+</equation>
+which coincides with the result obtained in <acroref type="example" acro="MRCM" />.
+</solution>
+</exercise>
+
+<exercise type="C" number="30" rough="Eigenvector representation">
+<problem contributor="robertbeezer">Find a basis for the vector space $P_3$  composed of eigenvectors of the linear transformation $T$.  Then find a matrix representation of $T$ relative to this basis.
+<equation>
+\ltdefn{T}{P_3}{P_3},\quad\lt{T}{a+bx+cx^2+dx^3}=
+(a+c+d)+(b+c+d)x+(a+b+c)x^2+(a+b+d)x^3
+</equation>
+</problem>
+<solution contributor="robertbeezer">With the domain and codomain being identical, we will build a matrix representation using the same basis for both the domain and codomain.  The eigenvalues of the matrix representation will be the eigenvalues of the linear transformation, and we can obtain the eigenvectors of the linear transformation by un-coordinatizing (<acroref type="theorem" acro="EER" />).  Since the method does not depend on <em>which</em> basis we choose, we can choose a natural basis for ease of computation, say,
+<equation>
+B=\set{1,\,x,\,x^2,x^3}
+</equation>
+The matrix representation is then,
+<equation>
+\matrixrep{T}{B}{B}=
+\begin{bmatrix}
+<![CDATA[1 &  0 &  1 &  1\\]]>
+<![CDATA[0 &  1 &  1 &  1\\]]>
+<![CDATA[1 &  1 &  1 &  0\\]]>
+<![CDATA[1 &  1 &  0 &  1]]>
+\end{bmatrix}
+</equation>
+The eigenvalues and eigenvectors of this matrix were computed in <acroref type="example" acro="ESMS4" />.  A basis for $\complex{4}$, composed of eigenvectors of the matrix representation is,
+<equation>
+C=\set{
+\colvector{1\\1\\1\\1},\,
+\colvector{-1\\1\\0\\0},\,
+\colvector{0\\0\\-1\\1},\,
+\colvector{-1\\-1\\1\\1}
+}
+</equation>
+Applying $\vectrepinvname{B}$ to each vector of this set, yields a basis of $P_3$ composed of eigenvectors of $T$,
+<equation>
+D=\set{1+x+x^2+x^3, -1+x,\,-x^2+x^3,\,-1-x+x^2+x^3}
+</equation>
+The matrix representation of $T$ relative to the basis $D$ will be a diagonal matrix with the corresponding eigenvalues along the diagonal, so in this case we get
+<equation>
+\matrixrep{T}{D}{D}=
+\begin{bmatrix}
+<![CDATA[3 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 1 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 1 & 0\\]]>
+<![CDATA[0 & 0 & 0 & -1]]>
+\end{bmatrix}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="C" number="40" rough="Basis to yield diagonalization on S_22">
+<problem contributor="robertbeezer">Let $S_{22}$ be the vector space of $2\times 2$ symmetric matrices. Find a basis $B$ for $S_{22}$ that yields a diagonal matrix representation of the linear transformation $R$.
+<alignmath>
+\ltdefn{R}{S_{22}}{S_{22}},\quad
+<![CDATA[\lt{R}{\begin{bmatrix}a&b\\b&c\end{bmatrix}}=]]>
+\begin{bmatrix}
+<![CDATA[-5a + 2b - 3c & -12a + 5b - 6c\\]]>
+<![CDATA[-12a + 5b - 6c & 6a - 2b + 4c]]>
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">Begin with a matrix representation of $R$, any matrix representation, but use the same basis for both instances of $S_{22}$.  We'll choose a basis that makes it easy to compute vector representations in $S_{22}$.
+<equation>
+B=\set{
+<![CDATA[\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}]]>
+}
+</equation>
+Then the resulting matrix representation of $R$  (<acroref type="definition" acro="MR" />) is
+<equation>
+\matrixrep{R}{B}{B}=
+\begin{bmatrix}
+<![CDATA[ -5 & 2 & -3 \\]]>
+<![CDATA[ -12 & 5 & -6 \\]]>
+<![CDATA[ 6 & -2 & 4]]>
+\end{bmatrix}
+</equation>
+Now, compute the eigenvalues and eigenvectors of this matrix, with the goal of diagonalizing the matrix (<acroref type="theorem" acro="DC" />),
+<alignmath>
+<![CDATA[\lambda&=2]]>
+<![CDATA[&]]>
+<![CDATA[\eigenspace{\matrixrep{R}{B}{B}}{2}&=\spn{\set{\colvector{-1\\-2\\1}}}\\]]>
+<![CDATA[\lambda&=1]]>
+<![CDATA[&]]>
+<![CDATA[\eigenspace{\matrixrep{R}{B}{B}}{1}&=\spn{\set{\colvector{-1\\0\\2},\,\colvector{1\\3\\0}}}\\]]>
+</alignmath>
+The three vectors that occur as basis elements for these eigenspaces will together form a linearly independent set (check this!).  So these column vectors may be employed in a matrix that will diagonalize the matrix representation.  If we <q>un-coordinatize</q> these three column vectors relative to the basis $B$, we will find three linearly independent elements of $S_{22}$ that are eigenvectors of the linear transformation $R$ (<acroref type="theorem" acro="EER" />).  A matrix representation relative to this basis of eigenvectors will be diagonal, with the eigenvalues ($\lambda=2,\,1$) as the diagonal elements.  Here we go,
+<alignmath>
+<![CDATA[\vectrepinv{B}{\colvector{-1\\-2\\1}}&=]]>
+<![CDATA[(-1)\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}+]]>
+<![CDATA[(-2)\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}+]]>
+<![CDATA[1\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}]]>
+=
+\begin{bmatrix}
+<![CDATA[-1 & -2 \\-2 & 1]]>
+\end{bmatrix}\\
+<![CDATA[\vectrepinv{B}{\colvector{-1\\0\\2}}&=]]>
+<![CDATA[(-1)\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}+]]>
+<![CDATA[2\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}]]>
+=
+\begin{bmatrix}
+<![CDATA[-1 & 0 \\ 0 & 2]]>
+\end{bmatrix}\\
+<![CDATA[\vectrepinv{B}{\colvector{1\\3\\0}}&=]]>
+<![CDATA[1\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}+]]>
+<![CDATA[3\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}+]]>
+<![CDATA[0\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}]]>
+=
+\begin{bmatrix}
+<![CDATA[1 & 3 \\ 3 & 0]]>
+\end{bmatrix}\\
+</alignmath>
+So the requested basis of $S_{22}$, yielding a diagonal matrix representation of $R$, is
+<equation>
+\set{
+\begin{bmatrix}
+<![CDATA[-1 & -2 \\-2 & 1]]>
+\end{bmatrix}\,\
+\begin{bmatrix}
+<![CDATA[-1 & 0 \\ 0 & 2]]>
+\end{bmatrix},\,
+\begin{bmatrix}
+<![CDATA[1 & 3 \\ 3 & 0]]>
+\end{bmatrix}%
+}
+</equation>
+</solution>
+</exercise>
+
+<exercise type="C" number="41" rough="Basis to yield diagonalization on S_22">
+<problem contributor="robertbeezer">Let $S_{22}$ be the vector space of $2\times 2$ symmetric matrices.  Find a basis for $S_{22}$ composed of eigenvectors of the linear transformation $\ltdefn{Q}{S_{22}}{S_{22}}$.
+<equation>
+\lt{Q}{
+\begin{bmatrix}
+<![CDATA[ a  &  b\\]]>
+<![CDATA[ b  &  c]]>
+\end{bmatrix}
+}
+=
+\begin{bmatrix}
+<![CDATA[ 25a + 18b + 30c  &  -16a - 11b - 20c\\]]>
+<![CDATA[ -16a - 11b - 20c  &  -11a - 9b - 12c]]>
+\end{bmatrix}
+</equation>
+</problem>
+<solution contributor="robertbeezer">Use a single basis for both the domain and codomain, since they are equal.
+<equation>
+B=\set{
+<![CDATA[\begin{bmatrix}1 & 0 \\ 0 & 0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}0 & 0 \\ 0 & 1\end{bmatrix}]]>
+}
+</equation>
+The matrix representation of $Q$ relative to $B$ is
+<equation>
+M=
+\matrixrep{Q}{B}{B}
+=
+\begin{bmatrix}
+<![CDATA[ 25 & 18 & 30 \\]]>
+<![CDATA[ -16 & -11 & -20 \\]]>
+<![CDATA[ -11 & -9 & -12]]>
+\end{bmatrix}
+</equation>
+We can analyze this matrix with the techniques of <acroref type="section" acro="EE" /> and then apply <acroref type="theorem" acro="EER" />.  The eigenvalues of this matrix are $\lambda=-2,\,1,\,3$ with eigenspaces
+<alignmath>
+<![CDATA[\eigenspace{M}{-2}&=\spn{\set{\colvector{-6\\4\\3}}}]]>
+<![CDATA[&]]>
+<![CDATA[\eigenspace{M}{1}&=\spn{\set{\colvector{-2\\1\\1}}}]]>
+<![CDATA[&]]>
+<![CDATA[\eigenspace{M}{3}&=\spn{\set{\colvector{-3\\2\\1}}}]]>
+</alignmath>
+Because the three eigenvalues are distinct, the three basis vectors from the three eigenspaces for a linearly independent set (<acroref type="theorem" acro="EDELI" />).  <acroref type="theorem" acro="EER" /> says we can uncoordinatize these eigenvectors to obtain eigenvectors of $Q$.  By <acroref type="theorem" acro="ILTLI" /> the resulting set will remain linearly independent.  Set
+<equation>
+C=\set{
+\vectrepinv{B}{\colvector{-6\\4\\3}},\,
+\vectrepinv{B}{\colvector{-2\\1\\1}},\,
+\vectrepinv{B}{\colvector{-3\\2\\1}}
+}
+=
+\set{
+<![CDATA[\begin{bmatrix}-6 & 4 \\ 4 & 3\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-2 & 1 \\ 1 & 1\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-3 & 2 \\ 2 & 1\end{bmatrix}]]>
+}
+</equation>
+Then $C$  is a linearly independent set of size 3 in the vector space $S_{22}$, which has dimension 3 as well.  By <acroref type="theorem" acro="G" />, $C$ is a basis of $S_{22}$.
+</solution>
+</exercise>
+
+<exercise type="T" number="10" rough="Eigenvalues of inverse linear trans">
+<problem contributor="robertbeezer">Suppose that $\ltdefn{T}{V}{V}$ is an invertible linear transformation with a nonzero eigenvalue $\lambda$.  Prove that $\displaystyle\frac{1}{\lambda}$ is an eigenvalue of $\ltinverse{T}$.
+</problem>
+<solution contributor="robertbeezer">Let $\vect{v}$ be an eigenvector of $T$ for the eigenvalue $\lambda$.  Then,
+<alignmath>
+<![CDATA[\lt{\ltinverse{T}}{\vect{v}}&=]]>
+<![CDATA[\frac{1}{\lambda}\lambda\lt{\ltinverse{T}}{\vect{v}}&&\text{$\lambda\neq 0$}\\]]>
+<![CDATA[&=\frac{1}{\lambda}\lt{\ltinverse{T}}{\lambda\vect{v}}&&]]>\text{<acroref type="theorem" acro="ILTLT" />}\\
+<![CDATA[&=\frac{1}{\lambda}\lt{\ltinverse{T}}{\lt{T}{\vect{v}}}&&\text{$\vect{v}$ eigenvector of $T$}\\]]>
+<![CDATA[&=\frac{1}{\lambda}\lt{I_V}{\vect{v}}&&]]>\text{<acroref type="definition" acro="IVLT" />}\\
+<![CDATA[&=\frac{1}{\lambda}\vect{v}&&]]>\text{<acroref type="definition" acro="IDLT" />}
+</alignmath>
+which says that $\displaystyle\frac{1}{\lambda}$ is an eigenvalue of $\ltinverse{T}$ with eigenvector $\vect{v}$.  Note that it is possible to prove that any eigenvalue of an invertible linear transformation is never zero.  So the hypothesis that $\lambda$ be nonzero is just a convenience for this problem.
+</solution>
+</exercise>
+
+<exercise type="T" number="15" rough="Injective iff no zero eigenvalue">
+<problem contributor="robertbeezer">Suppose that $V$ is a vector space and $\ltdefn{T}{V}{V}$ is a linear transformation.  Prove that $T$ is injective if and only if $\lambda=0$ is not an eigenvalue of $T$.
+</problem>
+</exercise>
+
+</exercisesubsection>
+
+</section>

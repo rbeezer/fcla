@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="PD">
+<title>Properties of Dimension</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section PD -->
+<!-- %  Properties of Dimension -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>Once the dimension of a vector space is known, then the determination of whether or not a set of vectors is linearly independent, or if it spans the vector space, can often be much easier.  In this section we will state a workhorse theorem and then apply it to the column space and row space of a matrix.  It will also help us describe a super-basis for $\complex{m}$.</p>
+
+</introduction>
+
+<subsection acro="GT">
+<title>Goldilocks' Theorem</title>
+
+<p>We begin with a useful theorem that we will need later, and in the proof of the main theorem in this subsection.  This theorem says that we can extend linearly independent sets, one vector at a time, by adding vectors from outside the span of the linearly independent set, all the while preserving the  linear independence of the set.</p>
+
+<theorem acro="ELIS" index="linearly independent!extending sets">
+<title>Extending Linearly Independent Sets</title>
+<statement>
+<p>Suppose $V$ is vector space and $S$ is a linearly independent set of vectors from $V$.  Suppose $\vect{w}$ is a vector such that $\vect{w}\not\in\spn{S}$.  Then the set $S^\prime=S\cup\set{\vect{w}}$ is linearly independent.</p>
+
+</statement>
+
+<proof>
+<p>Suppose $S=\set{\vectorlist{v}{m}}$ and begin with a relation of linear dependence on $S^\prime$,
+<equation>
+\lincombo{a}{v}{m}+a_{m+1}\vect{w}=\zerovector.
+</equation>
+</p>
+
+<p>There are two cases to consider.  First suppose that $a_{m+1}=0$.  Then the relation of linear dependence on $S^\prime$ becomes
+<equation>
+\lincombo{a}{v}{m}=\zerovector.
+</equation>
+and by the linear independence of the set $S$, we conclude that $a_1=a_2=a_3=\cdots=a_m=0$.  So all of the scalars in the relation of linear dependence on $S^\prime$ are zero.</p>
+
+<p>In the second case, suppose that $a_{m+1}\neq 0$.    Then the relation of linear dependence on $S^\prime$ becomes
+<alignmath>
+<![CDATA[a_{m+1}\vect{w}&=-a_1\vect{v}_1-a_2\vect{v}_2-a_3\vect{v}_3-\cdots-a_m\vect{v}_m\\]]>
+<![CDATA[\vect{w}&=-\frac{a_1}{a_{m+1}}\vect{v}_1-\frac{a_2}{a_{m+1}}\vect{v}_2-\frac{a_3}{a_{m+1}}\vect{v}_3-\cdots-\frac{a_m}{a_{m+1}}\vect{v}_m]]>
+</alignmath>
+</p>
+
+<p>This equation expresses $\vect{w}$ as a linear combination of the vectors in $S$, contrary to the assumption that $\vect{w}\not\in\spn{S}$, so this case leads to a contradiction.</p>
+
+<p>The first case yielded only a trivial relation of linear dependence on $S^\prime$ and the second case led to a contradiction.  So $S^\prime$ is a linearly independent set since any relation of linear dependence is trivial.</p>
+
+</proof>
+</theorem>
+
+<p>In the story <i>Goldilocks and the Three Bears</i>, the young girl Goldilocks visits the empty house of the three bears while out walking in the woods.  One bowl of porridge is too hot, the other too cold, the third is just right.  One chair is too hard, one too soft, the third is just right.  So it is with sets of vectors <mdash /> some are too big (linearly dependent), some are too small (they don't span), and some are just right (bases).  Here's Goldilocks' Theorem.</p>
+
+<theorem acro="G" index="goldilocks">
+<title>Goldilocks</title>
+<statement>
+<p>Suppose that $V$ is a vector space of dimension $t$.  Let $S=\set{\vectorlist{v}{m}}$ be a set of vectors from $V$.  Then
+<ol><li>  If $m>t$, then $S$ is linearly dependent.
+</li><li>  If $<![CDATA[m<t]]>$, then $S$ does not span $V$.
+</li><li>  If $m=t$ and $S$ is linearly independent, then $S$ spans $V$.
+</li><li>  If $m=t$ and $S$ spans $V$, then $S$ is linearly independent.
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>Let $B$ be a basis of $V$.  Since $\dimension{V}=t$, <acroref type="definition" acro="B" /> and <acroref type="theorem" acro="BIS" /> imply that $B$ is a linearly independent set of $t$ vectors that spans $V$.
+<ol><li> Suppose to the contrary that $S$ is linearly independent.  Then $B$ is a smaller set of vectors that spans $V$.   This contradicts <acroref type="theorem" acro="SSLD" />.
+</li><li> Suppose to the contrary that $S$ does span $V$.  Then $B$ is a larger set of vectors that is linearly independent.   This contradicts <acroref type="theorem" acro="SSLD" />.
+</li><li> Suppose to the contrary that $S$ does not span $V$.  Then we can choose a vector $\vect{w}$ such that $\vect{w}\in V$ and $\vect{w}\not\in\spn{S}$.  By <acroref type="theorem" acro="ELIS" />, the set $S^\prime=S\cup\set{\vect{w}}$ is again linearly independent.  Then $S^\prime$ is a set of $m+1=t+1$ vectors that are linearly independent, while $B$ is a set of $t$ vectors that span $V$.    This contradicts <acroref type="theorem" acro="SSLD" />.
+</li><li> Suppose to the contrary that $S$ is linearly dependent.  Then by <acroref type="theorem" acro="DLDS" /> (which can be upgraded, with no changes in the proof, to the setting of a general vector space), there is a vector in $S$, say $\vect{v}_k$ that is equal to a linear combination of the other vectors in $S$.  Let $S^\prime=S\setminus\set{\vect{v}_k}$, the set of <q>other</q> vectors in $S$.  Then it is easy to show that $V=\spn{S}=\spn{S^\prime}$.  So $S^\prime$ is a set of $m-1=t-1$ vectors that spans $V$, while $B$ is a set of $t$ linearly independent vectors in $V$.  This contradicts <acroref type="theorem" acro="SSLD" />.
+</li></ol>
+</p>
+
+</proof>
+</theorem>
+
+<p>There is a tension in the construction of basis.  Make a set too big and you will end up with relations of linear dependence among the vectors.  Make a set too small and you will not have enough raw material to span the entire vector space.  Make a set just the right size (the dimension) and you only need to have linear independence or spanning, and you get the other property for free.  These roughly-stated ideas are made precise by <acroref type="theorem" acro="G" />.</p>
+
+<p>The structure and proof of this theorem also deserve comment.  The hypotheses seem innocuous.  We presume we know the dimension of the vector space in hand, then we mostly just look at the size of the set $S$. From this we get big conclusions about spanning and linear independence.  Each of the four proofs relies on ultimately contradicting <acroref type="theorem" acro="SSLD" />, so in a way we could think of this entire theorem as a corollary of <acroref type="theorem" acro="SSLD" />.    (See <acroref type="technique" acro="LC" />.) The proofs of the third and fourth parts parallel each other in style (add $\vect{w}$, toss $\vect{v}_k$) and then turn on <acroref type="theorem" acro="ELIS" /> before contradicting <acroref type="theorem" acro="SSLD" />.</p>
+
+<p><acroref type="theorem" acro="G" /> is useful in both concrete examples and as a tool in other proofs.  We will use it often to bypass verifying linear independence or spanning.</p>
+
+<example acro="BPR" index="basis!polynomials">
+<title>Bases for $P_n$, reprised</title>
+
+<p>In <acroref type="example" acro="BP" /> we claimed that
+<alignmath>
+<![CDATA[B&=\set{1,\,x,\,x^2,\,x^3,\,\ldots,\,x^n}\\]]>
+<![CDATA[C&=\set{1,\,1+x,\,1+x+x^2,\,1+x+x^2+x^3,\,\ldots,\,1+x+x^2+x^3+\cdots+x^n}.]]>
+</alignmath>
+were both bases for $P_n$ (<acroref type="example" acro="VSP" />).  Suppose we had first verified that $B$ was a basis, so we would then know that $\dimension{P_n}=n+1$.  The size of $C$ is $n+1$, the right size to be a basis.  We could then verify that $C$ is linearly independent.  We would not have to make any special efforts to prove that $C$ spans $P_n$, since <acroref type="theorem" acro="G" /> would allow us to conclude this property of $C$ directly.  Then we would be able to say that $C$ is a basis of $P_n$ also.</p>
+
+</example>
+
+<example acro="BDM22" index="basis!subspace of matrices">
+<title>Basis by dimension in $M_{22}$</title>
+
+<p>In <acroref type="example" acro="DSM22" /> we showed that
+<equation>
+B=
+\set{
+<![CDATA[\begin{bmatrix}-2&1\\1&0\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-2&0\\0&1\end{bmatrix}]]>
+}
+</equation>
+is a basis for the subspace $Z$ of $M_{22}$ (<acroref type="example" acro="VSM" />) given by
+<equation>
+<![CDATA[Z=\setparts{\begin{bmatrix}a&b\\c&d\end{bmatrix}}{2a+b+3c+4d=0,\,-a+3b-5c-d=0}]]>
+</equation>
+</p>
+
+<p>This tells us that $\dimension{Z}=2$.  In this example we will find another basis.  We can construct two new matrices in $Z$ by forming linear combinations of the matrices in $B$.
+<alignmath>
+<![CDATA[    2\begin{bmatrix}-2&1\\1&0\end{bmatrix}+]]>
+<![CDATA[ (-3)\begin{bmatrix}-2&0\\0&1\end{bmatrix}&=]]>
+<![CDATA[ \begin{bmatrix}2&2\\2&-3\end{bmatrix}\\]]>
+<![CDATA[3\begin{bmatrix}-2&1\\1&0\end{bmatrix}+]]>
+<![CDATA[ 1\begin{bmatrix}-2&0\\0&1\end{bmatrix}&=]]>
+<![CDATA[\begin{bmatrix}-8&3\\3&1\end{bmatrix}]]>
+</alignmath>
+</p>
+
+<p>Then the set
+<equation>
+C=
+\set{
+<![CDATA[\begin{bmatrix}2&2\\2&-3\end{bmatrix},\,]]>
+<![CDATA[\begin{bmatrix}-8&3\\3&1\end{bmatrix}]]>
+}
+</equation>
+has the right size to be a basis of $Z$.  Let's see if it is a linearly independent set.  The relation of linear dependence
+<alignmath>
+<![CDATA[a_1\begin{bmatrix}2&2\\2&-3\end{bmatrix}+]]>
+<![CDATA[a_2\begin{bmatrix}-8&3\\3&1\end{bmatrix}&=\zeromatrix\\]]>
+<![CDATA[\begin{bmatrix}2a_1-8a_2&2a_1+3a_2\\2a_1+3a_2&-3a_1+a_2\end{bmatrix}&=]]>
+<![CDATA[\begin{bmatrix}0&0\\0&0\end{bmatrix}]]>
+</alignmath>
+leads to the homogeneous system of equations whose coefficient matrix
+<equation>
+\begin{bmatrix}
+<![CDATA[2&-8\\]]>
+<![CDATA[2&3\\]]>
+<![CDATA[2&3\\]]>
+<![CDATA[-3&1]]>
+\end{bmatrix}
+</equation>
+row-reduces to
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1}&0\\]]>
+<![CDATA[0&\leading{1}\\]]>
+<![CDATA[0&0\\]]>
+<![CDATA[0&0]]>
+\end{bmatrix}
+</equation>
+</p>
+
+<p>So with $a_1=a_2=0$ as the only solution, the set is linearly independent.  Now we can apply <acroref type="theorem" acro="G" /> to see that $C$ also spans $Z$ and therefore is a second basis for $Z$.</p>
+
+</example>
+
+<example acro="SVP4" index="basis!polynomials">
+<title>Sets of vectors in $P_4$</title>
+
+<p>In <acroref type="example" acro="BSP4" /> we showed that
+<equation>
+B=\set{x-2,\,x^2-4x+4,\,x^3-6x^2+12x-8,\,x^4-8x^3+24x^2-32x+16}
+</equation>
+is a basis for $W=\setparts{p(x)}{p\in P_4,\ p(2)=0}$.  So $\dimension{W}=4$.</p>
+
+<p>The set
+<equation>
+\set{3x^2-5x-2,\,2x^2-7x+6,\,x^3-2x^2+x-2}
+</equation>
+is a subset of $W$ (check this) and it happens to be linearly independent (check this, too).  However, by <acroref type="theorem" acro="G" /> it cannot span $W$.</p>
+
+<p>The set
+<equation>
+\set{3x^2-5x-2,\,2x^2-7x+6,\,x^3-2x^2+x-2,\,-x^4+2x^3+5x^2-10x,\,x^4-16}
+</equation>
+is another subset of $W$ (check this) and <acroref type="theorem" acro="G" /> tells us that it must be linearly dependent.</p>
+
+<p>The set
+<equation>
+\set{x-2,\,x^2-2x,\,x^3-2x^2,\,x^4-2x^3}
+</equation>
+is a third subset of $W$ (check this) and is linearly independent (check this).  Since it has the right size to be a basis, and is linearly independent, <acroref type="theorem" acro="G" /> tells us that it also spans $W$, and therefore is a basis of $W$.</p>
+
+</example>
+
+<p>A simple consequence of <acroref type="theorem" acro="G" /> is the observation that proper subspaces have strictly smaller dimensions.  Hopefully this may seem intuitively obvious, but it still requires proof, and we will cite this result later.</p>
+
+<theorem acro="PSSD" index="dimension!proper subspaces">
+<title>Proper Subspaces have Smaller Dimension</title>
+<statement>
+<p>
+<![CDATA[Suppose that $U$ and $V$ are subspaces of the vector space $W$, such that $U\subsetneq V$.  Then $\dimension{U}<\dimension{V}$.]]>
+</p>
+
+</statement>
+
+<proof>
+<p>
+Suppose that $\dimension{U}=m$ and $\dimension{V}=t$.  Then $U$ has a basis $B$ of size $m$.  If $m>t$, then by <acroref type="theorem" acro="G" />, $B$ is linearly dependent, which is a contradiction.  If $m=t$, then by <acroref type="theorem" acro="G" />, $B$ spans $V$.  Then $U=\spn{B}=V$, also a contradiction.
+<![CDATA[All that remains is that $m<t$, which is the desired conclusion.]]>
+</p>
+
+</proof>
+</theorem>
+
+<p>The final theorem of this subsection is an extremely powerful tool for establishing the equality of two sets that are subspaces.  Notice that the hypotheses include the equality of two integers (dimensions) while the conclusion is the equality of two sets (subspaces).  It is the extra <q>structure</q> of a vector space and its dimension that makes possible this huge leap from an integer equality to a set equality.</p>
+
+<theorem acro="EDYES" index="subspaces!equal dimension">
+<title>Equal Dimensions Yields Equal Subspaces</title>
+<statement>
+<p>Suppose that $U$ and $V$ are subspaces of the vector space $W$, such that $U\subseteq V$ and $\dimension{U}=\dimension{V}$.  Then $U=V$.</p>
+
+</statement>
+
+<proof>
+<p>We give a proof by contradiction (<acroref type="technique" acro="CD" />).  Suppose to the contrary that $U\neq V$.  Since $U\subseteq V$, there must be a vector $\vect{v}$ such that $\vect{v}\in V$ and $\vect{v}\not\in U$.  Let $B=\set{\vectorlist{u}{t}}$ be a basis for $U$.  Then, by <acroref type="theorem" acro="ELIS" />, the set $C=B\cup\set{\vect{v}}=\set{\vectorlist{u}{t},\,\vect{v}}$ is a linearly independent set of $t+1$ vectors in $V$.  However, by hypothesis, $V$ has the same dimension as $U$ (namely $t$) and therefore <acroref type="theorem" acro="G" /> says that $C$ is too big to be linearly independent.  This contradiction shows that $U=V$.</p>
+
+</proof>
+</theorem>
+
+</subsection>
+
+<subsection acro="RT">
+<title>Ranks and Transposes</title>
+
+<p>We now prove one of the most surprising theorems about matrices.  Notice the paucity of hypotheses compared to the precision of the conclusion.</p>
+
+<theorem acro="RMRT" index="rank!transpose">
+<title>Rank of a Matrix is the Rank of the Transpose</title>
+<statement>
+<p>Suppose $A$ is an $m\times n$ matrix.  Then $\rank{A}=\rank{\transpose{A}}$.</p>
+
+</statement>
+
+<proof>
+<p>Suppose we row-reduce $A$ to the matrix $B$ in reduced row-echelon form, and $B$ has $r$ non-zero rows.  The quantity $r$ tells us three things about $B$: the number of leading 1's, the number of non-zero rows and the number of pivot columns.  For this proof we will be interested in the latter two.</p>
+
+<p><acroref type="theorem" acro="BRS" /> and <acroref type="theorem" acro="BCS" /> each has a conclusion that provides a basis, for the row space and the column space, respectively.  In each case, these bases contain $r$ vectors.  This observation makes the following go.</p>
+
+<p>
+<alignmath>
+\rank{A}
+<![CDATA[&=\dimension{\csp{A}}&&]]>\text{<acroref type="definition" acro="ROM" />}\\
+<![CDATA[&=r&&]]>\text{<acroref type="theorem" acro="BCS" />}\\
+<![CDATA[&=\dimension{\rsp{A}}&&]]>\text{<acroref type="theorem" acro="BRS" />}\\
+<![CDATA[&=\dimension{\csp{\transpose{A}}}&&]]>\text{<acroref type="theorem" acro="CSRST" />}\\
+<![CDATA[&=\rank{\transpose{A}}&&]]>\text{<acroref type="definition" acro="ROM" />}
+</alignmath>
+</p>
+
+<p><contributorname code="jacoblinenthal" /> helped with this proof.</p>
+
+</proof>
+</theorem>
+
+<p>This says that the row space and the column space of a matrix have the same dimension, which should be very surprising.  It does <em>not</em> say that column space and the row space are identical.  Indeed, if the matrix is not square, then the sizes (number of slots) of the vectors in each space are different, so the sets are not even comparable.</p>
+
+<p>It is not hard to construct by yourself examples of matrices that illustrate <acroref type="theorem" acro="RMRT" />, since it applies equally well to <em>any</em> matrix.  Grab a matrix, row-reduce it, count the nonzero rows or the leading 1's.  That's the rank.  Transpose the matrix, row-reduce that, count the nonzero rows or the leading 1's.  That's the rank of the transpose.  The theorem says the two will be equal.  Here's an example anyway.</p>
+
+<example acro="RRTI" index="rank!of transpose">
+<title>Rank, rank of transpose, Archetype I</title>
+
+<p><acroref type="archetype" acro="I" /> has a $4\times 7$ coefficient matrix which row-reduces to
+<equation>
+<archetypepart acro="I" part="matrixreduced" /></equation>
+so the rank is $3$.  Row-reducing the transpose yields
+<equation>
+\begin{bmatrix}
+<![CDATA[\leading{1} & 0 & 0 & -\frac{31}{7}\\]]>
+<![CDATA[0 & \leading{1} & 0 & \frac{12}{7}\\]]>
+<![CDATA[0 & 0 & \leading{1} & \frac{13}{7}\\]]>
+<![CDATA[0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0\\]]>
+<![CDATA[0 & 0 & 0 & 0]]>
+\end{bmatrix}.
+</equation>
+demonstrating that the rank of the transpose is also $3$.</p>
+
+</example>
+
+</subsection>
+
+<subsection acro="DFS">
+<title>Dimension of Four Subspaces</title>
+
+<p>That the rank of a matrix equals the rank of its transpose is a fundamental and surprising result.  However, applying <acroref type="theorem" acro="FS" /> we can easily determine the dimension of all four fundamental subspaces associated with a matrix.</p>
+
+<theorem acro="DFS" index="four subspaces!dimension">
+<title>Dimensions of Four Subspaces</title>
+<statement>
+<p>Suppose that $A$ is an $m\times n$ matrix, and $B$ is a row-equivalent matrix in reduced row-echelon form with $r$ nonzero rows.  Then
+<ol><li> $\dimension{\nsp{A}}=n-r$
+</li><li> $\dimension{\csp{A}}=r$
+</li><li> $\dimension{\rsp{A}}=r$
+</li><li> $\dimension{\lns{A}}=m-r$
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>If $A$ row-reduces to a matrix in reduced row-echelon form with $r$ nonzero rows, then the matrix $C$ of extended echelon form (<acroref type="definition" acro="EEF" />) will be an $r\times n$ matrix in reduced row-echelon form with no zero rows and $r$ pivot columns (<acroref type="theorem" acro="PEEF" />).  Similarly, the matrix $L$ of extended echelon form (<acroref type="definition" acro="EEF" />) will be an $m-r\times m$ matrix in reduced row-echelon form with no zero rows and $m-r$ pivot columns (<acroref type="theorem" acro="PEEF" />).</p>
+
+<p>
+<alignmath>
+\dimension{\nsp{A}}
+<![CDATA[&=\dimension{\nsp{C}}&&]]>\text{<acroref type="theorem" acro="FS" />}\\
+<![CDATA[&=n-r&&]]>\text{<acroref type="theorem" acro="BNS" />}\\
+\ \\
+\dimension{\csp{A}}
+<![CDATA[&=\dimension{\nsp{L}}&&]]>\text{<acroref type="theorem" acro="FS" />}\\
+<![CDATA[&=m-(m-r)&&]]>\text{<acroref type="theorem" acro="BNS" />}\\
+<![CDATA[&=r\\]]>
+\ \\
+\dimension{\rsp{A}}
+<![CDATA[&=\dimension{\rsp{C}}&&]]>\text{<acroref type="theorem" acro="FS" />}\\
+<![CDATA[&=r&&]]>\text{<acroref type="theorem" acro="BRS" />}\\
+\ \\
+\dimension{\lns{A}}
+<![CDATA[&=\dimension{\rsp{L}}&&]]>\text{<acroref type="theorem" acro="FS" />}\\
+<![CDATA[&=m-r&&]]>\text{<acroref type="theorem" acro="BRS" />}\\
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>There are many different ways to state and prove this result, and indeed, the equality of the dimensions of the column space and row space is just a slight expansion of <acroref type="theorem" acro="RMRT" />.  However, we have restricted our techniques to applying <acroref type="theorem" acro="FS" /> and then determining dimensions with bases provided by <acroref type="theorem" acro="BNS" /> and <acroref type="theorem" acro="BRS" />.  This provides an appealing symmetry to the results and the proof.</p>
+
+<sageadvice acro="DMS" index="dimensions!matrix subspaces">
+<title>Dimensions of Matrix Subspaces</title>
+The theorems in this section about the dimensions of various subspaces associated with matrices can be tested easily in Sage.  For a large arbitrary matrix, we first we verify <acroref type="theorem" acro="RMRT" />, followed by the four conclusions of <acroref type="theorem" acro="DFS" />.
+<sage>
+<input>A = matrix(QQ, [
+    [ 1, -2,  3,  2,  0,  2,  2, -1,  3,  8,  0,  7],
+    [-1,  2, -2, -1,  3, -3,  5, -2, -6, -7,  6, -2],
+    [ 0,  0,  1,  1,  0,  0,  1, -3, -2,  0,  3,  8],
+    [-1, -1,  0, -1, -1,  0, -6, -2, -5, -6,  5,  1],
+    [ 1, -3,  2,  1, -4,  4, -6,  2,  7,  7, -5,  2],
+    [-2,  2, -2, -2,  3, -3,  6, -1, -8, -8,  7, -7],
+    [ 0, -3,  2,  0, -3,  3, -7,  1,  2,  3, -1,  0],
+    [ 0, -1,  2,  1,  2,  0,  4, -3, -3,  2,  6,  6],
+    [-1,  1,  0, -1,  2, -1,  6, -2, -6, -3,  8,  0],
+    [ 0, -4,  4,  0, -2,  4, -4, -2, -2,  4,  8,  6]
+               ])
+m = A.nrows()
+n = A.ncols()
+r = A.rank()
+m, n, r
+</input>
+<output>(10, 12, 7)
+</output>
+</sage>
+
+<sage>
+<input>A.transpose().rank() == r
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.right_kernel().dimension() == n - r
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.column_space().dimension() == r
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.row_space().dimension() == r
+</input>
+<output>True
+</output>
+</sage>
+
+<sage>
+<input>A.left_kernel().dimension() == m - r
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="DS">
+<title>Direct Sums</title>
+
+<p>Some of the more advanced ideas in linear algebra are closely related to decomposing (<acroref type="technique" acro="DC" />) vector spaces into direct sums of subspaces.  With our previous results about bases and dimension, now is the right time to state and collect a few results about direct sums, though we will only mention these results in passing until we get to <acroref type="section" acro="NLT" />, where they will get a heavy workout.</p>
+
+<p>A direct sum is a short-hand way to describe the relationship between a vector space and two, or more, of its subspaces.  As we will use it, it is not a way to construct new vector spaces from others.</p>
+
+<definition acro="DS" index="direct sum">
+<title>Direct Sum</title>
+<p>Suppose that $V$ is a vector space with two subspaces $U$ and $W$ such that
+for every $\vect{v}\in V$,
+<ol><li>  There exists vectors $\vect{u}\in U$, $\vect{w}\in W$ such that $\vect{v}=\vect{u}+\vect{w}$
+</li><li> If $\vect{v}=\vect{u}_1+\vect{w}_1$ and $\vect{v}=\vect{u}_2+\vect{w}_2$ where $\vect{u}_1,\,\vect{u}_2\in U$, $\vect{w}_1,\,\vect{w}_2\in W$ then $\vect{u}_1=\vect{u}_2$ and $\vect{w}_1=\vect{w}_2$.
+</li></ol>
+</p>
+
+<p>Then $V$ is the <define>direct sum</define> of $U$ and $W$ and we write $V=U\ds W$.</p>
+
+<notation acro="DS" index="direct sum">
+<title>Direct Sum</title>
+<usage>$V=U\ds W$</usage>
+</notation>
+</definition>
+
+<p>Informally, when we say $V$ is the direct sum of the subspaces $U$ and $W$, we are saying that each vector of $V$ can always be expressed as the sum of a vector from $U$ and a vector from $W$, and this expression can only be accomplished in one way (<ie /> uniquely).  This statement should begin to feel something like our definitions of nonsingular matrices (<acroref type="definition" acro="NM" />) and linear independence (<acroref type="definition" acro="LI" />).   It should not be hard to imagine the natural extension of this definition to the case of more than two subspaces.  Could you provide a careful definition of  $V=U_1\ds U_2\ds U_3\ds \dots\ds U_m$ (<acroref type="exercise" acro="PD.M50" />)?</p>
+
+<example acro="SDS" index="direct sum">
+<title>Simple direct sum</title>
+
+<p>In $\complex{3}$, define
+<alignmath>
+<![CDATA[\vect{v}_1&=\colvector{3\\2\\5}]]>
+<![CDATA[&]]>
+<![CDATA[\vect{v}_2&=\colvector{-1\\2\\1}]]>
+<![CDATA[&]]>
+<![CDATA[\vect{v}_3&=\colvector{2\\1\\-2}]]>
+</alignmath>
+Then $\complex{3}=\spn{\set{\vect{v}_1,\,\vect{v}_2}}\ds\spn{\set{\vect{v}_3}}$.  This statement derives from the fact that $B=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3}$ is basis for $\complex{3}$.  The spanning property of $B$ yields the decomposition of any vector into a sum of vectors from the two subspaces, and the linear independence of $B$ yields the uniqueness of the decomposition.  We will illustrate these claims with a numerical example.</p>
+
+<p>Choose $\vect{v}=\colvector{10\\1\\6}$.  Then
+<alignmath>
+\vect{v}
+<![CDATA[&=2\vect{v}_1+(-2)\vect{v}_2+1\vect{v}_3]]>
+=\left(2\vect{v}_1+(-2)\vect{v}_2\right)+\left(1\vect{v}_3\right)
+</alignmath>
+where we have added parentheses for emphasis.  Obviously $1\vect{v_3}\in\spn{\set{\vect{v}_3}}$, while $2\vect{v}_1+(-2)\vect{v}_2\in\spn{\set{\vect{v}_1,\,\vect{v}_2}}$.  <acroref type="theorem" acro="VRRB" /> provides the uniqueness of the scalars in these linear combinations.</p>
+
+</example>
+
+<p><acroref type="example" acro="SDS" /> is easy to generalize into a theorem.</p>
+
+<theorem acro="DSFB" index="direct sum!from a basis">
+<title>Direct Sum From a Basis</title>
+<statement>
+<p>Suppose that $V$ is a vector space with a basis
+$B=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\dots,\,\vect{v}_n}$ and $m\leq n$.  Define
+<alignmath>
+<![CDATA[U&=\spn{\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\dots,\,\vect{v}_m}}]]>
+<![CDATA[&]]>
+<![CDATA[W&=\spn{\set{\vect{v}_{m+1},\,\vect{v}_{m+2},\,\vect{v}_{m+3},\,\dots,\,\vect{v}_n}}]]>
+</alignmath>
+</p>
+
+<p>Then $V=U\ds W$.</p>
+
+</statement>
+
+<proof>
+<p>Choose any vector $\vect{v}\in V$.  Then by <acroref type="theorem" acro="VRRB" /> there are unique scalars, $\scalarlist{a}{n}$ such that
+<alignmath>
+\vect{v}
+<![CDATA[&=\lincombo{a}{v}{n}\\]]>
+<![CDATA[&=\left(a_1\vect{v}_1+a_2\vect{v}_2+a_3\vect{v}_3+\dots+a_m\vect{v}_m\right)+\\]]>
+<![CDATA[&\quad\quad\left(a_{m+1}\vect{v}_{m+1}+a_{m+2}\vect{v}_{m+2}+a_{m+3}\vect{v}_{m+3}+\dots+a_n\vect{v}_n\right)\\]]>
+<![CDATA[&=\vect{u}+\vect{w}]]>
+</alignmath>
+where we have implicitly defined $\vect{u}$ and $\vect{w}$ in the last line.  It should be clear that $\vect{u}\in{U}$, and similarly, $\vect{w}\in{W}$ (and not simply by the choice of their names).</p>
+
+<p>Suppose we had another decomposition of $\vect{v}$, say $\vect{v}=\vect{u}^\ast+\vect{w}^\ast$.  Then we could write $\vect{u}^\ast$ as a linear combination of $\vect{v}_1$ through $\vect{v}_m$, say using scalars $\scalarlist{b}{m}$.  And we could write $\vect{w}^\ast$ as a linear combination of $\vect{v}_{m+1}$ through $\vect{v}_n$, say using scalars $\scalarlist{c}{n-m}$.  These two collections of scalars would then together give a linear combination of $\vect{v}_1$ through $\vect{v}_n$  that  equals $\vect{v}$.  By the uniqueness of $\scalarlist{a}{n}$, $a_i=b_i$ for $1\leq i\leq m$ and $a_{m+i}=c_{i}$ for $1\leq i\leq n-m$.  From the equality of these scalars we conclude that $\vect{u}=\vect{u}^\ast$ and $\vect{w}=\vect{w}^\ast$.  So with both conditions of <acroref type="definition" acro="DS" /> fulfilled we see that $V=U\ds W$.</p>
+
+</proof>
+</theorem>
+
+<p>Given one subspace of a vector space, we can always find another subspace that will pair with the first to form a direct sum.  The main idea of this theorem, and its proof, is the idea of extending a linearly independent subset into a basis with repeated applications of <acroref type="theorem" acro="ELIS" />.</p>
+
+<theorem acro="DSFOS" index="direct sum!from one subspace">
+<title>Direct Sum From One Subspace</title>
+<statement>
+<p>Suppose that $U$ is a subspace of the vector space $V$.  Then there exists a subspace $W$ of $V$ such that $V=U\ds W$.</p>
+
+</statement>
+
+<!--  David Braithwaite suggest firming up the "eventually" - cite finite dimension, principally -->
+<proof>
+<p>If $U=V$, then choose $W=\set{\zerovector}$.  Otherwise, choose a basis $B=\set{\vectorlist{v}{m}}$ for $U$.  Then since $B$ is a linearly independent set, <acroref type="theorem" acro="ELIS" /> tells us there is a vector $\vect{v}_{m+1}$ in $V$, but not in $U$, such that $B\cup\set{\vect{v}_{m+1}}$ is linearly independent.  Define the subspace $U_1=\spn{B\cup\set{\vect{v}_{m+1}}}$.</p>
+
+<p>We can repeat this procedure, in the case were $U_1\neq V$, creating a new vector $\vect{v}_{m+2}$ in $V$, but not in $U_1$, and a new subspace $U_2=\spn{B\cup\set{\vect{v}_{m+1},\,\vect{v}_{m+2}}}$.  If we continue repeating this procedure, eventually, $U_k=V$ for some $k$, and we can no longer apply <acroref type="theorem" acro="ELIS" />.  No matter, in this case $B\cup\set{\vect{v}_{m+1},\,\vect{v}_{m+2},\,\dots,\,\vect{v}_{m+k}}$ is a linearly independent set that spans $V$, <ie /> a basis for $V$.</p>
+
+<p>Define $W=\spn{\set{\vect{v}_{m+1},\,\vect{v}_{m+2},\,\dots,\,\vect{v}_{m+k}}}$.  We now are exactly in position to apply <acroref type="theorem" acro="DSFB" /> and see that $V=U\ds W$.</p>
+
+</proof>
+</theorem>
+
+<p>There are several different ways to define a direct sum.  Our next two theorems give equivalences (<acroref type="technique" acro="E" />) for direct sums, and therefore could have been employed as definitions.  The first should further cement the notion that a direct sum has some connection with linear independence.</p>
+
+<theorem acro="DSZV" index="direct sum!decomposing zero vector">
+<title>Direct Sums and Zero Vectors</title>
+<statement>
+<p>Suppose $U$ and $W$ are subspaces of the vector space $V$.  Then $V=U\ds W$ if and only if
+<ol><li>  For every $\vect{v}\in V$, there exists vectors $\vect{u}\in U$, $\vect{w}\in W$ such that $\vect{v}=\vect{u}+\vect{w}$.
+</li><li> Whenever $\zerovector=\vect{u}+\vect{w}$ with $\vect{u}\in U$, $\vect{w}\in W$ then $\vect{u}=\vect{w}=\zerovector$.
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>The first condition is identical in the definition and the theorem, so we only need to establish the equivalence of the second conditions.</p>
+
+<p><implyforward />
+Assume that $V=U\ds W$, according to <acroref type="definition" acro="DS" />.   By <acroref type="property" acro="Z" />, $\zerovector\in V$ and $\zerovector=\zerovector+\zerovector$.  If we also assume that $\zerovector=\vect{u}+\vect{w}$, then the uniqueness of the decomposition gives $\vect{u}=\zerovector$ and $\vect{w}=\zerovector$.</p>
+
+<p><implyreverse />
+Suppose that $\vect{v}\in V$, $\vect{v}=\vect{u}_1+\vect{w}_1$ and $\vect{v}=\vect{u}_2+\vect{w}_2$ where $\vect{u}_1,\,\vect{u}_2\in U$, $\vect{w}_1,\,\vect{w}_2\in W$.  Then
+<alignmath>
+\zerovector
+<![CDATA[&=\vect{v}-\vect{v}&&]]>\text{<acroref type="property" acro="AI" />}\\
+<![CDATA[&=\left(\vect{u}_1+\vect{w}_1\right)-\left(\vect{u}_2+\vect{w}_2\right)\\]]>
+<![CDATA[&=\left(\vect{u}_1-\vect{u}_2\right)+\left(\vect{w}_1-\vect{w}_2\right)&&]]>\text{<acroref type="property" acro="AA" />}
+</alignmath>
+</p>
+
+<p>By <acroref type="property" acro="AC" />, $\vect{u}_1-\vect{u}_2\in U$ and $\vect{w}_1-\vect{w}_2\in W$.  We can now apply our hypothesis, the second statement of the theorem, to conclude that
+<alignmath>
+<![CDATA[\vect{u}_1-\vect{u}_2&=\zerovector & \vect{w}_1-\vect{w}_2&=\zerovector\\]]>
+<![CDATA[\vect{u}_1&=\vect{u}_2 & \vect{w}_1&=\vect{w}_2\\]]>
+</alignmath>
+which establishes the uniqueness needed for the second condition of the definition.
+</p>
+
+</proof>
+</theorem>
+
+<p>Our second equivalence lends further credence to calling a direct sum a decomposition.  The two subspaces of a direct sum have no (nontrivial) elements in common.</p>
+
+<theorem acro="DSZI" index="direct sum!zero intersection">
+<title>Direct Sums and Zero Intersection</title>
+<statement>
+<p>Suppose $U$ and $W$ are subspaces of the vector space $V$.  Then $V=U\ds W$ if and only if
+<ol><li>  For every $\vect{v}\in V$, there exists vectors $\vect{u}\in U$, $\vect{w}\in W$ such that $\vect{v}=\vect{u}+\vect{w}$.
+</li><li> $U\cap W=\set{\zerovector}$.
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>The first condition is identical in the definition and the theorem, so we only need to establish the equivalence of the second conditions.</p>
+
+<p><implyforward />
+Assume that $V=U\ds W$, according to <acroref type="definition" acro="DS" />.   By <acroref type="property" acro="Z" /> and <acroref type="definition" acro="SI" />, $\set{\zerovector}\subseteq U\cap W$.  To establish the opposite inclusion, suppose that $\vect{x}\in U\cap W$.  Then, since $\vect{x}$ is an element of both $U$ and $W$, we can write two decompositions of $\vect{x}$ as a vector from $U$ plus a vector from $W$,
+<alignmath>
+<![CDATA[\vect{x}&=\vect{x}+\zerovector]]>
+<![CDATA[&]]>
+<![CDATA[\vect{x}&=\zerovector+\vect{x}]]>
+</alignmath>
+</p>
+
+<p>
+By the uniqueness of the decomposition, we see (twice) that $\vect{x}=\zerovector$ and $U\cap W\subseteq\set{\zerovector}$.  Applying <acroref type="definition" acro="SE" />, we have $U\cap W=\set{\zerovector}$.</p>
+
+<p><implyreverse />
+Assume that $U\cap W=\set{\zerovector}$.  And assume further that $\vect{v}\in V$ is such that  $\vect{v}=\vect{u}_1+\vect{w}_1$ and $\vect{v}=\vect{u}_2+\vect{w}_2$ where $\vect{u}_1,\,\vect{u}_2\in U$, $\vect{w}_1,\,\vect{w}_2\in W$.  Define $\vect{x}=\vect{u}_1-\vect{u}_2$.  then by <acroref type="property" acro="AC" />, $\vect{x}\in U$.  Also
+<alignmath>
+\vect{x}
+<![CDATA[&=\vect{u}_1-\vect{u}_2\\]]>
+<![CDATA[&=\left(\vect{v}-\vect{w}_1\right)-\left(\vect{v}-\vect{w}_2\right)\\]]>
+<![CDATA[&=\left(\vect{v}-\vect{v}\right)-\left(\vect{w}_1-\vect{w}_2\right)\\]]>
+<![CDATA[&=\vect{w}_2-\vect{w}_1]]>
+</alignmath>
+</p>
+
+<p>So $\vect{x}\in W$ by <acroref type="property" acro="AC" />.  Thus, $\vect{x}\in U\cap W =\set{\zerovector}$ (<acroref type="definition" acro="SI" />).  So $\vect{x}=\zerovector$ and
+<alignmath>
+<![CDATA[\vect{u}_1-\vect{u}_2&=\zerovector & \vect{w}_2-\vect{w}_1 = \zerovector\\]]>
+<![CDATA[\vect{u}_1&=\vect{u}_2 & \vect{w}_2&=\vect{w}_1\\]]>
+</alignmath>
+yielding the desired uniqueness of the second condition of the definition.</p>
+
+</proof>
+</theorem>
+
+<p>If the statement of <acroref type="theorem" acro="DSZV" /> did not remind you of linear independence, the next theorem should establish the connection.</p>
+
+<theorem acro="DSLI" index="direct sums!linear independence">
+<title>Direct Sums and Linear Independence</title>
+<statement>
+<p>Suppose $U$ and $W$ are subspaces of the vector space $V$ with $V=U\ds W$.  Suppose that $R$ is a linearly independent subset of $U$ and $S$ is a linearly independent subset of $W$.  Then $R\cup S$ is a linearly independent subset of $V$.</p>
+
+</statement>
+
+<proof>
+<p>Let $R=\set{\vectorlist{u}{k}}$ and $S=\set{\vectorlist{w}{\ell}}$.  Begin with a relation of linear dependence (<acroref type="definition" acro="RLD" />) on the set $R\cup S$ using scalars $\scalarlist{a}{k}$ and $\scalarlist{b}{\ell}$.  Then,
+<alignmath>
+\zerovector
+<![CDATA[&=]]>
+\lincombo{a}{u}{k}
++
+\lincombo{b}{w}{\ell}\\
+<![CDATA[&=]]>
+\left(\lincombo{a}{u}{k}\right)
++
+\left(\lincombo{b}{w}{\ell}\right)\\
+<![CDATA[&=\vect{u}+\vect{w}]]>
+</alignmath>
+where we have made an implicit definition of the vectors $\vect{u}\in U$, $\vect{w}\in W$.</p>
+
+<p>Applying <acroref type="theorem" acro="DSZV" /> we conclude that
+<alignmath>
+<![CDATA[\vect{u}&=\lincombo{a}{u}{k}=\zerovector\\]]>
+<![CDATA[\vect{w}&=\lincombo{b}{w}{\ell}=\zerovector]]>
+</alignmath>
+</p>
+
+<p>Now the linear independence of $R$ and $S$ (individually) yields
+<alignmath>
+<![CDATA[a_1&=a_2=a_3=\cdots=a_k=0]]>
+<![CDATA[&]]>
+<![CDATA[b_1&=b_2=b_3=\cdots=b_\ell=0]]>
+</alignmath>
+</p>
+
+<p>Forced to acknowledge that only a trivial linear combination yields the zero vector, <acroref type="definition" acro="LI" /> says the set $R\cup S$ is linearly independent in $V$.</p>
+
+</proof>
+</theorem>
+
+<p>Our last theorem in this collection will go some ways towards explaining the word <q>sum</q> in the moniker <q>direct sum,</q>  while also partially explaining why these results appear in a section devoted to a discussion of dimension.</p>
+
+<theorem acro="DSD" index="direct sum!dimension">
+<title>Direct Sums and Dimension</title>
+<statement>
+<p>Suppose $U$ and $W$ are subspaces of the vector space $V$ with $V=U\ds W$.  Then $\dimension{V}=\dimension{U}+\dimension{W}$.</p>
+
+</statement>
+
+<proof>
+<p>We will establish this equality of positive integers with two inequalities.  We will need a basis of $U$ (call it $B$) and a basis of $W$ (call it $C$).</p>
+
+<p>First,  note that $B$ and $C$ have sizes equal to the dimensions of the respective subspaces.  The union of these two linearly independent sets, $B\cup C$ will be linearly independent in $V$ by <acroref type="theorem" acro="DSLI" />.  Further, the two bases have no vectors in common by <acroref type="theorem" acro="DSZI" />, since $B\cap C\subseteq\set{\zerovector}$ and the zero vector is never an element of a linearly independent set (<acroref type="exercise" acro="LI.T10" />).  So the size of the union is exactly the sum of the dimensions of $U$ and $W$.  By <acroref type="theorem" acro="G" /> the size  of $B\cup C$ cannot exceed the dimension of $V$ without being linearly dependent.  These observations give us $\dimension{U}+\dimension{W}\leq\dimension{V}$.</p>
+
+<p>Grab any vector $\vect{v}\in V$.  Then by <acroref type="theorem" acro="DSZI" /> we can write $\vect{v}=\vect{u}+\vect{w}$ with $\vect{u}\in U$ and $\vect{w}\in W$.  Individually, we can write $\vect{u}$ as a linear combination of the basis elements in $B$, and similarly, we can write $\vect{w}$ as a linear combination of the basis elements in $C$, since the bases are spanning sets for their respective subspaces.  These two sets of scalars will provide a linear combination of all of the vectors in $B\cup C$ which will equal $\vect{v}$.  The upshot of this is that $B\cup C$ is a spanning set for $V$.  By <acroref type="theorem" acro="G" />, the size of $B\cup C$ cannot be smaller than the dimension of $V$ without failing to span $V$.  These observations give us $\dimension{U}+\dimension{W}\geq\dimension{V}$.</p>
+
+</proof>
+</theorem>
+
+<p>There is a certain appealling symmetry in the previous proof, where both linear independence and spanning properties of the bases are used, both of the first two conclusions of <acroref type="theorem" acro="G" /> are employed, and we have quoted both of the two conditions of <acroref type="theorem" acro="DSZI" />.</p>
+
+<p>One final theorem tells us that we can successively decompose direct sums into sums of smaller and smaller subspaces.</p>
+
+<theorem acro="RDS" index="direct sums!repeated">
+<title>Repeated Direct Sums</title>
+<statement>
+<p>Suppose $V$ is a vector space with subspaces $U$ and $W$ with $V=U\ds W$.  Suppose that $X$ and $Y$ are subspaces of $W$ with $W=X\ds Y$.  Then $V=U\ds X\ds Y$.</p>
+
+</statement>
+
+<proof>
+<p>Suppose that  $\vect{v}\in V$.  Then due to $V=U\ds W$, there exist vectors $\vect{u}\in U$ and $\vect{w}\in W$ such that $\vect{v}=\vect{u}+\vect{w}$.   Due to $W=X\ds Y$, there exist vectors $\vect{x}\in X$ and $\vect{y}\in Y$ such that $\vect{w}=\vect{x}+\vect{y}$.   All together,
+<alignmath>
+<![CDATA[\vect{v}&=\vect{u}+\vect{w}=\vect{u}+\vect{x}+\vect{y}]]>
+</alignmath>
+which would be the first condition of a definition of a 3-way direct product.</p>
+
+<p>Now consider the uniqueness.  Suppose that
+<alignmath>
+<![CDATA[\vect{v}&=\vect{u}_1+\vect{x}_1+\vect{y}_1]]>
+<![CDATA[&]]>
+<![CDATA[\vect{v}&=\vect{u}_2+\vect{x}_2+\vect{y}_2]]>
+</alignmath></p>
+
+<p>Because $\vect{x}_1+\vect{y}_1\in W$, $\vect{x}_2+\vect{y}_2\in W$, and $V=U\ds W$, we conclude that
+<alignmath>
+<![CDATA[\vect{u}_1&=\vect{u}_2]]>
+<![CDATA[&]]>
+<![CDATA[\vect{x}_1+\vect{y}_1&=\vect{x}_2+\vect{y}_2]]>
+</alignmath></p>
+
+<p>From the second equality, an application of $W=X\ds Y$ yields the conclusions $\vect{x}_1=\vect{x}_2$ and $\vect{y}_1=\vect{y}_2$.  This establishes the uniqueness of the decomposition of $\vect{v}$ into a sum of vectors from $U$, $X$ and $Y$.</p>
+
+</proof>
+</theorem>
+
+<p>Remember that when we write $V=U\ds W$ there always needs to be a <q>superspace,</q> in this case $V$.  The statement $U\ds W$ is meaningless.  Writing $V=U\ds W$ is simply a shorthand for a somewhat complicated relationship between $V$, $U$ and $W$, as described in the two conditions of <acroref type="definition" acro="DS" />, or <acroref type="theorem" acro="DSZV" />, or <acroref type="theorem" acro="DSZI" />.  <acroref type="theorem" acro="DSFB" /> and <acroref type="theorem" acro="DSFOS" /> gives us sure-fire ways to build direct sums, while <acroref type="theorem" acro="DSLI" />,  <acroref type="theorem" acro="DSD" /> and <acroref type="theorem" acro="RDS" /> tell us interesting properties of direct sums.</p>
+
+<p>This subsection has been long on theorems and short on examples.  If we were to use the term <q>lemma</q> we might have chosen to label some of these results as such, since they will be important tools in other proofs, but may not have much interest on their own (see <acroref type="technique" acro="LC" />).  We will be referencing these results heavily in later sections, and will remind you then to come back for a second look.</p>
+
+</subsection>
+
+<!--   End  pd.tex -->
+<readingquestions>
+<ol>
+<li>Why does <acroref type="theorem" acro="G" /> have the title it does?
+</li>
+<li>Why is <acroref type="theorem" acro="RMRT" /> so surprising ?
+</li>
+<li>Row-reduce the matrix $A$ to reduced row-echelon form.  Without any further computations, compute the dimensions of the four subspaces, (a) $\nsp{A}$, (b) $\csp{A}$, (c) $\rsp{A}$  and  (d) $\lns{A}$.
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[ 1 & -1 & 2 & 8 & 5 \\]]>
+<![CDATA[ 1 & 1 & 1 & 4 & -1 \\]]>
+<![CDATA[ 0 & 2 & -3 & -8 & -6 \\]]>
+<![CDATA[ 2 & 0 & 1 & 8 & 4]]>
+\end{bmatrix}
+</equation>
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="10" rough="check-this from SVP4">
+<problem contributor="robertbeezer"><acroref type="example" acro="SVP4" /> leaves several details for the reader to check.  Verify these five claims.
+</problem>
+</exercise>
+
+<exercise type="C" number="40" rough="Recycle LISS.C40, 3 vectors in 5-D space">
+<problem contributor="robertbeezer">Determine if the set $T=\set{x^2-x+5,\,4x^3-x^2+5x,\,3x+2}$ spans the vector space of polynomials with degree 4 or less, $P_4$.  (Compare the solution to this exercise with <acroref type="solution" acro="LISS.C40" />.)
+</problem>
+<solution contributor="robertbeezer"><![CDATA[The vector space $P_4$ has dimension 5 by <acroref type="theorem" acro="DP" />.  Since $T$ contains only 3 vectors, and $3<5$, <acroref type="theorem" acro="G" /> tells us that $T$ does not span $P_4$.]]>
+</solution>
+</exercise>
+
+<exercise type="M" number="50" rough="define m-way diret sum">
+<problem contributor="robertbeezer">Mimic <acroref type="definition" acro="DS" /> and construct a reasonable definition of $V=U_1\ds U_2\ds U_3\ds \dots\ds U_m$.
+</problem>
+</exercise>
+
+<exercise type="T" number="05" rough="three dimension facts as with-equality-iff">
+<problem contributor="robertbeezer">Trivially, if $U$ and $V$ are two subspaces of $W$, then $\dimension{U}=\dimension{V}$.  Combine this fact, <acroref type="theorem" acro="PSSD" />, and <acroref type="theorem" acro="EDYES" /> all into one grand combined theorem.  You might look to <acroref type="theorem" acro="PIP" /> stylistic inspiration.  (Notice this problem does not ask you to prove anything.  It just asks you to roll up three theorems into one compact, logically equivalent statement.)
+</problem>
+</exercise>
+
+<exercise type="T" number="10" rough="dim equals set size, then lin ind iff spans">
+<problem contributor="robertbeezer">Prove the following theorem, which could be viewed as a reformulation of parts (3) and (4) of <acroref type="theorem" acro="G" />, or more appropriately as a corollary of <acroref type="theorem" acro="G" /> (<acroref type="technique" acro="LC" />).<br /><br />
+Suppose $V$ is a vector space and $S$ is a subset of $V$ such that the number of vectors in $S$ equals the dimension of $V$.  Then $S$ is linearly independent if and only if $S$ spans $V$.
+</problem>
+</exercise>
+
+<exercise type="T" number="15" rough="rank bounded above by min(m,n)">
+<problem contributor="robertbeezer">Suppose that $A$ is an $m\times n$ matrix and let $\text{min}(m,n)$ denote the minimum of $m$ and $n$.  Prove that $\rank{A}\leq \text{min}(m,n)$.
+</problem>
+</exercise>
+
+<exercise type="T" number="20" rough="consistent iff augmented has same rank">
+<problem contributor="robertbeezer">Suppose that $A$ is an $m\times n$ matrix and $\vect{b}\in\complex{m}$.  Prove that the linear system $\linearsystem{A}{\vect{b}}$ is consistent if and only if $\rank{A}=\rank{\augmented{A}{\vect{b}}}$.
+</problem>
+<solution contributor="robertbeezer"><implyforward /> Suppose first that $\linearsystem{A}{\vect{b}}$ is consistent.  Then by <acroref type="theorem" acro="CSCS" />, $\vect{b}\in\csp{A}$.  This means that $\csp{A}=\csp{\augmented{A}{\vect{b}}}$ and so it follows that $\rank{A}=\rank{\augmented{A}{\vect{b}}}$.<br /><br />
+<implyreverse />  Adding a column to a matrix will only increase the size of its column space, so in all cases, $\csp{A}\subseteq\csp{\augmented{A}{\vect{b}}}$.  However, if we assume that $\rank{A}=\rank{\augmented{A}{\vect{b}}}$, then by <acroref type="theorem" acro="EDYES" /> we conclude that $\csp{A}=\csp{\augmented{A}{\vect{b}}}$.  Then $\vect{b}\in\csp{\augmented{A}{\vect{b}}}=\csp{A}$ so by <acroref type="theorem" acro="CSCS" />, $\linearsystem{A}{\vect{b}}$ is consistent.
+</solution>
+</exercise>
+
+<exercise type="T" number="25" rough="subspace of finite-dim space has finite dim">
+<problem contributor="robertbeezer">Suppose that $V$ is a vector space with finite dimension.  Let $W$ be any subspace of $V$.  Prove that $W$ has finite dimension.
+</problem>
+</exercise>
+
+<exercise type="T" number="33" rough="Apply Theorem G to B.T50">
+<problem contributor="robertbeezer">Part of <acroref type="exercise" acro="B.T50" /> is the half of the proof where we assume the matrix $A$ is nonsingular and prove that a set is basis.  In <acroref type="solution" acro="B.T50" /> we proved directly that the set was both linearly independent and a spanning set.  Shorten this part of the proof by applying <acroref type="theorem" acro="G" />.  Be careful, there is one subtlety.
+</problem>
+<solution contributor="robertbeezer">By <acroref type="theorem" acro="DCM" /> we know that $\complex{n}$ has dimension $n$.  So by <acroref type="theorem" acro="G" /> we need only establish that the set $C$ is linearly independent or a spanning set.  However, the hypotheses also require that $C$ be of size $n$.  We assumed that $B=\set{\vectorlist{x}{n}}$ had size $n$, but there is no guarantee that $C=\set{A\vect{x}_1,\,A\vect{x}_2,\,A\vect{x}_3,\,\dots,\,A\vect{x}_n}$ will have size $n$.  There could be some <q>collapsing</q> or <q>collisions.</q><br /><br />
+Suppose we establish that $C$ is linearly independent.  Then $C$ must have $n$ distinct elements or else we could fashion a nontrivial relation of linear dependence involving duplicate elements.<br /><br />
+If we instead to choose to prove that $C$ is a spanning set, then we could establish the uniqueness of the elements of $C$ quite easily.  Suppose that $A\vect{x}_i=A\vect{x}_j$.  Then
+<alignmath>
+<![CDATA[A(\vect{x}_i-\vect{x}_j)&=A\vect{x}_i - A\vect{x}_j=\zerovector]]>
+</alignmath>
+Since $A$ is nonsingular, we conclude that $\vect{x}_i-\vect{x}_j=\zerovector$, or $\vect{x}_i=\vect{x}_j$, contrary to our description of $B$.
+</solution>
+</exercise>
+
+<exercise type="T" number="60" rough="intersecting subspaces and dimension">
+<problem contributor="joeriegsecker">Suppose that $W$ is a vector space with dimension 5, and $U$ and $V$ are subspaces of $W$, each of dimension 3.  Prove that $U\cap V$ contains a non-zero vector.  State a more general result.
+</problem>
+<solution contributor="robertbeezer">Let $\set{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3}$ and $\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3}$ be bases for $U$ and $V$ (respectively).  Then, the set $\set{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3}$ is linearly dependent, since <acroref type="theorem" acro="G" /> says we cannot have 6 linearly independent vectors in a vector space of dimension 5.  So we can assert that there is a non-trivial relation of linear dependence,
+<equation>
+a_1\vect{u}_1+a_2\vect{u}_2+a_3\vect{u}_3+b_1\vect{v}_1+b_2\vect{v}_2+b_3\vect{v}_3=\zerovector
+</equation>
+where $a_1,\,a_2,\,a_3$ and $b_1,\,b_2,\,b_3$ are not all zero.<br /><br />
+We can rearrange this equation as
+<equation>
+a_1\vect{u}_1+a_2\vect{u}_2+a_3\vect{u}_3=-b_1\vect{v}_1-b_2\vect{v}_2-b_3\vect{v}_3
+</equation>
+This is an equality of two vectors, so we can give this common vector a name, say $\vect{w}$,
+<equation>
+\vect{w}=a_1\vect{u}_1+a_2\vect{u}_2+a_3\vect{u}_3=-b_1\vect{v}_1-b_2\vect{v}_2-b_3\vect{v}_3
+</equation>
+This is the desired non-zero vector, as we will now show.<br /><br />
+First, since $\vect{w}=a_1\vect{u}_1+a_2\vect{u}_2+a_3\vect{u}_3$, we can see that $\vect{w}\in U$.  Similarly, $\vect{w}=-b_1\vect{v}_1-b_2\vect{v}_2-b_3\vect{v}_3$, so $\vect{w}\in V$.  This establishes that $\vect{w}\in U\cap V$ (<acroref type="definition" acro="SI" />).<br /><br />
+Is $\vect{w}\neq\zerovector$?  Suppose not, in other words, suppose $\vect{w}=\zerovector$.  Then
+<equation>
+\zerovector=\vect{w}=a_1\vect{u}_1+a_2\vect{u}_2+a_3\vect{u}_3
+</equation>
+Because $\set{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3}$ is a basis for $U$, it is a linearly independent set and the relation of linear dependence above means we must conclude that $a_1=a_2=a_3=0$.  By a similar process, we would conclude that $b_1=b_2=b_3=0$.  But this is a contradiction since $a_1,\,a_2,\,a_3,\,b_1,\,b_2,\,b_3$ were chosen so that some were nonzero.  So $\vect{w}\neq\zerovector$.<br /><br />
+How does this generalize?  All we really needed was the original relation of linear dependence that resulted because we had <q>too many</q> vectors in $W$.  A more general statement would be: Suppose that $W$ is a vector space with dimension $n$, $U$ is a subspace of dimension $p$ and $V$ is a subspace of dimension $q$.  If $p+q>n$, then $U\cap V$ contains a non-zero vector.
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

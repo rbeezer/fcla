@@ -1,0 +1,1458 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="MM">
+<title>Matrix Multiplication</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section MM -->
+<!-- %  Matrix Multiplication -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>We know how to add vectors and how to multiply them by scalars.  Together, these operations give us the possibility of making linear combinations.  Similarly, we know how to add matrices and how to multiply matrices by scalars.  In this section we mix all these ideas together and produce an operation known as <q>matrix multiplication.</q>  This will lead to some results that are both surprising and central.  We begin with a definition of how to multiply a vector by a matrix.</p>
+
+</introduction>
+
+<subsection acro="MVP">
+<title>Matrix-Vector Product</title>
+
+<p>We have repeatedly seen the importance of forming linear combinations of the columns of a matrix.  As one example of this, the oft-used <acroref type="theorem" acro="SLSLC" />, said that every solution to a system of linear equations gives rise to a linear combination of the column vectors of the coefficient matrix that equals the vector of constants.  This theorem, and others, motivate the following central definition.</p>
+
+<definition acro="MVP" index="matrix!product with vector">
+<title>Matrix-Vector Product</title>
+<indexlocation index="vector!product with matrix" />
+<p>Suppose $A$ is an $m\times n$ matrix with columns $\vectorlist{A}{n}$ and $\vect{u}$ is a vector of size $n$.  Then the <define>matrix-vector product</define> of $A$ with $\vect{u}$ is the linear combination
+<equation>
+A\vect{u}=
+\vectorentry{\vect{u}}{1}\vect{A}_1+
+\vectorentry{\vect{u}}{2}\vect{A}_2+
+\vectorentry{\vect{u}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{u}}{n}\vect{A}_n
+</equation>
+</p>
+
+<notation acro="MVP" index="matrix-vector product">
+<title>Matrix-Vector Product</title>
+<usage>$A\vect{u}$</usage>
+</notation>
+</definition>
+
+<p>So, the matrix-vector product is yet another version of <q>multiplication,</q> at least in the sense that we have yet again overloaded juxtaposition of two symbols as our notation.  Remember your objects, an $m\times n$ matrix times a vector of size $n$ will create a vector of size $m$.  So if $A$ is rectangular, then the size of the vector changes.  With all the linear combinations we have performed so far, this computation should now seem second nature.</p>
+
+<example acro="MTV" index="matrix-vector product">
+<title>A matrix times a vector</title>
+
+<p>Consider
+<alignmath>
+A=
+\begin{bmatrix}
+<![CDATA[1 & 4 & 2 & 3 & 4\\]]>
+<![CDATA[-3 & 2 & 0 & 1 & -2\\]]>
+<![CDATA[1 & 6 & -3 & -1 & 5]]>
+\end{bmatrix}
+<![CDATA[&&]]>
+\vect{u}=\colvector{2\\1\\-2\\3\\-1}
+</alignmath></p>
+
+<p>Then
+<equation>
+A\vect{u}=
+2\colvector{1\\-3\\1}+
+1\colvector{4\\2\\6}+
+(-2)\colvector{2\\0\\-3}+
+3\colvector{3\\1\\-1}+
+(-1)\colvector{4\\-2\\5}
+=
+\colvector{7\\1\\6}.
+</equation>
+</p>
+
+</example>
+
+<p>We can now represent systems of linear equations compactly with a matrix-vector product (<acroref type="definition" acro="MVP" />) and column vector equality (<acroref type="definition" acro="CVE" />).  This finally yields a very popular alternative to our unconventional $\linearsystem{A}{\vect{b}}$ notation.</p>
+
+<theorem acro="SLEMM" index="matrix multiplication!systems of linear equations">
+<title>Systems of Linear Equations as Matrix Multiplication</title>
+<statement>
+<p>The set of solutions to the linear system $\linearsystem{A}{\vect{b}}$ equals the set of solutions for $\vect{x}$ in the vector equation $A\vect{x}=\vect{b}$.</p>
+
+</statement>
+
+<proof>
+<p>This theorem says that two sets (of solutions) are equal.  So we need to show that one set of solutions is a subset of the other, and vice versa (<acroref type="definition" acro="SE" />).  Let $\vectorlist{A}{n}$ be the columns of $A$.  Both of these set inclusions then follow from the following chain of equivalences (<acroref type="technique" acro="E" />),
+<alignmath>
+<![CDATA[&\vect{x}\text{ is a solution to }\linearsystem{A}{\vect{b}}\\]]>
+<![CDATA[&\iff]]>
+\vectorentry{\vect{x}}{1}\vect{A}_1+
+\vectorentry{\vect{x}}{2}\vect{A}_2+
+\vectorentry{\vect{x}}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{x}}{n}\vect{A}_n
+<![CDATA[=\vect{b}&&]]>\text{<acroref type="theorem" acro="SLSLC" />}\\
+<![CDATA[&\iff]]>
+<![CDATA[\vect{x}\text{ is a solution to }A\vect{x}=\vect{b}&&]]>\text{<acroref type="definition" acro="MVP" />}
+</alignmath></p>
+
+</proof>
+</theorem>
+
+<example acro="MNSLE" index="linear systems!notation">
+<title>Matrix notation for systems of linear equations</title>
+
+<p>Consider the system of linear equations from <acroref type="example" acro="NSLE" />.</p>
+
+<p><alignmath>
+<![CDATA[2x_1+4x_2-3x_3+5x_4+x_5&=9\\]]>
+<![CDATA[3x_1+x_2+x_4-3x_5&=0\\]]>
+<![CDATA[-2x_1+7x_2-5x_3+2x_4+2x_5&=-3]]>
+</alignmath>
+has coefficient matrix
+<equation>
+A=
+\begin{bmatrix}
+<![CDATA[2 & 4 & -3 & 5 & 1\\]]>
+<![CDATA[3 & 1 & 0 & 1 & -3\\]]>
+<![CDATA[-2 & 7 & -5 & 2 & 2]]>
+\end{bmatrix}
+</equation>
+and vector of constants
+<equation>
+\vect{b}=\colvector{9\\0\\-3}
+</equation>
+and so will be described compactly by the vector equation $A\vect{x}=\vect{b}$.
+</p>
+
+</example>
+
+<p>The matrix-vector product is a very natural computation.  We have motivated it by its connections with systems of equations, but here is another example.</p>
+
+<example acro="MBC" index="best cities!money magazine">
+<title>Money's best cities</title>
+
+<p>Every year <i>Money</i> magazine selects several cities in the United States as the <q>best</q> cities to live in, based on a wide array of statistics about each city.  This is an example of how the editors of <i>Money</i> might arrive at a single number that consolidates the statistics about a city.  We will analyze Los Angeles, Chicago and New York City, based on four criteria:  average high temperature in July (Farenheit), number of colleges and universities in a 30-mile radius, number of toxic waste sites in the Superfund environmental clean-up program and a personal crime index based on FBI statistics (average = 100, smaller is safer).  It should be apparent how to generalize the example to a greater number of cities and a greater number of statistics.</p>
+
+<p>We begin by building a table of statistics.  The rows will be labeled with the cities, and the columns with statistical categories.  These values are from <i>Money</i>'s website in early 2005.
+
+<table>
+<latex>\begin{tabular}{||l||c|c|c|c||}\hline
+<![CDATA[City & Temp & Colleges & Superfund & Crime\\\hline\hline]]>
+<![CDATA[Los Angeles & 77 & 28 & 93 & 254\\\hline]]>
+<![CDATA[Chicago & 84 & 38 & 85 & 363\\\hline]]>
+<![CDATA[New York & 84 & 99 & 1 & 193\\\hline\hline]]>
+\end{tabular}</latex>
+<html>
+<![CDATA[<table border="1" cellpadding="2">
+  <tr><td>City</td><td>Temp</td><td>Colleges</td><td>Superfund</td><td>Crime</td></tr>
+  <tr><td>Los Angeles</td><td>77</td><td>28</td><td>93</td><td>254</td></tr>
+  <tr><td>Chicago    </td><td>84</td><td>38</td><td>85</td><td>363</td></tr>
+  <tr><td>New York   </td><td>84</td><td>99</td><td> 1</td><td>193</td></tr>
+</table>]]>
+</html>
+</table>
+
+
+</p>
+
+<p>Conceivably these data might reside in a spreadsheet.  Now we must combine the statistics for each city.  We could accomplish this by weighting each category, scaling the values and summing them.  The sizes of the weights would depend upon the numerical size of each statistic generally, but more importantly, they would reflect the editors opinions or beliefs about which statistics were most important to their readers.  Is the crime index more important than the number of colleges and universities?  Of course, there is no right answer to this question.</p>
+
+<p>Suppose the editors finally decide on the following weights to employ:  temperature, $0.23$; colleges, $0.46$; Superfund, $-0.05$; crime, $-0.20$.  Notice how negative weights are used for undesirable statistics.  Then, for example, the editors would compute for Los Angeles,
+<equation>
+(0.23)(77) + (0.46)(28) + (-0.05)(93) + (-0.20)(254) = -24.86
+</equation></p>
+
+<p>This computation might remind you of an inner product, but we will produce the computations for all of the cities as a matrix-vector product.  Write the table of raw statistics as a matrix
+<equation>
+T=
+\begin{bmatrix}
+<![CDATA[77 & 28 & 93 & 254\\]]>
+<![CDATA[84 & 38 & 85 & 363\\]]>
+<![CDATA[84 & 99 & 1 & 193]]>
+\end{bmatrix}
+</equation>
+and the weights as a vector
+<equation>
+\vect{w}=\colvector{0.23\\0.46\\-0.05\\-0.20}
+</equation>
+then the matrix-vector product (<acroref type="definition" acro="MVP" />) yields
+<equation>
+T\vect{w}=
+(0.23)\colvector{77\\84\\84}+
+(0.46)\colvector{28\\38\\99}+
+(-0.05)\colvector{93\\85\\1}+
+(-0.20)\colvector{254\\363\\193}
+=
+\colvector{-24.86\\-40.05\\26.21}
+</equation>
+</p>
+
+<p>This vector contains a single number for each of the cities being studied, so the editors would rank New York best ($26.21$), Los Angeles next ($-24.86$), and Chicago third ($-40.05$).  Of course, the mayor's offices in Chicago and Los Angeles are free to counter with a different set of weights that cause their city to be ranked best.  These alternative weights would be chosen to play to each cities' strengths, and minimize their problem areas.</p>
+
+<p>If a speadsheet were used to make these computations, a row of weights would be entered somewhere near the table of data and the formulas in the spreadsheet would effect a matrix-vector product.  This example is meant to illustrate how <q>linear</q> computations (addition, multiplication) can be organized as a matrix-vector product.</p>
+
+<p>Another example would be the matrix of numerical scores on examinations and exercises for students in a class.  The rows would correspond to students and the columns to exams and assignments.  The instructor could then assign weights to the different exams and assignments, and via a matrix-vector product, compute a single score for each student.</p>
+
+</example>
+
+<p>Later (much later) we will need the following theorem, which is really a technical lemma (see <acroref type="technique" acro="LC" />).  Since we are in a position to prove it now, we will.  But you can safely skip it for the moment, if you promise to come back later to study the proof when the theorem is employed.  At that point you will also be able to understand the comments in the paragraph following the proof.</p>
+
+<theorem acro="EMMVP" index="equal matrices!via equal matrix-vector products">
+<title>Equal Matrices and Matrix-Vector Products</title>
+<statement>
+<p>Suppose that $A$ and $B$ are $m\times n$ matrices such that $A\vect{x}=B\vect{x}$ for every $\vect{x}\in\complex{n}$.  Then $A=B$.</p>
+
+</statement>
+
+<proof>
+<p>We are assuming $A\vect{x}=B\vect{x}$ for all $\vect{x}\in\complex{n}$, so we can employ this equality for <em>any</em> choice of the vector $\vect{x}$.  However, we'll limit our use of this equality to the standard unit vectors, $\vect{e}_j$, $1\leq j\leq n$ (<acroref type="definition" acro="SUV" />).  For all $1\leq j\leq n$, $1\leq i\leq m$,
+<alignmath>
+\matrixentry{A}{ij}
+<![CDATA[&=]]>
+0\matrixentry{A}{i1}+
+\cdots+
+0\matrixentry{A}{i,j-1}+
+1\matrixentry{A}{ij}+
+0\matrixentry{A}{i,j+1}+
+\cdots+
+0\matrixentry{A}{in}\\
+<![CDATA[&=]]>
+\matrixentry{A}{i1}\vectorentry{\vect{e}_j}{1}+
+\matrixentry{A}{i2}\vectorentry{\vect{e}_j}{2}+
+\matrixentry{A}{i3}\vectorentry{\vect{e}_j}{3}+
+\cdots+
+\matrixentry{A}{in}\vectorentry{\vect{e}_j}{n}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="SUV" />}\\
+<![CDATA[&=]]>
+<![CDATA[\vectorentry{A\vect{e}_j}{i}&&]]>\text{<acroref type="definition" acro="MVP" />}\\
+<![CDATA[&=]]>
+<![CDATA[\vectorentry{B\vect{e}_j}{i}&&]]>\text{<acroref type="definition" acro="CVE" />}\\
+<![CDATA[&=]]>
+\matrixentry{B}{i1}\vectorentry{\vect{e}_j}{1}+
+\matrixentry{B}{i2}\vectorentry{\vect{e}_j}{2}+
+\matrixentry{B}{i3}\vectorentry{\vect{e}_j}{3}+
+\cdots+
+<![CDATA[\matrixentry{B}{in}\vectorentry{\vect{e}_j}{n}&&]]>\text{<acroref type="definition" acro="MVP" />}\\
+<![CDATA[&=]]>
+0\matrixentry{B}{i1}+
+\cdots+
+0\matrixentry{B}{i,j-1}+
+1\matrixentry{B}{ij}+
+0\matrixentry{B}{i,j+1}+
+\cdots+
+0\matrixentry{B}{in}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="SUV" />}\\
+<![CDATA[&=\matrixentry{B}{ij}]]>
+</alignmath></p>
+
+<p>So by <acroref type="definition" acro="ME" /> the matrices $A$ and $B$ are equal, as desired.</p>
+
+</proof>
+</theorem>
+
+<p>You might notice from studying the proof that the hypotheses of this theorem could be <q>weakened</q> (<ie />  made less restrictive).   We need only suppose the equality of the matrix-vector products for just the standard unit vectors (<acroref type="definition" acro="SUV" />) or any other spanning set (<acroref type="definition" acro="TSVS" />) of $\complex{n}$ (<acroref type="exercise" acro="LISS.T40" />).  However, in practice, when we apply this theorem the stronger hypothesis will be in effect so this version of the theorem will suffice for our purposes.  (If we changed the statement of the theorem to have the less restrictive hypothesis, then we would call the theorem <q>stronger.</q>)</p>
+
+<sageadvice acro="MVP" index="matrix-vector product">
+<title>Matrix-Vector Product</title>
+A matrix-vector product is very natural in Sage, and we can check the result against a linear combination of the columns.
+<sage>
+<input>A = matrix(QQ, [[1, -3,  4,  5],
+                [2,  3, -2,  0],
+                [5,  6,  8, -2]])
+v = vector(QQ, [2, -2, 1, 3])
+A*v
+</input>
+<output>(27, -4, 0)
+</output>
+</sage>
+
+<sage>
+<input>sum([v[i]*A.column(i) for i in range(len(v))])
+</input>
+<output>(27, -4, 0)
+</output>
+</sage>
+
+Notice that when a matrix is square, a vector of the correct size can be used in Sage in a product with a matrix by placing the vector on either side of the matrix.  However, the two results are <em>not</em> the same, and we will not have ocassion to place the vector on the left any time soon.  So, despite the possibility, be certain to keep your vectors on the right side of a matrix in a product.
+<sage>
+<input>B = matrix(QQ, [[ 1, -3,  4,  5],
+                [ 2,  3, -2,  0],
+                [ 5,  6,  8, -2],
+                [-4,  1,  1,  2]])
+w = vector(QQ, [1, 2, -3, 2])
+B*w
+</input>
+<output>(-7, 14, -11, -1)
+</output>
+</sage>
+
+<sage>
+<input>w*B
+</input>
+<output>(-18, -13, -22, 15)
+</output>
+</sage>
+
+<sage>
+<input>B*w == w*B
+</input>
+<output>False
+</output>
+</sage>
+
+Since a matrix-vector product forms a linear combination of columns of a matrix, it is now very easy to check if a vector is a solution to a system of equations.  This is basically the substance of <acroref type="theorem" acro="SLEMM" />.  Here we construct a system of equations and construct two solutions and one non-solution by applying <acroref type="theorem" acro="PSPHS" />.  Then we use a matrix-vector product to verify that the vectors are, or are not, solutions.
+<sage>
+<input>coeff = matrix(QQ, [[-1,  3, -1, -1,  0,  2],
+                    [ 2, -6,  1, -2, -5, -8],
+                    [ 1, -3,  2,  5,  4,  1],
+                    [ 2, -6,  2,  2,  1, -3]])
+const = vector(QQ, [13, -25, -17, -23])
+solution1 = coeff.solve_right(const)
+coeff*solution1
+</input>
+<output>(13, -25, -17, -23)
+</output>
+</sage>
+
+<sage>
+<input>nsp = coeff.right_kernel(basis='pivot')
+nsp
+</input>
+<output>Vector space of degree 6 and dimension 3 over Rational Field
+User basis matrix:
+[ 3  1  0  0  0  0]
+[ 3  0 -4  1  0  0]
+[ 1  0  1  0 -1  1]
+</output>
+</sage>
+
+<sage>
+<input>nspb = nsp.basis()
+solution2 = solution1 + 5*nspb[0]+(-4)*nspb[1]+2*nspb[2]
+coeff*solution2
+</input>
+<output>(13, -25, -17, -23)
+</output>
+</sage>
+
+<sage>
+<input>nonnullspace = vector(QQ, [5, 0, 0, 0, 0, 0])
+nonnullspace in nsp
+</input>
+<output>False
+</output>
+</sage>
+
+<sage>
+<input>nonsolution = solution1 + nonnullspace
+coeff*nonsolution
+</input>
+<output>(8, -15, -12, -13)
+</output>
+</sage>
+
+We can now explain the difference between <q>left</q> and <q>right</q> variants of various Sage commands for linear algebra.  Generally, the direction refers to <em>where the vector is placed</em> in a matrix-vector product.  We place a vector on the right and understand this to mean a linear combination of the columns of the matrix.  Placing a vector to the left of a matrix can be understood, in a manner totally consistent with our upcoming definition of matrix multiplication, as a linear combination of the <em>rows</em> of the matrix.<br /><br />
+So the difference between <code>A.solve_right(v)</code> and <code>A.solve_left(v)</code> is that the former asks for a vector <code>x</code> such that <code>A*x == v</code>, while the latter asks for a vector <code>x</code> such that <code>x*A == v</code>.  Given Sage's preference for rows, a direction-neutral version of a command, if it exists, will be the <q>left</q> version.  For example, there is a <code>.right_kernel()</code> matrix method, while the <code>.left_kernel()</code> and <code>.kernel()</code> methods are identical <mdash /> the names are synonyms for the exact same routine.<br /><br />
+So when you see a Sage command that comes in <q>left</q> and <q>right</q> variants figure out just what part of the defined object involves a matrix-vector product and form an interpretation from that.
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="MM">
+<title>Matrix Multiplication</title>
+
+<p>We now define how to multiply two matrices together.  Stop for a minute and think about how you might define this new operation.</p>
+
+<p>Many books would present this definition much earlier in the course.  However, we have taken great care to delay it as long as possible and to present as many ideas as practical based mostly on the notion of linear combinations.  Towards the conclusion of the course, or when you perhaps take a second course in linear algebra, you may be in a position to appreciate the reasons for this.  For now, understand that matrix multiplication is a central definition and perhaps you will appreciate its importance more by having saved it for later.</p>
+
+<definition acro="MM" index="matrix multiplication">
+<title>Matrix Multiplication</title>
+<indexlocation index="vector!product with matrix" />
+<p>Suppose $A$ is an $m\times n$ matrix and $B$ is an $n\times p$ matrix with columns $\vectorlist{B}{p}$.  Then the <define>matrix product</define> of $A$ with $B$ is the $m\times p$ matrix where column $i$ is the matrix-vector product $A\vect{B}_i$.  Symbolically,
+<equation>
+AB=A\matrixcolumns{B}{p}=\left[A\vect{B}_1|A\vect{B}_2|A\vect{B}_3|\ldots|A\vect{B}_p\right].
+</equation>
+</p>
+
+<notation acro="MM" index="matrix multiplication">
+<title>Matrix Multiplication</title>
+<usage>$AB$</usage>
+</notation>
+</definition>
+
+<example acro="PTM" index="matrix!product">
+<title>Product of two matrices</title>
+
+<p>Set
+<alignmath>
+A=
+\begin{bmatrix}
+<![CDATA[1 & 2 & -1 & 4 & 6\\]]>
+<![CDATA[0 & -4 & 1 & 2 & 3\\]]>
+<![CDATA[-5 & 1 & 2 & -3 & 4]]>
+\end{bmatrix}
+<![CDATA[&&]]>
+B=
+\begin{bmatrix}
+<![CDATA[1 & 6 & 2 & 1\\]]>
+<![CDATA[-1 & 4 & 3 & 2\\]]>
+<![CDATA[1 & 1 & 2 & 3\\]]>
+<![CDATA[6 & 4 & -1 & 2\\]]>
+<![CDATA[1 & -2 & 3 & 0]]>
+<![CDATA[\end{bmatrix} &]]>
+</alignmath>
+</p>
+
+<p>Then
+<equation>
+AB=
+\left[
+A\colvector{1\\-1\\1\\6\\1}
+\left\lvert A\colvector{6\\4\\1\\4\\-2}\right.
+\left\lvert A\colvector{2\\3\\2\\-1\\3}\right.
+\left\lvert A\colvector{1\\2\\3\\2\\0}\right.
+\right]
+=
+\begin{bmatrix}
+<![CDATA[28 & 17 & 20 & 10\\]]>
+<![CDATA[20 & -13 & -3 & -1\\]]>
+<![CDATA[-18 & -44 & 12 & -3]]>
+\end{bmatrix}.
+</equation>
+</p>
+
+</example>
+
+<p>Is this the definition of matrix multiplication you expected?  Perhaps our previous operations for matrices caused you to think that we might multiply two matrices of the <em>same</em> size, <em>entry-by-entry</em>?  Notice that our current definition uses matrices of different sizes (though the number of columns in the first must equal the number of rows in the second), and the result is of a third size.  Notice too in the previous example that we cannot even consider the product $BA$, since the sizes of the two matrices in this order aren't right.</p>
+
+<p>But it gets weirder than that.  Many of your old ideas about <q>multiplication</q> won't apply to matrix multiplication, but some still will.  So make no assumptions, and don't do anything until you have a theorem that says you can.  Even if the sizes are right, matrix multiplication is not commutative <mdash /> order matters.</p>
+
+<example acro="MMNC" index="matrix multiplication!noncommutative">
+<title>Matrix multiplication is not commutative</title>
+
+<p>Set
+<alignmath>
+A=
+\begin{bmatrix}
+<![CDATA[1 & 3\\]]>
+<![CDATA[-1 & 2]]>
+\end{bmatrix}
+<![CDATA[&&]]>
+B=
+\begin{bmatrix}
+<![CDATA[4&0\\]]>
+<![CDATA[5&1]]>
+\end{bmatrix}.
+</alignmath></p>
+
+<p>Then we have two square, $2\times 2$ matrices, so <acroref type="definition" acro="MM" /> allows us to multiply them in either order.  We find
+<alignmath>
+AB=
+\begin{bmatrix}
+<![CDATA[19 & 3\\]]>
+<![CDATA[6 & 2]]>
+\end{bmatrix}
+<![CDATA[&&]]>
+BA=
+\begin{bmatrix}
+<![CDATA[4 & 12\\]]>
+<![CDATA[4 & 17]]>
+\end{bmatrix}
+</alignmath>
+and $AB\neq BA$.  Not even close.  It should not be hard for you to construct other pairs of matrices that do not commute (try a couple of $3\times 3$'s).  Can you find a pair of non-identical matrices that <em>do</em> commute?</p>
+
+</example>
+
+</subsection>
+
+<subsection acro="MMEE">
+<title>Matrix Multiplication, Entry-by-Entry</title>
+
+<p>While certain <q>natural</q> properties of multiplication don't hold, many more do.  In the next subsection, we'll state and prove the relevant theorems.  But first, we need a theorem that provides an alternate means of multiplying two matrices.  In many texts, this would be given as the <em>definition</em> of matrix multiplication.  We prefer to turn it around and have the following formula as a consequence of our definition.  It will prove useful for proofs of matrix equality, where we need to examine products of matrices, entry-by-entry.</p>
+
+<theorem acro="EMP" index="matrix multiplication!entry-by-entry">
+<title>Entries of Matrix Products</title>
+<statement>
+<p>Suppose $A$ is an $m\times n$ matrix and $B$ is an $n\times p$ matrix.  Then for $1\leq i\leq m$, $1\leq j\leq p$, the individual entries of $AB$ are given by
+<alignmath>
+\matrixentry{AB}{ij}
+<![CDATA[&=]]>
+\matrixentry{A}{i1}\matrixentry{B}{1j}+
+\matrixentry{A}{i2}\matrixentry{B}{2j}+
+\matrixentry{A}{i3}\matrixentry{B}{3j}+
+\cdots+
+\matrixentry{A}{in}\matrixentry{B}{nj}\\
+<![CDATA[&=]]>
+\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}
+</alignmath></p>
+
+</statement>
+
+<proof>
+<p>Denote the columns of  $A$ as the vectors $\vectorlist{A}{n}$ and the columns of  $B$ as the vectors $\vectorlist{B}{p}$.  Then for $1\leq i\leq m$, $1\leq j\leq p$,
+<alignmath>
+\matrixentry{AB}{ij}
+<![CDATA[&=\vectorentry{A\vect{B}_j}{i}&&]]>\text{<acroref type="definition" acro="MM" />}\\
+<![CDATA[&=\vectorentry{]]>
+\vectorentry{\vect{B}_j}{1}\vect{A}_1+
+\vectorentry{\vect{B}_j}{2}\vect{A}_2+
+\vectorentry{\vect{B}_j}{3}\vect{A}_3+
+\cdots+
+\vectorentry{\vect{B}_j}{n}\vect{A}_n
+<![CDATA[}{i}&&]]>\text{<acroref type="definition" acro="MVP" />}\\
+<![CDATA[&=]]>
+\vectorentry{\vectorentry{\vect{B}_j}{1}\vect{A}_1}{i}+
+\vectorentry{\vectorentry{\vect{B}_j}{2}\vect{A}_2}{i}+
+\vectorentry{\vectorentry{\vect{B}_j}{3}\vect{A}_3}{i}+
+\cdots+
+\vectorentry{\vectorentry{\vect{B}_j}{n}\vect{A}_n}{i}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVA" />}\\
+<![CDATA[&=]]>
+\vectorentry{\vect{B}_j}{1}\vectorentry{\vect{A}_1}{i}+
+\vectorentry{\vect{B}_j}{2}\vectorentry{\vect{A}_2}{i}+
+\vectorentry{\vect{B}_j}{3}\vectorentry{\vect{A}_3}{i}+
+\cdots+
+\vectorentry{\vect{B}_j}{n}\vectorentry{\vect{A}_n}{i}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVSM" />}\\
+<![CDATA[&=]]>
+\matrixentry{B}{1j}\matrixentry{A}{i1}+
+\matrixentry{B}{2j}\matrixentry{A}{i2}+
+\matrixentry{B}{3j}\matrixentry{A}{i3}+
+\cdots+
+\matrixentry{B}{nj}\matrixentry{A}{in}
+<![CDATA[&&]]>\text{<acroref type="definition" acro="M" />}\\
+<![CDATA[&=]]>
+\matrixentry{A}{i1}\matrixentry{B}{1j}+
+\matrixentry{A}{i2}\matrixentry{B}{2j}+
+\matrixentry{A}{i3}\matrixentry{B}{3j}+
+\cdots+
+\matrixentry{A}{in}\matrixentry{B}{nj}
+<![CDATA[&&]]>\text{<acroref type="property" acro="CMCN" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}]]>
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<example acro="PTMEE" index="matrix!product">
+<title>Product of two matrices, entry-by-entry</title>
+
+<p>Consider again the two matrices from <acroref type="example" acro="PTM" />
+<alignmath>
+A=
+\begin{bmatrix}
+<![CDATA[1 & 2 & -1 & 4 & 6\\]]>
+<![CDATA[0 & -4 & 1 & 2 & 3\\]]>
+<![CDATA[-5 & 1 & 2 & -3 & 4]]>
+\end{bmatrix}
+<![CDATA[&&]]>
+B=
+\begin{bmatrix}
+<![CDATA[1 & 6 & 2 & 1\\]]>
+<![CDATA[-1 & 4 & 3 & 2\\]]>
+<![CDATA[1 & 1 & 2 & 3\\]]>
+<![CDATA[6 & 4 & -1 & 2\\]]>
+<![CDATA[1 & -2 & 3 & 0]]>
+<![CDATA[\end{bmatrix} &]]>
+</alignmath>
+</p>
+
+<p>Then suppose we just wanted the entry of $AB$ in the second row, third column:
+<alignmath>
+\matrixentry{AB}{23}
+<![CDATA[=&]]>
+\matrixentry{A}{21}\matrixentry{B}{13}+
+\matrixentry{A}{22}\matrixentry{B}{23}+
+\matrixentry{A}{23}\matrixentry{B}{33}+
+\matrixentry{A}{24}\matrixentry{B}{43}+
+\matrixentry{A}{25}\matrixentry{B}{53}\\
+<![CDATA[=&(0)(2)+(-4)(3)+(1)(2)+(2)(-1)+(3)(3)=-3]]>
+</alignmath></p>
+
+<p>Notice how there are 5 terms in the sum, since 5 is the common dimension of the two matrices (column count for $A$, row count for $B$).  In the conclusion of <acroref type="theorem" acro="EMP" />, it would be the index $k$ that would run from 1 to 5 in this computation.   Here's a bit more practice.</p>
+
+<p>The entry of third row, first column:
+<alignmath>
+\matrixentry{AB}{31}
+<![CDATA[=&]]>
+\matrixentry{A}{31}\matrixentry{B}{11}+
+\matrixentry{A}{32}\matrixentry{B}{21}+
+\matrixentry{A}{33}\matrixentry{B}{31}+
+\matrixentry{A}{34}\matrixentry{B}{41}+
+\matrixentry{A}{35}\matrixentry{B}{51}\\
+<![CDATA[=&(-5)(1)+(1)(-1)+(2)(1)+(-3)(6)+(4)(1)=-18]]>
+</alignmath>
+</p>
+
+<p>To get some more practice on your own, complete the computation of the other 10 entries of this product.  Construct some other pairs of matrices (of compatible sizes) and compute their product two ways.  First use <acroref type="definition" acro="MM" />.  Since linear combinations are straightforward for you now, this should be easy to do and to do correctly.  Then do it again, using <acroref type="theorem" acro="EMP" />.  Since this process may take some practice, use your first computation to check your work.</p>
+
+</example>
+
+<p><acroref type="theorem" acro="EMP" /> is the way many people compute matrix products by hand.  It will also be very useful for the theorems we are going to prove shortly.  However, the definition (<acroref type="definition" acro="MM" />) is frequently the most useful for its connections with deeper ideas like the null space and the upcoming column space.</p>
+
+<sageadvice acro="MM" index="matrix multiplication">
+<title>Matrix Multiplication</title>
+Matrix multiplication is very natural in Sage, and is just as easy as multiplying two numbers.  We illustrate <acroref type="theorem" acro="EMP" /> by using it to compute the entry in the first row and third column.
+<sage>
+<input>A = matrix(QQ, [[3, -1, 2,  5],
+                [9,  1, 2, -4]])
+B = matrix(QQ, [[1,  6, 1],
+                [0, -1, 2],
+                [5,  2, 3],
+                [1,  1, 1]])
+A*B
+</input>
+<output>[18 28 12]
+[15 53 13]
+</output>
+</sage>
+
+<sage>
+<input>sum([A[0,k]*B[k,2] for k in range(A.ncols())])
+</input>
+<output>12
+</output>
+</sage>
+
+Note in the final statement, we could replace <code>A.ncols()</code> by <code>B.nrows()</code> since these two quantities must be identical.  You can experiment with the last statement by editing it to compute any of the five other entries of the matrix product.<br /><br />
+Square matrices can be multiplied in either order, but the result will almost always be different.  Execute repeatedly the following products of two random $4\times 4$ matrices, with a check on the equality of the two products in either order.  It is possible, but highly unlikely, that the two products will be equal.  So if this compute cell ever produces <code>True</code> it will be a minor miracle.
+<sage>
+<input>A = random_matrix(QQ,4,4)
+B = random_matrix(QQ,4,4)
+A*B == B*A       # random, sort of
+</input>
+<output>False
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="PMM">
+<title>Properties of Matrix Multiplication</title>
+
+<p>In this subsection, we collect properties of matrix multiplication and its interaction with
+the zero matrix (<acroref type="definition" acro="ZM" />),
+the identity matrix (<acroref type="definition" acro="IM" />),
+matrix addition (<acroref type="definition" acro="MA" />),
+scalar matrix multiplication (<acroref type="definition" acro="MSM" />),
+the inner product (<acroref type="definition" acro="IP" />),
+conjugation (<acroref type="theorem" acro="MMCC" />),
+and
+the transpose (<acroref type="definition" acro="TM" />).
+Whew!  Here we go.  These are great proofs to practice with, so try to concoct the proofs before reading them, they'll get progressively more complicated as we go.</p>
+
+<theorem acro="MMZM" index="matrix multiplication!zero matrix">
+<title>Matrix Multiplication and the Zero Matrix</title>
+<statement>
+<p>Suppose $A$ is an $m\times n$ matrix.  Then
+<ol><li> $A\zeromatrix_{n\times p}=\zeromatrix_{m\times p}$
+</li><li> $\zeromatrix_{p\times m}A=\zeromatrix_{p\times n}$
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>We'll prove (1) and leave (2) to you.  Entry-by-entry, for $1\leq i\leq m$, $1\leq j\leq p$,
+<alignmath>
+\matrixentry{A\zeromatrix_{n\times p}}{ij}
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{\zeromatrix_{n\times p}}{kj}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{A}{ik}0]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="ZM" />}\\
+<![CDATA[&=\sum_{k=1}^{n}0\\]]>
+<![CDATA[&=0]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="ZCN" />}\\
+<![CDATA[&=\matrixentry{\zeromatrix_{m\times p}}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="ZM" />}
+</alignmath>
+</p>
+
+<p>So by the definition of matrix equality (<acroref type="definition" acro="ME" />), the matrices $A\zeromatrix_{n\times p}$ and $\zeromatrix_{m\times p}$ are equal.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="MMIM" index="matrix multiplication!identity matrix">
+<title>Matrix Multiplication and Identity Matrix</title>
+<statement>
+<p>Suppose $A$ is an $m\times n$ matrix.  Then
+<ol><li> $AI_n=A$
+</li><li> $I_mA=A$
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>Again, we'll prove (1) and leave (2) to you.  Entry-by-entry,    For $1\leq i\leq m$, $1\leq j\leq n$,
+<alignmath>
+<![CDATA[\matrixentry{AI_n}{ij}=&]]>
+\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{I_n}{kj}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\matrixentry{A}{ij}\matrixentry{I_n}{jj}+\sum_{\substack{k=1\\k\neq j}}^{n}\matrixentry{A}{ik}\matrixentry{I_n}{kj}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="CACN" />}\\
+<![CDATA[&=\matrixentry{A}{ij}(1)+\sum_{k=1, k\neq j}^{n}\matrixentry{A}{ik}(0)]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IM" />}\\
+<![CDATA[&=\matrixentry{A}{ij}+\sum_{k=1, k\neq j}^{n}0\\]]>
+<![CDATA[&=\matrixentry{A}{ij}]]>
+</alignmath>
+</p>
+
+<p>So the matrices $A$ and $AI_n$ are equal, entry-by-entry, and by the definition of matrix equality (<acroref type="definition" acro="ME" />) we can say they are equal matrices.</p>
+
+</proof>
+</theorem>
+
+<p>It is this theorem that gives the identity matrix its name.  It is a matrix that behaves with matrix multiplication like the scalar 1 does with scalar multiplication.  To multiply by the identity matrix is to have no effect on the other matrix.</p>
+
+<theorem acro="MMDAA" index="matrix multiplication!distributivity">
+<title>Matrix Multiplication Distributes Across Addition</title>
+<statement>
+<p>Suppose $A$ is an $m\times n$ matrix and $B$ and $C$ are $n\times p$ matrices and $D$ is a $p\times s$ matrix.    Then
+<ol><li> $A(B+C)=AB+AC$
+</li><li> $(B+C)D=BD+CD$
+</li></ol>
+</p>
+
+</statement>
+
+<proof>
+<p>We'll do (1), you do (2).  Entry-by-entry, for $1\leq i\leq m$, $1\leq j\leq p$,
+<alignmath>
+\matrixentry{A(B+C)}{ij}
+<![CDATA[&=]]>
+<![CDATA[\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B+C}{kj}&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{A}{ik}(\matrixentry{B}{kj}+\matrixentry{C}{kj})&&]]>\text{<acroref type="definition" acro="MA" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}+\matrixentry{A}{ik}\matrixentry{C}{kj}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DCN" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}+\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{C}{kj}&&]]>\text{<acroref type="property" acro="CACN" />}\\
+<![CDATA[&=\matrixentry{AB}{ij}+\matrixentry{AC}{ij}&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\matrixentry{AB+AC}{ij}&&]]>\text{<acroref type="definition" acro="MA" />}
+</alignmath>
+</p>
+
+<p>So the matrices $A(B+C)$ and $AB+AC$ are equal, entry-by-entry, and by the definition of matrix equality (<acroref type="definition" acro="ME" />) we can say they are equal matrices.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="MMSMM" index="matrix multiplication!scalar matrix multiplication">
+<title>Matrix Multiplication and Scalar Matrix Multiplication</title>
+<statement>
+<p>Suppose $A$ is an $m\times n$ matrix and $B$ is an $n\times p$ matrix.  Let $\alpha$ be a scalar.  Then $\alpha(AB)=(\alpha A)B=A(\alpha B)$.</p>
+
+</statement>
+
+<proof>
+<p>These are equalities of matrices.  We'll do the first one, the second is similar and will be good practice for you.    For $1\leq i\leq m$, $1\leq j\leq p$,
+<alignmath>
+\matrixentry{\alpha(AB)}{ij}
+<![CDATA[&=\alpha\matrixentry{AB}{ij}&&]]>\text{<acroref type="definition" acro="MSM" />}\\
+<![CDATA[&=\alpha\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\alpha\matrixentry{A}{ik}\matrixentry{B}{kj}&&]]>\text{<acroref type="property" acro="DCN" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{\alpha A}{ik}\matrixentry{B}{kj}&&]]>\text{<acroref type="definition" acro="MSM" />}\\
+<![CDATA[&=\matrixentry{(\alpha A)B}{ij}&&]]>\text{<acroref type="theorem" acro="EMP" />}
+</alignmath></p>
+
+<p>So the matrices $\alpha(AB)$ and $(\alpha A)B$ are equal, entry-by-entry, and by the definition of matrix equality (<acroref type="definition" acro="ME" />) we can say they are equal matrices.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="MMA" index="matrix multiplication!associativity">
+<title>Matrix Multiplication is Associative </title>
+<statement>
+<p>Suppose $A$ is an $m\times n$ matrix, $B$ is an $n\times p$ matrix and $D$ is a $p\times s$ matrix.  Then  $A(BD)=(AB)D$.</p>
+
+</statement>
+
+<proof>
+<p>A matrix equality, so we'll go entry-by-entry, no surprise there.    For $1\leq i\leq m$, $1\leq j\leq s$,
+<alignmath>
+\matrixentry{A(BD)}{ij}
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{BD}{kj}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{A}{ik}\left(\sum_{\ell=1}^{p}\matrixentry{B}{k\ell}\matrixentry{D}{\ell j}\right)]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\sum_{\ell=1}^{p}\matrixentry{A}{ik}\matrixentry{B}{k\ell}\matrixentry{D}{\ell j}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DCN" />}\\
+<intertext>We can switch the order of the summation since these are finite sums,</intertext>
+<![CDATA[&=\sum_{\ell=1}^{p}\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{k\ell}\matrixentry{D}{\ell j}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="CACN" />}\\
+<intertext>As $\matrixentry{D}{\ell j}$ does not depend on the index $k$, we can use distributivity to move it outside of the inner sum,</intertext>
+<![CDATA[&=\sum_{\ell=1}^{p}\matrixentry{D}{\ell j}\left(\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{k\ell}\right)]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="DCN" />}\\
+<![CDATA[&=\sum_{\ell=1}^{p}\matrixentry{D}{\ell j}\matrixentry{AB}{i\ell}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{\ell=1}^{p}\matrixentry{AB}{i\ell}\matrixentry{D}{\ell j}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="CMCN" />}\\
+<![CDATA[&=\matrixentry{(AB)D}{ij}&&]]>\text{<acroref type="theorem" acro="EMP" />}
+</alignmath>
+</p>
+
+<p>So the matrices $(AB)D$ and $A(BD)$ are equal, entry-by-entry, and by the definition of matrix equality (<acroref type="definition" acro="ME" />) we can say they are equal matrices.</p>
+
+</proof>
+</theorem>
+
+<p>The statement of our next theorem is technically inaccurate.  If we upgrade the vectors $\vect{u},\,\vect{v}$ to matrices with a single column, then the expression $\transpose{\vect{u}}\conjugate{\vect{v}}$ is a $1\times 1$ matrix, though we will treat this small matrix as if it was simply the scalar quantity in its lone entry.  When we apply <acroref type="theorem" acro="MMIP" /> there should not be any confusion.  Notice that if we treat a column vector as a matrix with a single column, then we can also construct the adjoint of a vector, though we will not make this a common practice.</p>
+
+<theorem acro="MMIP" index="matrix multiplication!inner product">
+<title>Matrix Multiplication and Inner Products</title>
+<statement>
+<p>If we consider the vectors $\vect{u},\,\vect{v}\in\complex{m}$ as $m\times 1$ matrices then
+<alignmath>
+\innerproduct{\vect{u}}{\vect{v}}
+<![CDATA[&=\transpose{\conjugate{\vect{u}}}\vect{v}]]>
+<![CDATA[=\adjoint{\vect{u}}\vect{v}]]>
+</alignmath>
+</p>
+
+</statement>
+
+<proof>
+<p>
+<alignmath>
+\innerproduct{\vect{u}}{\vect{v}}
+<![CDATA[&=\sum_{k=1}^{m}\conjugate{\vectorentry{\vect{u}}{k}}\vectorentry{\vect{v}}{k}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="IP" />}\\
+<![CDATA[&=\sum_{k=1}^{m}\conjugate{\matrixentry{\vect{u}}{k1}}\matrixentry{\vect{v}}{k1}]]>
+<![CDATA[&&\text{Column vectors as matrices}\\]]>
+<![CDATA[&=\sum_{k=1}^{m}\matrixentry{\conjugate{\vect{u}}}{k1}\matrixentry{\vect{v}}{k1}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CCM" />}\\
+<![CDATA[&=\sum_{k=1}^{m}\matrixentry{\transpose{\conjugate{\vect{u}}}}{1k}\matrixentry{\vect{v}}{k1}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="TM" />}\\
+<![CDATA[&=\matrixentry{\transpose{\conjugate{\vect{u}}}\vect{v}}{11}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+</alignmath>
+</p>
+
+<p>To finish we just blur the distinction between a $1\times 1$ matrix ($\transpose{\conjugate{\vect{u}}}\vect{v}$) and its lone entry.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="MMCC" index="matrix multiplication!complex conjugation">
+<title>Matrix Multiplication and Complex Conjugation</title>
+<statement>
+<p>Suppose $A$ is an $m\times n$ matrix and $B$ is an $n\times p$ matrix.  Then $\conjugate{AB}=\conjugate{A}\,\conjugate{B}$.</p>
+
+</statement>
+
+<proof>
+<p>To obtain this matrix equality, we will work entry-by-entry.  For $1\leq i\leq m$, $1\leq j\leq p$,
+<alignmath>
+\matrixentry{\conjugate{AB}}{ij}
+<![CDATA[&=\conjugate{\matrixentry{AB}{ij}}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CCM" />}\\
+<![CDATA[&=\conjugate{\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\conjugate{\matrixentry{A}{ik}\matrixentry{B}{kj}}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="CCRA" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\conjugate{\matrixentry{A}{ik}}\,\,\conjugate{\matrixentry{B}{kj}}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="CCRM" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{\conjugate{A}}{ik}\matrixentry{\conjugate{B}}{kj}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CCM" />}\\
+<![CDATA[&=\matrixentry{\conjugate{A}\,\conjugate{B}}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}
+</alignmath>
+</p>
+
+<p>So the matrices $\conjugate{AB}$ and $\conjugate{A}\,\conjugate{B}$ are equal, entry-by-entry, and by the definition of matrix equality (<acroref type="definition" acro="ME" />) we can say they are equal matrices.</p>
+
+</proof>
+</theorem>
+
+<p>Another theorem in this style, and it's a good one.  If you've been practicing with the previous proofs you should be able to do this one yourself.</p>
+
+<theorem acro="MMT" index="matrix multiplication!transposes">
+<title>Matrix Multiplication and Transposes</title>
+<statement>
+<p>Suppose $A$ is an $m\times n$ matrix and $B$ is an $n\times p$ matrix.  Then $\transpose{(AB)}=\transpose{B}\transpose{A}$.</p>
+
+</statement>
+
+<proof>
+<p>This theorem may be surprising but if we check the sizes of the matrices involved, then maybe it will not seem so far-fetched.  First, $AB$ has size $m\times p$, so its transpose has size $p\times m$.  The product of $\transpose{B}$ with $\transpose{A}$ is a $p\times n$ matrix times an $n\times m$ matrix, also resulting in a $p\times m$ matrix.  So at least our objects are compatible for equality (and would not be, in general, if we didn't reverse the order of the matrix multiplication).</p>
+
+<p>Here we go again, entry-by-entry.  For $1\leq i\leq m$, $1\leq j\leq p$,
+<alignmath>
+<![CDATA[\matrixentry{\transpose{(AB)}}{ji}=&\matrixentry{AB}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="TM" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{B}{kj}\matrixentry{A}{ik}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="CMCN" />}\\
+<![CDATA[&=\sum_{k=1}^{n}\matrixentry{\transpose{B}}{jk}\matrixentry{\transpose{A}}{ki}]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="TM" />}\\
+<![CDATA[&=\matrixentry{\transpose{B}\transpose{A}}{ji}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="EMP" />}
+</alignmath>
+</p>
+
+<p>So the matrices $\transpose{(AB)}$ and $\transpose{B}\transpose{A}$ are equal, entry-by-entry, and by the definition of matrix equality (<acroref type="definition" acro="ME" />) we can say they are equal matrices.</p>
+
+</proof>
+</theorem>
+
+<p>This theorem seems odd at first glance, since we have to switch the order of $A$ and $B$.  But if we simply consider the sizes of the matrices involved, we can see that the switch is necessary for this reason alone.  That the individual entries of the products then come along to be equal is a bonus.</p>
+
+<p>As the adjoint of a matrix is a composition of a conjugate and a transpose, its interaction with matrix multiplication is similar to that of a transpose.  Here's the last of our long list of basic properties of matrix multiplication.</p>
+
+<theorem acro="MMAD" index="matrix multiplication!adjoints">
+<title>Matrix Multiplication and Adjoints</title>
+<statement>
+<p>Suppose $A$ is an $m\times n$ matrix and $B$ is an $n\times p$ matrix.  Then $\adjoint{(AB)}=\adjoint{B}\adjoint{A}$.</p>
+
+</statement>
+
+<proof>
+<p>
+<alignmath>
+\adjoint{(AB)}
+<![CDATA[&=\transpose{\left(\conjugate{AB}\right)}&&]]>\text{<acroref type="definition" acro="A" />}\\
+<![CDATA[&=\transpose{\left(\conjugate{A}\,\conjugate{B}\right)}&&]]>\text{<acroref type="theorem" acro="MMCC" />}\\
+<![CDATA[&=\transpose{\left(\conjugate{B}\right)}\transpose{\left(\conjugate{A}\right)}&&]]>\text{<acroref type="theorem" acro="MMT" />}\\
+<![CDATA[&=\adjoint{B}\adjoint{A}&&]]>\text{<acroref type="definition" acro="A" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>Notice how none of these proofs above relied on writing out huge general matrices with lots of ellipses (<q><ellipsis /></q>) and trying to formulate the equalities a whole matrix at a time.  This messy business is a <q>proof technique</q> to be avoided at all costs.  Notice too how the proof of <acroref type="theorem" acro="MMAD" /> does not use an entry-by-entry approach, but simply builds on previous results about matrix multiplication's interaction with conjugation and transposes.</p>
+
+<p>These theorems, along with <acroref type="theorem" acro="VSPM" /> and the other results in <acroref type="section" acro="MO" />, give you the <q>rules</q> for how matrices interact with the various operations we have defined on matrices (addition, scalar multiplication, matrix multiplication, conjugation, transposes and adjoints).  Use them and use them often.  But don't try to do anything with a matrix that you don't have a rule for.  Together, we would informally call all these operations, and the attendant theorems, <q>the algebra of matrices.</q>  Notice, too, that every column vector is just a $n\times 1$ matrix, so these theorems apply to column vectors also.  Finally, these results, taken as a whole, may make us feel that the definition of matrix multiplication is not so unnatural.</p>
+
+<sageadvice acro="PMM" index="matrix multiplication, properties">
+<title>Properties of Matrix Multiplication</title>
+As before, we can use Sage to demonstrate theorems.  With randomly-generated matrices, these verifications might be even more believable.  Some of the above results should feel fairly routine, but some are perhaps contrary to intuition.  For example, <acroref type="theorem" acro="MMT" /> might at first glance seem surprising due to the requirement that the order of the product is reversed.  Here is how we would investigate this theorem in Sage.  The following compute cell should <em>always</em> return <code>True</code>.  Repeated experimental evidence does not make a proof, but certainly gives us confidence.
+<sage>
+<input>A = random_matrix(QQ, 3, 7)
+B = random_matrix(QQ, 7, 5)
+(A*B).transpose() == B.transpose()*A.transpose()
+</input>
+<output>True
+</output>
+</sage>
+
+By now, you can probably guess the matrix method for checking if a matrix is Hermitian.
+<sage>
+<input>A = matrix(QQbar, [[     45, -5-12*I, -1-15*I, -56-8*I],
+                   [-5+12*I,      42,    32*I, -14-8*I],
+                   [-1+15*I,   -32*I,      57,    12+I],
+                   [-56+8*I, -14+8*I,    12-I,      93]])
+A.is_hermitian()
+</input>
+<output>True
+</output>
+</sage>
+
+We can illustrate the most fundamental property of a Hermitian matrix.  The vectors <code>x</code> and <code>y</code> below are random, but according to <acroref type="theorem" acro="HMIP" /> the final command should produce <code>True</code> for any possible values of these two vectors.   (You would be right to think that using random vectors over <code>QQbar</code> would be a better idea, but at this writing, these vectors are not as <q>random</q> as one would like, and are insufficient to perform an accurate test here.)
+<sage>
+<input>x = random_vector(QQ, 4) + QQbar(I)*random_vector(QQ, 4)
+y = random_vector(QQ, 4) + QQbar(I)*random_vector(QQ, 4)
+(A*x).hermitian_inner_product(y) == x.hermitian_inner_product(A*y)
+</input>
+<output>True
+</output>
+</sage>
+
+
+
+</sageadvice>
+</subsection>
+
+<subsection acro="HM">
+<title>Hermitian Matrices</title>
+
+<p>The adjoint of a matrix has a basic property when employed in a matrix-vector product as part of an inner product.  At this point, you could even use the following result as a motivation for the definition of an adjoint.</p>
+
+<theorem acro="AIP" index="adjoint!inner product">
+<title>Adjoint and Inner Product</title>
+<statement>
+<p>Suppose that $A$ is an $m\times n$ matrix and $\vect{x}\in\complex{n}$, $\vect{y}\in\complex{m}$.  Then $\innerproduct{A\vect{x}}{\vect{y}}=\innerproduct{\vect{x}}{\adjoint{A}\vect{y}}$.</p>
+
+</statement>
+
+<proof>
+<p>
+<alignmath>
+\innerproduct{A\vect{x}}{\vect{y}}
+<![CDATA[&=\transpose{\left(\conjugate{A\vect{x}}\right)}\vect{y}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMIP" />}\\
+<![CDATA[&=\transpose{\left(\conjugate{A}\,\conjugate{\vect{x}}\right)}\vect{y}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMCC" />}\\
+<![CDATA[&=\transpose{\conjugate{\vect{x}}}\transpose{\conjugate{A}}\vect{y}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMT" />}\\
+<![CDATA[&=\transpose{\conjugate{\vect{x}}}\left(\adjoint{A}\vect{y}\right)]]>
+<![CDATA[&&]]>\text{<acroref type="definition" acro="A" />}\\
+<![CDATA[&=\innerproduct{\vect{x}}{\adjoint{A}\vect{y}}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="MMIP" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>Sometimes a matrix is equal to its adjoint (<acroref type="definition" acro="A" />), and these matrices have interesting properties.  One of the most common situations where this occurs is when a matrix has only real number entries.  Then we are simply talking about symmetric matrices (<acroref type="definition" acro="SYM" />), so you can view this as a generalization of a symmetric matrix.</p>
+
+<definition acro="HM" index="hermitian">
+<title>Hermitian Matrix</title>
+<p>The square matrix $A$ is <define>Hermitian</define> (or <define>self-adjoint</define>) if $A=\adjoint{A}$.</p>
+
+</definition>
+
+<p>Again, the set of real matrices that are Hermitian is exactly the set of symmetric matrices.  In <acroref type="section" acro="PEE" /> we will uncover some amazing properties of Hermitian matrices, so when you get there, run back here to remind yourself of this definition.  Further properties will also appear in <acroref type="section" acro="OD" />.  Right now we prove a fundamental result about Hermitian matrices, matrix vector products and inner products.  As a characterization, this could be employed as a definition of a Hermitian matrix and some authors take this approach.</p>
+
+<theorem acro="HMIP" index="Hermitian matrix!inner product">
+<title>Hermitian Matrices and Inner Products</title>
+<statement>
+<p>Suppose that $A$ is a square matrix of size $n$.  Then $A$ is Hermitian if and only if $\innerproduct{A\vect{x}}{\vect{y}}=\innerproduct{\vect{x}}{A\vect{y}}$ for all $\vect{x},\,\vect{y}\in\complex{n}$.</p>
+
+</statement>
+
+<proof>
+<p><implyforward />\quad  This is the <q>easy half</q> of the proof, and makes the rationale for a definition of Hermitian matrices most obvious.  Assume $A$ is Hermitian,
+<alignmath>
+\innerproduct{A\vect{x}}{\vect{y}}
+<![CDATA[&=\innerproduct{\vect{x}}{\adjoint{A}\vect{y}}&&]]>\text{<acroref type="theorem" acro="AIP" />}\\
+<![CDATA[&=\innerproduct{\vect{x}}{A\vect{y}}&&]]>\text{<acroref type="definition" acro="HM" />}\\
+</alignmath>
+</p>
+
+<p><implyreverse />\quad  This <q>half</q> will take a bit more work.  Assume that $\innerproduct{A\vect{x}}{\vect{y}}=\innerproduct{\vect{x}}{A\vect{y}}$ for all $\vect{x},\,\vect{y}\in\complex{n}$.   Choose any $\vect{x}\in\complex{n}$.  We want to show that $A=\adjoint{A}$ by establishing that $A\vect{x}=\adjoint{A}\vect{x}$.  With only this much motivation, consider the inner product,
+<alignmath>
+\innerproduct{A\vect{x}-\adjoint{A}\vect{x}}{A\vect{x}-\adjoint{A}\vect{x}}
+<![CDATA[&=]]>
+\innerproduct{A\vect{x}-\adjoint{A}\vect{x}}{A\vect{x}}-
+\innerproduct{A\vect{x}-\adjoint{A}\vect{x}}{\adjoint{A}\vect{x}}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="IPVA" />}\\
+<![CDATA[&=]]>
+\innerproduct{A\vect{x}-\adjoint{A}\vect{x}}{A\vect{x}}-
+\innerproduct{A\left(A\vect{x}-\adjoint{A}\vect{x}\right)}{\vect{x}}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="AIP" />}\\
+<![CDATA[&=]]>
+\innerproduct{A\vect{x}-\adjoint{A}\vect{x}}{A\vect{x}}-
+\innerproduct{A\vect{x}-\adjoint{A}\vect{x}}{A\vect{x}}
+<![CDATA[&&\text{Hypothesis}\\]]>
+<![CDATA[&]]>
+=0
+<![CDATA[&&]]>\text{<acroref type="property" acro="AICN" />}
+</alignmath></p>
+
+<p>Because this first inner product equals zero, and has the same vector in each argument ($A\vect{x}-\adjoint{A}\vect{x}$), <acroref type="theorem" acro="PIP" /> gives the conclusion that $A\vect{x}-\adjoint{A}\vect{x}=\zerovector$.  With $A\vect{x}=\adjoint{A}\vect{x}$ for all $\vect{x}\in\complex{n}$, <acroref type="theorem" acro="EMMVP" /> says $A=\adjoint{A}$, which is the defining property of a Hermitian matrix (<acroref type="definition" acro="HM" />).</p>
+
+</proof>
+</theorem>
+
+<p>So, informally, Hermitian matrices are those that can be tossed around from one side of an inner product to the other with reckless abandon.  We'll see later what this buys us.</p>
+
+</subsection>
+
+<!--   End  mm.tex -->
+<readingquestions>
+<ol>
+<li>Form the matrix vector product of
+<alignmath>
+\begin{bmatrix}
+<![CDATA[2 & 3 & -1 & 0\\]]>
+<![CDATA[1 & -2 & 7 & 3\\]]>
+<![CDATA[1 & 5 & 3 & 2\\]]>
+\end{bmatrix}
+<![CDATA[&&\text{with}&&]]>
+\colvector{2\\-3\\0\\5}
+</alignmath>
+</li>
+<li> Multiply together the two matrices below (in the order given).
+<alignmath>
+\begin{bmatrix}
+<![CDATA[2 & 3 & -1 & 0\\]]>
+<![CDATA[1 & -2 & 7 & 3\\]]>
+<![CDATA[1 & 5 & 3 & 2\\]]>
+\end{bmatrix}
+<![CDATA[&&]]>
+\begin{bmatrix}
+<![CDATA[2 & 6\\]]>
+<![CDATA[-3 & -4\\]]>
+<![CDATA[0 & 2\\]]>
+<![CDATA[3 & -1\\]]>
+\end{bmatrix}
+</alignmath>
+</li>
+<li>Rewrite the system of linear equations below as a vector equality and using a matrix-vector product.  (This question does not ask for a solution to the system.  But it does ask you to express the system of equations in a new form using tools from this section.)
+<alignmath>
+<![CDATA[2x_1 + 3x_2 - x_3 &= 0\\]]>
+<![CDATA[x_1 + 2x_2 + x_3 &= 3\\]]>
+<![CDATA[x_1 + 3x_2 + 3x_3 &= 7]]>
+</alignmath>
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="C" number="20" rough="Matrix product by the definitions.">
+<problem contributor="robertbeezer">Compute the product of the two matrices below, $AB$.  Do this using the definitions of the matrix-vector product (<acroref type="definition" acro="MVP" />) and the definition of matrix multiplication (<acroref type="definition" acro="MM" />).
+<alignmath>
+A=
+\begin{bmatrix}
+<![CDATA[2&5\\]]>
+<![CDATA[-1&3\\]]>
+<![CDATA[2&-2]]>
+\end{bmatrix}
+<![CDATA[&&]]>
+B=\begin{bmatrix}
+<![CDATA[1&5&-3&4\\]]>
+<![CDATA[2&0&2&-3]]>
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="robertbeezer">By <acroref type="definition" acro="MM" />,
+<alignmath>
+<![CDATA[AB&=]]>
+\left[
+\left.
+\begin{bmatrix}
+<![CDATA[2&5\\]]>
+<![CDATA[-1&3\\]]>
+<![CDATA[2&-2]]>
+\end{bmatrix}
+\colvector{1\\2}
+\right\vert\
+\left.
+\begin{bmatrix}
+<![CDATA[2&5\\]]>
+<![CDATA[-1&3\\]]>
+<![CDATA[2&-2]]>
+\end{bmatrix}
+\colvector{5\\0}
+\right\vert\
+\left.
+\begin{bmatrix}
+<![CDATA[2&5\\]]>
+<![CDATA[-1&3\\]]>
+<![CDATA[2&-2]]>
+\end{bmatrix}
+\colvector{-3\\2}
+\right\vert\
+\left.
+\begin{bmatrix}
+<![CDATA[2&5\\]]>
+<![CDATA[-1&3\\]]>
+<![CDATA[2&-2]]>
+\end{bmatrix}
+\colvector{4\\-2}
+\right.
+\right]
+<intertext>Repeated applications of <acroref type="definition" acro="MVP" /> give</intertext>
+<![CDATA[&=]]>
+\left[
+\left.1\colvector{2\\-1\\2}+2\colvector{5\\3\\-2}\right\vert\
+\left.5\colvector{2\\-1\\2}+0\colvector{5\\3\\-2}\right\vert\
+\left.-3\colvector{2\\-1\\2}+2\colvector{5\\3\\-2}\right\vert\
+\left.4\colvector{2\\-1\\2}+(-3)\colvector{5\\3\\-2}\right.
+\right]\\
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[12 & 10 & 4 & -7\\]]>
+<![CDATA[5 & -5 & 9 & -13\\]]>
+<![CDATA[-2 & 10 & -10 & 14]]>
+\end{bmatrix}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="C" number="21" rough="More matrix product drill">
+<problem contributor="chrisblack">Compute the product  $AB$ of the two matrices below using both the definition of the matrix-vector product (<acroref type="definition" acro="MVP" />) and the definition of matrix multiplication (<acroref type="definition" acro="MM" />).
+<alignmath>
+A
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[1 & 3 & 2 \\ -1 & 2 & 1 \\ 0 & 1 & 0]]>
+\end{bmatrix}
+<![CDATA[&]]>
+B
+<![CDATA[&=]]>
+\begin{bmatrix}
+<![CDATA[4 & 1 & 2\\ 1 & 0 & 1\\3 & 1 & 5]]>
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="chrisblack"><![CDATA[$AB = \begin{bmatrix} 13 & 3 & 15 \\ 1 & 0 & 5\\1 & 0 & 1 \end{bmatrix}$.]]>
+</solution>
+</exercise>
+
+<exercise type="C" number="22" rough="More matrix product drill">
+<problem contributor="chrisblack">Compute the product  $AB$ of the two matrices below using both the definition of the matrix-vector product (<acroref type="definition" acro="MVP" />) and the definition of matrix multiplication (<acroref type="definition" acro="MM" />).
+<alignmath>
+<![CDATA[A&=]]>
+\begin{bmatrix}
+<![CDATA[1 & 0 \\ -2 & 1]]>
+\end{bmatrix}
+<![CDATA[&]]>
+<![CDATA[B&=]]>
+\begin{bmatrix}
+<![CDATA[2 & 3 \\ 4 & 6]]>
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="chrisblack"><![CDATA[$AB = \begin{bmatrix} 2 & 3 \\ 0 & 0 \end{bmatrix}$.]]>
+</solution>
+</exercise>
+
+<exercise type="C" number="23" rough="More matrix product drill">
+<problem contributor="chrisblack">Compute the product  $AB$ of the two matrices below using both the definition of the matrix-vector product (<acroref type="definition" acro="MVP" />) and the definition of matrix multiplication (<acroref type="definition" acro="MM" />).
+<alignmath>
+<![CDATA[A&=]]>
+\begin{bmatrix}
+<![CDATA[3 & 1 \\ 2 & 4 \\ 6 & 5\\1 & 2]]>
+\end{bmatrix}
+<![CDATA[&]]>
+<![CDATA[B&=]]>
+\begin{bmatrix}
+<![CDATA[-3 & 1 \\ 4 & 2]]>
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="chrisblack"><![CDATA[$AB = \begin{bmatrix} -5&5\\ 10&10\\2&16\\5&5\end{bmatrix}$.]]>
+</solution>
+</exercise>
+
+<exercise type="C" number="24" rough="More matrix product drill">
+<problem contributor="chrisblack">Compute the product  $AB$ of the two matrices below.
+<alignmath>
+<![CDATA[A&=]]>
+\begin{bmatrix}
+<![CDATA[1 & 2 & 3 & -2 \\ 0 & 1 & -2 & -1\\ 1 & 1 & 3 & 1]]>
+\end{bmatrix}
+<![CDATA[&]]>
+<![CDATA[B&=]]>
+\begin{bmatrix}
+3\\ 4 \\ 0 \\ 2
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="chrisblack">$AB = \begin{bmatrix} 7\\2\\9\end{bmatrix}$.
+</solution>
+</exercise>
+
+<exercise type="C" number="25" rough="More matrix product drill">
+<problem contributor="chrisblack">Compute the product $AB$ of the two matrices below.
+<alignmath>
+<![CDATA[A&=]]>
+\begin{bmatrix}
+<![CDATA[1 & 2 & 3 & -2 \\ 0 & 1 & -2 & -1\\ 1 & 1 & 3 & 1]]>
+\end{bmatrix}
+<![CDATA[&]]>
+<![CDATA[B&=]]>
+\begin{bmatrix}
+-7\\ 3 \\ 1 \\ 1
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="chrisblack">$AB = \begin{bmatrix} 0\\ 0 \\ 0  \end{bmatrix}$.
+</solution>
+</exercise>
+
+<exercise type="C" number="26" rough="More matrix product drill">
+<problem contributor="chrisblack">Compute the product $AB$ of the two matrices below using both the definition of the matrix-vector product (<acroref type="definition" acro="MVP" />) and the definition of matrix multiplication (<acroref type="definition" acro="MM" />).
+<alignmath>
+<![CDATA[A&=]]>
+\begin{bmatrix}
+<![CDATA[1 & 3 & 1\\ 0 & 1 & 0\\1 & 1 & 2]]>
+\end{bmatrix}
+<![CDATA[&]]>
+<![CDATA[B&=]]>
+\begin{bmatrix}
+<![CDATA[2 & -5 & -1 \\ 0 & 1 & 0\\-1 & 2 & 1]]>
+\end{bmatrix}
+</alignmath>
+</problem>
+<solution contributor="chrisblack"><![CDATA[$AB = \begin{bmatrix} 1 & 0 & 0\\ 0 & 1 & 0\\ 0 & 0 & 1 \end{bmatrix}$.]]>
+</solution>
+</exercise>
+
+<exercise type="C" number="30" rough="Matrix powers, 2x2">
+<problem contributor="chrisblack">For the matrix
+<![CDATA[$A = \begin{bmatrix} 1 & 2 \\ 0 & 1 \end{bmatrix}$,]]>
+find $A^2$, $A^3$, $A^4$.  Find a general formula for $A^n$ for any positive integer $n$.
+</problem>
+<solution contributor="chrisblack"><![CDATA[$A^2 = \begin{bmatrix}1 & 4\\ 0 & 1\end{bmatrix}$,]]>
+<![CDATA[$A^3 = \begin{bmatrix}1 & 6\\ 0 & 1\end{bmatrix}$,]]>
+<![CDATA[$A^4 = \begin{bmatrix}1 & 8\\ 0 & 1\end{bmatrix}$.]]>
+From this pattern, we see that
+<![CDATA[$A^n = \begin{bmatrix}1 & 2n\\ 0 & 1\end{bmatrix}$.]]>
+</solution>
+</exercise>
+
+<exercise type="C" number="31" rough="Matrix powers, 2x2">
+<problem contributor="chrisblack">For the matrix
+<![CDATA[$A = \begin{bmatrix} 1 & -1 \\ 0 & 1 \end{bmatrix}$, find $A^2$, $A^3$, $A^4$.]]>
+ Find a general formula for $A^n$ for any positive integer $n$.
+</problem>
+<solution contributor="chrisblack"><![CDATA[$A^2 = \begin{bmatrix}1 & -2\\ 0 & 1\end{bmatrix}$,]]>
+<![CDATA[$A^3 = \begin{bmatrix}1 & -3\\ 0 & 1\end{bmatrix}$,]]>
+<![CDATA[$A^4 = \begin{bmatrix}1 & -4\\ 0 & 1\end{bmatrix}$.]]>
+From this pattern, we see that
+<![CDATA[$A^n = \begin{bmatrix}1 & -n\\ 0 & 1\end{bmatrix}$.]]>
+</solution>
+</exercise>
+
+<exercise type="C" number="32" rough="Matrix powers, 3x3 diagonal">
+<problem contributor="chrisblack">For the matrix
+<![CDATA[$A = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 3 \end{bmatrix}$,]]>
+find $A^2$, $A^3$, $A^4$.  Find a general formula for $A^n$ for any positive integer $n$.
+</problem>
+<solution contributor="chrisblack"><![CDATA[$A^{2} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 4 & 0\\ 0 & 0 & 9\end{bmatrix}$,]]>
+<![CDATA[$A^{3} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 8 & 0\\ 0 & 0 & 27\end{bmatrix}$, and]]>
+<![CDATA[$A^{4} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 16 & 0\\ 0 & 0 & 81\end{bmatrix}$.]]>
+The pattern emerges, and we see that
+<![CDATA[$A^{n} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 2^n & 0\\ 0 & 0 & 3^n\end{bmatrix}$.]]>
+</solution>
+</exercise>
+
+<exercise type="C" number="33" rough="Matrix powers, 3x3 idempotent">
+<problem contributor="chrisblack">For the matrix
+<![CDATA[$A = \begin{bmatrix} 0 & 1 & 2 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{bmatrix}$,]]>
+find $A^2$, $A^3$, $A^4$.  Find a general formula for $A^n$ for any positive integer $n$.
+</problem>
+<solution contributor="chrisblack">We quickly compute
+<![CDATA[$A^2 = \begin{bmatrix} 0 & 0 & 1\\ 0 & 0 & 0\\ 0 & 0 & 0\end{bmatrix}$,]]>
+and we then see that
+$A^3$ and all subsequent powers of $A$ are the $3 \times 3$ zero matrix;
+that is, $A^n = \zeromatrix_{3,3}$ for $n\ge 3$.
+</solution>
+</exercise>
+
+<exercise type="T" number="10" rough="One instance with uniq sln implies nonsingular">
+<problem contributor="robertbeezer">Suppose that $A$ is a square matrix and there is a vector, $\vect{b}$, such that $\linearsystem{A}{\vect{b}}$ has a unique solution.  Prove that $A$ is nonsingular.  Give a direct proof (perhaps appealing to <acroref type="theorem" acro="PSPHS" />) rather than just negating a sentence from the text discussing a similar situation.
+</problem>
+<solution contributor="robertbeezer">Since $\linearsystem{A}{b}$ has at least one solution, we can apply <acroref type="theorem" acro="PSPHS" />.  Because the solution is assumed to be unique, the null space of $A$ must be trivial.  Then <acroref type="theorem" acro="NMTNS" /> implies that $A$ is nonsingular.<br /><br />
+The converse of this statement is a trivial application of <acroref type="theorem" acro="NMUS" />.  That said, we could extend our NSMxx series of theorems with an added equivalence for nonsingularity, <q>Given a single vector of constants, $\vect{b}$, the system $\linearsystem{A}{\vect{b}}$ has a unique solution.</q>
+</solution>
+</exercise>
+
+<exercise type="T" number="20" rough="Theorem MMZM, part (2)">
+<problem contributor="robertbeezer">Prove the second part of <acroref type="theorem" acro="MMZM" />.
+</problem>
+</exercise>
+
+<exercise type="T" number="21" rough="Theorem MMIM, part (2)">
+<problem contributor="robertbeezer">Prove the second part of <acroref type="theorem" acro="MMIM" />.
+</problem>
+</exercise>
+
+<exercise type="T" number="22" rough="Theorem MMDAA, part (2)">
+<problem contributor="robertbeezer">Prove the second part of <acroref type="theorem" acro="MMDAA" />.
+</problem>
+</exercise>
+
+<exercise type="T" number="23" rough="Theorem MMSMM, part (2)">
+<problem contributor="robertbeezer">Prove the second part of <acroref type="theorem" acro="MMSMM" />.
+</problem>
+<solution contributor="robertbeezer">We'll run the proof entry-by-entry.
+<alignmath>
+<![CDATA[\matrixentry{\alpha(AB)}{ij}=&]]>
+<![CDATA[\alpha\matrixentry{AB}{ij}&&]]>\text{<acroref type="definition" acro="MSM" />}\\
+<![CDATA[=&\alpha\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}&&]]>\text{<acroref type="theorem" acro="EMP" />}\\
+<![CDATA[=&\sum_{k=1}^{n}\alpha\matrixentry{A}{ik}\matrixentry{B}{kj}&&\text{Distributivity in $\complex{\null}$}\\]]>
+<![CDATA[=&\sum_{k=1}^{n}\matrixentry{A}{ik}\alpha\matrixentry{B}{kj}&&\text{Commutativity in $\complex{\null}$}\\]]>
+<![CDATA[=&\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{\alpha B}{kj}&&]]>\text{<acroref type="definition" acro="MSM" />}\\
+<![CDATA[=&\matrixentry{A(\alpha B)}{ij}&&]]>\text{<acroref type="theorem" acro="EMP" />}
+</alignmath>
+So the matrices $\alpha(AB)$ and $A(\alpha B)$ are equal, entry-by-entry, and by the definition of matrix equality (<acroref type="definition" acro="ME" />) we can say they are equal matrices.
+</solution>
+</exercise>
+
+<exercise type="T" number="31" rough="Null space additive closue">
+<problem contributor="robertbeezer">Suppose that $A$ is an $m\times n$ matrix and $\vect{x},\,\vect{y}\in\nsp{A}$.  Prove that $\vect{x}+\vect{y}\in\nsp{A}$.
+</problem>
+</exercise>
+
+<exercise type="T" number="32" rough="Null scalar closure">
+<problem contributor="robertbeezer">Suppose that $A$ is an $m\times n$ matrix, $\alpha\in\complex{\null}$, and $\vect{x}\in\nsp{A}$.  Prove that $\alpha\vect{x}\in\nsp{A}$.
+</problem>
+</exercise>
+
+<exercise type="T" number="40" rough="Null space B a subset of null space AB">
+<problem contributor="robertbeezer">Suppose that $A$ is an $m\times n$ matrix and $B$ is an $n\times p$ matrix.  Prove that the null space of $B$ is a subset of the null space of $AB$, that is $\nsp{B}\subseteq\nsp{AB}$.  Provide an example where the opposite is false, in other words give an example where $\nsp{AB}\not\subseteq\nsp{B}$.
+</problem>
+<solution contributor="robertbeezer">To prove that one set is a subset of another, we start with an element of the smaller set and see if we can determine that it is a member of the larger set (<acroref type="definition" acro="SSET" />).  Suppose $\vect{x}\in\nsp{B}$.  Then we know that $B\vect{x}=\zerovector$ by <acroref type="definition" acro="NSM" />.  Consider
+<alignmath>
+<![CDATA[(AB)\vect{x}&=A(B\vect{x})&&]]>\text{<acroref type="theorem" acro="MMA" />}\\
+<![CDATA[&=A\zerovector&&\text{Hypothesis}\\]]>
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="theorem" acro="MMZM" />}\\
+</alignmath>
+This establishes that $\vect{x}\in\nsp{AB}$, so $\nsp{B}\subseteq\nsp{AB}$.<br /><br />
+To show that the inclusion does not hold in the opposite direction, choose $B$ to be any nonsingular matrix of size $n$.  Then $\nsp{B}=\set{\zerovector}$ by <acroref type="theorem" acro="NMTNS" />.  Let $A$ be the square zero matrix, $\zeromatrix$, of the same size.  Then $AB=\zeromatrix B=\zeromatrix$ by <acroref type="theorem" acro="MMZM" /> and therefore $\nsp{AB}=\complex{n}$, and is <em>not</em> a subset of $\nsp{B}=\set{\zerovector}$.
+</solution>
+</exercise>
+
+<exercise type="T" number="41" rough="Null space B equals null space AB, A n-s">
+<problem contributor="robertbeezer">Suppose that $A$ is an $n\times n$ nonsingular matrix and $B$ is an $n\times p$ matrix.  Prove that the null space of $B$ is equal to the null space of $AB$, that is $\nsp{B}=\nsp{AB}$.  (Compare with <acroref type="exercise" acro="MM.T40" />.)
+</problem>
+<solution contributor="davidbraithwaite">From the solution to <acroref type="exercise" acro="MM.T40" /> we know that $\nsp{B}\subseteq\nsp{AB}$.  So to establish the set equality (<acroref type="definition" acro="SE" />) we need to show that $\nsp{AB}\subseteq\nsp{B}$.<br /><br />
+Suppose $\vect{x}\in\nsp{AB}$.  Then we know that $AB\vect{x}=\zerovector$ by <acroref type="definition" acro="NSM" />.  Consider
+<alignmath>
+\zerovector
+<![CDATA[&=\left(AB\right)\vect{x}&&]]>\text{<acroref type="definition" acro="NSM" />}\\
+<![CDATA[&=A\left(B\vect{x}\right)&&]]>\text{<acroref type="theorem" acro="MMA" />}
+</alignmath>
+So, $B\vect{x}\in\nsp{A}$.  Because $A$ is nonsingular, it has a trivial null space (<acroref type="theorem" acro="NMTNS" />) and we conclude that $B\vect{x}=\zerovector$.  This establishes that $\vect{x}\in\nsp{B}$, so $\nsp{AB}\subseteq\nsp{B}$ and combined with the solution to <acroref type="exercise" acro="MM.T40" /> we have $\nsp{B}=\nsp{AB}$ when $A$ is nonsingular.
+</solution>
+</exercise>
+
+<exercise type="T" number="50" rough="Difference of solutions in null space">
+<problem contributor="robertbeezer">Suppose $\vect{u}$ and $\vect{v}$ are any two solutions of the linear system $\linearsystem{A}{\vect{b}}$.  Prove that $\vect{u}-\vect{v}$ is an element of the null space of $A$, that is, $\vect{u}-\vect{v}\in\nsp{A}$.
+</problem>
+</exercise>
+
+<exercise type="T" number="51" rough="Rework Theorem PSPHS">
+<problem contributor="robertbeezer">Give a new proof of <acroref type="theorem" acro="PSPHS" /> replacing applications of <acroref type="theorem" acro="SLSLC" /> with matrix-vector products (<acroref type="theorem" acro="SLEMM" />).
+</problem>
+<solution contributor="robertbeezer">We will work with the vector equality representations of the relevant systems of equations, as described by <acroref type="theorem" acro="SLEMM" />.<br /><br />
+<implyreverse />  Suppose $\vect{y}=\vect{w}+\vect{z}$ and $\vect{z}\in\nsp{A}$.  Then
+<alignmath>
+<![CDATA[A\vect{y}&=A(\vect{w}+\vect{z})&&\text{Substitution}\\]]>
+<![CDATA[&=A\vect{w}+A\vect{z}&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=\vect{b}+\zerovector&&\vect{z}\in\nsp{A}\\]]>
+<![CDATA[&=\vect{b}&&]]>\text{<acroref type="property" acro="ZC" />}\\
+</alignmath>
+demonstrating that $\vect{y}$ is a solution.<br /><br />
+<implyforward />  Suppose $\vect{y}$ is a solution to $\linearsystem{A}{b}$.  Then
+<alignmath>
+A(\vect{y}-\vect{w})
+<![CDATA[&=A\vect{y}-A\vect{w}&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=\vect{b}-\vect{b}&&\text{$\vect{y},\,\vect{w}$ solutions to $A\vect{x}=\vect{b}$}\\]]>
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="property" acro="AIC" />}\\
+</alignmath>
+which says that $\vect{y}-\vect{w}\in\nsp{A}$.  In other words, $\vect{y}-\vect{w}=\vect{z}$ for some vector $\vect{z}\in\nsp{A}$.  Rewritten, this is
+$\vect{y}=\vect{w}+\vect{z}$, as desired.
+</solution>
+</exercise>
+
+<exercise type="T" number="52" rough="x,y,x+y all solutions -> homogeneous">
+<problem contributor="robertbeezer">Suppose that $\vect{x},\,\vect{y}\in\complex{n}$, $\vect{b}\in\complex{m}$ and $A$ is an $m\times n$ matrix.  If $\vect{x}$, $\vect{y}$ and $\vect{x}+\vect{y}$ are each a solution to the linear system $\linearsystem{A}{\vect{b}}$, what interesting can you say about $\vect{b}$?  Form an implication with the existence of the three solutions as the hypothesis and an interesting statement about $\linearsystem{A}{\vect{b}}$ as the conclusion, and then give a proof.
+</problem>
+<solution contributor="robertbeezer">$\linearsystem{A}{\vect{b}}$ must be homogeneous.  To see this consider that
+<alignmath>
+\vect{b}
+<![CDATA[&=A\vect{x}&&]]>\text{<acroref type="theorem" acro="SLEMM" />}\\
+<![CDATA[&=A\vect{x}+\zerovector&&]]>\text{<acroref type="property" acro="ZC" />}\\
+<![CDATA[&=A\vect{x}+A\vect{y}-A\vect{y}&&]]>\text{<acroref type="property" acro="AIC" />}\\
+<![CDATA[&=A\left(\vect{x}+\vect{y}\right)-A\vect{y}&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
+<![CDATA[&=\vect{b}-\vect{b}&&]]>\text{<acroref type="theorem" acro="SLEMM" />}\\
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="property" acro="AIC" />}
+</alignmath>
+By <acroref type="definition" acro="HS" /> we see that $\linearsystem{A}{\vect{b}}$ is homogeneous.
+</solution>
+</exercise>
+
+</exercisesubsection>
+
+</section>

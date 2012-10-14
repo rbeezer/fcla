@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="SET">
+<title>Sets</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section SET -->
+<!-- %  Sets -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>We will frequently work carefully with sets, so the material in this review section is <em>very</em> important.  If these topics are new to you, study this section carefully and consider consulting another text for a more comprehensive introduction.</p>
+
+</introduction>
+
+<subsection acro="SET">
+<title>Sets</title>
+
+<definition acro="SET" index="set">
+<title>Set</title>
+<p>A <define>set</define> is an unordered collection of objects.  If $S$ is a set and $x$ is an object that is in the set $S$, we write $x\in S$.  If $x$ is not in $S$, then we write $x\not\in S$.  We refer to the objects in a set as its <define>elements</define>.</p>
+
+<notation acro="SETM" index="set!membership">
+<title>Set Membership</title>
+<usage>$x\in S$</usage>
+</notation>
+</definition>
+
+<p>Hard to get much more basic than that.   Notice that the objects in a set can be <em>anything</em>, and there is no notion of order among the elements of the set.  A set can be finite as well as infinite.  A set can contain other sets as its objects.  At a primitive level, a set is just a way to break up some class of objects into two groupings:  those objects in the set, and those objects not in the set.</p>
+
+<example acro="SETM" index="set!membership">
+<title>Set membership</title>
+
+<p>From the set of all possible symbols, construct the following set of three symbols,
+<alignmath>
+<![CDATA[S&=\set{\blacksquare,\,\blacklozenge,\,\bigstar}]]>
+</alignmath>
+Then the statement $\blacksquare\in S$ is true, while the statement $\blacktriangle\in S$ is false.  However, then the statement $\blacktriangle\not\in S$ is true.</p>
+
+</example>
+
+<p>A portion of a set is known as a subset.  Notice how the following definition uses an implication (if whenever<ellipsis /> then<ellipsis />).  Note too how the definition of a subset relies on the definition of a set through the idea of set membership.</p>
+
+<definition acro="SSET" index="subset">
+<title>Subset</title>
+<indexlocation index="set!subset" />
+<p>If $S$ and $T$ are two sets, then $S$ is a subset of $T$, written $S\subseteq T$ if whenever $x\in S$ then $x\in T$.</p>
+
+<notation acro="SSET" index="subset">
+<title>Subset</title>
+<usage>$S\subseteq T$</usage>
+</notation>
+</definition>
+
+<p>If we want to disallow the possibility that $S$ is the same as $T$, we use the notation $S\subset T$ and we say that $S$ is a <define>proper subset</define> of $T$.   We'll do an example, but first we'll define a special set.</p>
+
+<definition acro="ES" index="set!empty">
+<title>Empty Set</title>
+<indexlocation index="empty set" />
+<p>The empty set is the set with no elements.  It is denoted by $\emptyset$.</p>
+
+<notation acro="ES" index="empty set">
+<title>Empty Set</title>
+<usage>$\emptyset$</usage>
+</notation>
+</definition>
+
+<example acro="SSET" index="indesxstring">
+<title>Subset</title>
+
+<p>If $S=\set{\blacksquare,\,\blacklozenge,\,\bigstar}$, $T=\set{\bigstar,\,\blacklozenge}$, $R=\set{\blacktriangle,\,\bigstar}$, then
+<alignmath>
+<![CDATA[T&\subseteq S]]>
+<![CDATA[&]]>
+<![CDATA[R&\not\subseteq T]]>
+<![CDATA[&]]>
+<![CDATA[\emptyset&\subseteq S]]>
+\\
+<![CDATA[T&\subset S]]>
+<![CDATA[&]]>
+<![CDATA[S&\subseteq S]]>
+<![CDATA[&]]>
+<![CDATA[S&\not\subset S]]>
+</alignmath>
+</p>
+
+</example>
+
+<p>What does it mean for two sets to be equal?  They must be the same.  Well, that explanation is not really too helpful, is it?  How about:  If $A\subseteq B$ and $B\subseteq A$, then $A$ equals $B$.  This gives us something to work with, if $A$ is a subset of $B$, and <em>vice versa</em>, then they must really be the same set.  We will now make the symbol <q>$=$</q> do double-duty and extend its use to statements like $A=B$, where $A$ and $B$ are sets.  Here's the definition, which we will reference often.</p>
+
+<definition acro="SE" index="set!equality">
+<title>Set Equality</title>
+<p>Two sets, $S$ and $T$, are equal, if $S\subseteq T$ and $T\subseteq S$.  In this case, we write $S=T$.</p>
+
+<notation acro="SE" index="set!equality">
+<title>Set Equality</title>
+<usage>$S=T$</usage>
+</notation>
+</definition>
+
+<p>Sets are typically written inside of braces, as $\set{\ }$, as we have seen above.  However, when sets have more than a few elements, a description will typically have two components.  The first is a description of the general type of objects contained in a set, while the second is some sort of restriction on the properties the objects have.  Every object in the set must be of the type described in the first part and it must satisfy the restrictions in the second part.  Conversely, any object of the proper type for the first part, that also meets the conditions of the second part, will be in the set.  These two parts are set off from each other somehow, often with a vertical bar ($\vert$) or a colon (:).</p>
+
+<p>I like to think of sets as clubs.  The first part is some description of the type of people who <em>might</em> belong to the club, the basic objects.  For example, a bicycle club would describe its members as being people who like to ride bicycles.  The second part is like a membership committee, it restricts the people who are allowed in the club.  Continuing with our bicycle club analogy, we might decide to limit ourselves to <q>serious</q> riders and only have members who can document having ridden 100 kilometers or more in a single day at least one time.</p>
+
+<p>The restrictions on membership can migrate around some between the first and second part, and there may be several ways to describe the same set of objects.  Here's a more mathematical example, employing the set of all integers, ${\mathbb Z}$, to describe the set of even integers.
+<alignmath>
+E
+<![CDATA[&=\setparts{x\in{\mathbb Z}}{x\text{ is an even number}}\\]]>
+<![CDATA[&=\setparts{x\in{\mathbb Z}}{2\text{ divides }x\text{ evenly}}\\]]>
+<![CDATA[&=\setparts{2k}{k\in{\mathbb Z}}]]>
+</alignmath>
+Notice how this set tells us that its objects are integer numbers (not, say, matrices or functions, for example) and just those that are even.  So we can write that $10\in E$, while $17\not\in E$ once we check the membership criteria.  We also recognize the question
+<alignmath>
+\begin{bmatrix}
+<![CDATA[1&-3&5\\]]>
+<![CDATA[2&0&3]]>
+\end{bmatrix}
+\in E\text{?}
+</alignmath>
+as being simply ridiculous.</p>
+
+</subsection>
+
+<subsection acro="SC">
+<title>Set Cardinality</title>
+
+<p>On occasion, we will be interested in the number of elements in a finite set.  Here's the definition and the associated notation.</p>
+
+<definition acro="C" index="set!cardinality">
+<title>Cardinality</title>
+<indexlocation index="set!size" />
+<p>Suppose $S$ is a finite set.  Then the number of elements in $S$ is called the <define>cardinality</define> or <define>size</define> of $S$, and is denoted $\card{S}$.</p>
+
+<notation acro="C" index="set!cardinality">
+<title>Cardinality</title>
+<usage>$\card{S}$</usage>
+</notation>
+</definition>
+
+<example acro="CS" index="set!cardinality">
+<title>Cardinality and Size</title>
+
+<p>If $S=\set{\blacklozenge,\,\bigstar,\,\blacksquare}$, then $\card{S}=3$.</p>
+
+</example>
+
+</subsection>
+
+<subsection acro="SO">
+<title>Set Operations</title>
+
+<p>In this subsection we define and illustrate the three most common basic ways to manipulate sets to create other sets.  Since much of linear algebra is about sets, we will use these often.</p>
+
+<definition acro="SU" index="set!union">
+<title>Set Union</title>
+<p>Suppose $S$ and $T$ are sets.  Then the <define>union</define> of $S$ and $T$, denoted $S\cup T$, is the set whose elements are those that are elements of $S$ or of $T$, or both.  More formally,
+<alignmath>
+x\in S\cup T\text{ if and only if }x\in S\text{ or }x\in T
+</alignmath>
+</p>
+
+<notation acro="SU" index="set!union">
+<title>Set Union</title>
+<usage>$S\cup T$</usage>
+</notation>
+</definition>
+
+<p>Notice that the use of the word <q>or</q> in this definition is meant to be non-exclusive.  That is, it allows for $x$ to be an element of both $S$ and $T$ and still qualify for membership in $S\cup T$.</p>
+
+<example acro="SU" index="set!union">
+<title>Set union</title>
+
+<p>If $S=\set{\blacklozenge,\,\bigstar,\,\blacksquare}$ and $T=\set{\blacklozenge,\,\bigstar,\,\blacktriangle}$ then $S\cup T=\set{\blacklozenge,\,\bigstar,\,\blacksquare,\,\blacktriangle}$.</p>
+
+</example>
+
+<definition acro="SI" index="set!intersection">
+<title>Set Intersection</title>
+<p>Suppose $S$ and $T$ are sets.  Then the <define>intersection</define> of $S$ and $T$, denoted $S\cap T$, is the set whose elements are only those that are elements of $S$ and of $T$.  More formally,
+<alignmath>
+x\in S\cap T\text{ if and only if }x\in S\text{ and }x\in T
+</alignmath>
+</p>
+
+<notation acro="SI" index="set!intersection">
+<title>Set Intersection</title>
+<usage>$S\cap T$</usage>
+</notation>
+</definition>
+
+<example acro="SI" index="set!intersection">
+<title>Set intersection</title>
+
+<p>If $S=\set{\blacklozenge,\,\bigstar,\,\blacksquare}$ and $T=\set{\blacklozenge,\,\bigstar,\,\blacktriangle}$ then $S\cap T=\set{\blacklozenge,\,\bigstar}$.</p>
+
+</example>
+
+<p>The union and intersection of sets are operations that begin with two sets and produce a third, new, set.  Our final operation is the set complement, which we usually think of as an operation that takes a single set and creates a second, new, set.  However, if you study the definition carefully, you will see that it needs to be computed <em>relative</em> to some <q>universal</q> set.</p>
+
+<definition acro="SC" index="set!complement">
+<title>Set Complement</title>
+<p>Suppose $S$ is a set that is a subset of a universal set $U$.  Then the <define>complement</define> of $S$, denoted $\setcomplement{S}$, is the set whose elements are those that are elements of $U$ and not elements of $S$.  More formally,
+<alignmath>
+x\in\setcomplement{S}\text{ if and only if }x\in U\text{ and }x\not\in S
+</alignmath>
+</p>
+
+<notation acro="SC" index="set!complement">
+<title>Set Complement</title>
+<usage>$\setcomplement{S}$</usage>
+</notation>
+</definition>
+
+<p>Notice that there is nothing at all special about the universal set.  This is simply a term that suggests that $U$ contains all of the possible objects we are considering.  Often this set will be clear from the context, and we won't think much about it, nor reference it in our notation.  In other cases (rarely in our work in this course) the exact nature of the universal set must be made explicit, and reference to it will possibly be carried through in our choice of notation.</p>
+
+<example acro="SC" index="set!complement">
+<title>Set complement</title>
+
+<p>If $U=\set{\blacklozenge,\,\bigstar,\,\blacksquare,\,\blacktriangle}$ and $S=\set{\blacklozenge,\,\bigstar,\,\blacksquare}$ then $\setcomplement{S}=\set{\blacktriangle}$.</p>
+
+</example>
+
+<p>There are many more natural operations that can be performed on sets, such as an exclusive-or and the symmetric difference.  Many of these can be defined in terms of the union, intersection and complement.  We will not have much need of them in this course, and so we will not give precise descriptions here in this preliminary section.</p>
+
+<p>There is also an interesting variety of basic results that describe the interplay of these operations with each other.  We mention just two as an example, these are known as DeMorgan's Laws.
+<alignmath>
+<![CDATA[\setcomplement{\left(S\cup T\right)}&=\setcomplement{S}\cap\setcomplement{T}\\]]>
+<![CDATA[\setcomplement{\left(S\cap T\right)}&=\setcomplement{S}\cup\setcomplement{T}\\]]>
+</alignmath>
+</p>
+
+<p>Besides having an appealing symmetry, we mention these two facts, since constructing the proofs of each is a useful exercise that will require a solid understanding of all but one of the definitions presented in this section.  Give it a try.</p>
+
+</subsection>
+
+<!--   End of  set.tex -->
+</section>

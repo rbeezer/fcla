@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<section acro="VS">
+<title>Vector Spaces</title>
+
+<!-- %%%%%%%%%% -->
+<!-- % -->
+<!-- %  Section VS -->
+<!-- %  Vector Spaces -->
+<!-- % -->
+<!-- %%%%%%%%%% -->
+<introduction>
+<p>In this section we present a formal definition of a vector space, which will lead to an extra increment of abstraction.  Once defined, we study its most basic properties.</p>
+
+</introduction>
+
+<subsection acro="VS">
+<title>Vector Spaces</title>
+
+<p>Here is one of the two most important definitions in the entire course.</p>
+
+<definition acro="VS" index="vector space">
+<title>Vector Space</title>
+<p>Suppose that $V$ is a set upon which we have defined two operations: (1) <define>vector addition</define>, which combines two elements of $V$ and is denoted by <q>+</q>, and (2) <define>scalar multiplication</define>, which combines a complex number with an element of $V$ and is denoted by juxtaposition.   Then $V$, along with the two operations, is a <define>vector space</define> over $\complexes$ if the following ten properties hold.
+<propertylist>
+<property acro="AC" index="additive closure!vectors">
+<title>Additive Closure</title><content>
+If $\vect{u},\,\vect{v}\in V$, then $\vect{u}+\vect{v}\in V$.</content></property>
+
+<property acro="SC" index="scalar closure!vectors">
+<title>Scalar Closure</title><content>
+If $\alpha\in\complex{\null}$ and $\vect{u}\in V$, then $\alpha\vect{u}\in V$.</content></property>
+
+<property acro="C" index="commutativity!vectors">
+<title>Commutativity</title><content>
+If $\vect{u},\,\vect{v}\in V$, then $\vect{u}+\vect{v}=\vect{v}+\vect{u}$.</content></property>
+
+<property acro="AA" index="additive associativity!vectors">
+<title>Additive Associativity</title><content>
+If $\vect{u},\,\vect{v},\,\vect{w}\in V$, then $\vect{u}+\left(\vect{v}+\vect{w}\right)=\left(\vect{u}+\vect{v}\right)+\vect{w}$.</content></property>
+
+<property acro="Z" index="zero vector!vectors">
+<title>Zero Vector</title><content>
+There is a vector, $\zerovector$, called the <define>zero vector</define>, such that  $\vect{u}+\zerovector=\vect{u}$  for all $\vect{u}\in V$.</content></property>
+
+<property acro="AI" index="additive inverses!vectors">
+<title>Additive Inverses</title><content>
+If $\vect{u}\in V$, then there exists a vector $\vect{-u}\in V$ so that $\vect{u}+ (\vect{-u})=\zerovector$.</content></property>
+
+<property acro="SMA" index="scalar multiplication associativity!vectors">
+<title>Scalar Multiplication Associativity</title><content>
+If $\alpha,\,\beta\in\complex{\null}$ and $\vect{u}\in V$, then $\alpha(\beta\vect{u})=(\alpha\beta)\vect{u}$.</content></property>
+
+<property acro="DVA" index="distributivity, vector addition!vectors">
+<title>Distributivity across Vector Addition</title><content>
+If $\alpha\in\complex{\null}$ and $\vect{u},\,\vect{v}\in V$, then $\alpha(\vect{u}+\vect{v})=\alpha\vect{u}+\alpha\vect{v}$.</content></property>
+
+<property acro="DSA" index="distributivity, scalar addition!vectors">
+<title>Distributivity across Scalar Addition</title><content>
+If $\alpha,\,\beta\in\complex{\null}$ and $\vect{u}\in V$, then
+$(\alpha+\beta)\vect{u}=\alpha\vect{u}+\beta\vect{u}$.</content></property>
+
+<property acro="O" index="one!vectors">
+<title>One</title><content>
+If $\vect{u}\in V$, then $1\vect{u}=\vect{u}$.</content></property>
+
+</propertylist>
+
+</p>
+
+<p>The objects in $V$ are called <define>vectors</define>, no matter what else they might really be, simply by virtue of being elements of a vector space.</p>
+
+</definition>
+
+<p>Now, there are several important observations to make.  Many of these will be easier to understand on a second or third reading, and especially after carefully studying the examples in <acroref type="subsection" acro="VS.EVS" />.</p>
+
+<p>An <define>axiom</define> is often a <q>self-evident</q> truth.  Something so fundamental that we all agree it is true and accept it without proof.  Typically, it would be the logical underpinning that we would begin to build theorems upon.  Some might refer to the ten properties of <acroref type="definition" acro="VS" /> as axioms, implying that a vector space is a very natural object and the ten properties are the essence of a vector space.  We will instead emphasize that we will begin with a definition of a vector space.   After studying the remainder of this chapter, you might return here and remind yourself how all our forthcoming theorems and definitions rest on this foundation.</p>
+
+<p>As we will see shortly, the objects in $V$ can be <em>anything</em>, even though we will call them vectors.  We have been working with vectors frequently, but we should stress here that these have so far just been <em>column</em> vectors <mdash /> scalars arranged in a columnar list of fixed length.  In a similar vein, you have used the symbol <q>+</q> for many years to represent the addition of numbers (scalars).  We have extended its use to the addition of column vectors and to the addition of matrices, and now we are going to recycle it even further and let it denote vector addition in <em>any</em> possible vector space.  So when describing a new vector space, we will have to <em>define</em> exactly what <q>+</q> is.  Similar comments apply to scalar multiplication.  Conversely, we can <em>define</em> our operations any way we like, so long as the ten properties are fulfilled (see <acroref type="example" acro="CVS" />).</p>
+
+<p>In <acroref type="definition" acro="VS" />, the scalars do not have to be complex numbers.  They can come from what are called in more advanced mathematics, <q>fields</q> (see <acroref type="section" acro="F" /> for more on these objects).  Examples of fields are the set of complex numbers, the set of real numbers, the set of rational numbers, and even the finite set of <q>binary numbers</q>, $\set{0,\,1}$.  There are many, many others.  In this case we would call $V$ a <define>vector space</define> over (the field) $F$.</p>
+
+<p>A vector space is composed of three objects, a set and two operations.  Some would explicitly state in the definition that $V$ must be a non-empty set, be we can infer this from <acroref type="property" acro="Z" />, since the set cannot be empty and contain a vector that behaves as the zero vector.  Also, we usually use the same symbol for both the set and the vector space itself.  Do not let this convenience fool you into thinking the operations are secondary!</p>
+
+<p>This discussion has either convinced you that we are really embarking on a new level of abstraction, or they have seemed cryptic, mysterious or nonsensical.  You might want to return to this section in a few days and give it another read then.  In any case, let's look at some concrete examples now.</p>
+
+</subsection>
+
+<subsection acro="EVS">
+<title>Examples of Vector Spaces</title>
+
+<p>Our aim in this subsection is to give you a storehouse of examples to work with, to become comfortable with the ten vector space properties and to convince you that the multitude of examples justifies (at least initially) making such a broad definition as <acroref type="definition" acro="VS" />.  Some of our claims will be justified by reference to previous theorems, we will prove some facts from scratch, and we will do one non-trivial example completely.  In other places, our usual thoroughness will be neglected, so grab paper and pencil and play along.</p>
+
+<example acro="VSCV" index="complex $m$-space">
+<title>The vector space $\complex{m}$</title>
+
+<p>Set: $\complex{m}$, all column vectors of size $m$, <acroref type="definition" acro="VSCV" />.</p>
+<p>Equality: Entry-wise, <acroref type="definition" acro="CVE" />.</p>
+<p>Vector Addition:  The <q>usual</q> addition, given in <acroref type="definition" acro="CVA" />.</p>
+<p>Scalar Multiplication: The <q>usual</q> scalar multiplication, given in <acroref type="definition" acro="CVSM" />.</p>
+
+<p>Does this set with these operations fulfill the ten properties?  Yes.  And by design all we need to do is quote <acroref type="theorem" acro="VSPCV" />.  That was easy.</p>
+
+</example>
+
+<example acro="VSM" index="vector space of matrices">
+<title>The vector space of matrices, $M_{mn}$</title>
+
+<p>Set: $M_{mn}$, the set of all matrices of size $m\times n$ and entries from $\complex{\null}$, <acroref type="example" acro="VSM" />.</p>
+<p>Equality: Entry-wise, <acroref type="definition" acro="ME" />.</p>
+<p>Vector Addition:  The <q>usual</q> addition, given in <acroref type="definition" acro="MA" />.</p>
+<p>Scalar Multiplication: The <q>usual</q> scalar multiplication, given in <acroref type="definition" acro="MSM" />.</p>
+
+<p>Does this set with these operations fulfill the ten properties?  Yes.  And all we need to do is quote <acroref type="theorem" acro="VSPM" />.  Another easy one (by design).</p>
+
+</example>
+
+<p>So, the set of all matrices of a fixed size forms a vector space.  That entitles us to call a matrix a vector, since a matrix is an element of a vector space.  For example, if $A,\,B\in M_{3,4}$ then we call $A$ and $B$ <q>vectors,</q> and we even use our previous notation for column vectors to refer to $A$ and $B$.  So we could legitimately write expressions like
+<equation>
+\vect{u}+\vect{v}=A+B=B+A=\vect{v}+\vect{u}
+</equation>
+This could lead to some confusion, but it is not too great a danger.  But it is worth comment.</p>
+
+<p>The previous two examples may be less than satisfying.  We made all the relevant definitions long ago.  And the required verifications were all handled by quoting old theorems.  However, it is important to consider these two examples first.  We have been studying vectors and matrices carefully (<acroref type="chapter" acro="V" />, <acroref type="chapter" acro="M" />), and both objects, along with their operations, have certain properties in common, as you may have noticed in comparing <acroref type="theorem" acro="VSPCV" /> with <acroref type="theorem" acro="VSPM" />.  Indeed, it is these two theorems that <em>motivate</em> us to formulate the abstract definition of a vector space, <acroref type="definition" acro="VS" />.  Now, should we prove some general theorems about vector spaces (as we will shortly in <acroref type="subsection" acro="VS.VSP" />), we can instantly apply the conclusions to <em>both</em> $\complex{m}$ and $M_{mn}$.  Notice too how we have taken six definitions and two theorems and reduced them down to two <em>examples</em>.  With greater generalization and abstraction our old ideas get downgraded in stature.</p>
+
+<p>Let us look at some more examples, now considering some new vector spaces.</p>
+
+<example acro="VSP" index="vector space of polynomials">
+<title>The vector space of polynomials, $P_n$</title>
+
+<p>Set: $P_n$, the set of all polynomials of degree $n$ or less in the variable $x$ with coefficients from $\complex{\null}$.</p>
+<p>Equality:
+<equation>
+a_0+a_1x+a_2x^2+\cdots+a_nx^n=b_0+b_1x+b_2x^2+\cdots+b_nx^n
+\text{ if and only if }a_i=b_i\text{ for }0\leq i\leq n
+</equation></p>
+<p>Vector Addition:
+<alignmath>
+(a_0+a_1x+a_2x^2+\cdots+a_nx^n)+(b_0+b_1x+b_2x^2+\cdots+b_nx^n)=\\
+(a_0+b_0)+(a_1+b_1)x+(a_2+b_2)x^2+\cdots+(a_n+b_n)x^n
+</alignmath></p>
+<p>Scalar Multiplication:
+<equation>
+\alpha(a_0+a_1x+a_2x^2+\cdots+a_nx^n)=(\alpha a_0)+(\alpha a_1)x+(\alpha a_2)x^2+\cdots+(\alpha a_n)x^n
+</equation></p>
+
+<p>This set, with these operations, will fulfill the ten properties, though we will not work all the details here.  However, we will make a few comments and prove one of the properties.  First, the zero vector (<acroref type="property" acro="Z" />) is what you might expect, and you can check that it has the required property.
+<equation>
+\zerovector=0+0x+0x^2+\cdots+0x^n
+</equation>
+</p>
+
+<p>The additive inverse (<acroref type="property" acro="AI" />) is also no surprise, though consider how we have chosen to write it.
+<equation>
+-\left(a_0+a_1x+a_2x^2+\cdots+a_nx^n\right)=(-a_0)+(-a_1)x+(-a_2)x^2+\cdots+(-a_n)x^n
+</equation>
+</p>
+
+<p>Now let's prove the associativity of vector addition (<acroref type="property" acro="AA" />).  This is a bit tedious, though necessary.  Throughout, the plus sign (<q>+</q>) does triple-duty.  You might ask yourself what each plus sign represents as you work through this proof.
+<alignmath>
+<![CDATA[\vect{u}+&(\vect{v}+\vect{w})\\]]>
+<![CDATA[&=(a_0+a_1x+\cdots+a_nx^n)+\left((b_0+b_1x+\cdots+b_nx^n)+(c_0+c_1x+\cdots+c_nx^n)\right)\\]]>
+<![CDATA[&=(a_0+a_1x+\cdots+a_nx^n)+((b_0+c_0)+(b_1+c_1)x+\cdots+(b_n+c_n)x^n)\\]]>
+<![CDATA[&=(a_0+(b_0+c_0))+(a_1+(b_1+c_1))x+\cdots+(a_n+(b_n+c_n))x^n\\]]>
+<![CDATA[&=((a_0+b_0)+c_0)+((a_1+b_1)+c_1)x+\cdots+((a_n+b_n)+c_n)x^n\\]]>
+<![CDATA[&=((a_0+b_0)+(a_1+b_1)x+\cdots+(a_n+b_n)x^n)+(c_0+c_1x+\cdots+c_nx^n)\\]]>
+<![CDATA[&=\left((a_0+a_1x+\cdots+a_nx^n)+(b_0+b_1x+\cdots+b_nx^n)\right)+(c_0+c_1x+\cdots+c_nx^n)\\]]>
+<![CDATA[&=(\vect{u}+\vect{v})+\vect{w}]]>
+</alignmath>
+</p>
+
+<p>Notice how it is the application of the associativity of the (old) addition of complex numbers in the middle of this chain of equalities that makes the whole proof happen.  The remainder is successive applications of our (new) definition of vector (polynomial) addition.  Proving the remainder of the ten properties is similar in style and tedium.  You might try proving the commutativity of vector addition (<acroref type="property" acro="C" />), or one of the distributivity properties (<acroref type="property" acro="DVA" />, <acroref type="property" acro="DSA" />).
+</p>
+
+</example>
+
+<example acro="VSIS" index="vector space of infinite sequences">
+<title>The vector space of infinite sequences</title>
+
+<p>Set: $\complex{\infty}=\setparts{(c_0,\,c_1,\,c_2,\,c_3,\,\ldots)}{c_i\in\complex{\null},\ i\in\mathbb{N}}$.</p>
+<p>Equality:
+<equation>
+(c_0,\,c_1,\,c_2,\,\ldots)=(d_0,\,d_1,\,d_2,\,\ldots)\text{ if and only if }c_i=d_i\text{ for all }i\geq 0
+</equation></p>
+<p>Vector Addition:
+<equation>
+(c_0,\,c_1,\,c_2,\,\ldots)+(d_0,\,d_1,\,d_2,\,\ldots)=(c_0+d_0,\,c_1+d_1,\,c_2+d_2,\,\ldots)
+</equation></p>
+<p>Scalar Multiplication:
+<equation>
+\alpha (c_0,\,c_1,\,c_2,\,c_3,\,\ldots)=(\alpha c_0,\,\alpha c_1,\,\alpha c_2,\,\alpha c_3,\,\ldots)
+</equation></p>
+
+<p>This should remind you of the vector space $\complex{m}$, though now our lists of scalars are written horizontally with commas as delimiters and they are allowed to be infinite in length.  What does the zero vector look like (<acroref type="property" acro="Z" />)?  Additive inverses (<acroref type="property" acro="AI" />)?  Can you prove the associativity of vector addition (<acroref type="property" acro="AA" />)?</p>
+
+</example>
+
+<example acro="VSF" index="vector space of functions">
+<title>The vector space of functions</title>
+
+<p>Let $X$ be any set.</p>
+<p>Set: $F=\setparts{f}{f:X\rightarrow\complex{\null}}$.</p>
+<p>Equality: $f=g$ if and only if $f(x)=g(x)$ for all $x\in X$.</p>
+<p>Vector Addition:  $f+g$ is the function with outputs defined by $(f+g)(x)=f(x)+g(x)$.</p>
+<p>Scalar Multiplication: $\alpha f$ is the function with outputs defined by $(\alpha f)(x)=\alpha f(x)$.</p>
+
+<p>So this is the set of all functions of one variable that take elements of the set $X$ to a complex number.  You might have studied functions of one variable that take a real number to a real number, and that might be a more natural set to use as $X$.  But since we are allowing our scalars to be complex numbers, we need to specify that the range of our functions is the complex numbers.  Study carefully how the definitions of the operation are made, and think about the different uses of <q>+</q> and juxtaposition.  As an example of what is required when verifying that this is a vector space, consider that  the zero vector (<acroref type="property" acro="Z" />) is the function $z$ whose definition is $z(x)=0$ for every input $x\in X$.</p>
+
+<p>Vector spaces of functions are very important in mathematics and physics, where the field of scalars may be the real numbers, so the ranges of the functions can in turn also be the set of real numbers.</p>
+
+</example>
+
+<p>Here's a unique example.</p>
+
+<example acro="VSS" index="vector space, singleton">
+<title>The singleton vector space </title>
+
+<p>Set: $Z=\set{\vect{z}}$.</p>
+<p>Equality: Huh?</p>
+<p>Vector Addition:  $\vect{z}+\vect{z}=\vect{z}$.</p>
+<p>Scalar Multiplication: $\alpha\vect{z}=\vect{z}$.</p>
+
+<p>This should look pretty wild.  First, just what is $\vect{z}$?  Column vector, matrix, polynomial, sequence, function?  Mineral, plant, or animal?  We aren't saying!  $\vect{z}$ just <em>is</em>.  And we have definitions of vector addition and scalar multiplication that are sufficient for an occurrence of either that may come along.</p>
+
+<p>Our only concern is if this set, along with the definitions of two operations, fulfills the ten properties of <acroref type="definition" acro="VS" />.  Let's check associativity of vector addition (<acroref type="property" acro="AA" />).  For all $\vect{u},\,\vect{v},\,\vect{w}\in Z$,
+<alignmath>
+\vect{u}+(\vect{v}+\vect{w})
+<![CDATA[&=\vect{z}+(\vect{z}+\vect{z})\\]]>
+<![CDATA[&=\vect{z}+\vect{z}\\]]>
+<![CDATA[&=(\vect{z}+\vect{z})+\vect{z}\\]]>
+<![CDATA[&=(\vect{u}+\vect{v})+\vect{w}]]>
+</alignmath></p>
+
+<p>What is the zero vector in this vector space (<acroref type="property" acro="Z" />)?  With only one element in the set, we do not have much choice.  Is $\vect{z}=\zerovector$?  It appears that $\vect{z}$ behaves like the zero vector should, so it gets the title.  Maybe now the definition of this vector space does not seem so bizarre.  It is a set whose only element is the element that behaves like the zero vector, so that lone element <em>is</em> the zero vector.</p>
+
+</example>
+
+<p>Perhaps some of the above definitions and verifications seem obvious or like splitting hairs, but the next example should convince you that they <em>are</em> necessary.  We will study this one carefully.  Ready?  Check your preconceptions at the door.</p>
+
+<example acro="CVS" index="vector space, crazy">
+<title>The crazy vector space </title>
+
+<p>Set: $C=\setparts{(x_1,\,x_2)}{x_1,\,x_2\in\complex{\null}}$.</p>
+<p>Vector Addition:  $(x_1,\,x_2)+(y_1,\,y_2)=(x_1+y_1+1,\,x_2+y_2+1)$.</p>
+<p>Scalar Multiplication: $\alpha(x_1,\,x_2)=(\alpha x_1+\alpha-1,\,\alpha x_2+\alpha-1)$.</p>
+
+<p>Now, the first thing I hear you say is <q>You can't do that!</q>  And my response is, <q>Oh yes, I can!</q>  I am free to define my set and my operations any way I please.  They may not look natural, or even useful, but we will now verify that they provide us with another example of a vector space.  And that is enough.  If you are adventurous, you might try first checking some of the properties yourself.  What is the zero vector?  Additive inverses?  Can you prove associativity?  Ready, here we go.</p>
+
+<p><acroref type="property" acro="AC" />, <acroref type="property" acro="SC" />:  The result of each operation is a pair of complex numbers, so these two closure properties are fulfilled.</p>
+
+<p><acroref type="property" acro="C" />:
+<alignmath>
+<![CDATA[\vect{u}+\vect{v}&=(x_1,\,x_2)+(y_1,\,y_2)=(x_1+y_1+1,\,x_2+y_2+1)\\]]>
+<![CDATA[&=(y_1+x_1+1,\,y_2+x_2+1)=(y_1,\,y_2)+(x_1,\,x_2)\\]]>
+<![CDATA[&=\vect{v}+\vect{u}]]>
+</alignmath>
+</p>
+
+<p><acroref type="property" acro="AA" />:
+<alignmath>
+<![CDATA[\vect{u}+(\vect{v}+\vect{w})&=(x_1,\,x_2)+\left((y_1,\,y_2)+(z_1,\,z_2)\right)\\]]>
+<![CDATA[&=(x_1,\,x_2)+(y_1+z_1+1,\,y_2+z_2+1)\\]]>
+<![CDATA[&=(x_1+(y_1+z_1+1)+1,\,x_2+(y_2+z_2+1)+1)\\]]>
+<![CDATA[&=(x_1+y_1+z_1+2,\,x_2+y_2+z_2+2)\\]]>
+<![CDATA[&=((x_1+y_1+1)+z_1+1,\,(x_2+y_2+1)+z_2+1)\\]]>
+<![CDATA[&=(x_1+y_1+1,\,x_2+y_2+1)+(z_1,\,z_2)\\]]>
+<![CDATA[&=\left((x_1,\,x_2)+(y_1,\,y_2)\right)+(z_1,\,z_2)\\]]>
+<![CDATA[&=\left(\vect{u}+\vect{v}\right)+\vect{w}]]>
+</alignmath>
+</p>
+
+<p><acroref type="property" acro="Z" />:  The zero vector is <ellipsis /> $\zerovector=(-1,\,-1)$.  Now I hear you say, <q>No, no, that can't be, it must be $(0,\,0)$!</q>.  Indulge me for a moment and let us check my proposal.
+<equation>
+\vect{u}+\zerovector=(x_1,\,x_2)+(-1,\,-1)=(x_1+(-1)+1,\,x_2+(-1)+1)=(x_1,\,x_2)=\vect{u}
+</equation>
+Feeling better?  Or worse?</p>
+
+<p><acroref type="property" acro="AI" />:  For each vector, $\vect{u}$, we must locate an additive inverse, $\vect{-u}$.  Here it is, $-(x_1,\,x_2)=(-x_1-2,\,-x_2-2)$.  As odd as it may look, I hope you are withholding judgment.  Check:
+<equation>
+\vect{u}+ (\vect{-u})=(x_1,\,x_2)+(-x_1-2,\,-x_2-2)=(x_1+(-x_1-2)+1,\,-x_2+(x_2-2)+1)=(-1,\,-1)=\zerovector
+</equation>
+</p>
+
+<p><acroref type="property" acro="SMA" />:
+<alignmath>
+\alpha(\beta\vect{u})
+<![CDATA[&=\alpha(\beta(x_1,\,x_2))\\]]>
+<![CDATA[&=\alpha(\beta x_1+\beta-1,\,\beta x_2+\beta-1)\\]]>
+<![CDATA[&=(\alpha(\beta x_1+\beta-1)+\alpha-1,\,\alpha(\beta x_2+\beta-1)+\alpha-1)\\]]>
+<![CDATA[&=((\alpha\beta x_1+\alpha\beta-\alpha)+\alpha-1,\,(\alpha\beta x_2+\alpha\beta-\alpha)+\alpha-1)\\]]>
+<![CDATA[&=(\alpha\beta x_1+\alpha\beta-1,\,\alpha\beta x_2+\alpha\beta-1)\\]]>
+<![CDATA[&=(\alpha\beta)(x_1,\,x_2)\\]]>
+<![CDATA[&=(\alpha\beta)\vect{u}]]>
+</alignmath></p>
+
+<p><acroref type="property" acro="DVA" />:  If you have hung on so far, here's where it gets even wilder.  In the next two properties we mix and mash the two operations.
+<alignmath>
+<![CDATA[\alpha(\vect{u}+\vect{v})&=\alpha\left((x_1,\,x_2)+(y_1,\,y_2)\right)\\]]>
+<![CDATA[&=\alpha(x_1+y_1+1,\,x_2+y_2+1)\\]]>
+<![CDATA[&=(\alpha(x_1+y_1+1)+\alpha-1,\,\alpha(x_2+y_2+1)+\alpha-1)\\]]>
+<![CDATA[&=(\alpha x_1+\alpha y_1+\alpha+\alpha-1,\,\alpha x_2+\alpha y_2+\alpha+\alpha-1)\\]]>
+<![CDATA[&=(\alpha x_1+\alpha-1+\alpha y_1+\alpha-1+1,\,\alpha x_2+\alpha-1+\alpha y_2+\alpha-1+1)\\]]>
+<![CDATA[&=((\alpha x_1+\alpha-1)+(\alpha y_1+\alpha-1)+1,\,(\alpha x_2+\alpha-1)+(\alpha y_2+\alpha-1)+1)\\]]>
+<![CDATA[&=(\alpha x_1+\alpha-1,\,\alpha x_2+\alpha-1)+(\alpha y_1+\alpha-1,\,\alpha y_2+\alpha-1)\\]]>
+<![CDATA[&=\alpha(x_1,\,x_2)+\alpha(y_1,\,y_2)\\]]>
+<![CDATA[&=\alpha\vect{u}+\alpha\vect{v}]]>
+</alignmath>
+</p>
+
+<p><acroref type="property" acro="DSA" />:
+<alignmath>
+<![CDATA[(\alpha+\beta)\vect{u}&=(\alpha+\beta)(x_1,\,x_2)\\]]>
+<![CDATA[&=((\alpha+\beta)x_1+(\alpha+\beta)-1,\,(\alpha+\beta)x_2+(\alpha+\beta)-1)\\]]>
+<![CDATA[&=(\alpha x_1+\beta x_1+\alpha+\beta-1,\,\alpha x_2+\beta x_2+\alpha+\beta-1)\\]]>
+<![CDATA[&=(\alpha x_1+\alpha-1+\beta x_1+\beta-1+1,\,\alpha x_2+\alpha-1+\beta x_2+\beta-1+1)\\]]>
+<![CDATA[&=((\alpha x_1+\alpha-1)+(\beta x_1+\beta-1)+1,\,(\alpha x_2+\alpha-1)+(\beta x_2+\beta-1)+1)\\]]>
+<![CDATA[&=(\alpha x_1+\alpha-1,\,\alpha x_2+\alpha-1)+(\beta x_1+\beta-1,\,\beta x_2+\beta-1)\\]]>
+<![CDATA[&=\alpha(x_1,\,x_2)+\beta(x_1,\,x_2)\\]]>
+<![CDATA[&=\alpha\vect{u}+\beta\vect{u}]]>
+</alignmath>
+</p>
+
+<p><acroref type="property" acro="O" />:  After all that, this one is easy, but no less pleasing.
+<equation>
+1\vect{u}=1(x_1,\,x_2)=(x_1+1-1,\,x_2+1-1)=(x_1,\,x_2)=\vect{u}
+</equation>
+</p>
+
+<p>That's it, $C$ is a vector space, as crazy as that may seem.</p>
+
+<p>Notice that in the case of the zero vector and additive inverses, we only had to propose possibilities and then verify that they were the correct choices.  You might try to discover how you would arrive at these choices, though you should understand why the process of discovering them is not a necessary component of the proof itself.</p>
+
+</example>
+
+</subsection>
+
+<subsection acro="VSP">
+<title>Vector Space Properties</title>
+
+<p><acroref type="subsection" acro="VS.EVS" /> has provided us with an abundance of examples of vector spaces, most of them containing useful and interesting mathematical objects along with natural operations.  In this subsection we will prove some general properties of vector spaces.  Some of these results will again seem obvious, but it is important to understand why it is necessary to state and prove them.  A typical hypothesis will be <q>Let $V$ be a vector space.</q>  From this we may assume the ten properties of <acroref type="definition" acro="VS" />, <em>and nothing more</em>.  It's like starting over, as we learn about what can happen in this new algebra we are learning.  But the power of this careful approach is that we can apply these theorems to any vector space we encounter <mdash /> those in the previous examples, or new ones we have not yet contemplated.  Or perhaps new ones that nobody has ever contemplated.  We will illustrate some of these results with examples from the crazy vector space (<acroref type="example" acro="CVS" />), but mostly we are stating theorems and doing proofs.  These proofs do not get too involved, but are not trivial either, so these are good theorems to try proving yourself before you study the proof given here.  (See <acroref type="technique" acro="P" />.)</p>
+
+<p>First we show that there is just one zero vector.  Notice that the properties only require there to be <em>at least</em> one, and say nothing about there possibly being more.  That is because we can use the ten properties of a vector space (<acroref type="definition" acro="VS" />) to learn that there can <em>never</em> be more than one.  To require that this extra condition be stated as an eleventh property would make the definition of a vector space more complicated than it needs to be.</p>
+
+<theorem acro="ZVU" index="zero vector!unique">
+<title>Zero Vector is Unique</title>
+<statement>
+<p>Suppose that $V$ is a vector space.   The zero vector, $\zerovector$,  is unique.</p>
+
+</statement>
+
+<proof>
+<p>To prove uniqueness, a standard technique is to suppose the existence of two objects (<acroref type="technique" acro="U" />).  So let $\zerovector_1$ and $\zerovector_2$ be two zero vectors in $V$.  Then
+<alignmath>
+\zerovector_1
+<![CDATA[&=\zerovector_1+\zerovector_2]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="Z" /> for $\zerovector_2$}\\
+<![CDATA[&=\zerovector_2+\zerovector_1]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="C" />}\\
+<![CDATA[&=\zerovector_2]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="Z" /> for $\zerovector_1$}
+</alignmath>
+</p>
+
+<p>This proves the uniqueness since the two zero vectors are really the same.</p>
+
+</proof>
+</theorem>
+
+<theorem acro="AIU" index="additive inverses!unique">
+<title>Additive Inverses are Unique</title>
+<statement>
+<p>Suppose that $V$ is a vector space.   For each $\vect{u}\in V$, the additive inverse, $\vect{-u}$, is unique.</p>
+
+</statement>
+
+<proof>
+<p>To prove uniqueness, a standard technique is to suppose the existence of two objects (<acroref type="technique" acro="U" />).  So let $\vect{-u}_1$ and $\vect{-u}_2$ be two additive inverses for $\vect{u}$.  Then
+<alignmath>
+<![CDATA[\vect{-u}_1&=\vect{-u}_1+\zerovector&&]]>\text{<acroref type="property" acro="Z" />}\\
+<![CDATA[&=\vect{-u}_1+(\vect{u}+\vect{-u}_2)&&]]>\text{<acroref type="property" acro="AI" />}\\
+<![CDATA[&=(\vect{-u}_1+\vect{u})+\vect{-u}_2&&]]>\text{<acroref type="property" acro="AA" />}\\
+<![CDATA[&=\zerovector+\vect{-u}_2&&]]>\text{<acroref type="property" acro="AI" />}\\
+<![CDATA[&=\vect{-u}_2&&]]>\text{<acroref type="property" acro="Z" />}
+</alignmath></p>
+
+<p>So the two additive inverses are really the same.</p>
+
+</proof>
+</theorem>
+
+<p>As obvious as the next three theorems appear, nowhere have we guaranteed that the zero scalar, scalar multiplication and the zero vector all interact this way.  Until we have proved it, anyway.</p>
+
+<theorem acro="ZSSM" index="scalar multiplication!zero scalar">
+<title>Zero Scalar in Scalar Multiplication</title>
+<statement>
+<p>Suppose that $V$ is a vector space and $\vect{u}\in V$.  Then $0\vect{u}=\zerovector$.</p>
+
+</statement>
+
+<proof>
+<p>Notice that $0$ is a scalar, $\vect{u}$ is a vector, so <acroref type="property" acro="SC" /> says $0\vect{u}$ is again a vector.  As such, $0\vect{u}$ has an additive inverse, $-(0\vect{u})$ by <acroref type="property" acro="AI" />.
+<alignmath>
+0\vect{u}
+<![CDATA[&=\zerovector+0\vect{u}&&]]>\text{<acroref type="property" acro="Z" />}\\
+<![CDATA[&=\left(-(0\vect{u}) + 0\vect{u}\right)+0\vect{u}&&]]>\text{<acroref type="property" acro="AI" />}\\
+<![CDATA[&=-(0\vect{u}) + \left(0\vect{u}+0\vect{u}\right)&&]]>\text{<acroref type="property" acro="AA" />}\\
+<![CDATA[&=-(0\vect{u}) + (0+0)\vect{u}&&]]>\text{<acroref type="property" acro="DSA" />}\\
+<![CDATA[&=-(0\vect{u}) + 0\vect{u}&&]]>\text{<acroref type="property" acro="ZCN" />}\\
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="property" acro="AI" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>Here's another theorem that <em>looks</em> like it should be obvious, but is still in need of a proof.</p>
+
+<theorem acro="ZVSM" index="scalar multiplication!zero vector">
+<title>Zero Vector in Scalar Multiplication</title>
+<statement>
+<p>Suppose that $V$ is a vector space and $\alpha\in\complex{\null}$.   Then $\alpha\zerovector=\zerovector$.</p>
+
+</statement>
+
+<proof>
+<p>Notice that $\alpha$ is a scalar, $\zerovector$ is a vector, so <acroref type="property" acro="SC" /> means $\alpha\zerovector$ is again a vector.  As such, $\alpha\zerovector$ has an additive inverse, $-(\alpha\zerovector)$ by <acroref type="property" acro="AI" />.
+<alignmath>
+\alpha\zerovector
+<![CDATA[&=\zerovector+\alpha\zerovector&&]]>\text{<acroref type="property" acro="Z" />}\\
+<![CDATA[&=\left(-(\alpha\zerovector)+\alpha\zerovector\right)+\alpha\zerovector&&]]>\text{<acroref type="property" acro="AI" />}\\
+<![CDATA[&=-(\alpha\zerovector)+\left(\alpha\zerovector+\alpha\zerovector\right)&&]]>\text{<acroref type="property" acro="AA" />}\\
+<![CDATA[&=-(\alpha\zerovector)+\alpha\left(\zerovector+\zerovector\right)&&]]>\text{<acroref type="property" acro="DVA" />}\\
+<![CDATA[&=-(\alpha\zerovector)+\alpha\zerovector&&]]>\text{<acroref type="property" acro="Z" />}\\
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="property" acro="AI" />}
+</alignmath></p>
+
+</proof>
+</theorem>
+
+<p>Here's another one that sure looks obvious.  But understand that we have chosen to use certain notation because it makes the theorem's conclusion look so nice.  The theorem is not true because the notation looks so good, it still needs a proof.  If we had really wanted to make this point, we might have defined the additive inverse of $\vect{u}$ as $\vect{u}^\sharp$.  Then we would have written the defining property, <acroref type="property" acro="AI" />, as $\vect{u}+\vect{u}^\sharp=\zerovector$.  This theorem would become $\vect{u}^\sharp=(-1)\vect{u}$.  Not really quite as pretty, is it?</p>
+
+<theorem acro="AISM" index="additive inverse!from scalar multiplication">
+<title>Additive Inverses from Scalar Multiplication</title>
+<statement>
+<p>Suppose that $V$ is a vector space and $\vect{u}\in V$.  Then $\vect{-u}=(-1)\vect{u}$.</p>
+
+</statement>
+
+<proof>
+<p><alignmath>
+\vect{-u}
+<![CDATA[&=\vect{-u}+\zerovector&&]]>\text{<acroref type="property" acro="Z" />}\\
+<![CDATA[&=\vect{-u}+0\vect{u}&&]]>\text{<acroref type="theorem" acro="ZSSM" />}\\
+<![CDATA[&=\vect{-u}+\left(1+(-1)\right)\vect{u}\\]]>
+<![CDATA[&=\vect{-u}+\left(1\vect{u}+(-1)\vect{u}\right)&&]]>\text{<acroref type="property" acro="DSA" />}\\
+<![CDATA[&=\vect{-u}+\left(\vect{u}+(-1)\vect{u}\right)&&]]>\text{<acroref type="property" acro="O" />}\\
+<![CDATA[&=\left(\vect{-u}+\vect{u}\right)+(-1)\vect{u}&&]]>\text{<acroref type="property" acro="AA" />}\\
+<![CDATA[&=\zerovector+(-1)\vect{u}&&]]>\text{<acroref type="property" acro="AI" />}\\
+<![CDATA[&=(-1)\vect{u}&&]]>\text{<acroref type="property" acro="Z" />}
+</alignmath>
+</p>
+
+</proof>
+</theorem>
+
+<p>Because of this theorem, we can now write linear combinations like $6\vect{u}_1+(-4)\vect{u}_2$
+as $6\vect{u}_1-4\vect{u}_2$, even though we have not formally defined an operation called <define>vector subtraction</define>.</p>
+
+<p>Our next theorem is a bit different from several of the others in the list.  Rather than making a declaration (<q>the zero vector is unique</q>) it is an implication (<q>if<ellipsis />, then<ellipsis /></q>) and so can be used in proofs to convert a vector equality into two possibilities, one a scalar equality and the other a vector equality.  It should remind you of the situation for complex numbers.  If $\alpha,\,\beta\in\complexes$ and $\alpha\beta=0$, then $\alpha=0$ or $\beta=0$.  This critical property is the driving force behind using a factorization to solve a polynomial equation.</p>
+
+<theorem acro="SMEZV" index="scalar multiplication!zero vector result">
+<title>Scalar Multiplication Equals the Zero Vector</title>
+<statement>
+<p>Suppose that $V$ is a vector space and $\alpha\in\complex{\null}$.  If $\alpha\vect{u}=\zerovector$, then either $\alpha=0$ or $\vect{u}=\zerovector$.</p>
+
+</statement>
+
+<proof>
+<p>We prove this theorem by breaking up the analysis into two cases.  The first seems too trivial, and it is, but the logic of the argument is still legitimate.</p>
+
+<p>Case 1.  Suppose $\alpha=0$.  In this case our conclusion is true (the first part of the either/or is true) and we are done.  That was easy.</p>
+
+<p>Case 2.  Suppose $\alpha\neq 0$.
+<alignmath>
+\vect{u}
+<![CDATA[&=1\vect{u}]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="O" />}\\
+<![CDATA[&=\left(\frac{1}{\alpha}\alpha\right)\vect{u}]]>
+<![CDATA[&&\alpha\neq 0\\]]>
+<![CDATA[&=\frac{1}{\alpha}\left(\alpha\vect{u}\right)]]>
+<![CDATA[&&]]>\text{<acroref type="property" acro="SMA" />}\\
+<![CDATA[&=\frac{1}{\alpha}\left(\zerovector\right)]]>
+<![CDATA[&&\text{Hypothesis}\\]]>
+<![CDATA[&=\zerovector&&]]>\text{<acroref type="theorem" acro="ZVSM" />}
+</alignmath></p>
+
+<p>So in this case, the conclusion is true (the second part of the either/or is true) and we are done since the conclusion was true in each of the two cases.</p>
+
+</proof>
+</theorem>
+
+<example acro="PCVS" index="crazy vector space!properties">
+<title>Properties for the Crazy Vector Space</title>
+
+<p>Several of the above theorems have interesting demonstrations when applied to the crazy vector space, $C$ (<acroref type="example" acro="CVS" />).  We are not proving anything new here, or learning anything we did not know already about $C$.  It is just plain fun to see how these general theorems apply in a specific instance.  For most of our examples, the applications are obvious or trivial, but not with $C$.</p>
+
+<p>Suppose $\vect{u}\in C$.  Then, as given by <acroref type="theorem" acro="ZSSM" />,
+<equation>
+0\vect{u}=0(x_1,\,x_2)=(0x_1+0-1,\,0x_2+0-1)=(-1,-1)=\zerovector
+</equation>
+And as given by <acroref type="theorem" acro="ZVSM" />,
+<alignmath>
+\alpha\zerovector
+<![CDATA[&=\alpha(-1,\,-1)=(\alpha(-1)+\alpha-1,\,\alpha(-1)+\alpha-1)\\]]>
+<![CDATA[&=(-\alpha+\alpha-1,\,-\alpha+\alpha-1)=(-1,\,-1)=\zerovector]]>
+</alignmath>
+Finally, as given by <acroref type="theorem" acro="AISM" />,
+<alignmath>
+(-1)\vect{u}
+<![CDATA[&=(-1)(x_1,\,x_2)=((-1)x_1+(-1)-1,\,(-1)x_2+(-1)-1)\\]]>
+<![CDATA[&=(-x_1-2,\,-x_2-2)=-\vect{u}]]>
+</alignmath>
+</p>
+
+</example>
+
+</subsection>
+
+<subsection acro="RD">
+<title>Recycling Definitions</title>
+
+<p>When we say that $V$ is a vector space, we then know we have a set of objects (the <q>vectors</q>), but we also know we have been provided with two operations (<q>vector addition</q> and <q>scalar multiplication</q>) and these operations behave with these objects according to the ten properties of <acroref type="definition" acro="VS" />.  One combines two vectors and produces a vector, the other takes a scalar and a vector, producing a vector as the result.  So if $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3\in V$ then an expression like
+<equation>
+5\vect{u}_1+7\vect{u}_2-13\vect{u}_3
+</equation>
+would be unambiguous in <em>any</em> of the vector spaces we have discussed in this section.  And the resulting object would be another vector in the vector space.  If you were tempted to call the above expression a linear combination, you would be right.  Four of the definitions that were central to our discussions in <acroref type="chapter" acro="V" /> were stated in the context of vectors being <em>column vectors</em>, but were purposely kept broad enough that they could be applied in the context of any vector space.  They only rely on the presence of scalars, vectors, vector addition and scalar multiplication to make sense.  We will restate them shortly, unchanged, except that their titles and acronyms no longer refer to column vectors, and the hypothesis of being in a vector space has been added.  Take the time now to look forward and review each one, and begin to form some connections to what we have done earlier and what we will be doing in subsequent sections and chapters.  Specifically, compare the following pairs of definitions:<br />
+<acroref type="definition" acro="LCCV" /> and <acroref type="definition" acro="LC" /><br />
+<acroref type="definition" acro="SSCV" /> and <acroref type="definition" acro="SS" /><br />
+<acroref type="definition" acro="RLDCV" /> and <acroref type="definition" acro="RLD" /><br />
+<acroref type="definition" acro="LICV" /> and <acroref type="definition" acro="LI" />
+</p>
+
+</subsection>
+
+<!--   End vs.tex -->
+<readingquestions>
+<ol>
+<li>Comment on how the vector space $\complex{m}$ went from a theorem (<acroref type="theorem" acro="VSPCV" />) to an example (<acroref type="example" acro="VSCV" />).
+</li>
+<li>In the crazy vector space, $C$, (<acroref type="example" acro="CVS" />) compute the linear combination
+<equation>
+2(3,\,4)+(-6)(1,\,2).
+</equation>
+</li>
+<li>Suppose that $\alpha$ is a scalar and $\zerovector$ is the zero vector. Why should we prove anything as obvious as $\alpha\zerovector=\zerovector$ such as we did in <acroref type="theorem" acro="ZVSM" />?
+</li></ol>
+</readingquestions>
+
+<exercisesubsection>
+
+<exercise type="M" number="10" rough="9/10 axioms hold, Property O fails">
+<problem contributor="robertbeezer">Define a possibly new vector space by beginning with the set and vector addition from $\complex{2}$ (<acroref type="example" acro="VSCV" />) but change the definition of scalar multiplication to
+<alignmath>
+<![CDATA[\alpha\vect{x}&=\zerovector=\colvector{0\\0}&&\alpha\in\complex{\null},\ \vect{x}\in\complex{2}]]>
+</alignmath>
+Prove that the first nine properties required for a vector space hold, but <acroref type="property" acro="O" /> does not hold.<br /><br />
+This example shows us that we cannot expect to be able to derive <acroref type="property" acro="O" /> as a consequence of assuming the first nine properties.  In other words, we cannot slim down our list of properties by jettisoning the last one, and still have the same collection of objects qualify as vector spaces.
+</problem>
+</exercise>
+
+<exercise type="M" number="11" rough="Vector space or not?">
+<problem contributor="chrisblack">Let $V$ be the set $\complex{2}$ with the usual vector addition, but with scalar multiplication defined by
+<equation>
+\alpha \colvector{x\\y} = \colvector{\alpha y \\ \alpha x}
+</equation>
+Determine whether or not $V$ is a vector space with these operations.
+</problem>
+<solution contributor="chrisblack">The set $\complex{2}$ with the proposed operations is not a vector space since <acroref type="property" acro="O" /> is not valid.  A counterexample is $1\colvector{3\\2 } = \colvector{2\\3}\ne\colvector{3\\2 }$, so in general, $1\vect{u}\ne\vect{u}$.
+</solution>
+</exercise>
+
+<exercise type="M" number="12" rough="Vector space or not?">
+<problem contributor="chrisblack">Let $V$ be the set $\complex{2}$ with the usual scalar multiplication, but with vector addition defined by
+<equation>
+\colvector{x\\y} + \colvector{z\\w} = \colvector{y + w \\ x + z}
+</equation>
+Determine whether or not $V$ is a vector space with these operations.
+</problem>
+<solution contributor="chrisblack">Let's consider the existence of a zero vector, as required by <acroref type="property" acro="Z" /> of a vector space.  The <q>regular</q> zero vector fails : $\colvector{x\\y}+\colvector{0\\0} = \colvector{y\\x}\ne\colvector{x\\y}$ (remember that the property must hold for {\it{every}} vector, not just for some).  Is there another vector that fills the role of the zero vector?  Suppose that $\zerovector=\colvector{z_1\\z_2}$.  Then for any vector $\colvector{x\\y}$, we have
+<alignmath>
+\colvector{x\\y}+\colvector{z_1 \\z_2}
+<![CDATA[&= \colvector{y + z_2\\x + z_1}]]>
+=  \colvector{x\\y}
+</alignmath>
+so that $x = y + z_2$ and $y = x + z_1$.  This means that $z_1 = y - x$ and $z_2 = x - y$.  However, since $x$ and $y$ can be any complex numbers, there are no fixed complex numbers $z_1$ and $z_2$ that satisfy these equations.  Thus, there is no zero vector, <acroref type="property" acro="Z" />  is not valid, and the set  $\complex{2}$ with the proposed operations is not a vector space.
+</solution>
+</exercise>
+
+<exercise type="M" number="13" rough="Vector space or not?">
+<problem contributor="chrisblack">Let $V$ be the set $M_{2,2}$ with the usual  scalar multiplication, but with addition defined by
+$A + B = \zeromatrix_{2,2}$ for all $2 \times 2$ matrices $A$ and $B$.
+Determine whether or not $V$ is a vector space with these operations.
+</problem>
+<solution contributor="chrisblack">Since scalar multiplication remains unchanged, we only need to consider the axioms that involve vector addition.  Since every sum is the zero matrix, the first 4 properties hold easily.  However, there is no zero vector in this set.  Suppose that there was.  Then there is a matrix $Z$ so that $A + Z = A$ for any $2\times 2$ matrix $A$.  However, $A + Z = \zeromatrix_{2,2}$, which is in general not equal to $A$, so <acroref type="property" acro="Z" /> fails and this set is not a vector space.
+</solution>
+</exercise>
+
+<exercise type="M" number="14" rough="Vector space or not?">
+<problem contributor="chrisblack">Let $V$ be the set $M_{2,2}$ with the usual  addition, but with scalar multiplication defined by
+$\alpha A= \zeromatrix_{2,2}$ for all $2 \times 2$ matrices $A$ and scalars $\alpha$.
+Determine whether or not $V$ is a vector space with these operations.
+</problem>
+<solution contributor="chrisblack">Since addition is unchanged, we only need to check the axioms involving scalar multiplication.  The proposed scalar multiplication clearly fails <acroref type="property" acro="O" /> :  $1A = \zeromatrix_{2,2}\ne A$.  Thus, the proposed set is not a vector space.
+</solution>
+</exercise>
+
+<exercise type="M" number="15" rough="Vector space or not? (multipart - subspaces of M33)">
+<problem contributor="chrisblack">Consider the following sets of $3 \times 3$ matrices, where the symbol $*$ indicates the position of an arbitrary complex number.  Determine whether or not these sets form vector spaces with the usual operations of addition and scalar multiplication for matrices.
+<ol><li> All matrices of the form $<![CDATA[\begin{bmatrix} * & * & 1\\ * & 1 & *\\ 1 & * & * \end{bmatrix}]]>$
+</li><li> All matrices of the form $<![CDATA[\begin{bmatrix} * & 0 & *\\ 0 & * & 0\\ * & 0 & * \end{bmatrix}]]>$
+</li><li> All matrices of the form $<![CDATA[\begin{bmatrix} * & 0 & 0\\ 0 & * & 0\\ 0 & 0 & * \end{bmatrix}]]>$
+(These are the <define>diagonal</define> matrices.)
+</li><li> All matrices of the form $<![CDATA[\begin{bmatrix} * & * & *\\ 0 & * & *\\ 0 & 0 & * \end{bmatrix}]]>$
+(These are the <define>upper triangular</define> matrices.)
+</li></ol>
+</problem>
+<solution contributor="chrisblack">There is something to notice here that will make our job much easier:  Since each of these sets are comprised of $3\times 3$ matrices with the standard operations of addition and scalar multiplication of matrices, the last 8 properties will automatically hold.  That is, we really only need to verify <acroref type="property" acro="AC" /> and <acroref type="property" acro="SC" />.
+<ul><li>
+This set is not closed under either scalar multiplication or addition (fails <acroref type="property" acro="AC" /> and <acroref type="property" acro="SC" />).  For example,
+<![CDATA[$3\begin{bmatrix} *&*&1\\ *&1&*\\ 1&*&*\end{bmatrix}]]>
+<![CDATA[= \begin{bmatrix} *&*&3\\ *&3&*\\ 3&*&*\end{bmatrix}$]]>
+is not a member of the proposed set.
+</li><li>
+This set is closed under both scalar multiplication and addition, so this set is a vector space with the standard operation of addition and scalar multiplication.
+</li><li>
+This set is closed under both scalar multiplication and addition, so this set is a vector space with the standard operation of addition and scalar multiplication.
+</li><li>
+This set is closed under both scalar multiplication and addition, so this set is a vector space with the standard operation of addition and scalar multiplication.
+</li></ul>
+</solution>
+</exercise>
+
+<exercise type="M" number="20" rough="why isn't the set of all polys of degree exactly n a VS?">
+<problem contributor="chrisblack">Explain why we need to define the vector space $P_n$ as the set of all polynomials with degree <em>up to and including</em> $n$ instead of the more obvious set of all polynomials of degree <em>exactly</em> $n$.
+</problem>
+<solution contributor="chrisblack">Hint:  The set of all polynomials of degree <em>exactly</em> $n$ fails one of the closure properties of a vector space.  Which one, and why?
+</solution>
+</exercise>
+
+<exercise type="M" number="21" rough="why isn't the ZxZ a VS?">
+<problem contributor="chrisblack">The set of integers is denoted $\mathbb{Z}$.  Does the set $\mathbb{Z}^2 = \setparts{\colvector{m\\n}}{m,n\in\mathbb{Z}}$ with the operations of standard addition and scalar multiplication of vectors form a vector space?
+</problem>
+<solution contributor="robertbeezer">Additive closure will hold, but scalar closure will not.  The best way to convince yourself of this is to construct a counterexample.  Such as, $\frac{1}{2}\in\complexes$ and $\colvector{1\\0}\in\mathbb{Z}^2$, however $\frac{1}{2}\colvector{1\\0}=\colvector{\frac{1}{2}\\0}\not\in\mathbb{Z}^2$, which violates <acroref type="property" acro="SC" />.  So $\mathbb{Z}^2$ is not a vector space.
+</solution>
+</exercise>
+
+<exercise type="T" number="10" rough="10 axioms for 4 examples">
+<problem contributor="robertbeezer">Prove each of the ten properties of <acroref type="definition" acro="VS" /> for each of the following examples of a vector space:\\
+<acroref type="example" acro="VSP" />\\
+<acroref type="example" acro="VSIS" />\\
+<acroref type="example" acro="VSF" />\\
+<acroref type="example" acro="VSS" />
+</problem>
+</exercise>
+
+<exercisegroup>
+<p>The next three problems suggest that under the right situations we can <q>cancel.</q>  In practice, these techniques should be avoided in other proofs.  Prove each of the following statements.</p>
+
+<exercise type="T" number="21" rough="Cancel in addition">
+<problem contributor="robertbeezer">Suppose that $V$ is a vector space, and $\vect{u},\,\vect{v},\,\vect{w}\in V$.  If $\vect{w}+\vect{u}=\vect{w}+\vect{v}$, then $\vect{u}=\vect{v}$.
+</problem>
+<solution contributor="robertbeezer"><alignmath>
+\vect{u}
+<![CDATA[&=\zerovector+\vect{u}&&]]>\text{<acroref type="property" acro="Z" />}\\
+<![CDATA[&=\left(\vect{-w}+\vect{w}\right)+\vect{u}&&]]>\text{<acroref type="property" acro="AI" />}\\
+<![CDATA[&=\vect{-w}+\left(\vect{w}+\vect{u}\right)&&]]>\text{<acroref type="property" acro="AA" />}\\
+<![CDATA[&=\vect{-w}+\left(\vect{w}+\vect{v}\right)&&\text{Hypothesis}\\]]>
+<![CDATA[&=\left(\vect{-w}+\vect{w}\right)+\vect{v}&&]]>\text{<acroref type="property" acro="AA" />}\\
+<![CDATA[&=\zerovector+\vect{v}&&]]>\text{<acroref type="property" acro="AI" />}\\
+<![CDATA[&=\vect{v}&&]]>\text{<acroref type="property" acro="Z" />}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="T" number="22" rough="Cancel scalars in scalar multiplication">
+<problem contributor="robertbeezer">Suppose $V$ is a vector space, $\vect{u},\,\vect{v}\in V$ and $\alpha$ is a nonzero scalar from $\complex{\null}$. If $\alpha\vect{u}=\alpha\vect{v}$, then $\vect{u}=\vect{v}$.
+</problem>
+<solution contributor="robertbeezer"><alignmath>
+\vect{u}
+<![CDATA[&=1\vect{u}&&]]>\text{<acroref type="property" acro="O" />}\\
+<![CDATA[&=\left(\frac{1}{\alpha}\alpha\right)\vect{u}&&\alpha\neq 0\\]]>
+<![CDATA[&=\frac{1}{\alpha}\left(\alpha\vect{u}\right)&&]]>\text{<acroref type="property" acro="SMA" />}\\
+<![CDATA[&=\frac{1}{\alpha}\left(\alpha\vect{v}\right)&&\text{Hypothesis}\\]]>
+<![CDATA[&=\left(\frac{1}{\alpha}\alpha\right)\vect{v}&&]]>\text{<acroref type="property" acro="SMA" />}\\
+<![CDATA[&=1\vect{v}\\]]>
+<![CDATA[&=\vect{v}&&]]>\text{<acroref type="property" acro="O" />}
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="T" number="23" rough="Cancel vectors in scalar multiplication">
+<problem contributor="robertbeezer">Suppose $V$ is a vector space, $\vect{u}\neq\zerovector$ is a vector in $V$ and $\alpha,\,\beta\in\complex{\null}$. If $\alpha\vect{u}=\beta\vect{u}$, then $\alpha=\beta$.
+</problem>
+<solution contributor="robertbeezer"><alignmath>
+\zerovector
+<![CDATA[&=\alpha\vect{u} + -\left(\alpha\vect{u}\right)&&]]>\text{<acroref type="property" acro="AI" />}\\
+<![CDATA[&=\beta\vect{u} + -\left(\alpha\vect{u}\right)&&\text{Hypothesis}\\]]>
+<![CDATA[&=\beta\vect{u} + (-1)\left(\alpha\vect{u}\right)&&]]>\text{<acroref type="theorem" acro="AISM" />}\\
+<![CDATA[&=\beta\vect{u} + \left((-1)\alpha\right)\vect{u}&&]]>\text{<acroref type="property" acro="SMA" />}\\
+<![CDATA[&=\beta\vect{u} + \left(-\alpha\right)\vect{u}\\]]>
+<![CDATA[&=\left(\beta-\alpha\right)\vect{u}&&]]>\text{<acroref type="property" acro="DSA" />}\\
+<intertext>By hypothesis, $\vect{u}\neq\zerovector$, so <acroref type="theorem" acro="SMEZV" /> implies</intertext>
+<![CDATA[0&=\beta-\alpha\\]]>
+<![CDATA[\alpha&=\beta]]>
+</alignmath>
+</solution>
+</exercise>
+
+<exercise type="T" number="30" rough="Property O is just for 1">
+<problem contributor="robertbeezer">Suppose that $V$ is a vector space and $\alpha\in\complexes$ is a scalar such that $\alpha\vect{x}=\vect{x}$ for every $\vect{x}\in V$.  Prove that $\alpha = 1$.  In other words, <acroref type="property" acro="O" /> is not duplicated for any other scalar but the <q>special</q> scalar, 1.  (This question was suggested by James Gallagher.)
+</problem>
+<solution contributor="robertbeezer">We have,
+<alignmath>
+\zerovector
+<![CDATA[&=\vect{x}-\vect{x}&&]]>\text{<acroref type="property" acro="AI" />}\\
+<![CDATA[&=\alpha\vect{x}-\vect{x}&&\text{Hypothesis}\\]]>
+<![CDATA[&=\alpha\vect{x}-1\vect{x}&&]]>\text{<acroref type="property" acro="O" />}\\
+<![CDATA[&=(\alpha-1)\vect{x}&&]]>\text{<acroref type="property" acro="DSA" />}
+</alignmath>
+So by <acroref type="theorem" acro="SMEZV" /> we conclude that $\alpha-1=0$ or $\vect{x}=\zerovector$.  However, since our hypothesis was <em>for every</em> $\vect{x}\in V$, we are left with the first possibility and $\alpha=1$.<br /><br />
+There is one flaw in the proof above, and as stated, the problem is not correct either.  Can you spot the flaw and as a result correct the problem statement?  (Hint: <acroref type="example" acro="VSS" />).
+</solution>
+</exercise>
+
+</exercisegroup>
+
+</exercisesubsection>
+
+</section>
