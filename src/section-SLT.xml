@@ -83,8 +83,38 @@ is an unobtainable element of the codomain.  Suppose to the contrary that $\vect
 <p>With a leading 1 in the last column, <acroref type="theorem" acro="RCLS" /> tells us the system is inconsistent.  From the absence of any solutions we conclude that no such vector $\vect{u}$ exists, and by <acroref type="definition" acro="SLT" />, $T$ is not surjective.</p>
 
 <p>Again, do not concern yourself with how $\vect{v}$ was selected, as this will be explained shortly.  However, do understand <em>why</em> this vector provides enough evidence to conclude that $T$ is not surjective.</p>
-
 </example>
+
+<p>Here's a cartoon of a non-surjective linear transformation.  Notice that the central feature of this cartoon is that the vector $\vect{v}\in V$ does not have an arrow pointing to it, implying there is no $\vect{u}\in U$ such that $\lt{T}{\vect{u}}=\vect{v}$.  Even though this happens again with a second unnamed vector in $V$, it only takes one occurrence to destroy the possibility of surjectivity.
+<diagram acro="NSLT">
+<title>Non-Surjective Linear Transformation</title>
+<tikz>
+\tikzset{ltvect/.style={shape=circle, minimum size=0.30em, inner sep=0pt, draw, fill=black}}
+<![CDATA[\tikzset{ltedge/.style={->, bend left=20, thick, shorten <=0.1em, shorten >=0.1em}}]]>
+% base generic picture
+\draw ( 5em, 8em) circle [x radius=5em, y radius=8em, thick];
+\draw (20em, 8em) circle [x radius=5em, y radius=8em, thick];
+\node (U) at ( 5em, -1em) {$U$};
+\node (V) at (20em, -1em) {$V$};
+\draw[->, thick, draw] (U) to node[auto] {$T$} (V);
+% inputs
+\node (u1) [ltvect]                         at (5em, 13em) {};
+\node (u2) [ltvect]                         at (5em, 11em) {};
+\node (u3) [ltvect]                         at (5em,  8em) {};
+\node (u4) [ltvect]                         at (5em,  6em) {};
+% outputs
+\node (v1) [ltvect]                         at (20em, 12em) {};
+\node (v2) [ltvect]                         at (20em,  7em) {};
+\node (v3) [ltvect]                         at (19em,  3em) {};
+\node (v)  [ltvect, label=right:$\vect{v}$] at (21em,  3em) {};
+% associations
+\draw[ltedge] (u1) to (v1);
+\draw[ltedge] (u2) to (v1);
+\draw[ltedge] (u3) to (v2);
+\draw[ltedge] (u4) to (v2);
+</tikz>
+</diagram>
+</p>
 
 <p>To show that a linear transformation is not surjective, it is enough to find a single element of the codomain that is never created by any input, as in <acroref type="example" acro="NSAQ" />.  However, to show that a linear transformation is surjective we must establish that <em>every</em> element of the codomain occurs as an output of the linear transformation for some appropriate input.</p>
 
@@ -161,8 +191,41 @@ so we find that
 </p>
 
 <p>This establishes that if we are given <em>any</em> output vector $\vect{v}$, we can use its components in this final expression to formulate a vector $\vect{u}$ such that $\lt{T}{\vect{u}}=\vect{v}$.  So by <acroref type="definition" acro="SLT" /> we now know that $T$ is surjective.  You might try to verify this condition in its full generality (<ie /> evaluate $T$ with this final expression and see if you get $\vect{v}$ as the result), or test it more specifically for some numerical vector $\vect{v}$ (see <acroref type="exercise" acro="SLT.C20" />).</p>
-
 </example>
+
+<p>Here's the cartoon for a surjective linear transformation.  It is meant to suggest that for every output in $V$ there is <em>at least one</em> input in $V$ that is sent to the output.  (Even though we have depicted several inputs sent to each output.)  The key feature of this cartoon is that there are no vectors in $V$ without an arrow pointing to them.
+<diagram acro="SLT">
+<title>Surjective Linear Transformation</title>
+<tikz>
+\tikzset{ltvect/.style={shape=circle, minimum size=0.30em, inner sep=0pt, draw, fill=black}}
+<![CDATA[\tikzset{ltedge/.style={->, bend left=20, thick, shorten <=0.1em, shorten >=0.1em}}]]>
+% base generic picture
+\draw ( 5em, 8em) circle [x radius=5em, y radius=8em, thick];
+\draw (20em, 8em) circle [x radius=4em, y radius=7em, thick];
+\node (U) at ( 5em, -1em) {$U$};
+\node (V) at (20em, -1em) {$V$};
+\draw[->, thick, draw] (U) to node[auto] {$T$} (V);
+% inputs
+\node (u1) [ltvect]                         at (5em, 14em) {};
+\node (u2) [ltvect]                         at (5em, 12em) {};
+\node (u3) [ltvect]                         at (5em,  9em) {};
+\node (u4) [ltvect]                         at (5em,  7em) {};
+\node (u5) [ltvect]                         at (5em,  4em) {};
+\node (u6) [ltvect]                         at (5em,  2em) {};
+% outputs
+\node (v1) [ltvect]                         at (20em, 12em) {};
+\node (v2) [ltvect]                         at (20em,  8em) {};
+\node (v3) [ltvect]                         at (20em,  4em) {};
+% associations
+\draw[ltedge] (u1) to (v1);
+\draw[ltedge] (u2) to (v1);
+\draw[ltedge] (u3) to (v2);
+\draw[ltedge] (u4) to (v2);
+\draw[ltedge] (u5) to (v3);
+\draw[ltedge] (u6) to (v3);
+</tikz>
+</diagram>
+</p>
 
 <p>Let's now examine a surjective linear transformation between abstract vector spaces.</p>
 
