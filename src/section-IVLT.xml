@@ -166,7 +166,6 @@ then verify that $\lt{T}{\vect{x}}=B$.  Practice creating a few more inputs for 
 <title>Inverse of a Linear Transformation is a Linear Transformation</title>
 <statement>
 <p>Suppose that $\ltdefn{T}{U}{V}$ is an invertible linear transformation.  Then the function $\ltdefn{\ltinverse{T}}{V}{U}$ is a linear transformation.</p>
-
 </statement>
 
 <proof>
@@ -194,7 +193,6 @@ then verify that $\lt{T}{\vect{x}}=B$.  Practice creating a few more inputs for 
 </p>
 
 <p>So $\ltinverse{T}$ fulfills the requirements of <acroref type="definition" acro="LT" /> and is therefore a linear transformation.</p>
-
 </proof>
 </theorem>
 
@@ -291,7 +289,6 @@ IU.is_equal_function(id)
 <title>Invertible Linear Transformations are Injective and Surjective</title>
 <statement>
 <p>Suppose $\ltdefn{T}{U}{V}$ is a linear transformation.  Then $T$ is invertible if and only if $T$ is injective and surjective.</p>
-
 </statement>
 
 <proof>
@@ -346,11 +343,65 @@ and since our choice of $\vect{u}$ was arbitrary we have function equality, $\co
 =\lt{I_V}{\vect{v}}
 </equation>
 and since our choice of $\vect{v}$ was arbitrary we have function equality, $\compose{T}{S}=I_V$.</p>
-
 </proof>
 </theorem>
 
-<p>When a linear transformation is both injective and surjective, the pre-image of any element of the codomain is a set of size one (a <q>singleton</q>).  This fact allowed us to <em>construct</em> the inverse linear transformation in one half of the proof of <acroref type="theorem" acro="ILTIS" /> (see <acroref type="technique" acro="C" />).  We can follow this approach to construct the inverse of a specific linear transformation, as the next example shows.</p>
+<p>When a linear transformation is both injective and surjective, the pre-image of any element of the codomain is a set of size one (a <q>singleton</q>).  This fact allowed us to <em>construct</em> the inverse linear transformation in one half of the proof of <acroref type="theorem" acro="ILTIS" /> (see <acroref type="technique" acro="C" />) and is illustrated in the following cartoon.  This should remind you of the very general <acroref type="diagram" acro="KPI" /> which was used to illustrate <acroref type="theorem" acro="KPI" /> about pre-images, only now we have an invertible linear transformation which is therefore surjective and injective (<acroref type="theorem" acro="ILTIS" />).  As a surjective linear transformation, there are no vectors depicted in the codomain, $V$, that have empty pre-images.  More importantly, as an injective linear transformation, the kernel is trivial (<acroref type="theorem" acro="KILT" />), so each pre-image is a single vector.  This makes it possible to <q>turn around</q> all the arrows to create the inverse linear transformation $\ltinverse{T}$.
+<diagram acro="IVLT">
+<title>Invertible Linear Transformation</title>
+<tikz>
+\tikzset{ltvect/.style={shape=circle, minimum size=0.30em, inner sep=0pt, draw, fill=black}}
+<![CDATA[\tikzset{ltedge/.style={->, bend left=20, thick, shorten <=0.1em, shorten >=0.1em}}]]>
+% base generic picture
+\draw ( 5em, 8em) circle [x radius=5em, y radius=8em, thick];
+\draw (20em, 8em) circle [x radius=5em, y radius=8em, thick];
+\node (U) at ( 5em, -1em) {$U$};
+\node (V) at (20em, -1em) {$V$};
+\draw[->, thick, draw] (U) to node[auto] {$T$} (V);
+% inputs
+\node (u1)    [ltvect, label=above:$\vect{u}_1$]    at ( 5em, 14em) {};
+\node (u2)    [ltvect, label=above:$\vect{u}_2$]    at ( 5em, 10em) {};
+\node (zeroU) [ltvect, label=above:$\zerovector_U$] at ( 5em,  6em) {};
+\node (u3)    [ltvect, label=above:$\vect{u}_3$]    at ( 5em,  2em) {};
+% outputs
+\node (v1)    [ltvect, label=right:$\vect{v}_1$]    at (20em, 14em) {};
+\node (v2)    [ltvect, label=right:$\vect{v}_2$]    at (20em, 10em) {};
+\node (zeroV) [ltvect, label=right:$\zerovector_V$] at (20em,  6em) {};
+\node (v3)    [ltvect, label=right:$\vect{v}_3$]    at (20em,  2em) {};
+% associations
+\draw[ltedge] (u1) to (v1);
+\draw[ltedge] (u2) to (v2);
+\draw[ltedge] (zeroU) to (zeroV);
+\draw[ltedge] (u3) to (v3);
+% inverse associations
+<![CDATA[&=\draw[->, bend left=7, thick, shorten <=0.1em, shorten >=0.1em] (v1) to (u1);]]>
+<![CDATA[&=\draw[->, bend left=7, thick, shorten <=0.1em, shorten >=0.1em] (v2) to (u2);]]>
+<![CDATA[&=\draw[->, bend left=7, thick, shorten <=0.1em, shorten >=0.1em] (zeroV) to (zeroU);]]>
+<![CDATA[&=\draw[->, bend left=7, thick, shorten <=0.1em, shorten >=0.1em] (v3) to (u3);]]>
+% preimages
+\node (pre1) at (5em, 12.6em) {$\vect{u}_1 + \set{\zerovector_U}=\set{\vect{u}_1}$};
+\node (pre2) at (5em,    9em) {$\preimage{T}{\vect{v}_2}=\vect{u}_2 + \set{\zerovector_U}$};
+\node (pre3) at (4.5em,  5em) {$\preimage{T}{\zerovector_V}=\set{\zerovector_U}$};
+\node (pre4) at (5em,    1em) {$\preimage{T}{\vect{v}_3}$};
+% banding, x-coordinates are +/- 5*sqrt(3)/2 off midline
+\node (b11) [minimum size=0em, inner sep=0pt] at (0.669873em, 12em) {};
+\node (b12) [minimum size=0em, inner sep=0pt] at (9.330127em, 12em) {};
+\node (b21) [minimum size=0em, inner sep=0pt] at (       0em,  8em) {};
+\node (b22) [minimum size=0em, inner sep=0pt] at (      10em,  8em) {};
+\node (b31) [minimum size=0em, inner sep=0pt] at (0.669873em,  4em) {};
+\node (b32) [minimum size=0em, inner sep=0pt] at (9.330127em,  4em) {};
+\draw [-, bend right=10] (b11) to (b12);
+\draw [-, bend right=10] (b21) to (b22);
+\draw [-, bend right=10] (b31) to (b32);
+% inverse map
+\node (UU) at ( 5em, -2em) {$U$};
+\node (VV) at (20em, -2em) {$V$};
+\draw[->, thick, draw] (VV) to node[auto] {$\ltinverse{T}$} (UU);
+</tikz>
+</diagram>
+</p>
+
+<p>We can follow the constructive approach of the proof of <acroref type="theorem" acro="ILTIS" /> to construct the inverse of a specific linear transformation, as the next example shows.</p>
 
 <example acro="CIVLT" index="invertible linear transformations!computing">
 <title>Computing the Inverse of a Linear Transformations</title>

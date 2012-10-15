@@ -1232,6 +1232,38 @@ is a basis for $\rng{T}$.
 
 <p><acroref type="theorem" acro="KNSI" /> and <acroref type="theorem" acro="RCSI" /> can be viewed as further formal evidence for the <miscref type="principle" text="Coordinatization Principle" />, though they are not direct consequences.</p>
 
+<p><acroref type="diagram" acro="KRI" /> is meant to suggest <acroref type="theorem" acro="KNSI" /> and <acroref type="theorem" acro="RCSI" />, in addition to their proofs (and so carry the same notation as the statements of these two theorems).  The dashed lines indicate a subspace relationship, with the smaller vector space lower down in the diagram.  The central square is highly reminiscent of <acroref type="diagram" acro="FTMR" />.  Each of the four vector representations is an isomorphism, so the inverse linear transformation could be depicted with an arrow pointing in the other direction.  The four vector spaces across the bottom are familiar from the earliest days of the course, while the four vector spaces across the top are completely abstract.  The vector representations that are restrictions (far left and far right) are the functions shown to be invertible representations as the key technique in the proofs of <acroref type="theorem" acro="KNSI" /> and <acroref type="theorem" acro="RCSI" />.  So this diagram could be helpful as you study those two proofs.
+<diagram acro="KRI">
+<title>Kernel and Range Isomorphisms</title>
+<tikz>
+\matrix (m) [matrix of math nodes, row sep=2.5em, column sep=5em, text height=1.5ex, text depth=0.25ex]
+<![CDATA[{                          & U           & V           & \\
+ \krn{T}                   &             &             & \rng{T} \\
+                           & \complex{n} & \complex{m} & \\
+ \nsp{\matrixrep{T}{B}{C}} &             &             & \csp{\matrixrep{T}{B}{C}} \\
+};]]>
+% linear transformations
+\path[->]
+(m-1-2) edge[thick] node[auto]  {$T$}                    (m-1-3)
+(m-3-2) edge[thick] node[auto]  {$\matrixrep{T}{B}{C}$}  (m-3-3);
+% vector representations
+\path[->]
+(m-2-1) edge[thick] node[auto]  {$\restrict{\vectrepname{B}}{\krn{T}}$}  (m-4-1)
+(m-1-2) edge[thick] node[auto]  {$\vectrepname{B}$}  (m-3-2)
+(m-1-3) edge[thick] node[auto]  {$\vectrepname{C}$}  (m-3-3)
+(m-2-4) edge[thick] node[auto]  {$\restrict{\vectrepname{C}}{\rng{T}}$}  (m-4-4);
+% subsets
+\path[-]
+(m-1-2) edge[thick, densely dashed] (m-2-1)
+(m-1-3) edge[thick, densely dashed] (m-2-4)
+(m-3-2) edge[thick, densely dashed] (m-4-1)
+(m-3-3) edge[thick, densely dashed] (m-4-4);
+</tikz>
+</diagram>
+</p>
+
+
+
 <sageadvice acro="LTR" index="linear transformation!restrictions">
 <title>Linear Transformation Restrictions</title>
 <acroref type="theorem" acro="KNSI" /> and <acroref type="theorem" acro="RCSI" /> have two of the most subtle proofs we have seen so far.  The conclusion that two vector spaces are isomorphic is established by actually constructing an isomorphism between the vector spaces.  To build the isomorphism, we begin with a familar object, a vector representation linear transformation, but the hard work is showing that we can <q>restrict</q> the domain and codomain of this function and still arrive at a legitimate (bijective) linear transformation.  In an effort to make the proofs more concrete, we will walk through a nontrivial example for <acroref type="theorem" acro="KNSI" />, and you might try to do the same for <acroref type="theorem" acro="RCSI" />.  (An understanding of this subsection is not needed for the remainder <mdash /> its second purpose is to demonstrate some of the powerful tools Sage provides.)<br /><br />

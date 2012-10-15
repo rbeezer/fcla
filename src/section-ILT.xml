@@ -461,13 +461,78 @@ which qualifies $\vect{w}$ for membership in the preimage of $\vect{v}$, $\vect{
 
 <p>This theorem, and its proof, should remind you very much of <acroref type="theorem" acro="PSPHS" />.  Additionally, you might go back and review <acroref type="example" acro="SPIAS" />.  Can you tell now which is the only preimage to be a subspace?</p>
 
+<p>Here is the cartoon which describes the <q>many-to-one</q> behavior of a typical linear transformation.  Presume that $\lt{T}{\vect{u}_i}=\vect{v}_i$, for $i=1,2,3$, and as guaranteed by <acroref type="theorem" acro="LTTZZ" />, $\lt{T}{\zerovector_U}=\zerovector_V$.  Then four pre-images are depicted, each labeled slightly different.  $\preimage{T}{\vect{v}_2}$ is the most general, employing <acroref type="theorem" acro="KPI" /> to provide two equal descriptions of the set.  The most unusual is $\preimage{T}{\zerovector_V}$ which is equal to the kernel, $\krn{T}$, and hence is a subspace (by <acroref type="theorem" acro="KLTS" />).  The subdivisions of the domain, $U$, are meant to suggest the partioning of the domain by the collection of pre-images.  It also suggests that each pre-image is of similar size or structure, since each is a <q>shifted</q> copy of the kernel.  Notice that we cannot speak of the dimension of a pre-image, since it is almost never a subspace.  Also notice that $\vect{x},\,\vect{y}\in V$ are elements of the codomain with empty pre-images.
+<diagram acro="KPI">
+<title>Kernel and Pre-Image</title>
+<tikz>
+\tikzset{ltvect/.style={shape=circle, minimum size=0.30em, inner sep=0pt, draw, fill=black}}
+<![CDATA[\tikzset{ltedge/.style={->, bend left=20, thick, shorten <=0.1em, shorten >=0.1em}}]]>
+% base generic picture
+\draw ( 5em, 8em) circle [x radius=5em, y radius=8em, thick];
+\draw (20em, 8em) circle [x radius=5em, y radius=8em, thick];
+\node (U) at ( 5em, -1em) {$U$};
+\node (V) at (20em, -1em) {$V$};
+\draw[->, thick, draw] (U) to node[auto] {$T$} (V);
+% inputs
+% fine-tune u_1 to fit
+\node (u11)    [ltvect, label={[label distance=0.1em]80:$\vect{u}_1$}] at (3em, 14em) {};
+\node (u12)    [ltvect]                              at (5em, 14em) {};
+\node (u13)    [ltvect]                              at (7em, 14em) {};
+\node (u21)    [ltvect, label=above:$\vect{u}_2$]    at (3em, 10em) {};
+\node (u22)    [ltvect]                              at (5em, 10em) {};
+\node (u23)    [ltvect]                              at (7em, 10em) {};
+\node (zeroU1) [ltvect, label=above:$\zerovector_U$] at (3em,  6em) {};
+\node (zeroU2) [ltvect]                              at (5em,  6em) {};
+\node (zeroU3) [ltvect]                              at (7em,  6em) {};
+\node (u31)    [ltvect, label=above:$\vect{u}_3$]    at (3em,  2em) {};
+\node (u32)    [ltvect]                              at (5em,  2em) {};
+\node (u33)    [ltvect]                              at (7em,  2em) {};
+% outputs
+\node (v1)    [ltvect, label=right:$\vect{v}_1$]     at (20em, 14em) {};
+\node (v2)    [ltvect, label=right:$\vect{v}_2$]     at (20em, 10em) {};
+\node (zeroV) [ltvect, label=right:$\zerovector_V$]  at (20em,  6em) {};
+\node (o1)    [ltvect, label=right:$\vect{x}$]       at (18em, 4em) {};
+\node (o2)    [ltvect, label=right:$\vect{y}$]       at (22em, 4em) {};
+\node (v3)    [ltvect, label=right:$\vect{v}_3$]     at (20em,  2em) {};
+% associations
+\draw[ltedge] (u11) to (v1);
+\draw[ltedge] (u12) to (v1);
+\draw[ltedge] (u13) to (v1);
+\draw[ltedge] (u21) to (v2);
+\draw[ltedge] (u22) to (v2);
+\draw[ltedge] (u23) to (v2);
+\draw[ltedge] (zeroU1) to (zeroV);
+\draw[ltedge] (zeroU2) to (zeroV);
+\draw[ltedge] (zeroU3) to (zeroV);
+\draw[ltedge] (u31) to (v3);
+\draw[ltedge] (u32) to (v3);
+\draw[ltedge] (u33) to (v3);
+% preimages
+\node (pre1) at (4em,   13em) {$\vect{u}_1 + \krn{T}$};
+\node (pre2) at (5em,    9em) {$\preimage{T}{\vect{v}_2}=\vect{u}_2 + \krn{T}$};
+\node (pre3) at (4.5em,  5em) {$\preimage{T}{\zerovector_V}=\krn{T}$};
+\node (pre4) at (5em,    1em) {$\preimage{T}{\vect{v}_3}$};
+% banding, x-coordinates are +/- 5*sqrt(3)/2 off midline
+\node (b11) [minimum size=0em, inner sep=0pt] at (0.669873em, 12em) {};
+\node (b12) [minimum size=0em, inner sep=0pt] at (9.330127em, 12em) {};
+\node (b21) [minimum size=0em, inner sep=0pt] at (       0em,  8em) {};
+\node (b22) [minimum size=0em, inner sep=0pt] at (      10em,  8em) {};
+\node (b31) [minimum size=0em, inner sep=0pt] at (0.669873em,  4em) {};
+\node (b32) [minimum size=0em, inner sep=0pt] at (9.330127em,  4em) {};
+\draw [-, bend right=10] (b11) to (b12);
+\draw [-, bend right=10] (b21) to (b22);
+\draw [-, bend right=10] (b31) to (b32);
+</tikz>
+</diagram>
+</p>
+
+
 <p>The next theorem is one we will cite frequently, as it characterizes injections by the size of the kernel.</p>
 
 <theorem acro="KILT" index="kernel!injective linear transformation">
 <title>Kernel of an Injective Linear Transformation</title>
 <statement>
 <p>Suppose that $\ltdefn{T}{U}{V}$ is a linear transformation.  Then $T$ is injective if and only if the kernel of $T$ is trivial, $\krn{T}=\set{\zerovector}$.</p>
-
 </statement>
 
 <proof>
@@ -503,6 +568,8 @@ thus establishing that $T$ is injective by <acroref type="definition" acro="ILT"
 
 </proof>
 </theorem>
+
+<p>You might begin to think about how <acroref type="diagram" acro="KPI" /> would change if the linear transformation is injective, which would make the kernel trivial by <acroref type="theorem" acro="KILT" />.</p>
 
 <example acro="NIAQR" index="injective!not">
 <title>Not injective, Archetype Q, revisited</title>
