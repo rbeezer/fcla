@@ -1,0 +1,836 @@
+<!-- Mathematics notation macros collected in one place -->
+<!-- Keep two versions (latex, mathjax) in sync here    -->
+<macros>
+
+<!-- Latex versions from old style file, fcla-math.sty  -->
+<latex><![CDATA[%%  These definitions allow for a consistent look for
+%%  mathematical structures.  It is relatively safe to play
+%%  around with variants if you desire other notation or looks.
+
+%%  General comments
+%%    \ensuremath{} is a good idea
+
+%   Delimiters
+%     tex4ht needs \protect before some delimiters, so notation moves to notation list OK
+%     Too many protect's confuses the XML version, so we combine
+%     \left and \right with delimiting info here
+%     With an FCLA prefix, these are not meant for general use, or outside this file
+%       angle brackets: \langle, \rangle
+%       brackets: \lbrack, \rbrack
+%       single vertical: \lvert, \rvert
+%       double vertical: \lVert, \rVert
+%       matching nulls:  .
+%       set brackets: \{, \}
+%
+%     Following just need a \protect when used in macro, since not variable-sized (?)
+%       \colon, \widehat
+%
+%     Have not combined \left, \right with ( and ), doesn't seem necessary
+%     Also left alone bare | in \submatrix
+
+\newcommand*{\FCLAlangle}{\left\langle}
+\newcommand*{\FCLArangle}{\right\rangle}
+\newcommand*{\FCLAlbrack}{\left\lbrack}
+\newcommand*{\FCLArbrack}{\right\rbrack}
+\newcommand*{\FCLAlvert}{\left\lvert}
+\newcommand*{\FCLArvert}{\right\rvert}
+\newcommand*{\FCLAlVert}{\left\lVert}
+\newcommand*{\FCLArVert}{\right\rVert}
+\newcommand*{\FCLAlnull}{\left.}
+\newcommand*{\FCLArnull}{\right.}
+\newcommand*{\FCLAlsetbrack}{\left\{}
+\newcommand*{\FCLArsetbrack}{\right\}}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     Decorations and Conveniences
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+%  2006/09/17   Converted  _, ^  to \sb, \sp for TeX4ht
+
+%  Definitions
+%   An environment for definitions is given elsewhere.
+%   Here we define a typeface to use when a term is defined
+%   and route the term to the index
+%
+% Usage:  \define{definition-term}
+%
+\newcommand*{\define}[1]{{\bf #1}}
+
+%  In Computation Notes, we use a font
+%  for the commands used to communicate with the device
+%
+%  Usage:  \computerfont{commands}
+%
+\newcommand*{\computerfont}[1]{
+{\tt#1}
+}
+
+% Integers
+%
+% Usage:  \Z
+\newcommand*{\Z}{\ensuremath{{\mathbb Z}}}
+
+% Complex numbers, set of scalars
+% (Will obsolete \complex{\null} construction eventually)
+%
+% Usage:  \complexes
+\newcommand*{\complexes}{\ensuremath{{\mathbb C}}}
+
+% n-space over complex field
+%
+% Usage: \complex{integer-dimension, or \null}
+%
+\newcommand*{\complex}[1]{\ensuremath{{\mathbb C}\sp{#1}}}
+
+% n-space over real field
+%
+% Usage: \real{integer-dimension, or \null}
+%
+\newcommand*{\real}[1]{\ensuremath{{\mathbb R}\sp{#1}}}
+
+% Complex number modulus
+%
+%  Usage: \modulus{a+bi}
+%  Presumes math mode
+%
+\newcommand*{\modulus}[1]{\ensuremath{\protect\FCLAlvert#1\protect\FCLArvert}}
+
+% Complex number conjugation
+%
+%  Usage: \conjugate{a+bi}
+%  Presumes math mode
+%
+\newcommand*{\conjugate}[1]{\ensuremath{\overline{#1}}}
+
+%  Bold-face vectors (or use wiggles, arrows, whatever)
+%  Subscripts go outside this construction
+%
+%  Usage: \vect{a symbol to use as a vector}
+%  Have to already be in math mode
+%
+\newcommand*{\vect}[1]{\ensuremath{{\bf#1}}}
+
+% Standardized look for the zero vector
+%
+% Usage: \zerovector
+% Presumes math mode
+%
+\newcommand*{\zerovector}{\ensuremath{\vect{0}}}
+
+% Zero matrix
+%
+%  Usage: \zeromatrix
+%  For use in math mode, use a subscript when size is important
+%
+\newcommand*{\zeromatrix}{\ensuremath{{\cal O}}}
+
+% An inner product without matrix notation
+%
+% Usage: \innerproduct{a-vector}{a-vector}
+% Presumes math mode
+\newcommand*{\innerproduct}[2]{\ensuremath{\protect\FCLAlangle#1,\,#2\protect\FCLArangle}}
+
+% Norm of a vector
+%
+% Usage: \norm{a-vector}
+% Presumes math mode
+\newcommand*{\norm}[1]{\ensuremath{\protect\FCLAlVert#1\protect\FCLArVert}}
+
+% Determinant of a matrix (functional notation)
+%
+%  Usage: \detname{A}
+%  Presumes math mode
+\newcommand*{\detname}[1]{\ensuremath{\protect\det\protect\left(#1\protect\right)}}
+
+% Determinant of a matrix (vertical bars)
+%
+%  Usage: \detbars{A}
+%  Presumes math mode
+\newcommand*{\detbars}[1]{\ensuremath{\protect\FCLAlvert#1\protect\FCLArvert}}
+
+% Dimension
+%
+%  Usage: \dimension{vector-space-letter}
+%  Presumes math mode
+%
+\newcommand*{\dimension}[1]{\ensuremath{\dim\protect\left(#1\protect\right)}}
+
+% Nullity
+%
+%  Usage: \nullity{matrix-or-lintrans-letter}
+%  Presumes math mode
+%
+\newcommand*{\nullity}[1]{\ensuremath{n\protect\left(#1\protect\right)}}
+
+% Rank
+%
+%  Usage: \rank{matrix-or-lintrans-letter}
+%  Presumes math mode
+%
+\newcommand*{\rank}[1]{\ensuremath{r\protect\left(#1\protect\right)}}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     Sets
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+%  A convenience for simple sets
+%
+%  Usage:  \set{list of element}
+%  Presumes math mode
+%
+\newcommand*{\set}[1]{\ensuremath{\protect\FCLAlsetbrack#1\protect\FCLArsetbrack}}
+
+%  Sets with vertical bar, "such that", sized for objects, not condition
+%
+%  Usage:  \setparts{objects}{condition}
+%  Presumes math mode
+%
+%%\newcommand*{\setparts}[2]{\ensuremath{\protect\FCLAlsetbrack #1\protect\mid#2\protect\FCLArsetbrack}}
+\newcommand*{\setparts}[2]{\ensuremath{\protect\FCLAlsetbrack\protect\FCLAlnull #1\protect\FCLArvert#2\protect\FCLArsetbrack}}
+
+%  Set Cardinality
+%
+%  Usage:  \card{a-set-letter}
+%  Presumes math mode
+%
+\newcommand*{\card}[1]{\ensuremath{\protect\FCLAlvert#1\protect\FCLArvert}}
+
+%  Set Union
+%  Use \cup
+
+%  Set Intersection
+%  Use \cap
+
+%  Set Complement
+%
+%  Usage:  \setcomplement{a-set-letter}
+%  Presumes math mode
+%
+\newcommand*{\setcomplement}[1]{\ensuremath{\overline{#1}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     Row Operations, Echelon Form
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+% Row operations on matrices
+%
+% Three commands to shorten up descriptions of gaussian elimination
+%
+% Usage: \rowopswap{row-i}{row-j}
+% Usage: \rowopmult{scalar}{row-i}
+% Usage: \rowopadd{scalar}{row-multiplied}{row-added-to}
+\newcommand*{\rowopswap}[2]{\ensuremath{R\sb{#1}\leftrightarrow R\sb{#2}}}
+\newcommand*{\rowopmult}[2]{\ensuremath{#1R\sb{#2}}}
+\newcommand*{\rowopadd}[3]{\ensuremath{#1R\sb{#2}+R\sb{#3}}}
+
+% Mark leading 1's in echelon form
+% Just an fbox now, a *circle* eventually?
+%
+% Usage: \leading{a-1-usually}
+%
+\newcommand*{\leading}[1]{\ensuremath{\fbox{#1}}}
+
+%  Row-reduce arrow
+%
+%  Usage:  \rref inbetween a matrix and its reduced row-echelon form
+%
+\newcommand*{\rref}{\ensuremath{\xrightarrow{\text{RREF}}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     2-D Constructions (Lists, Vectors, Matrices)
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+% A list of scalars of generic length
+%
+%  Usage:  \scalarlist{scalar letter}{terminal subscript}
+%  Have to already be in math mode
+%%
+\newcommand*{\scalarlist}[2]
+{\ensuremath{{#1}\sb{1},\,{#1}\sb{2},\,{#1}\sb{3},\,\ldots,\,{#1}\sb{#2}}}
+
+% A column vector
+%
+% Usage: \colvector{list-delimited-by-\\}
+% Presumes math mode
+%
+\newcommand*{\colvector}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
+
+% A generic vector with components
+%
+% Usage: \vectorcomponents{component-letter}{final-subscript}
+% Presumes math mode
+\newcommand*{\vectorcomponents}[2]
+{\ensuremath{\colvector{#1\sb{1}\\#1\sb{2}\\#1\sb{3}\\\vdots\\#1\sb{#2}}}}
+
+% A list of vectors of generic length
+%
+%  Usage:  \vectorlist{vector letter}{terminal subscript}
+%  Have to already be in math mode
+%%
+\newcommand*{\vectorlist}[2]
+{\ensuremath{\vect{#1}\sb{1},\,\vect{#1}\sb{2},\,\vect{#1}\sb{3},\,\ldots,\,\vect{#1}\sb{#2}}}
+
+% Vector entries, entry-by-entry
+%
+%   Entry i of vector v
+%   vector-expession still needs \vect, etc.
+%
+%   Usage:  \vectorentry{vector-expression}{single-subscript}
+%
+\newcommand*{\vectorentry}[2]{\ensuremath{\protect\FCLAlbrack#1\protect\FCLArbrack\sb{#2}}}
+
+% A generic linear combination
+%
+%  Usage:  \lincombo{scalar letter}{vector letter}{terminal subscript}
+%  Have to already be in math mode
+%
+\newcommand*{\lincombo}[3]
+{\ensuremath{#1\sb{1}\vect{#2}\sb{1}+#1\sb{2}\vect{#2}\sb{2}+#1\sb{3}\vect{#2}\sb{3}+\cdots +#1\sb{#3}\vect{#2}\sb{#3}}}
+
+%  Matrix, column by column, as vectors
+%
+%  Usage:  \matrixcolumns{matrix letter}{terminal subscript}
+%  Have to already be in math mode
+%%
+\newcommand*{\matrixcolumns}[2]
+{\ensuremath{\left\lbrack\vect{#1}\sb{1}|\vect{#1}\sb{2}|\vect{#1}\sb{3}|\ldots|\vect{#1}\sb{#2}\right\rbrack}}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     Systems of Equations
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+%  In-line form of an augmented matrix for a system of equations
+%
+%  Usage: \augmented{coefficient-matrix}{constant-vector}
+%  Presumes in math mode
+%
+\newcommand*{\augmented}[2]{\ensuremath{\protect\FCLAlbrack\protect\FCLAlnull#1\,\protect\FCLArvert\,#2\protect\FCLArbrack}}
+
+%  Notation for a linear system before introducing matrix multiplication
+%
+% Usage: \linearsystem{coefficient-matrix}{constant-vector}
+% Presumes math mode
+%
+\newcommand*{\linearsystem}[2]{\ensuremath{{\mathcal L}{\mathcal S}\!\protect\left(#1,\,#2\protect\right)}}
+
+%  Notation for a homogenous system before introducing matrix multiplication
+%  Built on \linearsystem and \zerovector
+%
+% Usage: \homosystem{coefficient-matrix}
+% Presumes math mode
+%
+\newcommand*{\homosystem}[1]{\ensuremath{\linearsystem{#1}{\zerovector}}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     Subspace Constructions
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+% Span of a set of vectors
+%
+% \span and \sp are used by TeX for other things
+%
+% Usage: \spn{set-of-vectors}
+% Presumes math mode, uses ams-math \text command
+%
+% Obsoleted 2006/01/05:  Sp notation
+\newcommand*{\spn}[1]{\ensuremath{\protect\FCLAlangle#1\protect\FCLArangle}}
+
+% Null space of a matrix
+%
+%  A convenience for null spaces
+%
+%  Usage:  \nsp{A}
+%  Presumes math mode
+%
+\newcommand*{\nsp}[1]{\ensuremath{{\mathcal N}\!\protect\left(#1\protect\right)}}
+
+% Column Space of a matrix
+%
+%  Usage:  \csp{A}
+%  Presumes math mode
+%
+\newcommand*{\csp}[1]{\ensuremath{\mathcal{C}\!\protect\left(#1\protect\right)}}
+
+% Row Space of a matrix
+%
+%  Usage:  \rsp{A}
+%  Presumes math mode
+%
+\newcommand*{\rsp}[1]{\ensuremath{\mathcal{R}\!\protect\left(#1\protect\right)}}
+
+% Left Null space of a matrix
+%
+%  A convenience for null spaces
+%
+%  Usage:  \lns{A}
+%  Presumes math mode
+%
+\newcommand*{\lns}[1]{\ensuremath{\mathcal{L}\!\protect\left(#1\protect\right)}}
+
+% Range of a linear transformation
+%
+%  TeX uses \range for something else
+%
+%  Usage:  \rng{A}
+%  Presumes math mode
+%
+\newcommand*{\rng}[1]{\ensuremath{\mathcal{R}\!\protect\left(#1\protect\right)}}
+
+% Kernel of a linear transformation
+%
+%  TeX uses \ker to do something different
+%
+%  Usage:  \ker{A}
+%  Presumes math mode
+%
+\newcommand*{\krn}[1]{\ensuremath{\mathcal{K}\!\protect\left(#1\protect\right)}}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     Matrices
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+% Matrix expressions, entry-by-entry
+%
+%   Entry i,j of matrix A, usually when A is really an expression
+%   We can change it here if we choose
+%
+%   Usage:  \matrixentry{matrix-expression}{paired-subscripts}
+%
+\newcommand*{\matrixentry}[2]{\ensuremath{\protect\FCLAlbrack#1\protect\FCLArbrack\sb{#2}}}
+
+% Transpose of a matrix
+%
+%  Usage:  \transpose{A}
+%  Presumes math mode
+%
+\newcommand*{\transpose}[1]{\ensuremath{#1\sp{t}}}
+
+% Adjoint of a matrix
+%
+%  This macro is a convenience to call \transpose and \conjugate properly
+%  It shouldn't need to be modified (or mathematical meanings will change)
+%
+%  Usage:  \adj{A}
+%  Presumes math mode
+%
+\newcommand*{\adj}[1]{\ensuremath{\transpose{\left(\conjugate{#1}\right)}}}
+
+%  This macro controls the symbol used for the adjoint
+%  It can be edited to taste
+%
+%  Usage:  \adjoint{A}
+%  Presumes math mode
+%
+\newcommand*{\adjoint}[1]{\ensuremath{#1\sp{\ast}}}
+
+% Inverse of a matrix
+%
+%  Usage:  \inverse{A}
+%  Presumes math mode
+%
+\newcommand*{\inverse}[1]{\ensuremath{#1\sp{-1}}}
+
+% Similarity
+%
+%  Usage: \similar{inner-matrix}{outer-invertible-matrix}
+%  Presumes math mode
+%  Rearranging this will not "fix" all desired changes throughout
+%
+\newcommand*{\similar}[2]{\ensuremath{\inverse{#2}#1#2}}
+
+% Submatrix
+%
+%  Usage: \submatrix{matrix-name}{delete-row}{delete-col}
+%  Presumes math mode
+%
+\newcommand*{\submatrix}[3]{\ensuremath{#1\protect\left(#2|#3\protect\right)}}
+
+
+% Elementary Matrices
+%
+%  Usage: \elemswap{subscript}{subscript}
+%  Usage: \elemmult{scalar}{subscript}
+%  Usage: \elemadd{scalar}{subscript-mult}{subscript-target}
+%  Presumes math mode
+%
+\newcommand*{\elemswap}[2]{\ensuremath{E\sb{#1,#2}}}
+\newcommand*{\elemmult}[2]{\ensuremath{E\sb{#2}\protect\left(#1\protect\right)}}
+\newcommand*{\elemadd}[3]{\ensuremath{E\sb{#2,#3}\protect\left(#1\protect\right)}}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     Eigenvalues & Eigenspaces
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+% Characteristic polynomial
+%
+%  Usage: \charpoly{matrix-letter}{variable-letter}
+%  Presumes math mode
+%
+\newcommand*{\charpoly}[2]{\ensuremath{p\sb{#1}\left(#2\right)}}
+
+% Eigenspace
+%
+%  Usage: \eigenspace{matrix-letter}{eigenvalue-letter}
+%  Presumes math mode
+%
+\newcommand*{\eigenspace}[2]{\ensuremath{{\mathcal E}\sb{#1}\left(#2\right)}}
+
+% Generalized Eigenspace
+%
+%  Usage: \geneigenspace{lin-trans-letter}{eigenvalue-letter}
+%  Presumes math mode
+%
+\newcommand*{\geneigenspace}[2]{\ensuremath{{\mathcal G}\sb{#1}\protect\left(#2\protect\right)}}
+
+% Algebraic multiplicty
+%
+%  Usage: \algmult{matrix-letter}{eigenvalue-letter}
+%  Presumes math mode
+%
+\newcommand*{\algmult}[2]{\ensuremath{\alpha\sb{#1}\protect\left(#2\protect\right)}}
+
+% Geometric multiplicty
+%
+%  Usage: \geomult{matrix-letter}{eigenvalue-letter}
+%  Presumes math mode
+%
+\newcommand*{\geomult}[2]{\ensuremath{\gamma\sb{#1}\protect\left(#2\protect\right)}}
+
+% Index (of eigenvalue)
+%
+%  Usage: \indx{matrix-letter}{eigenvalue-letter}
+%  Presumes math mode
+%
+\newcommand*{\indx}[2]{\ensuremath{\iota\sb{#1}\protect\left(#2\protect\right)}}
+
+
+% Eigensystem
+%
+%  Usage: \eigensystem{matrixletter}{eigenvalue}{list of basis vectors}
+%  Presumes math mode and in align* environment
+%
+\newcommand*{\eigensystem}[3]{
+\ensuremath{\lambda&=#2&\eigenspace{#1}{#2}&=\spn{\set{#3}}}
+}
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     Linear Transformations
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+% Linear transformation definition
+%
+%  Usage: \ltdefn{name-letter}{domain}{range}
+%  Presumes math mode
+%
+% Through v 2.12:
+% \newcommand*{\ltdefn}[3]{\ensuremath{#1\protect\colon #2\mapsto#3}}
+% Now reserved for describing the action on an individual element
+\newcommand*{\ltdefn}[3]{\ensuremath{#1\protect\colon #2\rightarrow#3}}
+
+% Linear transformation output
+%
+%  Usage: \lt{name-letter}{input}
+%  Presumes math mode
+%
+\newcommand*{\lt}[2]{\ensuremath{#1\protect\left(#2\protect\right)}}
+
+% Linear transformation inverse
+%
+%  Usage: \ltinverse{name-letter}
+%  Presumes math mode
+%
+\newcommand*{\ltinverse}[1]{\ensuremath{#1\sp{-1}}}
+
+% Linear transformation restriction
+%
+%  Usage: \restrict{name-letter}{subspace-letter}
+%  Presumes math mode
+%
+\newcommand*{\restrict}[2]{\ensuremath{{#1}|\sb{#2}}}
+
+% Linear transformation preimage
+%
+%  Usage: \preimage{name-letter}{codomain-element}
+%  Presumes math mode
+%
+\newcommand*{\preimage}[2]{\ensuremath{#1\sp{-1}\protect\left(#2\protect\right)}}
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     Isomorphism and Representations
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+% Isomorphism symbol
+%
+%  Usage: \isomorphic
+%  Presumes math mode
+%
+\newcommand*{\isomorphic}{\ensuremath{\cong}}
+
+% Vector representation function name
+%
+%  Usage: \vectrepname{basis-letter}
+%  Presumes math mode
+%
+\newcommand*{\vectrepname}[1]{\ensuremath{\rho\sb{#1}}}
+
+% Vector representation output
+%
+%  Usage: \vectrep{basis-letter}{input}
+%  Presumes math mode
+%
+\newcommand*{\vectrep}[2]{\ensuremath{\lt{\vectrepname{#1}}{#2}}}
+
+% Vector representation inverse function name
+%  (Added later, not used consistently)
+%
+%  Usage: \vectrepinvname{basis-letter}
+%  Presumes math mode
+%
+\newcommand*{\vectrepinvname}[1]{\ensuremath{\ltinverse{\vectrepname{#1}}}}
+
+% Vector representation inverse output
+%
+%  Usage: \vectrepinv{basis-letter}{input}
+%  Presumes math mode
+%
+\newcommand*{\vectrepinv}[2]{\ensuremath{\lt{\ltinverse{\vectrepname{#1}}}{#2}}}
+
+% Matrix representation
+%
+%  Usage: \matrixrep{transformation-letter}{domain-basis-letter}{codomain-basis-letter}
+%  Presumes math mode
+%
+\newcommand*{\matrixrep}[3]{\ensuremath{M\sp{#1}\sb{#2,#3}}}
+
+% Matrix representation column-by-colum
+%
+%  Usage: \matrixrepcolumns{transformation-letter}{codomain-basis-letter}{codomain-basis-vector-letter}{final-index}
+%  Presumes math mode
+%
+\newcommand*{\matrixrepcolumns}[4]{
+\ensuremath{\left\lbrack
+\left.\vectrep{#2}{\lt{#1}{\vect{#3}\sb{1}}}\right|
+\left.\vectrep{#2}{\lt{#1}{\vect{#3}\sb{2}}}\right|
+\left.\vectrep{#2}{\lt{#1}{\vect{#3}\sb{3}}}\right|
+\ldots
+\left|\vectrep{#2}{\lt{#1}{\vect{#3}\sb{#4}}}\right.
+\right\rbrack
+}}
+
+% Change of basis
+%
+%  Usage: \cbm{domain-basis-letter}{codomain-basis-letter}
+%  Presumes math mode
+%
+\newcommand*{\cbm}[2]{\ensuremath{C\sb{#1,#2}}}
+
+% Linear transformation composition
+%
+%  Usage: \compose{function-name}{function-name}
+%  Presumes math mode
+%
+\newcommand*{\compose}[2]{\ensuremath{{#1}\circ{#2}}}
+
+% Vector space of linear transformations
+%
+%  Usage: \vslt{domains}{codomains}
+%  Presumes math mode
+%
+\newcommand*{\vslt}[2]{\ensuremath{{\mathcal LT}\left(#1,\,#2\right)}}
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     Canonical Forms
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+% Jordan blocks
+%
+%  Usage: \jordan{size}{diagonal-element}
+%  Presumes math mode
+%
+\newcommand*{\jordan}[2]{\ensuremath{J\sb{#1}\protect\left(#2\protect\right)}}
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     Hadamard Matrices
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+% Contributed by Elizabeth Million, to support her Topics section, HP
+
+% Usage: \hadamard{a-matrix}{a-matrix}
+% Presumes math mode
+\newcommand*{\hadamard}[2]{\ensuremath{#1\circ #2}}
+
+% Hadamard identity matrix
+%
+% Usage: \hadamardidentity{paired-subscripts-size-of-matrix}
+\newcommand*{\hadamardidentity}[1]{\ensuremath{J_{#1}}}
+
+% Hadamard inverse matrix
+%
+% Usage: \hadamardinverse{matrix-expression}
+\newcommand*{\hadamardinverse}[1]{\ensuremath{\protect\widehat{#1}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%
+%     Miscellaneous
+%
+%%%%%%%%%%%%%%%%%%%%%
+
+%  Direct sum
+%    Conveniece for actual symbol
+%
+%  Usage: \ds between a couple of subspaces
+%
+\newcommand*{\ds}{\ensuremath\oplus}
+
+%  Square Root of a Matrix
+%
+%  Usage: \sr{a-matrix}
+%
+\newcommand*{\sr}[1]{\ensuremath#1\sp{1/2}}
+
+
+% matrix trace
+%
+% Usage: \trace{matrix name}
+% Persumes in math mode
+\newcommand*{\trace}[1]{\ensuremath{t\protect\left(#1\protect\right)}}
+
+%  Indentation on pseudo-code
+%  2006/09/16 Changed fr0m 1.5em to 2em for Tex4ht
+%  2006/09/21 Changed back to 1.5em - too wide for text
+%
+%  Usage: \codeindent{n} where  n  is the level of indentation desired
+%
+\newlength{\oneindent}
+\setlength{\oneindent}{1.5em}
+\newcommand*{\codeindent}[1]{\noindent\hspace*{#1\oneindent}}]]></latex>
+
+<!-- Mathjax versions, originally by David Farmer, Sally Koutsoliotas -->
+<!-- translated by hand from old latex style file, fcla-math.sty      -->
+<!-- ready for inclusion in MathJax setup routines                    -->
+<mathjax><![CDATA[denote: ["",4],
+null: "",
+sb: "_",
+leading: ["\\fbox{#1}",1],
+rref: "\\xrightarrow{\\text{RREF}}",
+rowopswap: ["R_{#1} \\leftrightarrow R_{#2}",2],
+rowopmult: ["#1 R_{#2}",2],
+rowopadd: ["#1 R_{#2} + R_{#3}",3],
+compose: ["#1 \\circ #2",2],
+inverse: ["#1^{-1}",1],
+setcomplement: ["\\overline{#1}",1],
+ltinverse: ["#1^{-1}",1],
+preimage: ["#1^{-1}\\left(#2\\right)",2],
+lt: ["#1\\left(#2\\right)",2],
+transpose: ["#1^{t}",1],
+adjoint: ["#1^{\\ast}",1],
+adj: ["\\transpose{\\left(\\conjugate{#1}\\right)}",1],
+similar: ["\\inverse{#2}#1#2",2],
+detname: ["\\det\\left(#1\\right)",1],
+dimension: ["\\dim\\left(#1\\right)",1],
+colvector: ["\\begin{bmatrix}#1\\end{bmatrix}",1],
+vslt: ["{\\mathcal LT}\\left(#1,#2\\right)",2],
+lns: ["{\\mathcal L}\\left(#1\\right)",1],
+nsp: ["{\\mathcal N}\\left(#1\\right)",1],
+csp: ["{\\mathcal C}\\left(#1\\right)",1],
+rsp: ["{\\mathcal R}\\left(#1\\right)",1],
+rng: ["{\\mathcal R}\\left(#1\\right)",1],
+krn: ["{\\mathcal K}\\left(#1\\right)",1],
+vectrepname: ["\\rho_{#1}",1],
+vectrep: ["\\lt{\\vectrepname{#1}}{#2}",2],
+vectrepinvname: ["\\ltinverse{\\vectrepname{#1}}",1],
+vectrepinv: ["\\lt{\\ltinverse{\\vectrepname{#1}}}{#2}",2],
+matrixrepcolumns: ["\\left\\lbrack \\left.\\vectrep{#2}{\\lt{#1}{\\vect{#3}\\sb{1}}}\\right| \\left.\\vectrep{#2}{\\lt{#1}{\\vect{#3}\\sb{2}}}\\right| \\left.\\vectrep{#2}{\\lt{#1}{\\vect{#3}\\sb{3}}}\\right| \\ldots \\left|\\vectrep{#2}{\\lt{#1}{\\vect{#3}\\sb{#4}}}\\right.  \\right\\rbrack",4],
+matrixrep: ["M^{#1}_{#2,#3}",3],
+cbm: ["C_{#1,#2}",2],
+jordan: ["J_{#1}\\left(#2\\right)",2],
+restrict: ["{#1}|\\sb{#2}",2],
+indx: ["\\iota_{#1}|\\left(#2\\right)",2],
+rank: ["r\\left(#1\\right)",1],
+nullity: ["n\\left(#1\\right)",1],
+eigenspace: ["{\\mathcal E}_{#1}\\left(#2\\right)",2],
+eigensystem: ["\\lambda&=#2&\\eigenspace{#1}{#2}&=\\spn{\\set{#3}}",3],
+geneigenspace: ["{\\mathcal G}_{#1}\\left(#2\\right)",2],
+innerproduct: ["\\FCLAlangle#1,#2\\FCLArangle",2],
+spn: ["\\FCLAlangle#1\\FCLArangle",1],
+card: ["\\FCLAlvert#1\\FCLArvert",1],
+detbars: ["\\FCLAlvert#1\\FCLArvert",1],
+modulus: ["\\FCLAlvert#1\\FCLArvert",1],
+norm: ["\\FCLAlVert#1\\FCLArVert",1],
+matrixentry: ["\\FCLAlbrack#1\\FCLArbrack_{#2}",2],
+vectorentry: ["\\FCLAlbrack#1\\FCLArbrack_{#2}",2],
+matrixcolumns: ["\\left\\lbrack\\vect{#1}_{1}|\\vect{#1}_{2}|\\vect{#1}_{3}|\\ldots|\\vect{#1}_{#2}\\right\\rbrack",2],
+vectorlist: ["\\vect{#1}_{1}, \\vect{#1}_{2}, \\vect{#1}_{3}, \\ldots, \\vect{#1}_{#2}",2],
+scalarlist: ["{#1}_{1}, {#1}_{2}, {#1}_{3}, \\ldots, {#1}_{#2}",2],
+set: ["\\FCLAlsetbrack#1\\FCLArsetbrack",1],
+setparts: ["\\FCLAlsetbrack\\FCLAlnull #1 \\FCLArvert #2 \\FCLArsetbrack",2],
+algmult: ["\\alpha_{#1}\\left(#2\\right)",2],
+geomult: ["\\gamma_{#1}\\left(#2\\right)",2],
+charpoly: ["p_{#1}\\left(#2\\right)",2],
+augmented: ["\\FCLAlbrack\\FCLAlnull#1\\FCLArvert#2\\FCLArbrack",2],
+linearsystem: ["{\\mathcal L}{\\mathcal S}\\left(#1,#2\\right)",2],
+homosystem: ["\\linearsystem{#1}{\\zerovector}",1],
+lincombo: ["#1_{1}\\vect{#2}_{1}+#1_{2}\\vect{#2}_{2}+#1_{3}\\vect{#2}_{3}+\\cdots +#1_{#3}\\vect{#2}_{#3}",3],
+submatrix: ["#1\\left(#2|#3\\right)",3],
+elemswap: ["E_{#1,#2}",2],
+elemmult: ["E_{#2}\\left(#1\\right)",2],
+elemadd: ["E_{#2,#3}\\left(#1\\right)",3],
+ltdefn: ["#1 : #2 \\rightarrow #3",3],
+zerovector: "\\vect{0}",
+zeromatrix: "{\\mathcal 0}",
+vect: ["{\\bf #1}",1],
+conjugate: ["\\overline{#1}",1],
+ds: "\\oplus",
+isomorphic: "\\cong",
+complexes: "{\\mathbb C}",
+complex: ["{\\mathbb C}^{#1}",1],
+real: ["{\\mathbb R}^{#1}",1],
+FCLAlangle: "\\left\\langle",
+FCLArangle: "\\right\\rangle",
+FCLAlbrack: "\\left\\lbrack",
+FCLArbrack: "\\right\\rbrack",
+FCLAlvert: "\\left\\lvert",
+FCLArvert: "\\right\\rvert",
+FCLAlVert: "\\left\\lVert",
+FCLArVert: "\\right\\rVert",
+FCLAlnull: "\\left.",
+FCLArnull: "\\right.",
+FCLAlsetbrack: "\\left\\{",
+FCLArsetbrack: "\\right\\}",
+intertext: ["\\\\ \\text{#1}\\\\ ",1],]]></mathjax>
+
+</macros>
