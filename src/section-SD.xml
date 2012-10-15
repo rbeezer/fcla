@@ -271,10 +271,18 @@ is_sim
 </output>
 </sage>
 
-Since we knew in advance these two matrices are similar, we requested the transformation matrix, so the output is a pair.  The similarity matrix is a bit of a mess, so we will let you output <code>trans</code> with the next command rather than including it here.
+Since we knew in advance these two matrices are similar, we requested the transformation matrix, so the output is a pair.  The similarity matrix is a bit of a mess, so we will use three Sage routines to clean up <code>trans</code>.  We convert the entries to numerical approximations, clip very small values (less than $10^{-5}$) to zero and then round to three decimal places.  You can experiment printing just <code>trans</code> all by itself.
 <sage>
-<input>trans
+<input>trans.change_ring(RDF).zero_at(10^-5).round(3)
 </input>
+<output>[   1.0    0.0    0.0    0.0    0.0    0.0    0.0]
+[   0.0  1.188  0.375 -0.375  0.562 -0.375  0.375]
+[-3.107 -1.072  0.764  1.043 -2.288 -1.758 -2.495]
+[ 7.596    0.3 -1.026  -7.29 11.306 -2.705   -1.6]
+[ 0.266  0.079 -0.331 -0.387  0.756  0.447  0.429]
+[-2.157  0.071  0.469  1.893 -3.014  0.355  0.196]
+[-0.625  0.291 -0.068  0.995 -1.315  1.125  1.179]
+</output>
 </sage>
 
 The matrix <code>C</code> is not similar to <code>A</code> (and hence not similar to <code>B</code> by <acroref type="theorem" acro="SER" />), so we illustrate the return value when we do not request the similarity matrix (since it does not even exist).
