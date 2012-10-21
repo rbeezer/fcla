@@ -830,20 +830,20 @@ We claim that as we begin Step 2, the first $j$ columns of the matrix are in red
 </proof>
 </theorem>
 
-<p>The procedure given in the proof of <acroref type="theorem" acro="REMEF" /> can be more precisely described using a pseudo-code version of a computer program.  Single-letter variables, like <code>m, n, i, j, r</code> have the same meanings as above. <code>:=</code> is assignment of the value on the right to the variable on the left, <code>A[i,j]</code> is the equivalent of the matrix entry $\matrixentry{A}{ij}$, while <code>==</code> is an equality test and <code>!=</code> is a <q>not equals</q> test.
+<p>The procedure given in the proof of <acroref type="theorem" acro="REMEF" /> can be more precisely described using a pseudo-code version of a computer program.  Single-letter variables, like <code>m, n, i, j, r</code> have the same meanings as above. <code>:=</code> is assignment of the value on the right to the variable on the left, <code>A[i,j]</code> is the equivalent of the matrix entry $\matrixentry{A}{ij}$, while <code>==</code> is an equality test and <code><![CDATA[<>]]></code> is a <q>not equals</q> test.
 <!--   new latex environment, unsupported as of XML cutover -->
 <programlisting>
 input m, n and A
 r := 0
 for j := 1 to n
    i := r+1
-<![CDATA[   while i <= m and A[i,j] = 0]]>
+   while i <![CDATA[<= m]]> and A[i,j] = 0
        i := i+1
-   if i != m+1
+   if i <![CDATA[<]]> m+1
        r := r+1
        swap rows i and r of A (row op 1)
        scale entry in row r, column j of A to a leading 1 (row op 2)
-       for k := 1 to m, k != r
+           for k := 1 to m, k <![CDATA[<>]]> r
           zero out entry in row k, column j of A (row op 3 using row r)
 output r and A
 </programlisting>
