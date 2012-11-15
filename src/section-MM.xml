@@ -206,7 +206,7 @@ T\vect{w}=
 <proof>
 <p>We are assuming $A\vect{x}=B\vect{x}$ for all $\vect{x}\in\complex{n}$, so we can employ this equality for <em>any</em> choice of the vector $\vect{x}$.  However, we'll limit our use of this equality to the standard unit vectors, $\vect{e}_j$, $1\leq j\leq n$ (<acroref type="definition" acro="SUV" />).  For all $1\leq j\leq n$, $1\leq i\leq m$,
 <alignmath>
-\matrixentry{A}{ij}
+<![CDATA[&\matrixentry{A}{ij}\\]]>
 <![CDATA[&=]]>
 0\matrixentry{A}{i1}+
 \cdots+
@@ -214,7 +214,8 @@ T\vect{w}=
 1\matrixentry{A}{ij}+
 0\matrixentry{A}{i,j+1}+
 \cdots+
-0\matrixentry{A}{in}\\
+0\matrixentry{A}{in}
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="PCNA" />}\\
 <![CDATA[&=]]>
 \matrixentry{A}{i1}\vectorentry{\vect{e}_j}{1}+
 \matrixentry{A}{i2}\vectorentry{\vect{e}_j}{2}+
@@ -242,6 +243,7 @@ T\vect{w}=
 0\matrixentry{B}{in}
 <![CDATA[&&]]>\text{<acroref type="definition" acro="SUV" />}\\
 <![CDATA[&=\matrixentry{B}{ij}]]>
+<![CDATA[&&]]>\text{<acroref type="theorem" acro="PCNA" />}
 </alignmath></p>
 
 <p>So by <acroref type="definition" acro="ME" /> the matrices $A$ and $B$ are equal, as desired.</p>
@@ -368,7 +370,7 @@ So when you see a Sage command that comes in <q>left</q> and <q>right</q> varian
 <definition acro="MM" index="matrix multiplication">
 <title>Matrix Multiplication</title>
 <indexlocation index="vector!product with matrix" />
-<p>Suppose $A$ is an $m\times n$ matrix and $B$ is an $n\times p$ matrix with columns $\vectorlist{B}{p}$.  Then the <define>matrix product</define> of $A$ with $B$ is the $m\times p$ matrix where column $i$ is the matrix-vector product $A\vect{B}_i$.  Symbolically,
+<p>Suppose $A$ is an $m\times n$ matrix and $\vectorlist{B}{p}$ are the columns of an $n\times p$ matrix $B$.  Then the <define>matrix product</define> of $A$ with $B$ is the $m\times p$ matrix where column $i$ is the matrix-vector product $A\vect{B}_i$.  Symbolically,
 <equation>
 AB=A\matrixcolumns{B}{p}=\left[A\vect{B}_1|A\vect{B}_2|A\vect{B}_3|\ldots|A\vect{B}_p\right].
 </equation>
@@ -485,46 +487,40 @@ and $AB\neq BA$.  Not even close.  It should not be hard for you to construct ot
 <![CDATA[&=]]>
 \sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}
 </alignmath></p>
-
 </statement>
 
 <proof>
-<p>Denote the columns of  $A$ as the vectors $\vectorlist{A}{n}$ and the columns of  $B$ as the vectors $\vectorlist{B}{p}$.  Then for $1\leq i\leq m$, $1\leq j\leq p$,
+<p>Let the vectors $\vectorlist{A}{n}$ denote the columns of $A$ and let the vectors $\vectorlist{B}{p}$ denote the columns of $B$.  Then for $1\leq i\leq m$, $1\leq j\leq p$,
 <alignmath>
 \matrixentry{AB}{ij}
 <![CDATA[&=\vectorentry{A\vect{B}_j}{i}&&]]>\text{<acroref type="definition" acro="MM" />}\\
 <![CDATA[&=\vectorentry{]]>
 \vectorentry{\vect{B}_j}{1}\vect{A}_1+
 \vectorentry{\vect{B}_j}{2}\vect{A}_2+
-\vectorentry{\vect{B}_j}{3}\vect{A}_3+
 \cdots+
 \vectorentry{\vect{B}_j}{n}\vect{A}_n
 <![CDATA[}{i}&&]]>\text{<acroref type="definition" acro="MVP" />}\\
 <![CDATA[&=]]>
 \vectorentry{\vectorentry{\vect{B}_j}{1}\vect{A}_1}{i}+
 \vectorentry{\vectorentry{\vect{B}_j}{2}\vect{A}_2}{i}+
-\vectorentry{\vectorentry{\vect{B}_j}{3}\vect{A}_3}{i}+
 \cdots+
 \vectorentry{\vectorentry{\vect{B}_j}{n}\vect{A}_n}{i}
 <![CDATA[&&]]>\text{<acroref type="definition" acro="CVA" />}\\
 <![CDATA[&=]]>
 \vectorentry{\vect{B}_j}{1}\vectorentry{\vect{A}_1}{i}+
 \vectorentry{\vect{B}_j}{2}\vectorentry{\vect{A}_2}{i}+
-\vectorentry{\vect{B}_j}{3}\vectorentry{\vect{A}_3}{i}+
 \cdots+
 \vectorentry{\vect{B}_j}{n}\vectorentry{\vect{A}_n}{i}
 <![CDATA[&&]]>\text{<acroref type="definition" acro="CVSM" />}\\
 <![CDATA[&=]]>
 \matrixentry{B}{1j}\matrixentry{A}{i1}+
 \matrixentry{B}{2j}\matrixentry{A}{i2}+
-\matrixentry{B}{3j}\matrixentry{A}{i3}+
 \cdots+
 \matrixentry{B}{nj}\matrixentry{A}{in}
 <![CDATA[&&]]>\text{<acroref type="definition" acro="M" />}\\
 <![CDATA[&=]]>
 \matrixentry{A}{i1}\matrixentry{B}{1j}+
 \matrixentry{A}{i2}\matrixentry{B}{2j}+
-\matrixentry{A}{i3}\matrixentry{B}{3j}+
 \cdots+
 \matrixentry{A}{in}\matrixentry{B}{nj}
 <![CDATA[&&]]>\text{<acroref type="property" acro="CMCN" />}\\
