@@ -29,7 +29,7 @@
 <p>We will prove this result by contradiction (<acroref type="technique" acro="CD" />).  Suppose to the contrary that $S$ is a linearly dependent set.  Define $S_i=\set{\vectorlist{x}{i}}$ and let
 $k$ be an integer such that $S_{k-1}=\set{\vectorlist{x}{k-1}}$ is linearly independent and $S_k=\set{\vectorlist{x}{k}}$ is linearly dependent.  We have to ask if there is even such an integer $k$?  First, since eigenvectors are nonzero, the set $\set{\vect{x}_1}$ is linearly independent.  Since we are assuming that $S=S_p$ is linearly dependent, there must be an integer $k$, $2\leq k\leq p$, where the sets $S_i$ transition from linear independence to linear dependence (and stay that way). In other words, $\vect{x}_k$ is the vector with the smallest index that is a linear combination of just vectors with smaller indices.</p>
 
-<p>Since $\set{\vectorlist{x}{k}}$ is linearly dependent there are scalars, $\scalarlist{a}{k}$, some non-zero (<acroref type="definition" acro="LI" />), so that
+<p>Since $\set{\vectorlist{x}{k}}$ is a linearly dependent set there must be scalars, $\scalarlist{a}{k}$, not all zero (<acroref type="definition" acro="LI" />), so that
 <alignmath>
 \zerovector=\lincombo{a}{x}{k}
 </alignmath>
@@ -43,55 +43,47 @@ $k$ be an integer such that $S_{k-1}=\set{\vectorlist{x}{k-1}}$ is linearly inde
 <![CDATA[&=\left(A-\lambda_kI_n\right)\left(\lincombo{a}{x}{k}\right)]]>
 <![CDATA[&&]]>\text{<acroref type="definition" acro="RLD" />}\\
 <![CDATA[&=\left(A-\lambda_kI_n\right)a_1\vect{x}_1+]]>
-\left(A-\lambda_kI_n\right)a_2\vect{x}_2+
 \cdots+
 \left(A-\lambda_kI_n\right)a_k\vect{x}_k
 <![CDATA[&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
 <![CDATA[&=a_1\left(A-\lambda_kI_n\right)\vect{x}_1+]]>
-a_2\left(A-\lambda_kI_n\right)\vect{x}_2+
 \cdots+
 a_k\left(A-\lambda_kI_n\right)\vect{x}_k
 <![CDATA[&&]]>\text{<acroref type="theorem" acro="MMSMM" />}\\
 <![CDATA[&=a_1\left(A\vect{x}_1-\lambda_kI_n\vect{x}_1\right)+]]>
-a_2\left(A\vect{x}_2-\lambda_kI_n\vect{x}_2\right)+
 \cdots+
 a_k\left(A\vect{x}_k-\lambda_kI_n\vect{x}_k\right)
 <![CDATA[&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
 <![CDATA[&=a_1\left(A\vect{x}_1-\lambda_k\vect{x}_1\right)+]]>
-a_2\left(A\vect{x}_2-\lambda_k\vect{x}_2\right)+
 \cdots+
 a_k\left(A\vect{x}_k-\lambda_k\vect{x}_k\right)
 <![CDATA[&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
 <![CDATA[&=a_1\left(\lambda_1\vect{x}_1-\lambda_k\vect{x}_1\right)+]]>
-a_2\left(\lambda_2\vect{x}_2-\lambda_k\vect{x}_2\right)+
 \cdots+
 a_k\left(\lambda_k\vect{x}_k-\lambda_k\vect{x}_k\right)
 <![CDATA[&&]]>\text{<acroref type="definition" acro="EEM" />}\\
 <![CDATA[&=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+]]>
-a_2\left(\lambda_2-\lambda_k\right)\vect{x}_2+
 \cdots+
 a_k\left(\lambda_k-\lambda_k\right)\vect{x}_k
 <![CDATA[&&]]>\text{<acroref type="theorem" acro="MMDAA" />}\\
 <![CDATA[&=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+]]>
-a_2\left(\lambda_2-\lambda_k\right)\vect{x}_2+
 \cdots+
+a_{k-1}\left(\lambda_{k-1}-\lambda_k\right)\vect{x}_{k-1}+
 a_k\left(0\right)\vect{x}_k
 <![CDATA[&&]]>\text{<acroref type="property" acro="AICN" />}\\
 <![CDATA[&=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+]]>
-a_2\left(\lambda_2-\lambda_k\right)\vect{x}_2+
 \cdots+
 a_{k-1}\left(\lambda_{k-1}-\lambda_k\right)\vect{x}_{k-1}+
 \zerovector
 <![CDATA[&&]]>\text{<acroref type="theorem" acro="ZSSM" />}\\
 <![CDATA[&=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+]]>
-a_2\left(\lambda_2-\lambda_k\right)\vect{x}_2+
 \cdots+
 a_{k-1}\left(\lambda_{k-1}-\lambda_k\right)\vect{x}_{k-1}
 <![CDATA[&&]]>\text{<acroref type="property" acro="Z" />}
 </alignmath>
 </p>
 
-<p>This is a relation of linear dependence on the linearly independent set $\set{\vectorlist{x}{k-1}}$, so the scalars must all be zero.  That is, $a_i\left(\lambda_i-\lambda_k\right)=0$ for $1\leq i\leq k-1$.  However, we have the hypothesis that the eigenvalues are distinct, so $\lambda_i\neq\lambda_k$ for $1\leq i\leq k-1$.  Thus $a_i=0$ for $1\leq i\leq k-1$.</p>
+<p>This equation is a relation of linear dependence on the linearly independent set $\set{\vectorlist{x}{k-1}}$, so the scalars must all be zero.  That is, $a_i\left(\lambda_i-\lambda_k\right)=0$ for $1\leq i\leq k-1$.  However, we have the hypothesis that the eigenvalues are distinct, so $\lambda_i\neq\lambda_k$ for $1\leq i\leq k-1$.  Thus $a_i=0$ for $1\leq i\leq k-1$.</p>
 
 <p>This reduces the original relation of linear dependence on $\set{\vectorlist{x}{k}}$ to the simpler equation $a_k\vect{x}_k=\zerovector$.  By <acroref type="theorem" acro="SMEZV" /> we conclude that $a_k=0$ or $\vect{x}_k=\zerovector$.  Eigenvectors are never the zero vector (<acroref type="definition" acro="EEM" />), so $a_k=0$.  So all of the scalars $a_i$, $1\leq i\leq k$ are zero, contradicting their introduction as the scalars creating a nontrivial relation of linear dependence on the set $\set{\vectorlist{x}{k}}$.  With a contradiction in hand, we conclude that $S$ must be linearly independent.</p>
 
@@ -478,7 +470,7 @@ Now there is a row of $A$ that does not contain an entry of the form $c-x$.  We 
 <theorem acro="NEM" index="eigenvalues!number">
 <title>Number of Eigenvalues of a Matrix</title>
 <statement>
-<p>Suppose that $A$ is a square matrix of size $n$ with distinct eigenvalues $\scalarlist{\lambda}{k}$.  Then
+<p>Suppose that $\scalarlist{\lambda}{k}$ are the distinct eigenvalues of a square matrix $A$ of size $n$.  Then
 <equation>
 \sum_{i=1}^{k}\algmult{A}{\lambda_i}=n
 </equation>
