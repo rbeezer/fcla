@@ -597,41 +597,25 @@ We will now develop the same linear combination a bit quicker, using three steps
 
 <p>Step 3.  For each dependent variable, use the augmented matrix to formulate an equation expressing the dependent variable as a constant plus multiples of the free variables.  Convert this equation into entries of the vectors that ensure equality for each dependent variable, one at a time.
 <alignmath>
-<![CDATA[x_1&=15-2x_3+3x_4-9x_7]]>
-<![CDATA[&]]>
-<![CDATA[\Rightarrow&]]>
-<![CDATA[&]]>
-<![CDATA[\vect{x}&=]]>
+<![CDATA[x_1&=15-2x_3+3x_4-9x_7\ \Rightarrow\\&\vect{x}=]]>
 \colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
 \colvector{15\\ \\ 0\\ 0\\ \\ \\ 0}+
 x_3\colvector{-2\\ \\ 1\\ 0\\ \\ \\ 0}+
 x_4\colvector{3\\ \\ 0\\ 1\\ \\ \\ 0}+
 x_7\colvector{-9\\ \\ 0\\ 0\\ \\ \\ 1}\\
-<![CDATA[x_2&=-10+5x_3-4x_4+8x_7]]>
-<![CDATA[&]]>
-<![CDATA[\Rightarrow&]]>
-<![CDATA[&]]>
-<![CDATA[\vect{x}&=]]>
+<![CDATA[x_2&=-10+5x_3-4x_4+8x_7\ \Rightarrow\\&\vect{x}=]]>
 \colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
 \colvector{15\\ -10\\ 0\\ 0\\ \\ \\ 0}+
 x_3\colvector{-2\\ 5\\ 1\\ 0\\ \\ \\ 0}+
 x_4\colvector{3\\ -4\\ 0\\ 1\\ \\ \\ 0}+
 x_7\colvector{-9\\ 8\\ 0\\ 0\\ \\ \\ 1}\\
-<![CDATA[x_5&=11+6x_7]]>
-<![CDATA[&]]>
-<![CDATA[\Rightarrow&]]>
-<![CDATA[&]]>
-<![CDATA[\vect{x}&=]]>
+<![CDATA[x_5&=11+6x_7\ \Rightarrow\\&\vect{x}=]]>
 \colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
 \colvector{15\\ -10\\ 0\\ 0\\ 11\\ \\ 0}+
 x_3\colvector{-2\\ 5\\ 1\\ 0\\ 0\\ \\ 0}+
 x_4\colvector{3\\ -4\\ 0\\ 1\\ 0\\ \\ 0}+
 x_7\colvector{-9\\ 8\\ 0\\ 0\\ 6\\ \\ 1}\\
-<![CDATA[x_6&=-21-7x_7]]>
-<![CDATA[&]]>
-<![CDATA[\Rightarrow&]]>
-<![CDATA[&]]>
-<![CDATA[\vect{x}&=]]>
+<![CDATA[x_6&=-21-7x_7\ \Rightarrow\\&\vect{x}=]]>
 \colvector{x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7}=
 \colvector{15\\ -10\\ 0\\ 0\\ 11\\ -21\\ 0}+
 x_3\colvector{-2\\ 5\\ 1\\ 0\\ 0\\ 0\\ 0}+
@@ -773,7 +757,6 @@ S=\setparts{
 \vectorentry{\vect{c}}{f_i}+
 \alpha_1\vectorentry{\vect{u}_1}{f_i}+
 \alpha_2\vectorentry{\vect{u}_2}{f_i}+
-\alpha_3\vectorentry{\vect{u}_3}{f_i}+
 \cdots+
 \alpha_i\vectorentry{\vect{u}_i}{f_i}+
 \cdots+
@@ -782,7 +765,6 @@ S=\setparts{
 0+
 \alpha_1(0)+
 \alpha_2(0)+
-\alpha_3(0)+
 \cdots+
 \alpha_i(1)+
 \cdots+
@@ -832,12 +814,13 @@ S=\setparts{
 \cdots+
 \matrixentry{B}{\ell f_{n-r}}\alpha_{n-r}\\
 <![CDATA[&=]]>
-\matrixentry{B}{\ell,{n+1}}+
-\alpha_1(-\matrixentry{B}{\ell,f_1})+
-\alpha_2(-\matrixentry{B}{\ell,f_2})+
-\alpha_3(-\matrixentry{B}{\ell,f_3})+
+\matrixentry{B}{\ell,{n+1}}+\\
+<![CDATA[&\quad\quad]]>
+\alpha_1(-\matrixentry{B}{\ell f_1})+
+\alpha_2(-\matrixentry{B}{\ell f_2})+
+\alpha_3(-\matrixentry{B}{\ell f_3})+
 \cdots+
-\alpha_{n-r}(-\matrixentry{B}{\ell,f_{n-r}})
+\alpha_{n-r}(-\matrixentry{B}{\ell f_{n-r}})
 +\\
 <![CDATA[&\quad\quad]]>
 \matrixentry{B}{\ell f_1}\alpha_1+
@@ -1160,7 +1143,7 @@ One mystery left to resolve.  How can we get Sage to give us infinitely many sol
 \cdots+
 \vectorentry{\vect{w}}{n}\vect{A}_n
 <![CDATA[&&]]>\text{<acroref type="theorem" acro="SLSLC" />}\\
-<![CDATA[&\quad\quad\quad\quad]]>
+<![CDATA[&\quad\quad]]>
 +
 \vectorentry{\vect{z}}{1}\vect{A}_1+
 \vectorentry{\vect{z}}{2}\vect{A}_2+
@@ -1169,14 +1152,15 @@ One mystery left to resolve.  How can we get Sage to give us infinitely many sol
 \vectorentry{\vect{z}}{n}\vect{A}_n\\
 <![CDATA[&=]]>
 \left(\vectorentry{\vect{w}}{1}+\vectorentry{\vect{z}}{1}\right)\vect{A}_1+
-\left(\vectorentry{\vect{w}}{2}+\vectorentry{\vect{z}}{2}\right)\vect{A}_2+
-\cdots+
-\left(\vectorentry{\vect{w}}{n}+\vectorentry{\vect{z}}{n}\right)\vect{A}_n
+\left(\vectorentry{\vect{w}}{2}+\vectorentry{\vect{z}}{2}\right)\vect{A}_2
 <![CDATA[&&]]>\text{<acroref type="theorem" acro="VSPCV" />}\\
+<![CDATA[&\quad\quad]]>
+\left(\vectorentry{\vect{w}}{3}+\vectorentry{\vect{z}}{3}\right)\vect{A}_3+
+\cdots+
+\left(\vectorentry{\vect{w}}{n}+\vectorentry{\vect{z}}{n}\right)\vect{A}_n\\
 <![CDATA[&=]]>
-\vectorentry{\vect{w}+\vect{z}}{1}\vect{A}_1+
++\vectorentry{\vect{w}+\vect{z}}{1}\vect{A}_1+
 \vectorentry{\vect{w}+\vect{z}}{2}\vect{A}_2+
-\vectorentry{\vect{w}+\vect{z}}{3}\vect{A}_3+
 \cdots+
 \vectorentry{\vect{w}+\vect{z}}{n}\vect{A}_n
 <![CDATA[&&]]>\text{<acroref type="definition" acro="CVA" />}\\
@@ -1202,7 +1186,7 @@ Applying <acroref type="theorem" acro="SLSLC" /> we see that the vector $\vect{y
 \cdots+
 \vectorentry{\vect{y}}{n}\vect{A}_n
 <![CDATA[&&]]>\text{<acroref type="theorem" acro="SLSLC" />}\\
-<![CDATA[&\quad\quad\quad\quad]]>
+<![CDATA[&\quad\quad]]>
 -
 \left(
 \vectorentry{\vect{w}}{1}\vect{A}_1+
@@ -1213,17 +1197,21 @@ Applying <acroref type="theorem" acro="SLSLC" /> we see that the vector $\vect{y
 \right)\\
 <![CDATA[&=]]>
 \left(\vectorentry{\vect{y}}{1}-\vectorentry{\vect{w}}{1}\right)\vect{A}_1+
-\left(\vectorentry{\vect{y}}{2}-\vectorentry{\vect{w}}{2}\right)\vect{A}_2+
-\cdots+
-\left(\vectorentry{\vect{y}}{n}-\vectorentry{\vect{w}}{n}\right)\vect{A}_n
+\left(\vectorentry{\vect{y}}{2}-\vectorentry{\vect{w}}{2}\right)\vect{A}_2
 <![CDATA[&&]]>\text{<acroref type="theorem" acro="VSPCV" />}\\
+<![CDATA[&\quad\quad]]>
++
+\left(\vectorentry{\vect{y}}{3}-\vectorentry{\vect{w}}{3}\right)\vect{A}_3+
+\cdots+
+\left(\vectorentry{\vect{y}}{n}-\vectorentry{\vect{w}}{n}\right)\vect{A}_n\\
 <![CDATA[&=]]>
 \vectorentry{\vect{y}-\vect{w}}{1}\vect{A}_1+
-\vectorentry{\vect{y}-\vect{w}}{2}\vect{A}_2+
-\vectorentry{\vect{y}-\vect{w}}{3}\vect{A}_3+
+\vectorentry{\vect{y}-\vect{w}}{2}\vect{A}_2
+<![CDATA[&&]]>\text{<acroref type="definition" acro="CVA" />}\\
+<![CDATA[&\quad\quad]]>
++\vectorentry{\vect{y}-\vect{w}}{3}\vect{A}_3+
 \cdots+
 \vectorentry{\vect{y}-\vect{w}}{n}\vect{A}_n
-<![CDATA[&&]]>\text{<acroref type="definition" acro="CVA" />}
 </alignmath>
 By <acroref type="theorem" acro="SLSLC" /> we see that the vector $\vect{y}-\vect{w}$ is a solution to the homogeneous system $\homosystem{A}$ and by <acroref type="definition" acro="NSM" />, $\vect{y}-\vect{w}\in\nsp{A}$.  In other words, $\vect{y}-\vect{w}=\vect{z}$ for some vector $\vect{z}\in\nsp{A}$.  Rewritten, this is
 $\vect{y}=\vect{w}+\vect{z}$, as desired.</p>

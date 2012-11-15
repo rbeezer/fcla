@@ -837,14 +837,14 @@ input m, n and A
 r := 0
 for j := 1 to n
    i := r+1
-   while i <![CDATA[<= m]]> and A[i,j] = 0
+   while i <![CDATA[<= m]]> and A[i,j] == 0
        i := i+1
    if i <![CDATA[<]]> m+1
        r := r+1
        swap rows i and r of A (row op 1)
-       scale entry in row r, column j of A to a leading 1 (row op 2)
-           for k := 1 to m, k <![CDATA[<>]]> r
-          zero out entry in row k, column j of A (row op 3 using row r)
+       scale A[r,j] to a leading 1 (row op 2)
+       for k := 1 to m, k <![CDATA[<>]]> r
+           make A[k,j] zero (row op 3, employing row r)
 output r and A
 </programlisting>
 
