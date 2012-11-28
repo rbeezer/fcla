@@ -332,38 +332,33 @@ so we see by <acroref type="definition" acro="NRML" /> that $A$ is normal.  Howe
 
 <!--   TODO:  Proof needs some results, like adjoint of a product -->
 <proof>
-<p><implyforward /> Suppose there is a unitary matrix $U$ that diagonalizes $A$, resulting in $D$, <ie /> $\adjoint{U}AU=D$.  We check the normality of $A$,
+<p><implyforward /> Suppose there is a unitary matrix $U$ that diagonalizes $A$.  We would usally write this condition as $\adjoint{U}AU=D$, but we will find it convenient in this part of the proof to use our hypothesis in the equivalent form, $A=UD\adjoint{U}$.  Notice that since $D$ is a diagonal matrix, $\adjoint{D}$ is also a diagonal matrix, and therefore $D$ and $\adjoint{D}$ commute when multiplied.  We check the normality of $A$,
 <alignmath>
 \adjoint{A}A
-<![CDATA[&=I_n   \adjoint{A}   I_n   A  I_n&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
-<![CDATA[&=U\adjoint{U}   \adjoint{A}   U\adjoint{U}   A    U\adjoint{U}&&]]>\text{<acroref type="definition" acro="UM" />}\\
-<![CDATA[&=U  \adjoint{U}\adjoint{A}U    D    \adjoint{U}\\]]>
-<![CDATA[&=U  \adjoint{U}\adjoint{A}\adjoint{\left(\adjoint{U}\right)}    D    \adjoint{U}&&]]>\text{<acroref type="theorem" acro="AA" />}\\
-<![CDATA[&=U  \adjoint{\left(\adjoint{U}AU\right)}    D    \adjoint{U}&&\text{Adjoint of a product}\\]]>
-<![CDATA[&=U  \adjoint{D}    D    \adjoint{U}\\]]>
-<![CDATA[&=U  \transpose{\left(\conjugate{D}\right)}    D    \adjoint{U}&&]]>\text{<acroref type="definition" acro="A" />}\\
-<![CDATA[&=U  \conjugate{D}    D    \adjoint{U}&&\text{Diagonal matrix}\\]]>
-<![CDATA[&=U  D    \conjugate{D}    \adjoint{U}&&]]>\text{<acroref type="property" acro="CMCN" />}\\
-<![CDATA[&=U  D    \transpose{\left(\conjugate{D}\right)}    \adjoint{U}&&\text{Diagonal matrix}\\]]>
-<![CDATA[&=U  D    \adjoint{D}    \adjoint{U}&&]]>\text{<acroref type="definition" acro="A" />}\\
-<![CDATA[&=U  D    \adjoint{\left(\adjoint{U}AU\right)}    \adjoint{U}\\]]>
-<![CDATA[&=U  D    \adjoint{U}\adjoint{A}\adjoint{\left(\adjoint{U}\right)}    \adjoint{U}&&\text{Adjoint of a product}\\]]>
-<![CDATA[&=U  D    \adjoint{U}\adjoint{A}U    \adjoint{U}&&]]>\text{<acroref type="theorem" acro="AA" />}\\
-<![CDATA[&=U  \adjoint{U}AU    \adjoint{U}\adjoint{A}U    \adjoint{U}\\]]>
-<![CDATA[&=I_n A I_n \adjoint{A} I_n&&]]>\text{<acroref type="definition" acro="UM" />}\\
-<![CDATA[&=A\adjoint{A}&&]]>\text{<acroref type="theorem" acro="MMIM" />}
+<![CDATA[&=\adjoint{\left(UD\adjoint{U}\right)}\left(UD\adjoint{U}\right)&&]]>\text{Hypothesis}\\
+<![CDATA[&=\adjoint{\left(\adjoint{U}\right)}\adjoint{D}\adjoint{U}UD\adjoint{U}&&]]>\text{<acroref type="theorem" acro="MMAD" />}\\
+<![CDATA[&=U\adjoint{D}\adjoint{U}UD\adjoint{U}&&]]>\text{<acroref type="theorem" acro="AA" />}\\
+<![CDATA[&=U\adjoint{D}I_{n}D\adjoint{U}&&]]>\text{<acroref type="definition" acro="UM" />}\\
+<![CDATA[&=U\adjoint{D}D\adjoint{U}&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=UD\adjoint{D}\adjoint{U}&&]]>\text{<acroref type="property" acro="CMCN" />}\\
+<![CDATA[&=UDI_{n}\adjoint{D}\adjoint{U}&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
+<![CDATA[&=UD\adjoint{U}U\adjoint{D}\adjoint{U}&&]]>\text{<acroref type="definition" acro="UM" />}\\
+<![CDATA[&=UD\adjoint{U}\adjoint{\left(\adjoint{U}\right)}\adjoint{D}\adjoint{U}&&]]>\text{<acroref type="theorem" acro="AA" />}\\
+<![CDATA[&=\left(UD\adjoint{U}\right)\adjoint{\left(UD\adjoint{U}\right)}&&]]>\text{<acroref type="theorem" acro="MMAD" />}\\
+<![CDATA[&=A\adjoint{A}&&]]>\text{Hypothesis}
 </alignmath>
 </p>
 
 <p>So by <acroref type="definition" acro="NRML" />, $A$ is a normal matrix.</p>
 
-<p><implyreverse /> For the converse, suppose that $A$ is a normal matrix.   Whether or not $A$ is normal, <acroref type="theorem" acro="OBUTR" /> provides a unitary matrix $U$ and an upper triangular matrix $T$, whose diagonal entries are the eigenvalues of $A$, and such that $\adjoint{U}AU=T$.  With the added condition that $A$ is normal, we will determine that the entries of $T$ above the diagonal must be all zero.  Here we go.  First we show that $T$ is normal.</p>
+<p><implyreverse /> For the converse, suppose that $A$ is a normal matrix.   Whether or not $A$ is normal, <acroref type="theorem" acro="OBUTR" /> provides a unitary matrix $U$ and an upper triangular matrix $T$, whose diagonal entries are the eigenvalues of $A$, and such that $\adjoint{U}AU=T$.  With the added condition that $A$ is normal, we will determine that the entries of $T$ above the diagonal must be all zero.  Here we go.</p>
 
-<p>
+<p>First notice that <acroref type="definition" acro="UM" /> implies that the inverse of a unitary matrix $U$ is the adjoint, $\adjoint{U}$, so the product of these two matrices, in either order, is the identity matrix (<acroref type="theorem" acro="OSIS" />).  We begin by showing that $T$ is normal.
+
 <alignmath>
 \adjoint{T}T
-<![CDATA[&=\adjoint{\left(\adjoint{U}AU\right)}\adjoint{U}AU\\]]>
-<![CDATA[&=\adjoint{U}\adjoint{A}\adjoint{\left(\adjoint{U}\right)}\adjoint{U}AU&&\text{Adjoint of a product}\\]]>
+<![CDATA[&=\adjoint{\left(\adjoint{U}AU\right)}\left(\adjoint{U}AU\right)&&]]>\text{<acroref type="theorem" acro="OBUTR" />}\\
+<![CDATA[&=\adjoint{U}\adjoint{A}\adjoint{\left(\adjoint{U}\right)}\adjoint{U}AU&&]]>\text{<acroref type="theorem" acro="MMAD" />}\\
 <![CDATA[&=\adjoint{U}\adjoint{A}U\adjoint{U}AU&&]]>\text{<acroref type="theorem" acro="AA" />}\\
 <![CDATA[&=\adjoint{U}\adjoint{A}I_nAU&&]]>\text{<acroref type="definition" acro="UM" />}\\
 <![CDATA[&=\adjoint{U}\adjoint{A}AU&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
@@ -371,8 +366,8 @@ so we see by <acroref type="definition" acro="NRML" /> that $A$ is normal.  Howe
 <![CDATA[&=\adjoint{U}AI_n\adjoint{A}U&&]]>\text{<acroref type="theorem" acro="MMIM" />}\\
 <![CDATA[&=\adjoint{U}AU\adjoint{U}\adjoint{A}U&&]]>\text{<acroref type="definition" acro="UM" />}\\
 <![CDATA[&=\adjoint{U}AU\adjoint{U}\adjoint{A}\adjoint{\left(\adjoint{U}\right)}&&]]>\text{<acroref type="theorem" acro="AA" />}\\
-<![CDATA[&=\adjoint{U}AU\adjoint{\left(\adjoint{U}AU\right)}&&\text{Adjoint of a product}\\]]>
-<![CDATA[&=T\adjoint{T}]]>
+<![CDATA[&=\left(\adjoint{U}AU\right)\adjoint{\left(\adjoint{U}AU\right)}&&]]>\text{<acroref type="theorem" acro="MMAD" />}\\
+<![CDATA[&=T\adjoint{T}&&]]>\text{<acroref type="theorem" acro="OBUTR" />}
 </alignmath>
 </p>
 
