@@ -14,8 +14,6 @@
 <introduction>
 <p>We have seen in <acroref type="section" acro="SD" /> that under the right conditions a square matrix is similar to a diagonal matrix.  We recognize now, via <acroref type="theorem" acro="SCB" />, that a similarity transformation is a change of basis on a matrix representation.  So we can now discuss the choice of a basis used to build a matrix representation, and decide if some bases are better than others for this purpose.  This will be the tone of this section.  We will also see that every matrix has a reasonably useful matrix representation, and we will discover a new class of diagonalizable linear transformations.  First we need some basic facts about triangular matrices.</p>
 
-<p><b>Note:</b> This section is not as complete as the previous ones.  It would benefit from more examples, Sage explanations, and the inclusion of some exercises.  Furthermore, it is possible that applications of results about orthogonality make use of previous versions based on an inner product that is the <q>reverse</q> of the current version.  That said, the definitions, theorems and proofs are accurate and complete.</p>
-
 </introduction>
 
 <subsection acro="TM">
@@ -475,6 +473,38 @@ which forces the conclusions
 
 <p>In a vague way <acroref type="theorem" acro="OBNM" /> is an improvement on <acroref type="theorem" acro="HMOE" /> which said that eigenvectors of a Hermitian matrix for different eigenvalues are always orthogonal.  Hermitian matrices are normal and we see that we can find at least one basis where <em>every</em> pair of eigenvectors is orthogonal.  Notice that this is not a generalization, since <acroref type="theorem" acro="HMOE" /> states a weak result which applies to many (but not all) pairs of eigenvectors, while <acroref type="theorem" acro="OBNM" /> is a seemingly stronger result, but only asserts that there is one collection of eigenvectors with the stronger property.</p>
 
+<p>Given an $n\times n$ matrix $A$, an orthonormal basis for $\complex{n}$, comprised of eigenvectors of $A$ is an extremely useful basis to have at the service of the matrix $A$.  Why do we say this?  We can consider the vectors of a basis as a preferred set of directions, known as <q>axes,</q> which taken together might also be called a <q>coordinate system.</q>  The standard basis of <acroref type="definition" acro="SUV" /> could be considered the default, or prototype, coordinate system.  When a basis is orthornormal, we can consider the directions to be standardized to have unit length, and we can consider the axes as being mutually perpendicular.  But there is more <mdash /> let's be a bit more formal.</p>
+
+<p>Suppose $U$ is a matrix whose columns are an orthonormal basis of eigenvectors of the $n\times n$ matrix $A$.  So, in particular $U$ is a unitary matrix (<acroref type="theorem" acro="CUMOS" />).  For a vector $\vect{x}\in\complex{n}$, use the notation $\hat{\vect{x}}$ for the vector representation of $\vect{x}$ relative to the orthonormal basis.  So the entries of $\hat{\vect{x}}$, used in a linear combination of the columns of $U$ will create $\vect{x}$.  With <acroref type="definition" acro="MVP" />, we can write this relationship as
+<alignmath>
+U\hat{\vect{x}} = \vect{x}
+</alignmath>
+Since $\adjoint{U}$ is the inverse of $U$ (<acroref type="definition" acro="UM" />), we can rearrange this equation as
+<alignmath>
+\hat{\vect{x}} = \adjoint{U}\vect{x}
+</alignmath>
+This says we can easily create the vector representation relative to the orthonormal basis with a matrix-vector product of the adjoint of $U$.  Note that the adjoint is much easier to compute than a matrix inverse, which would be one general way to obtain a vector representation.  This is our first observation about coordinatization relative to orthonormal basis.  However, we already knew this, as we just have <acroref type="theorem" acro="COB" /> in disguise (see ).</p>
+
+<p>We also know that orthonormal bases play nicely with inner products.  <acroref type="theorem" acro="UMPIP" /> says unitary matrices preserve inner products (and hence norms).  More geometrically, lengths and angles are preserved by multiplication by a unitary matrix.  Using our notation, this becomes
+<alignmath>
+\innerproduct{\vect{x}}{\vect{y}}
+=\innerproduct{U\hat{\vect{x}}}{U\hat{\vect{y}}}
+=\innerproduct{\hat{\vect{x}}}{\hat{\vect{y}}}
+</alignmath>
+So we can compute inner products with the original vectors, or with their representations, and obtain the same result.  It follows that norms, lengths, and angles can all be computed with the original vectors or with the representations in the new coordinate system based on an orthonormal basis.</p>
+
+<p>So far we have not really said anything new, nor has the matrix $A$, or its eigenvectors, come into play.  We know that a matrix is really a linear transformation, so we express this view of a matrix as a function by writing generically that $A\vect{x}=\vect{y}$.  The matrix $U$ will diagonalize $A$, creating the diagonal matrix $D$ with diagonal entries equal to the eigenvalues of $A$.  We can write this as $\adjoint{U}AU = D$ and convert to $\adjoint{U}A=D\adjoint{U}$.  Then we have
+<alignmath>
+\hat{\vect{y}}
+=\adjoint{U}\vect{y}
+=\adjoint{U}A\vect{x}
+=D\adjoint{U}\vect{x}
+=D\hat{\vect{x}}
+</alignmath>
+So with the coordinatized vectors, the transformation by the matrix $A$ can be accomplished with multiplication by a diagonal matrix $D$.  A moment's thought should convince you that a matrix-vector product with a diagonal matrix is exeedingly simple computationally.  Geometrically, this is simply stretching, contracting and/or reflecting in the direction of each basis vector (<q>axis</q>).  And the multiples used for these changes are the diagonal entries of the diagonal matrix, the eigenvalues of $A$.</p>
+
+<p>So the new coordinate system (provided by the orthonormal basis of eigenvectors) is a collection of mutually perpendicular unit vectors where inner products are preserved, and the action of the matrix $A$ is described by multiples (eigenvalues) of the entries of the coordinatized versions of the vectors.  Nice.</p>
+
 </subsection>
 
 <!--   End  OD.tex -->
@@ -486,13 +516,22 @@ which forces the conclusions
 </ol>
 </readingquestions>
 
-<!-- Just a place holder so it is obvious there are no problems yet. -->
 <exercisesubsection>
-<exercise type="C" number="00" rough=" totally bogus">
+
+<exercise type="T" number="10" rough="A*A-adjoint is normal">
 <problem contributor="robertbeezer">
-This problem left intentionally blank.
+<acroref type="exercise" acro="MM.T35" /> asked you to show that $A\adjoint{A}$ is Hermitian.  Prove directly that $A\adjoint{A}$ is a normal matrix.
 </problem>
 </exercise>
+
+
+<exercise type="T" number="20" rough=" Theorem COB reprised">
+<problem contributor="robertbeezer">
+In the discussion following <acroref type="theorem" acro="OBNM" /> we comment that the equation $\hat{\vect{x}} = \adjoint{U}\vect{x}$ is just <acroref type="theorem" acro="COB" /> in disguise.  Formulate this observation more formally and prove the equivalence.
+</problem>
+</exercise>
+
+
 </exercisesubsection>
 
 
