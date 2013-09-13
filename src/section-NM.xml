@@ -137,7 +137,7 @@ I_4=
 
 </example>
 
-<p>Notice that an identity matrix is square, and in reduced row-echelon form.  So in particular, if we were to arrive at the identity matrix while bringing a matrix to reduced row-echelon form, then it would have all of the diagonal entries circled as leading 1's.</p>
+<p>Notice that an identity matrix is square, and in reduced row-echelon form.  Also, every column is a pivot column, and every possible pivot column appears once.</p>
 
 <sageadvice acro="IM" index="identity matrix">
 <title>Identity Matrix</title>
@@ -195,29 +195,24 @@ id50 == id50.rref()
 <example acro="SRR" index="singular matrix, row-reduced">
 <title>Singular matrix, row-reduced</title>
 
-<p>The coefficient matrix for <acroref type="archetype" acro="A" /> is
+<p>We have the coefficient matrix for <acroref type="archetype" acro="A" /> and a row-equivalent matrix $B$ in reduced row-echelon form, 
 <equation>
-A=<archetypepart acro="A" part="purematrix" /></equation>
-which when row-reduced becomes the row-equivalent matrix
-<equation>
-B=<archetypepart acro="A" part="matrixreduced" />.</equation>
+A=<archetypepart acro="A" part="purematrix" />\rref<archetypepart acro="A" part="matrixreduced" />=B</equation>
 </p>
 
-<p>Since this matrix is not the $3\times 3$ identity matrix, <acroref type="theorem" acro="NMRRI" /> tells us that $A$ is a singular matrix.</p>
+<p>Since $B$ is not the $3\times 3$ identity matrix, <acroref type="theorem" acro="NMRRI" /> tells us that $A$ is a singular matrix.</p>
 
 </example>
 
 <example acro="NSR" index="nonsingular matrix, row-reduced">
 <title>Nonsingular matrix, row-reduced</title>
 
-<p>The coefficient matrix for <acroref type="archetype" acro="B" /> is
+<p>We have the coefficient matrix for <acroref type="archetype" acro="B" /> and a row-equivalent matrix $B$ in reduced row-echelon form, 
 <equation>
-A=<archetypepart acro="B" part="purematrix" /></equation>
-which when row-reduced becomes the row-equivalent matrix
-<equation>
-B=<archetypepart acro="B" part="matrixreduced" /></equation></p>
+A=<archetypepart acro="A" part="purematrix" />\rref<archetypepart acro="B" part="matrixreduced" />=B</equation>
+</p>
 
-<p>Since this matrix is the $3\times 3$ identity matrix, <acroref type="theorem" acro="NMRRI" /> tells us that $A$ is a nonsingular matrix.</p>
+<p>Since $B$ is the $3\times 3$ identity matrix, <acroref type="theorem" acro="NMRRI" /> tells us that $A$ is a nonsingular matrix.</p>
 
 </example>
 
@@ -232,13 +227,12 @@ B=<archetypepart acro="B" part="matrixreduced" /></equation></p>
 <title>Null space of a singular matrix</title>
 
 <indexlocation index="null space!singular matrix" />
-<p>Given the coefficient matrix from <acroref type="archetype" acro="A" />,
-<equation>
-A=<archetypepart acro="A" part="purematrix" /></equation>
-the null space is the set of solutions to the homogeneous system of equations  $\homosystem{A}$ has a solution set and null space constructed in <acroref type="example" acro="HISAA" /> as
-<equation>
-\nsp{A}=\setparts{\colvector{-x_3\\x_3\\x_3}}{x_3\in\complex{\null}}
-</equation></p>
+<p>Given the singular coefficient matrix from <acroref type="archetype" acro="A" />, the null space is the set of solutions to the homogeneous system of equations  $\homosystem{A}$ has a solution set and null space constructed in <acroref type="example" acro="HISAA" /> as an infinite set of vectors.
+<!-- Watch blank line -->
+<alignmath>
+A<![CDATA[&=]]><archetypepart acro="A" part="purematrix" /><![CDATA[&]]>\nsp{A}<![CDATA[&=]]>\setparts{\colvector{-x_3\\x_3\\x_3}}{x_3\in\complex{\null}}
+</alignmath>
+</p>
 
 </example>
 
@@ -246,13 +240,12 @@ the null space is the set of solutions to the homogeneous system of equations  $
 <title>Null space of a nonsingular matrix</title>
 
 <indexlocation index="null space!nonsingular matrix" />
-<p>Given the coefficient matrix from <acroref type="archetype" acro="B" />,
-<equation>
-A=<archetypepart acro="B" part="purematrix" /></equation>
-the solution set to the homogeneous system $\homosystem{A}$ is constructed in <acroref type="example" acro="HUSAB" /> and contains only the trivial solution, so the null space has only a single element,
-<equation>
-\nsp{A}=\set{\colvector{0\\0\\0}}
-</equation></p>
+<p>Given the nonsingular coefficient matrix from <acroref type="archetype" acro="B" />, the solution set to the homogeneous system $\homosystem{A}$ is constructed in <acroref type="example" acro="HUSAB" /> and contains only the trivial solution, so the null space of $A$ has only a single element,
+<!-- Watch blank line -->
+<alignmath>
+A<![CDATA[&=]]><archetypepart acro="B" part="purematrix" /><![CDATA[&]]>\nsp{A}<![CDATA[&=]]>\set{\colvector{0\\0\\0}}
+</alignmath>
+</p>
 
 </example>
 
@@ -261,7 +254,7 @@ the solution set to the homogeneous system $\homosystem{A}$ is constructed in <a
 <theorem acro="NMTNS" index="nonsingular matrix!trivial null space">
 <title>Nonsingular Matrices have Trivial Null Spaces</title>
 <statement>
-<p>Suppose that $A$ is a square matrix.  Then $A$ is nonsingular if and only if the null space of $A$, $\nsp{A}$, contains only the zero vector, <ie /> $\nsp{A}=\set{\zerovector}$.</p>
+<p>Suppose that $A$ is a square matrix.  Then $A$ is nonsingular if and only if the null space of $A$ is the set containing only the zero vector, <ie /> $\nsp{A}=\set{\zerovector}$.</p>
 
 </statement>
 
@@ -310,7 +303,7 @@ the solution set to the homogeneous system $\homosystem{A}$ is constructed in <a
 </statement>
 
 <proof>
-<p>That $A$ is nonsingular is equivalent to each of the subsequent statements by, in turn,
+<p>The statement that $A$ is nonsingular is equivalent to each of the subsequent statements by, in turn,
 <acroref type="theorem" acro="NMRRI" />,
 <acroref type="theorem" acro="NMTNS" /> and
 <acroref type="theorem" acro="NMUS" />.  So the statement of this theorem is just a convenient way to organize all these results.</p>
@@ -366,16 +359,16 @@ How do we tell if the reduced row-echelon form of the augmented matrix of a syst
 
 
 </sageadvice>
-<p>Finally, you may have wondered why we refer to a matrix as <em>nonsingular</em> when it creates systems of equations with <em>single</em> solutions (<acroref type="theorem" acro="NMUS" />)!  I've wondered the same thing.  We'll have an opportunity to address this when we get to <acroref type="theorem" acro="SMZD" />.  Can you wait that long?</p>
+<p>Finally, you may have wondered why we refer to a matrix as <em>nonsingular</em> when it creates systems of equations with <em>single</em> solutions (<acroref type="theorem" acro="NMUS" />)!  I've wondered the same thing.  We will have an opportunity to address this when we get to <acroref type="theorem" acro="SMZD" />.  Can you wait that long?</p>
 
 </subsection>
 
 <!--   End  nsm.tex -->
 <readingquestions>
 <ol>
-<li>What is the definition of a nonsingular matrix?
+<li>In your own words state the definition of a nonsingular matrix.
 </li>
-<li>What is the easiest way to recognize if a square matrix is nonsingular or not?
+<li>What is the <em>easiest</em> way to recognize if a square matrix is nonsingular or not?
 </li>
 <li>Suppose we have a system of equations and its coefficient matrix is nonsingular.  What can you say about the solution set for this system?
 </li></ol>
