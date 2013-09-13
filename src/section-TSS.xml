@@ -9,14 +9,14 @@
 <!-- % -->
 <!-- %%%%%%%%%% -->
 <introduction>
-<p>We will now be more careful about analyzing the reduced row-echelon form derived from the  augmented matrix of a system of linear equations.    In particular, we will see how to systematically handle the situation when we have infinitely many solutions to a system, and we will prove that every system of linear equations has either zero, one or infinitely many solutions.  With these tools, we will be able to solve any system by a well-described method.</p>
+<p>We will now be more careful about analyzing the reduced row-echelon form derived from the  augmented matrix of a system of linear equations.    In particular, we will see how to systematically handle the situation when we have infinitely many solutions to a system, and we will prove that every system of linear equations has either zero, one or infinitely many solutions.  With these tools, we will be able to routinely solve any linear system.</p>
 
 </introduction>
 
 <subsection acro="CS">
 <title>Consistent Systems</title>
 
-<p>The computer scientist Donald Knuth said, <q>Science is what we understand well enough to explain to a computer. Art is everything else.</q>  In this section we'll remove solving systems of equations from the realm of art, and into the realm of science.  We begin with a definition.</p>
+<p>The computer scientist Donald Knuth said, <q>Science is what we understand well enough to explain to a computer. Art is everything else.</q>  In this section we will remove solving systems of equations from the realm of art, and into the realm of science.  We begin with a definition.</p>
 
 <definition acro="CS" index="consistent system">
 <title>Consistent System</title>
@@ -166,7 +166,7 @@ whose augmented matrix row-reduces to
 </equation>
 </p>
 
-<p>There are leading 1's in columns 1, 3 and 4, so $D=\set{1,\,3,\,4}$.  From this we know that the variables $x_1$, $x_3$ and $x_4$ will be dependent variables, and each of the $r=3$ nonzero rows of the row-reduced matrix will yield an expression for one of these three variables.  The set $F$ is all the remaining column indices, $F=\set{2,\,5,\,6}$.  That $6\in F$ refers to the column originating from the vector of constants, but the remaining indices in $F$ will correspond to free variables, so $x_2$ and $x_5$ (the remaining variables) are our free variables.  The resulting three equations that describe our solution set are then,
+<p>There are leading 1's in columns 1, 3 and 4, so $D=\set{1,\,3,\,4}$.  From this we know that the variables $x_1$, $x_3$ and $x_4$ will be dependent variables, and each of the $r=3$ nonzero rows of the row-reduced matrix will yield an expression for one of these three variables.  The set $F$ is all the remaining column indices, $F=\set{2,\,5,\,6}$.  The column index $6$ in $F$ means that the final column is not a pivot column, and thus the system is consistent (<acroref type="theorem" acro="RCLS" />).  The remaining indices in $F$ correspond to free variables, so $x_2$ and $x_5$ (the remaining variables) are our free variables.  The resulting three equations that describe our solution set are then,
 <alignmath>
 <![CDATA[(x_{d_1}=x_1)& & x_1&=6+x_2-3x_5\\]]>
 <![CDATA[(x_{d_2}=x_3)& & x_3&=1+2x_5\\]]>
@@ -233,7 +233,7 @@ Can you use this new matrix method to make a simpler version of the <code>consis
 
 
 </sageadvice>
-<p>Sets are an important part of algebra, and we've seen a few already.  Being comfortable with sets is important for understanding and writing proofs.  If you haven't already, pay a visit now to <acroref type="section" acro="SET" />.</p>
+<p>Sets are an important part of algebra, and we have seen a few already.  Being comfortable with sets is important for understanding and writing proofs.  If you have not already, pay a visit now to <acroref type="section" acro="SET" />.</p>
 
 <p>We can now use the values of $m$, $n$, $r$, and the independent and dependent variables to categorize the solution sets for linear systems through a sequence of theorems.</p>
 
@@ -252,7 +252,7 @@ Can you use this new matrix method to make a simpler version of the <code>consis
 <proof>
 <p><implyreverse />  The first half of the proof begins with the assumption that the leading 1 of row $r$ is located in column $n+1$ of $B$.  Then row $r$ of $B$ begins with $n$ consecutive zeros, finishing with the leading 1.  This is a representation of the equation $0=1$, which is false.  Since this equation is false for any collection of values we might choose for the variables, there are no solutions for the system of equations, and it is inconsistent.</p>
 
-<p><implyforward />  For the second half of the proof, we wish to show that if we assume the system is inconsistent, then the final leading 1 is located in the last column.  But instead of proving this directly, we'll form the logically equivalent statement that is the contrapositive, and prove that instead (see <acroref type="technique" acro="CP" />).  Turning the implication around, and negating each portion, we arrive at the logically equivalent statement:  If the leading 1 of row $r$ is not in column $n+1$, then the system of equations is consistent.</p>
+<p><implyforward />  For the second half of the proof, we wish to show that if we assume the system is inconsistent, then the final leading 1 is located in the last column.  But instead of proving this directly, we will form the logically equivalent statement that is the contrapositive, and prove that instead (see <acroref type="technique" acro="CP" />).  Turning the implication around, and negating each portion, we arrive at the logically equivalent statement:  If the leading 1 of row $r$ is not in column $n+1$, then the system of equations is consistent.</p>
 
 <p>If the  leading 1 for row $r$ is located somewhere in columns 1 through $n$, then <em>every</em> preceding row's leading 1 is also located in columns 1 through $n$.  In other words, since the last leading 1 is not in the last column, no leading 1 for any row is in the last column, due to the echelon layout of the leading 1's (<acroref type="definition" acro="RREF" />).  We will now construct a solution to the system by setting each dependent variable to the entry of the final column for the row with the corresponding leading 1, and setting each free variable to zero.  That sentence is pretty vague, so let's be more precise.  Using our notation for the sets $D$ and $F$ from the reduced row-echelon form (<acroref type="definition" acro="RREF" />):
 <alignmath>
@@ -547,7 +547,7 @@ In order to totally understand the behavior of the <code>.solve_right()</code> c
 <!--   End  tss.tex -->
 <readingquestions>
 <ol>
-<li>How can we easily recognize when a system of linear equations is inconsistent or not?
+<li>How can we <em>easily</em> recognize when a system of linear equations is inconsistent or not?
 </li>
 <li>Suppose we have converted the augmented matrix of a system of equations into reduced row-echelon form.  How do we then identify the dependent and independent (free) variables?
 </li>
