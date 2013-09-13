@@ -339,24 +339,7 @@ Why do some vectors of constants lead to a consistent system with this coefficie
 </sageadvice>
 <p>Notice that for a consistent system the row-reduced augmented matrix has $n+1\in F$, so the largest element of $F$ does not refer to a variable.  Also, for an inconsistent system, $n+1\in D$, and it then does not make much sense to discuss whether or not variables are free or dependent since there is no solution.  Take a look back at <acroref type="definition" acro="IDV" /> and see why we did not need to consider the possibility of referencing $x_{n+1}$ as a dependent variable.</p>
 
-<p>With the characterization of <acroref type="theorem" acro="RCLS" />, we can explore the relationships between $r$ and $n$ in light of the consistency of a system of equations.  First, a situation where we can quickly conclude the inconsistency of a system.</p>
-
-<theorem acro="ISRN" index="inconsistent linear systems">
-<title>Inconsistent Systems, $r$ and $n$</title>
-<statement>
-<p>Suppose $A$ is the augmented matrix of a system of linear equations in $n$ variables.  Suppose also that $B$ is a row-equivalent matrix in reduced row-echelon form with $r$ rows that are not completely zeros.  If $r=n+1$, then the system of equations is inconsistent.</p>
-
-</statement>
-
-<proof>
-<p>If  $r=n+1$, then $D=\set{1,\,2,\,3,\,\ldots,\,n,\,n+1}$ and every column of $B$ contains a leading 1 and is a pivot column.  In particular, the entry of column $n+1$ for row $r=n+1$ is a leading 1.  <acroref type="theorem" acro="RCLS" /> then says that the system is inconsistent.</p>
-
-</proof>
-</theorem>
-
-<p>Do not confuse <acroref type="theorem" acro="ISRN" /> with its converse!  Go check out <acroref type="technique" acro="CV" /> right now.</p>
-
-<p>Next, if a system is consistent, we can distinguish between a unique solution and infinitely many solutions, and furthermore, we recognize that these are the only two possibilities.</p>
+<p>With the characterization of <acroref type="theorem" acro="RCLS" />, we can explore the relationships between $r$ and $n$ for a consistent system.  We can distinguish between the case of a unique solution and infinitely many solutions, and furthermore, we recognize that these are the only two possibilities.</p>
 
 <theorem acro="CSRN" index="consistent linear systems">
 <title>Consistent Systems, $r$ and $n$</title>
@@ -368,7 +351,7 @@ then the system has infinitely many solutions.</p>
 </statement>
 
 <proof>
-<p>This theorem contains three implications that we must establish.  Notice first that $B$ has $n+1$ columns, so there can be at most $n+1$ pivot columns, <ie /> $r\leq n+1$.  If $r=n+1$, then <acroref type="theorem" acro="ISRN" /> tells us that the system is inconsistent, contrary to our hypothesis. We are left with $r\leq n$.</p>
+<p>This theorem contains three implications that we must establish.  Notice first that $B$ has $n+1$ columns, so there can be at most $n+1$ pivot columns, <ie /> $r\leq n+1$.  If $r=n+1$, then every column of $B$ is a pivot column, and in particular, the last column is a pivot column.  So <acroref type="theorem" acro="RCLS" /> tells us that the system is inconsistent, contrary to our hypothesis. We are left with $r\leq n$.</p>
 
 <p>When $r=n$, we find $n-r=0$ free variables (<ie /> $F=\set{n+1}$) and any solution must equal the unique solution given by the first $n$ entries of column $n+1$ of $B$.</p>
 
@@ -406,8 +389,8 @@ corresponding to columns of $B$ without a leading 1, excepting the final column,
 <p>For each archetype that is a system of equations, the values of $n$ and $r$ are listed.  Many also contain a few sample solutions.  We can use this information profitably, as illustrated by four examples.
 <ol><li> <acroref type="archetype" acro="A" /> has $n=3$ and $r=2$.  It can be seen to be consistent by the sample solutions given.  Its solution set then has $n-r=1$ free variables, and therefore will be infinite.
 </li><li> <acroref type="archetype" acro="B" /> has $n=3$ and $r=3$.  It can be seen to be consistent by the single sample solution given.  Its solution set can then be described with $n-r=0$ free variables, and therefore will have just the single solution.
-</li><li> <acroref type="archetype" acro="H" /> has $n=2$ and $r=3$.  In this case, $r=n+1$, so <acroref type="theorem" acro="ISRN" /> says the system is inconsistent.  We should not try to apply <acroref type="theorem" acro="FVCS" /> to count free variables, since the theorem only applies to consistent systems. (What would happen if you did?)
-</li><li> <acroref type="archetype" acro="E" /> has $n=4$ and $r=3$.  However, by looking at the reduced row-echelon form of the augmented matrix, we find a leading 1 in row 3, column 5.  By <acroref type="theorem" acro="RCLS" /> we recognize the system as inconsistent.  (Why doesn't this example contradict <acroref type="theorem" acro="ISRN" />?)
+</li><li> <acroref type="archetype" acro="H" /> has $n=2$ and $r=3$.  In this case, column 3 must be a pivot column, so by <acroref type="theorem" acro="RCLS" />, the system is inconsistent.  We should not try to apply <acroref type="theorem" acro="FVCS" /> to count free variables, since the theorem only applies to consistent systems. (What would happen if you did try to incorrectly apply <acroref type="theorem" acro="FVCS" />?)
+</li><li> <acroref type="archetype" acro="E" /> has $n=4$ and $r=3$.  However, by looking at the reduced row-echelon form of the augmented matrix, we find that column 5 is a pivot column.  By <acroref type="theorem" acro="RCLS" /> we recognize the system as inconsistent.
 </li></ol>
 </p>
 
@@ -701,7 +684,7 @@ $\setparts{\colvector{2 - x_3 + x_4\\ 0 \\ x_3 \\ x_4}}{x_3, x_4 \in\complexes}$
 <![CDATA[0 & 0 & 0 & \leading{1}]]>
 \end{bmatrix}.
 </alignmath>
-Since $n = 3$ and $r = 4 = n+1$,  <acroref type="theorem" acro="ISRN" /> guarantees that the system is inconsistent.  Thus, we see that the given system has no solution.
+Since $n = 3$ and $r = 4 = n+1$,  the last column is a pivot column and <acroref type="theorem" acro="RCLS" /> guarantees that the system is inconsistent.  Thus, we see that the given system has no solution.
 </solution>
 </exercise>
 
@@ -881,7 +864,7 @@ where $x_3$ is any scalar.  So we can express the solution set as
 <exercise type="M" number="57" rough="Vars + equations + extra, what can be said??">
 <problem contributor="robertbeezer">A system with 8 equations and 6 variables.  The reduced row-echelon form of the augmented matrix of the system has 7 pivot columns.
 </problem>
-<solution contributor="robertbeezer">7 pivot columns implies that there are $r=7$ nonzero rows (so row 8 is all zeros in the reduced row-echelon form).  Then $n+1=6+1=7=r$ and <acroref type="theorem" acro="ISRN" /> allows to conclude that the system is inconsistent.
+<solution contributor="robertbeezer">7 pivot columns implies that there are $r=7$ nonzero rows (so row 8 is all zeros in the reduced row-echelon form).  The last column must be a pivot column and <acroref type="theorem" acro="RCLS" /> allows to conclude that the system is inconsistent.
 </solution>
 </exercise>
 
@@ -934,6 +917,14 @@ If you cannot conclude anything about an entry, then say so.  (See <acroref type
 </problem>
 <solution contributor="robertbeezer"><acroref type="theorem" acro="FVCS" /> will indicate a negative number of free variables, but we can say even more.  If $r>n$, then the only possibility is that $r=n+1$, and then we compute $n-r=n-(n+1)=-1$ free variables.
 </solution>
+</exercise>
+
+<exercise type="T" number="11" rough="r=n+1 is inconsistent">
+<problem contributor="robertbeezer">Suppose $A$ is the augmented matrix of a system of linear equations in $n$ variables.  and that $B$ is a row-equivalent matrix in reduced row-echelon form with $r$ pivot columns.  If $r=n+1$, prove that the system of equations is inconsistent.
+<solution contributor="robertbeezer">If  $r=n+1$, then $D=\set{1,\,2,\,3,\,\ldots,\,n,\,n+1}$ and every column of $B$ is a pivot column.  In particular, column $n+1$ is a pivot column.  By <acroref type="theorem" acro="RCLS" /> the system is inconsistent.
+</solution>
+    
+</problem>
 </exercise>
 
 <exercise type="T" number="20" rough="full generalization of TSS.M46, TSS.M70">
