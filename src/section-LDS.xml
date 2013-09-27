@@ -18,7 +18,7 @@
 <subsection acro="LDSS">
 <title>Linearly Dependent Sets and Spans</title>
 
-<p>If we use a linearly dependent set to construct a span, then we can <em>always</em> create the same infinite set with a starting set that is one vector smaller in size.  We will illustrate this behavior in <acroref type="example" acro="RSC5" />.  However, this will not be possible if we build a span from a linearly independent set.  So in a certain sense, using a linearly independent set to formulate a span is the best possible way <mdash /> there aren't any extra vectors being used to build up all the necessary linear combinations.  OK, here's the theorem, and then the example.</p>
+<p>If we use a linearly dependent set to construct a span, then we can <em>always</em> create the same infinite set with a starting set that is one vector smaller in size.  We will illustrate this behavior in <acroref type="example" acro="RSC5" />.  However, this will not be possible if we build a span from a linearly independent set.  So in a certain sense, using a linearly independent set to formulate a span is the best possible way <mdash /> there are not any extra vectors being used to build up all the necessary linear combinations.  OK, here is the theorem, and then the example.</p>
 
 <theorem acro="DLDS" index="linearly dependent set!linear combinations within">
 <title>Dependency in Linearly Dependent Sets</title>
@@ -112,7 +112,7 @@ R=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}
 </equation>
 and define $V=\spn{R}$.</p>
 
-<p>To employ <acroref type="theorem" acro="LIVHS" />, we form a $5\times 4$ coefficient matrix, $D$,
+<p>To employ <acroref type="theorem" acro="LIVHS" />, we form a $5\times 4$ matrix, $D$, and row-reduce to understand solutions to the homogeneous system $\homosystem{D}$,
 <equation>
 D=
 \begin{bmatrix}
@@ -122,9 +122,7 @@ D=
 <![CDATA[3&1&-11&1\\]]>
 <![CDATA[2&2&-2&6]]>
 \end{bmatrix}
-</equation>
-and row-reduce to understand solutions to the homogeneous system $\homosystem{D}$,
-<equation>
+\rref
 \begin{bmatrix}
 <![CDATA[\leading{1}&0&0&4\\]]>
 <![CDATA[0&\leading{1}&0&0\\]]>
@@ -189,7 +187,7 @@ in essence declaring $\vect{v}_3$ as surplus for the task of building $V$ as a s
 
 <sageadvice acro="RLD" index="relations of linear dependence">
 <title>Relations of Linear Dependence</title>
-<acroref type="example" acro="RSC5" /> turned on a non-trivial relation of linear dependence (<acroref type="definition" acro="RLDCV" />) on the set $\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}$.  Besides indicating linear independence, the Sage vector space method <code>.linear_dependence()</code> produces relations of linear dependence for linearly dependent sets.  Here is how we would employ this method in <acroref type="example" acro="RSC5" />.  The optional argument <code>zeros='right'</code> will produce results consistent with our work here, you can also experiment with <code>zeros='left'</code> (which is the default).
+<acroref type="example" acro="RSC5" /> turned on a nontrivial relation of linear dependence (<acroref type="definition" acro="RLDCV" />) on the set $\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}$.  Besides indicating linear independence, the Sage vector space method <code>.linear_dependence()</code> produces relations of linear dependence for linearly dependent sets.  Here is how we would employ this method in <acroref type="example" acro="RSC5" />.  The optional argument <code>zeros='right'</code> will produce results consistent with our work here, you can also experiment with <code>zeros='left'</code> (which is the default).
 <sage>
 <input>V = QQ^5
 v1 = vector(QQ, [1,  2, -1,   3,  2])
@@ -218,7 +216,7 @@ L[0]
 </output>
 </sage>
 
-You can check that the list <code>L</code> has just one element (maybe with <code>len(L)</code>), but realize that any multiple of the vector <code>L[0]</code> is also a relation of linear dependence on <code>R</code>, most of which are non-trivial.  Notice that we have verified the final conclusion of <acroref type="example" acro="RSC5" /> with a comparison of two spans.<br /><br />
+You can check that the list <code>L</code> has just one element (maybe with <code>len(L)</code>), but realize that any multiple of the vector <code>L[0]</code> is also a relation of linear dependence on <code>R</code>, most of which are nontrivial.  Notice that we have verified the final conclusion of <acroref type="example" acro="RSC5" /> with a comparison of two spans.<br /><br />
 We will give the <code>.linear_dependence()</code> method a real workout in the nest Sage subsection (<acroref type="sage" acro="COV" />) <mdash /> this is just a quick introduction.
 
 
@@ -258,9 +256,9 @@ A=\matrixcolumns{A}{7}=<archetypepart acro="I" part="purematrix" /></equation>
 <p>By <acroref type="theorem" acro="SLSLC" /> a nontrivial solution to $\homosystem{A}$ will give us a nontrivial relation of linear dependence (<acroref type="definition" acro="RLDCV" />) on the columns of $A$ (which are the elements of the set $S$).  The row-reduced form for $A$ is the matrix
 <equation>
 B=<archetypepart acro="I" part="matrixreduced" /></equation>
-so we can easily create solutions to the homogeneous system $\homosystem{A}$ using the free variables $x_2,\,x_5,\,x_6,\,x_7$.  Any such solution will correspond to a relation of linear dependence on the columns of $B$.  These solutions will allow us to solve for one column vector as a linear combination of some others, in the spirit of <acroref type="theorem" acro="DLDS" />, and remove that vector from the set.  We'll set about forming these linear combinations methodically.</p>
+so we can easily create solutions to the homogeneous system $\homosystem{A}$ using the free variables $x_2,\,x_5,\,x_6,\,x_7$.  Any such solution will provide a relation of linear dependence on the columns of $B$.  These solutions will allow us to solve for one column vector as a linear combination of some others, in the spirit of <acroref type="theorem" acro="DLDS" />, and remove that vector from the set.  We will set about forming these linear combinations methodically.</p>
 
-<p>Set the free variable $x_2$ to one, and set the other free variables to zero.  Then a solution to $\linearsystem{A}{\zerovector}$ is
+<p>Set the free variable $x_2=1$, and set the other free variables to zero.  Then a solution to $\linearsystem{A}{\zerovector}$ is
 <equation>
 \vect{x}=\colvector{-4\\1\\0\\0\\0\\0\\0}
 </equation>
@@ -294,7 +292,7 @@ W=\spn{\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4,\,\vect{A}_5,\,\vect{A}_6,\,\ve
 
 <p>Technically, this set equality for $W$ requires a proof, in the spirit of <acroref type="example" acro="RSC5" />, but we will bypass this requirement here, and in the next few paragraphs.</p>
 
-<p>Now, set the free variable $x_5$ to one, and set the other free variables to zero.  Then a solution to $\linearsystem{B}{\zerovector}$ is
+<p>Now, set the free variable $x_5=1$, and set the other free variables to zero.  Then a solution to $\linearsystem{B}{\zerovector}$ is
 <equation>
 \vect{x}=\colvector{-2\\0\\-1\\-2\\1\\0\\0}
 </equation>
@@ -326,7 +324,7 @@ W=\spn{\left\{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4,\,\vect{A}_6,\,\vect{A}_7\rig
 </equation>
 </p>
 
-<p>Do it again, set the free variable $x_6$ to one, and set the other free variables to zero.  Then a solution to $\linearsystem{B}{\zerovector}$ is
+<p>Do it again, set the free variable $x_6=1$, and set the other free variables to zero.  Then a solution to $\linearsystem{B}{\zerovector}$ is
 <equation>
 \vect{x}=\colvector{-1\\0\\3\\6\\0\\1\\0}
 </equation>
@@ -355,7 +353,7 @@ This means that $\vect{A}_6$ is surplus, and we can create $W$ just as well with
 W=\spn{\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4,\,\vect{A}_7}}
 </equation></p>
 
-<p>Set the free variable $x_7$ to one, and set the other free variables to zero.  Then a solution to $\linearsystem{B}{\zerovector}$ is
+<p>Set the free variable $x_7=1$, and set the other free variables to zero.  Then a solution to $\linearsystem{B}{\zerovector}$ is
 <equation>
 \vect{x}=\colvector{3\\0\\-5\\-6\\0\\0\\1}
 </equation>
@@ -387,7 +385,7 @@ W=\spn{\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4}}
 </equation>
 </p>
 
-<p>You might think we could keep this up, but we have run out of free variables.  And not coincidentally, the set $\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4}$ is linearly independent (check this!).  It should be clear how each free variable was used to eliminate the corresponding column from the set used to span the column space, as this will be the essence of the proof of the next theorem.  The column vectors in $S$ were not chosen entirely at random, they are the columns of <acroref type="archetype" acro="I" />.  See if you can mimic this example using the columns of <acroref type="archetype" acro="J" />.  Go ahead, we'll go grab a cup of coffee and be back before you finish up.</p>
+<p>You might think we could keep this up, but we have run out of free variables.  And not coincidentally, the set $\set{\vect{A}_1,\,\vect{A}_3,\,\vect{A}_4}$ is linearly independent (check this!).  It should be clear how each free variable was used to eliminate the a column from the set used to span the column space, as this will be the essence of the proof of the next theorem.  The column vectors in $S$ were not chosen entirely at random, they are the columns of <acroref type="archetype" acro="I" />.  See if you can mimic this example using the columns of <acroref type="archetype" acro="J" />.  Go ahead, we'll go grab a cup of coffee and be back before you finish up.</p>
 
 <p>For extra credit, notice that the vector
 <equation>
@@ -516,7 +514,7 @@ Now, can you answer the extra credit question from <acroref type="example" acro=
 <theorem acro="BS" index="span!basis">
 <title>Basis of a Span</title>
 <statement>
-<p>Suppose that $S=\set{\vectorlist{v}{n}}$ is a set of column vectors.  Define $W=\spn{S}$ and let $A$ be the matrix whose columns are the vectors from $S$.  Let $B$ be the reduced row-echelon form of $A$, with $D=\set{\scalarlist{d}{r}}$ the set of column indices corresponding to the pivot columns of $B$.  Then
+<p>Suppose that $S=\set{\vectorlist{v}{n}}$ is a set of column vectors.  Define $W=\spn{S}$ and let $A$ be the matrix whose columns are the vectors from $S$.  Let $B$ be the reduced row-echelon form of $A$, with $D=\set{\scalarlist{d}{r}}$ the set of indices for the pivot columns of $B$.  Then
 <ol><li> $T=\set{\vect{v}_{d_1},\,\vect{v}_{d_2},\,\vect{v}_{d_3},\,\ldots\,\vect{v}_{d_r}}$ is a linearly independent set.
 </li><li> $W=\spn{T}$.
 </li></ol>
@@ -672,9 +670,9 @@ thus saying that $\vect{w}\in\spn{T}$.  Therefore, $W=\spn{S}\subseteq\spn{T}$.<
 </proof>
 </theorem>
 
-<p>In <acroref type="example" acro="COV" />, we tossed-out vectors one at a time.  But in each instance, we rewrote the offending vector as a linear combination of those vectors that corresponded to the pivot columns of the reduced row-echelon form of the matrix of columns.  In the proof of <acroref type="theorem" acro="BS" />, we accomplish this reduction in one big step.  In <acroref type="example" acro="COV" /> we arrived at a linearly independent set at exactly the same moment that we ran out of free variables to exploit.  This was not a coincidence, it is the substance of our conclusion of linear independence in <acroref type="theorem" acro="BS" />.</p>
+<p>In <acroref type="example" acro="COV" />, we tossed-out vectors one at a time.  But in each instance, we rewrote the offending vector as a linear combination of those vectors with the column indices of the pivot columns of the reduced row-echelon form of the matrix of columns.  In the proof of <acroref type="theorem" acro="BS" />, we accomplish this reduction in one big step.  In <acroref type="example" acro="COV" /> we arrived at a linearly independent set at exactly the same moment that we ran out of free variables to exploit.  This was not a coincidence, it is the substance of our conclusion of linear independence in <acroref type="theorem" acro="BS" />.</p>
 
-<p>Here's a straightforward application of <acroref type="theorem" acro="BS" />.
+<p>Here is a straightforward application of <acroref type="theorem" acro="BS" />.
 </p>
 
 <example acro="RSC4" index="span!reducing">
@@ -853,7 +851,7 @@ then $P$ is linearly independent and $\spn{P}=\spn{R}=X$ by <acroref type="theor
 =\vect{y}
 </equation></p>
 
-<p>A key feature of this example is that the linear combination that expresses $\vect{y}$ as a linear combination of the vectors in $P$ is unique.  This is a consequence of the linear independence of $P$.  The linearly independent set $P$ is smaller than $R$, but still just (barely) big enough to create elements of the set $X=\spn{R}$.  There are many, many ways to write $\vect{y}$ as a linear combination of the five vectors in $R$ (the appropriate system of equations to verify this claim has two free variables in the description of the solution set), yet there is precisely one way to write $\vect{y}$ as a linear combination of the three vectors in $P$.</p>
+<p>A key feature of this example is that the linear combination that expresses $\vect{y}$ as a linear combination of the vectors in $P$ is unique.  This is a consequence of the linear independence of $P$.  The linearly independent set $P$ is smaller than $R$, but still just (barely) big enough to create elements of the set $X=\spn{R}$.  There are many, many ways to write $\vect{y}$ as a linear combination of the five vectors in $R$ (the appropriate system of equations to verify this claim yields two free variables in the description of the solution set), yet there is precisely one way to write $\vect{y}$ as a linear combination of the three vectors in $P$.</p>
 
 </example>
 
@@ -1111,7 +1109,7 @@ A\rref B=
 <![CDATA[ 0 & 0 & \leading{1} & 1]]>
 \end{bmatrix}
 </equation>
-From <acroref type="theorem" acro="BS" /> we can form $R$ by choosing the columns of $A$ that correspond to the pivot columns of $B$.  <acroref type="theorem" acro="BS" /> also guarantees that $R$ will be linearly independent.
+From <acroref type="theorem" acro="BS" /> we can form $R$ by choosing the columns of $A$ that have the same indices as the pivot columns of $B$.  <acroref type="theorem" acro="BS" /> also guarantees that $R$ will be linearly independent.
 <equation>
 R=\set{
 \colvector{1 \\ -1 \\ 2},\,
