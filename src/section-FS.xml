@@ -111,7 +111,7 @@ User basis matrix:
 <subsection acro="CCS">
 <title>Computing Column Spaces</title>
 
-<p>We have three ways to build the column space of a matrix.  First, we can use just the definition, <acroref type="definition" acro="CSM" />, and express the column space as a span of the columns of the matrix.  A second approach gives us the column space as the span of <em>some</em> of the columns of the matrix, but this set is linearly independent (<acroref type="theorem" acro="BCS" />).  Finally, we can transpose the matrix, row-reduce the transpose, kick out zero rows, and transpose the remaining rows back into column vectors.  <acroref type="theorem" acro="CSRST" /> and <acroref type="theorem" acro="BRS" /> tell us that the resulting vectors are linearly independent and their span is the column space of the original matrix.</p>
+<p>We have three ways to build the column space of a matrix.  First, we can use just the definition, <acroref type="definition" acro="CSM" />, and express the column space as a span of the columns of the matrix.  A second approach gives us the column space as the span of <em>some</em> of the columns of the matrix, and additionally, this set is linearly independent (<acroref type="theorem" acro="BCS" />).  Finally, we can transpose the matrix, row-reduce the transpose, kick out zero rows, and write the remaining rows as column vectors.  <acroref type="theorem" acro="CSRST" /> and <acroref type="theorem" acro="BRS" /> tell us that the resulting vectors are linearly independent and their span is the column space of the original matrix.</p>
 
 <p>We will now demonstrate a fourth method by way of a rather complicated example.  Study this example carefully, but realize that its main purpose is to motivate a theorem that simplifies much of the apparent complexity.  So other than an instructive exercise or two, the procedure we are about to describe will not be a usual approach to computing a column space.</p>
 
@@ -146,7 +146,7 @@ A=
 </equation>
 </p>
 
-<p>To identify solutions we will bring this matrix to reduced row-echelon form.  Despite the presence of variables in the last column, there is nothing to stop us from doing this, except our numerical routines on calculators can't be used, and even some of the symbolic algebra routines do some unexpected maneuvers with this computation.  So do it by hand.  Yes, it is a bit of work.  But worth it.  We'll still be here when you get back.  Notice along the way that the row operations are <em>exactly</em> the same ones you would do if you were just row-reducing the coefficient matrix alone, say in connection with a homogeneous system of equations.  The column with the $b_i$ acts as a sort of bookkeeping device.  There are many different possibilities for the result, depending on what order you choose to perform the row operations, but shortly we'll all be on the same page.  Here's one possibility (you can find this same result by doing additional row operations with the fifth and sixth rows to remove any occurrences of $b_1$ and $b_2$ from the first four rows of your result):
+<p>To identify solutions we will bring this matrix to reduced row-echelon form.  Despite the presence of variables in the last column, there is nothing to stop us from doing this, except our numerical routines on calculators cannot be used, and even some of the symbolic algebra routines do some unexpected maneuvers with this computation.  So do it by hand.  Yes, it is a bit of work.  But worth it.  We'll still be here when you get back.  Notice along the way that the row operations are <em>exactly</em> the same ones you would do if you were just row-reducing the coefficient matrix alone, say in connection with a homogeneous system of equations.  The column with the $b_i$ acts as a sort of bookkeeping device.  There are many different possibilities for the result, depending on what order you choose to perform the row operations, but shortly we will all be on the same page.  If you want to match our work right now, use row 5 to remove any occurence of $b_1$ from the other entries of the last column, and use row 6 to remove any occurence of $b_2$ from the last columns.we have:
 <alignmath>
 \begin{bmatrix}
 <![CDATA[ \leading{1} & 0 & 0 & 0 & 2 & b_3 - b_4 + 2 b_5 - b_6\\]]>
@@ -159,7 +159,7 @@ A=
 </alignmath>
 </p>
 
-<p>Our goal is to identify those vectors $\vect{b}$ which make $\linearsystem{A}{\vect{b}}$ consistent.  By <acroref type="theorem" acro="RCLS" /> we know that the consistent systems are precisely those without a leading 1 in the last column.  Are the expressions in the last column of rows 5 and 6 equal to zero, or are they leading 1's?  The answer is: maybe.  It depends on $\vect{b}$.  With a nonzero value for either of these expressions, we would scale the row and produce a leading 1.   So we get a consistent system, and $\vect{b}$ is in the column space, if and only if these two expressions are both simultaneously zero.  In other words, members of the column space of $A$ are exactly those vectors $\vect{b}$ that satisfy
+<p>Our goal is to identify those vectors $\vect{b}$ which make $\linearsystem{A}{\vect{b}}$ consistent.  By <acroref type="theorem" acro="RCLS" /> we know that the consistent systems are precisely those without a pivot column in the last column.  Are the expressions in the last column of rows 5 and 6 equal to zero, or are they leading 1's?  The answer is: maybe.  It depends on $\vect{b}$.  With a nonzero value for either of these expressions, we would scale the row and produce a leading 1.   So we get a consistent system, and $\vect{b}$ is in the column space, if and only if these two expressions are both simultaneously zero.  In other words, members of the column space of $A$ are exactly those vectors $\vect{b}$ that satisfy
 <alignmath>
 <![CDATA[b_1 + 3 b_3 - b_4 + 3 b_5 + b_6 & = 0\\]]>
 <![CDATA[b_2 - 2 b_3 + b_4 + b_5 - b_6 & = 0]]>
@@ -189,7 +189,7 @@ L=
 
 <p>Whew!  As a postscript to this central example, you may wish to convince yourself that the four vectors above really are elements of the column space.  Do they create consistent systems with $A$ as coefficient matrix?  Can you recognize the constant vector in your description of these solution sets?</p>
 
-<p>OK, that was so much fun, let's do it again.  But simpler this time.  And we'll all get the same results all the way through.  Doing row operations by hand with variables can be a bit error prone, so let's see if we can improve the process some.  Rather than row-reduce a column vector $\vect{b}$ full of variables, let's write $\vect{b}=I_6\vect{b}$ and we will row-reduce the matrix $I_6$ and when we finish row-reducing, <em>then</em> we will compute the matrix-vector product.  You should first convince yourself that we can operate like this (this is the subject of a future homework exercise).
+<p>OK, that was so much fun, let's do it again.  But simpler this time.  And we will all get the same results all the way through.  Doing row operations by hand with variables can be a bit error prone, so let's see if we can improve the process some.  Rather than row-reduce a column vector $\vect{b}$ full of variables, let's write $\vect{b}=I_6\vect{b}$ and we will row-reduce the matrix $I_6$ and when we finish row-reducing, <em>then</em> we will compute the matrix-vector product.  You should first convince yourself that we can operate like this (this is the subject of a future homework exercise).
 <!-- %TODO (see <acroref type="exercise" acro="XX-commutingops-todo" /> on commuting operations). -->
 Rather than augmenting $A$ with $\vect{b}$, we will instead augment it with $I_6$ (does this feel familiar?),
 <equation>
@@ -205,7 +205,7 @@ M=
 </equation>
 </p>
 
-<p>We want to row-reduce the left-hand side of this matrix, but we will apply the same row operations to the right-hand side as well.  And once we get the left-hand side in reduced row-echelon form, we will continue on to put leading 1's in the final two rows, as well as clearing out the columns containing those two additional leading 1's.  It is these additional row operations that will ensure that we all get to the same place, since the reduced row-echelon form is unique (<acroref type="theorem" acro="RREFU" />),
+<p>We want to row-reduce the left-hand side of this matrix, but we will apply the same row operations to the right-hand side as well.  And once we get the left-hand side in reduced row-echelon form, we will continue on to put leading 1's in the final two rows, as well as making pivot columns that contain these two additional leading 1's.  It is these additional row operations that will ensure that we all get to the same place, since the reduced row-echelon form is unique (<acroref type="theorem" acro="RREFU" />),
 <equation>
 N=
 \begin{bmatrix}
@@ -379,13 +379,13 @@ Notice that the last two entries of the final column now have just a single <cod
 <title>Extended Echelon Form</title>
 <p>Suppose $A$ is an $m\times n$ matrix.  Extend $A$ on its right side with the addition of an $m\times m$ identity matrix to form an $m\times (n + m)$ matrix M.  Use row operations to bring $M$ to reduced row-echelon form and call the result $N$.  $N$ is the <define>extended reduced row-echelon form</define> of $A$, and we will standardize on names for five submatrices ($B$, $C$, $J$, $K$, $L$) of $N$.</p>
 
-<p>Let $B$ denote the $m\times n$ matrix formed from the first $n$ columns of $N$ and let $J$ denote the $m\times m$ matrix formed from the last $m$ columns of $N$.  Suppose that $B$ has $r$ nonzero rows.  Further partition $N$ by letting $C$ denote the $r\times n$ matrix formed from all of the non-zero rows of $B$.  Let $K$ be the $r\times m$ matrix formed from the first $r$ rows of $J$, while $L$ will be the $(m-r)\times m$ matrix formed from the bottom $m-r$ rows of $J$.  Pictorially,
+<p>Let $B$ denote the $m\times n$ matrix formed from the first $n$ columns of $N$ and let $J$ denote the $m\times m$ matrix formed from the last $m$ columns of $N$.  Suppose that $B$ has $r$ nonzero rows.  Further partition $N$ by letting $C$ denote the $r\times n$ matrix formed from all of the nonzero rows of $B$.  Let $K$ be the $r\times m$ matrix formed from the first $r$ rows of $J$, while $L$ will be the $(m-r)\times m$ matrix formed from the bottom $m-r$ rows of $J$.  Pictorially,
 <equation>
 M=[A\vert I_m]
 \rref
 N=[B\vert J]
 =
-<![CDATA[\left[\begin{array}{cc}C&K\\0&L\end{array}\right]]]>
+<![CDATA[\left[\begin{array}{c|c}C&K\\\hline0&L\end{array}\right]]]>
 </equation>
 </p>
 
@@ -484,7 +484,7 @@ N=
 <proof>
 <p>$J$ is the result of applying a sequence of row operations to $I_m$, and therefore $J$ and $I_m$ are row-equivalent.  $\homosystem{I_m}$ has only the zero solution, since $I_m$ is nonsingular (<acroref type="theorem" acro="NMRRI" />).  Thus, $\homosystem{J}$ also has only the zero solution (<acroref type="theorem" acro="REMES" />, <acroref type="definition" acro="ESYS" />) and $J$ is therefore nonsingular (<acroref type="definition" acro="NSM" />).</p>
 
-<p>To prove the second part of this conclusion, first convince yourself that row operations and the matrix-vector product are commutative operations.  By this we mean the following.
+<p>To prove the second part of this conclusion, first convince yourself that row operations and the matrix-vector product are associative operations.  By this we mean the following.
 Suppose that $F$ is an $m\times n$ matrix that is row-equivalent to the matrix $G$.  Apply to the column vector $F\vect{w}$ the same sequence of row operations that converts $F$ to $G$.  Then the result is $G\vect{w}$.  So we can do row operations on the matrix, then do a matrix-vector product, <em>or</em> do a matrix-vector product and then do row operations on a column vector, and the result will be the same either way.  Since matrix multiplication is defined by a collection of matrix-vector products (<acroref type="definition" acro="MM" />), the matrix product $FH$ will become $GH$ if we apply the same sequence of row operations to $FH$ that convert $F$ to $G$.  (This argument can be made more rigorous using elementary matrices from the upcoming <acroref type="subsection" acro="DM.EM" /> and the associative property of matrix multiplication established in <acroref type="theorem" acro="MMA" />.)  Now apply these observations to $A$.</p>
 
 <p>Write $AI_n=I_mA$ and apply the row operations that convert $M$ to $N$.  $A$ is converted to $B$, while $I_m$ is converted to $J$, so we have $BI_n=JA$.  Simplifying the left side gives the desired conclusion.</p>
@@ -501,7 +501,7 @@ Suppose that $F$ is an $m\times n$ matrix that is row-equivalent to the matrix $
 
 <p>The forward direction of the first equivalence is accomplished by multiplying both sides of the matrix equality by $J$, while the backward direction is accomplished by multiplying by the inverse of $J$ (which we know exists by <acroref type="theorem" acro="NI" /> since $J$ is nonsingular).  The second equivalence is obtained simply by the substitutions given by $JA=B$.</p>
 
-<p>The first $r$ rows of $N$ are in reduced row-echelon form, since any contiguous collection of rows taken from a matrix in reduced row-echelon form will form a matrix that is again in reduced row-echelon form.   Since the matrix $C$ is formed by removing the last $n$ entries of each these rows, the remainder is still in reduced row-echelon form.  By its construction, $C$ has no zero rows. $C$ has $r$ rows and each contains a leading 1, so there are $r$ pivot columns in $C$.</p>
+<p>The first $r$ rows of $N$ are in reduced row-echelon form, since any contiguous collection of rows taken from a matrix in reduced row-echelon form will form a matrix that is again in reduced row-echelon form (<acroref type="exercise" acro="RREF.T12" />).   Since the matrix $C$ is formed by removing the last $n$ entries of each these rows, the remainder is still in reduced row-echelon form.  By its construction, $C$ has no zero rows. $C$ has $r$ rows and each contains a leading 1, so there are $r$ pivot columns in $C$.</p>
 
 <p>The final $m-r$ rows of $N$ are in reduced row-echelon form, since any contiguous collection of rows taken from a matrix in reduced row-echelon form will form a matrix that is again in reduced row-echelon form.  Since the matrix $L$ is formed by removing the first $n$ entries of each these rows, and these entries are all zero (they form the zero rows of $B$), the remainder is still in reduced row-echelon form.  $L$ is the final $m-r$ rows of the nonsingular matrix $J$, so none of these rows can be totally zero, or $J$ would not row-reduce to the identity matrix.  $L$ has $m-r$ rows and each contains a leading 1, so there are $m-r$ pivot columns in $L$.</p>
 
@@ -704,7 +704,7 @@ Suppose that $F$ is an $m\times n$ matrix that is row-equivalent to the matrix $
 
 <p>The situation when $r=m$ deserves comment, since now the matrix $L$ has no rows.  What is $\csp{A}$ when we try to apply <acroref type="theorem" acro="FS" /> and encounter $\nsp{L}$?  One interpretation of this situation is that $L$ is the coefficient matrix of a homogeneous system that has no equations.  How hard is it to find a solution vector to this system?  Some thought will convince you that <em>any</em> proposed vector will qualify as a solution, since it makes <em>all</em> of the equations true.  So every possible vector is in the null space of $L$ and therefore $\csp{A}=\nsp{L}=\complex{m}$.  OK, perhaps this sounds like some twisted argument from <i>Alice in Wonderland</i>.  Let us try another argument that might solidly convince you of this logic.</p>
 
-<p>If $r=m$, when we row-reduce the augmented matrix of $\linearsystem{A}{\vect{b}}$ the result will have no zero rows, and all the leading 1's will occur in first $n$ columns, so by <acroref type="theorem" acro="RCLS" /> the system will be consistent.  By <acroref type="theorem" acro="CSCS" />, $\vect{b}\in\csp{A}$.  Since $\vect{b}$ was arbitrary, every possible vector is in the column space of $A$, so we again have $\csp{A}=\complex{m}$.  The situation when a matrix has $r=m$ is known by the term <define>full rank</define>, and in the case of a square matrix coincides with nonsingularity (see <acroref type="exercise" acro="FS.M50" />).</p>
+<p>If $r=m$, when we row-reduce the augmented matrix of $\linearsystem{A}{\vect{b}}$ the result will have no zero rows, and the first $n$ columns will all be pivot columns, leaving none for the final column, so by <acroref type="theorem" acro="RCLS" /> the system will be consistent.  By <acroref type="theorem" acro="CSCS" />, $\vect{b}\in\csp{A}$.  Since $\vect{b}$ was arbitrary, every possible vector is in the column space of $A$, so we again have $\csp{A}=\complex{m}$.  The situation when a matrix has $r=m$ is known by the term <define>full rank</define>, and in the case of a square matrix coincides with nonsingularity (see <acroref type="exercise" acro="FS.M50" />).</p>
 
 <p>The properties of the matrix $L$ described by this theorem can be explained informally as follows.  A column vector $\vect{y}\in\complex{m}$ is in the column space of $A$ if the linear system $\linearsystem{A}{\vect{y}}$ is consistent (<acroref type="theorem" acro="CSCS" />).  By <acroref type="theorem" acro="RCLS" />, the reduced row-echelon form of the augmented matrix $\augmented{A}{\vect{y}}$ of a consistent system will have zeros in the bottom $m-r$ locations of the last column.  By <acroref type="theorem" acro="PEEF" /> this final column is the vector $J\vect{y}$ and so should then have zeros in the final $m-r$ locations.  But since $L$ comprises the final $m-r$ rows of $J$, this condition is expressed by saying $\vect{y}\in\nsp{L}$.</p>
 
@@ -967,7 +967,7 @@ N=
 
 <sageadvice acro="EEF" index="extended echelon form">
 <title>Extended Echelon Form</title>
-Sage will compute the extended echelon form, an improvement over what we did <q>by hand</q> in <acroref type="sage" acro="MISLE" />.  And the output can be requested as a <q>subdivided</q> matrix so that we can easily work with the pieces $C$ and $L$.  Pieces of subdivided matrices can be extracted with indices entirely similar to how we index the actual entries of a matrix.  We'll redo <acroref type="example" acro="FS2" /> as an illustration of <acroref type="theorem" acro="FS" /> and <acroref type="theorem" acro="PEEF" />.
+Sage will compute the extended echelon form, an improvement over what we did <q>by hand</q> in <acroref type="sage" acro="MISLE" />.  And the output can be requested as a <q>subdivided</q> matrix so that we can easily work with the pieces $C$ and $L$.  Pieces of subdivided matrices can be extracted with indices entirely similar to how we index the actual entries of a matrix.  We will redo <acroref type="example" acro="FS2" /> as an illustration of <acroref type="theorem" acro="FS" /> and <acroref type="theorem" acro="PEEF" />.
 <sage>
 <input>A = matrix(QQ,[[ 10,  0,  3,   8,   7],
                [-16, -1, -4, -10, -13],
@@ -1116,7 +1116,7 @@ const = vector(R, [b1, b2, b3, b4, b5, b6])
 </sageadvice>
 <p><acroref type="example" acro="COV" /> and <acroref type="example" acro="CSROI" /> each describes the column space of the coefficient matrix from <acroref type="archetype" acro="I" /> as the span of a set of $r=3$ linearly independent vectors.  It is no accident that these two different sets both have the same size.  If we (you?) were to calculate the column space of this matrix using the null space of the matrix $L$ from <acroref type="theorem" acro="FS" /> then we would again find a set of 3 linearly independent vectors that span the range.  More on this later.</p>
 
-<p>So we have three different methods to obtain a description of the column space of a matrix as the span of a linearly independent set.  <acroref type="theorem" acro="BCS" /> is sometimes useful since the vectors it specifies are equal to actual columns of the matrix. <acroref type="theorem" acro="BRS" /> and <acroref type="theorem" acro="CSRST" /> combine to create vectors with lots of zeros, and strategically placed 1's near the top of the vector.   <acroref type="theorem" acro="FS" /> and the matrix $L$ from the extended echelon form gives us a third method, which tends to create vectors with lots of zeros, and strategically placed 1's near the bottom of the vector.   If we don't care about linear independence we can also appeal to <acroref type="definition" acro="CSM" /> and simply express the column space as the span of all the columns of the matrix, giving us a fourth description.</p>
+<p>So we have three different methods to obtain a description of the column space of a matrix as the span of a linearly independent set.  <acroref type="theorem" acro="BCS" /> is sometimes useful since the vectors it specifies are equal to actual columns of the matrix. <acroref type="theorem" acro="BRS" /> and <acroref type="theorem" acro="CSRST" /> combine to create vectors with lots of zeros, and strategically placed 1's near the top of the vector.   <acroref type="theorem" acro="FS" /> and the matrix $L$ from the extended echelon form gives us a third method, which tends to create vectors with lots of zeros, and strategically placed 1's near the bottom of the vector.   If we do not care about linear independence we can also appeal to <acroref type="definition" acro="CSM" /> and simply express the column space as the span of all the columns of the matrix, giving us a fourth description.</p>
 
 <p>With <acroref type="theorem" acro="CSRST" /> and <acroref type="definition" acro="RSM" />, we can compute column spaces with theorems about row spaces, and we can compute row spaces with theorems about column spaces, but in each case we must transpose the matrix first.  At this point you may be overwhelmed by all the possibilities for computing column and row spaces.  <acroref type="diagram" acro="CSRST" /> is meant to help.  For both the column space and row space, it suggests four techniques.  One is to appeal to the definition, another yields a span of a linearly independent set, and a third uses <acroref type="theorem" acro="FS" />.  A fourth suggests transposing the matrix and the dashed line implies that then the companion set of techniques can be applied.  This can lead to a bit of silliness, since if you were to follow the dashed lines <em>twice</em> you would transpose the matrix twice, and by <acroref type="theorem" acro="TT" /> would accomplish nothing productive.
 <diagram acro="CSRST">
@@ -1377,7 +1377,7 @@ S=\set{
 \colvector{1\\1\\-4}
 }
 </equation>
-<acroref type="theorem" acro="BCS" /> suggests row-reducing the matrix and using the columns of $B$ that correspond to the pivot columns.
+<acroref type="theorem" acro="BCS" /> suggests row-reducing the matrix and using the columns of $B$ with the same indices as the pivot columns.
 <equation>
 B\rref
 \begin{bmatrix}
@@ -1467,7 +1467,7 @@ B=
 <![CDATA[0 & 0 & 0 & 0]]>
 \end{bmatrix}
 </equation>
-By <acroref type="theorem" acro="BCS" /> we can choose the columns of $A$ that correspond to dependent variables ($D=\set{1,2}$) as the elements of $S$ and obtain the desired properties.  So
+By <acroref type="theorem" acro="BCS" /> we can choose the columns of $A$ that have the same indices as the pivot columns ($D=\set{1,2}$) as the elements of $S$ and obtain the desired properties.  So
 <equation>
 S=\set{\colvector{2\\-5\\1},\,\colvector{-1\\3\\1}}
 </equation>

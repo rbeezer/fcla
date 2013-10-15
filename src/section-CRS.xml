@@ -21,7 +21,7 @@
 <definition acro="CSM" index="matrix!column space">
 <title>Column Space of a Matrix</title>
 <indexlocation index="column space!matrix" />
-<p>Suppose that $A$ is an $m\times n$ matrix with columns $\set{\vectorlist{A}{n}}$.  Then the <define>column space</define> of $A$, written $\csp{A}$, is the subset of $\complex{m}$ containing all linear combinations of the columns of $A$,
+<p>Suppose that $A$ is an $m\times n$ matrix with columns $\vectorlist{A}{n}$.  Then the <define>column space</define> of $A$, written $\csp{A}$, is the subset of $\complex{m}$ containing all linear combinations of the columns of $A$,
 <equation>
 \csp{A}=\spn{\set{\vectorlist{A}{n}}}
 </equation></p>
@@ -34,21 +34,20 @@
 
 <p>Some authors refer to the column space of a matrix as the <define>range</define>, but we will reserve this term for use with linear transformations (<acroref type="definition" acro="RLT" />).</p>
 
-<p>Upon encountering any new set, the first question we ask is what objects are in the set, and which objects are not?  Here's an example of one way to answer this question, and it will motivate a theorem that will then answer the question precisely.</p>
+<p>Upon encountering any new set, the first question we ask is what objects are in the set, and which objects are not?  Here is an example of one way to answer this question, and it will motivate a theorem that will then answer the question precisely.</p>
 
 <example acro="CSMCS" index="column space!consistent systems">
 <title>Column space of a matrix and consistent systems</title>
 
 <p><acroref type="archetype" acro="D" /> and <acroref type="archetype" acro="E" /> are linear systems of equations, with an identical $3\times 4$ coefficient matrix, which we call $A$ here.  However, <acroref type="archetype" acro="D" /> is consistent, while <acroref type="archetype" acro="E" /> is not.  We can explain this difference by employing the column space of the matrix $A$.</p>
 
-<p>The column vector of constants, $\vect{b}$, in <acroref type="archetype" acro="D" /> is
-<equation>
-\vect{b}=\colvector{8\\-12\\4}
-</equation>
-One solution to $\linearsystem{A}{\vect{b}}$, as listed, is
-<equation>
-\vect{x}=\colvector{7\\8\\1\\3}
-</equation>
+<p>The column vector of constants, $\vect{b}$, in <acroref type="archetype" acro="D" /> is given below, and one solution listed for $\linearsystem{A}{\vect{b}}$ is $\vect{x}$,
+
+<alignmath>
+\vect{b}&amp;=\colvector{8\\-12\\4}
+&amp;
+\vect{x}&amp;=\colvector{7\\8\\1\\3}
+</alignmath>
 </p>
 
 <p>By <acroref type="theorem" acro="SLSLC" />, we can summarize this solution as a linear combination of the columns of $A$ that equals $\vect{b}$,
@@ -120,7 +119,7 @@ A\vect{x}=\vect{b}\text{ for some }\vect{x}
 
 <p>Notice how this formulation of the column space looks very much like the definition of the null space of a matrix (<acroref type="definition" acro="NSM" />), but for a rectangular matrix the column vectors of $\csp{A}$ and $\nsp{A}$ have different sizes, so the sets are very different.</p>
 
-<p>Given a vector $\vect{b}$ and a matrix $A$ it is now very mechanical to test if $\vect{b}\in\csp{A}$.  Form the linear system $\linearsystem{A}{\vect{b}}$, row-reduce the augmented matrix, $\augmented{A}{\vect{b}}$, and test for consistency with <acroref type="theorem" acro="RCLS" />.  Here's an example of this procedure.</p>
+<p>Given a vector $\vect{b}$ and a matrix $A$ it is now very mechanical to test if $\vect{b}\in\csp{A}$.  Form the linear system $\linearsystem{A}{\vect{b}}$, row-reduce the augmented matrix, $\augmented{A}{\vect{b}}$, and test for consistency with <acroref type="theorem" acro="RCLS" />.  Here is an example of this procedure.</p>
 
 <example acro="MCSM" index="column space!testing membership">
 <title>Membership in the column space of a matrix</title>
@@ -152,7 +151,7 @@ A=
 </equation>
 </p>
 
-<p>Without a leading 1 in the final column, <acroref type="theorem" acro="RCLS" /> tells us the system is consistent and therefore by <acroref type="theorem" acro="CSCS" />, $\vect{v}\in\csp{A}$.</p>
+<p>Since the final column is not a pivoot column, <acroref type="theorem" acro="RCLS" /> tells us the system is consistent and therefore by <acroref type="theorem" acro="CSCS" />, $\vect{v}\in\csp{A}$.</p>
 
 <p>If we wished to demonstrate explicitly that $\vect{v}$ is a linear combination of the columns of $A$, we can find a solution (any solution) of $\linearsystem{A}{\vect{v}}$ and use <acroref type="theorem" acro="SLSLC" /> to construct the desired linear combination.  For example, set the free variables to $x_3=2$ and $x_4=1$.  Then a solution has $x_2=1$ and $x_1=6$.  Then by <acroref type="theorem" acro="SLSLC" />,
 <equation>
@@ -180,7 +179,7 @@ A=
 </equation>
 </p>
 
-<p>With a leading 1 in the final column, <acroref type="theorem" acro="RCLS" /> tells us the system is inconsistent and therefore by <acroref type="theorem" acro="CSCS" />, $\vect{w}\not\in\csp{A}$.</p>
+<p>since the final column is a pivot column, <acroref type="theorem" acro="RCLS" /> tells us the system is inconsistent and therefore by <acroref type="theorem" acro="CSCS" />, $\vect{w}\not\in\csp{A}$.</p>
 
 </example>
 
@@ -365,7 +364,7 @@ and know that $\csp{A}=\spn{T}$ and $T$ is a linearly independent set of columns
 <theorem acro="BCS" index="column space!basis">
 <title>Basis of the Column Space</title>
 <statement>
-<p>Suppose that $A$ is an $m\times n$ matrix with columns $\vectorlist{A}{n}$, and $B$ is a row-equivalent matrix in reduced row-echelon form with $r$ nonzero rows.  Let $D=\{d_1,\,d_2,\,d_3,\,\ldots,\,d_r\}$ be the set of column indices where $B$ has leading 1's.  Let
+<p>Suppose that $A$ is an $m\times n$ matrix with columns $\vectorlist{A}{n}$, and $B$ is a row-equivalent matrix in reduced row-echelon form with $r$ nonzero rows.  Let $D=\{d_1,\,d_2,\,d_3,\,\ldots,\,d_r\}$ be the set of indices for the pivot columns of $B$  Let
 $T=\set{\vect{A}_{d_1},\,\vect{A}_{d_2},\,\vect{A}_{d_3},\,\ldots,\,\vect{A}_{d_r}}$.  Then
 <ol><li> $T$ is a linearly independent set.
 </li><li> $\csp{A}=\spn{T}$.
@@ -380,9 +379,9 @@ $T=\set{\vect{A}_{d_1},\,\vect{A}_{d_2},\,\vect{A}_{d_3},\,\ldots,\,\vect{A}_{d_
 </proof>
 </theorem>
 
-<p>This is a nice result since it gives us a handful of vectors that describe the entire column space (through the span), and we believe this set is as small as possible because we cannot create any more relations of linear dependence to trim it down further.  Furthermore, we defined the column space (<acroref type="definition" acro="CSM" />) as all linear combinations of the columns of the matrix, and the elements of the set $T$ are still columns of the matrix (we won't be so lucky in the next two constructions of the column space).</p>
+<p>This is a nice result since it gives us a handful of vectors that describe the entire column space (through the span), and we believe this set is as small as possible because we cannot create any more relations of linear dependence to trim it down further.  Furthermore, we defined the column space (<acroref type="definition" acro="CSM" />) as all linear combinations of the columns of the matrix, and the elements of the set $T$ are still columns of the matrix (we will not be so lucky in the next two constructions of the column space).</p>
 
-<p>Procedurally this theorem is extremely easy to apply.  Row-reduce the original matrix, identify $r$ columns with leading 1's in this reduced matrix, and grab the corresponding columns of the original matrix.  But it is still important to study the proof of <acroref type="theorem" acro="BS" /> and its motivation in <acroref type="example" acro="COV" /> which lie at the root of this theorem.  We'll trot through an example all the same.</p>
+<p>Procedurally this theorem is extremely easy to apply.  Row-reduce the original matrix, identify $r$ pivot columns the reduced matrix, and grab the columns of the original matrix with the same indices as the pivot columns.  But it is still important to study the proof of <acroref type="theorem" acro="BS" /> and its motivation in <acroref type="example" acro="COV" /> which lie at the root of this theorem.  We will trot through an example all the same.</p>
 
 <example acro="CSOCD" index="column space!original columns,  Archetype D">
 <title>Column space, original columns, Archetype D</title>
@@ -390,15 +389,14 @@ $T=\set{\vect{A}_{d_1},\,\vect{A}_{d_2},\,\vect{A}_{d_3},\,\ldots,\,\vect{A}_{d_
 <indexlocation index="Archetype D!column space, original columns" />
 <p>Let's determine a compact expression for the entire column space of the coefficient matrix of the system of equations that is <acroref type="archetype" acro="D" />.  Notice that in <acroref type="example" acro="CSMCS" /> we were only determining if individual vectors were in the column space or not, now we are describing the entire column space.</p>
 
-<p>To start with the application of <acroref type="theorem" acro="BCS" />, call the coefficient matrix $A$
-<equation>
-A=<archetypepart acro="D" part="purematrix" /></equation>
-and row-reduce it to reduced row-echelon form,
-<equation>
-B=<archetypepart acro="D" part="matrixreduced" /></equation>
+<p>To start with the application of <acroref type="theorem" acro="BCS" />, call the coefficient matrix $A$ and row-reduce it to reduced row-echelon form $B$,
+<alignmath>
+A&amp;=<archetypepart acro="D" part="purematrix" />
+&amp;
+B&amp;=<archetypepart acro="D" part="matrixreduced" /></alignmath>
 </p>
 
-<p>There are leading 1's in columns 1 and 2, so $D=\{1,\,2\}$.  To construct a set that spans $\csp{A}$, just grab the columns of $A$ indicated by the set $D$, so
+<p>Since columns 1 and 2 are pivot columns, $D=\{1,\,2\}$.  To construct a set that spans $\csp{A}$, just grab the columns of $A$ with indices in $D$, so
 <equation>
 \csp{A}=\spn{\set{\colvector{2\\-3\\1},\,\colvector{1\\4\\1}}}.
 </equation>
@@ -553,14 +551,13 @@ F.matrix_from_columns(F.pivots()).rref()   # random
 <title>Column space of Archetype A</title>
 
 <indexlocation index="Archetype A!column space" />
-<p>The coefficient matrix in <acroref type="archetype" acro="A" /> is
-<equation>
-A=<archetypepart acro="A" part="purematrix" /></equation>
-which row-reduces to
-<equation>
-<archetypepart acro="A" part="matrixreduced" /></equation></p>
+<p>The coefficient matrix in <acroref type="archetype" acro="A" /> is $A$, which row-reduces to $B$,
 
-<p>Columns 1 and 2 have leading 1's, so by <acroref type="theorem" acro="BCS" /> we can write
+<alignmath>A&amp;=<archetypepart acro="A" part="purematrix" />
+&amp;
+B&amp;=<archetypepart acro="A" part="matrixreduced" /></alignmath></p>
+
+<p>Columns 1 and 2 are pivot columns, so by <acroref type="theorem" acro="BCS" /> we can write
 <equation>
 \csp{A}=\spn{\set{\vect{A}_1,\,\vect{A}_2}}=\spn{\set{\colvector{1\\2\\1},\,\colvector{-1\\1\\1}}}.
 </equation>
@@ -755,7 +752,7 @@ I=<archetypepart acro="I" part="purematrix" /></equation>
 </equation>
 </p>
 
-<p>Since there are leading 1's in columns with indices $D=\set{1,\,2,\,3}$, the column space of $\transpose{I}$ can be spanned by just the first three columns of $\transpose{I}$,
+<p>Since the pivot columns have indices $D=\set{1,\,2,\,3}$, the column space of $\transpose{I}$ can be spanned by just the first three columns of $\transpose{I}$,
 <equation>
 \rsp{I}=\csp{\transpose{I}}=
 \spn{\set{
@@ -968,7 +965,7 @@ are row-equivalent by demonstrating a sequence of two row operations that conver
 
 </example>
 
-<p><acroref type="theorem" acro="REMRS" /> is at its best when one of the row-equivalent matrices is in reduced row-echelon form.  The vectors that correspond to the zero rows can be ignored. (Who needs the zero vector when building a span? See <acroref type="exercise" acro="LI.T10" />.)  The echelon pattern insures that the nonzero rows yield vectors that are linearly independent.  Here's the theorem.</p>
+<p><acroref type="theorem" acro="REMRS" /> is at its best when one of the row-equivalent matrices is in reduced row-echelon form.  The vectors that are zero rows can be ignored. (Who needs the zero vector when building a span? See <acroref type="exercise" acro="LI.T10" />.)  The echelon pattern insures that the nonzero rows yield vectors that are linearly independent.  Here is the theorem.</p>
 
 <theorem acro="BRS" index="row space!basis">
 <title>Basis for the Row Space</title>
@@ -982,15 +979,15 @@ are row-equivalent by demonstrating a sequence of two row operations that conver
 </statement>
 
 <proof>
-<p>From <acroref type="theorem" acro="REMRS" /> we know that $\rsp{A}=\rsp{B}$.  If $B$ has any zero rows, these correspond to columns of $\transpose{B}$ that are the zero vector.  We can safely toss out the zero vector in the span construction, since it can be recreated from the nonzero vectors by a linear combination where all the scalars are zero.  So $\rsp{A}=\spn{S}$.</p>
+<p>From <acroref type="theorem" acro="REMRS" /> we know that $\rsp{A}=\rsp{B}$.  If $B$ has any zero rows, these are columns of $\transpose{B}$ that are the zero vector.  We can safely toss out the zero vector in the span construction, since it can be recreated from the nonzero vectors by a linear combination where all the scalars are zero.  So $\rsp{A}=\spn{S}$.</p>
 
-<p>Suppose $B$ has $r$ nonzero rows and let $D=\set{d_1,\,d_2,\,d_3,\,\ldots,\,d_r}$ denote the column indices of $B$ that have a leading one in them.  Denote the $r$ column vectors of $\transpose{B}$, the vectors in $S$, as $\vectorlist{B}{r}$.  To show that $S$ is linearly independent, start with a relation of linear dependence
+<p>Suppose $B$ has $r$ nonzero rows and let $D=\set{d_1,\,d_2,\,d_3,\,\ldots,\,d_r}$ denote the  indices of the pivot columns of $B$.  Denote the $r$ column vectors of $\transpose{B}$, the vectors in $S$, as $\vectorlist{B}{r}$.  To show that $S$ is linearly independent, start with a relation of linear dependence
 <equation>
 \lincombo{\alpha}{B}{r}=\zerovector
 </equation>
 </p>
 
-<p>Now consider this vector equality in location $d_i$.  Since $B$ is in reduced row-echelon form, the entries of column $d_i$ of $B$ are all zero, except for a (leading) 1 in row $i$.  Thus, in $\transpose{B}$, row $d_i$ is all zeros, excepting a 1 in column $i$.   So, for $1\leq i\leq r$,
+<p>Now consider this vector equality in location $d_i$.  Since $B$ is in reduced row-echelon form, the entries of column $d_i$ of $B$ are all zero, except for a leading 1 in row $i$.  Thus, in $\transpose{B}$, row $d_i$ is all zeros, excepting a 1 in column $i$.   So, for $1\leq i\leq r$,
 <alignmath>
 0
 <![CDATA[&=\vectorentry{\zerovector}{d_i}&&]]><acroref type="definition" acro="ZCV" />\\
@@ -1076,9 +1073,11 @@ X=\rsp{A}=\rsp{B}=
 </equation>
 </p>
 
-<p>These three vectors provide a much-improved description of $X$.  There are fewer vectors, and the pattern of zeros and ones in the first three entries makes it easier to determine membership in $X$.  And all we had to do was row-reduce the right matrix and toss out a zero row.  Next to row operations themselves, <em>this is probably the most powerful computational technique at your disposal</em> as it quickly provides a much improved description of a span, any span.</p>
+<p>These three vectors provide a much-improved description of $X$.  There are fewer vectors, and the pattern of zeros and ones in the first three entries makes it easier to determine membership in $X$.  </p>
 
 </example>
+
+<p>Notice that in <acroref type="example" acro="IAS" /> all we had to do was row-reduce the right matrix and toss out a zero row.  Next to row operations themselves, <acroref type="theorem" acro="BRS" /> <em>is probably the most powerful computational technique at your disposal</em> as it quickly provides a much improved description of a span, <em>any span</em> (row space, column space, <ellipsis />).</p>
 
 <p><acroref type="theorem" acro="BRS" /> and the techniques of <acroref type="example" acro="IAS" /> will provide yet another description of the column space of a matrix.  First we state a triviality as a theorem, so we can reference it later.</p>
 
@@ -1103,7 +1102,7 @@ X=\rsp{A}=\rsp{B}=
 </proof>
 </theorem>
 
-<p>So to find another expression for the column space of a matrix, build its transpose, row-reduce it, toss out the zero rows, and convert the nonzero rows to column vectors to yield an improved set for the span construction.  We'll do <acroref type="archetype" acro="I" />, then you do <acroref type="archetype" acro="J" />.</p>
+<p>So to find another expression for the column space of a matrix, build its transpose, row-reduce it, toss out the zero rows, and convert the nonzero rows to column vectors to yield an improved set for the span construction.  We will do <acroref type="archetype" acro="I" />, then you do <acroref type="archetype" acro="J" />.</p>
 
 <example acro="CSROI" index="column space!row operations, Archetype I">
 <title>Column space from row operations, Archetype I</title>
@@ -1227,7 +1226,7 @@ Basis matrix:
 </output>
 </sage>
 
-We begin with the same four vectors in <acroref type="example" acro="IAS" /> and create their span, the vector space <code>X</code>.  The matrix <code>A</code> has these four vectors as rows and <code>B</code> is the reduced row-echelon form of <code>A</code>.  Then the row spaces of <code>A</code> and <code>B</code> are equal to the vector space <code>X</code> (and each other).  The way Sage describes this vector space is with a matrix whose rows <em>are the non-zero rows of the reduced row-echelon form of the matrix</em> <code>A</code>.  This is <acroref type="theorem" acro="BRS" /> in action where we go with Sage's penchant for rows and ignore the text's penchant for columns.<br /><br />
+We begin with the same four vectors in <acroref type="example" acro="IAS" /> and create their span, the vector space <code>X</code>.  The matrix <code>A</code> has these four vectors as rows and <code>B</code> is the reduced row-echelon form of <code>A</code>.  Then the row spaces of <code>A</code> and <code>B</code> are equal to the vector space <code>X</code> (and each other).  The way Sage describes this vector space is with a matrix whose rows <em>are the nonzero rows of the reduced row-echelon form of the matrix</em> <code>A</code>.  This is <acroref type="theorem" acro="BRS" /> in action where we go with Sage's penchant for rows and ignore the text's penchant for columns.<br /><br />
 We can illustrate a few other results about row spaces with Sage.  Discussion follows.
 <sage>
 <input>A = matrix(QQ,[[1,  1, 0, -1,  1,  1, 0],
@@ -1300,13 +1299,13 @@ vectors and explain your choice of method.
 <exercisesubsection>
 
 <exercise type="C" number="20" rough="Repeated calculations of C(A) and R(A);  lead to rank">
-<problem contributor="chrisblack">For parts (1), (2) and (3), find a set of linearly independent vectors $X$ so that $\csp{A} = \spn{X}$, and a set of linearly independent vectors $Y$ so that $\rsp{A} = \spn{Y}$.
-<ol>
-<li>$A = <![CDATA[\begin{bmatrix} 1 & 2 & 3 & 1 \\ 0 & 1 & 1 & 2\\ 1 & -1 & 2 & 3 \\ 1 & 1 & 2 & -1 \end{bmatrix}]]>$</li>
-<li>$A = <![CDATA[\begin{bmatrix}  1 & 2 & 1 & 1 & 1 \\ 3 & 2 & -1 & 4 & 5\\ 0 & 1 & 1 & 1 & 2 \end{bmatrix}]]>$</li>
-<li>$A = <![CDATA[\begin{bmatrix}  2 & 1 & 0 \\ 3 & 0 & 3\\ 1 & 2 & -3 \\ 1 & 1 & -1 \\ 1 & 1 & -1\end{bmatrix}]]>$</li>
-<li>From your results in parts (1) - (3), can you formulate a conjecture about the sets $X$ and $Y$?</li>
-</ol>
+<problem contributor="chrisblack">For each matrix below, find a set of linearly independent vectors $X$ so that $\spn{X}$ equals the clolumn space of the matrix, and a set of linearly independent vectors $Y$ so that $\spn{Y}$ equals the row space of the matrix.
+<alignmath>A&amp;=<![CDATA[\begin{bmatrix} 1 & 2 & 3 & 1 \\ 0 & 1 & 1 & 2\\ 1 & -1 & 2 & 3 \\ 1 & 1 & 2 & -1 \end{bmatrix}]]>
+&amp;
+B&amp;=<![CDATA[\begin{bmatrix}  1 & 2 & 1 & 1 & 1 \\ 3 & 2 & -1 & 4 & 5\\ 0 & 1 & 1 & 1 & 2 \end{bmatrix}]]>
+&amp;
+C&amp;=<![CDATA[\begin{bmatrix}  2 & 1 & 0 \\ 3 & 0 & 3\\ 1 & 2 & -3 \\ 1 & 1 & -1 \\ 1 & 1 & -1\end{bmatrix}]]></alignmath>
+From your results for these three matrices, can you formulate a conjecture about the sets $X$ and $Y$?
 </problem>
 </exercise>
 
@@ -1321,7 +1320,7 @@ vectors and explain your choice of method.
 </equation>
 <em>was</em> in the column space of $A$.   Attempt to write $\vect{c}$ and $\vect{b}$ as linear combinations of the two vectors in the span construction for the column space in <acroref type="example" acro="CSOCD" /> and record your observations.
 </problem>
-<solution contributor="robertbeezer">In each case, begin with a vector equation where one side contains a linear combination of the two vectors from the span construction that gives the column space of $A$ with unknowns for scalars, and then use <acroref type="theorem" acro="SLSLC" /> to set up a system of equations.  For $\vect{c}$, the corresponding system has no solution, as we would expect.<br /><br />
+<solution contributor="robertbeezer">In each case, begin with a vector equation where one side contains a linear combination of the two vectors from the span construction that gives the column space of $A$ with unknowns for scalars, and then use <acroref type="theorem" acro="SLSLC" /> to set up a system of equations.  For $\vect{c}$, the resulting system has no solution, as we would expect.<br /><br />
 For $\vect{b}$ there is a solution, as we would expect.  What is interesting is that the solution is unique.  This is a consequence of the linear independence of the set of two vectors in the span construction.  If we wrote $\vect{b}$ as a linear combination of all four columns of $A$, then there would be infinitely many ways to do this.
 </solution>
 </exercise>
@@ -1338,7 +1337,7 @@ A=
 \end{bmatrix}
 </equation>
 </problem>
-<solution contributor="robertbeezer"><acroref type="theorem" acro="BCS" /> is the right tool for this problem.  Row-reduce this matrix, identify the pivot columns and then grab the corresponding columns of $A$ for the set $T$.  The matrix $A$ row-reduces to
+<solution contributor="robertbeezer"><acroref type="theorem" acro="BCS" /> is the right tool for this problem.  Row-reduce this matrix, identify the pivot columns and then grab the columns of $A$ with the same indices for the set $T$.  The matrix $A$ row-reduces to
 <equation>
 \begin{bmatrix}
 <![CDATA[ \leading{1} & 0 & 3 & 0 & 0 \\]]>
@@ -1377,7 +1376,7 @@ B=
 \end{bmatrix}
 </equation>
 </problem>
-<solution contributor="robertbeezer"><acroref type="theorem" acro="BRS" /> is the most direct route to a set with these properties.  Row-reduce, toss zero rows, keep the others.  You could also transpose the matrix, then look for the column space by row-reducing the transpose and applying <acroref type="theorem" acro="BCS" />.  We'll do the former,
+<solution contributor="robertbeezer"><acroref type="theorem" acro="BRS" /> is the most direct route to a set with these properties.  Row-reduce, toss zero rows, keep the others.  You could also transpose the matrix, then look for the column space by row-reducing the transpose and applying <acroref type="theorem" acro="BCS" />.  We will do the former,
 <equation>
 B\rref
 \begin{bmatrix}
@@ -1424,7 +1423,7 @@ The augmented matrix $\augmented{\transpose{A}}{\vect{y}}$ row reduces to
 <![CDATA[ 0 & 0 & 0 & \leading{1}]]>
 \end{bmatrix}
 </alignmath>
-and with a leading 1 in the final column <acroref type="theorem" acro="RCLS" /> tells us the linear system is inconsistent and so $\vect{y}\not\in\rsp{A}$.
+and since the final column is a pivot column <acroref type="theorem" acro="RCLS" /> tells us the linear system is inconsistent and so $\vect{y}\not\in\rsp{A}$.
 </solution>
 </exercise>
 
@@ -1575,7 +1574,7 @@ E\rref
 <![CDATA[0 & 0 & \leading{1} & 1]]>
 \end{bmatrix}
 </equation>
-If we augment $E$ with any vector of constants, and row-reduce the augmented matrix, we will never find a leading 1 in the final column, so by <acroref type="theorem" acro="RCLS" /> the system will always be consistent.<br /><br />
+If we augment $E$ with any vector of constants, and row-reduce the augmented matrix, we will never find a pivot column in the final column, so by <acroref type="theorem" acro="RCLS" /> the system will always be consistent.<br /><br />
 Said another way, the column space of $E$ is all of $\complex{3}$, $\csp{E}=\complex{3}$.  So by <acroref type="theorem" acro="CSCS" /> any vector of constants will create a consistent system (and none will create an inconsistent system).
 </solution>
 </exercise>
@@ -1604,7 +1603,7 @@ has $\csp{A}=\nsp{A}=\spn{\set{\colvector{1\\-1}}}$.
 This is <em>not</em> not a legitimate procedure, and therefore is <em>not</em> a theorem.  Construct an example to show that the procedure will not in general create the column space of $A$.
 </problem>
 <solution contributor="robertbeezer">Begin with a matrix $A$ (of any size) that does not have any zero rows, but which when row-reduced to $B$ yields at least one row of zeros.  Such a matrix should be easy to construct (or find, like say from <acroref type="archetype" acro="A" />).<br /><br />
-$\csp{A}$ will contain some vectors whose final slot (entry $m$) is non-zero, however, every column vector from the matrix $B$ will have a zero in slot $m$ and so every vector in $\csp{B}$ will also contain a zero in the final slot.  This means that $\csp{A}\neq\csp{B}$, since we have vectors in $\csp{A}$ that cannot be elements of $\csp{B}$.
+$\csp{A}$ will contain some vectors whose final slot (entry $m$) is nonzero, however, every column vector from the matrix $B$ will have a zero in slot $m$ and so every vector in $\csp{B}$ will also contain a zero in the final slot.  This means that $\csp{A}\neq\csp{B}$, since we have vectors in $\csp{A}$ that cannot be elements of $\csp{B}$.
 </solution>
 </exercise>
 
