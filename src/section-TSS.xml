@@ -484,9 +484,9 @@ If only a single solution is needed, set all the free variables to zero and read
 
 <sageadvice acro="SS1" index="solving linear systems">
 <title>Solving Systems, Part 1</title>
-Sage has built-in commands that will solve a linear system of equations, given a coefficient matrix and a vector of constants.  We need to learn some more theory before we can entirely understand this command, but we can begin to explore its use.  For now, consider these methods experimental and do not let it replace row-reducing augmented matrices.<br /><br />
+Sage has a built-in command that will solve a linear system of equations, given a coefficient matrix and a vector of constants.  We need to learn some more theory before we can entirely understand this command, but we can begin to explore its use.  For now, consider these methods experimental and do not let it replace row-reducing augmented matrices.<br /><br />
 The matrix method <code>A.solve_right(b)</code> will provide information about solutions to the linear system of equations with coefficient matrix <code>A</code> and vector of constants <code>b</code>.  The reason for the <q>right</q> (and the corresponding command named with <q>left</q>) will have to wait for <acroref type="sage" acro="MVP" />.  For now, it is generally correct in this course to use the <q>right</q> variant of any Sage linear algebra command that has both <q>left</q> and <q>right</q> variants.<br /><br />
-Lets apply the <code>.solve_right()</code> command to a system with no solutions, in particular <acroref type="archetype" acro="E" />.  We have already seen in <acroref type="sage" acro="RCLS" /> that this system is inconsistent.
+Let's apply the <code>.solve_right()</code> command to a system with no solutions, in particular <acroref type="archetype" acro="E" />.  We have already seen in <acroref type="sage" acro="RCLS" /> that this system is inconsistent.
 <sage>
 <input>coeff = matrix(QQ, [[ 2, 1,  7, -7],
                     [-3, 4, -5, -6],
@@ -501,7 +501,7 @@ ValueError: matrix equation has no solutions
 </sage>
 
 This is our first discussion of Sage error messages, though undoubtedly you have seen several already!  First, here we only show the first and last lines of the message since typically it contains a lot of information specific to whichever computer you may be using.  but we always begin with the last line as the most important indication of what has happened.  Here the <q>problem</q> is quite evident: we get an <q>error</q> message telling us that the <code>matrix equation has no solutions</code>.  We can debate whether or not this is really an error, but that is the design decision taken in Sage <mdash /> we just need to be aware of it, the <code>.solve_right()</code> is really only valuable when there is a solution.<br /><br />
-Generally, when deciphering Sage error message, you want to start at the bottom of the <q>traceback</q> and read up through the various routines that have been called.  Execute the block above and you may see references to matrix methods such as <code>._solve_right_general()</code> and then <code>.solve_right()</code>.  With time and practice, these mysterious messages will become more and more helpful, so spend some time reading them in tandem with locating the real source of any problems you encounter.<br /><br />
+Generally, when deciphering Sage error messages, you want to start at the bottom of the <q>traceback</q> and read up through the various routines that have been called.  Execute the block above and you may see references to matrix methods such as <code>._solve_right_general()</code> and then <code>.solve_right()</code>.  With time and practice, these mysterious messages will become more and more helpful, so spend some time reading them in tandem with locating the real source of any problems you encounter.<br /><br />
 What does <code>.solve_right()</code> do with a system that does have solutions?  Lets take a look at <acroref type="example" acro="ISSI" /> again, as we did in <acroref type="sage" acro="FDV" />.
 <sage>
 <input>coeff = matrix(QQ, [[ 1,  4,  0, -1,  0,   7, -9],
