@@ -1,33 +1,4 @@
-<!-- Mathematics notation macros collected in one place -->
-<!-- Keep two versions (latex, mathjax) in sync here    -->
 <macros>
-
-<!-- Latex versions from old style file, fcla-math.sty  -->
-<latex><![CDATA[%%  These definitions allow for a consistent look for
-%%  mathematical structures.  It is relatively safe to play
-%%  around with variants if you desire other notation or looks.
-
-%%  General comments
-%%    \ensuremath{} is a good idea
-
-%   Delimiters
-%     tex4ht needs \protect before some delimiters, so notation moves to notation list OK
-%     Too many protect's confuses the XML version, so we combine
-%     \left and \right with delimiting info here
-%     With an FCLA prefix, these are not meant for general use, or outside this file
-%       angle brackets: \langle, \rangle
-%       brackets: \lbrack, \rbrack
-%       single vertical: \lvert, \rvert
-%       double vertical: \lVert, \rVert
-%       matching nulls:  .
-%       set brackets: \{, \}
-%
-%     Following just need a \protect when used in macro, since not variable-sized (?)
-%       \colon, \widehat
-%
-%     Have not combined \left, \right with ( and ), doesn't seem necessary
-%     Also left alone bare | in \submatrix
-
 \newcommand*{\FCLAlangle}{\left\langle}
 \newcommand*{\FCLArangle}{\right\rangle}
 \newcommand*{\FCLAlbrack}{\left\lbrack}
@@ -482,7 +453,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%
 %
-%     Eigenvalues & Eigenspaces
+%     Eigenvalues and Eigenspaces
 %
 %%%%%%%%%%%%%%%%%%%%%
 
@@ -528,15 +499,6 @@
 %
 \newcommand*{\indx}[2]{\ensuremath{\iota\sb{#1}\protect\left(#2\protect\right)}}
 
-
-% Eigensystem
-%
-%  Usage: \eigensystem{matrixletter}{eigenvalue}{list of basis vectors}
-%  Presumes math mode and in align* environment
-%
-\newcommand*{\eigensystem}[3]{
-\ensuremath{\lambda&=#2&\eigenspace{#1}{#2}&=\spn{\set{#3}}}
-}
 
 %%%%%%%%%%%%%%%%%%%%%
 %
@@ -737,100 +699,5 @@
 %
 \newlength{\oneindent}
 \setlength{\oneindent}{1.5em}
-\newcommand*{\codeindent}[1]{\noindent\hspace*{#1\oneindent}}]]></latex>
-
-<!-- Mathjax versions, originally by David Farmer, Sally Koutsoliotas -->
-<!-- translated by hand from old latex style file, fcla-math.sty      -->
-<!-- ready for inclusion in MathJax setup routines                    -->
-<mathjax><![CDATA[denote: ["",4],
-null: "",
-sb: "_",
-leading: ["\\fbox{#1}",1],
-rref: "\\xrightarrow{\\text{RREF}}",
-rowopswap: ["R_{#1} \\leftrightarrow R_{#2}",2],
-rowopmult: ["#1 R_{#2}",2],
-rowopadd: ["#1 R_{#2} + R_{#3}",3],
-compose: ["#1 \\circ #2",2],
-inverse: ["#1^{-1}",1],
-setcomplement: ["\\overline{#1}",1],
-ltinverse: ["#1^{-1}",1],
-preimage: ["#1^{-1}\\left(#2\\right)",2],
-lt: ["#1\\left(#2\\right)",2],
-transpose: ["#1^{t}",1],
-adjoint: ["#1^{\\ast}",1],
-adj: ["\\transpose{\\left(\\conjugate{#1}\\right)}",1],
-similar: ["\\inverse{#2}#1#2",2],
-detname: ["\\det\\left(#1\\right)",1],
-dimension: ["\\dim\\left(#1\\right)",1],
-colvector: ["\\begin{bmatrix}#1\\end{bmatrix}",1],
-vslt: ["{\\mathcal LT}\\left(#1,#2\\right)",2],
-lns: ["{\\mathcal L}\\left(#1\\right)",1],
-nsp: ["{\\mathcal N}\\left(#1\\right)",1],
-csp: ["{\\mathcal C}\\left(#1\\right)",1],
-rsp: ["{\\mathcal R}\\left(#1\\right)",1],
-rng: ["{\\mathcal R}\\left(#1\\right)",1],
-krn: ["{\\mathcal K}\\left(#1\\right)",1],
-vectrepname: ["\\rho_{#1}",1],
-vectrep: ["\\lt{\\vectrepname{#1}}{#2}",2],
-vectrepinvname: ["\\ltinverse{\\vectrepname{#1}}",1],
-vectrepinv: ["\\lt{\\ltinverse{\\vectrepname{#1}}}{#2}",2],
-matrixrepcolumns: ["\\left\\lbrack \\left.\\vectrep{#2}{\\lt{#1}{\\vect{#3}\\sb{1}}}\\right| \\left.\\vectrep{#2}{\\lt{#1}{\\vect{#3}\\sb{2}}}\\right| \\left.\\vectrep{#2}{\\lt{#1}{\\vect{#3}\\sb{3}}}\\right| \\ldots \\left|\\vectrep{#2}{\\lt{#1}{\\vect{#3}\\sb{#4}}}\\right.  \\right\\rbrack",4],
-matrixrep: ["M^{#1}_{#2,#3}",3],
-cbm: ["C_{#1,#2}",2],
-jordan: ["J_{#1}\\left(#2\\right)",2],
-restrict: ["{#1}|\\sb{#2}",2],
-indx: ["\\iota_{#1}|\\left(#2\\right)",2],
-rank: ["r\\left(#1\\right)",1],
-nullity: ["n\\left(#1\\right)",1],
-eigenspace: ["{\\mathcal E}_{#1}\\left(#2\\right)",2],
-eigensystem: ["\\lambda&=#2&\\eigenspace{#1}{#2}&=\\spn{\\set{#3}}",3],
-geneigenspace: ["{\\mathcal G}_{#1}\\left(#2\\right)",2],
-innerproduct: ["\\FCLAlangle#1,#2\\FCLArangle",2],
-spn: ["\\FCLAlangle#1\\FCLArangle",1],
-card: ["\\FCLAlvert#1\\FCLArvert",1],
-detbars: ["\\FCLAlvert#1\\FCLArvert",1],
-modulus: ["\\FCLAlvert#1\\FCLArvert",1],
-norm: ["\\FCLAlVert#1\\FCLArVert",1],
-matrixentry: ["\\FCLAlbrack#1\\FCLArbrack_{#2}",2],
-vectorentry: ["\\FCLAlbrack#1\\FCLArbrack_{#2}",2],
-matrixcolumns: ["\\left\\lbrack\\vect{#1}_{1}|\\vect{#1}_{2}|\\vect{#1}_{3}|\\ldots|\\vect{#1}_{#2}\\right\\rbrack",2],
-vectorlist: ["\\vect{#1}_{1}, \\vect{#1}_{2}, \\vect{#1}_{3}, \\ldots, \\vect{#1}_{#2}",2],
-scalarlist: ["{#1}_{1}, {#1}_{2}, {#1}_{3}, \\ldots, {#1}_{#2}",2],
-set: ["\\FCLAlsetbrack#1\\FCLArsetbrack",1],
-setparts: ["\\FCLAlsetbrack\\FCLAlnull #1 \\FCLArvert #2 \\FCLArsetbrack",2],
-algmult: ["\\alpha_{#1}\\left(#2\\right)",2],
-geomult: ["\\gamma_{#1}\\left(#2\\right)",2],
-charpoly: ["p_{#1}\\left(#2\\right)",2],
-augmented: ["\\FCLAlbrack\\FCLAlnull#1\\FCLArvert#2\\FCLArbrack",2],
-linearsystem: ["{\\mathcal L}{\\mathcal S}\\left(#1,#2\\right)",2],
-homosystem: ["\\linearsystem{#1}{\\zerovector}",1],
-lincombo: ["#1_{1}\\vect{#2}_{1}+#1_{2}\\vect{#2}_{2}+#1_{3}\\vect{#2}_{3}+\\cdots +#1_{#3}\\vect{#2}_{#3}",3],
-submatrix: ["#1\\left(#2|#3\\right)",3],
-elemswap: ["E_{#1,#2}",2],
-elemmult: ["E_{#2}\\left(#1\\right)",2],
-elemadd: ["E_{#2,#3}\\left(#1\\right)",3],
-ltdefn: ["#1 : #2 \\rightarrow #3",3],
-zerovector: "\\vect{0}",
-zeromatrix: "{\\mathcal 0}",
-vect: ["{\\bf #1}",1],
-conjugate: ["\\overline{#1}",1],
-ds: "\\oplus",
-isomorphic: "\\cong",
-complexes: "{\\mathbb C}",
-complex: ["{\\mathbb C}^{#1}",1],
-real: ["{\\mathbb R}^{#1}",1],
-FCLAlangle: "\\left\\langle",
-FCLArangle: "\\right\\rangle",
-FCLAlbrack: "\\left\\lbrack",
-FCLArbrack: "\\right\\rbrack",
-FCLAlvert: "\\left\\lvert",
-FCLArvert: "\\right\\rvert",
-FCLAlVert: "\\left\\lVert",
-FCLArVert: "\\right\\rVert",
-FCLAlnull: "\\left.",
-FCLArnull: "\\right.",
-FCLAlsetbrack: "\\left\\{",
-FCLArsetbrack: "\\right\\}",
-intertext: ["\\\\ \\text{#1}\\\\ ",1],]]></mathjax>
-
+\newcommand*{\codeindent}[1]{\noindent\hspace*{#1\oneindent}}
 </macros>
