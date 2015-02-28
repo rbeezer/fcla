@@ -28,35 +28,9 @@
 </statement>
 
 <proof>
-<p><implyforward /> We will do this portion of the proof in two parts, each as a proof by contradiction (<acroref type="technique" acro="CD" />).  Assume that $AB$ is nonsingular. Establishing that $B$ is nonsingular is the easier part, so we will do it first, but in reality, we will <em>need</em> to know that $B$ is nonsingular when we prove that $A$ is nonsingular.</p>
+<p><implyforward /> For this portion of the proof we will form the logically-equivalent contrapositive and prove that statement using two cases.  <q>$AB$ is nonsingular implies $A$ and $B$ are both nonsingular</q> becomes <q>$A$ or $B$ is singular implies $AB$ is singular.</q>  (Be sure to undertstand why the <q>and</q> became an <q>or</q>, see <acroref type="technique" acro="CP" />.)</p>
 
-<p>You can also think of this proof as being a study of four possible conclusions in the table below.  One of the four rows <em>must</em> happen (the list is exhaustive).  In the proof we learn that the first three rows lead to contradictions, and so are impossible.  That leaves the fourth row as a certainty, which is our desired conclusion.
-
-<table>
-<latex>\begin{tabular}{l|l|c}
-<![CDATA[\multicolumn{1}{c}{$A$}&]]>
-<![CDATA[\multicolumn{1}{c}{$B$}&]]>
-\multicolumn{1}{c}{Case}\\\hline\hline
-<![CDATA[Singular&Singular&1\\\hline]]>
-<![CDATA[Nonsingular&Singular&1\\\hline]]>
-<![CDATA[Singular&Nonsingular&2\\\hline]]>
-<![CDATA[Nonsingular&Nonsingular&]]>
-\end{tabular}</latex>
-<html>
-<![CDATA[<table border="1" cellpadding="2" style="margin:auto;">
-  <tr><td>$A$</td><td>$B$</td><td>Case</td></tr>
-  <tr><td>Singular</td><td>Singular</td><td>1</td></tr>
-  <tr><td>Nonsingular</td><td>Singular</td><td>1</td></tr>
-  <tr><td>Singular</td><td>Nonsingular</td><td>2</td></tr>
-  <tr><td>Nonsingular</td><td>Nonsingular</td><td></td></tr>
-</table>]]>
-</html>
-</table>
-
-
-</p>
-
-<p>Part 1.  Suppose $B$ is singular.  Then there is a nonzero vector $\vect{z}$ that is a solution to $\homosystem{B}$.  So
+<p>Case 1.  Suppose $B$ is singular.  Then there is a nonzero vector $\vect{z}$ that is a solution to $\homosystem{B}$.  So
 <alignmath>
 (AB)\vect{z}
 <![CDATA[&=A(B\vect{z})&&]]><acroref type="theorem" acro="MMA" />\\
@@ -64,9 +38,9 @@
 <![CDATA[&=\zerovector&&]]><acroref type="theorem" acro="MMZM" />\\
 </alignmath></p>
 
-<p>Because $\vect{z}$ is a nonzero solution to $\homosystem{AB}$,  we conclude that $AB$ is singular (<acroref type="definition" acro="NM" />).  This is a contradiction, so $B$ is nonsingular, as desired.</p>
+<p>With <acroref type="theorem" acro="SLEMM" /> we can translate this vector equality to the statement that $\vect{z}$ is a nonzero solution to $\homosystem{AB}$.  Thus $AB$ is singular (<acroref type="definition" acro="NM" />), as desired.</p>
 
-<p>Part 2.  Suppose $A$ is singular.  Then there is a nonzero vector $\vect{y}$ that is a solution to $\homosystem{A}$.  Now consider the linear system $\linearsystem{B}{\vect{y}}$.  Since we know $B$ is nonsingular from Case 1, the system has a unique solution (<acroref type="theorem" acro="NMUS" />), which we will denote as $\vect{w}$.  We first claim $\vect{w}$ is not the zero vector either.  Assuming the opposite, suppose that $\vect{w}=\zerovector$ (<acroref type="technique" acro="CD" />).  Then
+<p>Case 2.  Suppose $A$ is singular, and $B$ is not singular.  In other words, with Case 1 complete, we can be more precise about this remaining case and assume that $B$ is nonsingular.  Because $A$ is singular, there is a nonzero vector $\vect{y}$ that is a solution to $\homosystem{A}$.  Now consider the linear system $\linearsystem{B}{\vect{y}}$.  Since $B$ is nonsingular, the system has a unique solution (<acroref type="theorem" acro="NMUS" />), which we will denote as $\vect{w}$.  We first claim $\vect{w}$ is not the zero vector either.  Assuming the opposite, suppose that $\vect{w}=\zerovector$ (<acroref type="technique" acro="CD" />).  Then
 <alignmath>
 \vect{y}
 <![CDATA[&=B\vect{w}&&]]><acroref type="theorem" acro="SLEMM" />\\
@@ -80,7 +54,7 @@
 </alignmath>
 </p>
 
-<p>So $\vect{w}$ is a nonzero solution to $\homosystem{AB}$,  and thus we can say  that $AB$ is singular (<acroref type="definition" acro="NM" />).  This is a contradiction, so $A$ is nonsingular, as desired.</p>
+<p>With <acroref type="theorem" acro="SLEMM" /> we can translate this vector equality to the statement that $\vect{w}$ is a nonzero solution to $\homosystem{AB}$.  Thus $AB$ is singular (<acroref type="definition" acro="NM" />), as desired.  And this conclusion holds for both cases.</p>
 
 <p><implyreverse /> Now assume that both $A$ and $B$ are nonsingular.  Suppose that $\vect{x}\in\complex{n}$ is a solution to $\homosystem{AB}$.  Then
 <alignmath>
@@ -97,7 +71,7 @@
 
 <p>This is a powerful result in the <q>forward</q> direction, because it allows us to begin with a hypothesis that something complicated (the matrix product $AB$) has the property of being nonsingular, and we can then conclude that the simpler constituents ($A$ and $B$ individually) then also have the property of being nonsingular.  If we had thought that the matrix product was an artificial construction, results like this would make us begin to think twice.</p>
 
-<p>The contrapositive of this result is equally interesting.  It says that $A$ or $B$ (or both) is a singular matrix if and only if the product $AB$ is singular.  Notice how the negation of the theorem's conclusion ($A$ and $B$ both nonsingular) becomes the statement <q>at least one of $A$ and $B$ is singular.</q>  (See <acroref type="technique" acro="CP" />.)</p>
+<p>The contrapositive of this entire result is equally interesting.  It says that $A$ or $B$ (or both) is a singular matrix if and only if the product $AB$ is singular.  (See <acroref type="technique" acro="CP" />.)</p>
 
 <!--   TODO: Insert reference to a technique about negations. -->
 <theorem acro="OSIS" index="matrix inverse!one-sided">
