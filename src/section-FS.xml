@@ -88,8 +88,11 @@ A=
 
 <sageadvice acro="LNS" index="left null space">
 <title>Left Null Spaces</title>
-Similar to (right) null spaces, a left null space can be computed in Sage with the matrix method <code>.left_kernel()</code>.  For a matrix $A$, elements of the (right) null space are vectors $\vect{x}$ such that $A\vect{x}=\zerovector$.  If we interpret a vector placed to the left of a matrix as a 1-row matrix, then the product $\vect{x}A$ can be interpreted, according to our definition of matrix multiplication (<acroref type="definition" acro="MM" />, as the entries of the vector $\vect{x}$ providing the scalars for a linear combination of the <em>rows</em> of the matrix $A$.  So you can view each vector in the left null space naturally as the entries of a matrix with a single row, $Y$, with the property that $YA=\zeromatrix$.  <br /><br />
-Given Sage's preference for row vectors, the simpler name <code>.kernel()</code> is a synonym for <code>.left_kernel()</code>.  Given your text's preference for column vectors, we will continue to rely on the <code>.right_kernel()</code>.  Left kernels in Sage have the same options as right kernels and produce vector spaces as output in the same manner.  Once created, a vector space all by itself (with no history) is neither left or right.  Here is a quick repeat of <acroref type="example" acro="LNS" />.
+
+<p>Similar to (right) null spaces, a left null space can be computed in Sage with the matrix method <code>.left_kernel()</code>.  For a matrix $A$, elements of the (right) null space are vectors $\vect{x}$ such that $A\vect{x}=\zerovector$.  If we interpret a vector placed to the left of a matrix as a 1-row matrix, then the product $\vect{x}A$ can be interpreted, according to our definition of matrix multiplication (<acroref type="definition" acro="MM" />, as the entries of the vector $\vect{x}$ providing the scalars for a linear combination of the <em>rows</em> of the matrix $A$.  So you can view each vector in the left null space naturally as the entries of a matrix with a single row, $Y$, with the property that $YA=\zeromatrix$.</p>
+
+<p>Given Sage's preference for row vectors, the simpler name <code>.kernel()</code> is a synonym for <code>.left_kernel()</code>.  Given your text's preference for column vectors, we will continue to rely on the <code>.right_kernel()</code>.  Left kernels in Sage have the same options as right kernels and produce vector spaces as output in the same manner.  Once created, a vector space all by itself (with no history) is neither left or right.  Here is a quick repeat of <acroref type="example" acro="LNS" />.</p>
+
 <sage>
 <input>A = matrix(QQ, [[ 1, -3, 1],
                 [-2,  1, 1],
@@ -103,9 +106,8 @@ User basis matrix:
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <subsection acro="CCS">
@@ -270,8 +272,11 @@ b_2 - 2 b_3 + b_4 + b_5 - b_6\\
 
 <sageadvice acro="RRSM" index="row-reduce!symbolic matrix">
 <title>Row-Reducing a Symbolic Matrix</title>
-Sage can very nearly reproduce the reduced row-echelon form we obtained from the augmented matrix with variables present in the final column.  The first line below is a bit of advanced Sage.  It creates a number system <code>R</code> mixing the rational numbers with the variables <code>b1</code> through <code>b6</code>.  It is not important to know the details of this construction right now.  <code>B</code> is the reduced row-echelon form of <code>A</code>, as computed by Sage, where we have displayed the last column separately so it will all fit.  You will notice that <code>B</code> is different than what we used in <acroref type="example" acro="CSANS" />, where all the differences are in the final column.<br /><br />
-However, we can perform row operations on the final two rows of <code>B</code> to bring Sage's result in line with what we used above for the final two entries of the last column, which are the most critical.  Notice that since the final two rows are almost all zeros, any sequence of row operations on just these two rows will preserve the zeros (and we need only display the final column to keep track of our progress).
+
+<p>Sage can very nearly reproduce the reduced row-echelon form we obtained from the augmented matrix with variables present in the final column.  The first line below is a bit of advanced Sage.  It creates a number system <code>R</code> mixing the rational numbers with the variables <code>b1</code> through <code>b6</code>.  It is not important to know the details of this construction right now.  <code>B</code> is the reduced row-echelon form of <code>A</code>, as computed by Sage, where we have displayed the last column separately so it will all fit.  You will notice that <code>B</code> is different than what we used in <acroref type="example" acro="CSANS" />, where all the differences are in the final column.</p>
+
+<p>However, we can perform row operations on the final two rows of <code>B</code> to bring Sage's result in line with what we used above for the final two entries of the last column, which are the most critical.  Notice that since the final two rows are almost all zeros, any sequence of row operations on just these two rows will preserve the zeros (and we need only display the final column to keep track of our progress).</p>
+
 <sage>
 <input><![CDATA[R.<b1,b2,b3,b4,b5,b6> = QQ[]]]>
 A = matrix(R, [[ 10,  0,  3,   8,   7, b1],
@@ -364,10 +369,10 @@ B[0:6,0:5]
 </output>
 </sage>
 
-Notice that the last two entries of the final column now have just a single <code>b1</code> and a single <code>B2</code>. We could continue to perform more row operations by hand, using the last two rows to progressively eliminate <code>b1</code> and <code>b2</code> from the other four expressions of the last column.  Since the two last rows have zeros in their first five entries, only the entries in the final column would change.  You will see that much of this section is about how to automate these final calculations.
-
+<p>Notice that the last two entries of the final column now have just a single <code>b1</code> and a single <code>B2</code>. We could continue to perform more row operations by hand, using the last two rows to progressively eliminate <code>b1</code> and <code>b2</code> from the other four expressions of the last column.  Since the two last rows have zeros in their first five entries, only the entries in the final column would change.  You will see that much of this section is about how to automate these final calculations.</p>
 
 </sageadvice>
+
 </subsection>
 
 <subsection acro="EEF">
@@ -967,7 +972,9 @@ N=
 
 <sageadvice acro="EEF" index="extended echelon form">
 <title>Extended Echelon Form</title>
-Sage will compute the extended echelon form, an improvement over what we did <q>by hand</q> in <acroref type="sage" acro="MISLE" />.  And the output can be requested as a <q>subdivided</q> matrix so that we can easily work with the pieces $C$ and $L$.  Pieces of subdivided matrices can be extracted with indices entirely similar to how we index the actual entries of a matrix.  We will redo <acroref type="example" acro="FS2" /> as an illustration of <acroref type="theorem" acro="FS" /> and <acroref type="theorem" acro="PEEF" />.
+
+<p>Sage will compute the extended echelon form, an improvement over what we did <q>by hand</q> in <acroref type="sage" acro="MISLE" />.  And the output can be requested as a <q>subdivided</q> matrix so that we can easily work with the pieces $C$ and $L$.  Pieces of subdivided matrices can be extracted with indices entirely similar to how we index the actual entries of a matrix.  We will redo <acroref type="example" acro="FS2" /> as an illustration of <acroref type="theorem" acro="FS" /> and <acroref type="theorem" acro="PEEF" />.</p>
+
 <sage>
 <input>A = matrix(QQ,[[ 10,  0,  3,   8,   7],
                [-16, -1, -4, -10, -13],
@@ -1095,8 +1102,10 @@ N = A.extended_echelon_form(subdivide=True); N
 </output>
 </sage>
 
-Notice how we can employ the uniqueness of reduced row-echelon form (<acroref type="theorem" acro="RREFU" />) to verify that <code>C</code> and <code>L</code> are in reduced row-echelon form.  Realize too, that subdivided output is an optional behavior of the <code>.extended_echelon_form()</code> method and must be requested with <code>subdivide=True</code>.<br /><br />
-Additionally, it is the uniquely determined matrix <code>J</code> that provides us with a standard version of the final column of the row-reduced augmented matrix using variables in the vector of constants, as first shown back in <acroref type="example" acro="CSANS" /> and verified here with variables defined as in <acroref type="sage" acro="RRSM" />.  (The vector method <code>.column()</code> converts a vector into a 1-column matrix, used here to format the matrix-vector product nicely.)
+<p>Notice how we can employ the uniqueness of reduced row-echelon form (<acroref type="theorem" acro="RREFU" />) to verify that <code>C</code> and <code>L</code> are in reduced row-echelon form.  Realize too, that subdivided output is an optional behavior of the <code>.extended_echelon_form()</code> method and must be requested with <code>subdivide=True</code>.</p>
+
+<p>Additionally, it is the uniquely determined matrix <code>J</code> that provides us with a standard version of the final column of the row-reduced augmented matrix using variables in the vector of constants, as first shown back in <acroref type="example" acro="CSANS" /> and verified here with variables defined as in <acroref type="sage" acro="RRSM" />.  (The vector method <code>.column()</code> converts a vector into a 1-column matrix, used here to format the matrix-vector product nicely.)</p>
+
 <sage>
 <input><![CDATA[R.<b1,b2,b3,b4,b5,b6> = QQ[]]]>
 const = vector(R, [b1, b2, b3, b4, b5, b6])
@@ -1111,9 +1120,8 @@ const = vector(R, [b1, b2, b3, b4, b5, b6])
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 <p><acroref type="example" acro="COV" /> and <acroref type="example" acro="CSROI" /> each describes the column space of the coefficient matrix from <acroref type="archetype" acro="I" /> as the span of a set of $r=3$ linearly independent vectors.  It is no accident that these two different sets both have the same size.  If we (you?) were to calculate the column space of this matrix using the null space of the matrix $L$ from <acroref type="theorem" acro="FS" /> then we would again find a set of 3 linearly independent vectors that span the range.  More on this later.</p>
 
 <p>So we have three different methods to obtain a description of the column space of a matrix as the span of a linearly independent set.  <acroref type="theorem" acro="BCS" /> is sometimes useful since the vectors it specifies are equal to actual columns of the matrix. <acroref type="theorem" acro="BRS" /> and <acroref type="theorem" acro="CSRST" /> combine to create vectors with lots of zeros, and strategically placed 1's near the top of the vector.   <acroref type="theorem" acro="FS" /> and the matrix $L$ from the extended echelon form gives us a third method, which tends to create vectors with lots of zeros, and strategically placed 1's near the bottom of the vector.   If we do not care about linear independence we can also appeal to <acroref type="definition" acro="CSM" /> and simply express the column space as the span of all the columns of the matrix, giving us a fourth description.</p>

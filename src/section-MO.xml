@@ -146,7 +146,9 @@ and $\alpha=7$, then
 
 <sageadvice acro="MS" index="matrix spaces">
 <title>Matrix Spaces</title>
-Sage defines our set $M_{mn}$ as a <q>matrix space</q> with the command <code>MatrixSpace(R, m, n)</code> where <code>R</code> is a number system and <code>m</code> and <code>n</code> are the number of rows and number of columns, respectively.  This object does not have much functionality defined in Sage.  Its main purposes are to provide a parent for matrices, and to provide another way to create matrices.  The two matrix operations just defined (addition and scalar multiplication) are implemented as you would expect.  In the example below, we create two matrices in $M_{23}$ from just a list of 6 entries, by coercing the list into a matrix by using the relevant matrix space as if it were a function.  Then we can perform the basic operations of matrix addition (<acroref type="definition" acro="MA" />) and matrix scalar multiplication (<acroref type="definition" acro="MSM" />).
+
+<p>Sage defines our set $M_{mn}$ as a <q>matrix space</q> with the command <code>MatrixSpace(R, m, n)</code> where <code>R</code> is a number system and <code>m</code> and <code>n</code> are the number of rows and number of columns, respectively.  This object does not have much functionality defined in Sage.  Its main purposes are to provide a parent for matrices, and to provide another way to create matrices.  The two matrix operations just defined (addition and scalar multiplication) are implemented as you would expect.  In the example below, we create two matrices in $M_{23}$ from just a list of 6 entries, by coercing the list into a matrix by using the relevant matrix space as if it were a function.  Then we can perform the basic operations of matrix addition (<acroref type="definition" acro="MA" />) and matrix scalar multiplication (<acroref type="definition" acro="MSM" />).</p>
+
 <sage>
 <input>MS = MatrixSpace(QQ, 2, 3)
 MS
@@ -181,7 +183,8 @@ A + B
 </output>
 </sage>
 
-Coercion can make some interesting conveniences possible.  Notice how the scalar <code>37</code> in the following expression is coerced to $37$ times an identity matrix of the proper size.
+<p>Coercion can make some interesting conveniences possible.  Notice how the scalar <code>37</code> in the following expression is coerced to $37$ times an identity matrix of the proper size.</p>
+
 <sage>
 <input>A = matrix(QQ, [[ 0,  2, 4],
                 [ 6,  0, 8],
@@ -194,10 +197,10 @@ A + 37
 </output>
 </sage>
 
-This coercion only applies to sums with <em>square</em> matrices.  You might try this again, but with a rectangular matrix, just to see what the error message says.
-
+<p>This coercion only applies to sums with <em>square</em> matrices.  You might try this again, but with a rectangular matrix, just to see what the error message says.</p>
 
 </sageadvice>
+
 </subsection>
 
 <subsection acro="VSP">
@@ -695,7 +698,9 @@ $\adjoint{A}=\transpose{\left(\conjugate{A}\right)}$.</p>
 
 <sageadvice acro="MO" index="matrix operations">
 <title>Matrix Operations</title>
-Every operation in this section is implemented in Sage.  The only real subtlety is determining if certain matrices are symmetric, which we will discuss below.  In linear algebra, the term <q>adjoint</q> has two unrelated meanings, so you need to be careful when you see this term.  In particular, in Sage it is used to mean something different.  So our version of the adjoint is implemented as the matrix method <code>.conjugate_transpose()</code>.  Here are some straightforward examples.
+
+<p>Every operation in this section is implemented in Sage.  The only real subtlety is determining if certain matrices are symmetric, which we will discuss below.  In linear algebra, the term <q>adjoint</q> has two unrelated meanings, so you need to be careful when you see this term.  In particular, in Sage it is used to mean something different.  So our version of the adjoint is implemented as the matrix method <code>.conjugate_transpose()</code>.  Here are some straightforward examples.</p>
+
 <sage>
 <input>A = matrix(QQ, [[-1, 2, 4],
                 [ 0, 3, 1]])
@@ -750,7 +755,8 @@ C.conjugate()
 </output>
 </sage>
 
-With these constructions, we can test, or demonstrate, some of the theorems above.  Of course, this does not make the theorems true, but is satisfying nonetheless.  This can be an effective technique when you are learning new Sage commands or new linear algebra <mdash /> if your computations are not consistent with theorems, then your understanding of the linear algebra may be flawed, or your understanding of Sage may be flawed, or Sage may have a bug!  Note in the following how we use comparison (<code>==</code>) between matrices as an implementation of matrix equality (<acroref type="definition" acro="ME" />).
+<p>With these constructions, we can test, or demonstrate, some of the theorems above.  Of course, this does not make the theorems true, but is satisfying nonetheless.  This can be an effective technique when you are learning new Sage commands or new linear algebra <mdash /> if your computations are not consistent with theorems, then your understanding of the linear algebra may be flawed, or your understanding of Sage may be flawed, or Sage may have a bug!  Note in the following how we use comparison (<code>==</code>) between matrices as an implementation of matrix equality (<acroref type="definition" acro="ME" />).</p>
+
 <sage>
 <input>A = matrix(QQ, [[ 1, -1, 3],
                 [-3,  2, 0]])
@@ -786,8 +792,10 @@ acon = a.conjugate()
 </output>
 </sage>
 
-The opposite is true <mdash /> you can use theorems to convert, or express, Sage code into alternative, but mathematically equivalent forms.<br /><br />
-Here is the subtlety.  With approximate numbers, such as in <code>RDF</code> and <code>CDF</code>, it can be tricky to decide if two numbers are equal, or if a very small number is zero or not.  In these situations Sage allows us to specify a <q>tolerance</q> <mdash /> the largest number that can be effectively considered zero.  Consider the following:
+<p>The opposite is true <mdash /> you can use theorems to convert, or express, Sage code into alternative, but mathematically equivalent forms.</p>
+
+<p>Here is the subtlety.  With approximate numbers, such as in <code>RDF</code> and <code>CDF</code>, it can be tricky to decide if two numbers are equal, or if a very small number is zero or not.  In these situations Sage allows us to specify a <q>tolerance</q> <mdash /> the largest number that can be effectively considered zero.  Consider the following:</p>
+
 <sage>
 <input>A = matrix(CDF, [[1.0, 0.0], [0.0, 1.0]])
 A
@@ -836,7 +844,8 @@ A
 </output>
 </sage>
 
-Clearly the last result is not correct.  This is because $0.000000000001 = 1.0\times 10^{-12}$ is <q>small enough</q> to be confused as equal to the zero in the other corner of the matrix.  However, Sage will let us set our own idea of when two numbers are equal, by setting a tolerance on the difference between two numbers that will allow them to be considered equal.  The default tolerance is set at $1.0\times 10^{-12}$.  Here we use Sage's syntax for scientific notation to specify the tolerance.
+<p>Clearly the last result is not correct.  This is because $0.000000000001 = 1.0\times 10^{-12}$ is <q>small enough</q> to be confused as equal to the zero in the other corner of the matrix.  However, Sage will let us set our own idea of when two numbers are equal, by setting a tolerance on the difference between two numbers that will allow them to be considered equal.  The default tolerance is set at $1.0\times 10^{-12}$.  Here we use Sage's syntax for scientific notation to specify the tolerance.</p>
+
 <sage>
 <input>A = matrix(CDF, [[1.0, 0.0], [0.0, 1.0]])
 A.is_symmetric()
@@ -860,7 +869,8 @@ A.is_symmetric()
 </output>
 </sage>
 
-This is not a course in numerical linear algebra, even if that is a fascinating field of study.  To concentrate on the main ideas of introductory linear algebra, whenever possible we will concentrate on number systems like the rational numbers or algebraic numbers where we can rely on exact results.  If you are ever unsure if a number system is exact or not, just ask.
+<p>This is not a course in numerical linear algebra, even if that is a fascinating field of study.  To concentrate on the main ideas of introductory linear algebra, whenever possible we will concentrate on number systems like the rational numbers or algebraic numbers where we can rely on exact results.  If you are ever unsure if a number system is exact or not, just ask.</p>
+
 <sage>
 <input>QQ.is_exact()
 </input>
@@ -875,9 +885,8 @@ This is not a course in numerical linear algebra, even if that is a fascinating 
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <!--   End  mo.tex -->

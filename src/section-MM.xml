@@ -252,7 +252,9 @@ T\vect{w}=
 
 <sageadvice acro="MVP" index="matrix-vector product">
 <title>Matrix-Vector Product</title>
-A matrix-vector product is very natural in Sage, and we can check the result against a linear combination of the columns.
+
+<p>A matrix-vector product is very natural in Sage, and we can check the result against a linear combination of the columns.</p>
+
 <sage>
 <input>A = matrix(QQ, [[1, -3,  4,  5],
                 [2,  3, -2,  0],
@@ -271,7 +273,8 @@ A*v
 </output>
 </sage>
 
-Notice that when a matrix is square, a vector of the correct size can be used in Sage in a product with a matrix by placing the vector on either side of the matrix.  However, the two results are <em>not</em> the same, and we will not have ocassion to place the vector on the left any time soon.  So, despite the possibility, be certain to keep your vectors on the right side of a matrix in a product.
+<p>Notice that when a matrix is square, a vector of the correct size can be used in Sage in a product with a matrix by placing the vector on either side of the matrix.  However, the two results are <em>not</em> the same, and we will not have ocassion to place the vector on the left any time soon.  So, despite the possibility, be certain to keep your vectors on the right side of a matrix in a product.</p>
+
 <sage>
 <input>B = matrix(QQ, [[ 1, -3,  4,  5],
                 [ 2,  3, -2,  0],
@@ -298,7 +301,8 @@ B*w
 </output>
 </sage>
 
-Since a matrix-vector product forms a linear combination of columns of a matrix, it is now very easy to check if a vector is a solution to a system of equations.  This is basically the substance of <acroref type="theorem" acro="SLEMM" />.  Here we construct a system of equations and construct two solutions and one non-solution by applying <acroref type="theorem" acro="PSPHS" />.  Then we use a matrix-vector product to verify that the vectors are, or are not, solutions.
+<p>Since a matrix-vector product forms a linear combination of columns of a matrix, it is now very easy to check if a vector is a solution to a system of equations.  This is basically the substance of <acroref type="theorem" acro="SLEMM" />.  Here we construct a system of equations and construct two solutions and one non-solution by applying <acroref type="theorem" acro="PSPHS" />.  Then we use a matrix-vector product to verify that the vectors are, or are not, solutions.</p>
+
 <sage>
 <input>coeff = matrix(QQ, [[-1,  3, -1, -1,  0,  2],
                     [ 2, -6,  1, -2, -5, -8],
@@ -349,12 +353,14 @@ coeff*nonsolution
 </output>
 </sage>
 
-We can now explain the difference between <q>left</q> and <q>right</q> variants of various Sage commands for linear algebra.  Generally, the direction refers to <em>where the vector is placed</em> in a matrix-vector product.  We place a vector on the right and understand this to mean a linear combination of the columns of the matrix.  Placing a vector to the left of a matrix can be understood, in a manner totally consistent with our upcoming definition of matrix multiplication, as a linear combination of the <em>rows</em> of the matrix.<br /><br />
-So the difference between <code>A.solve_right(v)</code> and <code>A.solve_left(v)</code> is that the former asks for a vector <code>x</code> such that <code>A*x == v</code>, while the latter asks for a vector <code>x</code> such that <code>x*A == v</code>.  Given Sage's preference for rows, a direction-neutral version of a command, if it exists, will be the <q>left</q> version.  For example, there is a <code>.right_kernel()</code> matrix method, while the <code>.left_kernel()</code> and <code>.kernel()</code> methods are identical <mdash /> the names are synonyms for the exact same routine.<br /><br />
-So when you see a Sage command that comes in <q>left</q> and <q>right</q> variants figure out just what part of the defined object involves a matrix-vector product and form an interpretation from that.
+<p>We can now explain the difference between <q>left</q> and <q>right</q> variants of various Sage commands for linear algebra.  Generally, the direction refers to <em>where the vector is placed</em> in a matrix-vector product.  We place a vector on the right and understand this to mean a linear combination of the columns of the matrix.  Placing a vector to the left of a matrix can be understood, in a manner totally consistent with our upcoming definition of matrix multiplication, as a linear combination of the <em>rows</em> of the matrix.</p>
 
+<p>So the difference between <code>A.solve_right(v)</code> and <code>A.solve_left(v)</code> is that the former asks for a vector <code>x</code> such that <code>A*x == v</code>, while the latter asks for a vector <code>x</code> such that <code>x*A == v</code>.  Given Sage's preference for rows, a direction-neutral version of a command, if it exists, will be the <q>left</q> version.  For example, there is a <code>.right_kernel()</code> matrix method, while the <code>.left_kernel()</code> and <code>.kernel()</code> methods are identical <mdash /> the names are synonyms for the exact same routine.</p>
+
+<p>So when you see a Sage command that comes in <q>left</q> and <q>right</q> variants figure out just what part of the defined object involves a matrix-vector product and form an interpretation from that.</p>
 
 </sageadvice>
+
 </subsection>
 
 <subsection acro="MM">
@@ -586,7 +592,9 @@ B=
 
 <sageadvice acro="MM" index="matrix multiplication">
 <title>Matrix Multiplication</title>
-Matrix multiplication is very natural in Sage, and is just as easy as multiplying two numbers.  We illustrate <acroref type="theorem" acro="EMP" /> by using it to compute the entry in the first row and third column.
+
+<p>Matrix multiplication is very natural in Sage, and is just as easy as multiplying two numbers.  We illustrate <acroref type="theorem" acro="EMP" /> by using it to compute the entry in the first row and third column.</p>
+
 <sage>
 <input>A = matrix(QQ, [[3, -1, 2,  5],
                 [9,  1, 2, -4]])
@@ -608,8 +616,10 @@ A*B
 </output>
 </sage>
 
-Note in the final statement, we could replace <code>A.ncols()</code> by <code>B.nrows()</code> since these two quantities must be identical.  You can experiment with the last statement by editing it to compute any of the five other entries of the matrix product.<br /><br />
-Square matrices can be multiplied in either order, but the result will almost always be different.  Execute repeatedly the following products of two random $4\times 4$ matrices, with a check on the equality of the two products in either order.  It is possible, but highly unlikely, that the two products will be equal.  So if this compute cell ever produces <code>True</code> it will be a minor miracle.
+<p>Note in the final statement, we could replace <code>A.ncols()</code> by <code>B.nrows()</code> since these two quantities must be identical.  You can experiment with the last statement by editing it to compute any of the five other entries of the matrix product.</p>
+
+<p>Square matrices can be multiplied in either order, but the result will almost always be different.  Execute repeatedly the following products of two random $4\times 4$ matrices, with a check on the equality of the two products in either order.  It is possible, but highly unlikely, that the two products will be equal.  So if this compute cell ever produces <code>True</code> it will be a minor miracle.</p>
+
 <sage>
 <input>A = random_matrix(QQ,4,4)
 B = random_matrix(QQ,4,4)
@@ -619,9 +629,8 @@ A*B == B*A       # random, sort of
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <subsection acro="PMM">
@@ -924,7 +933,9 @@ Whew!  Here we go.  These are great proofs to practice with, so try to concoct t
 
 <sageadvice acro="PMM" index="matrix multiplication, properties">
 <title>Properties of Matrix Multiplication</title>
-As before, we can use Sage to demonstrate theorems.  With randomly-generated matrices, these verifications might be even more believable.  Some of the above results should feel fairly routine, but some are perhaps contrary to intuition.  For example, <acroref type="theorem" acro="MMT" /> might at first glance seem surprising due to the requirement that the order of the product is reversed.  Here is how we would investigate this theorem in Sage.  The following compute cell should <em>always</em> return <code>True</code>.  Repeated experimental evidence does not make a proof, but certainly gives us confidence.
+
+<p>As before, we can use Sage to demonstrate theorems.  With randomly-generated matrices, these verifications might be even more believable.  Some of the above results should feel fairly routine, but some are perhaps contrary to intuition.  For example, <acroref type="theorem" acro="MMT" /> might at first glance seem surprising due to the requirement that the order of the product is reversed.  Here is how we would investigate this theorem in Sage.  The following compute cell should <em>always</em> return <code>True</code>.  Repeated experimental evidence does not make a proof, but certainly gives us confidence.</p>
+
 <sage>
 <input>A = random_matrix(QQ, 3, 7)
 B = random_matrix(QQ, 7, 5)
@@ -934,7 +945,8 @@ B = random_matrix(QQ, 7, 5)
 </output>
 </sage>
 
-By now, you can probably guess the matrix method for checking if a matrix is Hermitian.
+<p>By now, you can probably guess the matrix method for checking if a matrix is Hermitian.</p>
+
 <sage>
 <input>A = matrix(QQbar, [[     45, -5-12*I, -1-15*I, -56-8*I],
                    [-5+12*I,      42,    32*I, -14-8*I],
@@ -946,7 +958,8 @@ A.is_hermitian()
 </output>
 </sage>
 
-We can illustrate the most fundamental property of a Hermitian matrix.  The vectors <code>x</code> and <code>y</code> below are random, but according to <acroref type="theorem" acro="HMIP" /> the final command should produce <code>True</code> for any possible values of these two vectors.   (You would be right to think that using random vectors over <code>QQbar</code> would be a better idea, but at this writing, these vectors are not as <q>random</q> as one would like, and are insufficient to perform an accurate test here.)
+<p>We can illustrate the most fundamental property of a Hermitian matrix.  The vectors <code>x</code> and <code>y</code> below are random, but according to <acroref type="theorem" acro="HMIP" /> the final command should produce <code>True</code> for any possible values of these two vectors.   (You would be right to think that using random vectors over <code>QQbar</code> would be a better idea, but at this writing, these vectors are not as <q>random</q> as one would like, and are insufficient to perform an accurate test here.)</p>
+
 <sage>
 <input>x = random_vector(QQ, 4) + QQbar(I)*random_vector(QQ, 4)
 y = random_vector(QQ, 4) + QQbar(I)*random_vector(QQ, 4)
@@ -956,9 +969,8 @@ y = random_vector(QQ, 4) + QQbar(I)*random_vector(QQ, 4)
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <subsection acro="HM">

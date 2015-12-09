@@ -185,7 +185,9 @@ A=
 
 <sageadvice acro="CSCS" index="column space!consistent systems">
 <title>Column Space and Consistent Systems</title>
-We could compute the column space of a matrix with a span of the set of columns of the matrix, much as we did back in <acroref type="sage" acro="CSS" /> when we were checking consistency of linear systems using spans of the set of columns of a coefficent matrix.  However, Sage provides a convenient matrix method to construct this same span: <code>.column_space()</code>.  Here is a check.
+
+<p>We could compute the column space of a matrix with a span of the set of columns of the matrix, much as we did back in <acroref type="sage" acro="CSS" /> when we were checking consistency of linear systems using spans of the set of columns of a coefficent matrix.  However, Sage provides a convenient matrix method to construct this same span: <code>.column_space()</code>.  Here is a check.</p>
+
 <sage>
 <input>D = matrix(QQ, [[ 2, -1, -4],
                 [ 5,  2, -1],
@@ -207,7 +209,8 @@ cs == cs_span
 </output>
 </sage>
 
-In <acroref type="sage" acro="CSS" /> we discussed solutions to systems of equations and the membership of the vector of constants in the span of the columns of the coefficient matrix.  This discussion turned on <acroref type="theorem" acro="SLSLC" />.  We can now be slightly more efficient with <acroref type="theorem" acro="CSCS" />, while still using the same ideas.  We recycle the computations from <acroref type="example" acro="CSMCS" /> that use <acroref type="archetype" acro="D" /> and <acroref type="archetype" acro="E" />.
+<p>In <acroref type="sage" acro="CSS" /> we discussed solutions to systems of equations and the membership of the vector of constants in the span of the columns of the coefficient matrix.  This discussion turned on <acroref type="theorem" acro="SLSLC" />.  We can now be slightly more efficient with <acroref type="theorem" acro="CSCS" />, while still using the same ideas.  We recycle the computations from <acroref type="example" acro="CSMCS" /> that use <acroref type="archetype" acro="D" /> and <acroref type="archetype" acro="E" />.</p>
+
 <sage>
 <input>coeff = matrix(QQ, [[ 2, 1,  7, -7],
                     [-3, 4, -5, -6],
@@ -244,9 +247,8 @@ ValueError: matrix equation has no solutions
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 <p><acroref type="theorem" acro="CSCS" /> completes a collection of three theorems, and one definition, that deserve comment.  Many questions about spans, linear independence, null space, column spaces and similar objects can be converted to questions about systems of equations (homogeneous or not), which we understand well from our previous results, especially those in <acroref type="chapter" acro="SLE" />.  These previous results include theorems like <acroref type="theorem" acro="RCLS" /> which allows us to quickly decide consistency of a system, and <acroref type="theorem" acro="BNS" /> which allows us to describe solution sets for homogeneous systems compactly as the span of a linearly independent set of column vectors.</p>
 
 <p>The table below lists these four definitions and theorems along with a brief reminder of the statement and an example of how the statement is used.
@@ -415,7 +417,9 @@ That's it.</p>
 
 <sageadvice acro="CSOC" index="column space!original columns">
 <title>Column Space, Original Columns</title>
-It might be worthwhile for Sage to create a column space using actual columns of the matrix as a spanning set.  But we can do it ourselves fairly easily.  A discussion follows the example.
+
+<p>It might be worthwhile for Sage to create a column space using actual columns of the matrix as a spanning set.  But we can do it ourselves fairly easily.  A discussion follows the example.</p>
+
 <sage>
 <input>A = matrix(QQ, [[-1, -1, 0,  1,  0,  1, -2, -3, 0],
                 [-1,  0, 0,  5, -2,  6, -6,  3, 5],
@@ -506,11 +510,16 @@ cs2 == A.column_space()
 </output>
 </sage>
 
-We see that <code>A</code> has four pivot columns, numbered <code>0,1,2,4</code>.  The matrix <code>B</code> is just a convenience to hold the pivot columns of <code>A</code>.  However, the column spaces of <code>A</code> and <code>B</code> should be equal, as Sage verifies.  Also <code>B</code> will row-reduce to the same 0-1 pivot columns of the reduced row-echelon form of the full matrix <code>A</code>.  So it is no accident that the reduced row-echelon form of <code>B</code> is a full identity matrix, followed by sufficiently many zero rows to give the matrix the correct size.<br /><br />
-The vector space method <code>.span_of_basis()</code> is new to us.  It creates a span of a set of vectors, as before, but we now are responsible for supplying a linearly independent set of vectors.  Which we have done.  We know this because <acroref type="theorem" acro="BCS" /> guarantees the set we provided is linearly independent (and spans the column space), while Sage would have given us an error if we had provided a linearly dependent set.  In return, Sage will carry this linearly independent spanning set along with the vector space, something Sage calls a <q>user basis.</q><br /><br />
-Notice how <code>cs</code> has two linearly independent spanning sets now.  Our set of <q>original columns</q> is obtained via the standard vector space method <code>.basis()</code> and we can obtain a linearly independent spanning set that looks more familiar with the vector space method <code>.echelonized_basis()</code>.  For a vector space created with a simple <code>.span()</code> construction these two commands would yield identical results <mdash /> it is only when we supply a linearly independent spanning set with the <code>.span_of_basis()</code> method that a <q>user basis</q> becomes relevant.
-Finally, we check that <code>cs</code> is indeed the column space of <code>A</code> (we knew it would be) and then we provide a one-line, totally general construction of the column space using original columns.
-This is an opportunity to make an interesting observation, which could be used to substantiate several theorems.  When we take the original columns that we recognize as pivot columns, and use them alone to form a matrix, this new matrix <em>will always</em> row-reduce to an identity matrix followed by zero rows.  This is basically a consequence of reduced row-echelon form.  Evaluate the compute cell below repeatedly.  The number of columns could in theory change, though this is unlikely since the columns of a random matrix are unlikely to be linearly dependent.  In any event, the form of the result will always be an identity matrix followed by some zero rows.
+<p>We see that <code>A</code> has four pivot columns, numbered <code>0,1,2,4</code>.  The matrix <code>B</code> is just a convenience to hold the pivot columns of <code>A</code>.  However, the column spaces of <code>A</code> and <code>B</code> should be equal, as Sage verifies.  Also <code>B</code> will row-reduce to the same 0-1 pivot columns of the reduced row-echelon form of the full matrix <code>A</code>.  So it is no accident that the reduced row-echelon form of <code>B</code> is a full identity matrix, followed by sufficiently many zero rows to give the matrix the correct size.</p>
+
+<p>The vector space method <code>.span_of_basis()</code> is new to us.  It creates a span of a set of vectors, as before, but we now are responsible for supplying a linearly independent set of vectors.  Which we have done.  We know this because <acroref type="theorem" acro="BCS" /> guarantees the set we provided is linearly independent (and spans the column space), while Sage would have given us an error if we had provided a linearly dependent set.  In return, Sage will carry this linearly independent spanning set along with the vector space, something Sage calls a <q>user basis.</q></p>
+
+<p>Notice how <code>cs</code> has two linearly independent spanning sets now.  Our set of <q>original columns</q> is obtained via the standard vector space method <code>.basis()</code> and we can obtain a linearly independent spanning set that looks more familiar with the vector space method <code>.echelonized_basis()</code>.  For a vector space created with a simple <code>.span()</code> construction these two commands would yield identical results <mdash /> it is only when we supply a linearly independent spanning set with the <code>.span_of_basis()</code> method that a <q>user basis</q> becomes relevant.</p>
+
+<p>Finally, we check that <code>cs</code> is indeed the column space of <code>A</code> (we knew it would be) and then we provide a one-line, totally general construction of the column space using original columns.</p>
+
+<p>This is an opportunity to make an interesting observation, which could be used to substantiate several theorems.  When we take the original columns that we recognize as pivot columns, and use them alone to form a matrix, this new matrix <em>will always</em> row-reduce to an identity matrix followed by zero rows.  This is basically a consequence of reduced row-echelon form.  Evaluate the compute cell below repeatedly.  The number of columns could in theory change, though this is unlikely since the columns of a random matrix are unlikely to be linearly dependent.  In any event, the form of the result will always be an identity matrix followed by some zero rows.</p>
+
 <sage>
 <input>F = random_matrix(QQ, 5, 3)
 F.matrix_from_columns(F.pivots()).rref()   # random
@@ -523,7 +532,8 @@ F.matrix_from_columns(F.pivots()).rref()   # random
 </output>
 </sage>
 
-With more columns than rows, we know by <acroref type="theorem" acro="MVSLD" /> that we will have a reduced number of pivot columns.  Here, we will almost always see an identity matrix as the result, though we could get a smaller identity matrix followed by zero rows.
+<p>With more columns than rows, we know by <acroref type="theorem" acro="MVSLD" /> that we will have a reduced number of pivot columns.  Here, we will almost always see an identity matrix as the result, though we could get a smaller identity matrix followed by zero rows.</p>
+
 <sage>
 <input>F = random_matrix(QQ, 3, 5)
 F.matrix_from_columns(F.pivots()).rref()   # random
@@ -534,9 +544,8 @@ F.matrix_from_columns(F.pivots()).rref()   # random
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <subsection acro="CSNM">
@@ -628,7 +637,9 @@ AB
 
 <sageadvice acro="NME4" index="nonsingular matrices!round 4">
 <title>Nonsingular Matrix Equivalences, Round 4</title>
-<acroref type="archetype" acro="A" /> and <acroref type="archetype" acro="B" /> have square coefficient matrices that illustrate the dichotomy of singular and nonsingular matrices.  Here we illustrate the latest addition to our series of equivalences, <acroref type="theorem" acro="CSNM" />.
+
+<p><acroref type="archetype" acro="A" /> and <acroref type="archetype" acro="B" /> have square coefficient matrices that illustrate the dichotomy of singular and nonsingular matrices.  Here we illustrate the latest addition to our series of equivalences, <acroref type="theorem" acro="CSNM" />.</p>
+
 <sage>
 <input>A = matrix(QQ, [[1, -1, 2],
                 [2,  1, 1],
@@ -663,7 +674,8 @@ A.is_singular()
 </output>
 </sage>
 
-We can even write <acroref type="theorem" acro="CSNM" /> as a one-line Sage statement that will return <code>True</code> for <em>any</em> square matrix.  Run the following repeatedly and it should always return <code>True</code>.  We have kept the size of the matrix relatively small to be sure that some of the random matrices produced are singular.
+<p>We can even write <acroref type="theorem" acro="CSNM" /> as a one-line Sage statement that will return <code>True</code> for <em>any</em> square matrix.  Run the following repeatedly and it should always return <code>True</code>.  We have kept the size of the matrix relatively small to be sure that some of the random matrices produced are singular.</p>
+
 <sage>
 <input>A = random_matrix(QQ, 4, 4)
 A.is_singular() == (not A.column_space() == QQ^4)
@@ -672,9 +684,8 @@ A.is_singular() == (not A.column_space() == QQ^4)
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <subsection acro="RSM">
@@ -1165,7 +1176,8 @@ The transpose is
 
 <sageadvice acro="RSM" index="row space">
 <title>Row Space of a Matrix</title>
-Not to be outdone, and not suprisingly, Sage can compute a row space with the matrix method <code>.row_space()</code>.  Indeed, given Sage's penchant for treating vectors as rows, much of Sage's infrastructure for vector spaces ultimately relies on <acroref type="theorem" acro="REMRS" />.  More on that in <acroref type="sage" acro="SUTH0" />.  For now, we reprise <acroref type="example" acro="IAS" /> as an illustration.
+<p>Not to be outdone, and not suprisingly, Sage can compute a row space with the matrix method <code>.row_space()</code>.  Indeed, given Sage's penchant for treating vectors as rows, much of Sage's infrastructure for vector spaces ultimately relies on <acroref type="theorem" acro="REMRS" />.  More on that in <acroref type="sage" acro="SUTH0" />.  For now, we reprise <acroref type="example" acro="IAS" /> as an illustration.</p>
+
 <sage>
 <input>v1 = vector(QQ, [1,  2,  1,  6,   6])
 v2 = vector(QQ, [3, -1,  2, -1,   6])
@@ -1221,8 +1233,10 @@ Basis matrix:
 </output>
 </sage>
 
-We begin with the same four vectors in <acroref type="example" acro="IAS" /> and create their span, the vector space <code>X</code>.  The matrix <code>A</code> has these four vectors as rows and <code>B</code> is the reduced row-echelon form of <code>A</code>.  Then the row spaces of <code>A</code> and <code>B</code> are equal to the vector space <code>X</code> (and each other).  The way Sage describes this vector space is with a matrix whose rows <em>are the nonzero rows of the reduced row-echelon form of the matrix</em> <code>A</code>.  This is <acroref type="theorem" acro="BRS" /> in action where we go with Sage's penchant for rows and ignore the text's penchant for columns.<br /><br />
-We can illustrate a few other results about row spaces with Sage.  Discussion follows.
+<p>We begin with the same four vectors in <acroref type="example" acro="IAS" /> and create their span, the vector space <code>X</code>.  The matrix <code>A</code> has these four vectors as rows and <code>B</code> is the reduced row-echelon form of <code>A</code>.  Then the row spaces of <code>A</code> and <code>B</code> are equal to the vector space <code>X</code> (and each other).  The way Sage describes this vector space is with a matrix whose rows <em>are the nonzero rows of the reduced row-echelon form of the matrix</em> <code>A</code>.  This is <acroref type="theorem" acro="BRS" /> in action where we go with Sage's penchant for rows and ignore the text's penchant for columns.</p>
+
+<p>We can illustrate a few other results about row spaces with Sage.  Discussion follows.</p>
+
 <sage>
 <input>A = matrix(QQ,[[1,  1, 0, -1,  1,  1, 0],
                [4,  5, 1, -6,  1,  6, 1],
@@ -1259,8 +1273,7 @@ B.column_space() == B.transpose().row_space()
 </output>
 </sage>
 
-We use the matrix <code>A</code> to illustrate <acroref type="definition" acro="RSM" />, and the matrix <code>B</code> to illustrate <acroref type="theorem" acro="CSRST" />.  <code>A</code> and <code>B</code> were designed to have the same reduced row-echelon form, and hence be row-equivalent, so this is not a consequence of any theorem or previous computation.  However, then <acroref type="theorem" acro="REMRS" /> guarantees that the row spaces of <code>A</code> and <code>B</code> are equal.
-
+<p>We use the matrix <code>A</code> to illustrate <acroref type="definition" acro="RSM" />, and the matrix <code>B</code> to illustrate <acroref type="theorem" acro="CSRST" />.  <code>A</code> and <code>B</code> were designed to have the same reduced row-echelon form, and hence be row-equivalent, so this is not a consequence of any theorem or previous computation.  However, then <acroref type="theorem" acro="REMRS" /> guarantees that the row spaces of <code>A</code> and <code>B</code> are equal.</p>
 
 </sageadvice>
 </subsection>

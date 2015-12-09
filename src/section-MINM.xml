@@ -169,7 +169,9 @@ A\left(\inverse{A}\vect{b}\right)
 
 <sageadvice acro="MI" index="matrix inverse">
 <title>Matrix Inverse</title>
-Now we know that invertibility is equivalent to nonsingularity, and that the procedure outlined in <acroref type="theorem" acro="CINM" /> will always yield an inverse for a nonsingular matrix.  But rather than using that procedure, Sage implements a <code>.inverse()</code> method.  In the following, we compute the inverse of a $3\times 3$ matrix, and then purposely convert it to a singular matrix by replacing the last column by a linear combination of the first two.
+
+<p>Now we know that invertibility is equivalent to nonsingularity, and that the procedure outlined in <acroref type="theorem" acro="CINM" /> will always yield an inverse for a nonsingular matrix.  But rather than using that procedure, Sage implements a <code>.inverse()</code> method.  In the following, we compute the inverse of a $3\times 3$ matrix, and then purposely convert it to a singular matrix by replacing the last column by a linear combination of the first two.</p>
+
 <sage>
 <input>A = matrix(QQ,[[ 3,  7, -6],
                [ 2,  5, -5],
@@ -217,8 +219,10 @@ ZeroDivisionError: input matrix must be nonsingular
 </output>
 </sage>
 
-Notice how the failure to invert <code>C</code> is explained by the matrix being singular.<br /><br />
-Systems with nonsingular coefficient matrices can be solved easily with the matrix inverse.  We will recycle <code>A</code> as a coefficient matrix, so be sure to execute the code above.
+<p>Notice how the failure to invert <code>C</code> is explained by the matrix being singular.</p>
+
+<p>Systems with nonsingular coefficient matrices can be solved easily with the matrix inverse.  We will recycle <code>A</code> as a coefficient matrix, so be sure to execute the code above.</p>
+
 <sage>
 <input>const = vector(QQ, [2, -1, 4])
 A.solve_right(const)
@@ -241,7 +245,8 @@ A.solve_right(const)
 </output>
 </sage>
 
-If you find it more convenient, you can use the same notation as the text for a matrix inverse.
+<p>If you find it more convenient, you can use the same notation as the text for a matrix inverse.</p>
+
 <sage>
 <input>A^-1
 </input>
@@ -251,12 +256,13 @@ If you find it more convenient, you can use the same notation as the text for a 
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 <sageadvice acro="NME3" index="nonsingular matrix equivalences, round 3">
 <title>Nonsingular Matrix Equivalences, Round 3</title>
-For square matrices, Sage has the methods <code>.is_singular()</code> and <code>.is_invertible()</code>.  By <acroref type="theorem" acro="NI" /> we know these two functions to be logical opposites.  One way to express this is that these two methods will always return different values.  Here we demonstrate with a nonsingular matrix and a singular matrix.  The comparison <code>!=</code> is <q>not equal.</q>
+
+<p>For square matrices, Sage has the methods <code>.is_singular()</code> and <code>.is_invertible()</code>.  By <acroref type="theorem" acro="NI" /> we know these two functions to be logical opposites.  One way to express this is that these two methods will always return different values.  Here we demonstrate with a nonsingular matrix and a singular matrix.  The comparison <code>!=</code> is <q>not equal.</q></p>
+
 <sage>
 <input>nonsing = matrix(QQ, [[ 0, -1,  1, -3],
                       [ 1,  1,  0, -3],
@@ -279,7 +285,8 @@ sing.is_singular() != sing.is_invertible()
 </output>
 </sage>
 
-We could test other properties of the matrix inverse, such as <acroref type="theorem" acro="SS" />.
+<p>We could test other properties of the matrix inverse, such as <acroref type="theorem" acro="SS" />.</p>
+
 <sage>
 <input>A = matrix(QQ, [[ 3, -5, -2,  8],
                 [-1,  2,  0, -1],
@@ -302,9 +309,8 @@ A.is_invertible() and B.is_invertible()
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <subsection acro="UM">
@@ -533,7 +539,9 @@ form an orthonormal set.  You might find checking the six inner products of pair
 
 <sageadvice acro="UM" index="unitary matrices">
 <title>Unitary Matrices</title>
-No surprise about how we check if a matrix is unitary.  Here is <acroref type="example" acro="UM3" />,
+
+<p>No surprise about how we check if a matrix is unitary.  Here is <acroref type="example" acro="UM3" />,</p>
+
 <sage>
 <input>A = matrix(QQbar, [
     [(1+I)/sqrt(5), (3+2*I)/sqrt(55), (2+2*I)/sqrt(22)],
@@ -553,7 +561,8 @@ A.is_unitary()
 </output>
 </sage>
 
-We can verify <acroref type="theorem" acro="UMPIP" />, where the vectors <code>u</code> and <code>v</code> are created randomly.  Try evaluating this compute cell with your own choices.
+<p>We can verify <acroref type="theorem" acro="UMPIP" />, where the vectors <code>u</code> and <code>v</code> are created randomly.  Try evaluating this compute cell with your own choices.</p>
+
 <sage>
 <input>u = random_vector(QQ, 3) + QQbar(I)*random_vector(QQ, 3)
 v = random_vector(QQ, 3) + QQbar(I)*random_vector(QQ, 3)
@@ -563,7 +572,8 @@ v = random_vector(QQ, 3) + QQbar(I)*random_vector(QQ, 3)
 </output>
 </sage>
 
-If you want to experiment with permutation matrices, Sage has these too.  We can create a permutation matrix from a list that indicates for each column the row with a one in it.  Notice that the product here of two permutation matrices is again a permutation matrix.
+<p>If you want to experiment with permutation matrices, Sage has these too.  We can create a permutation matrix from a list that indicates for each column the row with a one in it.  Notice that the product here of two permutation matrices is again a permutation matrix.</p>
+
 <sage>
 <input>sigma = Permutation([2,3,1])
 S = sigma.to_matrix(); S
@@ -601,9 +611,8 @@ S*T == rho.to_matrix()
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 <p>A final reminder:  the terms <q>dot product,</q> <q>symmetric matrix</q> and <q>orthogonal matrix</q> used in reference to vectors or matrices with real number entries are special cases of the terms <q>inner product,</q> <q>Hermitian matrix</q> and <q>unitary matrix</q> that we use for vectors or matrices with complex number entries, so keep that in mind as you read elsewhere.</p>
 
 </subsection>
