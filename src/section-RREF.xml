@@ -48,8 +48,9 @@ is a matrix with $m=3$ rows and $n=4$ columns.  We can say that $\matrixentry{B}
 
 <sageadvice acro="M" index="matrix creation">
 <title>Matrices</title>
-Matrices are fundamental objects in linear algebra and in Sage, so there are a variety of ways to construct a matrix in Sage.  Generally, you need to specify what types of entries the matrix contains (more on that in a minute), the number of rows and columns, and the entries themselves.  First, let us dissect an example:
-<br /><br />
+
+<p>Matrices are fundamental objects in linear algebra and in Sage, so there are a variety of ways to construct a matrix in Sage.  Generally, you need to specify what types of entries the matrix contains (more on that in a minute), the number of rows and columns, and the entries themselves.  First, let us dissect an example:</p>
+
 <sage>
 <input>A = matrix(QQ, 2, 3, [[1, 2, 3], [4, 5, 6]])
 A
@@ -59,8 +60,10 @@ A
 </output>
 </sage>
 
-<code>QQ</code> is the set of all rational numbers (fractions with an integer numerator and denominator), <code>2</code> is the number of rows, <code>3</code> is the number of columns.  Sage understands a list of items as delimited by brackets (<code>[,]</code>) and the items in the list can again be lists themselves.  So <code>[[1, 2, 3], [4, 5, 6]]</code> is a list of lists, and in this context the inner lists are rows of the matrix.<br /><br />
-There are various shortcuts you can employ when creating a matrix.  For example, Sage is able to infer the size of the matrix from the lists of entries.
+<p><code>QQ</code> is the set of all rational numbers (fractions with an integer numerator and denominator), <code>2</code> is the number of rows, <code>3</code> is the number of columns.  Sage understands a list of items as delimited by brackets (<code>[,]</code>) and the items in the list can again be lists themselves.  So <code>[[1, 2, 3], [4, 5, 6]]</code> is a list of lists, and in this context the inner lists are rows of the matrix.</p>
+
+<p>There are various shortcuts you can employ when creating a matrix.  For example, Sage is able to infer the size of the matrix from the lists of entries.</p>
+
 <sage>
 <input>B = matrix(QQ, [[1, 2, 3], [4, 5, 6]])
 B
@@ -70,7 +73,8 @@ B
 </output>
 </sage>
 
-Or you can specify how many rows the matrix will have and provide one big grand list of entries, which will get chopped up, row by row, if you prefer.
+<p>Or you can specify how many rows the matrix will have and provide one big grand list of entries, which will get chopped up, row by row, if you prefer.</p>
+
 <sage>
 <input>C = matrix(QQ, 2, [1, 2, 3, 4, 5, 6])
 C
@@ -80,8 +84,10 @@ C
 </output>
 </sage>
 
-It is possible to also skip specifying the type of numbers used for entries of a matrix, however this is fraught with peril, as Sage will make an informed guess about your intent.  Is this what you want?  Consider when you enter the single character <q>2</q> into a computer program like Sage.  Is this the integer $2$, the rational number $\frac{2}{1}$, the real number $2.00000$, the complex number $2 + 0i$, or the polynomial $p(x)=2$?  In context, us humans can usually figure it out, but a literal-minded computer is not so smart.  It happens that the operations we can perform, and how they behave, are influenced by the type of the entries in a matrix.  So it is important to get this right and our advice is to be explicit and be in the habit of always specifying the type of the entries of a matrix you create.<br /><br />
-Mathematical objects in Sage often come from sets of similar objects.  This set is called the <q>parent</q> of the element.  We can use this to learn how Sage deduces the type of entries in a matrix.  Execute the following three compute cells in the Sage notebook, and notice how the three matrices are constructed to have entries from the integers, the rationals and the reals.
+<p>It is possible to also skip specifying the type of numbers used for entries of a matrix, however this is fraught with peril, as Sage will make an informed guess about your intent.  Is this what you want?  Consider when you enter the single character <q>2</q> into a computer program like Sage.  Is this the integer $2$, the rational number $\frac{2}{1}$, the real number $2.00000$, the complex number $2 + 0i$, or the polynomial $p(x)=2$?  In context, us humans can usually figure it out, but a literal-minded computer is not so smart.  It happens that the operations we can perform, and how they behave, are influenced by the type of the entries in a matrix.  So it is important to get this right and our advice is to be explicit and be in the habit of always specifying the type of the entries of a matrix you create.</p>
+
+<p>Mathematical objects in Sage often come from sets of similar objects.  This set is called the <q>parent</q> of the element.  We can use this to learn how Sage deduces the type of entries in a matrix.  Execute the following three compute cells in the Sage notebook, and notice how the three matrices are constructed to have entries from the integers, the rationals and the reals.</p>
+
 <sage>
 <input>A = matrix(2, 3, [[1, 2, 3], [4, 5, 6]])
 A.parent()
@@ -107,8 +113,10 @@ Real Field with 53 bits of precision
 </output>
 </sage>
 
-Sage knows a wide variety of sets of numbers.  These are known as <q>rings</q> or <q>fields</q> (see <acroref type="section" acro="F" />), but we will call them <q>number systems</q> here.  Examples include: <code>ZZ</code> is the integers, <code>QQ</code> is the rationals, <code>RR</code> is the real numbers with reasonable precision, and <code>CC</code> is the complex numbers with reasonable precision.  We will present the theory of linear algebra over the complex numbers.  However, in any computer system, there will always be complications surrounding the inability of digital arithmetic to accurately represent all complex numbers.  In contrast, Sage can represent rational numbers exactly as the quotient of two (perhaps very large) integers.  So our Sage examples will begin by using <code>QQ</code> as our number system and we can concentrate on understanding the key concepts.<br /><br />
-Once we have constructed a matrix, we can learn a lot about it (such as its parent).  Sage is largely object-oriented, which means many commands apply to an object by using the <q>dot</q> notation.  <code>A.parent()</code> is an example of this syntax, while the constructor <code>matrix([[1, 2, 3], [4, 5, 6]])</code> is an exception.  Here are a few examples, followed by some explanation:
+<p>Sage knows a wide variety of sets of numbers.  These are known as <q>rings</q> or <q>fields</q> (see <acroref type="section" acro="F" />), but we will call them <q>number systems</q> here.  Examples include: <code>ZZ</code> is the integers, <code>QQ</code> is the rationals, <code>RR</code> is the real numbers with reasonable precision, and <code>CC</code> is the complex numbers with reasonable precision.  We will present the theory of linear algebra over the complex numbers.  However, in any computer system, there will always be complications surrounding the inability of digital arithmetic to accurately represent all complex numbers.  In contrast, Sage can represent rational numbers exactly as the quotient of two (perhaps very large) integers.  So our Sage examples will begin by using <code>QQ</code> as our number system and we can concentrate on understanding the key concepts.</p>
+
+<p>Once we have constructed a matrix, we can learn a lot about it (such as its parent).  Sage is largely object-oriented, which means many commands apply to an object by using the <q>dot</q> notation.  <code>A.parent()</code> is an example of this syntax, while the constructor <code>matrix([[1, 2, 3], [4, 5, 6]])</code> is an exception.  Here are a few examples, followed by some explanation:</p>
+
 <sage>
 <input>A = matrix(QQ, 2, 3, [[1,2,3],[4,5,6]])
 A.nrows(), A.ncols()
@@ -138,12 +146,14 @@ A.nrows(), A.ncols()
 </output>
 </sage>
 
-The number of rows and the number of columns should be apparent, <code>.base_ring()</code> gives the number system for the entries, as included in the information provided by <code>.parent()</code>.<br /><br />
-Computer scientists and computer languages prefer to begin counting from zero, while mathematicians and written mathematics prefer to begin counting at one.  Sage and this text are no exception.  It takes some getting used to, but the reasons for counting from zero in computer programs soon becomes very obvious.  Counting from one in mathematics is historical, and unlikely to change anytime soon.  So above, the two rows of <code>A</code> are numbered 0 and 1, while the columns are numbered 0, 1 and 2.  So <code>A[1,2]</code> refers to the entry of <code>A</code> in the second row and the third column, <ie /> <code>6</code>.<br /><br />
-There is much more to say about how Sage works with matrices, but this is already a lot to digest.  Use the space below to create some matrices (different ways) and examine them and their properties (size, entries, number system, parent).
+<p>The number of rows and the number of columns should be apparent, <code>.base_ring()</code> gives the number system for the entries, as included in the information provided by <code>.parent()</code>.</p>
 
+<p>Computer scientists and computer languages prefer to begin counting from zero, while mathematicians and written mathematics prefer to begin counting at one.  Sage and this text are no exception.  It takes some getting used to, but the reasons for counting from zero in computer programs soon becomes very obvious.  Counting from one in mathematics is historical, and unlikely to change anytime soon.  So above, the two rows of <code>A</code> are numbered 0 and 1, while the columns are numbered 0, 1 and 2.  So <code>A[1,2]</code> refers to the entry of <code>A</code> in the second row and the third column, <ie /> <code>6</code>.</p>
+
+<p>There is much more to say about how Sage works with matrices, but this is already a lot to digest.  Use the space below to create some matrices (different ways) and examine them and their properties (size, entries, number system, parent).</p>
 
 </sageadvice>
+
 <p>When we do equation operations on system of equations, the names of the variables really are not very important.  Use $x_1$, $x_2$, $x_3$, or $a$, $b$, $c$, or $x$, $y$, $z$, it really does not matter.  In this subsection we will describe some notation that will make it easier to describe linear systems, solve the systems and describe the solution sets.  Here is a list of definitions, laden with notation.</p>
 
 <definition acro="CV" index="vector!column">
@@ -179,7 +189,9 @@ or defined much more compactly, $\vectorentry{\zerovector}{i}=0$ for $1\leq i\le
 
 <sageadvice acro="V" index="vector creation">
 <title>Vectors</title>
-Vectors in Sage are built, manipulated and interrogated in much the same way as matrices (see <acroref type="sage" acro="M" />).  However as simple lists (<q>one-dimensional,</q> not <q>two-dimensional</q> such as matrices that look more tabular) they are simpler to construct and manipulate.  Sage will print a vector across the screen, even if we wish to interpret it as a column vector.  It will be delimited by parentheses (<code>(,)</code>) which allows us to distinguish a vector from a matrix with just one row, if we look carefully.  The number of <q>slots</q> in a vector is not referred to in Sage as rows or columns, but rather by <q>degree.</q>  Here are some examples (remember to start counting from zero):
+
+<p>Vectors in Sage are built, manipulated and interrogated in much the same way as matrices (see <acroref type="sage" acro="M" />).  However as simple lists (<q>one-dimensional,</q> not <q>two-dimensional</q> such as matrices that look more tabular) they are simpler to construct and manipulate.  Sage will print a vector across the screen, even if we wish to interpret it as a column vector.  It will be delimited by parentheses (<code>(,)</code>) which allows us to distinguish a vector from a matrix with just one row, if we look carefully.  The number of <q>slots</q> in a vector is not referred to in Sage as rows or columns, but rather by <q>degree.</q>  Here are some examples (remember to start counting from zero):</p>
+
 <sage>
 <input>v = vector(QQ, 4, [1, 1/2, 1/3, 1/4])
 v
@@ -239,8 +251,10 @@ the principal ideal domain Integer Ring
 </output>
 </sage>
 
-Notice that if you use commands like <code>.parent()</code> you will sometimes see references to <q>free modules.</q>  This is a technical generalization of the notion of a vector, which is beyond the scope of this course, so just mentally convert to vectors when you see this term.<br /><br />
-The zero vector is super easy to build, but be sure to specify what number system your zero is from.
+<p>Notice that if you use commands like <code>.parent()</code> you will sometimes see references to <q>free modules.</q>  This is a technical generalization of the notion of a vector, which is beyond the scope of this course, so just mentally convert to vectors when you see this term.</p>
+
+<p>The zero vector is super easy to build, but be sure to specify what number system your zero is from.</p>
+
 <sage>
 <input>z = zero_vector(QQ, 5)
 z
@@ -249,7 +263,8 @@ z
 </output>
 </sage>
 
-Notice that while using Sage, we try to remain consistent with our mathematical notation conventions.  This is not required, as you can give items in Sage very long names if you wish.  For example, the following is perfectly legitimate, as you can see.
+<p>Notice that while using Sage, we try to remain consistent with our mathematical notation conventions.  This is not required, as you can give items in Sage very long names if you wish.  For example, the following is perfectly legitimate, as you can see.</p>
+
 <sage>
 <input>blatzo = matrix(QQ, 2, [1, 2, 3, 4])
 blatzo
@@ -259,10 +274,10 @@ blatzo
 </output>
 </sage>
 
-In fact, our use of capital letters for matrices actually contradicts some of the conventions for naming objects in Sage, so there are good reasons for <em>not</em> mirroring our mathematical notation.
-
+<p>In fact, our use of capital letters for matrices actually contradicts some of the conventions for naming objects in Sage, so there are good reasons for <em>not</em> mirroring our mathematical notation.</p>
 
 </sageadvice>
+
 <definition acro="CM" index="coefficient matrix">
 <title>Coefficient Matrix</title>
 <p>For a system of linear equations,
@@ -402,7 +417,9 @@ Here is its augmented matrix.
 
 <sageadvice acro="AM" index="augmented matrix">
 <title>Augmented Matrix</title>
-Sage has a matrix method, <code>.augment()</code>, that will join two matrices, side-by-side provided they both have the same number of rows.  The same method will allow you to augment a matrix with a column vector, as described in <acroref type="definition" acro="AM" />, provided the number of entries in the vector matches the number of rows for the matrix.  Here we reprise the construction in <acroref type="example" acro="AMAA" />.  We will now format our matrices as input across several lines, a practice you may use in your own worksheets, or not.
+
+<p>Sage has a matrix method, <code>.augment()</code>, that will join two matrices, side-by-side provided they both have the same number of rows.  The same method will allow you to augment a matrix with a column vector, as described in <acroref type="definition" acro="AM" />, provided the number of entries in the vector matches the number of rows for the matrix.  Here we reprise the construction in <acroref type="example" acro="AMAA" />.  We will now format our matrices as input across several lines, a practice you may use in your own worksheets, or not.</p>
+
 <sage>
 <input>A = matrix(QQ, 3, 3, [[1, -1, 2],
                       [2,  1, 1],
@@ -417,8 +434,10 @@ M
 </output>
 </sage>
 
-Notice that the matrix method <code>.augment()</code> needs some input, in the above case, the vector <code>b</code>.  This will explain the need for the parentheses on the end of the <q>dot</q> commands, even if the particular command does not expect input.<br /><br />
-Some methods allow optional input, typically using keywords.  Matrices can track subdivisions, making breaks between rows and/or columns.  When augmenting, you can ask for the subdivision to be included.  Evalute the compute cell above if you have not already, so that <code>A</code> and <code>b</code> are defined, and then evaluate:
+<p>Notice that the matrix method <code>.augment()</code> needs some input, in the above case, the vector <code>b</code>.  This will explain the need for the parentheses on the end of the <q>dot</q> commands, even if the particular command does not expect input.</p>
+
+<p>Some methods allow optional input, typically using keywords.  Matrices can track subdivisions, making breaks between rows and/or columns.  When augmenting, you can ask for the subdivision to be included.  Evalute the compute cell above if you have not already, so that <code>A</code> and <code>b</code> are defined, and then evaluate:</p>
+
 <sage>
 <input>M = A.augment(b, subdivide=True)
 M
@@ -429,7 +448,8 @@ M
 </output>
 </sage>
 
-As a partial demonstration of manipulating subdivisions of matrices we can reset the subdivisions of <code>M</code> with the <code>.subdivide()</code> method.  We provide a list of rows to subdivide <em>before</em>, then a list of columns to subdivide <em>before</em>, where we remember that counting begins at zero.
+<p>As a partial demonstration of manipulating subdivisions of matrices we can reset the subdivisions of <code>M</code> with the <code>.subdivide()</code> method.  We provide a list of rows to subdivide <em>before</em>, then a list of columns to subdivide <em>before</em>, where we remember that counting begins at zero.</p>
+
 <sage>
 <input>M.subdivide([1,2],[1])
 M
@@ -441,8 +461,6 @@ M
 [ 1| 1  0  5]
 </output>
 </sage>
-
-
 
 </sageadvice>
 </subsection>
@@ -615,11 +633,13 @@ and by <acroref type="theorem" acro="REMES" /> the system of equations below has
 
 <sageadvice acro="RO" index="row operations">
 <title>Row Operations</title>
-Sage will perform individual row operations on a matrix.  This can get a bit tedious, but it is better than doing the computations (wrong, perhaps) by hand, and it can be useful when building up more complicated procedures for a matrix.
-<br /><br />
-For each row operation, there are two similar methods.  One changes the matrix <q>in-place</q> while the other creates a new matrix that is a modified version of the original.  This is an important distinction that you should understand for every new Sage command you learn that might change a matrix or vector.
-<br /><br />
-Consider the first row operation, which swaps two rows.  There are two matrix methods to do this, a <q>with</q> version that will create a new, changed matrix, which you will likely want to save, and a plain version that will change the matrix it operates on <q>in-place.</q>.  The <code>copy()</code> function, which is a general-purpose command, is a way to make a copy of a matrix before you make changes to it.  Study the example below carefully, and then read the explanation following. (Remember that counting begins with zero.)
+
+<p>Sage will perform individual row operations on a matrix.  This can get a bit tedious, but it is better than doing the computations (wrong, perhaps) by hand, and it can be useful when building up more complicated procedures for a matrix.</p>
+
+<p>For each row operation, there are two similar methods.  One changes the matrix <q>in-place</q> while the other creates a new matrix that is a modified version of the original.  This is an important distinction that you should understand for every new Sage command you learn that might change a matrix or vector.</p>
+
+<p>Consider the first row operation, which swaps two rows.  There are two matrix methods to do this, a <q>with</q> version that will create a new, changed matrix, which you will likely want to save, and a plain version that will change the matrix it operates on <q>in-place.</q>.  The <code>copy()</code> function, which is a general-purpose command, is a way to make a copy of a matrix before you make changes to it.  Study the example below carefully, and then read the explanation following. (Remember that counting begins with zero.)</p>
+
 <sage>
 <input>A = matrix(QQ,2,3,[1,2,3,4,5,6])
 B = A
@@ -659,20 +679,26 @@ A
 </output>
 </sage>
 
-Here is how each of these four matrices comes into existence.
+<p>Here is how each of these four matrices comes into existence.</p>
+
 <ol><li> <code>A</code> is our original matrix, created from a list of entries.
 </li><li> <code>B</code> is not a new copy of <code>A</code>, it is just a new name for referencing the exact same matrix internally.
 </li><li> <code>C</code> is a brand new matrix, stored internally separate from <code>A</code>, but with identical contents.
 </li><li> <code>D</code> is also a new matrix, which is created by swapping the rows of <code>A</code>
 </li></ol>
-And here is how each matrix is affected by the commands.
+
+<p>And here is how each matrix is affected by the commands.</p>
+
 <ol><li> <code>A</code> is changed twice <q>in-place</q>.  First, its rows are swapped rows a <q>plain</q> matrix method.  Then its entry in the lower-right corner is set to <code>-6</code>.
 </li><li> <code>B</code> is just another name for <code>A</code>.  So whatever changes are made to <code>A</code> will be evident when we ask for the matrix by the name <code>B</code>.  And vice-versa.
 </li><li> <code>C</code> is a copy of the original <code>A</code> and does not change, since no subsequent commands act on <code>C</code>.
 </li><li> <code>D</code> is a new copy of <code>A</code>, created by swapping the rows of <code>A</code>.  Once created from <code>A</code>, it has a life of its own, as illustrated by the change in its entry in the upper-left corner to <code>-1</code>.
 </li></ol>
-An interesting experiment is to rearrange some of the lines above (or add new ones) and predict the result.<br /><br />
-Just as with the first row operation, swapping rows, Sage supports the other two row operations with natural sounding commands, with both <q>in-place</q> versions and new-matrix versions.
+
+<p>An interesting experiment is to rearrange some of the lines above (or add new ones) and predict the result.</p>
+
+<p>Just as with the first row operation, swapping rows, Sage supports the other two row operations with natural sounding commands, with both <q>in-place</q> versions and new-matrix versions.</p>
+
 <sage>
 <input>A = matrix(QQ, 3, 4, [[1,  2,  3,  4],
                       [5,  6,  7,  8],
@@ -716,8 +742,7 @@ C
 </output>
 </sage>
 
-Notice that the order of the arguments might feel a bit odd, compared to how we write and think about row operations.  Also note how the <q>with</q> versions leave a trail of matrices for each step while the plain versions just keep changing <code>A</code>.
-
+<p>Notice that the order of the arguments might feel a bit odd, compared to how we write and think about row operations.  Also note how the <q>with</q> versions leave a trail of matrices for each step while the plain versions just keep changing <code>A</code>.</p>
 
 </sageadvice>
 </subsection>
@@ -1273,7 +1298,9 @@ illustrate the full range of possibilities for a system of linear equations <mda
 
 <sageadvice acro="RREF" index="reduced row-echelon form">
 <title>Reduced Row-Echelon Form</title>
-There has been a lot of information about using Sage with vectors and matrices in this section.  But we can now construct the coefficient matrix of a system of equations and the vector of constants.  From these pieces we can easily construct the augmented matrix, which we could subject to a series of row operations.  Computers are suppose to make routine tasks easy so we can concentrate on bigger ideas.  No exception here, Sage can bring a matrix (augmented or not) to reduced row echelon form with no problem.  Let us redo <acroref type="example" acro="SAB" /> with Sage.
+
+<p>There has been a lot of information about using Sage with vectors and matrices in this section.  But we can now construct the coefficient matrix of a system of equations and the vector of constants.  From these pieces we can easily construct the augmented matrix, which we could subject to a series of row operations.  Computers are suppose to make routine tasks easy so we can concentrate on bigger ideas.  No exception here, Sage can bring a matrix (augmented or not) to reduced row echelon form with no problem.  Let us redo <acroref type="example" acro="SAB" /> with Sage.</p>
+
 <sage>
 <input>coeff = matrix(QQ, [[-7, -6, -12],
                     [5,   5,   7],
@@ -1288,9 +1315,9 @@ aug.rref()
 </output>
 </sage>
 
-And the solution $x_1=-3$, $x_2=5$, $x_3=2$ is now obvious.  Beautiful.<br /><br />
-You may notice that Sage has some commands with the word <q>echelon</q> in them.  For now, these should be avoided like the plague, as there are some subtleties in how they work.  The matrix method <code>.rref()</code> will be sufficient for our purposes for a long, long time <mdash /> so stick with it.
+<p>And the solution $x_1=-3$, $x_2=5$, $x_3=2$ is now obvious.  Beautiful.</p>
 
+<p>You may notice that Sage has some commands with the word <q>echelon</q> in them.  For now, these should be avoided like the plague, as there are some subtleties in how they work.  The matrix method <code>.rref()</code> will be sufficient for our purposes for a long, long time <mdash /> so stick with it.</p>
 
 </sageadvice>
 </subsection>

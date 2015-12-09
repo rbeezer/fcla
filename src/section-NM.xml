@@ -66,8 +66,11 @@ is a nonsingular matrix since the homogeneous system, $\homosystem{B}$, has only
 
 <sageadvice acro="NM" index="nonsingular matrix">
 <title>Nonsingular Matrix</title>
-Being nonsingular is an important matrix property, and in such cases Sage contains commands that quickly and easily determine if the mathematical object does, or does not, have the property.  The names of these types of methods universally begin with <code>.is_</code>, and these might be referred to as <q>predicates</q> or <q>queries.</q>.  In the Sage notebook, define a simple matrix <code>A</code>, and then in a cell type <code>A.is_</code>, followed by pressing the tab key rather than evaluating the cell.  You will get a list of numerous properties that you can investigate for the matrix <code>A</code>.  (This will not work as advertised with the Sage cell server.)
-The other convention is to name these properties in a positive way, so the relevant command for nonsingular matrices is <code>.is_singular()</code>.  We will redo <acroref type="example" acro="S" /> and <acroref type="example" acro="NM" />.  Note the use of <code>not</code> in the last compute cell.
+
+<p>Being nonsingular is an important matrix property, and in such cases Sage contains commands that quickly and easily determine if the mathematical object does, or does not, have the property.  The names of these types of methods universally begin with <code>.is_</code>, and these might be referred to as <q>predicates</q> or <q>queries.</q>.  In the Sage notebook, define a simple matrix <code>A</code>, and then in a cell type <code>A.is_</code>, followed by pressing the tab key rather than evaluating the cell.  You will get a list of numerous properties that you can investigate for the matrix <code>A</code>.  (This will not work as advertised with the Sage cell server.)</p>
+
+<p>The other convention is to name these properties in a positive way, so the relevant command for nonsingular matrices is <code>.is_singular()</code>.  We will redo <acroref type="example" acro="S" /> and <acroref type="example" acro="NM" />.  Note the use of <code>not</code> in the last compute cell.</p>
+
 <sage>
 <input>A = matrix(QQ, [[1, -1, 2],
                 [2,  1, 1],
@@ -95,9 +98,8 @@ B.is_singular()
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 <p>The next theorem combines with our main computational technique (row reducing a matrix) to make it easy to recognize a nonsingular matrix.  But first a definition.</p>
 
 <definition acro="IM" index="matrix!identity">
@@ -141,7 +143,9 @@ I_4=
 
 <sageadvice acro="IM" index="identity matrix">
 <title>Identity Matrix</title>
-It is straightforward to create an identity matrix in Sage.  Just specify the number system and the number of rows (which will equal the number of columns, so you do not specify that since it would be redundant).  The number system can be left out, but the result will have entries from the integers (<code>ZZ</code>), which in this course is unlikely to be what you really want.
+
+<p>It is straightforward to create an identity matrix in Sage.  Just specify the number system and the number of rows (which will equal the number of columns, so you do not specify that since it would be redundant).  The number system can be left out, but the result will have entries from the integers (<code>ZZ</code>), which in this course is unlikely to be what you really want.</p>
+
 <sage>
 <input>id5 = identity_matrix(QQ, 5)
 id5
@@ -162,8 +166,10 @@ id4.base_ring()
 </output>
 </sage>
 
-Notice that we do not use the now-familiar dot notation to <em>create</em> an identity matrix.  What would we use the dot notation on anyway?  For these reasons we call the <code>identity_matrix()</code> function a <define>constructor</define>, since it builds something from scratch, in this case a very particular type of matrix.
-We mentioned above that an identity matrix is in reduced row-echelon form.  What happens if we try to row-reduce a matrix that is already in reduced row-echelon form?  By the uniqueness of the result, there should be no change.  The following code illustrates this.  Notice that <code>=</code> is used to <em>assign</em> an object to a new name, while <code>==</code> is used to <em>test equality</em> of two objects.  I frequently make the mistake of forgetting the second equal sign when I mean to test equality.
+<p>Notice that we do not use the now-familiar dot notation to <em>create</em> an identity matrix.  What would we use the dot notation on anyway?  For these reasons we call the <code>identity_matrix()</code> function a <define>constructor</define>, since it builds something from scratch, in this case a very particular type of matrix.</p>
+
+<p>We mentioned above that an identity matrix is in reduced row-echelon form.  What happens if we try to row-reduce a matrix that is already in reduced row-echelon form?  By the uniqueness of the result, there should be no change.  The following code illustrates this.  Notice that <code>=</code> is used to <em>assign</em> an object to a new name, while <code>==</code> is used to <em>test equality</em> of two objects.  I frequently make the mistake of forgetting the second equal sign when I mean to test equality.</p>
+
 <sage>
 <input>id50 = identity_matrix(QQ, 50)
 id50 == id50.rref()
@@ -172,9 +178,8 @@ id50 == id50.rref()
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 <theorem acro="NMRRI" index="nonsingular matrix!row-reduced">
 <title>Nonsingular Matrices Row Reduce to the Identity matrix</title>
 <statement>
@@ -313,9 +318,13 @@ A<![CDATA[&=]]><archetypepart acro="B" part="purematrix" /><![CDATA[&]]>\nsp{A}<
 
 <sageadvice acro="NME1" index="nonsingular matrix equivalences">
 <title>Nonsingular Matrix Equivalences, Round 1</title>
-Sage will create random matrices and vectors, sometimes with various properties.  These can be very useful for quick experiments, and they are also useful for <em>illustrating</em> that theorems hold for any object satisfying the hypotheses of the theorem.  But this will never replace a proof.<br /><br />
-We will illustrate <acroref type="theorem" acro="NME1" /> using Sage.  We will use a variant of the <code>random_matrix()</code> constructor that uses the <code>algorithm='unimodular'</code> keyword.  We will have to wait for <acroref type="chapter" acro="D" /> before we can give a full explanation, but for now, understand that this command will <em>always</em> create a square matrix that is nonsingular.  Also realize that there are square nonsingular matrices which will never be the output of this command.  In other words, this command creates elements of just a subset of all possible nonsingular matrices.<br /><br />
-So we are using random matrices below to illustrate properties predicted by <acroref type="theorem" acro="NME1" />.  Execute the first command to create a random nonsingular matrix, and notice that we only have to mark the output of <code>A</code> as random for our automated testing process.  After a few runs, notice that you can also edit the value of <code>n</code> to create matrices of different sizes.  With a matrix <code>A</code> defined, run the next three cells, which by <acroref type="theorem" acro="NME1" /> each always produce <code>True</code> as their output, <em>no matter what value</em> <code>A</code> <em>has</em>, so long as <code>A</code> is nonsingular.  Read the code and try to determine exactly how they correspond to the parts of the theorem (some commentary along these lines follows).
+
+<p>Sage will create random matrices and vectors, sometimes with various properties.  These can be very useful for quick experiments, and they are also useful for <em>illustrating</em> that theorems hold for any object satisfying the hypotheses of the theorem.  But this will never replace a proof.</p>
+
+<p>We will illustrate <acroref type="theorem" acro="NME1" /> using Sage.  We will use a variant of the <code>random_matrix()</code> constructor that uses the <code>algorithm='unimodular'</code> keyword.  We will have to wait for <acroref type="chapter" acro="D" /> before we can give a full explanation, but for now, understand that this command will <em>always</em> create a square matrix that is nonsingular.  Also realize that there are square nonsingular matrices which will never be the output of this command.  In other words, this command creates elements of just a subset of all possible nonsingular matrices.</p>
+
+<p>So we are using random matrices below to illustrate properties predicted by <acroref type="theorem" acro="NME1" />.  Execute the first command to create a random nonsingular matrix, and notice that we only have to mark the output of <code>A</code> as random for our automated testing process.  After a few runs, notice that you can also edit the value of <code>n</code> to create matrices of different sizes.  With a matrix <code>A</code> defined, run the next three cells, which by <acroref type="theorem" acro="NME1" /> each always produce <code>True</code> as their output, <em>no matter what value</em> <code>A</code> <em>has</em>, so long as <code>A</code> is nonsingular.  Read the code and try to determine exactly how they correspond to the parts of the theorem (some commentary along these lines follows).</p>
+
 <sage>
 <input>n = 6
 A = random_matrix(QQ, n, algorithm='unimodular')
@@ -354,11 +363,12 @@ aug.pivots() == tuple(range(n))
 </output>
 </sage>
 
-The only portion of these commands that may be unfamilar is the last one.  The command <code>range(n)</code> is incredibly useful, as it will create a list of the integers from <code>0</code> up to, <em>but not including</em>, <code>n</code>.  (We saw this command briefly in <acroref type="sage" acro="FDV" />.)  So, for example, <code>range(3) == [0,1,2]</code> is <code>True</code>.  Pivots are returned as a <q>tuple</q> which is very much like a list, except we cannot change the contents.  We can see the difference by the way the tuple prints with parentheses (<code>(,)</code>) rather than brackets (<code>[,]</code>).  We can convert a list to a tuple with the <code>tuple()</code> command, in order to make the comparison succeed.<br /><br />
-How do we tell if the reduced row-echelon form of the augmented matrix of a system of equations represents a system with a unique solution?  First, the system must be consistent, which by <acroref type="theorem" acro="RCLS" /> means the last column is not a pivot column.  Then with a consistent system we need to insure there are no free variables.  This happens if and only if the remaining columns are all pivot columns, according to <acroref type="theorem" acro="FVCS" />, thus the test used in the last compute cell.
+<p>The only portion of these commands that may be unfamilar is the last one.  The command <code>range(n)</code> is incredibly useful, as it will create a list of the integers from <code>0</code> up to, <em>but not including</em>, <code>n</code>.  (We saw this command briefly in <acroref type="sage" acro="FDV" />.)  So, for example, <code>range(3) == [0,1,2]</code> is <code>True</code>.  Pivots are returned as a <q>tuple</q> which is very much like a list, except we cannot change the contents.  We can see the difference by the way the tuple prints with parentheses (<code>(,)</code>) rather than brackets (<code>[,]</code>).  We can convert a list to a tuple with the <code>tuple()</code> command, in order to make the comparison succeed.</p>
 
+<p>How do we tell if the reduced row-echelon form of the augmented matrix of a system of equations represents a system with a unique solution?  First, the system must be consistent, which by <acroref type="theorem" acro="RCLS" /> means the last column is not a pivot column.  Then with a consistent system we need to insure there are no free variables.  This happens if and only if the remaining columns are all pivot columns, according to <acroref type="theorem" acro="FVCS" />, thus the test used in the last compute cell.</p>
 
 </sageadvice>
+
 <p>Finally, you may have wondered why we refer to a matrix as <em>nonsingular</em> when it creates systems of equations with <em>single</em> solutions (<acroref type="theorem" acro="NMUS" />)!  I have wondered the same thing.  We will have an opportunity to address this when we get to <acroref type="theorem" acro="SMZD" />.  Can you wait that long?</p>
 
 </subsection>

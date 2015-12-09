@@ -141,9 +141,10 @@ where <acroref type="theorem" acro="HMVEI" /> tells us that there is only one po
 
 <sageadvice acro="SHS" index="homogeneous systems!solving">
 <title>Solving Homogeneous Systems</title>
-We can explore homogeneous systems easily in Sage with commands we have already learned.  Notably, the <code>zero_vector()</code> constructor will quickly create the necessary vector of constants (<acroref type="sage" acro="V" />).<br /><br />
-You could try defining a function to accept a matrix as input, augment the matrix with a zero vector having the right number of entries, and then return the reduced row-echelon form of the augmented matrix, or maybe you could return the number of free variables. (See <acroref type="sage" acro="RCLS" /> for a refresher on how to do this).  It is also interesting to see how <code>.solve_right()</code> behaves on homogeneous systems, since in particular we know it will never give us an error.  (Why not? Hint: <acroref type="theorem" acro="HSC" />.)
 
+<p>We can explore homogeneous systems easily in Sage with commands we have already learned.  Notably, the <code>zero_vector()</code> constructor will quickly create the necessary vector of constants (<acroref type="sage" acro="V" />).</p>
+
+<p>You could try defining a function to accept a matrix as input, augment the matrix with a zero vector having the right number of entries, and then return the reduced row-echelon form of the augmented matrix, or maybe you could return the number of free variables. (See <acroref type="sage" acro="RCLS" /> for a refresher on how to do this).  It is also interesting to see how <code>.solve_right()</code> behaves on homogeneous systems, since in particular we know it will never give us an error.  (Why not? Hint: <acroref type="theorem" acro="HSC" />.)</p>
 
 </sageadvice>
 </subsection>
@@ -259,7 +260,9 @@ which we write as $\nsp{C}$.   Translating <acroref type="definition" acro="NSM"
 
 <sageadvice acro="NS" index="null space">
 <title>Null Space</title>
-Sage will compute a null space for us.  Which is rather remarkable, as it is an infinite set!  Again, this is a powerful command, and there is lots of associated theory, so we will not understand everything about it right away, and it also has a radically different name in Sage.  But we will find it useful immediately.  Let us reprise <acroref type="example" acro="NSEAI" />.  The relevant command to build the null space of a matrix is <code>.right_kernel()</code>, where again, we will rely exclusively on the <q>right</q> version.  Also, to match our work in the text, and make the results more recognizable, we will consistently us the keyword option <code>basis='pivot'</code>, which we will be able to explain once we have more theory (<acroref type="sage" acro="SSNS" />, <acroref type="sage" acro="SUTH0" />).  Note too, that this is a place where it is critical that matrices are defined to use the rationals as their number system (<code>QQ</code>).
+
+<p>Sage will compute a null space for us.  Which is rather remarkable, as it is an infinite set!  Again, this is a powerful command, and there is lots of associated theory, so we will not understand everything about it right away, and it also has a radically different name in Sage.  But we will find it useful immediately.  Let us reprise <acroref type="example" acro="NSEAI" />.  The relevant command to build the null space of a matrix is <code>.right_kernel()</code>, where again, we will rely exclusively on the <q>right</q> version.  Also, to match our work in the text, and make the results more recognizable, we will consistently us the keyword option <code>basis='pivot'</code>, which we will be able to explain once we have more theory (<acroref type="sage" acro="SSNS" />, <acroref type="sage" acro="SUTH0" />).  Note too, that this is a place where it is critical that matrices are defined to use the rationals as their number system (<code>QQ</code>).</p>
+
 <sage>
 <input>I = matrix(QQ, [[ 1,  4,  0, -1,  0,   7, -9],
                 [ 2,  8, -1,  3,  9, -13,  7],
@@ -277,7 +280,8 @@ User basis matrix:
 </output>
 </sage>
 
-As we said, <code>nsp</code> contains a lot of unfamiliar information.  Ignore most of it for now.  But as a set, we can test membership in <code>nsp</code>.
+<p>As we said, <code>nsp</code> contains a lot of unfamiliar information.  Ignore most of it for now.  But as a set, we can test membership in <code>nsp</code>.</p>
+
 <sage>
 <input>x = vector(QQ, [3, 0, -5, -6, 0, 0, 1])
 x in nsp
@@ -302,8 +306,10 @@ z in nsp
 </output>
 </sage>
 
-We did a bad thing above, as Sage likes to use <code>I</code> for the imaginary number $i=\sqrt{-1}$ and we just clobbered that.  We will not do it again.  See below how to fix this.
-<code>nsp</code> is an infinite set.  Since we know the null space is defined as solution to a system of equations, and the work above shows it has at least two elements, we are not surprised to discover that the set is infinite (<acroref type="theorem" acro="PSSLS" />).
+<p>We did a bad thing above, as Sage likes to use <code>I</code> for the imaginary number $i=\sqrt{-1}$ and we just clobbered that.  We will not do it again.  See below how to fix this.</p>
+
+<p><code>nsp</code> is an infinite set.  Since we know the null space is defined as solution to a system of equations, and the work above shows it has at least two elements, we are not surprised to discover that the set is infinite (<acroref type="theorem" acro="PSSLS" />).</p>
+
 <sage>
 <input>nsp.is_finite()
 </input>
@@ -311,7 +317,8 @@ We did a bad thing above, as Sage likes to use <code>I</code> for the imaginary 
 </output>
 </sage>
 
-If we want an element of the null space to experiment with, we can get a <q>random</q> element easily.  Evaluate the following compute cell repeatedly to get a feel for the variety of the different output.  You will see a different result each time, and the result supplied in your downloaded worksheet is very unlikely to be a result you will ever see again.  The bit of text, <code># random</code>, is technically a <q>comment</q>, but we are using it as a signal to our automatic testing of the Sage examples that this example should be skipped.  You <em>do not</em> need to use this device in your own work, though you may use the comment syntax if you wish.
+<p>If we want an element of the null space to experiment with, we can get a <q>random</q> element easily.  Evaluate the following compute cell repeatedly to get a feel for the variety of the different output.  You will see a different result each time, and the result supplied in your downloaded worksheet is very unlikely to be a result you will ever see again.  The bit of text, <code># random</code>, is technically a <q>comment</q>, but we are using it as a signal to our automatic testing of the Sage examples that this example should be skipped.  You <em>do not</em> need to use this device in your own work, though you may use the comment syntax if you wish.</p>
+
 <sage>
 <input>z = nsp.random_element()
 z                       # random
@@ -327,7 +334,8 @@ z                       # random
 </output>
 </sage>
 
-Sometimes, just sometimes, the null space is finite, and we can list its elements.  This is from <acroref type="example" acro="CNS2" />.
+<p>Sometimes, just sometimes, the null space is finite, and we can list its elements.  This is from <acroref type="example" acro="CNS2" />.</p>
+
 <sage>
 <input>C = matrix(QQ, [[-4, 6, 1],
                 [-1, 4, 1],
@@ -347,8 +355,10 @@ Cnsp.is_finite()
 </output>
 </sage>
 
-Notice that we get back a list (which mathematically is really a set), and it has one element, the three-entry zero vector.<br /><br />
-There is more to learn about exploring the null space with Sage's <code>.right_kernel()</code> so we will see more of this matrix method.  In the meantime, if you are done experimenting with the matrix <code>I</code> we can restore the variable <code>I</code> back to being the imaginary number $i = \sqrt{-1}$ with the Sage <code>restore()</code> command.
+<p>Notice that we get back a list (which mathematically is really a set), and it has one element, the three-entry zero vector.</p>
+
+<p>There is more to learn about exploring the null space with Sage's <code>.right_kernel()</code> so we will see more of this matrix method.  In the meantime, if you are done experimenting with the matrix <code>I</code> we can restore the variable <code>I</code> back to being the imaginary number $i = \sqrt{-1}$ with the Sage <code>restore()</code> command.</p>
+
 <sage>
 <input>restore()
 I^2
@@ -357,17 +367,18 @@ I^2
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 <sageadvice acro="SH" index="help">
 <title>Sage Help</title>
-There are many ways to learn about, or remind yourself of, how various Sage commands behave.  Now that we have learned a few, it is a good time to show you the most direct methods of obtaining help.  These work throughout Sage, so can be useful if you want to apply Sage to other areas of mathematics.<br /><br />
-The first hurdle is to learn how to make a mathematical object in Sage.  We know now how to make matrices and vectors (and null spaces).  This is enough to help us explore relevant commands in Sage for linear algebra.  First, define a very simple matrix <code>A</code>, with maybe one with one row and two columns.  The number system you choose will have some effect on the results, so use <code>QQ</code> for now.  In the notebook, enter <code>A.</code> (assuming you called your matrix <code>A</code>, and be sure to include the period).  Now hit the <q>tab</q> key and you will get a long list of all the possible methods you can apply to <code>A</code> using the dot notation.<br /><br />
-You can click directly on one of these commands (the word, not the blue highlight) to enter it into the cell.  Now instead of adding parentheses to the command, place a single question mark (<code>?</code>) on the end and hit the tab key again.  You should get some nicely formatted documentation, along with example uses.  (Try <code>A.rref?</code> below for a good example of this.)  You can replace the single question mark by two question marks, and as Sage is an open source program you can see the actual computer instructions for the method, which at first includes all the documentation again.  Note that now the documentation is enclosed in a pair of triple quotation marks (<code>""","""</code>) as part of the source code, and is not specially formatted.<br /><br />
-These methods of learning about Sage are generally referred to as <q>tab-completion</q> and we will use this term going forward.  To learn about the use of Sage in other areas of mathematics, you just need to find out how to create the relevant objects via a <q>constructor</q> function, such as <code>matrix()</code> and <code>vector()</code> for linear algebra.
-Sage has a comprehensive Reference Manual and there is a Linear Algebra Quick Reference sheet.  These should be easily located online via <url>sagemath.org</url> or with an internet search leading with the terms <q>sage math</q> (use <q>math</q> to avoid confusion with other websites for things named <q>Sage</q>).
 
+<p>There are many ways to learn about, or remind yourself of, how various Sage commands behave.  Now that we have learned a few, it is a good time to show you the most direct methods of obtaining help.  These work throughout Sage, so can be useful if you want to apply Sage to other areas of mathematics.</p>
+
+<p>The first hurdle is to learn how to make a mathematical object in Sage.  We know now how to make matrices and vectors (and null spaces).  This is enough to help us explore relevant commands in Sage for linear algebra.  First, define a very simple matrix <code>A</code>, with maybe one with one row and two columns.  The number system you choose will have some effect on the results, so use <code>QQ</code> for now.  In the notebook, enter <code>A.</code> (assuming you called your matrix <code>A</code>, and be sure to include the period).  Now hit the <q>tab</q> key and you will get a long list of all the possible methods you can apply to <code>A</code> using the dot notation.</p>
+
+<p>You can click directly on one of these commands (the word, not the blue highlight) to enter it into the cell.  Now instead of adding parentheses to the command, place a single question mark (<code>?</code>) on the end and hit the tab key again.  You should get some nicely formatted documentation, along with example uses.  (Try <code>A.rref?</code> below for a good example of this.)  You can replace the single question mark by two question marks, and as Sage is an open source program you can see the actual computer instructions for the method, which at first includes all the documentation again.  Note that now the documentation is enclosed in a pair of triple quotation marks (<code>""","""</code>) as part of the source code, and is not specially formatted.</p>
+
+<p>These methods of learning about Sage are generally referred to as <q>tab-completion</q> and we will use this term going forward.  To learn about the use of Sage in other areas of mathematics, you just need to find out how to create the relevant objects via a <q>constructor</q> function, such as <code>matrix()</code> and <code>vector()</code> for linear algebra.  Sage has a comprehensive Reference Manual and there is a Linear Algebra Quick Reference sheet.  These should be easily located online via <url>sagemath.org</url> or with an internet search leading with the terms <q>sage math</q> (use <q>math</q> to avoid confusion with other websites for things named <q>Sage</q>).</p>
 
 </sageadvice>
 </subsection>
