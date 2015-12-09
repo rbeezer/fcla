@@ -370,8 +370,11 @@ C=
 
 <sageadvice acro="LI" index="linear independence">
 <title>Linear Independence</title>
-We can use the Sage tools we already have, along with <acroref type="theorem" acro="LIVRN" />, to determine if sets are linearly independent.  There is just one hitch <mdash /> Sage has a preference for placing vectors into matrices as <em>rows</em>, rather than as columns.  When printing vectors on the screen, writing them <em>across</em> the screen makes good sense, and there are more mathematical reasons for this choice.  But we have chosen to present introductory linear algebra with an emphasis on the <em>columns</em> of matrices <mdash /> again, for good mathematical reasons.  Fortunately, Sage allows us to build matrices from columns as well as rows.<br /><br />
-Let us redo <acroref type="example" acro="LDHS" />, the determination that a set of three vectors is linearly dependent.  We will enter the vectors, construct a matrix with the vectors as <em>columns</em> via the <code>column_matrix()</code> constructor, and analyze.  Here we go.
+
+<p>We can use the Sage tools we already have, along with <acroref type="theorem" acro="LIVRN" />, to determine if sets are linearly independent.  There is just one hitch <mdash /> Sage has a preference for placing vectors into matrices as <em>rows</em>, rather than as columns.  When printing vectors on the screen, writing them <em>across</em> the screen makes good sense, and there are more mathematical reasons for this choice.  But we have chosen to present introductory linear algebra with an emphasis on the <em>columns</em> of matrices <mdash /> again, for good mathematical reasons.  Fortunately, Sage allows us to build matrices from columns as well as rows.</p>
+
+<p>Let us redo <acroref type="example" acro="LDHS" />, the determination that a set of three vectors is linearly dependent.  We will enter the vectors, construct a matrix with the vectors as <em>columns</em> via the <code>column_matrix()</code> constructor, and analyze.  Here we go.</p>
+
 <sage>
 <input>v1 = vector(QQ, [2, -1,  3,  4, 2])
 v2 = vector(QQ, [6,  2, -1,  3, 4])
@@ -394,12 +397,14 @@ A
 </output>
 </sage>
 
-Notice that we never explicitly row-reduce <code>A</code>, though this computation must happen behind the scenes when we compute the list of pivot columns.  We do not really care <em>where</em> the pivots are (the actual list), but rather we want to know <em>how many</em> there are, thus we ask about the <em>length</em> of the list with the function <code>len()</code>.  Once we construct the matrix, the analysis is quick.  With $n\neq r$, <acroref type="theorem" acro="LIVRN" /> tells us the set is linearly dependent.<br /><br />
-Reprising <acroref type="example" acro="LIS" /> with Sage would be good practice at this point.  Here is an empty compute cell to use.
+<p>Notice that we never explicitly row-reduce <code>A</code>, though this computation must happen behind the scenes when we compute the list of pivot columns.  We do not really care <em>where</em> the pivots are (the actual list), but rather we want to know <em>how many</em> there are, thus we ask about the <em>length</em> of the list with the function <code>len()</code>.  Once we construct the matrix, the analysis is quick.  With $n\neq r$, <acroref type="theorem" acro="LIVRN" /> tells us the set is linearly dependent.</p>
 
+<p>Reprising <acroref type="example" acro="LIS" /> with Sage would be good practice at this point.  Here is an empty compute cell to use.</p>
 
-While it is extremely important to understand the approach outlined above, Sage has a convenient tool for working with linear independence. <code>.linear_dependence()</code>  is a method for vector spaces, which we feed in a list of vectors.  The output is again a list of vectors, each one containing the scalars that yield a nontrivial relation of linear dependence on the input vectors.  We will give this method a workout in the next section, but for now we are interested in the case of a linearly independent set.  In this instance, the method will return nothing (an empty list, really).  Not even the all-zero vector is produced, since it is not interesting and definitely is not surprising.<br /><br />
-Again, we will not say anymore about the output of this method until the next section, and do not let its use replace a good conceptual understanding of this section.  We will redo <acroref type="example" acro="LDHS" /> again, you try <acroref type="example" acro="LIS" /> again.  If you are playing along, be sure <code>v1, v2, v3</code> are defined from the code above.
+<p>While it is extremely important to understand the approach outlined above, Sage has a convenient tool for working with linear independence. <code>.linear_dependence()</code>  is a method for vector spaces, which we feed in a list of vectors.  The output is again a list of vectors, each one containing the scalars that yield a nontrivial relation of linear dependence on the input vectors.  We will give this method a workout in the next section, but for now we are interested in the case of a linearly independent set.  In this instance, the method will return nothing (an empty list, really).  Not even the all-zero vector is produced, since it is not interesting and definitely is not surprising.</p>
+
+<p>Again, we will not say anymore about the output of this method until the next section, and do not let its use replace a good conceptual understanding of this section.  We will redo <acroref type="example" acro="LDHS" /> again, you try <acroref type="example" acro="LIS" /> again.  If you are playing along, be sure <code>v1, v2, v3</code> are defined from the code above.</p>
+
 <sage>
 <input>L = [v1, v2, v3]
 V = QQ^5
@@ -409,8 +414,7 @@ V.linear_dependence(L) == []
 </output>
 </sage>
 
-The only comment to make here is that we need to create the vector space <code>QQ^5</code> since <code>.linear_dependence()</code> is a method of vector spaces.  <acroref type="example" acro="LIS" /> should proceed similarly, though being a linearly independent set, the comparison with the empty list should yield <code>True</code>.
-
+<p>The only comment to make here is that we need to create the vector space <code>QQ^5</code> since <code>.linear_dependence()</code> is a method of vector spaces.  <acroref type="example" acro="LIS" /> should proceed similarly, though being a linearly independent set, the comparison with the empty list should yield <code>True</code>.</p>
 
 </sageadvice>
 </subsection>
@@ -498,7 +502,9 @@ B=
 
 <sageadvice acro="NME2" index="nonsingular matrices, round 2">
 <title>Nonsingular Matrix Equivalences, Round 2</title>
-As will be our habit, we can illustrate properties of nonsingular matrices with random square matrices.  Review <acroref type="sage" acro="NME1" /> for a refresher on generating these matrices.  Here we will illustrate the fifth condition, half of <acroref type="theorem" acro="NMLIC" />.
+
+<p>As will be our habit, we can illustrate properties of nonsingular matrices with random square matrices.  Review <acroref type="sage" acro="NME1" /> for a refresher on generating these matrices.  Here we will illustrate the fifth condition, half of <acroref type="theorem" acro="NMLIC" />.</p>
+
 <sage>
 <input>n = 6
 A = random_matrix(QQ, n, algorithm='unimodular')
@@ -521,8 +527,7 @@ V.linear_dependence(A.columns()) == []
 </output>
 </sage>
 
-You should always get an empty list (<code>[]</code>) as the result of the second compute cell, no matter which random (unimodular) matrix you produce prior.  Note that the list of vectors created using <code>.columns()</code> is exactly the list we want to feed to <code>.linear_dependence()</code>.
-
+<p>You should always get an empty list (<code>[]</code>) as the result of the second compute cell, no matter which random (unimodular) matrix you produce prior.  Note that the list of vectors created using <code>.columns()</code> is exactly the list we want to feed to <code>.linear_dependence()</code>.</p>
 
 </sageadvice>
 </subsection>
@@ -667,8 +672,11 @@ Solving the homogeneous system $\homosystem{L}$ resulted in recognizing $x_4$ an
 
 <sageadvice acro="LISS" index="linearly independent spanning sets">
 <title>Linearly Independent Spanning Sets</title>
-No new commands here, but instead we can now reveal and explore one of our Sage mysteries.  When we create a null space with <code>.right_kernel(basis='pivot')</code>, or a span with <code>.span()</code>, Sage internally creates a new spanning set for the null space or span.  We see the vectors of these spanning sets as the rows of the <code>Basis matrix</code> or <code>User basis matrix</code> when we print one of these sets.<br /><br />
-But more than a spanning set, these vectors are always a linearly independent set.  The advantages of this will have to wait for more theory, but for now, this may explain why the spanning set changes (and sometimes shrinks).  We can also demonstrate this behavior, by creating the span of a large set of (linearly dependent) vectors.
+
+<p>No new commands here, but instead we can now reveal and explore one of our Sage mysteries.  When we create a null space with <code>.right_kernel(basis='pivot')</code>, or a span with <code>.span()</code>, Sage internally creates a new spanning set for the null space or span.  We see the vectors of these spanning sets as the rows of the <code>Basis matrix</code> or <code>User basis matrix</code> when we print one of these sets.</p>
+
+<p>But more than a spanning set, these vectors are always a linearly independent set.  The advantages of this will have to wait for more theory, but for now, this may explain why the spanning set changes (and sometimes shrinks).  We can also demonstrate this behavior, by creating the span of a large set of (linearly dependent) vectors.</p>
+
 <sage>
 <input>V = QQ^5
 v1 = vector(QQ, [ 5,   2, -11, -24, -17])
@@ -722,8 +730,7 @@ X == W
 </output>
 </sage>
 
-So the above examines properties of the two vectors, <code>S</code>, that Sage computes for the span <code>W</code> built from the seven vectors in the set <code>L</code>.  We see that the span of <code>S</code> is equal to the span of <code>L</code> via the comparison <code>X == W</code>.  And the smaller set, <code>S</code>, is linearly independent, as promised.  Notice that we do not need to use Sage to know that <code>L</code> is linearly dependent, this is guaranteed by <acroref type="theorem" acro="MVSLD" />.
-
+<p>So the above examines properties of the two vectors, <code>S</code>, that Sage computes for the span <code>W</code> built from the seven vectors in the set <code>L</code>.  We see that the span of <code>S</code> is equal to the span of <code>L</code> via the comparison <code>X == W</code>.  And the smaller set, <code>S</code>, is linearly independent, as promised.  Notice that we do not need to use Sage to know that <code>L</code> is linearly dependent, this is guaranteed by <acroref type="theorem" acro="MVSLD" />.</p>
 
 </sageadvice>
 </subsection>

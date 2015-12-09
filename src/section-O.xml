@@ -410,16 +410,26 @@ since $0+0i$ is the only complex number with zero modulus.  Thus every entry of 
 
 <sageadvice acro="EVIC" index="exact vs.\ inexact computations">
 <title>Exact Versus Inexact Computations</title>
-We are now at a crossroads in our use of Sage.  So far our computations have involved rational numbers: fractions of two integers.  Sage is able to work with integers of seemingly unlimited size, and then can work with rational numbers exactly.  So all of our computations have been exactly correct so far.  In practice, many computations, especially those that originate with data, are not so precise.  Then we <em>represent</em> real numbers by <q>floating point numbers.</q>  Since the real numbers are infinite, finite computers must fake it with an extremely large, but still finite, collection of numbers.  The price we pay is that some computations will be just slightly imprecise when there is no number available that represents the exact answer.<br /><br />
-You should now appreciate two problems that occur.  If we were to row-reduce a matrix with floating point numbers, there are potentially many computations and if a small amount of imprecision arises in each one, these errors can accumulate and lead to wildly incorrect answers.  When we row-reduce a matrix, whether or not an entry is zero or not is critically important in the decisions we make about which row operation to perform.  If we have an extremely small number (like $10^{-16}$) how can we be sure if it is zero or not?<br /><br />
-Why discuss this now?  What is $\alpha=\sqrt{\frac{7}{3}}$?  Hard to say exactly, but it is definitely not a rational number.  Norms of vectors will feature prominently in all our discussions about orthogonal vectors, so we now have to recognize the need to work with square roots properly.  We have two strategies in Sage.<br /><br />
-The number system <code>QQbar</code>, also known as the <q>field of algebraic numbers,</q> is a truly amazing feature of Sage.  It contains the rational numbers, plus <em>every</em> root of <em>every</em> polynomial with coefficients that are rational numbers.  For example, notice that $\alpha$ above is one solution to the polynomial equation $3x^2-7=0$ and thus is a number in <code>QQbar</code>, so Sage can work with it <em>exactly</em>.  These numbers are called <q>algebraic numbers</q> and you can recognize them since they print with a question mark near the end to remind you that when printed as a decimal they are approximations of numbers that Sage carries internally as exact quantities.  For example $\alpha$ can be created with <code>QQbar(sqrt(7/3))</code> and will print as <code>1.527525231651947</code>?.  Notice that complex numbers begin with the introduction of the imaginary number $i$, which is a root of the polynomial equation $x^2+1=0$, so the field of algebraic numbers contains many complex numbers.  The downside of <code>QQbar</code> is that computations are slow (relatively speaking), so this number system is most useful for examples and demonstrations.<br /><br />
-The other strategy is to work strictly with approximate numbers, cognizant of the potential for inaccuracies.  Sage has two such number systems: <code>RDF</code> and <code>CDF</code>, which are comprised of <q>double precision</q> floating point numbers, first limited to just the reals, then expanded to the complexes.  Double-precision refers to the use of 64 bits to store the sign, mantissa and exponent in the representation of a real number.  This gives 53 bits of precision.  Do not confuse these fields with <code>RR</code> and <code>CC</code>, which are similar in appearance but very different in implementation.  Sage has implementations of several computations designed exclusively for <code>RDF</code> and <code>CDF</code>, such as the norm.  And they are very, very fast.  But some computations, like echelon form, can be wildly unreliable with these approximate numbers.  We will have more to say about this as we go.  In practice, you can use <code>CDF</code>, since <code>RDF</code> is a subset and only different in very limited cases.<br /><br />
-In summary, <code>QQbar</code> is an extension of <code>QQ</code> which allows exact computations, but can be slow for large examples.  <code>RDF</code> and <code>CDF</code> are fast, with special algorithms to control much of the imprecision in some, but not all, computations.  So we need to be vigilant and skeptical when we work with these approximate numbers.  We will use both strategies, as appropriate.
+
+<p>We are now at a crossroads in our use of Sage.  So far our computations have involved rational numbers: fractions of two integers.  Sage is able to work with integers of seemingly unlimited size, and then can work with rational numbers exactly.  So all of our computations have been exactly correct so far.  In practice, many computations, especially those that originate with data, are not so precise.  Then we <em>represent</em> real numbers by <q>floating point numbers.</q>  Since the real numbers are infinite, finite computers must fake it with an extremely large, but still finite, collection of numbers.  The price we pay is that some computations will be just slightly imprecise when there is no number available that represents the exact answer.</p>
+
+<p>You should now appreciate two problems that occur.  If we were to row-reduce a matrix with floating point numbers, there are potentially many computations and if a small amount of imprecision arises in each one, these errors can accumulate and lead to wildly incorrect answers.  When we row-reduce a matrix, whether or not an entry is zero or not is critically important in the decisions we make about which row operation to perform.  If we have an extremely small number (like $10^{-16}$) how can we be sure if it is zero or not?</p>
+
+<p>Why discuss this now?  What is $\alpha=\sqrt{\frac{7}{3}}$?  Hard to say exactly, but it is definitely not a rational number.  Norms of vectors will feature prominently in all our discussions about orthogonal vectors, so we now have to recognize the need to work with square roots properly.  We have two strategies in Sage.</p>
+
+<p>The number system <code>QQbar</code>, also known as the <q>field of algebraic numbers,</q> is a truly amazing feature of Sage.  It contains the rational numbers, plus <em>every</em> root of <em>every</em> polynomial with coefficients that are rational numbers.  For example, notice that $\alpha$ above is one solution to the polynomial equation $3x^2-7=0$ and thus is a number in <code>QQbar</code>, so Sage can work with it <em>exactly</em>.  These numbers are called <q>algebraic numbers</q> and you can recognize them since they print with a question mark near the end to remind you that when printed as a decimal they are approximations of numbers that Sage carries internally as exact quantities.  For example $\alpha$ can be created with <code>QQbar(sqrt(7/3))</code> and will print as <code>1.527525231651947</code>?.  Notice that complex numbers begin with the introduction of the imaginary number $i$, which is a root of the polynomial equation $x^2+1=0$, so the field of algebraic numbers contains many complex numbers.  The downside of <code>QQbar</code> is that computations are slow (relatively speaking), so this number system is most useful for examples and demonstrations.</p>
+
+<p>The other strategy is to work strictly with approximate numbers, cognizant of the potential for inaccuracies.  Sage has two such number systems: <code>RDF</code> and <code>CDF</code>, which are comprised of <q>double precision</q> floating point numbers, first limited to just the reals, then expanded to the complexes.  Double-precision refers to the use of 64 bits to store the sign, mantissa and exponent in the representation of a real number.  This gives 53 bits of precision.  Do not confuse these fields with <code>RR</code> and <code>CC</code>, which are similar in appearance but very different in implementation.  Sage has implementations of several computations designed exclusively for <code>RDF</code> and <code>CDF</code>, such as the norm.  And they are very, very fast.  But some computations, like echelon form, can be wildly unreliable with these approximate numbers.  We will have more to say about this as we go.  In practice, you can use <code>CDF</code>, since <code>RDF</code> is a subset and only different in very limited cases.</p>
+
+<p>In summary, <code>QQbar</code> is an extension of <code>QQ</code> which allows exact computations, but can be slow for large examples.  <code>RDF</code> and <code>CDF</code> are fast, with special algorithms to control much of the imprecision in some, but not all, computations.  So we need to be vigilant and skeptical when we work with these approximate numbers.  We will use both strategies, as appropriate.</p>
+
 </sageadvice>
+
 <sageadvice acro="CNIP" index="conjugates, norms, inner products">
 <title>Conjugates, Norms and Inner Products</title>
-Conjugates, of complex numbers and of vectors, are straightforward, in <code>QQbar</code> or in <code>CDF</code>.
+
+<p>Conjugates, of complex numbers and of vectors, are straightforward, in <code>QQbar</code> or in <code>CDF</code>.</p>
+
 <sage>
 <input>alpha = QQbar(2 + 3*I)
 alpha.conjugate()
@@ -452,8 +462,10 @@ w.conjugate()
 </output>
 </sage>
 
-The term <q>inner product</q> means slightly different things to different people.  For some, it is the <q>dot product</q> that you may have seen in a calculus or physics course.  Our inner product could be called the <q>Hermitian inner product</q> to emphasize the use of vectors over the complex numbers and conjugating some of the entries.  So Sage has a <code>.dot_product()</code>, <code>.inner_product()</code>, and <code>.hermitian_inner_product()</code> <mdash /> we want to use the last one.<br /><br />
-From now on, when we mention an inner product in the context of using Sage, we will mean <code>.hermitian_inner_product()</code>.  We will redo the first part of <acroref type="example" acro="CSIP" />.  Notice that the syntax is a bit asymmetric.
+<p>The term <q>inner product</q> means slightly different things to different people.  For some, it is the <q>dot product</q> that you may have seen in a calculus or physics course.  Our inner product could be called the <q>Hermitian inner product</q> to emphasize the use of vectors over the complex numbers and conjugating some of the entries.  So Sage has a <code>.dot_product()</code>, <code>.inner_product()</code>, and <code>.hermitian_inner_product()</code> <mdash /> we want to use the last one.</p>
+
+<p>From now on, when we mention an inner product in the context of using Sage, we will mean <code>.hermitian_inner_product()</code>.  We will redo the first part of <acroref type="example" acro="CSIP" />.  Notice that the syntax is a bit asymmetric.</p>
+
 <sage>
 <input>u = vector(QQbar, [2+3*I,  5+2*I, -3+I])
 v = vector(QQbar, [1+2*I, -4+5*I,  5*I])
@@ -463,8 +475,7 @@ u.hermitian_inner_product(v)
 </output>
 </sage>
 
-Norms are as easy as conjugates.  Easier maybe.  It might be useful to realize that Sage uses entirely distinct code to compute an exact norm over <code>QQbar</code> versus an approximate norm over <code>CDF</code>, though that is totally transparent as you issue commands.  Here is <acroref type="example" acro="CNSV" /> reprised.
-
+<p>Norms are as easy as conjugates.  Easier maybe.  It might be useful to realize that Sage uses entirely distinct code to compute an exact norm over <code>QQbar</code> versus an approximate norm over <code>CDF</code>, though that is totally transparent as you issue commands.  Here is <acroref type="example" acro="CNSV" /> reprised.</p>
 
 <sage>
 <input>entries = [3+2*I, 1-6*I, 2+4*I, 2+I]
@@ -490,8 +501,10 @@ u.norm()
 </output>
 </sage>
 
-We have three different numerical approximations, the latter 30-digit number being an approximation to the answer in the text.  But there is no inconsistency between them.  The first, an algebraic number, is represented internally as $5*a$ where $a$ is a root of the polynomial equation $x^2-3=0$, in other words it is $5\sqrt{3}$.  The <code>CDF</code> value prints with a few digits less than what is carried internally.  Notice that our different definitions of the inner product make no difference in the computation of a norm.<br /><br />
-One warning now that we are working with complex numbers.  It is easy to <q>clobber</q> the symbol <code>I</code> used for the imaginary number $i$.  In other words, Sage will allow you to assign it to something else, rendering it useless.  An identity matrix is a likely reassignment.  If you run the next compute cell, be sure to evaluate the compute cell afterward to restore <code>I</code> to its usual role.
+<p>We have three different numerical approximations, the latter 30-digit number being an approximation to the answer in the text.  But there is no inconsistency between them.  The first, an algebraic number, is represented internally as $5*a$ where $a$ is a root of the polynomial equation $x^2-3=0$, in other words it is $5\sqrt{3}$.  The <code>CDF</code> value prints with a few digits less than what is carried internally.  Notice that our different definitions of the inner product make no difference in the computation of a norm.</p>
+
+<p>One warning now that we are working with complex numbers.  It is easy to <q>clobber</q> the symbol <code>I</code> used for the imaginary number $i$.  In other words, Sage will allow you to assign it to something else, rendering it useless.  An identity matrix is a likely reassignment.  If you run the next compute cell, be sure to evaluate the compute cell afterward to restore <code>I</code> to its usual role.</p>
+
 <sage>
 <input>alpha = QQbar(5 - 6*I)
 I = identity_matrix(2)
@@ -511,7 +524,8 @@ I^2
 </output>
 </sage>
 
-We will finish with a verification of <acroref type="theorem" acro="IPN" />.  To test equality it is best if we work with entries from <code>QQbar</code>.
+<p>We will finish with a verification of <acroref type="theorem" acro="IPN" />.  To test equality it is best if we work with entries from <code>QQbar</code>.</p>
+
 <sage>
 <input>v = vector(QQbar, [2-3*I, 9+5*I, 6+2*I, 4-7*I])
 v.hermitian_inner_product(v) == v.norm()^2
@@ -521,6 +535,7 @@ v.hermitian_inner_product(v) == v.norm()^2
 </sage>
 
 </sageadvice>
+
 </subsection>
 
 <subsection acro="OV">
@@ -910,7 +925,8 @@ to an orthogonal set via the Gram-Schmidt Process (<acroref type="theorem" acro=
 
 <sageadvice acro="OGS" index="orthogonality and Gram-Schmidt">
 <title>Orthogonality and Gram-Schmidt</title>
-It is easy enough to check a pair of vectors for orthogonality (is the inner product zero?).  To check that a set is orthogonal, we just need to do this repeatedly. This is a redo of <acroref type="example" acro="AOS" />.
+<p>It is easy enough to check a pair of vectors for orthogonality (is the inner product zero?).  To check that a set is orthogonal, we just need to do this repeatedly. This is a redo of <acroref type="example" acro="AOS" />.</p>
+
 <sage>
 <input>x1 = vector(QQbar, [    1+I,       1,      1-I,       I])
 x2 = vector(QQbar, [  1+5*I,   6+5*I,     -7-I,   1-6*I])
@@ -925,7 +941,8 @@ all([ip == 0 for ip in ips])
 </output>
 </sage>
 
-Notice how the list comprehension computes each pair just once, and never checks the inner product of a vector with itself.  If we wanted to check that a set is orthonormal, the <q>normal</q> part is less involved.  We will check the set above, even though we can clearly see that the four vectors are not even close to being unit vectors.  Be sure to run the above definitions of <code>S</code> before running the next compute cell.
+<p>Notice how the list comprehension computes each pair just once, and never checks the inner product of a vector with itself.  If we wanted to check that a set is orthonormal, the <q>normal</q> part is less involved.  We will check the set above, even though we can clearly see that the four vectors are not even close to being unit vectors.  Be sure to run the above definitions of <code>S</code> before running the next compute cell.</p>
+
 <sage>
 <input>ips = [S[i].hermitian_inner_product(S[i]) for i in range(3)]
 all([ip == 1 for ip in ips])
@@ -934,8 +951,10 @@ all([ip == 1 for ip in ips])
 </output>
 </sage>
 
-Applying the Gram-Schmidt procedure to a set of vectors is the type of computation that a program like Sage is perfect for.  Gram-Schmidt is implemented as a method for matrices, where we interpret the rows of the matrix as the vectors in the original set.  The result is two matrices, where the first has rows that are the orthogonal vectors.  The second matrix has rows that provide linear combinations of the orthogonal vectors that equal the original vectors.  The original vectors do not need to form a linearly independent set, and when the set is linearly dependent, then zero vectors produced are not part of the returned set.<br /><br />
-Over <code>CDF</code> the set is automatically orthonormal, and since a different algorithm is used (to help control the imprecisions), the results will look different than what would result from <acroref type="theorem" acro="GSP" />.  We will illustrate with the vectors from <acroref type="example" acro="GSTV" />.
+<p>Applying the Gram-Schmidt procedure to a set of vectors is the type of computation that a program like Sage is perfect for.  Gram-Schmidt is implemented as a method for matrices, where we interpret the rows of the matrix as the vectors in the original set.  The result is two matrices, where the first has rows that are the orthogonal vectors.  The second matrix has rows that provide linear combinations of the orthogonal vectors that equal the original vectors.  The original vectors do not need to form a linearly independent set, and when the set is linearly dependent, then zero vectors produced are not part of the returned set.</p>
+
+<p>Over <code>CDF</code> the set is automatically orthonormal, and since a different algorithm is used (to help control the imprecisions), the results will look different than what would result from <acroref type="theorem" acro="GSP" />.  We will illustrate with the vectors from <acroref type="example" acro="GSTV" />.</p>
+
 <sage>
 <input>v1 = vector(CDF, [ 1, 1+I,   1])
 v2 = vector(CDF, [-I,   1, 1+I])
@@ -950,7 +969,8 @@ G.round(5)
 </output>
 </sage>
 
-We formed the matrix A with the three vectors as rows, and of the two outputs we are interested in the first one, whose rows form the orthonormal set.  We round the numbers to 5 digits, just to make the result fit nicely on your screen.  Let us do it again, now exactly over <code>QQbar</code>.  We will output the entries of the matrix as list, working across rows first, so it fits nicely.
+<p>We formed the matrix A with the three vectors as rows, and of the two outputs we are interested in the first one, whose rows form the orthonormal set.  We round the numbers to 5 digits, just to make the result fit nicely on your screen.  Let us do it again, now exactly over <code>QQbar</code>.  We will output the entries of the matrix as list, working across rows first, so it fits nicely.</p>
+
 <sage>
 <input>v1 = vector(QQbar, [ 1, 1+I,   1])
 v2 = vector(QQbar, [-I,   1, 1+I])
@@ -973,7 +993,8 @@ Sequence(G.list(), cr=True)
 </output>
 </sage>
 
-Notice that we asked for orthonormal output, so the rows of <code>G</code> are the vectors $\set{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3}$ in <acroref type="example" acro="ONTV" />.  Exactly.  We can restrict ourselves to <code>QQ</code> and forego the <q>normality</q> to obtain just the orthogonal set $\set{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3}$ of <acroref type="example" acro="GSTV" />.
+<p>Notice that we asked for orthonormal output, so the rows of <code>G</code> are the vectors $\set{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3}$ in <acroref type="example" acro="ONTV" />.  Exactly.  We can restrict ourselves to <code>QQ</code> and forego the <q>normality</q> to obtain just the orthogonal set $\set{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3}$ of <acroref type="example" acro="GSTV" />.</p>
+
 <sage>
 <input>v1 = vector(QQbar, [ 1, 1+I,   1])
 v2 = vector(QQbar, [-I,   1, 1+I])
@@ -996,7 +1017,8 @@ I + 1,
 </output>
 </sage>
 
-Notice that it is an error to ask for an orthonormal set over <code>QQ</code> since you cannot expect to take square roots of rationals and stick with rationals.
+<p>Notice that it is an error to ask for an orthonormal set over <code>QQ</code> since you cannot expect to take square roots of rationals and stick with rationals.</p>
+
 <sage>
 <input>v1 = vector(QQ, [1, 1])
 v2 = vector(QQ, [2, 3])
@@ -1009,9 +1031,8 @@ TypeError: QR decomposition unable to compute square roots in Rational Field
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <!--   End  o.tex -->

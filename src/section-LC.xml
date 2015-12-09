@@ -87,7 +87,9 @@ Do you think you could create <em>any</em> possible vector from $\complex{6}$ by
 
 <sageadvice acro="LC" index="linear combinations">
 <title>Linear Combinations</title>
-We can redo <acroref type="example" acro="TLC" /> with Sage.  First we build the relevant vectors and then do the computation.
+
+<p>We can redo <acroref type="example" acro="TLC" /> with Sage.  First we build the relevant vectors and then do the computation.</p>
+
 <sage>
 <input>u1 = vector(QQ,  [ 2, 4, -3,  1,  2, 9])
 u2 = vector(QQ,  [ 6, 3,  0, -2,  1, 4])
@@ -99,7 +101,8 @@ u4 = vector(QQ,  [ 3, 2, -5,  7,  1, 3])
 </output>
 </sage>
 
-With a linear combination combining many vectors, we sometimes will use more compact ways of forming a linear combination.  So we will redo the second linear combination of $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4$ using a list comprehension and the <code>sum()</code> function.
+<p>With a linear combination combining many vectors, we sometimes will use more compact ways of forming a linear combination.  So we will redo the second linear combination of $\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4$ using a list comprehension and the <code>sum()</code> function.</p>
+
 <sage>
 <input>vectors = [u1, u2, u3, u4]
 scalars = [3, 0, 5, -1]
@@ -111,7 +114,8 @@ multiples
 </output>
 </sage>
 
-We have constructed two lists and used a list comprehension to just form the scalar multiple of each vector as part of the list <code>multiples</code>.  Now we use the <code>sum()</code> function to add them all together.
+<p>We have constructed two lists and used a list comprehension to just form the scalar multiple of each vector as part of the list <code>multiples</code>.  Now we use the <code>sum()</code> function to add them all together.</p>
+
 <sage>
 <input>sum(multiples)
 </input>
@@ -119,7 +123,8 @@ We have constructed two lists and used a list comprehension to just form the sca
 </output>
 </sage>
 
-We can improve on this in two ways.  First, we can determine the number of elements in any list with the <code>len()</code> function.  So we do not have to count up that we have 4 vectors (not that it is very hard to count!).  Second, we can combine this all into one line, once we have defined the list of vectors and the list of scalars.
+<p>We can improve on this in two ways.  First, we can determine the number of elements in any list with the <code>len()</code> function.  So we do not have to count up that we have 4 vectors (not that it is very hard to count!).  Second, we can combine this all into one line, once we have defined the list of vectors and the list of scalars.</p>
+
 <sage>
 <input>sum([scalars[i]*vectors[i] for i in range(len(vectors))])
 </input>
@@ -127,14 +132,14 @@ We can improve on this in two ways.  First, we can determine the number of eleme
 </output>
 </sage>
 
-The corresponding expression in mathematical notation, after a change of names and with counting starting from 1, would roughly be:
+<p>The corresponding expression in mathematical notation, after a change of names and with counting starting from 1, would roughly be:
 <alignmath>
 \sum_{i=1}^4 a_i\vect{u}_i
 </alignmath>
-Using <code>sum()</code> and a list comprehension might be overkill in this example, but we will find it very useful in just a minute.
-
+Using <code>sum()</code> and a list comprehension might be overkill in this example, but we will find it very useful in just a minute.</p>
 
 </sageadvice>
+
 <p>Our next two examples are key ones, and a discussion about decompositions is timely.  Have a look at <acroref type="technique" acro="DC" /> before studying the next two examples.</p>
 
 <example acro="ABLC" index="linear combination! system of equations">
@@ -385,7 +390,9 @@ So the entries of the vector $\vect{b}$, and the entries of the vector that is t
 
 <sageadvice acro="SLC" index="solutions, linear combinations">
 <title>Solutions and Linear Combinations</title>
-We can easily illustrate <acroref type="theorem" acro="SLSLC" /> with Sage.  We will use <acroref type="archetype" acro="F" /> as an example.
+
+<p>We can easily illustrate <acroref type="theorem" acro="SLSLC" /> with Sage.  We will use <acroref type="archetype" acro="F" /> as an example.</p>
+
 <sage>
 <input>coeff = matrix(QQ, [[33, -16,  10,-2],
                     [99, -47,  27,-7],
@@ -395,7 +402,8 @@ const = vector(QQ, [-27, -77, -52, 5])
 </input>
 </sage>
 
-A solution to this system is $x_1=1,\,x_2=2,\,x_3=-2,\,x_4=4$.  So we will use these four values as scalars in a linear combination of the columns of the coefficient matrix.  However, we do not have to type in the columns individually, we can have Sage extract them all for us into a list with the matrix method <code>.columns()</code>.
+<p>A solution to this system is $x_1=1,\,x_2=2,\,x_3=-2,\,x_4=4$.  So we will use these four values as scalars in a linear combination of the columns of the coefficient matrix.  However, we do not have to type in the columns individually, we can have Sage extract them all for us into a list with the matrix method <code>.columns()</code>.</p>
+
 <sage>
 <input>cols = coeff.columns()
 cols
@@ -405,7 +413,8 @@ cols
 </output>
 </sage>
 
-With our scalars also in a list, we can compute the linear combination of the columns, like we did in <acroref type="sage" acro="LC" />.
+<p>With our scalars also in a list, we can compute the linear combination of the columns, like we did in <acroref type="sage" acro="LC" />.</p>
+
 <sage>
 <input>soln = [1, 2, -2, 4]
 sum([soln[i]*cols[i] for i in range(len(cols))])
@@ -414,7 +423,8 @@ sum([soln[i]*cols[i] for i in range(len(cols))])
 </output>
 </sage>
 
-So we see that the solution gives us scalars that yield the vector of constants as a linear combination of the columns of the coefficient matrix.  Exactly as predicted by <acroref type="theorem" acro="SLSLC" />.  We can duplicate this observation with just one line:
+<p>So we see that the solution gives us scalars that yield the vector of constants as a linear combination of the columns of the coefficient matrix.  Exactly as predicted by <acroref type="theorem" acro="SLSLC" />.  We can duplicate this observation with just one line:</p>
+
 <sage>
 <input>const == sum([soln[i]*cols[i] for i in range(len(cols))])
 </input>
@@ -422,7 +432,8 @@ So we see that the solution gives us scalars that yield the vector of constants 
 </output>
 </sage>
 
-In a similar fashion we can test other potential solutions.  With theory we will develop later, we will be able to determine that <acroref type="archetype" acro="F" /> has only one solution.  Since <acroref type="theorem" acro="SLSLC" /> is an equivalence (<acroref type="technique" acro="E" />), any other choice for the scalars should not create the vector of constants as a linear combination.
+<p>In a similar fashion we can test other potential solutions.  With theory we will develop later, we will be able to determine that <acroref type="archetype" acro="F" /> has only one solution.  Since <acroref type="theorem" acro="SLSLC" /> is an equivalence (<acroref type="technique" acro="E" />), any other choice for the scalars should not create the vector of constants as a linear combination.</p>
+
 <sage>
 <input>alt_soln = [-3, 2, 4, 1]
 const == sum([alt_soln[i]*cols[i] for i in range(len(cols))])
@@ -431,8 +442,7 @@ const == sum([alt_soln[i]*cols[i] for i in range(len(cols))])
 </output>
 </sage>
 
-Now would be a good time to find another system of equations, perhaps one with infinitely many solutions, and practice the techniques above.
-
+<p>Now would be a good time to find another system of equations, perhaps one with infinitely many solutions, and practice the techniques above.</p>
 
 </sageadvice>
 </subsection>
@@ -1058,7 +1068,9 @@ x_5\colvector{2\\-2\\1\\0\\1}
 
 <sageadvice acro="SS2" index="solving linear systems">
 <title>Solving Systems, Part 2</title>
-We can now resolve a bit of the mystery around Sage's <code>.solve_right()</code> method.  Recall from <acroref type="sage" acro="SS1" /> that if a linear system has solutions, Sage only provides one solution, even in the case when there are infinitely many solutions.  In our previous discussion, we used the system from <acroref type="example" acro="ISSI" />.
+
+<p>We can now resolve a bit of the mystery around Sage's <code>.solve_right()</code> method.  Recall from <acroref type="sage" acro="SS1" /> that if a linear system has solutions, Sage only provides one solution, even in the case when there are infinitely many solutions.  In our previous discussion, we used the system from <acroref type="example" acro="ISSI" />.</p>
+
 <sage>
 <input>coeff = matrix(QQ, [[ 1,  4,  0, -1,  0,   7, -9],
                     [ 2,  8, -1,  3,  9, -13,  7],
@@ -1071,7 +1083,8 @@ coeff.solve_right(const)
 </output>
 </sage>
 
-The vector $\vect{c}$ described in the statement of <acroref type="theorem" acro="VFSLS" /> is precisely the solution returned from Sage's <code>.solve_right()</code> method.  This is the solution where we choose the $\alpha_i$, $1\leq i\leq n-r$ to all be zero, in other words, each free variable is set to zero (how convenient!).  Free variables correspond to columns of the row-reduced augmented matrix that are <em>not</em> pivot columns.  So we can profitably employ the <code>.nonpivots()</code> matrix method.  Let us put this all together.
+<p>The vector $\vect{c}$ described in the statement of <acroref type="theorem" acro="VFSLS" /> is precisely the solution returned from Sage's <code>.solve_right()</code> method.  This is the solution where we choose the $\alpha_i$, $1\leq i\leq n-r$ to all be zero, in other words, each free variable is set to zero (how convenient!).  Free variables correspond to columns of the row-reduced augmented matrix that are <em>not</em> pivot columns.  So we can profitably employ the <code>.nonpivots()</code> matrix method.  Let us put this all together.</p>
+
 <sage>
 <input>aug = coeff.augment(const)
 reduced = aug.rref()
@@ -1091,10 +1104,11 @@ reduced
 </output>
 </sage>
 
-Since the eighth column (numbered 7) of the reduced row-echelon form is not a pivot column, we know by <acroref type="theorem" acro="RCLS" /> that the system is consistent.  We can use the indices of the remaining non-pivot columns to place zeros into the vector $\vect{c}$ in those locations.  The remaining entries of $\vect{c}$ are the entries of the reduced row-echelon form in the last column, inserted in that order.  Boom!<br /><br />
-So we have three ways to get to the same solution: (a) row-reduce the augmented matrix and set the free variables all to zero, (b) row-reduce the augmented matrix and use the formula from <acroref type="theorem" acro="VFSLS" /> to construct $\vect{c}$, and (c) use Sage's <code>.solve_right()</code> method.<br /><br />
-One mystery left to resolve.  How can we get Sage to give us infinitely many solutions in the case of systems with an infinite solution set?  This is best handled in the next section, <acroref type="section" acro="SS" />, specifically in <acroref type="sage" acro="SS3" />.
+<p>Since the eighth column (numbered 7) of the reduced row-echelon form is not a pivot column, we know by <acroref type="theorem" acro="RCLS" /> that the system is consistent.  We can use the indices of the remaining non-pivot columns to place zeros into the vector $\vect{c}$ in those locations.  The remaining entries of $\vect{c}$ are the entries of the reduced row-echelon form in the last column, inserted in that order.  Boom!</p>
 
+<p>So we have three ways to get to the same solution: (a) row-reduce the augmented matrix and set the free variables all to zero, (b) row-reduce the augmented matrix and use the formula from <acroref type="theorem" acro="VFSLS" /> to construct $\vect{c}$, and (c) use Sage's <code>.solve_right()</code> method.</p>
+
+<p>One mystery left to resolve.  How can we get Sage to give us infinitely many solutions in the case of systems with an infinite solution set?  This is best handled in the next section, <acroref type="section" acro="SS" />, specifically in <acroref type="sage" acro="SS3" />.</p>
 
 </sageadvice>
 </subsection>
@@ -1288,7 +1302,9 @@ and form their difference,
 
 <sageadvice acro="PSHS" index="particular solutions, homogeneous solutions">
 <title>Particular Solutions, Homogeneous Solutions</title>
-Again, Sage is useful for illustrating a theorem, in this case <acroref type="theorem" acro="PSPHS" />.  We will illustrate both <q>directions</q> of this equivalence with the system from <acroref type="example" acro="ISSI" />.
+
+<p>Again, Sage is useful for illustrating a theorem, in this case <acroref type="theorem" acro="PSPHS" />.  We will illustrate both <q>directions</q> of this equivalence with the system from <acroref type="example" acro="ISSI" />.</p>
+
 <sage>
 <input>coeff = matrix(QQ,[[ 1,  4,  0, -1,  0,   7, -9],
                    [ 2,  8, -1,  3,  9, -13,  7],
@@ -1299,7 +1315,8 @@ const = vector(QQ, [3, 9, 1, 4])
 </input>
 </sage>
 
-First we will build solutions to this system.  <acroref type="theorem" acro="PSPHS" /> says we need a particular solution, <ie /> one solution to the system, $\vect{w}$.  We can get this from Sage's <code>.solve_right()</code> matrix method.  Then for <em>any</em> vector $\vect{z}$ from the null space of the coefficient matrix, the new vector $\vect{y}=\vect{w}+\vect{z}$ should be a solution.  We walk through this construction in the next few cells, where we have employed a specific element of the null space, <code>z</code>, along with a check that it is really in the null space.
+<p>First we will build solutions to this system.  <acroref type="theorem" acro="PSPHS" /> says we need a particular solution, <ie /> one solution to the system, $\vect{w}$.  We can get this from Sage's <code>.solve_right()</code> matrix method.  Then for <em>any</em> vector $\vect{z}$ from the null space of the coefficient matrix, the new vector $\vect{y}=\vect{w}+\vect{z}$ should be a solution.  We walk through this construction in the next few cells, where we have employed a specific element of the null space, <code>z</code>, along with a check that it is really in the null space.</p>
+
 <sage>
 <input>w = coeff.solve_right(const)
 nsp = coeff.right_kernel(basis='pivot')
@@ -1325,7 +1342,8 @@ y
 </output>
 </sage>
 
-You can create solutions repeatedly via the creation of random elements of the null space.  Be sure you have executed the cells above, so that <code>coeff</code>, <code>n</code>, <code>const</code>, <code>nsp</code> and <code>w</code> are all defined.  Try executing the cell below repeatedly to test infinitely many solutions to the system.  You can use the subsequent compute cell to peek at any of the solutions you create.
+<p>You can create solutions repeatedly via the creation of random elements of the null space.  Be sure you have executed the cells above, so that <code>coeff</code>, <code>n</code>, <code>const</code>, <code>nsp</code> and <code>w</code> are all defined.  Try executing the cell below repeatedly to test infinitely many solutions to the system.  You can use the subsequent compute cell to peek at any of the solutions you create.</p>
+
 <sage>
 <input>z = nsp.random_element()
 y = w + z
@@ -1342,7 +1360,8 @@ const == sum([y[i]*coeff.column(i) for i in range(n)])
 </output>
 </sage>
 
-For the other direction, we present (and verify) two solutions to the linear system of equations.  The condition that $\vect{y}=\vect{w}+\vect{z}$ can be rewritten as $\vect{y}-\vect{w}=\vect{z}$, where $\vect{z}$ is in the null space of the coefficient matrix.  which of our two solutions is the <q>particular</q> solution and which is <q>some other</q> solution?  It does not matter, it is all sematics at this point.  What is important is that their <em>difference</em> is an element of the null space (in either order).  So we define the solutions, along with checks that they are really solutions, then examine their difference.
+<p>For the other direction, we present (and verify) two solutions to the linear system of equations.  The condition that $\vect{y}=\vect{w}+\vect{z}$ can be rewritten as $\vect{y}-\vect{w}=\vect{z}$, where $\vect{z}$ is in the null space of the coefficient matrix.  which of our two solutions is the <q>particular</q> solution and which is <q>some other</q> solution?  It does not matter, it is all sematics at this point.  What is important is that their <em>difference</em> is an element of the null space (in either order).  So we define the solutions, along with checks that they are really solutions, then examine their difference.</p>
+
 <sage>
 <input>soln1 = vector(QQ,[4, 0, -96, 29, 46, 76, 56])
 const == sum([soln1[i]*coeff.column(i) for i in range(n)])
@@ -1365,8 +1384,6 @@ const == sum([soln2[i]*coeff.column(i) for i in range(n)])
 <output>True
 </output>
 </sage>
-
-
 
 </sageadvice>
 </subsection>

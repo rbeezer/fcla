@@ -356,7 +356,9 @@ so we are convinced that $\vect{x}$ really is in $\spn{R}$.  Notice that in this
 
 <sageadvice acro="SS" index="spanning sets">
 <title>Spanning Sets</title>
-A strength of Sage is the ability to create infinite sets, such as the span of a set of vectors, from finite descriptions.  In other words, we can take a finite set with just a handful of vectors and Sage will create the set that is the span of these vectors, which is an infinite set.  Here we will show you how to do this, and show how you can use the results.  The key command is the vector space method <code>.span()</code>.<br /><br />
+
+<p>A strength of Sage is the ability to create infinite sets, such as the span of a set of vectors, from finite descriptions.  In other words, we can take a finite set with just a handful of vectors and Sage will create the set that is the span of these vectors, which is an infinite set.  Here we will show you how to do this, and show how you can use the results.  The key command is the vector space method <code>.span()</code>.</p>
+
 <sage>
 <input>V = QQ^4
 v1 = vector(QQ, [1,1,2,-1])
@@ -409,11 +411,16 @@ u in W
 </output>
 </sage>
 
-Most of the above should be fairly self-explanatory, but a few comments are in order.  The span, <code>W</code>, is created in the first compute cell with the <code>.span()</code> method, which accepts a list of vectors and needs to be employed as a method of a vector space.  The information about <code>W</code> printed when we just input the span itself may be somewhat confusing, and as before, we need to learn some more theory to totally understand it all.  For now you can see the number system (<code>Rational Field</code>) and the number of entries in each vector (<code>degree 4</code>).  The <code>dimension</code> may be more complicated than you first suspect.<br /><br />
-Sets are all about membership, and we see that we can easily check membership in a span.  We know the vector <code>x</code> will be in the span <code>W</code> since we built it as a linear combination of <code>v1</code> and <code>v2</code>.  The vectors <code>y</code> and <code>u</code> are a bit more mysterious, but Sage can answer the membership question easily for both.<br /><br />
-The last compute cell is something new.  The symbol <code><![CDATA[<=]]></code> is meant here to be the <q>subset of</q> relation, <ie /> a slight abuse of the mathematical symbol $\subseteq$, and then we are not surprised to learn that <code>W</code> really is a subset of <code>V</code>.<br /><br />
-It is important to realize that the span is a <em>construction</em> that begins with a finite set, yet creates an infinite set.  With a loop (the <code>for</code> command) and the <code>.random_element()</code> vector space method we can create <em>many</em>, but not all, of the elements of a span.  In the examples below, you can edit the total number of random vectors produced, and you may need to click through to another file of output if you ask for more than about 100 vectors.<br /><br />
-Each example is designed to illustrate some aspect of the behavior of the span command and to provoke some questions.  So put on your mathematician's hat, evaluate the compute cells to create some sample elements, and then <em>study</em> the output carefully looking for patterns and maybe even conjecture some explanations for the behavior.  The puzzle gets just a bit harder for each new example.  (We use the <code>Sequence()</code> command to get nicely-formatted line-by-line output of the list, and notice that we are only providing a portion of the output here.  You will want to evalaute the computation of <code>vecs</code> and then evaluate the next cell in the Sage notebook for maximum effect.)
+<p>Most of the above should be fairly self-explanatory, but a few comments are in order.  The span, <code>W</code>, is created in the first compute cell with the <code>.span()</code> method, which accepts a list of vectors and needs to be employed as a method of a vector space.  The information about <code>W</code> printed when we just input the span itself may be somewhat confusing, and as before, we need to learn some more theory to totally understand it all.  For now you can see the number system (<code>Rational Field</code>) and the number of entries in each vector (<code>degree 4</code>).  The <code>dimension</code> may be more complicated than you first suspect.</p>
+
+<p>Sets are all about membership, and we see that we can easily check membership in a span.  We know the vector <code>x</code> will be in the span <code>W</code> since we built it as a linear combination of <code>v1</code> and <code>v2</code>.  The vectors <code>y</code> and <code>u</code> are a bit more mysterious, but Sage can answer the membership question easily for both.</p>
+
+<p>The last compute cell is something new.  The symbol <code><![CDATA[<=]]></code> is meant here to be the <q>subset of</q> relation, <ie /> a slight abuse of the mathematical symbol $\subseteq$, and then we are not surprised to learn that <code>W</code> really is a subset of <code>V</code>.</p>
+
+<p>It is important to realize that the span is a <em>construction</em> that begins with a finite set, yet creates an infinite set.  With a loop (the <code>for</code> command) and the <code>.random_element()</code> vector space method we can create <em>many</em>, but not all, of the elements of a span.  In the examples below, you can edit the total number of random vectors produced, and you may need to click through to another file of output if you ask for more than about 100 vectors.</p>
+
+<p>Each example is designed to illustrate some aspect of the behavior of the span command and to provoke some questions.  So put on your mathematician's hat, evaluate the compute cells to create some sample elements, and then <em>study</em> the output carefully looking for patterns and maybe even conjecture some explanations for the behavior.  The puzzle gets just a bit harder for each new example.  (We use the <code>Sequence()</code> command to get nicely-formatted line-by-line output of the list, and notice that we are only providing a portion of the output here.  You will want to evalaute the computation of <code>vecs</code> and then evaluate the next cell in the Sage notebook for maximum effect.)</p>
+
 <sage>
 <input>V = QQ^4
 W = V.span([ vector(QQ, [0, 1, 0, 1]),
@@ -532,13 +539,15 @@ vecs = [(i, W.random_element()) for i in range(100)]
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 <sageadvice acro="CSS" index="consistent systems, spans">
 <title>Consistent Systems and Spans</title>
-With the notion of a span, we can expand our techniques for checking the consistency of a linear system.  <acroref type="theorem" acro="SLSLC" /> tells us a system is consistent if and only if the vector of constants is a linear combination of the columns of the coefficient matrix.  This is because <acroref type="theorem" acro="SLSLC" /> says that any solution to the system will provide a linear combination of the columns of the coefficient that equals the vector of constants.  So consistency of a system is equivalent to the membership of the vector of constants in the span of the columns of the coefficient matrix.  Read that last sentence again carefully.  We will see this idea again, but more formally, in <acroref type="theorem" acro="CSCS" />.<br /><br />
-We will reprise <acroref type="sage" acro="SLC" />, which is based on <acroref type="archetype" acro="F" />.  We again make use of the matrix method <code>.columns()</code> to get all of the columns into a list at once.<br /><br />
+
+<p>With the notion of a span, we can expand our techniques for checking the consistency of a linear system.  <acroref type="theorem" acro="SLSLC" /> tells us a system is consistent if and only if the vector of constants is a linear combination of the columns of the coefficient matrix.  This is because <acroref type="theorem" acro="SLSLC" /> says that any solution to the system will provide a linear combination of the columns of the coefficient that equals the vector of constants.  So consistency of a system is equivalent to the membership of the vector of constants in the span of the columns of the coefficient matrix.  Read that last sentence again carefully.  We will see this idea again, but more formally, in <acroref type="theorem" acro="CSCS" />.</p>
+
+<p>We will reprise <acroref type="sage" acro="SLC" />, which is based on <acroref type="archetype" acro="F" />.  We again make use of the matrix method <code>.columns()</code> to get all of the columns into a list at once.</p>
+
 <sage>
 <input>coeff = matrix(QQ, [[33, -16, 10, -2],
                     [99, -47, 27, -7],
@@ -561,7 +570,8 @@ const in span
 </output>
 </sage>
 
-You could try to find an example of a vector of constants which would create an inconsistent system with this coefficient matrix.  But there is no such thing.  Here is why <mdash /> the null space of <code>coeff</code> is trivial, just the zero vector.
+<p>You could try to find an example of a vector of constants which would create an inconsistent system with this coefficient matrix.  But there is no such thing.  Here is why <mdash /> the null space of <code>coeff</code> is trivial, just the zero vector.</p>
+
 <sage>
 <input>nsp = coeff.right_kernel(basis='pivot')
 nsp.list()
@@ -570,8 +580,7 @@ nsp.list()
 </output>
 </sage>
 
-The system is consistent, as we have shown, so we can apply <acroref type="theorem" acro="PSPHS" />. We can read <acroref type="theorem" acro="PSPHS" /> as saying <em>any</em> two different solutions of the system will differ by an element of the null space, and the only possibility for this null space vector is just the zero vector.  In other words, any two solutions <em>cannot</em> be different.
-
+<p>The system is consistent, as we have shown, so we can apply <acroref type="theorem" acro="PSPHS" />. We can read <acroref type="theorem" acro="PSPHS" /> as saying <em>any</em> two different solutions of the system will differ by an element of the null space, and the only possibility for this null space vector is just the zero vector.  In other words, any two solutions <em>cannot</em> be different.</p>
 
 </sageadvice>
 </subsection>
@@ -752,7 +761,9 @@ B=
 
 <sageadvice acro="SSNS" index="null space!spanning set">
 <title>Spanning Sets for Null Spaces</title>
-We have seen that we can create a null space in Sage with the <code>.right_kernel()</code> method for matrices.  We use the optional argument <code>basis='pivot'</code>, so we get exactly the spanning set $\set{\vectorlist{z}{n-r}}$ described in <acroref type="theorem" acro="SSNS" />.  This optional argument will overide Sage's default spanning set, whose purpose we will explain fully in <acroref type="sage" acro="SUTH0" />.  Here is <acroref type="example" acro="SSNS" /> again, along with a few extras we will comment on afterwards.
+
+<p>We have seen that we can create a null space in Sage with the <code>.right_kernel()</code> method for matrices.  We use the optional argument <code>basis='pivot'</code>, so we get exactly the spanning set $\set{\vectorlist{z}{n-r}}$ described in <acroref type="theorem" acro="SSNS" />.  This optional argument will overide Sage's default spanning set, whose purpose we will explain fully in <acroref type="sage" acro="SUTH0" />.  Here is <acroref type="example" acro="SSNS" /> again, along with a few extras we will comment on afterwards.</p>
+
 <sage>
 <input>A = matrix(QQ, [[ 1,  3,  3, -1, -5],
                 [ 2,  5,  7,  1,  1],
@@ -793,8 +804,10 @@ z
 </output>
 </sage>
 
-We built the null space as <code>nsp</code>, and then asked for its <code>.basis()</code>.  For now, a <q>basis</q> will give us a spanning set, and with more theory we will understand it better.  This is a set of vectors that form a spanning set for the null space, and with the <code>basis='pivot'</code> argument we have asked for the spanning set in the format described in <acroref type="theorem" acro="SSNS" />.  The spanning set <code>N</code> is a list of vectors, which we have extracted and named as <code>z1</code> and <code>z2</code>.  The linear combination of these two vectors, named <code>z</code>, will also be in the null space since <code>N</code> is a spanning set for <code>nsp</code>.  As verification, we have have used the five entries of <code>z</code> in a linear combination of the columns of <code>A</code>, yielding the zero vector (with four entries) as we expect.<br /><br />
-We can also just ask Sage if <code>z</code> is in <code>nsp</code>:
+<p>We built the null space as <code>nsp</code>, and then asked for its <code>.basis()</code>.  For now, a <q>basis</q> will give us a spanning set, and with more theory we will understand it better.  This is a set of vectors that form a spanning set for the null space, and with the <code>basis='pivot'</code> argument we have asked for the spanning set in the format described in <acroref type="theorem" acro="SSNS" />.  The spanning set <code>N</code> is a list of vectors, which we have extracted and named as <code>z1</code> and <code>z2</code>.  The linear combination of these two vectors, named <code>z</code>, will also be in the null space since <code>N</code> is a spanning set for <code>nsp</code>.  As verification, we have have used the five entries of <code>z</code> in a linear combination of the columns of <code>A</code>, yielding the zero vector (with four entries) as we expect.</p>
+
+<p>We can also just ask Sage if <code>z</code> is in <code>nsp</code>:</p>
+
 <sage>
 <input>z in nsp
 </input>
@@ -802,7 +815,8 @@ We can also just ask Sage if <code>z</code> is in <code>nsp</code>:
 </output>
 </sage>
 
-Now is an appropriate time to comment on how Sage displays a null space when we just ask about it alone.  Just as with a span, the number system and the number of entries are easy to see.  Again, <code>dimension</code> should wait for a bit.  But you will notice now that the <code>Basis matrix</code> has been replaced by <code>User basis matrix</code>.  This is a consequence of our request for something other than the default basis (the <code>'pivot'</code> basis).  As part of its standard information about a null space, or a span, Sage spits out the basis matrix.  This is a matrix, whose <em>rows</em> are vectors in a spanning set.  This matrix can be requested by itself, using the method <code>.basis_matrix()</code>.  It is important to notice that this is very different than the output of <code>.basis()</code> which is a list of vectors.  The two objects print very similarly, but even this is different <mdash /> compare the organization of the brackets and parentheses.  Finally the last command should print true for <em>any</em> span or null space Sage creates.  If you rerun the commands below, be sure the null space <code>nsp</code> is defined from the code just above.
+<p>Now is an appropriate time to comment on how Sage displays a null space when we just ask about it alone.  Just as with a span, the number system and the number of entries are easy to see.  Again, <code>dimension</code> should wait for a bit.  But you will notice now that the <code>Basis matrix</code> has been replaced by <code>User basis matrix</code>.  This is a consequence of our request for something other than the default basis (the <code>'pivot'</code> basis).  As part of its standard information about a null space, or a span, Sage spits out the basis matrix.  This is a matrix, whose <em>rows</em> are vectors in a spanning set.  This matrix can be requested by itself, using the method <code>.basis_matrix()</code>.  It is important to notice that this is very different than the output of <code>.basis()</code> which is a list of vectors.  The two objects print very similarly, but even this is different <mdash /> compare the organization of the brackets and parentheses.  Finally the last command should print true for <em>any</em> span or null space Sage creates.  If you rerun the commands below, be sure the null space <code>nsp</code> is defined from the code just above.</p>
+
 <sage>
 <input>nsp
 </input>
@@ -838,9 +852,8 @@ User basis matrix:
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 <p>Here is an example that will simultaneously exercise the span construction and <acroref type="theorem" acro="SSNS" />, while also pointing the way to the next section.</p>
 
 <example acro="SCAD" index="span of columns!Archetype D">
@@ -914,9 +927,13 @@ W=\spn{\left\{\vect{w}_1,\,\vect{w}_2\right\}}
 
 <sageadvice acro="SS3" index="solving systems">
 <title>Solving Systems, Part 3</title>
-We have deferred several mysteries and postponed some explanations of the terms Sage uses to describe certain objects.  This is because Sage is a comprehensive tool that you can use throughout your mathematical career, and Sage assumes you already know a lot of linear algebra.  Do not worry, you already know <em>some</em> linear algebra and will very soon will know a <em>whole lot more</em>.  And we know enough now that we can now solve one mystery.  How can we create <em>all</em> of the solutions to a linear system of equations when the solution set is infinite?<br /><br />
-<acroref type="theorem" acro="VFSLS" /> described elements of a solution set as a single vector $\vect{c}$, plus linear combinations of vectors $\vectorlist{u}{n-r}$.  The vectors $\vect{u}_j$ are identical to the vectors $\vect{z}_j$ in the description of the spanning set of a null space in <acroref type="theorem" acro="SSNS" />, suitably adjusted from the setting of a general system and the relevant homogeneous system for a null space.  We can get the single vector $\vect{c}$ from the <code>.solve_right()</code> method of a coefficient matrix, once supplied with the vector of constants.  The vectors $\set{\vectorlist{z}{n-r}}$ come from Sage in the basis returned by the <code>.right_kernel(basis='pivot')</code> method applied to the coefficient matrix.  <acroref type="theorem" acro="PSPHS" /> amplifies and generalizes this discussion, making it clear that the choice of the particular particular solution $\vect{c}$ (Sage's choice, and your author's choice) is just a matter of convenience.<br /><br />
-In our previous discussion, we used the system from <acroref type="example" acro="ISSI" />.  We will use it one more time.
+
+<p>We have deferred several mysteries and postponed some explanations of the terms Sage uses to describe certain objects.  This is because Sage is a comprehensive tool that you can use throughout your mathematical career, and Sage assumes you already know a lot of linear algebra.  Do not worry, you already know <em>some</em> linear algebra and will very soon will know a <em>whole lot more</em>.  And we know enough now that we can now solve one mystery.  How can we create <em>all</em> of the solutions to a linear system of equations when the solution set is infinite?</p>
+
+<p><acroref type="theorem" acro="VFSLS" /> described elements of a solution set as a single vector $\vect{c}$, plus linear combinations of vectors $\vectorlist{u}{n-r}$.  The vectors $\vect{u}_j$ are identical to the vectors $\vect{z}_j$ in the description of the spanning set of a null space in <acroref type="theorem" acro="SSNS" />, suitably adjusted from the setting of a general system and the relevant homogeneous system for a null space.  We can get the single vector $\vect{c}$ from the <code>.solve_right()</code> method of a coefficient matrix, once supplied with the vector of constants.  The vectors $\set{\vectorlist{z}{n-r}}$ come from Sage in the basis returned by the <code>.right_kernel(basis='pivot')</code> method applied to the coefficient matrix.  <acroref type="theorem" acro="PSPHS" /> amplifies and generalizes this discussion, making it clear that the choice of the particular particular solution $\vect{c}$ (Sage's choice, and your author's choice) is just a matter of convenience.</p>
+
+<p>In our previous discussion, we used the system from <acroref type="example" acro="ISSI" />.  We will use it one more time.</p>
+
 <sage>
 <input>coeff = matrix(QQ, [[ 1,  4,  0, -1,  0,   7, -9],
                     [ 2,  8, -1,  3,  9, -13,  7],
@@ -959,9 +976,9 @@ check
 </output>
 </sage>
 
-So we can describe the infinitely many solutions with just five items: the specific solution, $\vect{c}$, and the four vectors of the spanning set.  Boom!<br /><br />
-As an exercise in understanding <acroref type="theorem" acro="PSPHS" />, you might begin with <code>soln</code> and add a linear combination of the spanning set for the null space to create another solution (which you can check).
+<p>So we can describe the infinitely many solutions with just five items: the specific solution, $\vect{c}$, and the four vectors of the spanning set.  Boom!</p>
 
+<p>As an exercise in understanding <acroref type="theorem" acro="PSPHS" />, you might begin with <code>soln</code> and add a linear combination of the spanning set for the null space to create another solution (which you can check).</p>
 
 </sageadvice>
 </subsection>

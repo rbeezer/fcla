@@ -34,8 +34,11 @@
 
 <sageadvice acro="VSCV" index="vector spaces!column vectors">
 <title>Vector Spaces of Column Vectors</title>
-It is possible to construct vector spaces several ways in Sage.  For now, we will show you two basic ways.  Remember that while our theory is all developed over the complex numbers, $\complexes$, it is better to initially illustrate these ideas in Sage using the rationals, <code>QQ</code>.<br /><br />
-To create a vector space, we use the <code>VectorSpace()</code> constructor, which requires the name of the number system for the entries and the number of entries in each vector.  We can display some information about the vector space, and with tab-completion you can see what functions are available.  We will not do too much with these methods immediately, but instead learn about them as we progress through the theory.
+
+<p>It is possible to construct vector spaces several ways in Sage.  For now, we will show you two basic ways.  Remember that while our theory is all developed over the complex numbers, $\complexes$, it is better to initially illustrate these ideas in Sage using the rationals, <code>QQ</code>.</p>
+
+<p>To create a vector space, we use the <code>VectorSpace()</code> constructor, which requires the name of the number system for the entries and the number of entries in each vector.  We can display some information about the vector space, and with tab-completion you can see what functions are available.  We will not do too much with these methods immediately, but instead learn about them as we progress through the theory.</p>
+
 <sage>
 <input>V = VectorSpace(QQ, 8)
 V
@@ -44,13 +47,15 @@ V
 </output>
 </sage>
 
-Notice that the word <q>dimension</q> is used to refer to the number of entries in a vector contained in the vector space, whereas we have used the word <q>degree</q> before.  Try pressing the Tab key while in the next cell to see the range of methods you can use on a vector space.
+<p>Notice that the word <q>dimension</q> is used to refer to the number of entries in a vector contained in the vector space, whereas we have used the word <q>degree</q> before.  Try pressing the Tab key while in the next cell to see the range of methods you can use on a vector space.</p>
+
 <sage>
 <input>V.
 </input>
 </sage>
 
-We can easily create <q>random</q> elements of any vector space, much as we did earlier for the kernel of a matrix.  Try executing the next compute cell several times.
+<p>We can easily create <q>random</q> elements of any vector space, much as we did earlier for the kernel of a matrix.  Try executing the next compute cell several times.</p>
+
 <sage>
 <input>w = V.random_element()
 w             # random
@@ -59,7 +64,8 @@ w             # random
 </output>
 </sage>
 
-Vector spaces are a fundamental objects in Sage and in mathematics, and Sage has a nice compact way to create them, mimicking the notation we use when working on paper.
+<p>Vector spaces are a fundamental objects in Sage and in mathematics, and Sage has a nice compact way to create them, mimicking the notation we use when working on paper.</p>
+
 <sage>
 <input>U = CC^5
 U
@@ -77,7 +83,8 @@ W
 </output>
 </sage>
 
-Sage can determine if two vector spaces are the same.  Notice that we use two equals sign to test equality, since we use a single equals sign to make assignments.
+<p>Sage can determine if two vector spaces are the same.  Notice that we use two equals sign to test equality, since we use a single equals sign to make assignments.</p>
+
 <sage>
 <input>X = VectorSpace(QQ, 3)
 W = QQ^3
@@ -86,8 +93,6 @@ X == W
 <output>True
 </output>
 </sage>
-
-
 
 </sageadvice>
 </subsection>
@@ -214,7 +219,9 @@ and $\alpha=6$, then
 
 <sageadvice acro="VO" index="vector operations">
 <title>Vector Operations</title>
-Sage can easily perform the two basic operations with vectors, vector addition, <code>+</code>,  and scalar vector multiplication, <code>*</code>.  Notice that Sage is not confused by an ambiguity due to multiple meanings for the symbols <code>+</code> and <code>*</code> <mdash /> for example, Sage knows that <code>3 + 12</code> is different than the vector additions below.
+
+<p>Sage can easily perform the two basic operations with vectors, vector addition, <code>+</code>,  and scalar vector multiplication, <code>*</code>.  Notice that Sage is not confused by an ambiguity due to multiple meanings for the symbols <code>+</code> and <code>*</code> <mdash /> for example, Sage knows that <code>3 + 12</code> is different than the vector additions below.</p>
+
 <sage>
 <input>x = vector(QQ, [1, 2, 3])
 y = vector(QQ, [10, 20, 30])
@@ -252,8 +259,6 @@ w
 <output>(-7/3, -14/3, -7)
 </output>
 </sage>
-
-
 
 </sageadvice>
 </subsection>
@@ -359,7 +364,9 @@ $\vect{u}+\vect{v}+\vect{w}+\vect{x}+\vect{y}$, since we get the same result no 
 
 <sageadvice acro="ANC" index="coercion">
 <title>A Note on Coercion</title>
-Study the following sequence of commands, while cognizant of the failure to specify a number system for <code>x</code>.
+
+<p>Study the following sequence of commands, while cognizant of the failure to specify a number system for <code>x</code>.</p>
+
 <sage>
 <input>x = vector([1, 2, 3])
 u = 3*x
@@ -394,7 +401,8 @@ z
 </output>
 </sage>
 
-None of this should be too much of a surprise, and the results should be what we would have expected.  Though for <code>x</code> we never specified if <code>1, 2, 3</code> are integers, rationals, reals, complexes, or <ellipsis />?  Let us dig a little deeper and examine the parents of the five vectors involved.
+<p>None of this should be too much of a surprise, and the results should be what we would have expected.  Though for <code>x</code> we never specified if <code>1, 2, 3</code> are integers, rationals, reals, complexes, or <ellipsis />?  Let us dig a little deeper and examine the parents of the five vectors involved.</p>
+
 <sage>
 <input>x.parent()
 </input>
@@ -439,15 +447,19 @@ the principal ideal domain Integer Ring
 </output>
 </sage>
 
-So <code>x</code> and <code>u</code> belong to something called an <q>ambient free module,</q> whatever that is.  What is important here is that the parent of <code>x</code> uses the integers as its number system.  How about <code>u</code>, <code>v</code>, <code>y</code>, <code>w</code>, <code>z</code>?  All but the first has a parent that uses the rationals for its number system.<br /><br />
-Three of the final four vectors are examples of a process that Sage calls <q>coercion.</q>  Mathematical elements get converted to a new parent, as necessary, when the conversion is totally unambiguous.  In the examples above:
+<p>So <code>x</code> and <code>u</code> belong to something called an <q>ambient free module,</q> whatever that is.  What is important here is that the parent of <code>x</code> uses the integers as its number system.  How about <code>u</code>, <code>v</code>, <code>y</code>, <code>w</code>, <code>z</code>?  All but the first has a parent that uses the rationals for its number system.</p>
+
+<p>Three of the final four vectors are examples of a process that Sage calls <q>coercion.</q>  Mathematical elements get converted to a new parent, as necessary, when the conversion is totally unambiguous.  In the examples above:</p>
+
 <ul><li> <code>u</code> is the result of scalar multiplication by an integer, so the computation and result can all be accommodated within the integers as the number system.
 </li><li> <code>v</code> involves scalar multiplication by a scalar that is not an integer, and which could be construed as a rational number.  So the result needs to have a parent whose number system is the rationals.
 </li><li> <code>y</code> is created <em>explicitly</em> as a vector whose entries are rational numbers.
 </li><li> Even though <code>w</code> is created only with products of integers, the fact that <code>y</code> has entries considered as rational numbers, so too does the result.
 </li><li> The creation of <code>z</code> is the result of adding a vector of integers to a vector of rationals.  This is the best example of coercion <mdash /> Sage promotes <code>x</code> to a vector of rationals and therefore returns a result that is a vector of rationals.  Notice that there is no ambiguity and no argument about how to promote <code>x</code>, and the same would be true for any vector full of integers.
 </li></ul>
-The coercion above is automatic, but we can also usually force it to happen without employing an operation.
+
+<p>The coercion above is automatic, but we can also usually force it to happen without employing an operation.</p>
+
 <sage>
 <input>t = vector([10, 20, 30])
 t.parent()
@@ -490,7 +502,8 @@ Complex Field with 53 bits of precision
 </output>
 </sage>
 
-So the syntax is to use the name of the parent like a function and <em>coerce</em> the element into the new parent.  This can fail if there is no natural way to make the conversion.
+<p>So the syntax is to use the name of the parent like a function and <em>coerce</em> the element into the new parent.  This can fail if there is no natural way to make the conversion.</p>
+
 <sage>
 <input>u = vector(CC, [5*I, 4-I])
 u
@@ -510,8 +523,7 @@ TypeError: Unable to coerce 5.00000000000000*I
 </output>
 </sage>
 
-Coercion is one of the more mysterious aspects of Sage, and the above discussion may not be very clear the first time though.  But if you get an error (like the one above) talking about coercion, you know to come back here and have another read through.  For now, be sure to create all your vectors and matrices over <code>QQ</code> and you should not have any difficulties.
-
+<p>Coercion is one of the more mysterious aspects of Sage, and the above discussion may not be very clear the first time though.  But if you get an error (like the one above) talking about coercion, you know to come back here and have another read through.  For now, be sure to create all your vectors and matrices over <code>QQ</code> and you should not have any difficulties.</p>
 
 </sageadvice>
 </subsection>

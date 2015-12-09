@@ -187,7 +187,9 @@ in essence declaring $\vect{v}_3$ as surplus for the task of building $V$ as a s
 
 <sageadvice acro="RLD" index="relations of linear dependence">
 <title>Relations of Linear Dependence</title>
-<acroref type="example" acro="RSC5" /> turned on a nontrivial relation of linear dependence (<acroref type="definition" acro="RLDCV" />) on the set $\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}$.  Besides indicating linear independence, the Sage vector space method <code>.linear_dependence()</code> produces relations of linear dependence for linearly dependent sets.  Here is how we would employ this method in <acroref type="example" acro="RSC5" />.  The optional argument <code>zeros='right'</code> will produce results consistent with our work here, you can also experiment with <code>zeros='left'</code> (which is the default).
+
+<p><acroref type="example" acro="RSC5" /> turned on a nontrivial relation of linear dependence (<acroref type="definition" acro="RLDCV" />) on the set $\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}$.  Besides indicating linear independence, the Sage vector space method <code>.linear_dependence()</code> produces relations of linear dependence for linearly dependent sets.  Here is how we would employ this method in <acroref type="example" acro="RSC5" />.  The optional argument <code>zeros='right'</code> will produce results consistent with our work here, you can also experiment with <code>zeros='left'</code> (which is the default).</p>
+
 <sage>
 <input>V = QQ^5
 v1 = vector(QQ, [1,  2, -1,   3,  2])
@@ -216,9 +218,9 @@ L[0]
 </output>
 </sage>
 
-You can check that the list <code>L</code> has just one element (maybe with <code>len(L)</code>), but realize that any multiple of the vector <code>L[0]</code> is also a relation of linear dependence on <code>R</code>, most of which are nontrivial.  Notice that we have verified the final conclusion of <acroref type="example" acro="RSC5" /> with a comparison of two spans.<br /><br />
-We will give the <code>.linear_dependence()</code> method a real workout in the next Sage subsection (<acroref type="sage" acro="COV" />) <mdash /> this is just a quick introduction.
+<p>You can check that the list <code>L</code> has just one element (maybe with <code>len(L)</code>), but realize that any multiple of the vector <code>L[0]</code> is also a relation of linear dependence on <code>R</code>, most of which are nontrivial.  Notice that we have verified the final conclusion of <acroref type="example" acro="RSC5" /> with a comparison of two spans.</p>
 
+<p>We will give the <code>.linear_dependence()</code> method a real workout in the next Sage subsection (<acroref type="sage" acro="COV" />) <mdash /> this is just a quick introduction.</p>
 
 </sageadvice>
 </subsection>
@@ -397,7 +399,9 @@ is the vector of constants in the definition of <acroref type="archetype" acro="
 
 <sageadvice acro="COV" index="span!casting out vectors">
 <title>Casting Out Vectors</title>
-We will redo <acroref type="example" acro="COV" />, though somewhat tersely, just producing the justification for each time we toss a vector (a specific relation of linear dependence), and then verifying that the resulting spans, each with one fewer vector, still produce the original span.  We also introduce the <code>.remove()</code> method for lists.  Ready?  Here we go.
+
+<p>We will redo <acroref type="example" acro="COV" />, though somewhat tersely, just producing the justification for each time we toss a vector (a specific relation of linear dependence), and then verifying that the resulting spans, each with one fewer vector, still produce the original span.  We also introduce the <code>.remove()</code> method for lists.  Ready?  Here we go.</p>
+
 <sage>
 <input>V = QQ^4
 v1 = vector(QQ,  [ 1,   2,  0,  -1])
@@ -495,8 +499,10 @@ W == V.span(S)
 </output>
 </sage>
 
-Notice that <code>S</code> begins with all seven original vectors, and slowly gets whittled down to just the list <code>[v1, v3, v4]</code>.  If you experiment with the above commands, be sure to return to the start and work your way through in order, or the results will not be right.<br /><br />
-As a bonus, notice that the set of relations of linear dependence provided by Sage, <code>D</code>, is itself a linearly independent set (but within a very different vector space).  Is that too weird?
+<p>Notice that <code>S</code> begins with all seven original vectors, and slowly gets whittled down to just the list <code>[v1, v3, v4]</code>.  If you experiment with the above commands, be sure to return to the start and work your way through in order, or the results will not be right.</p>
+
+<p>As a bonus, notice that the set of relations of linear dependence provided by Sage, <code>D</code>, is itself a linearly independent set (but within a very different vector space).  Is that too weird?</p>
+
 <sage>
 <input>U = QQ^7
 U.linear_dependence(D) == []
@@ -505,10 +511,10 @@ U.linear_dependence(D) == []
 </output>
 </sage>
 
-Now, can you answer the extra credit question from <acroref type="example" acro="COV" /> using Sage?
-
+<p>Now, can you answer the extra credit question from <acroref type="example" acro="COV" /> using Sage?</p>
 
 </sageadvice>
+
 <p><acroref type="example" acro="COV" /> deserves your careful attention, since this important example motivates the following very fundamental theorem.</p>
 
 <theorem acro="BS" index="span!basis">
@@ -733,7 +739,9 @@ is linearly independent and $\spn{T}=\spn{S}=W$.  Boom!</p>
 
 <sageadvice acro="RS" index="span!reduced">
 <title>Reducing a Span</title>
-<acroref type="theorem" acro="BS" /> allows us to construct a reduced spanning set for a span.  As with the theorem, employing Sage we begin by constructing a matrix with the vectors of the spanning set as columns.  Here is a do-over of <acroref type="example" acro="RSC4" />, illustrating the use of <acroref type="theorem" acro="BS" /> in Sage.
+
+<p><acroref type="theorem" acro="BS" /> allows us to construct a reduced spanning set for a span.  As with the theorem, employing Sage we begin by constructing a matrix with the vectors of the spanning set as columns.  Here is a do-over of <acroref type="example" acro="RSC4" />, illustrating the use of <acroref type="theorem" acro="BS" /> in Sage.</p>
+
 <sage>
 <input>V = QQ^4
 v1 = vector(QQ, [1,1,2,1])
@@ -764,10 +772,10 @@ T
 </output>
 </sage>
 
-Notice how we compute <code>T</code> with the single line that mirrors the construction of the set $T=\set{\vect{v}_{d_1},\,\vect{v}_{d_2},\,\vect{v}_{d_3},\,\ldots\,\vect{v}_{d_r}}$ in the statement of <acroref type="theorem" acro="BS" />.  Again, the row-reducing is hidden in the use of the <code>.pivot()</code> matrix method, which necessarily must compute the reduced row-echelon form.  The final two compute cells verify both conclusions of the theorem.
-
+<p>Notice how we compute <code>T</code> with the single line that mirrors the construction of the set $T=\set{\vect{v}_{d_1},\,\vect{v}_{d_2},\,\vect{v}_{d_3},\,\ldots\,\vect{v}_{d_r}}$ in the statement of <acroref type="theorem" acro="BS" />.  Again, the row-reducing is hidden in the use of the <code>.pivot()</code> matrix method, which necessarily must compute the reduced row-echelon form.  The final two compute cells verify both conclusions of the theorem.</p>
 
 </sageadvice>
+
 <example acro="RES" index="span!reworking elements">
 <title>Reworking elements of a span</title>
 
@@ -857,7 +865,9 @@ then $P$ is linearly independent and $\spn{P}=\spn{R}=X$ by <acroref type="theor
 
 <sageadvice acro="RES" index="span!reworked">
 <title>Reworking a Span</title>
-As another demonstration of using Sage to help us understand spans, linear combinations, linear independence and reduced row-echelon form, we will recreate parts of <acroref type="example" acro="RES" />.  Most of this should be familiar, but see the commments following.
+
+<p>As another demonstration of using Sage to help us understand spans, linear combinations, linear independence and reduced row-echelon form, we will recreate parts of <acroref type="example" acro="RES" />.  Most of this should be familiar, but see the commments following.</p>
+
 <sage>
 <input>V = QQ^4
 v1 = vector(QQ, [2,1,3,2])
@@ -922,7 +932,8 @@ Basis matrix:
 </output>
 </sage>
 
-The final two results <mdash /> a trivial null space for <code>coeff</code> and the linear independence of <code>P</code> <mdash /> both individually imply that the solution to the system of equations (just prior) is unique.  Sage produces its own linearly independent spanning set for each span, as we see whenever we inquire about a span.
+<p>The final two results <mdash /> a trivial null space for <code>coeff</code> and the linear independence of <code>P</code> <mdash /> both individually imply that the solution to the system of equations (just prior) is unique.  Sage produces its own linearly independent spanning set for each span, as we see whenever we inquire about a span.</p>
+
 <sage>
 <input>X
 </input>
@@ -934,8 +945,7 @@ Basis matrix:
 </output>
 </sage>
 
-Can you extract the three vectors that Sage uses to span <code>X</code> and solve the appropriate system of equations to see how to write <code>y</code> as a linear combination of these three vectors?  Once you have done that, check your answer <em>by hand</em> and think about how using Sage could have been overkill for this question.
-
+<p>Can you extract the three vectors that Sage uses to span <code>X</code> and solve the appropriate system of equations to see how to write <code>y</code> as a linear combination of these three vectors?  Once you have done that, check your answer <em>by hand</em> and think about how using Sage could have been overkill for this question.</p>
 
 </sageadvice>
 </subsection>
