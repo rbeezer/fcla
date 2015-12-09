@@ -361,7 +361,9 @@ so the entries of vectors $\vectrep{B}{\vect{u}}$ and $\vect{v}$ are equal and <
 
 <sageadvice acro="VR" index="vector representations">
 <title>Vector Representations</title>
-Vector representation is described in the text in a fairly abstract fashion.  Sage will support this view (which will be useful in the next section), as well as provide a more practical approach.  We will explain both approaches.  We begin with an arbitrarily chosen basis.  We then create an alternate version of <code>QQ^4</code> with this basis as a<q>user basis</q>, namely <code>V</code>.
+
+<p>Vector representation is described in the text in a fairly abstract fashion.  Sage will support this view (which will be useful in the next section), as well as provide a more practical approach.  We will explain both approaches.  We begin with an arbitrarily chosen basis.  We then create an alternate version of <code>QQ^4</code> with this basis as a<q>user basis</q>, namely <code>V</code>.</p>
+
 <sage>
 <input>v0 = vector(QQ, [ 1, 1, 1, 0])
 v1 = vector(QQ, [ 1, 2, 3, 2])
@@ -390,7 +392,8 @@ User basis matrix:
 </output>
 </sage>
 
-Now, the construction of a linear transformation will use the basis provided for <code>V</code>.  In the proof of <acroref type="theorem" acro="VRLT" /> we defined a linear transformation $T$ that equaled $\vectrepname{B}$.  $T$ was defined by taking the basis vectors of $B$ to the basis composed of standard unit vectors (<acroref type="definition" acro="SUV" />).  This is exactly what we will accomplish in the following construction.  Note how the basis associated with the domain is automatically paired with the elements of the basis for the codomain.
+<p>Now, the construction of a linear transformation will use the basis provided for <code>V</code>.  In the proof of <acroref type="theorem" acro="VRLT" /> we defined a linear transformation $T$ that equaled $\vectrepname{B}$.  $T$ was defined by taking the basis vectors of $B$ to the basis composed of standard unit vectors (<acroref type="definition" acro="SUV" />).  This is exactly what we will accomplish in the following construction.  Note how the basis associated with the domain is automatically paired with the elements of the basis for the codomain.</p>
+
 <sage>
 <input>rho = linear_transformation(V, QQ^4, (QQ^4).basis())
 rho
@@ -410,7 +413,8 @@ Codomain: Vector space of dimension 4 over Rational Field
 </output>
 </sage>
 
-First, we verify <acroref type="theorem" acro="VRILT" />:
+<p>First, we verify <acroref type="theorem" acro="VRILT" />:</p>
+
 <sage>
 <input>rho.is_invertible()
 </input>
@@ -418,7 +422,8 @@ First, we verify <acroref type="theorem" acro="VRILT" />:
 </output>
 </sage>
 
-Notice that the matrix of the linear transformation is the identity matrix.  This might look odd now, but we will have a full explanation soon.  Let us see if this linear transformation behaves as it should.  We will <q>coordinatize</q> an arbitrary vector, <code>w</code>.
+<p>Notice that the matrix of the linear transformation is the identity matrix.  This might look odd now, but we will have a full explanation soon.  Let us see if this linear transformation behaves as it should.  We will <q>coordinatize</q> an arbitrary vector, <code>w</code>.</p>
+
 <sage>
 <input>w = vector(QQ, [-13, 28, 45, 43])
 rho(w)
@@ -442,7 +447,8 @@ lincombo
 </output>
 </sage>
 
-Notice how the expression for <code>lincombo</code> is exactly the messy expression displayed in <acroref type="definition" acro="VR" />. More precisely, we could even write this as:
+<p>Notice how the expression for <code>lincombo</code> is exactly the messy expression displayed in <acroref type="definition" acro="VR" />. More precisely, we could even write this as:</p>
+
 <sage>
 <input>w == sum([rho(w)[i]*B[i] for i in range(4)])
 </input>
@@ -450,7 +456,8 @@ Notice how the expression for <code>lincombo</code> is exactly the messy express
 </output>
 </sage>
 
-Or we can test this equality repeatedly with random vectors.
+<p>Or we can test this equality repeatedly with random vectors.</p>
+
 <sage>
 <input>u = random_vector(QQ, 4)
 u == sum([rho(u)[i]*B[i] for i in range(4)])
@@ -459,7 +466,8 @@ u == sum([rho(u)[i]*B[i] for i in range(4)])
 </output>
 </sage>
 
-Finding a vector representation is such a fundamental operation that Sage has an easier command, bypassing the need to create a linear transformation.  It does still require constructing a vector space with the alternate basis.  Here goes, repeating the prior example.
+<p>Finding a vector representation is such a fundamental operation that Sage has an easier command, bypassing the need to create a linear transformation.  It does still require constructing a vector space with the alternate basis.  Here goes, repeating the prior example.</p>
+
 <sage>
 <input>w = vector(QQ, [-13, 28, 45, 43])
 V.coordinate_vector(w)
@@ -468,10 +476,10 @@ V.coordinate_vector(w)
 </output>
 </sage>
 
-Boom!
-
+<p>Boom!</p>
 
 </sageadvice>
+
 </subsection>
 
 <subsection acro="CVS">
@@ -717,11 +725,13 @@ which is exactly the matrix we would have computed had we just performed the mat
 
 <sageadvice acro="SUTH2" index="sage under the hood!round 2">
 <title>Sage Under The Hood, Round 2</title>
-You will have noticed that we have never constructed examples involving our favorite abstract vector spaces, such as the vector space of polynomials with fixed maximum degree, the vector space of matrices of a fixed size, or even the crazy vector space.  There is nothing to stop us (or you) from implementing these examples in Sage as vector spaces.  Maybe someday it will happen.  But since Sage is built to be a tool for serious mathematical research, the designers recognize that this is not necessary.<br /><br />
-<acroref type="theorem" acro="CFDVS" /> tells us that <em>every</em> finite-dimensional vector space can be described (loosely speaking) by just a field of scalars (for us, $\complexes$ in the text, <code>QQ</code> in Sage) and the dimension.  You can study whatever whacky vector space you might dream up, or whatever very complicated vector space that is important for particle physics, and through vector representation (<q>coordinatization</q>), you can convert your calculations to and from Sage.
 
+<p>You will have noticed that we have never constructed examples involving our favorite abstract vector spaces, such as the vector space of polynomials with fixed maximum degree, the vector space of matrices of a fixed size, or even the crazy vector space.  There is nothing to stop us (or you) from implementing these examples in Sage as vector spaces.  Maybe someday it will happen.  But since Sage is built to be a tool for serious mathematical research, the designers recognize that this is not necessary.</p>
+
+<p><acroref type="theorem" acro="CFDVS" /> tells us that <em>every</em> finite-dimensional vector space can be described (loosely speaking) by just a field of scalars (for us, $\complexes$ in the text, <code>QQ</code> in Sage) and the dimension.  You can study whatever whacky vector space you might dream up, or whatever very complicated vector space that is important for particle physics, and through vector representation (<q>coordinatization</q>), you can convert your calculations to and from Sage.</p>
 
 </sageadvice>
+
 </subsection>
 
 <!--   End of  vr.tex -->

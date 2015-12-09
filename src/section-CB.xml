@@ -172,8 +172,11 @@ and the vectors
 
 <sageadvice acro="ENDO" index="endomorphisms">
 <title>Endomorphisms</title>
-An <define>endomorphism</define> is an <q>operation-preserving</q> function (a <q>morphism</q>) whose domain and codomain are equal.  Sage takes this definition one step further for linear transformations and requires that the domain and codomain have the same bases (either a default echelonized basis or the same user basis).  When a linear transformation meets this extra requirement, several natural methods become available.<br /><br />
-Principally, we can compute the eigenvalues provided by <acroref type="definition" acro="EELT" />.  We also get a natural notion of a characteristic polynomial.
+
+<p>An <define>endomorphism</define> is an <q>operation-preserving</q> function (a <q>morphism</q>) whose domain and codomain are equal.  Sage takes this definition one step further for linear transformations and requires that the domain and codomain have the same bases (either a default echelonized basis or the same user basis).  When a linear transformation meets this extra requirement, several natural methods become available.</p>
+
+<p>Principally, we can compute the eigenvalues provided by <acroref type="definition" acro="EELT" />.  We also get a natural notion of a characteristic polynomial.</p>
+
 <sage>
 <input>x1, x2, x3, x4 = var('x1, x2, x3, x4')
 outputs = [ 4*x1 + 2*x2 -   x3 + 8*x4,
@@ -203,10 +206,10 @@ cp
 </output>
 </sage>
 
-Now the question of eigenvalues being elements of the set of scalars used for the vector space becomes even more obvious.  If we define an endomorphism on a vector space whose scalars are the rational numbers, should we <q>allow</q> irrational or complex eigenvalues?  You will now recognize our use of the complex numbers in the text for the gross convenience that it is.
-
+<p>Now the question of eigenvalues being elements of the set of scalars used for the vector space becomes even more obvious.  If we define an endomorphism on a vector space whose scalars are the rational numbers, should we <q>allow</q> irrational or complex eigenvalues?  You will now recognize our use of the complex numbers in the text for the gross convenience that it is.</p>
 
 </sageadvice>
+
 </subsection>
 
 <subsection acro="CBM">
@@ -562,7 +565,9 @@ Then the change-of-basis matrix $\cbm{B}{C}$ is nonsingular and
 
 <sageadvice acro="CBM" index="change-of-basis matrix">
 <title>Change-of-Basis Matrix</title>
-To create a change-of-basis matrix, it is enough to construct an identity linear transformation relative to a domain and codomain with the specified user bases, which is simply a straight application of <acroref type="definition" acro="CBM" />.  Here we go with two arbitrary bases.
+
+<p>To create a change-of-basis matrix, it is enough to construct an identity linear transformation relative to a domain and codomain with the specified user bases, which is simply a straight application of <acroref type="definition" acro="CBM" />.  Here we go with two arbitrary bases.</p>
+
 <sage>
 <input>b0 = vector(QQ, [-5, 8,  0, 4])
 b1 = vector(QQ, [-3, 9, -2, 4])
@@ -596,7 +601,8 @@ CB
 </output>
 </sage>
 
-We can demonstrate that <code>CB</code> is indeed the change-of-basis matrix from <code>B</code> to <code>C</code>, converting vector representations relative to <code>B</code> into vector representations relative to <code>C</code>.  We choose an arbitrary vector, <code>x</code>, to experiment with (you could experiment with other possibilities).  We use the Sage conveniences to create vector representations relative to the two bases, and then verify <acroref type="theorem" acro="CB" />.  Recognize that <code>x</code>, <code>u</code> and <code>v</code> are all the same vector.
+<p>We can demonstrate that <code>CB</code> is indeed the change-of-basis matrix from <code>B</code> to <code>C</code>, converting vector representations relative to <code>B</code> into vector representations relative to <code>C</code>.  We choose an arbitrary vector, <code>x</code>, to experiment with (you could experiment with other possibilities).  We use the Sage conveniences to create vector representations relative to the two bases, and then verify <acroref type="theorem" acro="CB" />.  Recognize that <code>x</code>, <code>u</code> and <code>v</code> are all the same vector.</p>
+
 <sage>
 <input>x = vector(QQ, [-45, 62, 171, 85])
 u = U.coordinate_vector(x)
@@ -621,7 +627,8 @@ v
 </output>
 </sage>
 
-We can also verify the construction above by building the change-of-basis matrix directly (i.e., without constructing a linear transformation).
+<p>We can also verify the construction above by building the change-of-basis matrix directly (i.e., without constructing a linear transformation).</p>
+
 <sage>
 <input>cols = [V.coordinate_vector(u) for u in U.basis()]
 M = column_matrix(cols)
@@ -634,9 +641,8 @@ M
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <subsection acro="MRS">
@@ -1143,7 +1149,9 @@ C=\set{\vect{y}_1,\,\vect{y}_2,\,\vect{y}_3,\,\vect{y}_4}
 
 <sageadvice acro="MRCB" index="matrix representation!change-of-basis">
 <title>Matrix Representation and Change-of-Basis</title>
-In <acroref type="sage" acro="MR" /> we built two matrix representations of one linear transformation, relative to two different pairs of bases.  We now understand how these two matrix representations are related <mdash /> <acroref type="theorem" acro="MRCB" /> gives the precise relationship with change-of-basis matrices, one converting vector representations on the domain, the other converting vector representations on the codomain.  Here is the demonstration.  We use <code>MT</code> as the prefix of names for matrix representations, <code>CB</code> as the prefix for change-of-basis matrices, and numerals to distinguish the two domain-codomain pairs.
+
+<p>In <acroref type="sage" acro="MR" /> we built two matrix representations of one linear transformation, relative to two different pairs of bases.  We now understand how these two matrix representations are related <mdash /> <acroref type="theorem" acro="MRCB" /> gives the precise relationship with change-of-basis matrices, one converting vector representations on the domain, the other converting vector representations on the codomain.  Here is the demonstration.  We use <code>MT</code> as the prefix of names for matrix representations, <code>CB</code> as the prefix for change-of-basis matrices, and numerals to distinguish the two domain-codomain pairs.</p>
+
 <sage>
 <input>x1, x2, x3, x4 = var('x1, x2, x3, x4')
 outputs = [3*x1 + 7*x2 + x3 - 4*x4,
@@ -1195,7 +1203,8 @@ MTDE
 </output>
 </sage>
 
-This is as far as we could go back in <acroref type="section" acro="MR" />.  These two matrices represent the same linear transformation (namely <code>T_symbolic</code>), but the question now is <q>how are these representations related?</q>  We need two change-of-basis matrices.  Notice that with different dimensions for the domain and codomain, we get square matrices of different sizes.
+<p>This is as far as we could go back in <acroref type="section" acro="MR" />.  These two matrices represent the same linear transformation (namely <code>T_symbolic</code>), but the question now is <q>how are these representations related?</q>  We need two change-of-basis matrices.  Notice that with different dimensions for the domain and codomain, we get square matrices of different sizes.</p>
+
 <sage>
 <input>identity4(x1, x2, x3, x4) = [x1, x2, x3, x4]
 CU = linear_transformation(U2, U1, identity4)
@@ -1221,7 +1230,8 @@ CBCE
 </output>
 </sage>
 
-Finally, here is <acroref type="theorem" acro="MRCB" />, relating the the two matrix representations via the change-of-basis matrices.
+<p>Finally, here is <acroref type="theorem" acro="MRCB" />, relating the the two matrix representations via the change-of-basis matrices.</p>
+
 <sage>
 <input>MTDE == CBCE * MTBC * CBDB
 </input>
@@ -1229,7 +1239,8 @@ Finally, here is <acroref type="theorem" acro="MRCB" />, relating the the two ma
 </output>
 </sage>
 
-We can walk through this theorem just a bit more carefully, step-by-step.  We will compute three matrix-vector products, using three vector representations, to demonstrate the equality above.  To prepare, we choose the vector <code>x</code> arbitrarily, and we compute its value when evaluted by <code>T_symbolic</code>, and then verify the vector and matrix representations relative to <code>D</code> and <code>E</code>.
+<p>We can walk through this theorem just a bit more carefully, step-by-step.  We will compute three matrix-vector products, using three vector representations, to demonstrate the equality above.  To prepare, we choose the vector <code>x</code> arbitrarily, and we compute its value when evaluted by <code>T_symbolic</code>, and then verify the vector and matrix representations relative to <code>D</code> and <code>E</code>.</p>
+
 <sage>
 <input>T_symbolic(34, -61, 55, 18)
 </input>
@@ -1261,8 +1272,10 @@ v_E
 </output>
 </sage>
 
-So far this is not really new, we have just verified the representation <code>MTDE</code> in the case of one input vector (<code>x</code>), but now we will use the alternate version of this matrix representation, <code>CBCE * MTBC * CBDB</code>, in steps.<br /><br />
-First, convert the input vector from a representation relative to <code>D</code> to a representation relative to <code>B</code>.
+<p>So far this is not really new, we have just verified the representation <code>MTDE</code> in the case of one input vector (<code>x</code>), but now we will use the alternate version of this matrix representation, <code>CBCE * MTBC * CBDB</code>, in steps.</p>
+
+<p>First, convert the input vector from a representation relative to <code>D</code> to a representation relative to <code>B</code>.</p>
+
 <sage>
 <input>u_B = CBDB*u_D
 u_B
@@ -1271,7 +1284,8 @@ u_B
 </output>
 </sage>
 
-Now apply the matrix representation, which expects <q>input</q> coordinatized relative to <code>B</code> and produces <q>output</q> coordinatized relative to <code>C</code>.
+<p>Now apply the matrix representation, which expects <q>input</q> coordinatized relative to <code>B</code> and produces <q>output</q> coordinatized relative to <code>C</code>.</p>
+
 <sage>
 <input>v_C = MTBC*u_B
 v_C
@@ -1280,7 +1294,8 @@ v_C
 </output>
 </sage>
 
-Now convert the output vector from a representation relative to <code>C</code> to a representation relative to <code>E</code>.
+<p>Now convert the output vector from a representation relative to <code>C</code> to a representation relative to <code>E</code>.</p>
+
 <sage>
 <input>v_E = CBCE*v_C
 v_E
@@ -1289,8 +1304,10 @@ v_E
 </output>
 </sage>
 
-It is no surprise that this version of <code>v_E</code> equals the previous one, since we have checked the equality of the matrices earlier.  But it may be instructive to see the input converted by change-of-basis matrices before and after being hit by the linear transformation (as a matrix representation).
-Now we will perform another example, but this time using Sage endomorphisms, linear transformations with equal bases for the domain and codomain.  This will allow us to illustrate <acroref type="theorem" acro="SCB" />.  Just for fun, we will do something large. Notice the labor-saving device for manufacturing many symbolic variables at once.
+<p>It is no surprise that this version of <code>v_E</code> equals the previous one, since we have checked the equality of the matrices earlier.  But it may be instructive to see the input converted by change-of-basis matrices before and after being hit by the linear transformation (as a matrix representation).</p>
+
+<p>Now we will perform another example, but this time using Sage endomorphisms, linear transformations with equal bases for the domain and codomain.  This will allow us to illustrate <acroref type="theorem" acro="SCB" />.  Just for fun, we will do something large. Notice the labor-saving device for manufacturing many symbolic variables at once.</p>
+
 <sage>
 <input>[var('x{0}'.format(i)) for i in range(1, 12)]
 </input>
@@ -1335,7 +1352,8 @@ MC
 </output>
 </sage>
 
-Not very interesting, and perhaps even transparent, with a definiton from a matrix and with the standard basis attached to <code>V1 == QQ^11</code>.  Let us use a different basis to obtain a more interesting representation.  We will input the basis compactly as the columns of a nonsingular matrix.
+<p>Not very interesting, and perhaps even transparent, with a definiton from a matrix and with the standard basis attached to <code>V1 == QQ^11</code>.  Let us use a different basis to obtain a more interesting representation.  We will input the basis compactly as the columns of a nonsingular matrix.</p>
+
 <sage>
 <input>D = matrix(QQ, 11,
     [[ 1,  2, -1, -2,  4,  2,  2, -2,  4,  4,  8],
@@ -1369,7 +1387,8 @@ MB
 </output>
 </sage>
 
-Well, now <em>that</em> is interesting!  What a nice representation.  Of course, it is all due to the choice of the basis (which we have not explained).  To explain the relationship between the two matrix representations, we need a change-of-basis-matrix, and its inverse.  <acroref type="theorem" acro="SCB" /> says we need the matrix that converts vector representations relative to <code>B</code> into vector representations relative to <code>C</code>.
+<p>Well, now <em>that</em> is interesting!  What a nice representation.  Of course, it is all due to the choice of the basis (which we have not explained).  To explain the relationship between the two matrix representations, we need a change-of-basis-matrix, and its inverse.  <acroref type="theorem" acro="SCB" /> says we need the matrix that converts vector representations relative to <code>B</code> into vector representations relative to <code>C</code>.</p>
+
 <sage>
 <input>out = [x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11]
 id11(x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11) = out
@@ -1391,7 +1410,8 @@ CB
 </output>
 </sage>
 
-OK, all set.
+<p>OK, all set.</p>
+
 <sage>
 <input>CB^-1*MC*CB
 </input>
@@ -1409,10 +1429,10 @@ OK, all set.
 </output>
 </sage>
 
-Which is <code>MB</code>.  So the conversion from a <q>messy</q> matrix representation relative to a standard basis to a <q>clean</q> representation relative to some other basis is just a similarity transformation by a change-of-basis matrix.  Oh, I almost forgot.  Where did that basis come from?  Hint: find a description of <q>Jordan Canonical Form</q>, perhaps in our <booktitle>Second Course in Linear Algebra</booktitle>.
-
+<p>Which is <code>MB</code>.  So the conversion from a <q>messy</q> matrix representation relative to a standard basis to a <q>clean</q> representation relative to some other basis is just a similarity transformation by a change-of-basis matrix.  Oh, I almost forgot.  Where did that basis come from?  Hint: find a description of <q>Jordan Canonical Form</q>, perhaps in our <booktitle>Second Course in Linear Algebra</booktitle>.</p>
 
 </sageadvice>
+
 <p>We can now return to the question of computing an eigenvalue or eigenvector of a linear transformation.  For a linear transformation of the form $\ltdefn{T}{V}{V}$, we know that representations relative to different bases are similar matrices.  We also know that similar matrices have equal characteristic polynomials by <acroref type="theorem" acro="SMEE" />.   We will now show that eigenvalues of a linear transformation $T$ are precisely the eigenvalues of <em>any</em> matrix representation of $T$.  Since the choice of a different matrix representation leads to a similar matrix, there will be no <q>new</q> eigenvalues obtained from this second representation.  Similarly, the change-of-basis matrix can be used to show that eigenvectors obtained from one matrix representation will be precisely those obtained from any other representation.  So we can determine the eigenvalues and eigenvectors of a linear transformation by forming one matrix representation, using <em>any</em> basis we please, and analyzing the matrix in the manner of <acroref type="chapter" acro="E" />.</p>
 
 <theorem acro="EER" index="eigenvalues, eigenvectors!vector, matrix representations">
@@ -2014,7 +2034,9 @@ with geometric multiplicities
 
 <sageadvice acro="CELT" index="matrix representation!designing">
 <title>Designing Matrix Representations</title>
-How do we find the eigenvectors of a linear transformation?  How do we find pleasing (or computationally simple) matrix representations of linear transformations?  <acroref type="theorem" acro="EER" /> and <acroref type="theorem" acro="SCB" /> applied in the context of <acroref type="theorem" acro="DC" /> can answer both questions.  Here is an example.
+
+<p>How do we find the eigenvectors of a linear transformation?  How do we find pleasing (or computationally simple) matrix representations of linear transformations?  <acroref type="theorem" acro="EER" /> and <acroref type="theorem" acro="SCB" /> applied in the context of <acroref type="theorem" acro="DC" /> can answer both questions.  Here is an example.</p>
+
 <sage>
 <input>x1, x2, x3, x4, x5, x6 = var('x1, x2, x3, x4,x5,x6')
 outputs = [  9*x1 - 15*x2 - 7*x3 + 15*x4 - 36*x5 - 53*x6,
@@ -2037,7 +2059,8 @@ M1
 </output>
 </sage>
 
-Now we compute the eigenvalues and eigenvectors of <code>M1</code>.  Since <code>M1</code> is diagonalizable, we can find a basis of eigenvectors for use as the basis for a new representation.
+<p>Now we compute the eigenvalues and eigenvectors of <code>M1</code>.  Since <code>M1</code> is diagonalizable, we can find a basis of eigenvectors for use as the basis for a new representation.</p>
+
 <sage>
 <input>ev = M1.eigenvectors_right()
 ev
@@ -2074,19 +2097,23 @@ M2
 </output>
 </sage>
 
-The eigenvectors that are the basis elements in B are the eigenvectors of the linear transformation, <em>relative</em> to the standard basis.  For different representations the eigenvectors take different forms, relative to other bases.  What are the eigenvectors of the matrix representation M2?<br /><br />
-Notice that the eigenvalues of the linear transformation are totally independent of the representation.  So in a sense, they are an inherent property of the linear transformation.<br /><br />
-You should be able to use these techniques with linear transformations on abstract vector spaces <mdash /> just use a mental linear transformation transforming the abstract vector space back-and-forth between a vector space of column vectors of the right size.
+<p>The eigenvectors that are the basis elements in B are the eigenvectors of the linear transformation, <em>relative</em> to the standard basis.  For different representations the eigenvectors take different forms, relative to other bases.  What are the eigenvectors of the matrix representation M2?</p>
 
+<p>Notice that the eigenvalues of the linear transformation are totally independent of the representation.  So in a sense, they are an inherent property of the linear transformation.</p>
+
+<p>You should be able to use these techniques with linear transformations on abstract vector spaces <mdash /> just use a mental linear transformation transforming the abstract vector space back-and-forth between a vector space of column vectors of the right size.</p>
 
 </sageadvice>
+
 <sageadvice acro="SUTH4" index="sage under the hood!round 4">
 <title>Sage Under The Hood, Round 4</title>
-We finally have enough theorems to understand how Sage creates and manages linear transformations.  With a choice of bases for the domain and codomain, a linear transformation can be represented by a matrix.  Every interesting property of the linear transformation can be computed from the matrix representation, and we can convert between representations (of vectors and linear transformations) with change-of-basis matrices, similarity and matrix multiplication.<br /><br />
-So we can understand the theory of linear algebra better by experimenting with the assistance of Sage, and the theory of linear algebra helps us understand how Sage is designed and functions.  A virtuous cycle, if there ever was one.  Keep it going.
 
+<p>We finally have enough theorems to understand how Sage creates and manages linear transformations.  With a choice of bases for the domain and codomain, a linear transformation can be represented by a matrix.  Every interesting property of the linear transformation can be computed from the matrix representation, and we can convert between representations (of vectors and linear transformations) with change-of-basis matrices, similarity and matrix multiplication.</p>
+
+<p>So we can understand the theory of linear algebra better by experimenting with the assistance of Sage, and the theory of linear algebra helps us understand how Sage is designed and functions.  A virtuous cycle, if there ever was one.  Keep it going.</p>
 
 </sageadvice>
+
 </subsection>
 
 <!--   End of  cb.tex -->
