@@ -139,8 +139,11 @@ so that $\vect{v}$ is also an eigenvector of $A$ for the eigenvalue $\lambda=2$.
 
 <sageadvice acro="EE" index="eigenvalues and eigenvectors">
 <title>Eigenvalues and Eigenvectors</title>
-Sage can compute eigenvalues and eigenvectors of matrices.  We will see shortly that there are subtleties involved with using these routines, but here is a quick example to begin with.  These two commands should be enough to get you started with most of the early examples in this section.  See the end of the section for more comprehensive advice.<br /><br />
-For a square matrix, the methods <code>.eigenvalues()</code> and <code>.eigenvectors_right()</code> will produce what you expect, though the format of the eigenvector output requires some explanation.  Here is <acroref type="example" acro="SEE" /> from the start of this chapter.
+
+<p>Sage can compute eigenvalues and eigenvectors of matrices.  We will see shortly that there are subtleties involved with using these routines, but here is a quick example to begin with.  These two commands should be enough to get you started with most of the early examples in this section.  See the end of the section for more comprehensive advice.</p>
+
+<p>For a square matrix, the methods <code>.eigenvalues()</code> and <code>.eigenvectors_right()</code> will produce what you expect, though the format of the eigenvector output requires some explanation.  Here is <acroref type="example" acro="SEE" /> from the start of this chapter.</p>
+
 <sage>
 <input>A = matrix(QQ, [[ 204,   98, -26, -10],
                 [-280, -134,  36,  14],
@@ -166,12 +169,14 @@ A.eigenvalues()
 </output>
 </sage>
 
-The three eigenvalues we know are included in the output of <code>eigenvalues()</code>, though for some reason the eigenvalue $\lambda=2$ shows up twice.<br /><br />
-The output of the <code>eigenvectors_right()</code> method is a list of triples.  Each triple begins with an eigenvalue.  This is followed by a list of eigenvectors for that eigenvalue.  Notice the first eigenvector is identical to the one we described in <acroref type="example" acro="SEE" />.  The eigenvector for $\lambda=0$ is different, but is just a scalar multiple of the one from <acroref type="example" acro="SEE" />.  For $\lambda=2$, we now get two eigenvectors, and neither looks like either of the ones from <acroref type="example" acro="SEE" />.  (Hint: try writing the eigenvectors from the example as linear combinations of the two in the Sage output.)  An explanation of the the third part of each triple (an integer) will have to wait, though it can be optionally surpressed if desired.<br /><br />
-One cautionary note:  The word <code>lambda</code> has a special purpose in Sage, so do not try to use this as a name for your eigenvalues.
+<p>The three eigenvalues we know are included in the output of <code>eigenvalues()</code>, though for some reason the eigenvalue $\lambda=2$ shows up twice.</p>
 
+<p>The output of the <code>eigenvectors_right()</code> method is a list of triples.  Each triple begins with an eigenvalue.  This is followed by a list of eigenvectors for that eigenvalue.  Notice the first eigenvector is identical to the one we described in <acroref type="example" acro="SEE" />.  The eigenvector for $\lambda=0$ is different, but is just a scalar multiple of the one from <acroref type="example" acro="SEE" />.  For $\lambda=2$, we now get two eigenvectors, and neither looks like either of the ones from <acroref type="example" acro="SEE" />.  (Hint: try writing the eigenvectors from the example as linear combinations of the two in the Sage output.)  An explanation of the the third part of each triple (an integer) will have to wait, though it can be optionally surpressed if desired.</p>
+
+One cautionary note:  The word <code>lambda</code> has a special purpose <p>in Sage, so do not try to use this as a name for your eigenvalues.</p>
 
 </sageadvice>
+
 <p><acroref type="example" acro="SEE" /> hints at a number of intriguing properties, and there are many more.  We will explore the general properties of eigenvalues and eigenvectors in <acroref type="section" acro="PEE" />, but in this section we will concern ourselves with the question of actually computing eigenvalues and eigenvectors.  First we need a bit of background material on polynomials and matrices.</p>
 
 </subsection>
@@ -1223,8 +1228,11 @@ So the eigenvalues are $\lambda=2,\,1,\,0,\,-1,\,-3$ with algebraic multipliciti
 
 <sageadvice acro="CEVAL" index="eigenvalues!computing">
 <title>Computing Eigenvalues</title>
-We can now give a more careful explantion about eigenvalues in Sage.  Sage will compute the characteristic polynomial of a matrix, with amazing ease (in other words, quite quickly, even for large matrices).  The two matrix methods <code>.charpoly()</code> and <code>.characteristic_polynomial()</code> do exactly the same thing.  We will use the longer name just to be more readable, you may prefer the shorter.<br /><br />
-We now can appreciate a very fundamental obstacle to determining the eigenvalues of a matrix, which is a theme that will run through any advanced study of linear algebra.  Study this example carefully before reading the discussion that follows.
+
+<p>We can now give a more careful explantion about eigenvalues in Sage.  Sage will compute the characteristic polynomial of a matrix, with amazing ease (in other words, quite quickly, even for large matrices).  The two matrix methods <code>.charpoly()</code> and <code>.characteristic_polynomial()</code> do exactly the same thing.  We will use the longer name just to be more readable, you may prefer the shorter.</p>
+
+<p>We now can appreciate a very fundamental obstacle to determining the eigenvalues of a matrix, which is a theme that will run through any advanced study of linear algebra.  Study this example carefully before reading the discussion that follows.</p>
+
 <sage>
 <input>A = matrix(QQ, [[-24,   6,  0,  -1,  31,   7],
                 [ -9,  -2, -8, -17,  24, -29],
@@ -1262,9 +1270,12 @@ B.characteristic_polynomial()
 </output>
 </sage>
 
-We know by <acroref type="theorem" acro="EMRCP" /> that to compute eigenvalues, we need the roots of the characteristic polynomial, and from basic algebra, we know these correspond to linear factors.  However, with our matrix defined with entries from <code>QQ</code>, the factorization of the characteristic polynomial does not <q>leave</q> that number system, only factoring <q>far enough</q> to retain factors with rational coefficients.  The solutions to $x^2 - 2 = 0$ are somewhat obvious ($\pm\sqrt{2}\approx\pm 1.414213$), but the roots of the cubic factor are more obscure.<br /><br />
-But then we have <code>QQbar</code> to the rescue.  Since this number system contains the roots of every possible polynomial with integer coefficients, we can totally factor any characteristic polynomial that results from a matrix with entries from <code>QQbar</code>.  A common situation will be to begin with a matrix having rational entries, yet the matrix has a characteristic polynomial with roots that are complex numbers.<br /><br />
-We can demonstrate this behavior with the <code>extend</code> keyword option, which tells Sage whether or not to expand the number system to contain the eigenvalues.
+<p>We know by <acroref type="theorem" acro="EMRCP" /> that to compute eigenvalues, we need the roots of the characteristic polynomial, and from basic algebra, we know these correspond to linear factors.  However, with our matrix defined with entries from <code>QQ</code>, the factorization of the characteristic polynomial does not <q>leave</q> that number system, only factoring <q>far enough</q> to retain factors with rational coefficients.  The solutions to $x^2 - 2 = 0$ are somewhat obvious ($\pm\sqrt{2}\approx\pm 1.414213$), but the roots of the cubic factor are more obscure.</p>
+
+<p>But then we have <code>QQbar</code> to the rescue.  Since this number system contains the roots of every possible polynomial with integer coefficients, we can totally factor any characteristic polynomial that results from a matrix with entries from <code>QQbar</code>.  A common situation will be to begin with a matrix having rational entries, yet the matrix has a characteristic polynomial with roots that are complex numbers.</p>
+
+<p>We can demonstrate this behavior with the <code>extend</code> keyword option, which tells Sage whether or not to expand the number system to contain the eigenvalues.</p>
+
 <sage>
 <input>A.eigenvalues(extend=False)
 </input>
@@ -1280,8 +1291,10 @@ We can demonstrate this behavior with the <code>extend</code> keyword option, wh
 </output>
 </sage>
 
-For matrices with entries from <code>QQ</code>, the default behavior is to extend to <code>QQbar</code> when necessary.  But for other number systems, you may need to explicitly use the <code>extend=True</code> option.<br /><br />
-From a factorization of the characteristic polynomial, we can see the algebraic multiplicity of each eigenvalue as the second entry of the each pair returned in the list.  We demonstrate with <acroref type="example" acro="SEE" />, extending to <code>QQbar</code>, which is not strictly necessary for this simple matrix.
+<p>For matrices with entries from <code>QQ</code>, the default behavior is to extend to <code>QQbar</code> when necessary.  But for other number systems, you may need to explicitly use the <code>extend=True</code> option.</p>
+
+<p>From a factorization of the characteristic polynomial, we can see the algebraic multiplicity of each eigenvalue as the second entry of the each pair returned in the list.  We demonstrate with <acroref type="example" acro="SEE" />, extending to <code>QQbar</code>, which is not strictly necessary for this simple matrix.</p>
+
 <sage>
 <input>A = matrix(QQ, [[204, 98, -26, -10],
                 [-280, -134, 36, 14],
@@ -1293,7 +1306,8 @@ A.characteristic_polynomial().roots(QQbar)
 </output>
 </sage>
 
-One more example, which illustrates the behavior when we use floating-point approximations as entries (in other words, we use <code>CDF</code> as our number system).  This is <acroref type="example" acro="EMMS4" />, both as an exact matrix with entries from <code>QQbar</code> and as an approximate matrix with entries from <code>CDF</code>.
+<p>One more example, which illustrates the behavior when we use floating-point approximations as entries (in other words, we use <code>CDF</code> as our number system).  This is <acroref type="example" acro="EMMS4" />, both as an exact matrix with entries from <code>QQbar</code> and as an approximate matrix with entries from <code>CDF</code>.</p>
+
 <sage>
 <input>A = matrix(QQ, [[-2,  1, -2, -4],
                 [12,  1,  4,  9],
@@ -1316,15 +1330,19 @@ B.eigenvalues()
 </output>
 </sage>
 
-So, we see $\lambda=2$ as an eigenvalue with algebraic multiplicity 3, while the numerical results contain three complex numbers, each very, very close to 2.  The approximate nature of these eigenvalues may be disturbing (or alarming).  However, their computation, as floating-point numbers, can be incredibly fast with sophisticated algorithms allowing the analysis of huge matrices with millions of entries.  And perhaps your original matrix includes data from an experiment, and is not even exact in the first place.  Designing and analyzing algorithms to perform these computations quickly and accurately is part of the field known as numerical linear algebra.<br /><br />
-One cautionary note: Sage uses a definition of the characteristic polynomial slightly different than ours, namely $\detname{xI_n-A}$.  This has the advantage that the $x^n$ term always has a positive one as the leading coefficient.  For even values of $n$ the two definitions create the identical polynomial, and for odd values of $n$, the two polynomials differ only by a multiple of $-1$.  The reason this is not very critical is that <acroref type="theorem" acro="EMRCP" /> is true in either case, and this is a principal use of the characteristic polynomial.  Our definition is more amenable to computations by hand.<br /><br />
+<p>So, we see $\lambda=2$ as an eigenvalue with algebraic multiplicity 3, while the numerical results contain three complex numbers, each very, very close to 2.  The approximate nature of these eigenvalues may be disturbing (or alarming).  However, their computation, as floating-point numbers, can be incredibly fast with sophisticated algorithms allowing the analysis of huge matrices with millions of entries.  And perhaps your original matrix includes data from an experiment, and is not even exact in the first place.  Designing and analyzing algorithms to perform these computations quickly and accurately is part of the field known as numerical linear algebra.</p>
 
+<p>One cautionary note: Sage uses a definition of the characteristic polynomial slightly different than ours, namely $\detname{xI_n-A}$.  This has the advantage that the $x^n$ term always has a positive one as the leading coefficient.  For even values of $n$ the two definitions create the identical polynomial, and for odd values of $n$, the two polynomials differ only by a multiple of $-1$.  The reason this is not very critical is that <acroref type="theorem" acro="EMRCP" /> is true in either case, and this is a principal use of the characteristic polynomial.  Our definition is more amenable to computations by hand.</p>
 
 </sageadvice>
+
 <sageadvice acro="CEVEC" index="eigenvectors!computing">
 <title>Computing Eigenvectors</title>
-There are three ways to get eigenvectors in Sage.  For each eigenvalue, the method <code>.eigenvectors_right()</code> will return a list of eigenvectors that is a basis for the associated eigenspace.  The method <code>.eigenspaces_right()</code> will return an eigenspace (in other words, a vector space, rather than a list of vectors) for each eigenvalue.  There are also <code>eigenmatrix</code> methods which we will describe at the end of the chapter in <acroref type="sage" acro="MD" />.<br /><br />
-The matrix method <code>.eigenvectors_right()</code> (or equivalently the matrix method <code>.right_eigenvectors()</code>) produces a list of triples, one triple per eigenvalue.  Each triple has an eigenvalue, a list, and then the algebraic multiplicity of the eigenvalue.  The list contains vectors forming a basis for the eigenspace.  Notice that the length of the list of eigenvectors will be the geometric multiplicity (and there is no easier way to get this information).<br /><br />
+
+<p>There are three ways to get eigenvectors in Sage.  For each eigenvalue, the method <code>.eigenvectors_right()</code> will return a list of eigenvectors that is a basis for the associated eigenspace.  The method <code>.eigenspaces_right()</code> will return an eigenspace (in other words, a vector space, rather than a list of vectors) for each eigenvalue.  There are also <code>eigenmatrix</code> methods which we will describe at the end of the chapter in <acroref type="sage" acro="MD" />.</p>
+
+<p>The matrix method <code>.eigenvectors_right()</code> (or equivalently the matrix method <code>.right_eigenvectors()</code>) produces a list of triples, one triple per eigenvalue.  Each triple has an eigenvalue, a list, and then the algebraic multiplicity of the eigenvalue.  The list contains vectors forming a basis for the eigenspace.  Notice that the length of the list of eigenvectors will be the geometric multiplicity (and there is no easier way to get this information).</p>
+
 <sage>
 <input>A = matrix(QQ, [[-5,  1, 7, -15],
                 [-2,  0, 5,  -7],
@@ -1345,8 +1363,10 @@ A.eigenvectors_right()
 </output>
 </sage>
 
-Note that this is a good place to practice burrowing down into Sage output that is full of lists (and lists of lists).  See if you can extract just the second eigenvector for $\lambda=3$ using a single statement.  Or perhaps try obtaining the geometric multiplicity of $\lambda=-2i$.  Notice, too, that Sage has automatically upgraded to <code>QQbar</code> to get the complex eigenvalues.<br /><br />
-The matrix method <code>.eigenspaces_right()</code> (equal to <code>.right_eigenspaces()</code>) produces a list of pairs, one pair per eigenvalue.  Each pair has an eigenvalue, followed by the eigenvalue's eigenspace.  Notice that the basis matrix of the eigenspace may not have the same eigenvectors you might get from other methods.  Similar to the <code>eigenvectors</code> method, the dimension of the eigenspace will yield the geometric multiplicity (and there is no easier way to get this information).   If you need the algebraic multiplicities, you can supply the keyword option <code>algebraic_multiplicity=True</code> to get back triples with the algebraic multiplicity in the third entry of the triple.  We will recycle the example above, and not demonstrate the algebraic multiplicity option.  (We have formatted the one-row  basis matrices over <code>QQbar</code> across several lines.)
+<p>Note that this is a good place to practice burrowing down into Sage output that is full of lists (and lists of lists).  See if you can extract just the second eigenvector for $\lambda=3$ using a single statement.  Or perhaps try obtaining the geometric multiplicity of $\lambda=-2i$.  Notice, too, that Sage has automatically upgraded to <code>QQbar</code> to get the complex eigenvalues.</p>
+
+<p>The matrix method <code>.eigenspaces_right()</code> (equal to <code>.right_eigenspaces()</code>) produces a list of pairs, one pair per eigenvalue.  Each pair has an eigenvalue, followed by the eigenvalue's eigenspace.  Notice that the basis matrix of the eigenspace may not have the same eigenvectors you might get from other methods.  Similar to the <code>eigenvectors</code> method, the dimension of the eigenspace will yield the geometric multiplicity (and there is no easier way to get this information).   If you need the algebraic multiplicities, you can supply the keyword option <code>algebraic_multiplicity=True</code> to get back triples with the algebraic multiplicity in the third entry of the triple.  We will recycle the example above, and not demonstrate the algebraic multiplicity option.  (We have formatted the one-row  basis matrices over <code>QQbar</code> across several lines.)</p>
+
 <sage>
 <input>A.eigenspaces_right()
 </input>
@@ -1371,8 +1391,10 @@ User basis matrix:
 </output>
 </sage>
 
-Notice how the output includes a subspace of dimension two over the rationals, and two subspaces of dimension one over the algebraic numbers.<br /><br />
-The upcoming <acroref type="subsection" acro="EE.ECEE" /> has many examples, which mostly reflect techniques that might be possible to verify by hand.  Here is the same matrix as above, analyzed in a similar way.  Practicing the examples in this subsection, either directly with the higher-level Sage commands, and/or with more primitive commands (as below) would be an extremely  good exercise at this point.
+<p>Notice how the output includes a subspace of dimension two over the rationals, and two subspaces of dimension one over the algebraic numbers.</p>
+
+<p>The upcoming <acroref type="subsection" acro="EE.ECEE" /> has many examples, which mostly reflect techniques that might be possible to verify by hand.  Here is the same matrix as above, analyzed in a similar way.  Practicing the examples in this subsection, either directly with the higher-level Sage commands, and/or with more primitive commands (as below) would be an extremely  good exercise at this point.</p>
+
 <sage>
 <input>A = matrix(QQ, [[-5,  1, 7, -15],
                 [-2,  0, 5, -7],
@@ -1430,9 +1452,12 @@ User basis matrix:
 </output>
 </sage>
 
-Notice how we changed the number system to the algebraic numbers before working with the complex eigenvalues.  Also, we are using the <code>basis='pivot'</code> keyword option so that bases for the eigenspaces look more like the bases described in <acroref type="theorem" acro="BNS" />.<br /><br />
-By now, it should be clear why we keep using the <q>right</q> variants of these methods.  Eigenvectors can be defined <q>on the right</q>, $A\vect{x}=\lambda\vect{x}$ as we have done, or <q>on the left,</q>  $\vect{x}A=\lambda\vect{x}$.  So use the <q>right</q> versions of the eigenvalue and eigenvector commands to stay consistent with the text.  Recognize, too, that eigenspaces may be computed with different bases than those given in the text (typically like those for null spaces with the <code>basis='echelon'</code> option).<br /><br />
-Why does the <code>.eigenvalues()</code> method not come in left and right versions?  The upcoming <acroref type="theorem" acro="ETM" /> can be used to show that the two versions would have identical output, so there is no need.
+<p>Notice how we changed the number system to the algebraic numbers before working with the complex eigenvalues.  Also, we are using the <code>basis='pivot'</code> keyword option so that bases for the eigenspaces look more like the bases described in <acroref type="theorem" acro="BNS" />.</p>
+
+<p>By now, it should be clear why we keep using the <q>right</q> variants of these methods.  Eigenvectors can be defined <q>on the right</q>, $A\vect{x}=\lambda\vect{x}$ as we have done, or <q>on the left,</q>  $\vect{x}A=\lambda\vect{x}$.  So use the <q>right</q> versions of the eigenvalue and eigenvector commands to stay consistent with the text.  Recognize, too, that eigenspaces may be computed with different bases than those given in the text (typically like those for null spaces with the <code>basis='echelon'</code> option).</p>
+
+<p>Why does the <code>.eigenvalues()</code> method not come in left and right versions?  The upcoming <acroref type="theorem" acro="ETM" /> can be used to show that the two versions would have identical output, so there is no need.</p>
+
 </sageadvice>
 </subsection>
 

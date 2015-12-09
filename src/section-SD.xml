@@ -248,7 +248,9 @@ A=\similar{B}{S}=\similar{I_2}{S}=\inverse{S}S=I_2
 
 <sageadvice acro="SM" index="similar matrices">
 <title>Similar Matrices</title>
-It is quite easy to determine if two matrices are similar, using the matrix method <code>.is_similar()</code>.  However, computationally this can be a very difficult proposition, so support in Sage is incomplete now, though it will always return a result for matrices with rational entries.  Here are examples where the two matrices are and are not similar.  Notice that the keyword option <code>transformation=True</code> will cause a pair to be returned, such that if the matrices are indeed similar, the matrix effecting the similarity transformation will be in the second slot of the pair.
+
+<p>It is quite easy to determine if two matrices are similar, using the matrix method <code>.is_similar()</code>.  However, computationally this can be a very difficult proposition, so support in Sage is incomplete now, though it will always return a result for matrices with rational entries.  Here are examples where the two matrices are and are not similar.  Notice that the keyword option <code>transformation=True</code> will cause a pair to be returned, such that if the matrices are indeed similar, the matrix effecting the similarity transformation will be in the second slot of the pair.</p>
+
 <sage>
 <input>A = matrix(QQ, [[ 25,   2,  -8,  -1,  11,  26,  35],
                 [ 28,   2, -15,   2,   6,  34,  31],
@@ -271,7 +273,8 @@ is_sim
 </output>
 </sage>
 
-Since we knew in advance these two matrices are similar, we requested the transformation matrix, so the output is a pair.  The similarity matrix is a bit of a mess, so we will use three Sage routines to clean up <code>trans</code>.  We convert the entries to numerical approximations, clip very small values (less than $10^{-5}$) to zero and then round to three decimal places.  You can experiment printing just <code>trans</code> all by itself.
+<p>Since we knew in advance these two matrices are similar, we requested the transformation matrix, so the output is a pair.  The similarity matrix is a bit of a mess, so we will use three Sage routines to clean up <code>trans</code>.  We convert the entries to numerical approximations, clip very small values (less than $10^{-5}$) to zero and then round to three decimal places.  You can experiment printing just <code>trans</code> all by itself.</p>
+
 <sage>
 <input>trans.change_ring(RDF).zero_at(10^-5).round(3)
 </input>
@@ -285,7 +288,8 @@ Since we knew in advance these two matrices are similar, we requested the transf
 </output>
 </sage>
 
-The matrix <code>C</code> is not similar to <code>A</code> (and hence not similar to <code>B</code> by <acroref type="theorem" acro="SER" />), so we illustrate the return value when we do not request the similarity matrix (since it does not even exist).
+<p>The matrix <code>C</code> is not similar to <code>A</code> (and hence not similar to <code>B</code> by <acroref type="theorem" acro="SER" />), so we illustrate the return value when we do not request the similarity matrix (since it does not even exist).</p>
+
 <sage>
 <input>C = matrix(QQ, [[ 16, -26,  19,  -56,  26,   8, -49],
                 [ 20, -43,  36, -102,  52,  23, -65],
@@ -300,9 +304,8 @@ C.is_similar(A)
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <subsection acro="D">
@@ -634,9 +637,13 @@ and an eigenspace for $\lambda=2$ of
 
 <sageadvice acro="MD" index="diagonalization of a matrix">
 <title>Matrix Diagonalization</title>
-The third way to get eigenvectors is the matrix method <code>.eigenmatrix_right()</code> (and the analogous <code>.eigenmatrix_left()</code>).  It always returns two square matrices of the same size as the original matrix.  The first matrix of the output is a diagonal matrix with the eigenvalues of the matrix filling the diagonal entries of the matrix.  The second matrix has eigenvectors in the columns, in the same order as the corresponding eigenvalues.  For a single eigenvalue, these columns/eigenvectors form a linearly independent set.<br /><br />
-A careful reading of the previous paragraph suggests the question:  what if we do not have enough eigenvectors to fill the columns of the second square matrix?  When the geometric multiplicity does not equal the algebraic multiplicity, the deficit is met by inserting zero columns in the matrix of eigenvectors.  Conversely, when the matrix is diagonalizable, by <acroref type="theorem" acro="DMFE" /> the geometric and algebraic multiplicities of each eigenvalue are equal, and the union of the bases of the eigenspaces provides a complete set of linearly independent vectors.  So for a matrix $A$, Sage will output two matrices, $D$ and $S$ such that $\inverse{S}AS=D$.<br /><br />
-We can rewrite the relation above as $AS=SD$.  In the case of a non-diagonalizable matrix, the matrix of eigenvectors is singular (it has zero columns), but the relationship $AS=SD$ still holds.  Here are examples of the two scenarios, along with demonstrations of the matrix method <code>is_diagonalizable()</code>.
+
+<p>The third way to get eigenvectors is the matrix method <code>.eigenmatrix_right()</code> (and the analogous <code>.eigenmatrix_left()</code>).  It always returns two square matrices of the same size as the original matrix.  The first matrix of the output is a diagonal matrix with the eigenvalues of the matrix filling the diagonal entries of the matrix.  The second matrix has eigenvectors in the columns, in the same order as the corresponding eigenvalues.  For a single eigenvalue, these columns/eigenvectors form a linearly independent set.</p>
+
+<p>A careful reading of the previous paragraph suggests the question:  what if we do not have enough eigenvectors to fill the columns of the second square matrix?  When the geometric multiplicity does not equal the algebraic multiplicity, the deficit is met by inserting zero columns in the matrix of eigenvectors.  Conversely, when the matrix is diagonalizable, by <acroref type="theorem" acro="DMFE" /> the geometric and algebraic multiplicities of each eigenvalue are equal, and the union of the bases of the eigenspaces provides a complete set of linearly independent vectors.  So for a matrix $A$, Sage will output two matrices, $D$ and $S$ such that $\inverse{S}AS=D$.</p>
+
+<p>We can rewrite the relation above as $AS=SD$.  In the case of a non-diagonalizable matrix, the matrix of eigenvectors is singular (it has zero columns), but the relationship $AS=SD$ still holds.  Here are examples of the two scenarios, along with demonstrations of the matrix method <code>is_diagonalizable()</code>.</p>
+
 <sage>
 <input>A = matrix(QQ, [[ 2, -18, -68,  64, -99, -87,  83],
                 [ 4, -10, -41,  34, -58, -57,  46],
@@ -685,7 +692,8 @@ D
 </output>
 </sage>
 
-Now for a matrix that is far from diagonalizable.
+<p>Now for a matrix that is far from diagonalizable.</p>
+
 <sage>
 <input>B = matrix(QQ, [[ 37, -13,  30,  81, -74, -13,  18],
                 [  6,  26,  21, -11, -46, -48,  19],
@@ -733,10 +741,8 @@ D
 <output>False
 </output>
 </sage>
-
-
-
 </sageadvice>
+
 <theorem acro="DED" index="diagonalizable!distinct eigenvalues">
 <title>Distinct Eigenvalues implies Diagonalizable</title>
 <statement>
