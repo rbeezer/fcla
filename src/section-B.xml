@@ -324,8 +324,11 @@ is a basis for $V$.  Our theorem tells us this is a basis, there is no need to v
 
 <sageadvice acro="B" index="bases">
 <title>Bases</title>
-Every vector space in Sage has a basis <mdash /> you can obtain this with the vector space method <code>.basis()</code>, and the result is a list of vectors.  Another method for a vector space is <code>.basis_matrix()</code> which outputs a matrix whose rows are the vectors of a basis.  Sometimes one form is more convenient than the other, but notice that the description of a vector space chooses to print the basis matrix (since its display is just a bit easier to read).  A vector space typically has many bases (infinitely many), so which one does Sage use?  You will notice that the basis matrices displayed are in reduced row-echelon form <mdash /> this is the defining property of the basis chosen by Sage.<br /><br />
-Here is <acroref type="example" acro="RSB" /> again as an example of how bases are provided in Sage.
+
+<p>Every vector space in Sage has a basis <mdash /> you can obtain this with the vector space method <code>.basis()</code>, and the result is a list of vectors.  Another method for a vector space is <code>.basis_matrix()</code> which outputs a matrix whose rows are the vectors of a basis.  Sometimes one form is more convenient than the other, but notice that the description of a vector space chooses to print the basis matrix (since its display is just a bit easier to read).  A vector space typically has many bases (infinitely many), so which one does Sage use?  You will notice that the basis matrices displayed are in reduced row-echelon form <mdash /> this is the defining property of the basis chosen by Sage.</p>
+
+<p>Here is <acroref type="example" acro="RSB" /> again as an example of how bases are provided in Sage.</p>
+
 <sage>
 <input>V = QQ^3
 v1 = vector(QQ, [ 2, -3,  1])
@@ -360,17 +363,23 @@ Basis matrix:
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 <sageadvice acro="SUTH0" index="sage under the hood!round 0">
 <title>Sage Under The Hood, Round 0</title>
-Or perhaps, <q>under the bonnet</q> if you learned your English in the Commonwealth.  This is the first in a series that aims to explain how our knowledge of linear algebra <em>theory</em> helps us understand the design, construction and informed use of Sage.<br /><br />
-How does Sage determine if two vector spaces are equal?  Especially since these are infinite sets?  One approach would be to take a spanning set for the first vector space (maybe a minimal spanning set), and ask if each element of the spanning set is an element of the second vector space.  If so, the first vector space is a subset of the second.  Then we could turn it around, and determine if the second vector space is a subset of the first.  By <acroref type="definition" acro="SE" />, the two vector spaces would be equal if both subset tests succeeded.<br /><br />
-However, each time we would test if an element of a spanning set lives in a second vector space, we would need to solve a linear system.  So for two large vector spaces, this could take a noticeable amount of time.  There is a better way, made possible by exploiting two important theorems.<br /><br />
-For every vector space, Sage creates a basis that uniquely identifies the vector space.  We could call this a <q>canonical basis.</q>  By <acroref type="theorem" acro="REMRS" /> we can span the row space of a matrix by the rows of any row-equivalent matrix.  So if we begin with a vector space described by any basis (or any spanning set, for that matter), we can make a matrix with these rows as vectors, and the vector space is now the row space of the matrix.  Of all the possible row-equivalent matrices, which would you pick?  Of course, the reduced row-echelon version is useful, and here it is critical to realize this version is unique (<acroref type="theorem" acro="RREFU" />).<br /><br />
-So for every vector space, Sage takes a spanning set, makes its vectors the rows of a matrix, row-reduces the matrix and tosses out the zero rows.  The result is what Sage calls an <q>echelonized basis.</q>  Now, two vector spaces are equal if, and only if, they have equal <q>echelonized basis matrices.</q>  It takes some computation to form the echelonized basis, but once built, the comparison of two echelonized bases can proceed very quickly by perhaps just comparing entries of the echelonized basis matrices.<br /><br />
-You might create a vector space with a basis you prefer (a <q>user basis</q>), but Sage always has an echelonized basis at hand.  If you do not specify some alternate basis, this is the basis Sage will create and provide for you.  We can now continue a discussion we began back in <acroref type="sage" acro="SSNS" />.  We have consistently used the <code>basis='pivot'</code> keyword when we construct null spaces.  This is because we initially prefer to see the basis described in <acroref type="theorem" acro="BNS" />, rather than Sage's default basis, the echelonized version.  But the echelonized version is always present and available.
+
+<p>Or perhaps, <q>under the bonnet</q> if you learned your English in the Commonwealth.  This is the first in a series that aims to explain how our knowledge of linear algebra <em>theory</em> helps us understand the design, construction and informed use of Sage.</p>
+
+<p>How does Sage determine if two vector spaces are equal?  Especially since these are infinite sets?  One approach would be to take a spanning set for the first vector space (maybe a minimal spanning set), and ask if each element of the spanning set is an element of the second vector space.  If so, the first vector space is a subset of the second.  Then we could turn it around, and determine if the second vector space is a subset of the first.  By <acroref type="definition" acro="SE" />, the two vector spaces would be equal if both subset tests succeeded.</p>
+
+<p>However, each time we would test if an element of a spanning set lives in a second vector space, we would need to solve a linear system.  So for two large vector spaces, this could take a noticeable amount of time.  There is a better way, made possible by exploiting two important theorems.</p>
+
+<p>For every vector space, Sage creates a basis that uniquely identifies the vector space.  We could call this a <q>canonical basis.</q>  By <acroref type="theorem" acro="REMRS" /> we can span the row space of a matrix by the rows of any row-equivalent matrix.  So if we begin with a vector space described by any basis (or any spanning set, for that matter), we can make a matrix with these rows as vectors, and the vector space is now the row space of the matrix.  Of all the possible row-equivalent matrices, which would you pick?  Of course, the reduced row-echelon version is useful, and here it is critical to realize this version is unique (<acroref type="theorem" acro="RREFU" />).</p>
+
+<p>So for every vector space, Sage takes a spanning set, makes its vectors the rows of a matrix, row-reduces the matrix and tosses out the zero rows.  The result is what Sage calls an <q>echelonized basis.</q>  Now, two vector spaces are equal if, and only if, they have equal <q>echelonized basis matrices.</q>  It takes some computation to form the echelonized basis, but once built, the comparison of two echelonized bases can proceed very quickly by perhaps just comparing entries of the echelonized basis matrices.</p>
+
+<p>You might create a vector space with a basis you prefer (a <q>user basis</q>), but Sage always has an echelonized basis at hand.  If you do not specify some alternate basis, this is the basis Sage will create and provide for you.  We can now continue a discussion we began back in <acroref type="sage" acro="SSNS" />.  We have consistently used the <code>basis='pivot'</code> keyword when we construct null spaces.  This is because we initially prefer to see the basis described in <acroref type="theorem" acro="BNS" />, rather than Sage's default basis, the echelonized version.  But the echelonized version is always present and available.</p>
+
 <sage>
 <input>A = matrix(QQ, [[14, -42, -2, -44, -42, 100, -18],
                 [-40, 120, -6, 129, 135, -304, 28],
@@ -396,8 +405,6 @@ K.basis_matrix()
 [ 0  0  0  1 -3 -1 -1]
 </output>
 </sage>
-
-
 
 </sageadvice>
 </subsection>
@@ -464,7 +471,9 @@ is a (novel) basis of $\complex{5}$.</p>
 
 <sageadvice acro="NME5" index="nonsingular matrix equivalences!round 5">
 <title>Nonsingular Matrix Equivalences, Round 5</title>
-We can easily illustrate our latest equivalence for nonsingular matrices.
+
+<p>We can easily illustrate our latest equivalence for nonsingular matrices.</p>
+
 <sage>
 <input>A = matrix(QQ, [[ 2,  3, -3,  2,  8, -4],
                 [ 3,  4, -4,  4,  8,  1],
@@ -494,9 +503,8 @@ V == V.span(cols)
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <subsection acro="OBC">
@@ -742,7 +750,9 @@ which you should be able to check easily, even if you do not have much patience.
 
 <sageadvice acro="C" index="coordinates">
 <title>Coordinates</title>
-For vector spaces of column vectors, Sage can quickly determine the coordinates of a vector relative to a basis, as guaranteed by <acroref type="theorem" acro="VRRB" />.  We illustrate some new Sage commands with a simple example and then apply them to orthonormal bases.  The vectors <code>v1</code> and <code>v2</code> are linearly independent and thus span a subspace with a basis of size 2.  We first create this subspace and let Sage determine the basis, then we illustrate a new vector space method, <code>.subspace_with_basis()</code>, that allows us to specify the basis.  (This method is very similar to <code>.span_of_basis()</code>, except it preserves a subspace relationship with the original vector space.)  Notice how the description of the vector space makes it clear that <code>W</code> has a user-specified basis.  Notice too that the actual subspace created is the same in both cases.
+
+<p>For vector spaces of column vectors, Sage can quickly determine the coordinates of a vector relative to a basis, as guaranteed by <acroref type="theorem" acro="VRRB" />.  We illustrate some new Sage commands with a simple example and then apply them to orthonormal bases.  The vectors <code>v1</code> and <code>v2</code> are linearly independent and thus span a subspace with a basis of size 2.  We first create this subspace and let Sage determine the basis, then we illustrate a new vector space method, <code>.subspace_with_basis()</code>, that allows us to specify the basis.  (This method is very similar to <code>.span_of_basis()</code>, except it preserves a subspace relationship with the original vector space.)  Notice how the description of the vector space makes it clear that <code>W</code> has a user-specified basis.  Notice too that the actual subspace created is the same in both cases.</p>
+
 <sage>
 <input>V = QQ^3
 v1 = vector(QQ,[ 2, 1, 3])
@@ -775,8 +785,8 @@ User basis matrix:
 </output>
 </sage>
 
-Now we manufacture a third vector in the subspace, and request a coordinatization in each vector space, which has the effect of using a different basis in each case.  The vector space method <code>.coordinate_vector(v)</code> computes a vector whose entries express <code>v</code> as a linear combination of basis vectors.
-Verify for yourself in each case below that the components of the vector returned really give a linear combination of the basis vectors that equals <code>v3</code>.
+<p>Now we manufacture a third vector in the subspace, and request a coordinatization in each vector space, which has the effect of using a different basis in each case.  The vector space method <code>.coordinate_vector(v)</code> computes a vector whose entries express <code>v</code> as a linear combination of basis vectors.  Verify for yourself in each case below that the components of the vector returned really give a linear combination of the basis vectors that equals <code>v3</code>.</p>
+
 <sage>
 <input>v3 = 4*v1 + v2; v3
 </input>
@@ -798,7 +808,8 @@ Verify for yourself in each case below that the components of the vector returne
 </output>
 </sage>
 
-Now we can construct a more complicated example using an orthonormal basis, specifically the one from <acroref type="example" acro="CROB4" />, but we will compute over <code>QQbar</code>, the field of algebraic numbers.  We form the four vectors of the orthonormal basis, install them as the basis of a vector space and then ask for the coordinates.  Sage treats the square roots in the scalars as <q>symbolic</q> expressions, so we need to explicitly coerce them into <code>QQbar</code> before computing the scalar multiples.
+<p>Now we can construct a more complicated example using an orthonormal basis, specifically the one from <acroref type="example" acro="CROB4" />, but we will compute over <code>QQbar</code>, the field of algebraic numbers.  We form the four vectors of the orthonormal basis, install them as the basis of a vector space and then ask for the coordinates.  Sage treats the square roots in the scalars as <q>symbolic</q> expressions, so we need to explicitly coerce them into <code>QQbar</code> before computing the scalar multiples.</p>
+
 <sage>
 <input>V = QQbar^4
 x1 = vector(QQbar, [    1+I,       1,      1-I,       I])
@@ -820,7 +831,8 @@ c = W.coordinate_vector(w); c
 </output>
 </sage>
 
-Is this right?  Our exact coordinates in the text are printed differently, but we can check that they are the same numbers:
+<p>Is this right?  Our exact coordinates in the text are printed differently, but we can check that they are the same numbers:</p>
+
 <sage>
 <input>c[0] == 1/sqrt(6)*(-5*I)
 </input>
@@ -849,7 +861,8 @@ Is this right?  Our exact coordinates in the text are printed differently, but w
 </output>
 </sage>
 
-With an orthonormal basis, we can illustrate <acroref type="theorem" acro="CUMOS" /> by making the four vectors the columns of $4\times 4$ matrix and verifying the result is a unitary matrix.
+<p>With an orthonormal basis, we can illustrate <acroref type="theorem" acro="CUMOS" /> by making the four vectors the columns of $4\times 4$ matrix and verifying the result is a unitary matrix.</p>
+
 <sage>
 <input>U = column_matrix([v1, v2, v3, v4])
 U.is_unitary()
@@ -858,10 +871,10 @@ U.is_unitary()
 </output>
 </sage>
 
-We will see coordinate vectors again, in a more formal setting, in <acroref type="sage" acro="VR" />.
-
+<p>We will see coordinate vectors again, in a more formal setting, in <acroref type="sage" acro="VR" />.</p>
 
 </sageadvice>
+
 </subsection>
 
 <!--   End  b.tex -->
