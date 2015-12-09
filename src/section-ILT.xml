@@ -598,7 +598,9 @@ a subspace of $\complex{3}$ with dimension 1.  Since the kernel is not trivial, 
 
 <sageadvice acro="ILT" index="linear transformation!injective">
 <title>Injective Linear Transformations</title>
-By now, you have probably already figured out how to determine if a linear transformation is injective, and what its kernel is.  You may also now begin to understand why Sage calls the null space of a matrix a kernel.  Here are two examples, first a reprise of <acroref type="example" acro="NKAO" />.
+
+<p>By now, you have probably already figured out how to determine if a linear transformation is injective, and what its kernel is.  You may also now begin to understand why Sage calls the null space of a matrix a kernel.  Here are two examples, first a reprise of <acroref type="example" acro="NKAO" />.</p>
+
 <sage>
 <input>U = QQ^3
 V = QQ^5
@@ -625,7 +627,8 @@ Basis matrix:
 </output>
 </sage>
 
-So we have a concrete demonstration of one half of <acroref type="theorem" acro="KILT" />.  Here is the second example, a do-over for <acroref type="example" acro="TKAP" />, but renamed as S.
+<p>So we have a concrete demonstration of one half of <acroref type="theorem" acro="KILT" />.  Here is the second example, a do-over for <acroref type="example" acro="TKAP" />, but renamed as S.</p>
+
 <sage>
 <input>U = QQ^3
 V = QQ^5
@@ -659,8 +662,10 @@ Basis matrix:
 </output>
 </sage>
 
-And so we have a concrete demonstration of the other half of <acroref type="theorem" acro="KILT" />.<br /><br />
-Now that we have <acroref type="theorem" acro="KPI" />, we can return to our discussion from <acroref type="sage" acro="PI" />.  The <code>.preimage_representative()</code> method of a linear transformation will give us a <em>single</em> element of the pre-image, with no other guarantee about the nature of that element.  That is fine, since this is all <acroref type="theorem" acro="KPI" /> requires (in addition to the kernel).  Remember that not every element of the codomain may have a nonempty pre-image (as indicated in the hypotheses of <acroref type="theorem" acro="KPI" />).  Here is an example using <code>T</code> from above, with a choice of a codomain element that has a nonempty pre-image.
+<p>And so we have a concrete demonstration of the other half of <acroref type="theorem" acro="KILT" />.</p>
+
+<p>Now that we have <acroref type="theorem" acro="KPI" />, we can return to our discussion from <acroref type="sage" acro="PI" />.  The <code>.preimage_representative()</code> method of a linear transformation will give us a <em>single</em> element of the pre-image, with no other guarantee about the nature of that element.  That is fine, since this is all <acroref type="theorem" acro="KPI" /> requires (in addition to the kernel).  Remember that not every element of the codomain may have a nonempty pre-image (as indicated in the hypotheses of <acroref type="theorem" acro="KPI" />).  Here is an example using <code>T</code> from above, with a choice of a codomain element that has a nonempty pre-image.</p>
+
 <sage>
 <input>TK = T.kernel()
 v = vector(QQ, [2, 3, 0, 1, -1])
@@ -671,7 +676,8 @@ u
 </output>
 </sage>
 
-Now the following will create random elements of the preimage of <code>v</code>, which can be verified by the test always returning <code>True</code>.  Use the compute cell just below if you are curious what <code>p</code> looks like.
+<p>Now the following will create random elements of the preimage of <code>v</code>, which can be verified by the test always returning <code>True</code>.  Use the compute cell just below if you are curious what <code>p</code> looks like.</p>
+
 <sage>
 <input>p = u + TK.random_element()
 T(p) == v
@@ -687,7 +693,8 @@ T(p) == v
 </output>
 </sage>
 
-As suggested, some choices of <code>v</code> can lead to empty pre-images, in which case <acroref type="theorem" acro="KPI" /> does not even apply.
+<p>As suggested, some choices of <code>v</code> can lead to empty pre-images, in which case <acroref type="theorem" acro="KPI" /> does not even apply.</p>
+
 <sage>
 <input>v = vector(QQ, [4, 6, 3, 1, -2])
 u = T.preimage_representative(v)
@@ -698,10 +705,10 @@ ValueError: element is not in the image
 </output>
 </sage>
 
-The situation is less interesting for an injective linear transformation.  Still, pre-images may be empty, but when they are nonempty, they are just singletons (a single element) since the kernel is empty.  So a repeat of the above example, with <code>S</code> rather than <code>T</code>, would not be very informative.
-
+<p>The situation is less interesting for an injective linear transformation.  Still, pre-images may be empty, but when they are nonempty, they are just singletons (a single element) since the kernel is empty.  So a repeat of the above example, with <code>S</code> rather than <code>T</code>, would not be very informative.</p>
 
 </sageadvice>
+
 </subsection>
 
 <subsection acro="ILTLI">
@@ -856,8 +863,11 @@ is a linearly independent subset of $V$.</p>
 
 <sageadvice acro="CILT" index="linear transformation!composition">
 <title>Composition of Injective Linear Transformations</title>
-One way to use Sage is to construct examples of theorems and verify the conclusions.  Sometimes you will get this wrong: you might build an example that does not satisfy the hypotheses, or your example may not satisfy the conclusions.  This may be because you are not using Sage properly, or because you do not understand a definition or a theorem, or in very limited cases you may have uncovered a bug in Sage (which is always the preferred explanation!).  But in the process of trying to understand a discrepancy or unexpected result, you will learn much more, both about linear algebra and about Sage.  And Sage is incredibly patient <mdash /> it will stay up with you all night to help you through a rough patch.<br /><br />
-Let us illustrate the above in the context of <acroref type="theorem" acro="CILTI" />.  The hypotheses indicate we need two injective linear transformations.  Where will get two such linear transformations?  Well, the contrapositive of <acroref type="theorem" acro="ILTD" /> tells us that if the dimension of the domain exceeds the dimension of the codomain, we will never be injective.  So we should at a minimum avoid this scenario.  We can build two linear transformations from matrices created randomly, and just hope that they lead to injective linear transformations.  Here is an example of how we create examples like this.  The random matrix has single-digit entries, and almost always will lead to an injective linear transformation, though we cannot be absolutely certain.  Evaluate this cell repeatedly, to see how rarely the result is not injective.
+
+<p>One way to use Sage is to construct examples of theorems and verify the conclusions.  Sometimes you will get this wrong: you might build an example that does not satisfy the hypotheses, or your example may not satisfy the conclusions.  This may be because you are not using Sage properly, or because you do not understand a definition or a theorem, or in very limited cases you may have uncovered a bug in Sage (which is always the preferred explanation!).  But in the process of trying to understand a discrepancy or unexpected result, you will learn much more, both about linear algebra and about Sage.  And Sage is incredibly patient <mdash /> it will stay up with you all night to help you through a rough patch.</p>
+
+<p>Let us illustrate the above in the context of <acroref type="theorem" acro="CILTI" />.  The hypotheses indicate we need two injective linear transformations.  Where will get two such linear transformations?  Well, the contrapositive of <acroref type="theorem" acro="ILTD" /> tells us that if the dimension of the domain exceeds the dimension of the codomain, we will never be injective.  So we should at a minimum avoid this scenario.  We can build two linear transformations from matrices created randomly, and just hope that they lead to injective linear transformations.  Here is an example of how we create examples like this.  The random matrix has single-digit entries, and almost always will lead to an injective linear transformation, though we cannot be absolutely certain.  Evaluate this cell repeatedly, to see how rarely the result is not injective.</p>
+
 <sage>
 <input>E = random_matrix(ZZ, 3, 2, x=-9, y=9)
 T = linear_transformation(QQ^2, QQ^3, E, side='right')
@@ -867,7 +877,8 @@ T.is_injective()                              # random
 </output>
 </sage>
 
-Our concrete example below was created this way, so here we go.
+<p>Our concrete example below was created this way, so here we go.</p>
+
 <sage>
 <input>U = QQ^2
 V = QQ^3
@@ -902,9 +913,8 @@ C.is_injective()
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <!--   End of  ilt.tex -->

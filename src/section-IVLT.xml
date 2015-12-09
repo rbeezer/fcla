@@ -219,7 +219,9 @@ then verify that $\lt{T}{\vect{x}}=B$.  Practice creating a few more inputs for 
 
 <sageadvice acro="IVLT" index="linear transformation!inverse">
 <title>Invertible Linear Transformations</title>
-Of course, Sage can compute the inverse of a linear transformation.  However, not every linear transformation has an inverse, and we will see shortly how to determine this.  For now, take this example as just an illustration of the basics (both mathematically and for Sage).
+
+<p>Of course, Sage can compute the inverse of a linear transformation.  However, not every linear transformation has an inverse, and we will see shortly how to determine this.  For now, take this example as just an illustration of the basics (both mathematically and for Sage).</p>
+
 <sage>
 <input>U = QQ^4
 V = QQ^4
@@ -243,7 +245,8 @@ Codomain: Vector space of dimension 4 over Rational Field
 </output>
 </sage>
 
-We can build the composition of <code>T</code> and its inverse, <code>S</code>, in both orders.  We will optimistically name these as identity linear transformations, as predicted by <acroref type="definition" acro="IVLT" />.  Run the cells to define the compositions, then run the compute cells with the random vectors repeatedly <mdash /> they should always return <code>True</code>.
+<p>We can build the composition of <code>T</code> and its inverse, <code>S</code>, in both orders.  We will optimistically name these as identity linear transformations, as predicted by <acroref type="definition" acro="IVLT" />.  Run the cells to define the compositions, then run the compute cells with the random vectors repeatedly <mdash /> they should always return <code>True</code>.</p>
+
 <sage>
 <input>IU = S*T
 IV = T*S
@@ -266,7 +269,8 @@ IV(v) == v      # random
 </output>
 </sage>
 
-We can also check that the compositions are the same as the identity linear transformation itself.  We will do one, you can try the other.
+<p>We can also check that the compositions are the same as the identity linear transformation itself.  We will do one, you can try the other.</p>
+
 <sage>
 <input>id = linear_transformation(U, U, identity_matrix(QQ, 4))
 IU.is_equal_function(id)
@@ -275,9 +279,8 @@ IU.is_equal_function(id)
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <subsection acro="IV">
@@ -573,7 +576,9 @@ so $\compose{\left(\compose{\ltinverse{T}}{\ltinverse{S}}\right)}{\left(\compose
 
 <sageadvice acro="CIVLT" index="linear transformation!computing an inverse">
 <title>Computing the Inverse of a Linear Transformations</title>
-<acroref type="theorem" acro="ILTIS" /> gives us a straightforward condition equivalence for an invertible linear transformation, but of course, it is even easier in Sage.
+
+<p><acroref type="theorem" acro="ILTIS" /> gives us a straightforward condition equivalence for an invertible linear transformation, but of course, it is even easier in Sage.</p>
+
 <sage>
 <input>U = QQ^4
 V = QQ^4
@@ -590,8 +595,10 @@ T.is_invertible()
 </output>
 </sage>
 
-As easy as that is, it is still instructive to walk through an example similar to <acroref type="example" acro="CIVLT" /> using Sage, as a further illustration of the second half of the proof of <acroref type="theorem" acro="ILTIS" />.  Since T is surjective, every element of the codomain has a nonempty pre-image, and since T is injective, the pre-image of each element is a single element.  Keep these facts in mind and convince yourself that the procedure below would never raise an error, and always has a unique result.<br /><br />
-We first compute the pre-image of each element of a basis of the codomain.
+<p>As easy as that is, it is still instructive to walk through an example similar to <acroref type="example" acro="CIVLT" /> using Sage, as a further illustration of the second half of the proof of <acroref type="theorem" acro="ILTIS" />.  Since T is surjective, every element of the codomain has a nonempty pre-image, and since T is injective, the pre-image of each element is a single element.  Keep these facts in mind and convince yourself that the procedure below would never raise an error, and always has a unique result.</p>
+
+<p>We first compute the pre-image of each element of a basis of the codomain.</p>
+
 <sage>
 <input>preimages = [T.preimage_representative(v) for v in V.basis()]
 preimages
@@ -600,7 +607,8 @@ preimages
 </output>
 </sage>
 
-Then we define a new linear transformation, from <code>V</code> to <code>U</code>, which turns it around and uses the preimages as a set of images defining the new linear transformation.  Explain to yourself how we know that <code>preimages</code> is a basis for <code>U</code>, and why this will create an invertible linear transformation.
+<p>Then we define a new linear transformation, from <code>V</code> to <code>U</code>, which turns it around and uses the preimages as a set of images defining the new linear transformation.  Explain to yourself how we know that <code>preimages</code> is a basis for <code>U</code>, and why this will create an invertible linear transformation.</p>
+
 <sage>
 <input>S = linear_transformation(V, U, preimages)
 S
@@ -622,11 +630,12 @@ Codomain: Vector space of dimension 4 over Rational Field
 </output>
 </sage>
 
-While this is a simple two-step procedure (form preimages, construct linear transformation), realize that this is <em>not</em> the process that Sage uses internally.<br /><br />
-Notice that the essence of this construction is that when we work with an invertible linear transformation, the method <code>.preimage_representative()</code> behaves as a function (we mean the precise mathematical definition here) <mdash /> it is always defined and always produces just one well-defined output.  Here the <code>linear_transformation()</code> constructor is extending it to a linear function based on its action on a (finite) basis of the domain.
+<p>While this is a simple two-step procedure (form preimages, construct linear transformation), realize that this is <em>not</em> the process that Sage uses internally.</p>
 
+<p>Notice that the essence of this construction is that when we work with an invertible linear transformation, the method <code>.preimage_representative()</code> behaves as a function (we mean the precise mathematical definition here) <mdash /> it is always defined and always produces just one well-defined output.  Here the <code>linear_transformation()</code> constructor is extending it to a linear function based on its action on a (finite) basis of the domain.</p>
 
 </sageadvice>
+
 </subsection>
 
 <subsection acro="SI">
@@ -910,7 +919,9 @@ Similarly, <acroref type="theorem" acro="RPNDD" /> can be used to provide altern
 
 <sageadvice acro="LTOE" index="linear transformation!rank, nullity">
 <title>Linear Transformation Odds and Ends</title>
-We should mention that the notation <code>T^-1</code> will yield an inverse of a linear transformation in Sage.
+
+<p>We should mention that the notation <code>T^-1</code> will yield an inverse of a linear transformation in Sage.</p>
+
 <sage>
 <input>U = QQ^4
 V = QQ^4
@@ -933,7 +944,8 @@ Codomain: Vector space of dimension 4 over Rational Field
 </output>
 </sage>
 
-Also, the rank and nullity are what you might expect.  Recall that for a matrix Sage provides a left nullity and a right nullity.  There is no such distinction for linear transformations.  We verify <acroref type="theorem" acro="RPNDD" /> as an example.
+<p>Also, the rank and nullity are what you might expect.  Recall that for a matrix Sage provides a left nullity and a right nullity.  There is no such distinction for linear transformations.  We verify <acroref type="theorem" acro="RPNDD" /> as an example.</p>
+
 <sage>
 <input>U = QQ^3
 V = QQ^4
@@ -964,9 +976,8 @@ R.rank()
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <subsection acro="SLELT">
@@ -1018,7 +1029,9 @@ x_4\colvector{-7\\-6\\-5}
 
 <sageadvice acro="SUTH1" index="sage under the hood!round 1">
 <title>Sage Under The Hood, Round 1</title>
-We can parallel the above discussion about systems of linear equations and linear transformations using Sage.  We begin with a matrix that we will use as a coefficient matrix for systems of equations, and then use the same matrix to define the associated linear transformation (acting on vectors placed to the right of the matrix).
+
+<p>We can parallel the above discussion about systems of linear equations and linear transformations using Sage.  We begin with a matrix that we will use as a coefficient matrix for systems of equations, and then use the same matrix to define the associated linear transformation (acting on vectors placed to the right of the matrix).</p>
+
 <sage>
 <input>A = matrix(QQ, [[-1, 0, 2],
                 [ 1, 3, 7],
@@ -1028,7 +1041,8 @@ T = linear_transformation(QQ^3, QQ^4, A, side='right')
 </input>
 </sage>
 
-We solve a linear system using the coefficient matrix, and compute an element of the pre-image of the linear transformation.
+<p>We solve a linear system using the coefficient matrix, and compute an element of the pre-image of the linear transformation.</p>
+
 <sage>
 <input>v = vector(QQ, [1, 2, 0, 1])
 A.solve_right(v)
@@ -1044,7 +1058,8 @@ A.solve_right(v)
 </output>
 </sage>
 
-We compute a null space of the coefficient matrix and a kernel of the linear transformation, so as to understand the full solution set or the full preimage set.
+<p>We compute a null space of the coefficient matrix and a kernel of the linear transformation, so as to understand the full solution set or the full preimage set.</p>
+
 <sage>
 <input>A.right_kernel()
 </input>
@@ -1063,7 +1078,8 @@ Basis matrix:
 </output>
 </sage>
 
-We compute a column space of the coefficient matrix and an image (range) of the linear transformation to help us build an inconsistent system.
+<p>We compute a column space of the coefficient matrix and an image (range) of the linear transformation to help us build an inconsistent system.</p>
+
 <sage>
 <input>A.column_space()
 </input>
@@ -1084,7 +1100,8 @@ Basis matrix:
 </output>
 </sage>
 
-A vector that creates a system with no solution is a vector that has an empty pre-image.
+<p>A vector that creates a system with no solution is a vector that has an empty pre-image.</p>
+
 <sage>
 <input>v = vector(QQ, [1, 2, 1, 1])
 A.solve_right(v)
@@ -1104,11 +1121,12 @@ ValueError: element is not in the image
 </output>
 </sage>
 
-Note that we could redo the above, replacing uses of <q>right</q> by <q>left</q> and uses of <q>column</q> by <q>row.</q>  The output would not change.<br /><br />
-We suggest in the text that one could develop the theory of linear transformations from scratch, and then obtain many of our initial results about systems of equations and matrices as a consequence.  In Sage it is the reverse.  Sage implements many advanced concepts from various areas of mathematics by translating fundamental computations into the language of linear algebra.  In turn, many of Sage's linear algebra routines ultimately depend on very fast algorithms for basic operations on matrices, such as computing an echelon form, a null space, or a span.
+<p>Note that we could redo the above, replacing uses of <q>right</q> by <q>left</q> and uses of <q>column</q> by <q>row.</q>  The output would not change.</p>
 
+<p>We suggest in the text that one could develop the theory of linear transformations from scratch, and then obtain many of our initial results about systems of equations and matrices as a consequence.  In Sage it is the reverse.  Sage implements many advanced concepts from various areas of mathematics by translating fundamental computations into the language of linear algebra.  In turn, many of Sage's linear algebra routines ultimately depend on very fast algorithms for basic operations on matrices, such as computing an echelon form, a null space, or a span.</p>
 
 </sageadvice>
+
 </subsection>
 
 <!--   End of  ivlt.tex -->

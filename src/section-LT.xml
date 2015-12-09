@@ -222,12 +222,14 @@ as an example of <acroref type="theorem" acro="LTTZZ" /> at work.</p>
 
 <sageadvice acro="LTS" index="linear transformation!symbolic">
 <title>Linear Transformations, Symbolic</title>
-There are several ways to create a linear transformation in Sage, and many natural operations on these objects are possible.  As previously, rather than use the complex numbers as our number system, we will instead use the rational numbers, since Sage can model them exactly.  We will also use the following transformation repeatedly for examples, when no special properties are required:
+
+<p>There are several ways to create a linear transformation in Sage, and many natural operations on these objects are possible.  As previously, rather than use the complex numbers as our number system, we will instead use the rational numbers, since Sage can model them exactly.  We will also use the following transformation repeatedly for examples, when no special properties are required:
 <alignmath>
 <![CDATA[&\ltdefn{T}{\complex{3}}{\complex{4}}\\]]>
 <![CDATA[&\lt{T}{\colvector{x_1\\x_2\\x_3}}=\colvector{-x_1 + 2x_3\\x_1 + 3x_2 + 7x_3\\x_1 + x_2 + x_3\\2x_1 + 3x_2 + 5x_3}]]>
 </alignmath>
-To create this linear transformation in Sage, we first create a <q>symbolic</q> function, which requires that we also first define some symbolic variables which are <code>x1</code>, <code>x2</code> and <code>x3</code> in this case.  (You can bypass the intermediate variable <code>outputs</code> in your own work.  We will use it consistently to allow us to spread the definition across several lines without the Sage preparser getting in the way.  In other words, it is safe to combine the the two lines below and not use <code>outputs</code>.)
+To create this linear transformation in Sage, we first create a <q>symbolic</q> function, which requires that we also first define some symbolic variables which are <code>x1</code>, <code>x2</code> and <code>x3</code> in this case.  (You can bypass the intermediate variable <code>outputs</code> in your own work.  We will use it consistently to allow us to spread the definition across several lines without the Sage preparser getting in the way.  In other words, it is safe to combine the the two lines below and not use <code>outputs</code>.)</p>
+
 <sage>
 <input>x1, x2, x3 = var('x1, x2, x3')
 outputs = [ -x1        + 2*x3,
@@ -235,16 +237,19 @@ outputs = [ -x1        + 2*x3,
              x1 +   x2 +   x3,
            2*x1 + 3*x2 + 5*x3]
 T_symbolic(x1, x2, x3) = outputs
+
 </input>
 </sage>
 
-You can experiment with <code>T_symbolic</code>, evaluating it at triples of rational numbers, and perhaps doing things like calculating its partial derivatives.  We will use it as input to the <code>linear_transformation()</code> constructor.  We just need to specify carefully the domain and codomain, now as vector spaces over the rationals rather than the complex numbers.
+<p>You can experiment with <code>T_symbolic</code>, evaluating it at triples of rational numbers, and perhaps doing things like calculating its partial derivatives.  We will use it as input to the <code>linear_transformation()</code> constructor.  We just need to specify carefully the domain and codomain, now as vector spaces over the rationals rather than the complex numbers.</p>
+
 <sage>
 <input>T = linear_transformation(QQ^3, QQ^4, T_symbolic)
 </input>
 </sage>
 
-You can now, of course, experiment with <code>T</code> via tab-completion, but we will explain the various properties of Sage linear transformations as we work through this chapter.  Even some seemingly simple operations, such as printing <code>T</code> will require some explanation.  But for starters, we can evaluate <code>T</code>.
+<p>You can now, of course, experiment with <code>T</code> via tab-completion, but we will explain the various properties of Sage linear transformations as we work through this chapter.  Even some seemingly simple operations, such as printing <code>T</code> will require some explanation.  But for starters, we can evaluate <code>T</code>.</p>
+
 <sage>
 <input>u = vector(QQ, [3, -1, 2])
 w = T(u)
@@ -261,7 +266,8 @@ w
 </output>
 </sage>
 
-Here is a small verification of <acroref type="theorem" acro="LTTZZ" />.
+<p>Here is a small verification of <acroref type="theorem" acro="LTTZZ" />.</p>
+
 <sage>
 <input>zero_in = zero_vector(QQ, 3)
 zero_out = zero_vector(QQ, 4)
@@ -271,10 +277,10 @@ T(zero_in) == zero_out
 </output>
 </sage>
 
-Note that Sage will recognize some symbolic functions as not being linear transformations (in other words, inconsistent with <acroref type="definition" acro="LT" />), but this detection is fairly easy to fool.  We will see some safer ways to create a linear transformation shortly.
-
+<p>Note that Sage will recognize some symbolic functions as not being linear transformations (in other words, inconsistent with <acroref type="definition" acro="LT" />), but this detection is fairly easy to fool.  We will see some safer ways to create a linear transformation shortly.</p>
 
 </sageadvice>
+
 </subsection>
 
 <subsection acro="LTC">
@@ -583,8 +589,11 @@ and <acroref type="theorem" acro="MLTCV" /> guarantees that $\lt{S}{\vect{x}}=C\
 
 <sageadvice acro="LTM" index="linear transformation!matrices">
 <title>Linear Transformations, Matrices</title>
-A second way to build a linear transformation is to use a matrix, as motivated by <acroref type="theorem" acro="MBLT" />.  But there is one caveat.  We have seen that Sage has a preference for rows, so when defining a linear transformation with a product of a matrix and a vector, <em>Sage forms a linear combination of the rows of the matrix with the scalars of the vector</em>.  This is expressed by writing the vector on the left of the matrix, where if we were to interpret the vector as a 1-row matrix, then the definition of matrix multiplication would do the right thing.<br /><br />
-Remember throughout, a linear transformation has very little to do with the mechanism by which we define it.  Whether or not we use matrix multiplication with vectors on the left (Sage internally) or matrix multiplication with vectors on the right (your text), what matters is the <em>function</em> that results.  One concession to the <q>vector on the right</q> approach is that we can tell Sage that we mean for the matrix to define the linear transformation by multiplication with the vector on the right.  Here is our running example again <mdash /> with some explanation following.
+
+<p>A second way to build a linear transformation is to use a matrix, as motivated by <acroref type="theorem" acro="MBLT" />.  But there is one caveat.  We have seen that Sage has a preference for rows, so when defining a linear transformation with a product of a matrix and a vector, <em>Sage forms a linear combination of the rows of the matrix with the scalars of the vector</em>.  This is expressed by writing the vector on the left of the matrix, where if we were to interpret the vector as a 1-row matrix, then the definition of matrix multiplication would do the right thing.</p>
+
+<p>Remember throughout, a linear transformation has very little to do with the mechanism by which we define it.  Whether or not we use matrix multiplication with vectors on the left (Sage internally) or matrix multiplication with vectors on the right (your text), what matters is the <em>function</em> that results.  One concession to the <q>vector on the right</q> approach is that we can tell Sage that we mean for the matrix to define the linear transformation by multiplication with the vector on the right.  Here is our running example again <mdash /> with some explanation following.</p>
+
 <sage>
 <input>A = matrix(QQ, [[-1, 0, 2],
                 [ 1, 3, 7],
@@ -602,8 +611,10 @@ Codomain: Vector space of dimension 4 over Rational Field
 </output>
 </sage>
 
-The way <code>T</code> prints reflects the way Sage carries <code>T</code> internally.  But notice that we defined <code>T</code> in a way that is consistent with the text, via the use of the optional <code>side='right'</code> keyword.  If you rework examples from the text, or use Sage to assist with exercises, be sure to remember this option.  In particular, when the matrix is square it might be easy to miss that you have forgotten this option.  Note too that Sage uses a more general term for a linear transformation, <q>vector space morphism.</q>  Just mentally translate from Sage-speak to the terms we use here in the text.<br /><br />
-If the standard way that Sage prints a linear transformation is too confusing, you can get all the relevant information with a handful of commands.
+<p>The way <code>T</code> prints reflects the way Sage carries <code>T</code> internally.  But notice that we defined <code>T</code> in a way that is consistent with the text, via the use of the optional <code>side='right'</code> keyword.  If you rework examples from the text, or use Sage to assist with exercises, be sure to remember this option.  In particular, when the matrix is square it might be easy to miss that you have forgotten this option.  Note too that Sage uses a more general term for a linear transformation, <q>vector space morphism.</q>  Just mentally translate from Sage-speak to the terms we use here in the text.</p>
+
+<p>If the standard way that Sage prints a linear transformation is too confusing, you can get all the relevant information with a handful of commands.</p>
+
 <sage>
 <input>T.matrix(side='right')
 </input>
@@ -628,7 +639,8 @@ If the standard way that Sage prints a linear transformation is too confusing, y
 </output>
 </sage>
 
-So we can build a linear transformation in Sage from a matrix, as promised by <acroref type="theorem" acro="MBLT" />.  Furthermore, <acroref type="theorem" acro="MLTCV" /> says there is a matrix associated with every linear transformation.  This matrix is provided in Sage by the <code>.matrix()</code> method, where we use the option <code>side='right'</code> to be consistent with the text.  Here is <acroref type="example" acro="MOLT" /> reprised, where we define the linear transformation via a Sage symbolic function and then recover the matrix of the linear transformation.
+<p>So we can build a linear transformation in Sage from a matrix, as promised by <acroref type="theorem" acro="MBLT" />.  Furthermore, <acroref type="theorem" acro="MLTCV" /> says there is a matrix associated with every linear transformation.  This matrix is provided in Sage by the <code>.matrix()</code> method, where we use the option <code>side='right'</code> to be consistent with the text.  Here is <acroref type="example" acro="MOLT" /> reprised, where we define the linear transformation via a Sage symbolic function and then recover the matrix of the linear transformation.</p>
+
 <sage>
 <input>x1, x2, x3 = var('x1, x2, x3')
 outputs = [3*x1 - 2*x2 + 5*x3,
@@ -654,9 +666,8 @@ S(x) == C*x
 </output>
 </sage>
 
-
-
 </sageadvice>
+
 </subsection>
 
 <subsection acro="LTLC">
@@ -948,8 +959,9 @@ q(x)=9-6x-5x^2+2x^3=(-5)(3-4x+x^2)+(2)(12-13x+x^3)
 
 <sageadvice acro="LTB" index="linear transformation!bases">
 <title>Linear Transformations, Bases</title>
-A third way to create a linear transformation in Sage is to provide a list of images for a basis, as motivated by <acroref type="theorem" acro="LTDB" />.  The default is to use the standard basis as the inputs (<acroref type="definition" acro="SUV" />).
-We will, once again, create our running example.
+
+<p>A third way to create a linear transformation in Sage is to provide a list of images for a basis, as motivated by <acroref type="theorem" acro="LTDB" />.  The default is to use the standard basis as the inputs (<acroref type="definition" acro="SUV" />).  We will, once again, create our running example.</p>
+
 <sage>
 <input>U = QQ^3
 V = QQ^4
@@ -968,9 +980,12 @@ Codomain: Vector space of dimension 4 over Rational Field
 </output>
 </sage>
 
-Notice that there is no requirement that the list of images (in Sage or in <acroref type="theorem" acro="LTDB" />) is a basis.  They do not even have to be different.  They could all be the zero vector (try it).<br /><br />
-If we want to use an alternate basis for the domain, it is possible, but there are two caveats.  The first caveat is that we must be sure to provide a basis for the domain, Sage will give an error if the proposed basis is not linearly independent and we are responsible for providing the right number of vectors (which should be easy).<br /><br />
-We have seen that vector spaces can have alternate bases, which prints as a <q>user basis.</q>  Here will provide the domain with an alternate basis.  The relevant command will create a subspace, but for now, we need to provide a big enough set to create the entire domain.  It is possible to use fewer linearly independent vectors, and create a proper subspace, but then we will not be able to use this proper subspace to build the linear transformation we want.
+<p>Notice that there is no requirement that the list of images (in Sage or in <acroref type="theorem" acro="LTDB" />) is a basis.  They do not even have to be different.  They could all be the zero vector (try it).</p>
+
+<p>If we want to use an alternate basis for the domain, it is possible, but there are two caveats.  The first caveat is that we must be sure to provide a basis for the domain, Sage will give an error if the proposed basis is not linearly independent and we are responsible for providing the right number of vectors (which should be easy).</p>
+
+We have seen that vector spaces can have alternate bases, which print<p>s as a <q>user basis.</q>  Here will provide the domain with an alternate basis.  The relevant command will create a subspace, but for now, we need to provide a big enough set to create the entire domain.  It is possible to use fewer linearly independent vectors, and create a proper subspace, but then we will not be able to use this proper subspace to build the linear transformation we want.</p>
+
 <sage>
 <input>u1 = vector(QQ, [ 1,  3, -4])
 u2 = vector(QQ, [-1, -2,  3])
@@ -1000,7 +1015,8 @@ U == QQ^3
 </output>
 </sage>
 
-We can use this alternate version of <code>U</code> to create a linear transformation from specified images.  Superficially there is nothing real special about our choices for <code>v1, v2, v3</code>.
+<p>We can use this alternate version of <code>U</code> to create a linear transformation from specified images.  Superficially there is nothing real special about our choices for <code>v1, v2, v3</code>.</p>
+
 <sage>
 <input>V = QQ^4
 v1 = vector(QQ, [-9, -18,  0, -9])
@@ -1009,7 +1025,8 @@ v3 = vector(QQ, [-7, -17, -1, -10])
 </input>
 </sage>
 
-Now we create the linear transformation.  Here is the second caveat:  the matrix of the linear transformation is no longer that provided by <acroref type="theorem" acro="MLTCV" />.  It may be obvious where the matrix comes from, but a full understanding of its interpretation will have to wait until <acroref type="section" acro="MR" />.
+<p>Now we create the linear transformation.  Here is the second caveat:  the matrix of the linear transformation is no longer that provided by <acroref type="theorem" acro="MLTCV" />.  It may be obvious where the matrix comes from, but a full understanding of its interpretation will have to wait until <acroref type="section" acro="MR" />.</p>
+
 <sage>
 <input>S = linear_transformation(U, V, [v1, v2, v3])
 S.matrix(side='right')
@@ -1021,7 +1038,8 @@ S.matrix(side='right')
 </output>
 </sage>
 
-We suggested our choices for <code>v1, v2, v3</code> were <q>random.</q>  Not so <mdash /> the linear transformation <code>S</code> just created is equal to the linear transformation <code>T</code> above.  If you have run all the input in this subsection, in order, then you should be able to compare the <em>functions</em> <code>S</code> and <code>T</code>.  The next command should <em>always</em> produce <code>True</code>.
+<p>We suggested our choices for <code>v1, v2, v3</code> were <q>random.</q>  Not so <mdash /> the linear transformation <code>S</code> just created is equal to the linear transformation <code>T</code> above.  If you have run all the input in this subsection, in order, then you should be able to compare the <em>functions</em> <code>S</code> and <code>T</code>.  The next command should <em>always</em> produce <code>True</code>.</p>
+
 <sage>
 <input>u = random_vector(QQ, 3)
 T(u) == S(u)
@@ -1030,7 +1048,8 @@ T(u) == S(u)
 </output>
 </sage>
 
-Notice that <code>T == S</code> may not do what you expect here.  Instead, the linear transformation method <code>.is_equal_function()</code> will perform a conclusive check of equality of two linear transformations as functions.
+<p>Notice that <code>T == S</code> may not do what you expect here.  Instead, the linear transformation method <code>.is_equal_function()</code> will perform a conclusive check of equality of two linear transformations as functions.</p>
+
 <sage>
 <input>T.is_equal_function(S)
 </input>
@@ -1038,10 +1057,10 @@ Notice that <code>T == S</code> may not do what you expect here.  Instead, the l
 </output>
 </sage>
 
-Can you reproduce this example?  In other words, define some linear transformation, any way you like.  Then give the domain an alternate basis and concoct the correct images to create a second linear transformation (by the method of this subsection) which is equal to the first.
-
+<p>Can you reproduce this example?  In other words, define some linear transformation, any way you like.  Then give the domain an alternate basis and concoct the correct images to create a second linear transformation (by the method of this subsection) which is equal to the first.</p>
 
 </sageadvice>
+
 </subsection>
 
 <subsection acro="PI">
@@ -1181,7 +1200,9 @@ Choose
 
 <sageadvice acro="PI" index="pre-images">
 <title>Pre-Images</title>
-Sage handles pre-images just a bit differently than our approach in the text.  For the moment, we can obtain a single vector in the set that is the pre-image via the <code>.preimage_representative()</code> method.  Understand that this method will return <em>just one</em> element of the pre-image set, and we have no real control over which one.  Also, it is certainly possible that a pre-image is the empty set <mdash /> in this case, the method will raise a <code>ValueError</code>.  We will use our running example to illustrate.
+
+<p>Sage handles pre-images just a bit differently than our approach in the text.  For the moment, we can obtain a single vector in the set that is the pre-image via the <code>.preimage_representative()</code> method.  Understand that this method will return <em>just one</em> element of the pre-image set, and we have no real control over which one.  Also, it is certainly possible that a pre-image is the empty set <mdash /> in this case, the method will raise a <code>ValueError</code>.  We will use our running example to illustrate.</p>
+
 <sage>
 <input>A = matrix(QQ, [[-1, 0, 2],
                 [ 1, 3, 7],
@@ -1212,10 +1233,10 @@ ValueError: element is not in the image
 </output>
 </sage>
 
-Remember, we have defined the pre-image as a set, and Sage just gives us a single element of the set.  We will see in <acroref type="sage" acro="ILT" /> that the upcoming <acroref type="theorem" acro="KPI" /> explains why this is no great shortcoming in Sage.
-
+<p>Remember, we have defined the pre-image as a set, and Sage just gives us a single element of the set.  We will see in <acroref type="sage" acro="ILT" /> that the upcoming <acroref type="theorem" acro="KPI" /> explains why this is no great shortcoming in Sage.</p>
 
 </sageadvice>
+
 </subsection>
 
 <subsection acro="NLTFO">
@@ -1443,7 +1464,9 @@ In <acroref type="example" acro="STLT" /> compute (via <acroref type="theorem" a
 
 <sageadvice acro="OLT" index="linear transformation!operations on">
 <title>Operations on Linear Transformations</title>
-It is possible in Sage to add linear transformations (<acroref type="definition" acro="LTA" />), multiply them by scalars (<acroref type="definition" acro="LTSM" />) and compose (<acroref type="definition" acro="LTC" />) them.  Then <acroref type="theorem" acro="SLTLT" /> <acroref type="theorem" acro="MLTLT" />, and <acroref type="theorem" acro="CLTLT" /> (respectively) tell us the results are again linear transformations.  Here are some examples:
+
+<p>It is possible in Sage to add linear transformations (<acroref type="definition" acro="LTA" />), multiply them by scalars (<acroref type="definition" acro="LTSM" />) and compose (<acroref type="definition" acro="LTC" />) them.  Then <acroref type="theorem" acro="SLTLT" /> <acroref type="theorem" acro="MLTLT" />, and <acroref type="theorem" acro="CLTLT" /> (respectively) tell us the results are again linear transformations.  Here are some examples:</p>
+
 <sage>
 <input>U = QQ^4
 V = QQ^2
@@ -1480,7 +1503,8 @@ Codomain: Vector space of dimension 2 over Rational Field
 </output>
 </sage>
 
-Perhaps the only surprise in all this is the necessity of writing scalar multiplication on the right of the linear transformation (rather on the left, as we do in the text).  We will recycle the linear transformation <code>T</code> from above and redefine <code>S</code> to form an example of composition.
+<p>Perhaps the only surprise in all this is the necessity of writing scalar multiplication on the right of the linear transformation (rather on the left, as we do in the text).  We will recycle the linear transformation <code>T</code> from above and redefine <code>S</code> to form an example of composition.</p>
+
 <sage>
 <input>W = QQ^3
 C = matrix(QQ, [[ 4, -2],
@@ -1500,8 +1524,10 @@ Codomain: Vector space of dimension 3 over Rational Field
 </output>
 </sage>
 
-We use the star symbol (<code>*</code>) to indicate composition of linear transformations.  Notice that the order of the two linear transformations we compose is important, and Sage's order agrees with the text.  The order does not have to agree, and there are good arguments to have it reversed, so be careful if you read about composition elsewhere.<br /><br />
-This is a good place to expand on <acroref type="theorem" acro="VSLT" />, which says that with definitions of addition and scalar multiplication of linear transformations we then arrive at a vector space.  A vector space full of linear transformations.  Objects in Sage have <q>parents</q> <mdash /> vectors have vector spaces for parents, fractions of integers have the rationals as parents.  What is the parent of a linear transformation?  Let us see, by investigating the parent of <code>S</code> just defined above.
+<p>We use the star symbol (<code>*</code>) to indicate composition of linear transformations.  Notice that the order of the two linear transformations we compose is important, and Sage's order agrees with the text.  The order does not have to agree, and there are good arguments to have it reversed, so be careful if you read about composition elsewhere.</p>
+
+<p>This is a good place to expand on <acroref type="theorem" acro="VSLT" />, which says that with definitions of addition and scalar multiplication of linear transformations we then arrive at a vector space.  A vector space full of linear transformations.  Objects in Sage have <q>parents</q> <mdash /> vectors have vector spaces for parents, fractions of integers have the rationals as parents.  What is the parent of a linear transformation?  Let us see, by investigating the parent of <code>S</code> just defined above.</p>
+
 <sage>
 <input>P = S.parent()
 P
@@ -1512,7 +1538,8 @@ Vector space of dimension 3 over Rational Field
 </output>
 </sage>
 
-<q>Morphism</q> is a general term for a function that <q>preserves structure</q> or <q>respects operations.</q>  In Sage a collection of morphisms is referenced as a <q>homset</q> or a <q>homspace.</q>  In this example, we have a homset that is the vector space of linear transformations that go from a dimension 2 vector space over the rationals to a dimension 3 vector space over the rationals.  What can we do with it?  A few things, but not everything you might imagine.  It does have a basis, containing a few very simple linear transformations:
+<p><q>Morphism</q> is a general term for a function that <q>preserves structure</q> or <q>respects operations.</q>  In Sage a collection of morphisms is referenced as a <q>homset</q> or a <q>homspace.</q>  In this example, we have a homset that is the vector space of linear transformations that go from a dimension 2 vector space over the rationals to a dimension 3 vector space over the rationals.  What can we do with it?  A few things, but not everything you might imagine.  It does have a basis, containing a few very simple linear transformations:</p>
+
 <sage>
 <input>P.basis()
 </input>
@@ -1549,7 +1576,8 @@ Codomain: Vector space of dimension 3 over Rational Field)
 </output>
 </sage>
 
-You can create a set of linear transformations with the <code>Hom()</code> function, simply by giving the domain and codomain.
+<p>You can create a set of linear transformations with the <code>Hom()</code> function, simply by giving the domain and codomain.</p>
+
 <sage>
 <input>H = Hom(QQ^6, QQ^9)
 H
@@ -1560,10 +1588,10 @@ Vector space of dimension 9 over Rational Field
 </output>
 </sage>
 
-An understanding of Sage's homsets is not critical to understanding the use of Sage during the remainder of this course.  But such an understanding can be very useful in understanding some of Sage's more advanced and powerful features.
-
+<p>An understanding of Sage's homsets is not critical to understanding the use of Sage during the remainder of this course.  But such an understanding can be very useful in understanding some of Sage's more advanced and powerful features.</p>
 
 </sageadvice>
+
 </subsection>
 
 <!--   End of  lt.tex -->
