@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xml:id="section-RREF" acro="RREF">
     <title>Reduced Row-Echelon Form</title>
-    <!-- %%%%%%%%%% -->
-    <!-- % -->
-    <!-- %  Section RREF -->
-    <!-- %  Reduced Row-Echelon Form -->
-    <!-- % -->
-    <!-- %%%%%%%%%% -->
     <introduction>
         <p>After solving a few systems of equations, you will recognize that it does not matter so much <em>what</em> we call our variables, as opposed to what numbers act as their coefficients.  A system in the variables <m>x_1,\,x_2,\,x_3</m>  would behave the same if we changed the names of the variables to <m>a,\,b,\,c</m> and kept all the constants the same and in the same places.  In this section, we will isolate the key bits of information about a system of equations into something called a matrix, and then use this matrix to systematically solve the equations.  Along the way we will obtain one of our most important and useful computational tools.</p>
     </introduction>
@@ -14,31 +8,19 @@
         <title>Matrix and Vector Notation for Systems of Equations</title>
         <definition xml:id="definition-M" acro="M">
             <title>Matrix</title>
-            <index>
-                <main>matrix</main>
-            </index>
+            <index>matrix</index>
+            <index><main>matrix</main><sub>notation</sub> </index>
+            <index><main>matrix entries</main><sub>notation</sub></index>
             <statement>
                 <p>An <m>m\times n</m> <term>matrix</term> is a rectangular layout of numbers from <m>\complexes</m> having <m>m</m> rows and <m>n</m> columns.  We will use upper-case Latin letters from the start of the alphabet (<m>A,\,B,\,C,\dotsc</m>) to denote matrices and squared-off brackets to delimit the layout.  Many use large parentheses instead of brackets <mdash/> the distinction is not important.  Rows of a matrix will be referenced starting at the top and working down (<ie/> row 1 is at the top) and columns will be referenced starting from the left (<ie/> column 1 is at the left).  For a matrix <m>A</m>, the notation <m>\matrixentry{A}{ij}</m> will refer to the complex number in row <m>i</m> and column <m>j</m> of <m>A</m>.</p>
             </statement>
             <notation xml:id="notation-M" acro="M">
-                <index>
-                    <main>matrix</main>
-                    <sub>notation</sub>
-                </index>
                 <description>Matrix</description>
-                <usage>
-                    <m>A</m>
-                </usage>
+                <usage><m>A</m></usage>
             </notation>
             <notation xml:id="notation-ME" acro="ME">
-                <index>
-                    <main>matrix entries</main>
-                    <sub>notation</sub>
-                </index>
                 <description>Matrix Entries</description>
-                <usage>
-                    <m>\matrixentry{A}{ij}</m>
-                </usage>
+                <usage><m>\matrixentry{A}{ij}</m></usage>
             </notation>
         </definition>
         <p>Be careful with this notation for individual entries, since it is easy to think that <m>\matrixentry{A}{ij}</m> refers to the <em>whole</em> matrix.  It does not.  It is just a <em>number</em>, but is a convenient way to talk about the individual entries simultaneously.  This notation will get a heavy workout once we get to <xref ref="chapter-M" acro="M" autoname="yes"/>.</p>
@@ -48,115 +30,113 @@
             </index>
             <title>A matrix</title>
             <p><me>B=\begin{bmatrix}
--1&amp;2&amp;5&amp;3\\
-1&amp;0&amp;-6&amp;1\\
--4&amp;2&amp;2&amp;-2
-\end{bmatrix}</me>
-is a matrix with <m>m=3</m> rows and <m>n=4</m> columns.  We can say that <m>\matrixentry{B}{2,3}=-6</m> while <m>\matrixentry{B}{3,4}=-2</m>.</p>
+                    -1&amp;2&amp;5&amp;3\\
+                    1&amp;0&amp;-6&amp;1\\
+                    -4&amp;2&amp;2&amp;-2
+                    \end{bmatrix}</me>is a matrix with <m>m=3</m> rows and <m>n=4</m> columns.  We can say that <m>\matrixentry{B}{2,3}=-6</m> while <m>\matrixentry{B}{3,4}=-2</m>.</p>
         </example>
         <computation xml:id="sage-M" acro="M">
             <title>Matrices</title>
-            <index>
-                <main>matrix creation</main>
-            </index>
+            <index>matrix creation</index>
             <p>Matrices are fundamental objects in linear algebra and in Sage, so there are a variety of ways to construct a matrix in Sage.  Generally, you need to specify what types of entries the matrix contains (more on that in a minute), the number of rows and columns, and the entries themselves.  First, let us dissect an example:</p>
             <sage xml:id="sagecell-M-1">
                 <input>
-A = matrix(QQ, 2, 3, [[1, 2, 3], [4, 5, 6]])
-A
-</input>
+                A = matrix(QQ, 2, 3, [[1, 2, 3], [4, 5, 6]])
+                A
+                </input>
                 <output>
-[1 2 3]
-[4 5 6]
-</output>
+                [1 2 3]
+                [4 5 6]
+                </output>
             </sage>
             <p><c>QQ</c> is the set of all rational numbers (fractions with an integer numerator and denominator), <c>2</c> is the number of rows, <c>3</c> is the number of columns.  Sage understands a list of items as delimited by brackets (<c>[,]</c>) and the items in the list can again be lists themselves.  So <c>[[1, 2, 3], [4, 5, 6]]</c> is a list of lists, and in this context the inner lists are rows of the matrix.</p>
             <p>There are various shortcuts you can employ when creating a matrix.  For example, Sage is able to infer the size of the matrix from the lists of entries.</p>
             <sage xml:id="sagecell-M-2">
                 <input>
-B = matrix(QQ, [[1, 2, 3], [4, 5, 6]])
-B
-</input>
+                B = matrix(QQ, [[1, 2, 3], [4, 5, 6]])
+                B
+                </input>
                 <output>
-[1 2 3]
-[4 5 6]
-</output>
+                [1 2 3]
+                [4 5 6]
+                </output>
             </sage>
             <p>Or you can specify how many rows the matrix will have and provide one big grand list of entries, which will get chopped up, row by row, if you prefer.</p>
             <sage xml:id="sagecell-M-3">
                 <input>
-C = matrix(QQ, 2, [1, 2, 3, 4, 5, 6])
-C
-</input>
+                C = matrix(QQ, 2, [1, 2, 3, 4, 5, 6])
+                C
+                </input>
                 <output>
-[1 2 3]
-[4 5 6]
-</output>
+                [1 2 3]
+                [4 5 6]
+                </output>
             </sage>
             <p>It is possible to also skip specifying the type of numbers used for entries of a matrix, however this is fraught with peril, as Sage will make an informed guess about your intent.  Is this what you want?  Consider when you enter the single character <q>2</q> into a computer program like Sage.  Is this the integer <m>2</m>, the rational number <m>\frac{2}{1}</m>, the real number <m>2.00000</m>, the complex number <m>2 + 0i</m>, or the polynomial <m>p(x)=2</m>?  In context, us humans can usually figure it out, but a literal-minded computer is not so smart.  It happens that the operations we can perform, and how they behave, are influenced by the type of the entries in a matrix.  So it is important to get this right and our advice is to be explicit and be in the habit of always specifying the type of the entries of a matrix you create.</p>
             <p>Mathematical objects in Sage often come from sets of similar objects.  This set is called the <q>parent</q> of the element.  We can use this to learn how Sage deduces the type of entries in a matrix.  Execute the following three compute cells in the Sage notebook, and notice how the three matrices are constructed to have entries from the integers, the rationals and the reals.</p>
             <sage xml:id="sagecell-M-4">
                 <input>
-A = matrix(2, 3, [[1, 2, 3], [4, 5, 6]])
-A.parent()
-</input>
+                A = matrix(2, 3, [[1, 2, 3], [4, 5, 6]])
+                A.parent()
+                </input>
                 <output>
-Full MatrixSpace of 2 by 3 dense matrices over Integer Ring
-</output>
+                Full MatrixSpace of 2 by 3 dense matrices over Integer Ring
+                </output>
             </sage>
             <sage xml:id="sagecell-M-5">
                 <input>
-B = matrix(2, 3, [[1, 2/3, 3], [4, 5, 6]])
-B.parent()
-</input>
+                B = matrix(2, 3, [[1, 2/3, 3], [4, 5, 6]])
+                B.parent()
+                </input>
                 <output>
-Full MatrixSpace of 2 by 3 dense matrices over Rational Field
-</output>
+                Full MatrixSpace of 2 by 3 dense matrices over Rational Field
+                </output>
             </sage>
             <sage xml:id="sagecell-M-6">
                 <input>
-C = matrix(2, 3, [[1, sin(2.2), 3], [4, 5, 6]])
-C.parent()
-</input>
+                C = matrix(2, 3, [[1, sin(2.2), 3], [4, 5, 6]])
+                C.parent()
+                </input>
                 <output>
-Full MatrixSpace of 2 by 3 dense matrices over
-Real Field with 53 bits of precision
-</output>
+                Full MatrixSpace of 2 by 3 dense matrices over
+                Real Field with 53 bits of precision
+                </output>
             </sage>
-            <p>Sage knows a wide variety of sets of numbers.  These are known as <q>rings</q> or <q>fields</q> (see <xref ref="section-F" acro="F" autoname="yes"/>), but we will call them <q>number systems</q> here.  Examples include: <c>ZZ</c> is the integers, <c>QQ</c> is the rationals, <c>RR</c> is the real numbers with reasonable precision, and <c>CC</c> is the complex numbers with reasonable precision.  We will present the theory of linear algebra over the complex numbers.  However, in any computer system, there will always be complications surrounding the inability of digital arithmetic to accurately represent all complex numbers.  In contrast, Sage can represent rational numbers exactly as the quotient of two (perhaps very large) integers.  So our Sage examples will begin by using <c>QQ</c> as our number system and we can concentrate on understanding the key concepts.</p>
+            <!-- Removed a cross-reference here to materall on fields -->
+            <p>Sage knows a wide variety of sets of numbers.  These are known formally as <term>rings</term> or <term>fields</term>, but we will refer to them generically as <term>number systems</term> here.  Examples include: <c>ZZ</c> is the integers, <c>QQ</c> is the rationals, <c>RR</c> is the real numbers with reasonable precision, and <c>CC</c> is the complex numbers with reasonable precision.  We will present the theory of linear algebra over the complex numbers.  However, in any computer system, there will always be complications surrounding the inability of digital arithmetic to accurately represent all complex numbers.  In contrast, Sage can represent rational numbers exactly as the quotient of two (perhaps very large) integers.  So our Sage examples will begin by using <c>QQ</c> as our number system and we can concentrate on understanding the key concepts.</p>
             <p>Once we have constructed a matrix, we can learn a lot about it (such as its parent).  Sage is largely object-oriented, which means many commands apply to an object by using the <q>dot</q> notation.  <c>A.parent()</c> is an example of this syntax, while the constructor <c>matrix([[1, 2, 3], [4, 5, 6]])</c> is an exception.  Here are a few examples, followed by some explanation:</p>
             <sage xml:id="sagecell-M-7">
                 <input>
-A = matrix(QQ, 2, 3, [[1,2,3],[4,5,6]])
-A.nrows(), A.ncols()
-</input>
+                A = matrix(QQ, 2, 3, [[1,2,3],[4,5,6]])
+                A.nrows(), A.ncols()
+                </input>
                 <output>
-(2, 3)
-</output>
+                (2, 3)
+                </output>
             </sage>
             <sage xml:id="sagecell-M-8">
                 <input>
-A.base_ring()
-</input>
+                A.base_ring()
+                </input>
                 <output>
-Rational Field
-</output>
+                Rational Field
+                </output>
             </sage>
             <sage xml:id="sagecell-M-9">
                 <input>
-A[1,1]
-</input>
+                A[1,1]
+                </input>
                 <output>
-5
-</output>
+                5
+                </output>
             </sage>
             <sage xml:id="sagecell-M-10">
                 <input>
-A[1,2]
-</input>
+                A[1,2]
+                </input>
                 <output>
-6
-</output>
+                6
+                </output>
             </sage>
             <p>The number of rows and the number of columns should be apparent, <c>.base_ring()</c> gives the number system for the entries, as included in the information provided by <c>.parent()</c>.</p>
             <p>Computer scientists and computer languages prefer to begin counting from zero, while mathematicians and written mathematics prefer to begin counting at one.  Sage and this text are no exception.  It takes some getting used to, but the reasons for counting from zero in computer programs soon becomes very obvious.  Counting from one in mathematics is historical, and unlikely to change anytime soon.  So above, the two rows of <c>A</c> are numbered 0 and 1, while the columns are numbered 0, 1 and 2.  So <c>A[1,2]</c> refers to the entry of <c>A</c> in the second row and the third column, <ie/> <c>6</c>.</p>
@@ -165,231 +145,201 @@ A[1,2]
         <p>When we do equation operations on system of equations, the names of the variables really are not very important.  Use <m>x_1</m>, <m>x_2</m>, <m>x_3</m>, or <m>a</m>, <m>b</m>, <m>c</m>, or <m>x</m>, <m>y</m>, <m>z</m>, it really does not matter.  In this subsection we will describe some notation that will make it easier to describe linear systems, solve the systems and describe the solution sets.  Here is a list of definitions, laden with notation.</p>
         <definition xml:id="definition-CV" acro="CV">
             <title>Column Vector</title>
-            <index>
-                <main>vector</main>
-                <sub>column</sub>
-            </index>
+            <index><main>vector</main><sub>column</sub></index>
+            <index><main>vector</main><sub>notation</sub></index> 
+            <index><main>vector entries</main><sub>notation</sub></index> 
             <statement>
                 <p>A <term>column vector</term> of <term>size</term> <m>m</m> is an ordered list of <m>m</m> numbers, which is written in order vertically, starting at the top and proceeding to the bottom.  At times, we will refer to a column vector as simply a <term>vector</term>.  Column vectors will be written in bold, usually with lower case Latin letter from the end of the alphabet such as <m>\vect{u}</m>, <m>\vect{v}</m>, <m>\vect{w}</m>, <m>\vect{x}</m>, <m>\vect{y}</m>, <m>\vect{z}</m>.  Some books like to write vectors with arrows, such as <m>\vec{u}</m>.  Writing by hand, some like to put arrows on top of the symbol, or a tilde underneath the symbol, as in <m>\underset{\sim}{\textstyle u}</m>.  To refer to the <term>entry</term> or <term>component</term> of vector <m>\vect{v}</m> in location <m>i</m> of the list, we write <m>\vectorentry{\vect{v}}{i}</m>.</p>
             </statement>
             <notation xml:id="notation-CV" acro="CV">
-                <index>
-                    <main>vector</main>
-                    <sub>notation</sub>
-                </index>
                 <description>Column Vector</description>
-                <usage>
-                    <m>\vect{v}</m>
-                </usage>
+                <usage><m>\vect{v}</m></usage>
             </notation>
             <notation xml:id="notation-CVE" acro="CVE">
-                <index>
-                    <main>vector entries</main>
-                    <sub>notation</sub>
-                </index>
                 <description>Column Vector Entries</description>
-                <usage>
-                    <m>\vectorentry{\vect{v}}{i}</m>
-                </usage>
+                <usage><m>\vectorentry{\vect{v}}{i}</m></usage>
             </notation>
         </definition>
         <p>Be careful with this notation.  While the symbols <m>\vectorentry{\vect{v}}{i}</m> might look somewhat substantial, as an object this represents just one entry of a vector, which is just a single complex number.</p>
         <definition xml:id="definition-ZCV" acro="ZCV">
             <title>Zero Column Vector</title>
-            <index>
-                <main>zero column vector</main>
-            </index>
+            <index>zero column vector</index>
+            <index><main>zero column vector</main><sub>notation</sub></index>
             <statement>
-                <p>The <term>zero vector</term> of size <m>m</m> is the column vector of size <m>m</m> where each entry is the number zero,
-<md><mrow>\zerovector=
-\colvector{0\\0\\0\\\vdots\\0}</mrow></md>
-or defined much more compactly, <m>\vectorentry{\zerovector}{i}=0</m> for <m>1\leq i\leq m</m>.</p>
+                <p>The <term>zero vector</term> of size <m>m</m> is the column vector of size <m>m</m> where each entry is the number zero,<md>
+                    <mrow>\zerovector=\colvector{0\\0\\0\\\vdots\\0}</mrow>
+                </md>or defined much more compactly, <m>\vectorentry{\zerovector}{i}=0</m> for <m>1\leq i\leq m</m>.</p>
             </statement>
             <notation xml:id="notation-ZCV" acro="ZCV">
-                <index>
-                    <main>zero column vector</main>
-                    <sub>notation</sub>
-                </index>
                 <description>Zero Column Vector</description>
-                <usage>
-                    <m>\zerovector</m>
-                </usage>
+                <usage><m>\zerovector</m></usage>
             </notation>
         </definition>
         <computation xml:id="sage-V" acro="V">
             <title>Vectors</title>
-            <index>
-                <main>vector creation</main>
-            </index>
+            <index>vector creation</index>
             <p>Vectors in Sage are built, manipulated and interrogated in much the same way as matrices (see Sage<nbsp/><xref ref="sage-M" acro="M" autoname="no"/>).  However as simple lists (<q>one-dimensional,</q> not <q>two-dimensional</q> such as matrices that look more tabular) they are simpler to construct and manipulate.  Sage will print a vector across the screen, even if we wish to interpret it as a column vector.  It will be delimited by parentheses (<c>(,)</c>) which allows us to distinguish a vector from a matrix with just one row, if we look carefully.  The number of <q>slots</q> in a vector is not referred to in Sage as rows or columns, but rather by <q>degree.</q>  Here are some examples (remember to start counting from zero):</p>
             <sage xml:id="sagecell-V-1">
                 <input>
-v = vector(QQ, 4, [1, 1/2, 1/3, 1/4])
-v
-</input>
+                v = vector(QQ, 4, [1, 1/2, 1/3, 1/4])
+                v
+                </input>
                 <output>
-(1, 1/2, 1/3, 1/4)
-</output>
+                (1, 1/2, 1/3, 1/4)
+                </output>
             </sage>
             <sage xml:id="sagecell-V-2">
                 <input>
-v.degree()
-</input>
+                v.degree()
+                </input>
                 <output>
-4
-</output>
+                4
+                </output>
             </sage>
             <sage xml:id="sagecell-V-3">
                 <input>
-v.parent()
-</input>
+                v.parent()
+                </input>
                 <output>
-Vector space of dimension 4 over Rational Field
-</output>
+                Vector space of dimension 4 over Rational Field
+                </output>
             </sage>
             <sage xml:id="sagecell-V-4">
                 <input>
-v[2]
-</input>
+                v[2]
+                </input>
                 <output>
-1/3
-</output>
+                1/3
+                </output>
             </sage>
             <sage xml:id="sagecell-V-5">
                 <input>
-w = vector([1, 2, 3, 4, 5, 6])
-w
-</input>
+                w = vector([1, 2, 3, 4, 5, 6])
+                w
+                </input>
                 <output>
-(1, 2, 3, 4, 5, 6)
-</output>
+                (1, 2, 3, 4, 5, 6)
+                </output>
             </sage>
             <sage xml:id="sagecell-V-6">
                 <input>
-w.degree()
-</input>
+                w.degree()
+                </input>
                 <output>
-6
-</output>
+                6
+                </output>
             </sage>
             <sage xml:id="sagecell-V-7">
                 <input>
-w.parent()
-</input>
+                w.parent()
+                </input>
                 <output>
-Ambient free module of rank 6 over
-the principal ideal domain Integer Ring
-</output>
+                Ambient free module of rank 6 over
+                the principal ideal domain Integer Ring
+                </output>
             </sage>
             <sage xml:id="sagecell-V-8">
                 <input>
-w[3]
-</input>
+                w[3]
+                </input>
                 <output>
-4
-</output>
+                4
+                </output>
             </sage>
             <p>Notice that if you use commands like <c>.parent()</c> you will sometimes see references to <q>free modules.</q>  This is a technical generalization of the notion of a vector, which is beyond the scope of this course, so just mentally convert to vectors when you see this term.</p>
             <p>The zero vector is super easy to build, but be sure to specify what number system your zero is from.</p>
             <sage xml:id="sagecell-V-9">
                 <input>
-z = zero_vector(QQ, 5)
-z
-</input>
+                z = zero_vector(QQ, 5)
+                z
+                </input>
                 <output>
-(0, 0, 0, 0, 0)
-</output>
+                (0, 0, 0, 0, 0)
+                </output>
             </sage>
             <p>Notice that while using Sage, we try to remain consistent with our mathematical notation conventions.  This is not required, as you can give items in Sage very long names if you wish.  For example, the following is perfectly legitimate, as you can see.</p>
             <sage xml:id="sagecell-V-10">
                 <input>
-blatzo = matrix(QQ, 2, [1, 2, 3, 4])
-blatzo
-</input>
+                blatzo = matrix(QQ, 2, [1, 2, 3, 4])
+                blatzo
+                </input>
                 <output>
-[1 2]
-[3 4]
-</output>
+                [1 2]
+                [3 4]
+                </output>
             </sage>
             <p>In fact, our use of capital letters for matrices actually contradicts some of the conventions for naming objects in Sage, so there are good reasons for <em>not</em> mirroring our mathematical notation.</p>
         </computation>
         <definition xml:id="definition-CM" acro="CM">
             <title>Coefficient Matrix</title>
-            <index>
-                <main>coefficient matrix</main>
-            </index>
+            <index>coefficient matrix</index>
             <statement>
-                <p>For a system of linear equations,
-<md><mrow>a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&amp;=b_1</mrow><mrow>a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&amp;=b_2</mrow><mrow>a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&amp;=b_3</mrow><mrow>\vdots&amp;</mrow><mrow>a_{m1}x_1+a_{m2}x_2+a_{m3}x_3+\dots+a_{mn}x_n&amp;=b_m</mrow></md>
-the <term>coefficient matrix</term> is the <m>m\times n</m> matrix
-<me>A=
-\begin{bmatrix}
-a_{11}&amp;a_{12}&amp;a_{13}&amp;\dots&amp;a_{1n}\\
-a_{21}&amp;a_{22}&amp;a_{23}&amp;\dots&amp;a_{2n}\\
-a_{31}&amp;a_{32}&amp;a_{33}&amp;\dots&amp;a_{3n}\\
-\vdots&amp;\\
-a_{m1}&amp;a_{m2}&amp;a_{m3}&amp;\dots&amp;a_{mn}\\
-\end{bmatrix}</me>
-</p>
+                <p>For a system of linear equations,<md>
+                    <mrow>a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&amp;=b_1</mrow>
+                    <mrow>a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&amp;=b_2</mrow>
+                    <mrow>a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&amp;=b_3</mrow>
+                    <mrow>\vdots&amp;</mrow>
+                    <mrow>a_{m1}x_1+a_{m2}x_2+a_{m3}x_3+\dots+a_{mn}x_n&amp;=b_m</mrow>
+                </md>the <term>coefficient matrix</term> is the <m>m\times n</m> matrix
+                <me>A=
+                \begin{bmatrix}
+                a_{11}&amp;a_{12}&amp;a_{13}&amp;\dots&amp;a_{1n}\\
+                a_{21}&amp;a_{22}&amp;a_{23}&amp;\dots&amp;a_{2n}\\
+                a_{31}&amp;a_{32}&amp;a_{33}&amp;\dots&amp;a_{3n}\\
+                \vdots&amp;\\
+                a_{m1}&amp;a_{m2}&amp;a_{m3}&amp;\dots&amp;a_{mn}\\
+                \end{bmatrix}</me></p>
             </statement>
         </definition>
         <definition xml:id="definition-VOC" acro="VOC">
             <title>Vector of Constants</title>
-            <index>
-                <main>vector</main>
-                <sub>of constants</sub>
-            </index>
+            <index><main>vector</main><sub>of constants</sub></index>
             <statement>
-                <p>For a system of linear equations,
-<md><mrow>a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&amp;=b_1</mrow><mrow>a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&amp;=b_2</mrow><mrow>a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&amp;=b_3</mrow><mrow>\vdots&amp;</mrow><mrow>a_{m1}x_1+a_{m2}x_2+a_{m3}x_3+\dots+a_{mn}x_n&amp;=b_m</mrow></md>
-the <term>vector of constants</term> is the column vector of size <m>m</m>
-<me>\vect{b}=
-\begin{bmatrix}
-b_1\\
-b_2\\
-b_3\\
-\vdots\\
-b_m\\
-\end{bmatrix}</me>
-</p>
+                <p>For a system of linear equations, <md>
+                    <mrow>a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&amp;=b_1</mrow>
+                    <mrow>a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&amp;=b_2</mrow>
+                    <mrow>a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&amp;=b_3</mrow>
+                    <mrow>\vdots&amp;</mrow>
+                    <mrow>a_{m1}x_1+a_{m2}x_2+a_{m3}x_3+\dots+a_{mn}x_n&amp;=b_m</mrow>
+                </md>the <term>vector of constants</term> is the column vector of size <m>m</m><me>\vect{b}=
+                \begin{bmatrix}
+                b_1\\
+                b_2\\
+                b_3\\
+                \vdots\\
+                b_m\\
+                \end{bmatrix}</me></p>
             </statement>
         </definition>
         <definition xml:id="definition-SOLV" acro="SOLV">
             <title>Solution Vector</title>
-            <index>
-                <main>solution vector</main>
-            </index>
+            <index>solution vector</index>
             <statement>
-                <p>For a system of linear equations,
-<md><mrow>a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&amp;=b_1</mrow><mrow>a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&amp;=b_2</mrow><mrow>a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&amp;=b_3</mrow><mrow>\vdots&amp;</mrow><mrow>a_{m1}x_1+a_{m2}x_2+a_{m3}x_3+\dots+a_{mn}x_n&amp;=b_m</mrow></md>
-the <term>solution vector</term> is the column vector of size <m>n</m>
-<me>\vect{x}=
-\begin{bmatrix}
-x_1\\
-x_2\\
-x_3\\
-\vdots\\
-x_n\\
-\end{bmatrix}</me>
-</p>
+                <p>For a system of linear equations,<md>
+                    <mrow>a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&amp;=b_1</mrow>
+                    <mrow>a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&amp;=b_2</mrow>
+                    <mrow>a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&amp;=b_3</mrow>
+                    <mrow>\vdots&amp;</mrow>
+                    <mrow>a_{m1}x_1+a_{m2}x_2+a_{m3}x_3+\dots+a_{mn}x_n&amp;=b_m</mrow>
+                </md>the <term>solution vector</term> is the column vector of size <m>n</m><me>\vect{x}=
+                    \begin{bmatrix}
+                    x_1\\
+                    x_2\\
+                    x_3\\
+                    \vdots\\
+                    x_n\\
+                    \end{bmatrix}</me></p>
             </statement>
         </definition>
         <p>The solution vector may do double-duty on occasion.  It might refer to a list of variable quantities at one point, and subsequently refer to values of those variables that actually form a particular solution to that system.</p>
         <definition xml:id="definition-MRLS" acro="MRLS">
             <title>Matrix Representation of a Linear System</title>
-            <index>
-                <main>linear system</main>
-                <sub>matrix representation</sub>
-            </index>
+            <index><main>linear system</main><sub>matrix representation</sub></index>
+            <index><main>linear system</main><sub>matrix representation</sub><sub>notation</sub></index>
             <statement>
                 <p>If <m>A</m> is the coefficient matrix of a system of linear equations and <m>\vect{b}</m> is the vector of constants, then we will write <m>\linearsystem{A}{\vect{b}}</m> as a shorthand expression for the  system of linear equations, which we will refer to as the <term>matrix representation</term> of the linear system.</p>
             </statement>
             <notation xml:id="notation-MRLS" acro="MRLS">
-                <index>
-                    <main>linear system</main>
-                    <sub>matrix representation</sub>
-                    <sub>notation</sub>
-                </index>
                 <description>Matrix Representation of a Linear System</description>
                 <usage>
                     <m>\linearsystem{A}{\vect{b}}</m>
@@ -397,108 +347,94 @@ x_n\\
             </notation>
         </definition>
         <example xml:id="example-NSLE" acro="NSLE">
-            <index>
-                <main>linear systems</main>
-                <sub>notation</sub>
-            </index>
             <title>Notation for systems of linear equations</title>
-            <p>The system of linear equations
-<md><mrow>2x_1+4x_2-3x_3+5x_4+x_5&amp;=9</mrow><mrow>3x_1+x_2+\quad\quad x_4-3x_5&amp;=0</mrow><mrow>-2x_1+7x_2-5x_3+2x_4+2x_5&amp;=-3</mrow></md>
-has coefficient matrix
-<me>A=
-\begin{bmatrix}
-2 &amp; 4 &amp; -3 &amp; 5 &amp; 1\\
-3 &amp; 1 &amp; 0 &amp; 1 &amp; -3\\
--2 &amp; 7 &amp; -5 &amp; 2 &amp; 2
-\end{bmatrix}</me>
-and vector of constants
-<me>\vect{b}=\colvector{9\\0\\-3}</me>
-and so will be referenced as <m>\linearsystem{A}{\vect{b}}</m>.</p>
+            <index><main>linear system</main><sub>notation</sub></index>
+            <p>The system of linear equations <md>
+                <mrow>2x_1+4x_2-3x_3+5x_4+x_5&amp;=9</mrow>
+                <mrow>3x_1+x_2+\quad\quad x_4-3x_5&amp;=0</mrow>
+                <mrow>-2x_1+7x_2-5x_3+2x_4+2x_5&amp;=-3</mrow>
+            </md> has coefficient matrix<me>A=
+            \begin{bmatrix}
+            2 &amp; 4 &amp; -3 &amp; 5 &amp; 1\\
+            3 &amp; 1 &amp; 0 &amp; 1 &amp; -3\\
+            -2 &amp; 7 &amp; -5 &amp; 2 &amp; 2
+            \end{bmatrix}</me>and vector of constants<me>\vect{b}=\colvector{9\\0\\-3}</me>and so will be referenced as <m>\linearsystem{A}{\vect{b}}</m>.</p>
         </example>
         <definition xml:id="definition-AM" acro="AM">
             <title>Augmented Matrix</title>
-            <index>
-                <main>matrix</main>
-                <sub>augmented</sub>
-            </index>
+            <index><main>matrix</main><sub>augmented</sub></index>
+            <index><main>matrix</main><sub>augmented</sub><sub>notation</sub></index>
             <statement>
                 <p>Suppose we have a system of <m>m</m> equations in <m>n</m> variables, with coefficient matrix <m>A</m> and vector of constants <m>\vect{b}</m>.  Then the <term>augmented matrix</term> of the system of equations is the <m>m\times(n+1)</m> matrix whose first <m>n</m> columns are the columns of <m>A</m> and whose last column (<m>n+1</m>) is the column vector <m>\vect{b}</m>.  This matrix will be written as <m>\augmented{A}{\vect{b}}</m>.</p>
             </statement>
             <notation xml:id="notation-AM" acro="AM">
-                <index>
-                    <main>augmented matrix</main>
-                    <sub>notation</sub>
-                </index>
                 <description>Augmented Matrix</description>
-                <usage>
-                    <m>\augmented{A}{\vect{b}}</m>
-                </usage>
+                <usage> <m>\augmented{A}{\vect{b}}</m></usage>
             </notation>
         </definition>
         <p>The augmented matrix <em>represents</em> all the important information in the system of equations, since the names of the variables have been ignored, and the only connection with the variables is the location of their coefficients in the matrix.  It is important to realize that the augmented matrix is just that, a matrix, and <em>not</em> a system of equations.  In particular, the augmented matrix does not have any <q>solutions,</q> though it will be useful for finding solutions to the system of equations that it is associated with.  (Think about your objects, and review Proof Technique<nbsp/><xref ref="technique-L" acro="L" autoname="no"/>.)  However, notice that an augmented matrix always belongs to some system of equations, and vice versa, so it is tempting to try and blur the distinction between the two.  Here is a quick example.</p>
         <example xml:id="example-AMAA" acro="AMAA">
-            <index>
-                <main>archetype A</main>
-                <sub>augmented matrix</sub>
-            </index>
             <title>Augmented matrix for Archetype A</title>
-            <p>Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/> is the following system of 3 equations in 3 variables.
-<!-- Archetype A, Part systemdefn --><systemdefn><md><mrow>x_1 -x_2 +2x_3 &amp; =1</mrow><mrow>2x_1+ x_2 + x_3 &amp; =8</mrow><mrow>x_1 + x_2 &amp; =5</mrow></md></systemdefn>
-Here is its augmented matrix.
-<md><mrow><!-- Archetype A, Part augmented -->\begin{bmatrix}
-1 &amp; -1 &amp; 2 &amp; 1\\
-2 &amp; 1 &amp; 1 &amp; 8\\
-1 &amp; 1 &amp; 0 &amp; 5
-\end{bmatrix}</mrow></md>
-</p>
+            <index><main>archetype A</main><sub>augmented matrix</sub></index>
+            <!-- Archetype A, Part systemdefn -->
+            <!-- Archetype A, Part augmented -->
+            <p>Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/> is the following system of 3 equations in 3 variables.<md>
+                <mrow>x_1 -x_2 +2x_3 &amp; =1</mrow>
+                <mrow>2x_1+ x_2 + x_3 &amp; =8</mrow>
+                <mrow>x_1 + x_2 &amp; =5</mrow>
+            </md>Here is its augmented matrix.<md>
+                <mrow>\begin{bmatrix}
+                1 &amp; -1 &amp; 2 &amp; 1\\
+                2 &amp; 1 &amp; 1 &amp; 8\\
+                1 &amp; 1 &amp; 0 &amp; 5
+                \end{bmatrix}</mrow>
+            </md></p>
         </example>
         <computation xml:id="sage-AM" acro="AM">
             <title>Augmented Matrix</title>
-            <index>
-                <main>augmented matrix</main>
-            </index>
+            <index>augmented matrix</index>
             <p>Sage has a matrix method, <c>.augment()</c>, that will join two matrices, side-by-side provided they both have the same number of rows.  The same method will allow you to augment a matrix with a column vector, as described in <xref ref="definition-AM" acro="AM" autoname="yes"/>, provided the number of entries in the vector matches the number of rows for the matrix.  Here we reprise the construction in <xref ref="example-AMAA" acro="AMAA" autoname="yes"/>.  We will now format our matrices as input across several lines, a practice you may use in your own worksheets, or not.</p>
             <sage xml:id="sagecell-AM-1">
                 <input>
-A = matrix(QQ, 3, 3, [[1, -1, 2],
-                      [2,  1, 1],
-                      [1,  1, 0]])
-b = vector(QQ, [1, 8, 5])
-M = A.augment(b)
-M
-</input>
+                A = matrix(QQ, 3, 3, [[1, -1, 2],
+                                      [2,  1, 1],
+                                      [1,  1, 0]])
+                b = vector(QQ, [1, 8, 5])
+                M = A.augment(b)
+                M
+                </input>
                 <output>
-[ 1 -1  2  1]
-[ 2  1  1  8]
-[ 1  1  0  5]
-</output>
+                [ 1 -1  2  1]
+                [ 2  1  1  8]
+                [ 1  1  0  5]
+                </output>
             </sage>
             <p>Notice that the matrix method <c>.augment()</c> needs some input, in the above case, the vector <c>b</c>.  This will explain the need for the parentheses on the end of the <q>dot</q> commands, even if the particular command does not expect input.</p>
             <p>Some methods allow optional input, typically using keywords.  Matrices can track subdivisions, making breaks between rows and/or columns.  When augmenting, you can ask for the subdivision to be included.  Evalute the compute cell above if you have not already, so that <c>A</c> and <c>b</c> are defined, and then evaluate:</p>
             <sage xml:id="sagecell-AM-2">
                 <input>
-M = A.augment(b, subdivide=True)
-M
-</input>
+                M = A.augment(b, subdivide=True)
+                M
+                </input>
                 <output>
-[ 1 -1  2| 1]
-[ 2  1  1| 8]
-[ 1  1  0| 5]
-</output>
+                [ 1 -1  2| 1]
+                [ 2  1  1| 8]
+                [ 1  1  0| 5]
+                </output>
             </sage>
             <p>As a partial demonstration of manipulating subdivisions of matrices we can reset the subdivisions of <c>M</c> with the <c>.subdivide()</c> method.  We provide a list of rows to subdivide <em>before</em>, then a list of columns to subdivide <em>before</em>, where we remember that counting begins at zero.</p>
             <sage xml:id="sagecell-AM-3">
                 <input>
-M.subdivide([1,2],[1])
-M
-</input>
+                M.subdivide([1,2],[1])
+                M
+                </input>
                 <output>
-[ 1|-1  2  1]
-[--+--------]
-[ 2| 1  1  8]
-[--+--------]
-[ 1| 1  0  5]
-</output>
+                [ 1|-1  2  1]
+                [--+--------]
+                [ 2| 1  1  8]
+                [--+--------]
+                [ 1| 1  0  5]
+                </output>
             </sage>
         </computation>
     </subsection>
@@ -507,109 +443,81 @@ M
         <p>An augmented matrix for a system of equations will save us the tedium of continually writing down the names of the variables as we solve the system.  It will also release us from any dependence on the actual names of the variables.  We have seen how certain operations we can perform on equations (<xref ref="definition-EO" acro="EO" autoname="yes"/>) will preserve their solutions (<xref ref="theorem-EOPSS" acro="EOPSS" autoname="yes"/>).  The next two definitions and the following theorem carry over these ideas to augmented matrices.</p>
         <definition xml:id="definition-RO" acro="RO">
             <title>Row Operations</title>
-            <index>
-                <main>row operations</main>
-            </index>
+            <index>row operations</index>
+            <index><main>row operation</main><sub>swap</sub><sub>notation</sub></index>
+            <index><main>row operation</main><sub>multiply</sub><sub>notation</sub></index>
+            <index><main>row operation</main><sub>add</sub><sub>notation</sub></index>
             <statement>
-                <p>The following three operations will transform an <m>m\times n</m> matrix into a different matrix of the same size, and each is known as a <term>row operation</term>.
-<ol><li> Swap the locations of two rows.
-</li><li> Multiply each entry of a single row by a nonzero quantity.
-</li><li> Multiply each entry of one row by some quantity, and add these values to the entries in the same columns of a second row.  Leave the first row the same after this operation, but replace the second row by the new values.
-</li></ol>
-We will use a symbolic shorthand to describe these row operations:
-<ol><li><m>\rowopswap{i}{j}</m>: Swap the location of rows <m>i</m> and <m>j</m>.
-</li><li><m>\rowopmult{\alpha}{i}</m>: Multiply row <m>i</m> by the nonzero scalar <m>\alpha</m>.
-</li><li><m>\rowopadd{\alpha}{i}{j}</m>: Multiply row <m>i</m> by the scalar <m>\alpha</m> and add to row <m>j</m>.
-</li></ol></p>
+                <p>The following three operations will transform an <m>m\times n</m> matrix into a different matrix of the same size, and each is known as a <term>row operation</term>. <ol>
+                    <li>Swap the locations of two rows.</li>
+                    <li>Multiply each entry of a single row by a nonzero quantity.</li>
+                    <li>Multiply each entry of one row by some quantity, and add these values to the entries in the same columns of a second row.  Leave the first row the same after this operation, but replace the second row by the new values.</li>
+                </ol>We will use a symbolic shorthand to describe these row operations:<ol>
+                    <li><m>\rowopswap{i}{j}</m>: Swap the location of rows <m>i</m> and <m>j</m>.</li>
+                    <li><m>\rowopmult{\alpha}{i}</m>: Multiply row <m>i</m> by the nonzero scalar <m>\alpha</m>.</li>
+                    <li><m>\rowopadd{\alpha}{i}{j}</m>: Multiply row <m>i</m> by the scalar <m>\alpha</m> and add to row <m>j</m>.</li>
+                </ol></p>
             </statement>
             <notation xml:id="notation-ROS" acro="ROS">
-                <index>
-                    <main>row operation</main>
-                    <sub>swap</sub>
-                    <sub>notation</sub>
-                </index>
                 <description>Row Operation, Swap</description>
-                <usage>
-                    <m>\rowopswap{i}{j}</m>
-                </usage>
+                <usage><m>\rowopswap{i}{j}</m></usage>
             </notation>
             <notation xml:id="notation-ROM" acro="ROM">
-                <index>
-                    <main>row operation</main>
-                    <sub>multiply</sub>
-                    <sub>notation</sub>
-                </index>
                 <description>Row Operation, Multiply</description>
-                <usage>
-                    <m>\rowopmult{\alpha}{i}</m>
-                </usage>
+                <usage><m>\rowopmult{\alpha}{i}</m> </usage>
             </notation>
             <notation xml:id="notation-ROA" acro="ROA">
-                <index>
-                    <main>row operation</main>
-                    <sub>add</sub>
-                    <sub>notation</sub>
-                </index>
                 <description>Row Operation, Add</description>
-                <usage>
-                    <m>\rowopadd{\alpha}{i}{j}</m>
-                </usage>
+                <usage><m>\rowopadd{\alpha}{i}{j}</m></usage>
             </notation>
         </definition>
         <definition xml:id="definition-REM" acro="REM">
             <title>Row-Equivalent Matrices</title>
-            <index>
-                <main>row-equivalent matrices</main>
-            </index>
+            <index>row-equivalent matrices</index>
             <statement>
                 <p>Two matrices, <m>A</m> and <m>B</m>, are <term>row-equivalent</term> if one can be obtained from the other by a sequence of row operations.</p>
             </statement>
         </definition>
         <example xml:id="example-TREM" acro="TREM">
-            <index>
-                <main>row-equivalent matrices</main>
-            </index>
             <title>Two row-equivalent matrices</title>
-            <p>The matrices
-<md><mrow>A=\begin{bmatrix}
-2&amp;-1&amp;3&amp;4\\
-5&amp;2&amp;-2&amp;3\\
-1&amp;1&amp;0&amp;6
-\end{bmatrix}
-&amp;&amp;
-B=\begin{bmatrix}
-1&amp;1&amp;0&amp;6\\
-3&amp;0&amp;-2&amp;-9\\
-2&amp;-1&amp;3&amp;4
-\end{bmatrix}</mrow></md>
-are row-equivalent as can be seen from
-<md><mrow>\begin{bmatrix}
-2&amp;-1&amp;3&amp;4\\
-5&amp;2&amp;-2&amp;3\\
-1&amp;1&amp;0&amp;6
-\end{bmatrix}
-\xrightarrow{\rowopswap{1}{3}}
-\begin{bmatrix}
-1&amp;1&amp;0&amp;6\\
-5&amp;2&amp;-2&amp;3\\
-2&amp;-1&amp;3&amp;4
-\end{bmatrix}
-&amp;
-\xrightarrow{\rowopadd{-2}{1}{2}}
-\begin{bmatrix}
-1&amp;1&amp;0&amp;6\\
-3&amp;0&amp;-2&amp;-9\\
-2&amp;-1&amp;3&amp;4
-\end{bmatrix}</mrow></md>
-We can also say that any pair of these three matrices are row-equivalent.</p>
+            <index>row-equivalent matrices</index>
+            <p>The matrices<md>
+                <mrow>A=\begin{bmatrix}
+                2&amp;-1&amp;3&amp;4\\
+                5&amp;2&amp;-2&amp;3\\
+                1&amp;1&amp;0&amp;6
+                \end{bmatrix}
+                &amp;&amp;
+                B=\begin{bmatrix}
+                1&amp;1&amp;0&amp;6\\
+                3&amp;0&amp;-2&amp;-9\\
+                2&amp;-1&amp;3&amp;4
+                \end{bmatrix}</mrow>
+            </md>are row-equivalent as can be seen from<md>
+                <mrow>\begin{bmatrix}
+                2&amp;-1&amp;3&amp;4\\
+                5&amp;2&amp;-2&amp;3\\
+                1&amp;1&amp;0&amp;6
+                \end{bmatrix}
+                \xrightarrow{\rowopswap{1}{3}}
+                \begin{bmatrix}
+                1&amp;1&amp;0&amp;6\\
+                5&amp;2&amp;-2&amp;3\\
+                2&amp;-1&amp;3&amp;4
+                \end{bmatrix}
+                &amp;
+                \xrightarrow{\rowopadd{-2}{1}{2}}
+                \begin{bmatrix}
+                1&amp;1&amp;0&amp;6\\
+                3&amp;0&amp;-2&amp;-9\\
+                2&amp;-1&amp;3&amp;4
+                \end{bmatrix}</mrow></md>We can also say that any pair of these three matrices are row-equivalent.</p>
         </example>
         <p>Notice that each of the three row operations is reversible (<xref ref="exercise-RREF-T10" acro="RREF.T10" autoname="yes"/>), so we do not have to be careful about the distinction between <q><m>A</m> is row-equivalent to <m>B</m></q> and <q><m>B</m> is row-equivalent to <m>A</m>.</q> (<xref ref="exercise-RREF-T11" acro="RREF.T11" autoname="yes"/>)</p>
         <p>The preceding definitions are designed to make the following theorem possible.  It says that row-equivalent matrices represent systems of linear equations that have identical solution sets.</p>
         <theorem xml:id="theorem-REMES" acro="REMES">
-            <index>
-                <main>row-equivalent matrices</main>
-            </index>
             <title>Row-Equivalent Matrices represent Equivalent Systems</title>
+            <index>row-equivalent matrices</index>
             <statement>
                 <p>Suppose that <m>A</m> and <m>B</m> are row-equivalent augmented matrices.  Then the systems of linear equations that they represent are equivalent systems.</p>
             </statement>
@@ -618,179 +526,169 @@ We can also say that any pair of these three matrices are row-equivalent.</p>
             </proof>
         </theorem>
         <p>So at this point, our strategy is to begin with a system of equations, represent the system by an augmented matrix, perform row operations (which will preserve solutions for the system) to get a <q>simpler</q> augmented matrix, convert back to a <q>simpler</q>  system of equations and then solve that system, knowing that its solutions are those of the original system.  Here is a rehash of <xref ref="example-US" acro="US" autoname="yes"/> as an exercise in using our new tools.</p>
-        <!-- MBX: index entry may have math needing adjustment -->
         <example xml:id="example-USR" acro="USR">
-            <index>
-                <main>unique solution, 3\times 3</main>
-            </index>
             <title>Three equations, one solution, reprised</title>
-            <p>We solve the following system using augmented matrices and row operations.  This is the same system of equations solved in <xref ref="example-US" acro="US" autoname="yes"/> using equation operations.
-<md><mrow>x_1+2x_2+2x_3&amp;=4</mrow><mrow>x_1+3x_2+3x_3&amp;=5</mrow><mrow>2x_1+6x_2+5x_3&amp;=6</mrow></md>
-Form the augmented matrix,
-<md><mrow>A=\begin{bmatrix}
-1&amp;2&amp;2&amp;4\\
-1&amp;3&amp;3&amp;5\\
-2&amp;6&amp;5&amp;6
-\end{bmatrix}</mrow></md>
-and apply row operations,
-<md><mrow>\xrightarrow{\rowopadd{-1}{1}{2}}
-&amp;
-\begin{bmatrix}
-1&amp;2&amp;2&amp;4\\
-0&amp;1&amp;1&amp;1\\
-2&amp;6&amp;5&amp;6
-\end{bmatrix}
-\xrightarrow{\rowopadd{-2}{1}{3}}
-\begin{bmatrix}
-1&amp;2&amp;2&amp;4\\
-0&amp;1&amp;1&amp;1\\
-0&amp;2&amp;1&amp;-2
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{-2}{2}{3}}
-&amp;
-\begin{bmatrix}
-1&amp;2&amp;2&amp;4\\
-0&amp;1&amp;1&amp;1\\
-0&amp;0&amp;-1&amp;-4
-\end{bmatrix}
-\xrightarrow{\rowopmult{-1}{3}}
-\begin{bmatrix}
-1&amp;2&amp;2&amp;4\\
-0&amp;1&amp; 1&amp;1\\
-0&amp;0&amp;1&amp;4
-\end{bmatrix}</mrow></md></p>
-            <p>So the matrix
-<me>B=\begin{bmatrix}
-1&amp;2&amp;2&amp;4\\
-0&amp;1&amp; 1&amp;1\\
-0&amp;0&amp;1&amp;4
-\end{bmatrix}</me>
-is row equivalent to <m>A</m>
-and by <xref ref="theorem-REMES" acro="REMES" autoname="yes"/> the system of equations below has the same solution set as the original system of equations.
-<md><mrow>x_1+2x_2+2x_3&amp;=4</mrow><mrow>x_2+ x_3&amp;=1</mrow><mrow>x_3&amp;=4</mrow></md></p>
-            <p>Solving this <q>simpler</q> system is straightforward and is identical to the process in <xref ref="example-US" acro="US" autoname="yes"/>.</p>
+            <index>unique solution, <m>3\times 3</m></index>
+            <p>We solve the following system using augmented matrices and row operations.  This is the same system of equations solved in <xref ref="example-US" acro="US" autoname="yes"/> using equation operations.<md>
+                <mrow>x_1+2x_2+2x_3&amp;=4</mrow>
+                <mrow>x_1+3x_2+3x_3&amp;=5</mrow>
+                <mrow>2x_1+6x_2+5x_3&amp;=6</mrow>
+            </md>Form the augmented matrix,<md>
+                <mrow>A=\begin{bmatrix}
+                1&amp;2&amp;2&amp;4\\
+                1&amp;3&amp;3&amp;5\\
+                2&amp;6&amp;5&amp;6
+                \end{bmatrix}</mrow>
+            </md>and apply row operations,<md>
+                <mrow>\xrightarrow{\rowopadd{-1}{1}{2}}
+                &amp;
+                \begin{bmatrix}
+                1&amp;2&amp;2&amp;4\\
+                0&amp;1&amp;1&amp;1\\
+                2&amp;6&amp;5&amp;6
+                \end{bmatrix}
+                \xrightarrow{\rowopadd{-2}{1}{3}}
+                \begin{bmatrix}
+                1&amp;2&amp;2&amp;4\\
+                0&amp;1&amp;1&amp;1\\
+                0&amp;2&amp;1&amp;-2
+                \end{bmatrix}</mrow>
+                <mrow>\xrightarrow{\rowopadd{-2}{2}{3}}
+                &amp;
+                \begin{bmatrix}
+                1&amp;2&amp;2&amp;4\\
+                0&amp;1&amp;1&amp;1\\
+                0&amp;0&amp;-1&amp;-4
+                \end{bmatrix}
+                \xrightarrow{\rowopmult{-1}{3}}
+                \begin{bmatrix}
+                1&amp;2&amp;2&amp;4\\
+                0&amp;1&amp; 1&amp;1\\
+                0&amp;0&amp;1&amp;4
+                \end{bmatrix}</mrow>
+            </md></p>
+            <p>So the matrix<me>B=\begin{bmatrix}
+                1&amp;2&amp;2&amp;4\\
+                0&amp;1&amp; 1&amp;1\\
+                0&amp;0&amp;1&amp;4
+                \end{bmatrix}</me>is row equivalent to <m>A</m> and by <xref ref="theorem-REMES" acro="REMES" autoname="yes"/> the system of equations below has the same solution set as the original system of equations. <md>
+                    <mrow>x_1+2x_2+2x_3&amp;=4</mrow>
+                    <mrow>x_2+ x_3&amp;=1</mrow>
+                    <mrow>x_3&amp;=4</mrow>
+                </md></p>
+                <p>Solving this <q>simpler</q> system is straightforward and is identical to the process in <xref ref="example-US" acro="US" autoname="yes"/>.</p>
         </example>
         <computation xml:id="sage-RO" acro="RO">
             <title>Row Operations</title>
-            <index>
-                <main>row operations</main>
-            </index>
+            <index>row operations</index>
             <p>Sage will perform individual row operations on a matrix.  This can get a bit tedious, but it is better than doing the computations (wrong, perhaps) by hand, and it can be useful when building up more complicated procedures for a matrix.</p>
             <p>For each row operation, there are two similar methods.  One changes the matrix <q>in-place</q> while the other creates a new matrix that is a modified version of the original.  This is an important distinction that you should understand for every new Sage command you learn that might change a matrix or vector.</p>
             <p>Consider the first row operation, which swaps two rows.  There are two matrix methods to do this, a <q>with</q> version that will create a new, changed matrix, which you will likely want to save, and a plain version that will change the matrix it operates on <q>in-place.</q>.  The <c>copy()</c> function, which is a general-purpose command, is a way to make a copy of a matrix before you make changes to it.  Study the example below carefully, and then read the explanation following. (Remember that counting begins with zero.)</p>
             <sage xml:id="sagecell-RO-1">
                 <input>
-A = matrix(QQ,2,3,[1,2,3,4,5,6])
-B = A
-C = copy(A)
-D = A.with_swapped_rows(0,1)
-D[0,0] = -1
-A.swap_rows(0,1)
-A[1,2] = -6
-A
-</input>
+                A = matrix(QQ,2,3,[1,2,3,4,5,6])
+                B = A
+                C = copy(A)
+                D = A.with_swapped_rows(0,1)
+                D[0,0] = -1
+                A.swap_rows(0,1)
+                A[1,2] = -6
+                A
+                </input>
                 <output>
-[ 4  5  6]
-[ 1  2 -6]
-</output>
+                [ 4  5  6]
+                [ 1  2 -6]
+                </output>
             </sage>
             <sage xml:id="sagecell-RO-2">
                 <input>
-B
-</input>
+                B
+                </input>
                 <output>
-[ 4  5  6]
-[ 1  2 -6]
-</output>
+                [ 4  5  6]
+                [ 1  2 -6]
+                </output>
             </sage>
             <sage xml:id="sagecell-RO-3">
                 <input>
-C
-</input>
+                C
+                </input>
                 <output>
-[1 2 3]
-[4 5 6]
-</output>
+                [1 2 3]
+                [4 5 6]
+                </output>
             </sage>
             <sage xml:id="sagecell-RO-4">
                 <input>
-D
-</input>
+                D
+                </input>
                 <output>
-[-1  5  6]
-[ 1  2  3]
-</output>
+                [-1  5  6]
+                [ 1  2  3]
+                </output>
             </sage>
             <p>Here is how each of these four matrices comes into existence.</p>
             <ol>
-                <li><c>A</c> is our original matrix, created from a list of entries.
-</li>
-                <li><c>B</c> is not a new copy of <c>A</c>, it is just a new name for referencing the exact same matrix internally.
-</li>
-                <li><c>C</c> is a brand new matrix, stored internally separate from <c>A</c>, but with identical contents.
-</li>
-                <li><c>D</c> is also a new matrix, which is created by swapping the rows of <c>A</c>
-</li>
+                <li><c>A</c> is our original matrix, created from a list of entries.</li>
+                <li><c>B</c> is not a new copy of <c>A</c>, it is just a new name for referencing the exact same matrix internally.</li>
+                <li><c>C</c> is a brand new matrix, stored internally separate from <c>A</c>, but with identical contents.</li>
+                <li><c>D</c> is also a new matrix, which is created by swapping the rows of <c>A</c></li>
             </ol>
             <p>And here is how each matrix is affected by the commands.</p>
             <ol>
-                <li><c>A</c> is changed twice <q>in-place</q>.  First, its rows are swapped rows a <q>plain</q> matrix method.  Then its entry in the lower-right corner is set to <c>-6</c>.
-</li>
-                <li><c>B</c> is just another name for <c>A</c>.  So whatever changes are made to <c>A</c> will be evident when we ask for the matrix by the name <c>B</c>.  And vice-versa.
-</li>
-                <li><c>C</c> is a copy of the original <c>A</c> and does not change, since no subsequent commands act on <c>C</c>.
-</li>
-                <li><c>D</c> is a new copy of <c>A</c>, created by swapping the rows of <c>A</c>.  Once created from <c>A</c>, it has a life of its own, as illustrated by the change in its entry in the upper-left corner to <c>-1</c>.
-</li>
+                <li><c>A</c> is changed twice <q>in-place</q>.  First, its rows are swapped rows a <q>plain</q> matrix method.  Then its entry in the lower-right corner is set to <c>-6</c>.</li>
+                <li><c>B</c> is just another name for <c>A</c>.  So whatever changes are made to <c>A</c> will be evident when we ask for the matrix by the name <c>B</c>.  And vice-versa.</li>
+                <li><c>C</c> is a copy of the original <c>A</c> and does not change, since no subsequent commands act on <c>C</c>.</li>
+                <li><c>D</c> is a new copy of <c>A</c>, created by swapping the rows of <c>A</c>.  Once created from <c>A</c>, it has a life of its own, as illustrated by the change in its entry in the upper-left corner to <c>-1</c>.</li>
             </ol>
             <p>An interesting experiment is to rearrange some of the lines above (or add new ones) and predict the result.</p>
             <p>Just as with the first row operation, swapping rows, Sage supports the other two row operations with natural sounding commands, with both <q>in-place</q> versions and new-matrix versions.</p>
             <sage xml:id="sagecell-RO-5">
                 <input>
-A = matrix(QQ, 3, 4, [[1,  2,  3,  4],
-                      [5,  6,  7,  8],
-                      [9, 10, 11, 12]])
-B = copy(A)
-A.rescale_row(1, 1/2)
-A
-</input>
+                A = matrix(QQ, 3, 4, [[1,  2,  3,  4],
+                                      [5,  6,  7,  8],
+                                      [9, 10, 11, 12]])
+                B = copy(A)
+                A.rescale_row(1, 1/2)
+                A
+                </input>
                 <output>
-[  1   2   3   4]
-[5/2   3 7/2   4]
-[  9  10  11  12]
-</output>
+                [  1   2   3   4]
+                [5/2   3 7/2   4]
+                [  9  10  11  12]
+                </output>
             </sage>
             <sage xml:id="sagecell-RO-6">
                 <input>
-A.add_multiple_of_row(2, 0, 10)
-A
-</input>
+                A.add_multiple_of_row(2, 0, 10)
+                A
+                </input>
                 <output>
-[  1   2   3   4]
-[5/2   3 7/2   4]
-[ 19  30  41  52]
-</output>
+                [  1   2   3   4]
+                [5/2   3 7/2   4]
+                [ 19  30  41  52]
+                </output>
             </sage>
             <sage xml:id="sagecell-RO-7">
                 <input>
-B.with_rescaled_row(1, 1/2)
-</input>
+                B.with_rescaled_row(1, 1/2)
+                </input>
                 <output>
-[  1   2   3   4]
-[5/2   3 7/2   4]
-[  9  10  11  12]
-</output>
+                [  1   2   3   4]
+                [5/2   3 7/2   4]
+                [  9  10  11  12]
+                </output>
             </sage>
             <sage xml:id="sagecell-RO-8">
                 <input>
-C = B.with_added_multiple_of_row(2, 0, 10)
-C
-</input>
+                C = B.with_added_multiple_of_row(2, 0, 10)
+                C
+                </input>
                 <output>
-[ 1  2  3  4]
-[ 5  6  7  8]
-[19 30 41 52]
-</output>
+                [ 1  2  3  4]
+                [ 5  6  7  8]
+                [19 30 41 52]
+                </output>
             </sage>
             <p>Notice that the order of the arguments might feel a bit odd, compared to how we write and think about row operations.  Also note how the <q>with</q> versions leave a trail of matrices for each step while the plain versions just keep changing <c>A</c>.</p>
         </computation>
@@ -800,25 +698,18 @@ C
         <p>The preceding example amply illustrates the definitions and theorems we have seen so far.  But it still leaves two questions unanswered.  Exactly what is this <q>simpler</q> form for a matrix, and just how do we get it?  Here is the answer to the first question, a definition of reduced row-echelon form.</p>
         <definition xml:id="definition-RREF" acro="RREF">
             <title>Reduced Row-Echelon Form</title>
-            <index>
-                <main>reduced row-echelon form</main>
-            </index>
+            <index>reduced row-echelon form</index>
+            <index><main>reduced row-echelon form</main><sub>analysis</sub><sub>notation</sub></index>
             <statement>
-                <p>A matrix is in <term>reduced row-echelon form</term> if it meets all of the following conditions:
-<ol><li> If there is a row where every entry is zero, then this row lies below any other row that contains a nonzero entry.
-</li><li> The leftmost nonzero entry of a row is equal to 1.
-</li><li> The leftmost nonzero entry of a row is the only nonzero entry in its column.
-</li><li> Consider any two different leftmost nonzero entries, one located in row <m>i</m>, column <m>j</m> and the other located in row <m>s</m>, column <m>t</m>.  If <m>s&gt;i</m>, then <m>t&gt;j</m>.
-</li></ol>
-A row of only zero entries is called a <term>zero row</term> and the leftmost nonzero entry of a nonzero row is a <term>leading 1</term>.  A column containing a leading 1 will be called a <term>pivot column</term>.  The number of nonzero rows will be denoted by <m>r</m>, which is also equal to the number of leading 1's and the number of pivot columns.</p>
+                <p>A matrix is in <term>reduced row-echelon form</term> if it meets all of the following conditions:<ol>
+                    <li>If there is a row where every entry is zero, then this row lies below any other row that contains a nonzero entry.</li>
+                    <li>The leftmost nonzero entry of a row is equal to 1. </li><li> The leftmost nonzero entry of a row is the only nonzero entry in its column.</li>
+                    <li>Consider any two different leftmost nonzero entries, one located in row <m>i</m>, column <m>j</m> and the other located in row <m>s</m>, column <m>t</m>.  If <m>s&gt;i</m>, then <m>t&gt;j</m>.</li>
+                </ol></p>
+                <p>A row of only zero entries is called a <term>zero row</term> and the leftmost nonzero entry of a nonzero row is a <term>leading 1</term>.  A column containing a leading 1 will be called a <term>pivot column</term>.  The number of nonzero rows will be denoted by <m>r</m>, which is also equal to the number of leading 1's and the number of pivot columns.</p>
                 <p>The set of column indices for the pivot columns will be denoted by <m>D=\set{d_1,\,d_2,\,d_3,\,\ldots,\,d_r}</m> where <m>d_1\lt d_2\lt d_3\lt\cdots\lt d_r</m>, while the columns that are not pivot columns will be denoted as <m>F=\set{f_1,\,f_2,\,f_3,\,\ldots,\,f_{n-r}}</m> where <m>f_1\lt f_2\lt f_3\lt\cdots\lt f_{n-r}</m>.</p>
             </statement>
             <notation xml:id="notation-RREFA" acro="RREFA">
-                <index>
-                    <main>reduced row-echelon form</main>
-                    <sub>analysis</sub>
-                    <sub>notation</sub>
-                </index>
                 <description>Reduced Row-Echelon Form Analysis</description>
                 <usage><m>r</m>, <m>D</m>, <m>F</m></usage>
             </notation>
@@ -826,491 +717,464 @@ A row of only zero entries is called a <term>zero row</term> and the leftmost no
         <p>The principal feature of reduced row-echelon form is the pattern of leading 1's guaranteed by conditions (2) and (4), reminiscent of a flight of geese, or steps in a staircase, or water cascading down a mountain stream.</p>
         <p>There are a number of new terms and notation introduced in this definition, which should make you suspect that this is an important definition.  Given all there is to digest here, we will mostly save the use of <m>D</m> and <m>F</m> until <xref ref="section-TSS" acro="TSS" autoname="yes"/>.  However, one important point to make here is that all of these terms and notation apply to a matrix.  Sometimes we will employ these terms and sets for an augmented matrix, and other times it might be a coefficient matrix.  So always give some thought to exactly which type of matrix you are analyzing.</p>
         <example xml:id="example-RREF" acro="RREF">
-            <index>
-                <main>reduced row-echelon form</main>
-            </index>
             <title>A matrix in reduced row-echelon form</title>
-            <p>The matrix <m>C</m> is in reduced row-echelon form.
-<md><mrow>C&amp;=
-\begin{bmatrix}
-1&amp;-3&amp;0&amp;6&amp;0&amp;0&amp;-5&amp;9\\
-0&amp;0&amp;0&amp;0&amp;1&amp;0&amp;3&amp;-7\\
-0&amp;0&amp;0&amp;0&amp;0&amp;1&amp;7&amp;3\\
-0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0\\
-0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0
-\end{bmatrix}</mrow></md>
-This matrix has two zero rows and three pivot columns.   So <m>r=3</m>.  Columns 1, 5, and 6 are the three pivot columns, so <m>D=\set{1,\,5,\,6}</m> and then <m>F=\set{2,\,3,\,4,\,7,\,8}</m>.</p>
+            <index>reduced row-echelon form</index>
+            <p>The matrix <m>C</m> is in reduced row-echelon form.<md>
+                <mrow>C&amp;=
+                \begin{bmatrix}
+                1&amp;-3&amp;0&amp;6&amp;0&amp;0&amp;-5&amp;9\\
+                0&amp;0&amp;0&amp;0&amp;1&amp;0&amp;3&amp;-7\\
+                0&amp;0&amp;0&amp;0&amp;0&amp;1&amp;7&amp;3\\
+                0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0\\
+                0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0
+                \end{bmatrix}</mrow>
+            </md>This matrix has two zero rows and three pivot columns.  So <m>r=3</m>.  Columns 1, 5, and 6 are the three pivot columns, so <m>D=\set{1,\,5,\,6}</m> and then <m>F=\set{2,\,3,\,4,\,7,\,8}</m>.</p>
         </example>
         <example xml:id="example-NRREF" acro="NRREF">
-            <index>
-                <main>reduced row-echelon form</main>
-            </index>
             <title>A matrix not in reduced row-echelon form</title>
-            <p>The matrix <m>E</m> is not in reduced row-echelon form, as it fails each of the four requirements once.
-<md><mrow>E&amp;=
-\begin{bmatrix}
-1&amp;0&amp;-3&amp;0&amp;6&amp;0&amp;7&amp;-5&amp;9\\
-0&amp;0&amp;0&amp;5&amp;0&amp;1&amp;0&amp;3&amp;-7\\
-0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0\\
-0&amp;1&amp;0&amp;0&amp;0&amp;0&amp;0&amp;-4&amp;2\\
-0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;1&amp;7&amp;3\\
-0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0
-\end{bmatrix}</mrow></md></p>
+            <index>reduced row-echelon form</index>
+            <p>The matrix <m>E</m> is not in reduced row-echelon form, as it fails each of the four requirements once.<md>
+                <mrow>E&amp;=
+                \begin{bmatrix}
+                1&amp;0&amp;-3&amp;0&amp;6&amp;0&amp;7&amp;-5&amp;9\\
+                0&amp;0&amp;0&amp;5&amp;0&amp;1&amp;0&amp;3&amp;-7\\
+                0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0\\
+                0&amp;1&amp;0&amp;0&amp;0&amp;0&amp;0&amp;-4&amp;2\\
+                0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;1&amp;7&amp;3\\
+                0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0
+                \end{bmatrix}</mrow>
+            </md></p>
         </example>
         <p>Our next theorem has a <q>constructive</q> proof.  Learn about the meaning of this term in Proof Technique<nbsp/><xref ref="technique-C" acro="C" autoname="no"/>.</p>
         <theorem xml:id="theorem-REMEF" acro="REMEF">
-            <index>
-                <main>row-reduced matrices</main>
-            </index>
+            <index>row-reduced matrices</index>
             <title>Row-Equivalent Matrix in Echelon Form</title>
             <statement>
-                <p>Suppose <m>A</m> is a matrix.  Then there is a matrix <m>B</m> so that
-<ol><li><m>A</m> and <m>B</m> are row-equivalent.
-</li><li><m>B</m> is in reduced row-echelon form.
-</li></ol></p>
+                <p>Suppose <m>A</m> is a matrix.  Then there is a matrix <m>B</m> so that <ol>
+                    <li><m>A</m> and <m>B</m> are row-equivalent.</li>
+                    <li><m>B</m> is in reduced row-echelon form.</li>
+                </ol></p>
             </statement>
             <proof>
                 <p>Suppose that <m>A</m> has <m>m</m> rows and <m>n</m> columns.  We will describe a process for converting <m>A</m> into <m>B</m> via row operations.  This procedure is known as <term>Gauss-Jordan elimination</term>.  Tracing through this procedure will be easier if you recognize that <m>i</m> refers to a row that is being converted, <m>j</m> refers to a column that is being converted, and <m>r</m> keeps track of the number of nonzero rows.  Here we go.</p>
-                <p>
-                    <ol>
-                        <!--1-->
-                        <li>Set <m>j=0</m> and <m>r=0</m>.</li>
-                        <!--2-->
-                        <li>Increase <m>j</m> by 1.  If <m>j</m> now equals <m>n+1</m>, then stop.</li>
-                        <!--3-->
-                        <li>Examine the entries of <m>A</m> in column <m>j</m> located in rows <m>r+1</m> through <m>m</m>.  If all of these entries are zero, then go to Step 2.</li>
-                        <!--4-->
-                        <li>Choose a row from rows <m>r+1</m> through <m>m</m> with a nonzero entry in column <m>j</m>.  Let <m>i</m> denote the index for this row.</li>
-                        <!--5-->
-                        <li>Increase <m>r</m> by 1.</li>
-                        <!--6-->
-                        <li>Use the first row operation to swap rows <m>i</m> and <m>r</m>.</li>
-                        <!--7-->
-                        <li>Use the second row operation to convert the entry in row <m>r</m> and column <m>j</m> to a 1.</li>
-                        <!--8-->
-                        <li>Use the third row operation with row <m>r</m> to convert every other entry of column <m>j</m> to zero.</li>
-                        <!--9-->
-                        <li>Go to Step 2.</li>
-                    </ol>
-                </p>
+                <p><ol>
+                    <!--1-->
+                    <li>Set <m>j=0</m> and <m>r=0</m>.</li>
+                    <!--2-->
+                    <li>Increase <m>j</m> by 1.  If <m>j</m> now equals <m>n+1</m>, then stop.</li>
+                    <!--3-->
+                    <li>Examine the entries of <m>A</m> in column <m>j</m> located in rows <m>r+1</m> through <m>m</m>.  If all of these entries are zero, then go to Step 2.</li>
+                    <!--4-->
+                    <li>Choose a row from rows <m>r+1</m> through <m>m</m> with a nonzero entry in column <m>j</m>.  Let <m>i</m> denote the index for this row.</li>
+                    <!--5-->
+                    <li>Increase <m>r</m> by 1.</li>
+                    <!--6-->
+                    <li>Use the first row operation to swap rows <m>i</m> and <m>r</m>.</li>
+                    <!--7-->
+                    <li>Use the second row operation to convert the entry in row <m>r</m> and column <m>j</m> to a 1.</li>
+                    <!--8-->
+                    <li>Use the third row operation with row <m>r</m> to convert every other entry of column <m>j</m> to zero.</li>
+                    <!--9-->
+                    <li>Go to Step 2.</li>
+                </ol></p>
                 <p>The result of this procedure is that the matrix <m>A</m> is converted to a matrix in reduced row-echelon form, which we will refer to as <m>B</m>.  We need to now prove this claim by showing that the converted matrix has the requisite properties of <xref ref="definition-RREF" acro="RREF" autoname="yes"/>.  First, the matrix is only converted through row operations (Steps 6, 7, 8), so <m>A</m> and <m>B</m> are row-equivalent (<xref ref="definition-REM" acro="REM" autoname="yes"/>).</p>
-                <p>It is a bit more work to be certain that <m>B</m> is in reduced row-echelon form.
-We claim that as we begin Step 2, the first <m>j</m> columns of the matrix are in reduced row-echelon form with <m>r</m> nonzero rows.   Certainly this is true at the start when <m>j=0</m>, since the matrix has no columns and so vacuously meets the conditions of <xref ref="definition-RREF" acro="RREF" autoname="yes"/> with <m>r=0</m> nonzero rows.</p>
+                <p>It is a bit more work to be certain that <m>B</m> is in reduced row-echelon form. We claim that as we begin Step 2, the first <m>j</m> columns of the matrix are in reduced row-echelon form with <m>r</m> nonzero rows.   Certainly this is true at the start when <m>j=0</m>, since the matrix has no columns and so vacuously meets the conditions of <xref ref="definition-RREF" acro="RREF" autoname="yes"/> with <m>r=0</m> nonzero rows.</p>
                 <p>In Step 2 we increase <m>j</m> by 1 and begin to work with the next column.  There are two possible outcomes for Step 3.  Suppose that every entry of column <m>j</m> in rows <m>r+1</m> through <m>m</m> is zero.  Then with no changes we recognize that the first <m>j</m> columns of the matrix has its first <m>r</m> rows still in reduced-row echelon form, with the final <m>m-r</m> rows still all zero.</p>
                 <p>Suppose instead that the entry in row <m>i</m> of column <m>j</m> is nonzero.  Notice that since <m>r+1\leq i\leq m</m>, we know the first <m>j-1</m> entries of this row are all zero.  Now, in Step 5 we increase <m>r</m> by 1, and then embark on building a new nonzero row.  In Step 6 we swap row <m>r</m> and row <m>i</m>.  In the first <m>j</m> columns, the first <m>r-1</m> rows remain in reduced row-echelon form after the swap.  In Step 7 we multiply row <m>r</m> by a nonzero scalar, creating a 1 in the entry in column <m>j</m> of row <m>i</m>, and not changing any other rows.  This new leading 1 is the first nonzero entry in its row, and is located to the right of all the leading 1's in the preceding <m>r-1</m> rows.  With Step 8 we insure that every entry in the column with this new leading 1 is now zero, as required for reduced row-echelon form.  Also, rows <m>r+1</m> through <m>m</m> are now all zeros in the first <m>j</m> columns, so we now only have one new nonzero row, consistent with our increase of <m>r</m> by one.  Furthermore, since the first <m>j-1</m> entries of row <m>r</m> are zero, the employment of the third row operation does not destroy any of the necessary features of rows <m>1</m> through <m>r-1</m> and rows <m>r+1</m> through <m>m</m>, in columns <m>1</m> through <m>j-1</m>.</p>
                 <p>So at this stage, the first <m>j</m> columns of the matrix are in reduced row-echelon form.  When Step 2 finally increases <m>j</m> to <m>n+1</m>, then the procedure is completed and the full <m>n</m> columns of the matrix are in reduced row-echelon form, with the value of <m>r</m> correctly recording the number of nonzero rows.</p>
             </proof>
         </theorem>
-        <p>The procedure given in the proof of <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/> can be more precisely described using a pseudo-code version of a computer program.  Single-letter variables, like <c>m, n, i, j, r</c> have the same meanings as above. <c>:=</c> is assignment of the value on the right to the variable on the left, <c>A[i,j]</c> is the equivalent of the matrix entry <m>\matrixentry{A}{ij}</m>, while <c>==</c> is an equality test and <c>&lt;&gt;</c> is a <q>not equals</q> test.
-<!--   new latex environment, unsupported as of XML cutover -->
-<pre>
-input m, n and A
-r := 0
-for j := 1 to n
-   i := r+1
-   while i &lt;= m and A[i,j] == 0
-       i := i+1
-   if i &lt; m+1
-       r := r+1
-       swap rows i and r of A (row op 1)
-       scale A[r,j] to a leading 1 (row op 2)
-       for k := 1 to m, k &lt;&gt; r
-           make A[k,j] zero (row op 3, employing row r)
-output r and A
-</pre>
-
-</p>
+        <p>The procedure given in the proof of <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/> can be more precisely described using a pseudo-code version of a computer program.  Single-letter variables, like <c>m, n, i, j, r</c> have the same meanings as above. <c>:=</c> is assignment of the value on the right to the variable on the left, <c>A[i,j]</c> is the equivalent of the matrix entry <m>\matrixentry{A}{ij}</m>, while <c>==</c> is an equality test and <c>&lt;&gt;</c> is a <q>not equals</q> test.</p>
+        <p><pre>
+        input m, n and A
+        r := 0
+        for j := 1 to n
+           i := r+1
+           while i &lt;= m and A[i,j] == 0
+               i := i+1
+           if i &lt; m+1
+               r := r+1
+               swap rows i and r of A (row op 1)
+               scale A[r,j] to a leading 1 (row op 2)
+               for k := 1 to m, k &lt;&gt; r
+                   make A[k,j] zero (row op 3, employing row r)
+        output r and A
+        </pre></p>
         <p>Notice that as a practical matter the <q>and</q> used in the conditional statement of the while statement should be of the <q>short-circuit</q> variety so that the array access that follows is not out-of-bounds.</p>
         <p>So now we can put it all together.  Begin with a system of linear equations (<xref ref="definition-SLE" acro="SLE" autoname="yes"/>), and represent the system by its augmented matrix (<xref ref="definition-AM" acro="AM" autoname="yes"/>).  Use row operations (<xref ref="definition-RO" acro="RO" autoname="yes"/>) to convert this matrix into reduced row-echelon form (<xref ref="definition-RREF" acro="RREF" autoname="yes"/>), using the procedure outlined in the proof of <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/>.  <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/> also tells us we can always accomplish this, and that the result is row-equivalent (<xref ref="definition-REM" acro="REM" autoname="yes"/>) to the original augmented matrix.  Since the matrix in reduced-row echelon form has the same solution set, we can analyze the row-reduced version instead of the original matrix, viewing it as the augmented matrix of a different system of equations.  The beauty of augmented matrices in reduced row-echelon form is that the solution sets to the systems they represent can be easily determined, as we will see in the next few examples and in the next section.</p>
         <p>We will see through the course that almost every interesting property of a matrix can be discerned by looking at a row-equivalent matrix in reduced row-echelon form.  For this reason it is important to know that the matrix <m>B</m> is guaranteed to exist by <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/> is also unique.</p>
         <p>Two proof techniques are applicable to the proof. First, head out and read two proof techniques:  Proof Technique<nbsp/><xref ref="technique-CD" acro="CD" autoname="no"/> and Proof Technique<nbsp/><xref ref="technique-U" acro="U" autoname="no"/>.</p>
         <theorem xml:id="theorem-RREFU" acro="RREFU">
-            <index>
-                <main>reduced row-echelon form</main>
-                <sub>unique</sub>
-            </index>
             <title>Reduced Row-Echelon Form is Unique</title>
+            <index><main>reduced row-echelon form</main><sub>unique</sub></index>
             <statement>
                 <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix and that <m>B</m> and <m>C</m> are <m>m\times n</m> matrices that are row-equivalent to <m>A</m> and in reduced row-echelon form.  Then <m>B=C</m>.</p>
             </statement>
             <proof>
                 <p>We need to begin with no assumptions about any relationships between <m>B</m> and <m>C</m>, other than they are both in reduced row-echelon form, and they are both row-equivalent to <m>A</m>.</p>
-                <p>If <m>B</m> and <m>C</m> are both row-equivalent to <m>A</m>, then they are row-equivalent to each other.  Repeated row operations on a matrix combine the rows with each other using operations that are linear, and are identical in each column.  A key observation for this proof is that each individual row of <m>B</m> is linearly related to the rows of <m>C</m>.  This relationship is different for each row of <m>B</m>, but once we fix a row, the relationship is the same across columns.  More precisely, there are scalars <m>\delta_{ik}</m>, <m>1\leq i,k\leq m</m> such that for any <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>,
-<md><mrow>\matrixentry{B}{ij}
-&amp;=\sum_{k=1}^{m}\delta_{ik}\matrixentry{C}{kj}</mrow></md></p>
+                <p>If <m>B</m> and <m>C</m> are both row-equivalent to <m>A</m>, then they are row-equivalent to each other.  Repeated row operations on a matrix combine the rows with each other using operations that are linear, and are identical in each column.  A key observation for this proof is that each individual row of <m>B</m> is linearly related to the rows of <m>C</m>.  This relationship is different for each row of <m>B</m>, but once we fix a row, the relationship is the same across columns.  More precisely, there are scalars <m>\delta_{ik}</m>, <m>1\leq i,k\leq m</m> such that for any <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>,<md>
+                    <mrow>\matrixentry{B}{ij}&amp;=\sum_{k=1}^{m}\delta_{ik}\matrixentry{C}{kj}</mrow>
+                </md></p>
                 <p>You should read this as saying that an entry of row <m>i</m> of <m>B</m> (in column <m>j</m>) is a linear function of the entries of all the rows of <m>C</m> that are also in column <m>j</m>, and the scalars (<m>\delta_{ik}</m>) depend on which row of <m>B</m> we are considering (the <m>i</m> subscript on <m>\delta_{ik}</m>), but are the same for every column (no dependence on <m>j</m> in <m>\delta_{ik}</m>).  This idea may be complicated now, but will feel more familiar once we discuss <q>linear combinations</q> (<xref ref="definition-LCCV" acro="LCCV" autoname="yes"/>) and moreso when we discuss <q>row spaces</q> (<xref ref="definition-RSM" acro="RSM" autoname="yes"/>).  For now, spend some time carefully working <xref ref="exercise-RREF-M40" acro="RREF.M40" autoname="yes"/>, which is designed to illustrate the origins of this expression.  This completes our exploitation of the row-equivalence of <m>B</m> and <m>C</m>.</p>
                 <p>We now repeatedly exploit the fact that <m>B</m> and <m>C</m> are in reduced row-echelon form.  Recall that a pivot column is all zeros, except a single one.  More carefully, if <m>R</m> is a matrix in reduced row-echelon form, and <m>d_\ell</m> is the index of a pivot column, then <m>\matrixentry{R}{kd_\ell}=1</m> precisely when <m>k=\ell</m> and is otherwise zero.  Notice also that any entry of <m>R</m> that is both below the entry in row <m>\ell</m> <em>and</em> to the left of column <m>d_\ell</m> is also zero (with below and left understood to include equality).  In other words, look at examples of matrices in reduced row-echelon form and choose a leading 1 (with a box around it).  The rest of the column is also zeros, and the lower left <q>quadrant</q> of the matrix that begins here is totally zeros.</p>
-                <p>Assuming no relationship about the form of <m>B</m> and <m>C</m>, let <m>B</m> have <m>r</m> nonzero rows and denote the pivot columns as <m>D=\set{\scalarlist{d}{r}}</m>.  For <m>C</m> let <m>r^\prime</m> denote the number of nonzero rows and denote the pivot columns
-as
-<!--  Extra thin space in set is triple brace protection for Sage worksheets -->
-<!--  Maybe a space will work just as well now with straight-to MathJax -->
-<m>D^\prime=\set{\,\scalarlist{d^\prime}{r^\prime}}</m> (<xref ref="definition-RREF" acro="RREF" autoname="yes"/>).  There are four steps in the proof, and the first three are about showing that <m>B</m> and <m>C</m> have the same number of pivot columns, in the same places.  In other words, the <q>primed</q> symbols are a necessary fiction.</p>
-                <p>First Step.  Suppose that <m>d_1\lt d^\prime_1</m>.  Then
-<md><mrow>1
-&amp;=\matrixentry{B}{1d_1}
-&amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{m}\delta_{1k}\matrixentry{C}{kd_1}</mrow><mrow>&amp;=\sum_{k=1}^{m}\delta_{1k}(0)
-&amp;&amp;d_1&lt;d^\prime_1</mrow><mrow>&amp;=0</mrow></md>
-The entries of <m>C</m> are all zero since they are left and below of the leading 1 in row 1 and column <m>d^\prime_1</m> of <m>C</m>.  This is a contradiction, so we know that <m>d_1\geq d^\prime_1</m>.  By an entirely similar argument, reversing the roles of <m>B</m> and <m>C</m>, we could conclude that <m>d_1\leq d^\prime_1</m>.  Together this means that <m>d_1=d^\prime_1</m>.</p>
-                <p>Second Step.  Suppose that we have determined that <m>d_1=d^\prime_1</m>, <m>d_2=d^\prime_2</m>, <m>d_3=d^\prime_3</m>, <ellipsis/> <m>d_p=d^\prime_p</m>.  Let us now show that <m>d_{p+1}=d^\prime_{p+1}</m>.  Working towards a contradiction, suppose that <m>d_{p+1}\lt d^\prime_{p+1}</m>.  For <m>1\leq\ell\leq p</m>,
-<md><mrow>0
-&amp;=\matrixentry{B}{p+1,d_\ell}
-&amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{m}\delta_{p+1,k}\matrixentry{C}{kd_\ell}</mrow><mrow>&amp;=\sum_{k=1}^{m}\delta_{p+1,k}\matrixentry{C}{kd^\prime_\ell}</mrow><mrow>&amp;=
-\delta_{p+1,\ell}\matrixentry{C}{\ell d^\prime_\ell}+
-\sum_{\substack{k=1\\k\neq\ell}}^{m}\delta_{p+1,k}\matrixentry{C}{kd^\prime_\ell}
-&amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow><mrow>&amp;=
-\delta_{p+1,\ell}(1)+
-\sum_{\substack{k=1\\k\neq\ell}}^{m}\delta_{p+1,k}(0)
-&amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow><mrow>&amp;=\delta_{p+1,\ell}</mrow></md>
-Now,
-<md><mrow>1
-&amp;=\matrixentry{B}{p+1,d_{p+1}}
-&amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{m}\delta_{p+1,k}\matrixentry{C}{kd_{p+1}}</mrow><mrow>&amp;=
-\sum_{k=1}^{p}\delta_{p+1,k}\matrixentry{C}{kd_{p+1}}+
-\sum_{k=p+1}^{m}\delta_{p+1,k}\matrixentry{C}{kd_{p+1}}
-&amp;&amp;<xref ref="property-AACN" acro="AACN" autoname="yes"/></mrow><mrow>&amp;=
-\sum_{k=1}^{p}(0)\matrixentry{C}{kd_{p+1}}+
-\sum_{k=p+1}^{m}\delta_{p+1,k}\matrixentry{C}{kd_{p+1}}</mrow><mrow>&amp;=\sum_{k=p+1}^{m}\delta_{p+1,k}\matrixentry{C}{kd_{p+1}}</mrow><mrow>&amp;=\sum_{k=p+1}^{m}\delta_{p+1,k}(0)
-&amp;&amp;d_{p+1}&lt;d^\prime_{p+1}</mrow><mrow>&amp;=0</mrow></md>
-This contradiction shows that
-<m>d_{p+1}\geq d^\prime_{p+1}</m>.  By an entirely similar argument, we could conclude that <m>d_{p+1}\leq d^\prime_{p+1}</m>, and therefore <m>d_{p+1}=d^\prime_{p+1}</m>.</p>
-                <p>
-Third Step.  Now we establish that <m>r=r^\prime</m>.  Suppose that <m>r^\prime\lt r</m>.  By the arguments above, we know that <m>d_1=d^\prime_1</m>, <m>d_2=d^\prime_2</m>, <m>d_3=d^\prime_3</m>, <ellipsis/>, <m>d_{r^\prime}=d^\prime_{r^\prime}</m>.   For <m>1\leq\ell\leq r^\prime\lt r</m>,
-<md><mrow>0
-&amp;=\matrixentry{B}{rd_\ell}
-&amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{m}\delta_{rk}\matrixentry{C}{kd_\ell}</mrow><mrow>&amp;=
-\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kd_\ell}
-+
-\sum_{k=r^\prime+1}^{m}\delta_{rk}\matrixentry{C}{kd_\ell}
-&amp;&amp;<xref ref="property-AACN" acro="AACN" autoname="yes"/>\\%
-&amp;=
-\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kd_\ell}
-+
-\sum_{k=r^\prime+1}^{m}\delta_{rk}(0)
-&amp;&amp;<xref ref="property-AACN" acro="AACN" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kd_\ell}</mrow><mrow>&amp;=\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kd^\prime_\ell}</mrow><mrow>&amp;=
-\delta_{r\ell}\matrixentry{C}{\ell d^\prime_\ell}
-+
-\sum_{\substack{k=1\\k\neq\ell}}^{r^\prime}\delta_{rk}\matrixentry{C}{kd^\prime_\ell}
-&amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow><mrow>&amp;=
-\delta_{r\ell}(1)
-+
-\sum_{\substack{k=1\\k\neq\ell}}^{r^\prime}\delta_{rk}(0)
-&amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow><mrow>&amp;=\delta_{r\ell}</mrow></md>
-Now examine the entries of row <m>r</m> of <m>B</m>,
-<md><mrow>\matrixentry{B}{rj}
-&amp;=\sum_{k=1}^{m}\delta_{rk}\matrixentry{C}{kj}</mrow><mrow>&amp;=
-\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kj}
-+
-\sum_{k=r^\prime+1}^{m}\delta_{rk}\matrixentry{C}{kj}
-&amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow><mrow>&amp;=
-\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kj}
-+
-\sum_{k=r^\prime+1}^{m}\delta_{rk}(0)
-&amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kj}</mrow><mrow>&amp;=\sum_{k=1}^{r^\prime}(0)\matrixentry{C}{kj}</mrow><mrow>&amp;=0</mrow></md>
-So row <m>r</m> is a totally zero row, contradicting that this should be the bottommost nonzero row of <m>B</m>.  So <m>r^\prime\geq r</m>.  By an entirely similar argument, reversing the roles of <m>B</m> and <m>C</m>, we would conclude that <m>r^\prime\leq r</m> and therefore <m>r=r^\prime</m>.  Thus, combining the first three steps we can say that <m>D=D^\prime</m>.  In other words, <m>B</m> and <m>C</m> have the same pivot columns, in the same locations.</p>
-                <p>
-Fourth Step.  In this final step, we will not argue by contradiction.  Our intent is to determine the values of the <m>\delta_{ij}</m>.  Notice that we can use the values of the <m>d_i</m> interchangeably for <m>B</m> and <m>C</m>.  Here we go,
-<md><mrow>1
-&amp;=\matrixentry{B}{id_i}
-&amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{m}\delta_{ik}\matrixentry{C}{kd_i}</mrow><mrow>&amp;=
-\delta_{ii}\matrixentry{C}{id_i}
-+
-\sum_{\substack{k=1\\k\neq i}}^{m}\delta_{ik}\matrixentry{C}{kd_i}
-&amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow><mrow>&amp;=
-\delta_{ii}(1)
-+
-\sum_{\substack{k=1\\k\neq i}}^{m}\delta_{ik}(0)
-&amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow><mrow>&amp;=\delta_{ii}</mrow></md>
-and for <m>\ell\neq i</m>
-<md><mrow>0
-&amp;=\matrixentry{B}{id_\ell}
-&amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{m}\delta_{ik}\matrixentry{C}{kd_\ell}</mrow><mrow>&amp;=
-\delta_{i\ell}\matrixentry{C}{\ell d_\ell}
-+
-\sum_{\substack{k=1\\k\neq\ell}}^{m}\delta_{ik}\matrixentry{C}{kd_\ell}
-&amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow><mrow>&amp;=
-\delta_{i\ell}(1)
-+
-\sum_{\substack{k=1\\k\neq\ell}}^{m}\delta_{ik}(0)
-&amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow><mrow>&amp;=\delta_{i\ell}</mrow></md>
-Finally, having determined the values of the <m>\delta_{ij}</m>, we can show that <m>B=C</m>.  For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>,
-<md><mrow>\matrixentry{B}{ij}
-&amp;=\sum_{k=1}^{m}\delta_{ik}\matrixentry{C}{kj}</mrow><mrow>&amp;=
-\delta_{ii}\matrixentry{C}{ij}
-+
-\sum_{\substack{k=1\\k\neq i}}^{m}\delta_{ik}\matrixentry{C}{kj}
-&amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow><mrow>&amp;=
-(1)\matrixentry{C}{ij}
-+
-\sum_{\substack{k=1\\k\neq i}}^{m}(0)\matrixentry{C}{kj}</mrow><mrow>&amp;=\matrixentry{C}{ij}</mrow></md>
-So <m>B</m> and <m>C</m> have equal values in every entry, and so are the same matrix.</p>
+                <!--  Extra thin space in set is triple brace protection for Sage worksheets -->
+                <!--  Maybe a space will work just as well now with straight-to MathJax -->
+                <p>Assuming no relationship about the form of <m>B</m> and <m>C</m>, let <m>B</m> have <m>r</m> nonzero rows and denote the pivot columns as <m>D=\set{\scalarlist{d}{r}}</m>.  For <m>C</m> let <m>r^\prime</m> denote the number of nonzero rows and denote the pivot columns as
+                <m>D^\prime=\set{\,\scalarlist{d^\prime}{r^\prime}}</m> (<xref ref="definition-RREF" acro="RREF" autoname="yes"/>).  There are four steps in the proof, and the first three are about showing that <m>B</m> and <m>C</m> have the same number of pivot columns, in the same places.  In other words, the <q>primed</q> symbols are a necessary fiction.</p>
+                <p>First Step.  Suppose that <m>d_1\lt d^\prime_1</m>.  Then<md>
+                    <mrow>1 &amp;=\matrixentry{B}{1d_1} &amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\delta_{1k}\matrixentry{C}{kd_1}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\delta_{1k}(0) &amp;&amp;d_1&lt;d^\prime_1</mrow>
+                    <mrow>&amp;=0</mrow>
+                </md> The entries of <m>C</m> are all zero since they are left and below of the leading 1 in row 1 and column <m>d^\prime_1</m> of <m>C</m>.  This is a contradiction, so we know that <m>d_1\geq d^\prime_1</m>.  By an entirely similar argument, reversing the roles of <m>B</m> and <m>C</m>, we could conclude that <m>d_1\leq d^\prime_1</m>.  Together this means that <m>d_1=d^\prime_1</m>.</p>
+                <p>Second Step.  Suppose that we have determined that <m>d_1=d^\prime_1</m>, <m>d_2=d^\prime_2</m>, <m>d_3=d^\prime_3</m>, <ellipsis/> <m>d_p=d^\prime_p</m>.  Let us now show that <m>d_{p+1}=d^\prime_{p+1}</m>.  Working towards a contradiction, suppose that <m>d_{p+1}\lt d^\prime_{p+1}</m>.  For <m>1\leq\ell\leq p</m>, <md>
+                    <mrow>0 &amp;=\matrixentry{B}{p+1,d_\ell} &amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\delta_{p+1,k}\matrixentry{C}{kd_\ell}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\delta_{p+1,k}\matrixentry{C}{kd^\prime_\ell}</mrow>
+                    <mrow>&amp;= \delta_{p+1,\ell}\matrixentry{C}{\ell d^\prime_\ell}+ \sum_{\substack{k=1\\k\neq\ell}}^{m}\delta_{p+1,k}\matrixentry{C}{kd^\prime_\ell}
+                    &amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow>
+                    <mrow>&amp;= \delta_{p+1,\ell}(1)+ \sum_{\substack{k=1\\k\neq\ell}}^{m}\delta_{p+1,k}(0)
+                    &amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\delta_{p+1,\ell}</mrow>
+                </md>Now, <md>
+                    <mrow>1 &amp;=\matrixentry{B}{p+1,d_{p+1}}
+                    &amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\delta_{p+1,k}\matrixentry{C}{kd_{p+1}}</mrow>
+                    <mrow>&amp;= \sum_{k=1}^{p}\delta_{p+1,k}\matrixentry{C}{kd_{p+1}}+ \sum_{k=p+1}^{m}\delta_{p+1,k}\matrixentry{C}{kd_{p+1}}
+                    &amp;&amp;<xref ref="property-AACN" acro="AACN" autoname="yes"/></mrow>
+                    <mrow>&amp;= \sum_{k=1}^{p}(0)\matrixentry{C}{kd_{p+1}}+ \sum_{k=p+1}^{m}\delta_{p+1,k}\matrixentry{C}{kd_{p+1}}</mrow>
+                    <mrow>&amp;=\sum_{k=p+1}^{m}\delta_{p+1,k}\matrixentry{C}{kd_{p+1}}</mrow>
+                    <mrow>&amp;=\sum_{k=p+1}^{m}\delta_{p+1,k}(0)
+                    &amp;&amp;d_{p+1}&lt;d^\prime_{p+1}</mrow>
+                    <mrow>&amp;=0</mrow>
+                </md>This contradiction shows that <m>d_{p+1}\geq d^\prime_{p+1}</m>.  By an entirely similar argument, we could conclude that <m>d_{p+1}\leq d^\prime_{p+1}</m>, and therefore <m>d_{p+1}=d^\prime_{p+1}</m>.</p>
+                <p>Third Step.  Now we establish that <m>r=r^\prime</m>.  Suppose that <m>r^\prime\lt r</m>.  By the arguments above, we know that <m>d_1=d^\prime_1</m>, <m>d_2=d^\prime_2</m>, <m>d_3=d^\prime_3</m>, <ellipsis/>, <m>d_{r^\prime}=d^\prime_{r^\prime}</m>.   For <m>1\leq\ell\leq r^\prime\lt r</m>, <md>
+                    <mrow>0 &amp;=\matrixentry{B}{rd_\ell}
+                    &amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\delta_{rk}\matrixentry{C}{kd_\ell}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kd_\ell} + \sum_{k=r^\prime+1}^{m}\delta_{rk}\matrixentry{C}{kd_\ell}
+                    &amp;&amp;<xref ref="property-AACN" acro="AACN" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kd_\ell} + \sum_{k=r^\prime+1}^{m}\delta_{rk}(0)
+                    &amp;&amp;<xref ref="property-AACN" acro="AACN" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kd_\ell}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kd^\prime_\ell}</mrow>
+                    <mrow>&amp;=\delta_{r\ell}\matrixentry{C}{\ell d^\prime_\ell} + \sum_{\substack{k=1\\k\neq\ell}}^{r^\prime}\delta_{rk}\matrixentry{C}{kd^\prime_\ell}
+                    &amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow>
+                    <mrow>&amp;= \delta_{r\ell}(1) + \sum_{\substack{k=1\\k\neq\ell}}^{r^\prime}\delta_{rk}(0)
+                    &amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\delta_{r\ell}</mrow>
+                </md>Now examine the entries of row <m>r</m> of <m>B</m>, <md>
+                    <mrow>\matrixentry{B}{rj} &amp;=\sum_{k=1}^{m}\delta_{rk}\matrixentry{C}{kj}</mrow>
+                    <mrow>&amp;= \sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kj} + \sum_{k=r^\prime+1}^{m}\delta_{rk}\matrixentry{C}{kj}
+                    &amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kj} + \sum_{k=r^\prime+1}^{m}\delta_{rk}(0)
+                    &amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r^\prime}\delta_{rk}\matrixentry{C}{kj}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r^\prime}(0)\matrixentry{C}{kj}</mrow>
+                    <mrow>&amp;=0</mrow>
+                </md>So row <m>r</m> is a totally zero row, contradicting that this should be the bottommost nonzero row of <m>B</m>.  So <m>r^\prime\geq r</m>.  By an entirely similar argument, reversing the roles of <m>B</m> and <m>C</m>, we would conclude that <m>r^\prime\leq r</m> and therefore <m>r=r^\prime</m>.  Thus, combining the first three steps we can say that <m>D=D^\prime</m>.  In other words, <m>B</m> and <m>C</m> have the same pivot columns, in the same locations.</p> <p> Fourth Step.  In this final step, we will not argue by contradiction.  Our intent is to determine the values of the <m>\delta_{ij}</m>.  Notice that we can use the values of the <m>d_i</m> interchangeably for <m>B</m> and <m>C</m>.  Here we go, <md>
+                    <mrow>1 &amp;=\matrixentry{B}{id_i}
+                    &amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\delta_{ik}\matrixentry{C}{kd_i}</mrow>
+                    <mrow>&amp;= \delta_{ii}\matrixentry{C}{id_i} + \sum_{\substack{k=1\\k\neq i}}^{m}\delta_{ik}\matrixentry{C}{kd_i}
+                    &amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow>
+                    <mrow>&amp;= \delta_{ii}(1) + \sum_{\substack{k=1\\k\neq i}}^{m}\delta_{ik}(0)
+                    &amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\delta_{ii}</mrow>
+                </md>and for <m>\ell\neq i</m><md>
+                    <mrow>0 &amp;=\matrixentry{B}{id_\ell} &amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\delta_{ik}\matrixentry{C}{kd_\ell}</mrow>
+                    <mrow>&amp;= \delta_{i\ell}\matrixentry{C}{\ell d_\ell} + \sum_{\substack{k=1\\k\neq\ell}}^{m}\delta_{ik}\matrixentry{C}{kd_\ell}
+                    &amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow>
+                    <mrow>&amp;= \delta_{i\ell}(1) + \sum_{\substack{k=1\\k\neq\ell}}^{m}\delta_{ik}(0)
+                    &amp;&amp;<xref ref="definition-RREF" acro="RREF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\delta_{i\ell}</mrow>
+                </md>Finally, having determined the values of the <m>\delta_{ij}</m>, we can show that <m>B=C</m>.  For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>,<md>
+                    <mrow>\matrixentry{B}{ij} &amp;=\sum_{k=1}^{m}\delta_{ik}\matrixentry{C}{kj}</mrow>
+                    <mrow>&amp;= \delta_{ii}\matrixentry{C}{ij} + \sum_{\substack{k=1\\k\neq i}}^{m}\delta_{ik}\matrixentry{C}{kj}
+                    &amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow>
+                    <mrow>&amp;= (1)\matrixentry{C}{ij} + \sum_{\substack{k=1\\k\neq i}}^{m}(0)\matrixentry{C}{kj}</mrow>
+                    <mrow>&amp;=\matrixentry{C}{ij}</mrow>
+                </md>So <m>B</m> and <m>C</m> have equal values in every entry, and so are the same matrix.</p>
             </proof>
         </theorem>
         <p>We will now run through some examples of using these definitions and theorems to solve some systems of equations.  From now on, when we have a matrix in reduced row-echelon form, we will mark the leading 1's with a small box.  This will help you count, and identify, the pivot columns.  In your work, you can box 'em, circle 'em or write 'em in a different color <mdash/> just identify 'em somehow.  This device will prove very useful later and is a <em>very good habit</em> to start developing <em>right now</em>.</p>
         <example xml:id="example-SAB" acro="SAB">
-            <index>
-                <main>archetype B</main>
-                <sub>solutions</sub>
-            </index>
             <title>Solutions for Archetype B</title>
-            <p>Let us find the solutions to the following system of equations,
-<!-- Archetype B, Part systemdefn --><systemdefn><md><mrow>-7x_1 -6 x_2 - 12x_3 &amp;=-33</mrow><mrow> 5x_1  + 5x_2 + 7x_3 &amp;=24</mrow><mrow> x_1 +4x_3 &amp;=5</mrow></md></systemdefn>
-First, form the augmented matrix,
-<md><mrow><!-- Archetype B, Part augmented -->\begin{bmatrix}
--7&amp;-6&amp;- 12&amp;-33\\
- 5&amp;5&amp;7&amp;24\\
- 1&amp;0&amp;4&amp;5
-\end{bmatrix}</mrow></md>
-and work to reduced row-echelon form, first with <m>j=1</m>,
-<md><mrow>\xrightarrow{\rowopswap{1}{3}}
-&amp;
-\begin{bmatrix}
-1&amp;0&amp;4&amp;5\\
-5&amp;5&amp;7&amp;24\\
--7&amp;-6&amp;-12&amp;-33
-\end{bmatrix}
-\xrightarrow{\rowopadd{-5}{1}{2}}
-\begin{bmatrix}
-1&amp;0&amp;4&amp;5\\
-0&amp;5&amp;-13&amp;-1\\
--7&amp;-6&amp;-12&amp;-33
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{7}{1}{3}}
-&amp;
-\begin{bmatrix}
-\leading{1}&amp;0&amp;4&amp;5\\
-0&amp;5&amp;-13&amp;-1\\
-0&amp;-6&amp;16&amp;2
-\end{bmatrix}</mrow><intertext>Now, with <m>j=2</m>,</intertext><mrow>\xrightarrow{\rowopmult{\frac{1}{5}}{2}}
-&amp;
-\begin{bmatrix}
-\leading{1}&amp;0&amp;4&amp;5\\
-0&amp;1&amp;\frac{-13}{5}&amp;\frac{-1}{5}\\
-0&amp;-6&amp;16&amp;2
-\end{bmatrix}
-\xrightarrow{\rowopadd{6}{2}{3}}
-\begin{bmatrix}
-\leading{1}&amp;0&amp;4&amp;5\\
-0&amp;\leading{1}&amp;\frac{-13}{5}&amp;\frac{-1}{5}\\
-0&amp;0&amp;\frac{2}{5}&amp;\frac{4}{5}
-\end{bmatrix}</mrow><intertext>And finally, with <m>j=3</m>,</intertext><mrow>\xrightarrow{\rowopmult{\frac{5}{2}}{3}}
-&amp;
-\begin{bmatrix}
-\leading{1}&amp;0&amp;4&amp;5\\
-0&amp;\leading{1}&amp;\frac{-13}{5}&amp;\frac{-1}{5}\\
-0&amp;0&amp;1&amp;2
-\end{bmatrix}
-\xrightarrow{\rowopadd{\frac{13}{5}}{3}{2}}
-\begin{bmatrix}
-\leading{1}&amp;0&amp;4&amp;5\\
-0&amp;\leading{1}&amp;0&amp;5\\
-0&amp;0&amp;1&amp;2
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{-4}{3}{1}}
-&amp;<!-- Archetype B, Part augmentedreduced -->\begin{bmatrix}
-\leading{1}&amp;0&amp;0&amp;-3\\
-0&amp;\leading{1}&amp;0&amp;5\\
-0&amp;0&amp;\leading{1}&amp;2
-\end{bmatrix}</mrow></md>
-</p>
-            <p>This is now the augmented matrix of a very simple system of equations, namely <m>x_1=-3</m>, <m>x_2=5</m>, <m>x_3=2</m>, which has an obvious solution.  Furthermore, we can see that this is the <em>only</em> solution to this system, so we have determined the entire solution set,
-<md><mrow>S&amp;=\set{\colvector{-3\\5\\2}}</mrow></md></p>
+            <index><main>archetype B</main><sub>solutions</sub></index>
+            <!-- Archetype B, Part systemdefn -->
+            <!-- Archetype B, Part augmented -->
+            <!-- Archetype B, Part augmentedreduced -->
+            <p>Let us find the solutions to the following system of equations,<md>
+                <mrow>-7x_1 -6 x_2 - 12x_3 &amp;=-33</mrow>
+                <mrow> 5x_1  + 5x_2 + 7x_3 &amp;=24</mrow>
+                <mrow> x_1 +4x_3 &amp;=5</mrow>
+            </md>First, form the augmented matrix,<md>
+                <mrow>\begin{bmatrix}
+                -7&amp;-6&amp;- 12&amp;-33\\
+                 5&amp;5&amp;7&amp;24\\
+                 1&amp;0&amp;4&amp;5
+                \end{bmatrix}</mrow>
+            </md>and work to reduced row-echelon form, first with <m>j=1</m>,<md>
+                <mrow>\xrightarrow{\rowopswap{1}{3}}
+                &amp;
+                \begin{bmatrix}
+                1&amp;0&amp;4&amp;5\\
+                5&amp;5&amp;7&amp;24\\
+                -7&amp;-6&amp;-12&amp;-33
+                \end{bmatrix}
+                \xrightarrow{\rowopadd{-5}{1}{2}}
+                \begin{bmatrix}
+                1&amp;0&amp;4&amp;5\\
+                0&amp;5&amp;-13&amp;-1\\
+                -7&amp;-6&amp;-12&amp;-33
+                \end{bmatrix}</mrow>
+                <mrow>\xrightarrow{\rowopadd{7}{1}{3}}
+                &amp;
+                \begin{bmatrix}
+                \leading{1}&amp;0&amp;4&amp;5\\
+                0&amp;5&amp;-13&amp;-1\\
+                0&amp;-6&amp;16&amp;2
+                \end{bmatrix}</mrow>
+                <intertext>Now, with <m>j=2</m>,</intertext>
+                <mrow>\xrightarrow{\rowopmult{\frac{1}{5}}{2}}
+                &amp;
+                \begin{bmatrix}
+                \leading{1}&amp;0&amp;4&amp;5\\
+                0&amp;1&amp;\frac{-13}{5}&amp;\frac{-1}{5}\\
+                0&amp;-6&amp;16&amp;2
+                \end{bmatrix}
+                \xrightarrow{\rowopadd{6}{2}{3}}
+                \begin{bmatrix}
+                \leading{1}&amp;0&amp;4&amp;5\\
+                0&amp;\leading{1}&amp;\frac{-13}{5}&amp;\frac{-1}{5}\\
+                0&amp;0&amp;\frac{2}{5}&amp;\frac{4}{5}
+                \end{bmatrix}</mrow>
+                <intertext>And finally, with <m>j=3</m>,</intertext>
+                <mrow>\xrightarrow{\rowopmult{\frac{5}{2}}{3}}
+                &amp;
+                \begin{bmatrix}
+                \leading{1}&amp;0&amp;4&amp;5\\
+                0&amp;\leading{1}&amp;\frac{-13}{5}&amp;\frac{-1}{5}\\
+                0&amp;0&amp;1&amp;2
+                \end{bmatrix}
+                \xrightarrow{\rowopadd{\frac{13}{5}}{3}{2}}
+                \begin{bmatrix}
+                \leading{1}&amp;0&amp;4&amp;5\\
+                0&amp;\leading{1}&amp;0&amp;5\\
+                0&amp;0&amp;1&amp;2
+                \end{bmatrix}</mrow>
+                <mrow>\xrightarrow{\rowopadd{-4}{3}{1}}
+                &amp;\begin{bmatrix}
+                \leading{1}&amp;0&amp;0&amp;-3\\
+                0&amp;\leading{1}&amp;0&amp;5\\
+                0&amp;0&amp;\leading{1}&amp;2
+                \end{bmatrix}</mrow>
+            </md></p>
+            <p>This is now the augmented matrix of a very simple system of equations, namely <m>x_1=-3</m>, <m>x_2=5</m>, <m>x_3=2</m>, which has an obvious solution.  Furthermore, we can see that this is the <em>only</em> solution to this system, so we have determined the entire solution set,<md>
+                <mrow>S&amp;=\set{\colvector{-3\\5\\2}}</mrow>
+            </md></p>
             <p>You might compare this example with the procedure we used in <xref ref="example-US" acro="US" autoname="yes"/>.</p>
         </example>
         <p>Archetypes A and B are meant to contrast each other in many respects.  So let us solve Archetype A now.</p>
         <example xml:id="example-SAA" acro="SAA">
-            <index>
-                <main>solution set</main>
-                <sub>Archetype A</sub>
-            </index>
             <title>Solutions for Archetype A</title>
-            <p>Let us find the solutions to the following system of equations,
-<!-- Archetype A, Part systemdefn --><systemdefn><md><mrow>x_1 -x_2 +2x_3 &amp; =1</mrow><mrow>2x_1+ x_2 + x_3 &amp; =8</mrow><mrow>x_1 + x_2 &amp; =5</mrow></md></systemdefn></p>
-            <p>First, form the augmented matrix,
-<md><mrow><!-- Archetype A, Part augmented -->\begin{bmatrix}
-1 &amp; -1 &amp; 2 &amp; 1\\
-2 &amp; 1 &amp; 1 &amp; 8\\
-1 &amp; 1 &amp; 0 &amp; 5
-\end{bmatrix}</mrow></md>
-and work to reduced row-echelon form, first with <m>j=1</m>,
-<md><mrow>\xrightarrow{\rowopadd{-2}{1}{2}}
-&amp;
-\begin{bmatrix}
-1 &amp; -1 &amp; 2 &amp; 1\\
-0 &amp; 3 &amp; -3 &amp; 6\\
-1 &amp; 1 &amp; 0 &amp; 5
-\end{bmatrix}
-\xrightarrow{\rowopadd{-1}{1}{3}}
-\begin{bmatrix}
-\leading{1} &amp; -1 &amp; 2 &amp; 1\\
-0 &amp; 3 &amp; -3 &amp; 6\\
-0 &amp; 2 &amp; -2 &amp; 4
-\end{bmatrix}</mrow><intertext>Now, with <m>j=2</m>,</intertext><mrow>\xrightarrow{\rowopmult{\frac{1}{3}}{2}}
-&amp;
-\begin{bmatrix}
-\leading{1} &amp; -1 &amp; 2 &amp; 1\\
-0 &amp; 1 &amp; -1 &amp; 2\\
-0 &amp; 2 &amp; -2 &amp; 4
-\end{bmatrix}
-\xrightarrow{\rowopadd{1}{2}{1}}
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 1 &amp; 3\\
-0 &amp; 1 &amp; -1 &amp; 2\\
-0 &amp; 2 &amp; -2 &amp; 4
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{-2}{2}{3}}
-&amp;
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 1 &amp; 3\\
-0 &amp; \leading{1} &amp; -1 &amp; 2\\
-0 &amp; 0 &amp; 0 &amp; 0
-\end{bmatrix}</mrow></md></p>
-            <p>The system of equations represented by this augmented matrix needs to be considered a bit differently than that for Archetype B.  First, the last row of the matrix is the equation <m>0=0</m>, which is <em>always</em> true, so it imposes no restrictions on our possible solutions and therefore we can safely ignore it as we analyze the other two equations.  These equations are,
-<md><mrow>x_1+x_3&amp;=3</mrow><mrow>x_2-x_3&amp;=2.</mrow></md></p>
-            <p>While this system is fairly easy to solve, it also appears to have a multitude of solutions.  For example, choose <m>x_3=1</m> and see that then <m>x_1=2</m> and <m>x_2=3</m> will together form a solution.  Or choose <m>x_3=0</m>, and then discover that <m>x_1=3</m> and <m>x_2=2</m> lead to a solution.  Try it yourself: pick <em>any</em> value of <m>x_3</m> you please, and figure out what <m>x_1</m> and <m>x_2</m> should be to make the first and second equations (respectively) true.  We'll wait while you do that.  Because of this behavior, we say that <m>x_3</m> is a <q>free</q> or <q>independent</q> variable.  But why do we vary <m>x_3</m> and not some other variable?  For now, notice that the third column of the augmented matrix is not a pivot column.  With this idea, we can rearrange the two equations, solving each for the variable whose index is the same as the column index of a pivot column.
-<md><mrow>x_1&amp;=3-x_3</mrow><mrow>x_2&amp;=2+x_3</mrow></md>
-</p>
-            <p>To write the set of solution vectors in set notation, we have
-<md><mrow>S&amp;=\setparts{\colvector{3-x_3\\2+x_3\\x_3}}{x_3\in\complexes}</mrow></md></p>
+            <index><main>solution set</main><sub>Archetype A</sub></index>
+            <!-- Archetype A, Part systemdefn -->
+            <!-- Archetype A, Part augmented -->
+            <p>Let us find the solutions to the following system of equations,<md>
+                <mrow>x_1 -x_2 +2x_3 &amp; =1</mrow>
+                <mrow>2x_1+ x_2 + x_3 &amp; =8</mrow>
+                <mrow>x_1 + x_2 &amp; =5</mrow>
+            </md></p>
+            <p>First, form the augmented matrix,<md>
+                <mrow>\begin{bmatrix}
+                1 &amp; -1 &amp; 2 &amp; 1\\
+                2 &amp; 1 &amp; 1 &amp; 8\\
+                1 &amp; 1 &amp; 0 &amp; 5
+                \end{bmatrix}</mrow>
+            </md>and work to reduced row-echelon form, first with <m>j=1</m>,<md>
+                <mrow>\xrightarrow{\rowopadd{-2}{1}{2}}
+                &amp;
+                \begin{bmatrix}
+                1 &amp; -1 &amp; 2 &amp; 1\\
+                0 &amp; 3 &amp; -3 &amp; 6\\
+                1 &amp; 1 &amp; 0 &amp; 5
+                \end{bmatrix}
+                \xrightarrow{\rowopadd{-1}{1}{3}}
+                \begin{bmatrix}
+                \leading{1} &amp; -1 &amp; 2 &amp; 1\\
+                0 &amp; 3 &amp; -3 &amp; 6\\
+                0 &amp; 2 &amp; -2 &amp; 4
+                \end{bmatrix}</mrow>
+                <intertext>Now, with <m>j=2</m>,</intertext>
+                <mrow>\xrightarrow{\rowopmult{\frac{1}{3}}{2}}
+                &amp;
+                \begin{bmatrix}
+                \leading{1} &amp; -1 &amp; 2 &amp; 1\\
+                0 &amp; 1 &amp; -1 &amp; 2\\
+                0 &amp; 2 &amp; -2 &amp; 4
+                \end{bmatrix}
+                \xrightarrow{\rowopadd{1}{2}{1}}
+                \begin{bmatrix}
+                \leading{1} &amp; 0 &amp; 1 &amp; 3\\
+                0 &amp; 1 &amp; -1 &amp; 2\\
+                0 &amp; 2 &amp; -2 &amp; 4
+                \end{bmatrix}</mrow>
+                <mrow>\xrightarrow{\rowopadd{-2}{2}{3}}
+                &amp;
+                \begin{bmatrix}
+                \leading{1} &amp; 0 &amp; 1 &amp; 3\\
+                0 &amp; \leading{1} &amp; -1 &amp; 2\\
+                0 &amp; 0 &amp; 0 &amp; 0
+                \end{bmatrix}</mrow>
+            </md></p>
+            <p>The system of equations represented by this augmented matrix needs to be considered a bit differently than that for Archetype B.  First, the last row of the matrix is the equation <m>0=0</m>, which is <em>always</em> true, so it imposes no restrictions on our possible solutions and therefore we can safely ignore it as we analyze the other two equations.  These equations are,<md>
+                <mrow>x_1+x_3&amp;=3</mrow>
+                <mrow>x_2-x_3&amp;=2.</mrow>
+            </md></p>
+            <p>While this system is fairly easy to solve, it also appears to have a multitude of solutions.  For example, choose <m>x_3=1</m> and see that then <m>x_1=2</m> and <m>x_2=3</m> will together form a solution.  Or choose <m>x_3=0</m>, and then discover that <m>x_1=3</m> and <m>x_2=2</m> lead to a solution.  Try it yourself: pick <em>any</em> value of <m>x_3</m> you please, and figure out what <m>x_1</m> and <m>x_2</m> should be to make the first and second equations (respectively) true.  We'll wait while you do that.  Because of this behavior, we say that <m>x_3</m> is a <q>free</q> or <q>independent</q> variable.  But why do we vary <m>x_3</m> and not some other variable?  For now, notice that the third column of the augmented matrix is not a pivot column.  With this idea, we can rearrange the two equations, solving each for the variable whose index is the same as the column index of a pivot column.<md>
+                <mrow>x_1&amp;=3-x_3</mrow>
+                <mrow>x_2&amp;=2+x_3</mrow>
+            </md></p>
+            <p>To write the set of solution vectors in set notation, we have<md>
+                <mrow>S&amp;=\setparts{\colvector{3-x_3\\2+x_3\\x_3}}{x_3\in\complexes}</mrow>
+            </md></p>
             <p>We will learn more in the next section about systems with infinitely many solutions and how to express their solution sets.  Right now, you might look back at  <xref ref="example-IS" acro="IS" autoname="yes"/>.</p>
         </example>
         <example xml:id="example-SAE" acro="SAE">
-            <index>
-                <main>solution set</main>
-                <sub>archetype E</sub>
-            </index>
             <title>Solutions for Archetype E</title>
-            <p>Let us find the solutions to the following system of equations,
-<!-- Archetype E, Part systemdefn --><systemdefn><md><mrow>2x_1  + x_2 + 7x_3 - 7x_4 &amp;= 2 </mrow><mrow>-3x_1 + 4x_2 -5x_3 - 6x_4 &amp;=  3 </mrow><mrow>x_1 +x_2 + 4x_3 - 5x_4 &amp;=  2</mrow></md></systemdefn></p>
-            <p>First, form the augmented matrix,
-<md><mrow><!-- Archetype E, Part augmented -->\begin{bmatrix}
-2 &amp; 1 &amp; 7 &amp; -7 &amp; 2\\
--3 &amp; 4 &amp;  -5 &amp; -6 &amp;  3\\
-1 &amp; 1 &amp; 4 &amp;  -5 &amp; 2
-\end{bmatrix}</mrow></md>
-and work to reduced row-echelon form, first with <m>j=1</m>,
-<md><mrow>\xrightarrow{\rowopswap{1}{3}}
-&amp;
-\begin{bmatrix}
-1 &amp; 1 &amp; 4 &amp;  -5 &amp; 2\\
--3 &amp; 4 &amp;  -5 &amp; -6 &amp;  3\\
-2 &amp; 1 &amp; 7 &amp; -7 &amp; 2
-\end{bmatrix}
-\xrightarrow{\rowopadd{3}{1}{2}}
-\begin{bmatrix}
-1 &amp; 1 &amp; 4 &amp;  -5 &amp; 2\\
-0 &amp; 7 &amp;  7 &amp; -21 &amp;  9\\
-2 &amp; 1 &amp; 7 &amp; -7 &amp; 2
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{-2}{1}{3}}
-&amp;
-\begin{bmatrix}
-\leading{1} &amp; 1 &amp; 4 &amp;  -5 &amp; 2\\
-0 &amp; 7 &amp;  7 &amp; -21 &amp;  9\\
-0 &amp; -1 &amp; -1 &amp; 3 &amp; -2
-\end{bmatrix}</mrow><intertext>Now, with <m>j=2</m>,</intertext><mrow>\xrightarrow{\rowopswap{2}{3}}
-&amp;
-\begin{bmatrix}
-\leading{1} &amp; 1 &amp; 4 &amp;  -5 &amp; 2\\
-0 &amp; -1 &amp; -1 &amp; 3 &amp; -2\\
-0 &amp; 7 &amp;  7 &amp; -21 &amp;  9
-\end{bmatrix}
-\xrightarrow{\rowopmult{-1}{2}}
-\begin{bmatrix}
-\leading{1} &amp; 1 &amp; 4 &amp;  -5 &amp; 2\\
-0 &amp; 1 &amp; 1 &amp; -3 &amp; 2\\
-0 &amp; 7 &amp;  7 &amp; -21 &amp;  9
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{-1}{2}{1}}
-&amp;
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 3 &amp;  -2 &amp; 0\\
-0 &amp; 1 &amp; 1 &amp; -3 &amp; 2\\
-0 &amp; 7 &amp;  7 &amp; -21 &amp;  9
-\end{bmatrix}
-\xrightarrow{\rowopadd{-7}{2}{3}}
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 3 &amp;  -2 &amp; 0\\
-0 &amp; \leading{1} &amp; 1 &amp; -3 &amp; 2\\
-0 &amp; 0 &amp;  0 &amp; 0 &amp;  -5
-\end{bmatrix}</mrow><intertext>And finally, with <m>j=4</m>,</intertext><mrow>\xrightarrow{\rowopmult{-\frac{1}{5}}{3}}
-&amp;
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 3 &amp;  -2 &amp; 0\\
-0 &amp; \leading{1} &amp; 1 &amp; -3 &amp; 2\\
-0 &amp; 0 &amp;  0 &amp; 0 &amp;  1
-\end{bmatrix}
-\xrightarrow{\rowopadd{-2}{3}{2}}<!-- Archetype E, Part augmentedreduced -->\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 3 &amp;  -2 &amp; 0\\
-0 &amp; \leading{1} &amp; 1 &amp; -3 &amp; 0\\
-0 &amp; 0 &amp;  0 &amp; 0 &amp;  \leading{1}
-\end{bmatrix}</mrow></md>
-</p>
+            <index><main>solution set</main><sub>archetype E</sub></index>
+            <!-- Archetype E, Part systemdefn -->
+            <!-- Archetype E, Part augmented -->
+            <!-- Archetype E, Part augmentedreduced -->
+            <p>Let us find the solutions to the following system of equations,<md>
+                <mrow>2x_1  + x_2 + 7x_3 - 7x_4 &amp;= 2 </mrow>
+                <mrow>-3x_1 + 4x_2 -5x_3 - 6x_4 &amp;=  3 </mrow>
+                <mrow>x_1 +x_2 + 4x_3 - 5x_4 &amp;=  2</mrow>
+            </md></p>
+            <p>First, form the augmented matrix,<md>
+                <mrow>\begin{bmatrix}
+                2 &amp; 1 &amp; 7 &amp; -7 &amp; 2\\
+                -3 &amp; 4 &amp;  -5 &amp; -6 &amp;  3\\
+                1 &amp; 1 &amp; 4 &amp;  -5 &amp; 2
+                \end{bmatrix}</mrow>
+            </md>and work to reduced row-echelon form, first with <m>j=1</m>,<md>
+                <mrow>\xrightarrow{\rowopswap{1}{3}}
+                &amp;
+                \begin{bmatrix}
+                1 &amp; 1 &amp; 4 &amp;  -5 &amp; 2\\
+                -3 &amp; 4 &amp;  -5 &amp; -6 &amp;  3\\
+                2 &amp; 1 &amp; 7 &amp; -7 &amp; 2
+                \end{bmatrix}
+                \xrightarrow{\rowopadd{3}{1}{2}}
+                \begin{bmatrix}
+                1 &amp; 1 &amp; 4 &amp;  -5 &amp; 2\\
+                0 &amp; 7 &amp;  7 &amp; -21 &amp;  9\\
+                2 &amp; 1 &amp; 7 &amp; -7 &amp; 2
+                \end{bmatrix}</mrow>
+                <mrow>\xrightarrow{\rowopadd{-2}{1}{3}}
+                &amp;
+                \begin{bmatrix}
+                \leading{1} &amp; 1 &amp; 4 &amp;  -5 &amp; 2\\
+                0 &amp; 7 &amp;  7 &amp; -21 &amp;  9\\
+                0 &amp; -1 &amp; -1 &amp; 3 &amp; -2
+                \end{bmatrix}</mrow>
+                <intertext>Now, with <m>j=2</m>,</intertext>
+                <mrow>\xrightarrow{\rowopswap{2}{3}}
+                &amp;
+                \begin{bmatrix}
+                \leading{1} &amp; 1 &amp; 4 &amp;  -5 &amp; 2\\
+                0 &amp; -1 &amp; -1 &amp; 3 &amp; -2\\
+                0 &amp; 7 &amp;  7 &amp; -21 &amp;  9
+                \end{bmatrix}
+                \xrightarrow{\rowopmult{-1}{2}}
+                \begin{bmatrix}
+                \leading{1} &amp; 1 &amp; 4 &amp;  -5 &amp; 2\\
+                0 &amp; 1 &amp; 1 &amp; -3 &amp; 2\\
+                0 &amp; 7 &amp;  7 &amp; -21 &amp;  9
+                \end{bmatrix}</mrow>
+                <mrow>\xrightarrow{\rowopadd{-1}{2}{1}}
+                &amp;
+                \begin{bmatrix}
+                \leading{1} &amp; 0 &amp; 3 &amp;  -2 &amp; 0\\
+                0 &amp; 1 &amp; 1 &amp; -3 &amp; 2\\
+                0 &amp; 7 &amp;  7 &amp; -21 &amp;  9
+                \end{bmatrix}
+                \xrightarrow{\rowopadd{-7}{2}{3}}
+                \begin{bmatrix}
+                \leading{1} &amp; 0 &amp; 3 &amp;  -2 &amp; 0\\
+                0 &amp; \leading{1} &amp; 1 &amp; -3 &amp; 2\\
+                0 &amp; 0 &amp;  0 &amp; 0 &amp;  -5
+                \end{bmatrix}</mrow>
+                <intertext>And finally, with <m>j=4</m>,</intertext>
+                <mrow>\xrightarrow{\rowopmult{-\frac{1}{5}}{3}}
+                &amp;
+                \begin{bmatrix}
+                \leading{1} &amp; 0 &amp; 3 &amp;  -2 &amp; 0\\
+                0 &amp; \leading{1} &amp; 1 &amp; -3 &amp; 2\\
+                0 &amp; 0 &amp;  0 &amp; 0 &amp;  1
+                \end{bmatrix}
+                \xrightarrow{\rowopadd{-2}{3}{2}}
+                \begin{bmatrix}
+                \leading{1} &amp; 0 &amp; 3 &amp;  -2 &amp; 0\\
+                0 &amp; \leading{1} &amp; 1 &amp; -3 &amp; 0\\
+                0 &amp; 0 &amp;  0 &amp; 0 &amp;  \leading{1}
+                \end{bmatrix}</mrow>
+            </md></p>
             <p>Let us analyze the equations in the system represented by this augmented matrix.  The third equation will read <m>0=1</m>.  This is patently false, all the time.  No choice of values for our variables will ever make it true.  We are done.  Since we cannot even make the last equation true, we have no hope of making all of the equations simultaneously true.  So this system has no solutions, and its solution set is the empty set, <m>\emptyset=\set{\ }</m> (<xref ref="definition-ES" acro="ES" autoname="yes"/>).</p>
-            <p>Notice that we could have reached this conclusion sooner.  After performing the row operation
-<m>\rowopadd{-7}{2}{3}</m>, we can see that the third equation reads <m>0=-5</m>, a false statement.  Since the system represented by this matrix has no solutions, none of the systems represented has any solutions.  However, for this example, we have chosen to bring the matrix all the way  to reduced row-echelon form as practice.</p>
+            <p>Notice that we could have reached this conclusion sooner.  After performing the row operation <m>\rowopadd{-7}{2}{3}</m>, we can see that the third equation reads <m>0=-5</m>, a false statement.  Since the system represented by this matrix has no solutions, none of the systems represented has any solutions.  However, for this example, we have chosen to bring the matrix all the way  to reduced row-echelon form as practice.</p>
         </example>
-        <p>These three examples
-(<xref ref="example-SAB" acro="SAB" autoname="yes"/>, <xref ref="example-SAA" acro="SAA" autoname="yes"/>, <xref ref="example-SAE" acro="SAE" autoname="yes"/>)
-illustrate the full range of possibilities for a system of linear equations <mdash/> no solutions, one solution, or infinitely many solutions.  In the next section we will examine these three scenarios more closely.</p>
+        <p>These three examples (<xref ref="example-SAB" acro="SAB" autoname="yes"/>, <xref ref="example-SAA" acro="SAA" autoname="yes"/>, <xref ref="example-SAE" acro="SAE" autoname="yes"/>) illustrate the full range of possibilities for a system of linear equations <mdash/> no solutions, one solution, or infinitely many solutions.  In the next section we will examine these three scenarios more closely.</p>
         <p>We (and everybody else) will often speak of <q>row-reducing</q> a matrix.  This is an informal way of saying we begin with a matrix <m>A</m> and then analyze <em>the</em> matrix <m>B</m> that is row-equivalent to <m>A</m> and in reduced row-echelon form.  So the term <term>row-reduce</term> is used as a verb, but describes something a bit more complicated, since we do not really change <m>A</m>.   <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/> tells us that this process will always be successful and <xref ref="theorem-RREFU" acro="RREFU" autoname="yes"/> tells us that <m>B</m> will be unambiguous.  Typically, an investigation of <m>A</m> will proceed by analyzing <m>B</m> and applying theorems whose hypotheses include the row-equivalence of <m>A</m> and <m>B</m>, and usually the hypothesis that <m>B</m> is in reduced row-echelon form.</p>
         <computation xml:id="sage-RREF" acro="RREF">
             <title>Reduced Row-Echelon Form</title>
-            <index>
-                <main>reduced row-echelon form</main>
-            </index>
+            <index>reduced row-echelon form</index>
             <p>There has been a lot of information about using Sage with vectors and matrices in this section.  But we can now construct the coefficient matrix of a system of equations and the vector of constants.  From these pieces we can easily construct the augmented matrix, which we could subject to a series of row operations.  Computers are suppose to make routine tasks easy so we can concentrate on bigger ideas.  No exception here, Sage can bring a matrix (augmented or not) to reduced row echelon form with no problem.  Let us redo <xref ref="example-SAB" acro="SAB" autoname="yes"/> with Sage.</p>
             <sage xml:id="sagecell-RREF-1">
                 <input>
-coeff = matrix(QQ, [[-7, -6, -12],
-                    [5,   5,   7],
-                    [1,   0,   4]])
-const = vector(QQ, [-33, 24, 5])
-aug = coeff.augment(const)
-aug.rref()
-</input>
+                coeff = matrix(QQ, [[-7, -6, -12],
+                                    [5,   5,   7],
+                                    [1,   0,   4]])
+                const = vector(QQ, [-33, 24, 5])
+                aug = coeff.augment(const)
+                aug.rref()
+                </input>
                 <output>
-[ 1  0  0 -3]
-[ 0  1  0  5]
-[ 0  0  1  2]
-</output>
+                [ 1  0  0 -3]
+                [ 0  1  0  5]
+                [ 0  0  1  2]
+                </output>
             </sage>
             <p>And the solution <m>x_1=-3</m>, <m>x_2=5</m>, <m>x_3=2</m> is now obvious.  Beautiful.</p>
             <p>You may notice that Sage has some commands with the word <q>echelon</q> in them.  For now, these should be avoided like the plague, as there are some subtleties in how they work.  The matrix method <c>.rref()</c> will be sufficient for our purposes for a long, long time <mdash/> so stick with it.</p>
         </computation>
     </subsection>
-    <!--   End  rref.tex -->
     <exercises>
         <title>Reading Questions</title>
         <exercise>
             <statement>
-                <p>Is the matrix below in reduced row-echelon form?  Why or why
-not?
-<me>\begin{bmatrix}
-1 &amp; 5 &amp; 0 &amp; 6 &amp; 8\\
-0 &amp; 0 &amp; 1 &amp; 2 &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}</me>
-</p>
+                <p>Is the matrix below in reduced row-echelon form?  Why or why not?<me>\begin{bmatrix}
+                1 &amp; 5 &amp; 0 &amp; 6 &amp; 8\\
+                0 &amp; 0 &amp; 1 &amp; 2 &amp; 0\\
+                0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
+                \end{bmatrix}</me></p>
             </statement>
         </exercise>
         <exercise>
             <statement>
-                <p>Use row operations to convert the matrix below to reduced
-row-echelon form and report the final matrix.
-<me>\begin{bmatrix}
-2 &amp; 1 &amp; 8\\
--1 &amp; 1 &amp; -1\\
--2 &amp; 5 &amp; 4
-\end{bmatrix}</me>
-</p>
+                <p>Use row operations to convert the matrix below to reduced row-echelon form and report the final matrix.<me>\begin{bmatrix}
+                2 &amp; 1 &amp; 8\\
+                -1 &amp; 1 &amp; -1\\
+                -2 &amp; 5 &amp; 4
+                \end{bmatrix}</me></p>
             </statement>
         </exercise>
         <exercise>
             <statement>
                 <p>Find all the solutions to the system below by using an augmented
 matrix and row operations.  Report your final matrix in reduced row-echelon form and the set of solutions.
-<md><mrow>2x_1 + 3x_2 - x_3&amp;= 0</mrow><mrow>x_1 + 2x_2 + x_3&amp;= 3</mrow><mrow>x_1 + 3x_2 + 3x_3&amp;= 7</mrow></md>
-</p>
+<md><mrow>2x_1 + 3x_2 - x_3&amp;= 0</mrow><mrow>x_1 + 2x_2 + x_3&amp;= 3</mrow><mrow>x_1 + 3x_2 + 3x_3&amp;= 7</mrow></md></p>
             </statement>
         </exercise>
     </exercises>
@@ -1319,18 +1183,7 @@ matrix and row operations.  Report your final matrix in reduced row-echelon form
         <exercise number="C05" xml:id="exercise-RREF-C05">
             <statement>
                 <p>Each archetype below is a system of equations.  Form the augmented matrix of the system of equations, convert the matrix to reduced row-echelon form by using equation operations and then describe the solution set of the original system of equations.</p>
-                <p>
-Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-C" acro="C" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-F" acro="F" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-G" acro="G" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-H" acro="H" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-I" acro="I" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-J" acro="J" autoname="no"/>
-</p>
+                <p>Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/>, Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/>, Archetype<nbsp/><xref ref="archetype-C" acro="C" autoname="no"/>, Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/>, Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/>, Archetype<nbsp/><xref ref="archetype-F" acro="F" autoname="no"/>, Archetype<nbsp/><xref ref="archetype-G" acro="G" autoname="no"/>, Archetype<nbsp/><xref ref="archetype-H" acro="H" autoname="no"/>, Archetype<nbsp/><xref ref="archetype-I" acro="I" autoname="no"/>, Archetype<nbsp/><xref ref="archetype-J" acro="J" autoname="no"/></p>
             </statement>
         </exercise>
         <exercisegroup>
@@ -1349,16 +1202,14 @@ Archetype<nbsp/><xref ref="archetype-J" acro="J" autoname="no"/>
                     </p>
                 </statement>
                 <solution xml:id="solution-RREF-C10">
-                    <p>The augmented matrix row-reduces to
-<me>\begin{bmatrix}
-\leading{1} &amp;  0 &amp;  0 &amp;  0 &amp;  1\\
-0 &amp;  \leading{1} &amp;  0 &amp;  0 &amp;  -3\\
-0 &amp;  0 &amp;  \leading{1} &amp;  0 &amp;  -4\\
-0 &amp;  0 &amp;  0 &amp;  \leading{1} &amp;  1
-\end{bmatrix}</me>
-This augmented matrix represents the linear system <m>x_1=1</m>, <m>x_2=-3</m>, <m>x_3=-4</m>, <m>x_4=1</m>, which clearly has only one possible solution.  We can write this solution set then as
-<md><mrow>S&amp;=\set{\colvector{1\\-3\\-4\\1}}</mrow></md>
-</p>
+                    <p>The augmented matrix row-reduces to<me>\begin{bmatrix}
+                    \leading{1} &amp;  0 &amp;  0 &amp;  0 &amp;  1\\
+                    0 &amp;  \leading{1} &amp;  0 &amp;  0 &amp;  -3\\
+                    0 &amp;  0 &amp;  \leading{1} &amp;  0 &amp;  -4\\
+                    0 &amp;  0 &amp;  0 &amp;  \leading{1} &amp;  1
+                    \end{bmatrix}</me>This augmented matrix represents the linear system <m>x_1=1</m>, <m>x_2=-3</m>, <m>x_3=-4</m>, <m>x_4=1</m>, which clearly has only one possible solution.  We can write this solution set then as<md>
+                        <mrow>S&amp;=\set{\colvector{1\\-3\\-4\\1}}</mrow>
+                    </md></p>
                 </solution>
             </exercise>
             <exercise number="C11" xml:id="exercise-RREF-C11">
@@ -1372,14 +1223,11 @@ This augmented matrix represents the linear system <m>x_1=1</m>, <m>x_2=-3</m>, 
                     </p>
                 </statement>
                 <solution xml:id="solution-RREF-C11">
-                    <p>The augmented matrix row-reduces to
-<me>\begin{bmatrix}
-\leading{1} &amp;  0 &amp;  1 &amp;  4/5 &amp;  0\\
-0 &amp;  \leading{1} &amp;  -1 &amp;  -1/10 &amp;  0\\
-0 &amp;  0 &amp;  0 &amp;  0 &amp;  \leading{1}
-\end{bmatrix}</me>
-Row 3 represents the equation <m>0=1</m>, which is patently false, so the original system has no solutions.  We can express the solution set as the empty set, <m>\emptyset=\set{\ }</m>.
-</p>
+                    <p>The augmented matrix row-reduces to<me>\begin{bmatrix}
+                    \leading{1} &amp;  0 &amp;  1 &amp;  4/5 &amp;  0\\
+                    0 &amp;  \leading{1} &amp;  -1 &amp;  -1/10 &amp;  0\\
+                    0 &amp;  0 &amp;  0 &amp;  0 &amp;  \leading{1}
+                    \end{bmatrix}</me>Row 3 represents the equation <m>0=1</m>, which is patently false, so the original system has no solutions.  We can express the solution set as the empty set, <m>\emptyset=\set{\ }</m>.</p>
                 </solution>
             </exercise>
             <exercise number="C12" xml:id="exercise-RREF-C12">
@@ -1393,76 +1241,58 @@ Row 3 represents the equation <m>0=1</m>, which is patently false, so the origin
                     </p>
                 </statement>
                 <solution xml:id="solution-RREF-C12">
-                    <p>The augmented matrix row-reduces to
-<md><mrow>\begin{bmatrix}
-\leading{1} &amp;  2 &amp;  0 &amp;  -4 &amp;  2\\
-0 &amp;  0 &amp;  \leading{1} &amp;  3 &amp;  -6\\
-0 &amp;  0 &amp;  0 &amp;  0 &amp;  0
-\end{bmatrix}</mrow></md>
-In the spirit of <xref ref="example-SAA" acro="SAA" autoname="yes"/>, we can express the infinitely many solutions of this system compactly with set notation.  The key is to express certain variables in terms of others.  More specifically, each pivot column number is the index of a variable that can be written in terms of the variables whose indices are non-pivot columns.  Or saying the same thing: for each <m>i</m> in <m>D</m>, we can find an expression for <m>x_i</m> in terms of the variables without their index in <m>D</m>.  Here <m>D=\set{1,\,3}</m>, so
-<md><mrow>x_1&amp;=2-2x_2+4x_4</mrow><mrow>x_3&amp;=-6\quad\quad-3x_4</mrow></md>
-As a set, we write the solutions precisely as
-<md><mrow>\setparts{\colvector{2-2x_2+4x_4\\x_2\\-6-3x_4\\x_4}}{x_2,\,x_4\in\complexes}</mrow></md>
-</p>
+                    <p>The augmented matrix row-reduces to<md>
+                        <mrow>\begin{bmatrix}
+                        \leading{1} &amp;  2 &amp;  0 &amp;  -4 &amp;  2\\
+                        0 &amp;  0 &amp;  \leading{1} &amp;  3 &amp;  -6\\
+                        0 &amp;  0 &amp;  0 &amp;  0 &amp;  0
+                        \end{bmatrix}</mrow>
+                    </md>In the spirit of <xref ref="example-SAA" acro="SAA" autoname="yes"/>, we can express the infinitely many solutions of this system compactly with set notation.  The key is to express certain variables in terms of others.  More specifically, each pivot column number is the index of a variable that can be written in terms of the variables whose indices are non-pivot columns.  Or saying the same thing: for each <m>i</m> in <m>D</m>, we can find an expression for <m>x_i</m> in terms of the variables without their index in <m>D</m>.  Here <m>D=\set{1,\,3}</m>, so<md>
+                        <mrow>x_1&amp;=2-2x_2+4x_4</mrow>
+                        <mrow>x_3&amp;=-6\quad\quad-3x_4</mrow>
+                    </md>As a set, we write the solutions precisely as<md>
+                        <mrow>\setparts{\colvector{2-2x_2+4x_4\\x_2\\-6-3x_4\\x_4}}{x_2,\,x_4\in\complexes}</mrow>
+                    </md></p>
                 </solution>
             </exercise>
             <exercise number="C13" xml:id="exercise-RREF-C13">
                 <statement>
-                    <p>
-                        <md>
-                            <mrow>x_1+2x_2+8x_3-7x_4&amp;=-2</mrow>
-                            <mrow>3x_1+2x_2+12x_3-5x_4&amp;=6</mrow>
-                            <mrow>-x_1+x_2+x_3-5x_4&amp;=-10</mrow>
-                        </md>
-                    </p>
+                    <p><md>
+                        <mrow>x_1+2x_2+8x_3-7x_4&amp;=-2</mrow>
+                        <mrow>3x_1+2x_2+12x_3-5x_4&amp;=6</mrow>
+                        <mrow>-x_1+x_2+x_3-5x_4&amp;=-10</mrow>
+                        </md></p>
                 </statement>
                 <solution xml:id="solution-RREF-C13">
-                    <p>The augmented matrix of the system of equations is
-<me>\begin{bmatrix}
-1 &amp; 2 &amp; 8 &amp; -7 &amp; -2\\
-3 &amp; 2 &amp; 12 &amp; -5 &amp; 6\\
--1 &amp; 1 &amp; 1 &amp; -5 &amp; -10
-\end{bmatrix}</me>
-which row-reduces to
-<me>\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 2 &amp; 1 &amp; 0\\
-0 &amp; \leading{1} &amp; 3 &amp; -4 &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}
-\end{bmatrix}</me>
-Row 3 represents the equation <m>0=1</m>, which is patently false, so the original system has no solutions.  We can express the solution set as the empty set, <m>\emptyset=\set{\ }</m>.
-</p>
+                    <p>The augmented matrix of the system of equations is<me>\begin{bmatrix}
+                    1 &amp; 2 &amp; 8 &amp; -7 &amp; -2\\
+                    3 &amp; 2 &amp; 12 &amp; -5 &amp; 6\\
+                    -1 &amp; 1 &amp; 1 &amp; -5 &amp; -10
+                    \end{bmatrix}</me>which row-reduces to<me>\begin{bmatrix}
+                    \leading{1} &amp; 0 &amp; 2 &amp; 1 &amp; 0\\
+                    0 &amp; \leading{1} &amp; 3 &amp; -4 &amp; 0\\
+                    0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}
+                    \end{bmatrix}</me>Row 3 represents the equation <m>0=1</m>, which is patently false, so the original system has no solutions.  We can express the solution set as the empty set, <m>\emptyset=\set{\ }</m>.</p>
                 </solution>
             </exercise>
             <exercise number="C14" xml:id="exercise-RREF-C14">
                 <statement>
-                    <p>
-                        <md>
-                            <mrow>2x_1+x_2+7x_3-2x_4&amp;=4</mrow>
-                            <mrow>3x_1-2x_2+11x_4&amp;=13</mrow>
-                            <mrow>x_1+x_2+5x_3-3x_4&amp;=1</mrow>
-                        </md>
-                    </p>
+                    <p><md>
+                        <mrow>2x_1+x_2+7x_3-2x_4&amp;=4</mrow>
+                        <mrow>3x_1-2x_2+11x_4&amp;=13</mrow>
+                        <mrow>x_1+x_2+5x_3-3x_4&amp;=1</mrow>
+                    </md></p>
                 </statement>
                 <solution xml:id="solution-RREF-C14">
-                    <p>The augmented matrix of the system of equations is
-<me>\begin{bmatrix}
-2 &amp; 1 &amp; 7 &amp; -2 &amp; 4\\
-3 &amp; -2 &amp; 0 &amp; 11 &amp; 13\\
-1 &amp; 1 &amp; 5 &amp; -3 &amp; 1
-\end{bmatrix}</me>
-which row-reduces to
-<me>\begin{bmatrix}
-\leading{1}&amp; 0 &amp; 2 &amp; 1 &amp; 3\\
-0 &amp; \leading{1} &amp; 3 &amp; -4 &amp; -2\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
-\end{bmatrix}</me>
-In the spirit of <xref ref="example-SAA" acro="SAA" autoname="yes"/>, we can express the infinitely many solutions of this system compactly with set notation.  The key is to express certain variables in terms of others.  More specifically, each pivot column number is the index of a variable that can be written in terms of the variables whose indices are non-pivot columns.  Or saying the same thing: for each <m>i</m> in <m>D</m>, we can find an expression for <m>x_i</m> in terms of the variables without their index in <m>D</m>.  Here <m>D=\set{1,\,2}</m>, so rearranging the equations represented by the two nonzero rows to gain expressions for the variables <m>x_1</m> and <m>x_2</m> yields the solution set,
-<me>S=\setparts{
-\colvector{3-2x_3-x_4\\-2-3x_3+4x_4\\x_3\\x_4}
-}{
-x_3,\,x_4\in\complexes
-}</me>
-</p>
+                    <p>The augmented matrix of the system of equations is<me>\begin{bmatrix}
+                    2 &amp; 1 &amp; 7 &amp; -2 &amp; 4\\
+                    3 &amp; -2 &amp; 0 &amp; 11 &amp; 13\\
+                    1 &amp; 1 &amp; 5 &amp; -3 &amp; 1
+                    \end{bmatrix}</me>which row-reduces to<me>\begin{bmatrix}
+                    \leading{1}&amp; 0 &amp; 2 &amp; 1 &amp; 3\\
+                    0 &amp; \leading{1} &amp; 3 &amp; -4 &amp; -2\\
+                    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+                    \end{bmatrix}</me>In the spirit of <xref ref="example-SAA" acro="SAA" autoname="yes"/>, we can express the infinitely many solutions of this system compactly with set notation.  The key is to express certain variables in terms of others.  More specifically, each pivot column number is the index of a variable that can be written in terms of the variables whose indices are non-pivot columns.  Or saying the same thing: for each <m>i</m> in <m>D</m>, we can find an expression for <m>x_i</m> in terms of the variables without their index in <m>D</m>.  Here <m>D=\set{1,\,2}</m>, so rearranging the equations represented by the two nonzero rows to gain expressions for the variables <m>x_1</m> and <m>x_2</m> yields the solution set<me>S=\setparts{\colvector{3-2x_3-x_4\\-2-3x_3+4x_4\\x_3\\x_4}}{x_3,\,x_4\in\complexes}</me></p>
                 </solution>
             </exercise>
             <exercise number="C15" xml:id="exercise-RREF-C15">
@@ -1476,25 +1306,15 @@ x_3,\,x_4\in\complexes
                     </p>
                 </statement>
                 <solution xml:id="solution-RREF-C15">
-                    <p>The augmented matrix of the system of equations is
-<me>\begin{bmatrix}
- 2 &amp; 3 &amp; -1 &amp; -9 &amp; -16 \\
- 1 &amp; 2 &amp; 1 &amp; 0 &amp; 0 \\
- -1 &amp; 2 &amp; 3 &amp; 4 &amp; 8
-\end{bmatrix}</me>
-which row-reduces to
-<me>\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 0 &amp; 2 &amp; 3 \\
- 0 &amp; \leading{1} &amp; 0 &amp; -3 &amp; -5 \\
- 0 &amp; 0 &amp; \leading{1} &amp; 4 &amp; 7
-\end{bmatrix}</me>
-In the spirit of <xref ref="example-SAA" acro="SAA" autoname="yes"/>, we can express the infinitely many solutions of this system compactly with set notation.  The key is to express certain variables in terms of others.  More specifically, each pivot column number is the index of a variable that can be written in terms of the variables whose indices are non-pivot columns.  Or saying the same thing: for each <m>i</m> in <m>D</m>, we can find an expression for <m>x_i</m> in terms of the variables without their index in <m>D</m>.  Here <m>D=\set{1,\,2,\,3}</m>, so rearranging the equations represented by the three nonzero rows to gain expressions for the variables <m>x_1</m>, <m>x_2</m> and <m>x_3</m> yields the solution set,
-<me>S=\setparts{
-\colvector{3-2x_4\\-5+3x_4\\7-4x_4\\x_4}
-}{
-x_4\in\complexes
-}</me>
-</p>
+                    <p>The augmented matrix of the system of equations is<me>\begin{bmatrix}
+                     2 &amp; 3 &amp; -1 &amp; -9 &amp; -16 \\
+                     1 &amp; 2 &amp; 1 &amp; 0 &amp; 0 \\
+                     -1 &amp; 2 &amp; 3 &amp; 4 &amp; 8
+                    \end{bmatrix}</me>which row-reduces to<me>\begin{bmatrix}
+                     \leading{1} &amp; 0 &amp; 0 &amp; 2 &amp; 3 \\
+                     0 &amp; \leading{1} &amp; 0 &amp; -3 &amp; -5 \\
+                     0 &amp; 0 &amp; \leading{1} &amp; 4 &amp; 7
+                    \end{bmatrix}</me>In the spirit of <xref ref="example-SAA" acro="SAA" autoname="yes"/>, we can express the infinitely many solutions of this system compactly with set notation.  The key is to express certain variables in terms of others.  More specifically, each pivot column number is the index of a variable that can be written in terms of the variables whose indices are non-pivot columns.  Or saying the same thing: for each <m>i</m> in <m>D</m>, we can find an expression for <m>x_i</m> in terms of the variables without their index in <m>D</m>.  Here <m>D=\set{1,\,2,\,3}</m>, so rearranging the equations represented by the three nonzero rows to gain expressions for the variables <m>x_1</m>, <m>x_2</m> and <m>x_3</m> yields the solution set <me>S=\setparts{\colvector{3-2x_4\\-5+3x_4\\7-4x_4\\x_4}}{x_4\in\complexes}</me></p>
                 </solution>
             </exercise>
             <exercise number="C16" xml:id="exercise-RREF-C16">
@@ -1508,20 +1328,15 @@ x_4\in\complexes
                     </p>
                 </statement>
                 <solution xml:id="solution-RREF-C16">
-                    <p>The augmented matrix of the system of equations is
-<me>\begin{bmatrix}
- 2 &amp; 3 &amp; 19 &amp; -4 &amp; 2 \\
- 1 &amp; 2 &amp; 12 &amp; -3 &amp; 1 \\
- -1 &amp; 2 &amp; 8 &amp; -5 &amp; 1
-\end{bmatrix}</me>
-which row-reduces to
-<me>\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 2 &amp; 1 &amp; 0 \\
- 0 &amp; \leading{1} &amp; 5 &amp; -2 &amp; 0 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}
-\end{bmatrix}</me>
-Row 3 represents the equation <m>0=1</m>, which is patently false, so the original system has no solutions.  We can express the solution set as the empty set, <m>\emptyset=\set{\ }</m>.
-</p>
+                    <p>The augmented matrix of the system of equations is<me>\begin{bmatrix}
+                     2 &amp; 3 &amp; 19 &amp; -4 &amp; 2 \\
+                     1 &amp; 2 &amp; 12 &amp; -3 &amp; 1 \\
+                     -1 &amp; 2 &amp; 8 &amp; -5 &amp; 1
+                    \end{bmatrix}</me>which row-reduces to<me>\begin{bmatrix}
+                     \leading{1} &amp; 0 &amp; 2 &amp; 1 &amp; 0 \\
+                     0 &amp; \leading{1} &amp; 5 &amp; -2 &amp; 0 \\
+                     0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}
+                    \end{bmatrix}</me>Row 3 represents the equation <m>0=1</m>, which is patently false, so the original system has no solutions.  We can express the solution set as the empty set, <m>\emptyset=\set{\ }</m>.</p>
                 </solution>
             </exercise>
             <exercise number="C17" xml:id="exercise-RREF-C17">
@@ -1536,86 +1351,82 @@ Row 3 represents the equation <m>0=1</m>, which is patently false, so the origin
                     </p>
                 </statement>
                 <solution xml:id="solution-RREF-C17">
-                    <p>We row-reduce the augmented matrix of the system of equations,
-<md><mrow>\begin{bmatrix}
- -1 &amp; 5 &amp; 0 &amp; 0 &amp; -8 \\
- -2 &amp; 5 &amp; 5 &amp; 2 &amp; 9 \\
- -3 &amp; -1 &amp; 3 &amp; 1 &amp; 3 \\
- 7 &amp; 6 &amp; 5 &amp; 1 &amp; 30
-\end{bmatrix}
-&amp;\rref
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 3 \\
- 0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; -1 \\
- 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 2 \\
- 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 5
-\end{bmatrix}</mrow></md>
-This augmented matrix represents the linear system <m>x_1=3</m>, <m>x_2=-1</m>, <m>x_3=2</m>, <m>x_4=5</m>, which clearly has only one possible solution.  We can write this solution set then as
-<md><mrow>S&amp;=\set{\colvector{3\\-1\\2\\5}}</mrow></md>
-</p>
+                    <p>We row-reduce the augmented matrix of the system of equations,<md>
+                        <mrow>\begin{bmatrix}
+                         -1 &amp; 5 &amp; 0 &amp; 0 &amp; -8 \\
+                         -2 &amp; 5 &amp; 5 &amp; 2 &amp; 9 \\
+                         -3 &amp; -1 &amp; 3 &amp; 1 &amp; 3 \\
+                         7 &amp; 6 &amp; 5 &amp; 1 &amp; 30
+                        \end{bmatrix}
+                        &amp;\rref
+                        \begin{bmatrix}
+                         \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 3 \\
+                         0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; -1 \\
+                         0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 2 \\
+                         0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 5
+                        \end{bmatrix}</mrow>
+                    </md>This augmented matrix represents the linear system <m>x_1=3</m>, <m>x_2=-1</m>, <m>x_3=2</m>, <m>x_4=5</m>, which clearly has only one possible solution.  We can write this solution set then as <md>
+                        <mrow>S&amp;=\set{\colvector{3\\-1\\2\\5}}</mrow>
+                    </md></p>
                 </solution>
             </exercise>
             <exercise number="C18" xml:id="exercise-RREF-C18">
                 <statement>
-                    <p>
-                        <md>
-                            <mrow>x_1+2x_2-4x_3-x_4&amp;=32</mrow>
-                            <mrow>x_1+3x_2-7x_3-x_5&amp;=33</mrow>
-                            <mrow>x_1+2x_3-2x_4+3x_5&amp;=22\\</mrow>
-                        </md>
-                    </p>
+                    <p><md>
+                        <mrow>x_1+2x_2-4x_3-x_4&amp;=32</mrow>
+                        <mrow>x_1+3x_2-7x_3-x_5&amp;=33</mrow>
+                        <mrow>x_1+2x_3-2x_4+3x_5&amp;=22\\</mrow>
+                    </md></p>
                 </statement>
                 <solution xml:id="solution-RREF-C18">
-                    <p>We row-reduce the augmented matrix of the system of equations,
-<md><mrow>\begin{bmatrix}
- 1 &amp; 2 &amp; -4 &amp; -1 &amp; 0 &amp; 32 \\
- 1 &amp; 3 &amp; -7 &amp; 0 &amp; -1 &amp; 33 \\
- 1 &amp; 0 &amp; 2 &amp; -2 &amp; 3 &amp; 22
-\end{bmatrix}
-&amp;\rref
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 2 &amp; 0 &amp; 5 &amp; 6 \\
- 0 &amp; \leading{1} &amp; -3 &amp; 0 &amp; -2 &amp; 9 \\
- 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 1 &amp; -8
-\end{bmatrix}</mrow></md>
-In the spirit of <xref ref="example-SAA" acro="SAA" autoname="yes"/>, we can express the infinitely many solutions of this system compactly with set notation.  The key is to express certain variables in terms of others.  More specifically, each pivot column number is the index of a variable that can be written in terms of the variables whose indices are non-pivot columns.  Or saying the same thing: for each <m>i</m> in <m>D</m>, we can find an expression for <m>x_i</m> in terms of the variables without their index in <m>D</m>.  Here <m>D=\set{1,\,2,\,4}</m>, so
-<md><mrow>x_1+2x_3+5x_5=6
-\quad&amp;\rightarrow\quad x_1=6-2x_3-5x_5</mrow><mrow>x_2-3x_3-2x_5=9
-\quad&amp;\rightarrow\quad x_2=9+3x_3+2x_5</mrow><mrow>x_4+x_5=-8\quad&amp;\rightarrow\quad x_4=-8-x_5</mrow></md>
-As a set, we write the solutions precisely as
-<md><mrow>S&amp;=\setparts{\colvector{6-2x_3-5x_5\\9+3x_3+2x_5\\x_3\\-8-x_5\\x_5}}{x_3,\,x_5\in\complexes}</mrow></md>
-</p>
+                    <p>We row-reduce the augmented matrix of the system of equations,<md>
+                        <mrow>\begin{bmatrix}
+                         1 &amp; 2 &amp; -4 &amp; -1 &amp; 0 &amp; 32 \\
+                         1 &amp; 3 &amp; -7 &amp; 0 &amp; -1 &amp; 33 \\
+                         1 &amp; 0 &amp; 2 &amp; -2 &amp; 3 &amp; 22
+                        \end{bmatrix}
+                        &amp;\rref
+                        \begin{bmatrix}
+                         \leading{1} &amp; 0 &amp; 2 &amp; 0 &amp; 5 &amp; 6 \\
+                         0 &amp; \leading{1} &amp; -3 &amp; 0 &amp; -2 &amp; 9 \\
+                         0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 1 &amp; -8
+                        \end{bmatrix}</mrow>
+                    </md>In the spirit of <xref ref="example-SAA" acro="SAA" autoname="yes"/>, we can express the infinitely many solutions of this system compactly with set notation.  The key is to express certain variables in terms of others.  More specifically, each pivot column number is the index of a variable that can be written in terms of the variables whose indices are non-pivot columns.  Or saying the same thing: for each <m>i</m> in <m>D</m>, we can find an expression for <m>x_i</m> in terms of the variables without their index in <m>D</m>.  Here <m>D=\set{1,\,2,\,4}</m>, so<md>
+                        <mrow>x_1+2x_3+5x_5=6 \quad&amp;\rightarrow\quad x_1=6-2x_3-5x_5</mrow>
+                        <mrow>x_2-3x_3-2x_5=9 \quad&amp;\rightarrow\quad x_2=9+3x_3+2x_5</mrow>
+                        <mrow>x_4+x_5=-8\quad&amp;\rightarrow\quad x_4=-8-x_5</mrow>
+                    </md>As a set, we write the solutions precisely as <md>
+                        <mrow>S&amp;=\setparts{\colvector{6-2x_3-5x_5\\9+3x_3+2x_5\\x_3\\-8-x_5\\x_5}}{x_3,\,x_5\in\complexes}</mrow>
+                    </md></p>
                 </solution>
             </exercise>
             <exercise number="C19" xml:id="exercise-RREF-C19">
                 <statement>
-                    <p>
-                        <md>
-                            <mrow> 2x_1 + x_2 &amp;= 6 </mrow>
-                            <mrow> -x_1 - x_2 &amp;= -2 </mrow>
-                            <mrow> 3x_1 + 4x_2 &amp;= 4 </mrow>
-                            <mrow> 3x_1 + 5x_2 &amp;= 2</mrow>
-                        </md>
-                    </p>
+                    <p><md>
+                        <mrow> 2x_1 + x_2 &amp;= 6 </mrow>
+                        <mrow> -x_1 - x_2 &amp;= -2 </mrow>
+                        <mrow> 3x_1 + 4x_2 &amp;= 4 </mrow>
+                        <mrow> 3x_1 + 5x_2 &amp;= 2</mrow>
+                    </md></p>
                 </statement>
                 <solution xml:id="solution-RREF-C19">
-                    <p>We form the augmented matrix of the system,
-<md><mrow>&amp;\begin{bmatrix}
- 2 &amp; 1 &amp; 6 \\
- -1 &amp; -1 &amp; -2 \\
- 3 &amp; 4 &amp; 4 \\
- 3 &amp; 5 &amp; 2
-\end{bmatrix}</mrow></md>
-which row-reduces to
-<md><mrow>&amp;\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 4 \\
- 0 &amp; \leading{1} &amp; -2 \\
- 0 &amp; 0 &amp; 0 \\
- 0 &amp; 0 &amp; 0
-\end{bmatrix}</mrow></md>
-This augmented matrix represents the linear system <m>x_1=4</m>, <m>x_2=-2</m>, <m>0=0</m>, <m>0=0</m>, which clearly has only one possible solution.  We can write this solution set then as
-<md><mrow>S&amp;=\set{\colvector{4\\-2}}</mrow></md>
-</p>
+                    <p>We form the augmented matrix of the system,<md>
+                        <mrow>&amp;\begin{bmatrix}
+                         2 &amp; 1 &amp; 6 \\
+                         -1 &amp; -1 &amp; -2 \\
+                         3 &amp; 4 &amp; 4 \\
+                         3 &amp; 5 &amp; 2
+                        \end{bmatrix}</mrow>
+                    </md>which row-reduces to<md>
+                        <mrow>&amp;\begin{bmatrix}
+                        \leading{1} &amp; 0 &amp; 4 \\
+                        0 &amp; \leading{1} &amp; -2 \\
+                        0 &amp; 0 &amp; 0 \\
+                        0 &amp; 0 &amp; 0
+                        \end{bmatrix}</mrow>
+                    </md>This augmented matrix represents the linear system <m>x_1=4</m>, <m>x_2=-2</m>, <m>0=0</m>, <m>0=0</m>, which clearly has only one possible solution.  We can write this solution set then as<md>
+                        <mrow>S&amp;=\set{\colvector{4\\-2}}</mrow>
+                    </md></p>
                 </solution>
             </exercise>
         </exercisegroup>
@@ -1625,456 +1436,438 @@ This augmented matrix represents the linear system <m>x_1=4</m>, <m>x_2=-2</m>, 
             </introduction>
             <exercise number="C30" xml:id="exercise-RREF-C30">
                 <statement>
-                    <p>
-                        <md>
-                            <mrow>\begin{bmatrix}
-2 &amp; 1 &amp; 5 &amp; 10\\
-1 &amp; -3 &amp; -1 &amp; -2\\
-4 &amp; -2 &amp; 6 &amp; 12
-\end{bmatrix}</mrow>
-                        </md>
-                    </p>
+                    <p><md>
+                        <mrow>\begin{bmatrix}
+                        2 &amp; 1 &amp; 5 &amp; 10\\
+                        1 &amp; -3 &amp; -1 &amp; -2\\
+                        4 &amp; -2 &amp; 6 &amp; 12
+                        \end{bmatrix}</mrow>
+                    </md></p>
                 </statement>
                 <solution xml:id="solution-RREF-C30">
-                    <p>
-                        <md>
-                            <mrow>&amp;
-\begin{bmatrix}
-2 &amp; 1 &amp; 5 &amp; 10\\
-1 &amp; -3 &amp; -1 &amp; -2\\
-4 &amp; -2 &amp; 6 &amp; 12
-\end{bmatrix}
-\xrightarrow{\rowopswap{1}{2}}
-\begin{bmatrix}
-1 &amp; -3 &amp; -1 &amp; -2\\
-2 &amp; 1 &amp; 5 &amp; 10\\
-4 &amp; -2 &amp; 6 &amp; 12
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{-2}{1}{2}}
-&amp;
-\begin{bmatrix}
-1 &amp; -3 &amp; -1 &amp; -2\\
-0 &amp; 7 &amp; 7 &amp; 14\\
-4 &amp; -2 &amp; 6 &amp; 12
-\end{bmatrix}
-\xrightarrow{\rowopadd{-4}{1}{3}}
-\begin{bmatrix}
-1 &amp; -3 &amp; -1 &amp; -2\\
-0 &amp; 7 &amp; 7 &amp; 14\\
-0 &amp; 10 &amp; 10 &amp; 20
-\end{bmatrix}\\
-\xrightarrow{\rowopmult{\frac{1}{7}}{2}}
-&amp;
-\begin{bmatrix}
-1 &amp; -3 &amp; -1 &amp; -2\\
-0 &amp; 1 &amp; 1 &amp; 2\\
-0 &amp; 10 &amp; 10 &amp; 20
-\end{bmatrix}
-\xrightarrow{\rowopadd{3}{2}{1}}
-\begin{bmatrix}
-1 &amp; 0 &amp; 2 &amp; 4\\
-0 &amp; 1 &amp; 1 &amp; 2\\
-0 &amp; 10 &amp; 10 &amp; 20
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{-10}{2}{3}}
-&amp;
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 2 &amp; 4\\
-0 &amp; \leading{1} &amp; 1 &amp; 2\\
-0 &amp; 0 &amp; 0 &amp; 0
-\end{bmatrix}</mrow>
-                        </md>
-                    </p>
+                    <p><md>
+                        <mrow>&amp;
+                        \begin{bmatrix}
+                        2 &amp; 1 &amp; 5 &amp; 10\\
+                        1 &amp; -3 &amp; -1 &amp; -2\\
+                        4 &amp; -2 &amp; 6 &amp; 12
+                        \end{bmatrix}
+                        \xrightarrow{\rowopswap{1}{2}}
+                        \begin{bmatrix}
+                        1 &amp; -3 &amp; -1 &amp; -2\\
+                        2 &amp; 1 &amp; 5 &amp; 10\\
+                        4 &amp; -2 &amp; 6 &amp; 12
+                        \end{bmatrix}</mrow>
+                        <mrow>\xrightarrow{\rowopadd{-2}{1}{2}}
+                        &amp;
+                        \begin{bmatrix}
+                        1 &amp; -3 &amp; -1 &amp; -2\\
+                        0 &amp; 7 &amp; 7 &amp; 14\\
+                        4 &amp; -2 &amp; 6 &amp; 12
+                        \end{bmatrix}
+                        \xrightarrow{\rowopadd{-4}{1}{3}}
+                        \begin{bmatrix}
+                        1 &amp; -3 &amp; -1 &amp; -2\\
+                        0 &amp; 7 &amp; 7 &amp; 14\\
+                        0 &amp; 10 &amp; 10 &amp; 20
+                        \end{bmatrix}</mrow>
+                        <mrow>\xrightarrow{\rowopmult{\frac{1}{7}}{2}}
+                        &amp;
+                        \begin{bmatrix}
+                        1 &amp; -3 &amp; -1 &amp; -2\\
+                        0 &amp; 1 &amp; 1 &amp; 2\\
+                        0 &amp; 10 &amp; 10 &amp; 20
+                        \end{bmatrix}
+                        \xrightarrow{\rowopadd{3}{2}{1}}
+                        \begin{bmatrix}
+                        1 &amp; 0 &amp; 2 &amp; 4\\
+                        0 &amp; 1 &amp; 1 &amp; 2\\
+                        0 &amp; 10 &amp; 10 &amp; 20
+                        \end{bmatrix}</mrow>
+                        <mrow>\xrightarrow{\rowopadd{-10}{2}{3}}
+                        &amp;
+                        \begin{bmatrix}
+                        \leading{1} &amp; 0 &amp; 2 &amp; 4\\
+                        0 &amp; \leading{1} &amp; 1 &amp; 2\\
+                        0 &amp; 0 &amp; 0 &amp; 0
+                        \end{bmatrix}</mrow>
+                    </md></p>
                 </solution>
             </exercise>
             <exercise number="C31" xml:id="exercise-RREF-C31">
                 <statement>
-                    <p>
-                        <md>
-                            <mrow>\begin{bmatrix}
- 1 &amp; 2 &amp; -4 \\
- -3 &amp; -1 &amp; -3 \\
- -2 &amp; 1 &amp; -7
-\end{bmatrix}</mrow>
-                        </md>
-                    </p>
+                    <p><md>
+                        <mrow>\begin{bmatrix}
+                        1 &amp; 2 &amp; -4 \\
+                        -3 &amp; -1 &amp; -3 \\
+                        -2 &amp; 1 &amp; -7
+                        \end{bmatrix}</mrow>
+                    </md> </p>
                 </statement>
                 <solution xml:id="solution-RREF-C31">
-                    <p>
-                        <md>
-                            <mrow>&amp;
-\begin{bmatrix}
- 1 &amp; 2 &amp; -4 \\
- -3 &amp; -1 &amp; -3 \\
- -2 &amp; 1 &amp; -7
-\end{bmatrix}
-\xrightarrow{\rowopadd{3}{1}{2}}
-\begin{bmatrix}
- 1 &amp; 2 &amp; -4 \\
- 0 &amp; 5 &amp; -15 \\
- -2 &amp; 1 &amp; -7
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{2}{1}{3}}
-&amp;
-\begin{bmatrix}
- 1 &amp; 2 &amp; -4 \\
- 0 &amp; 5 &amp; -15 \\
- 0 &amp; 5 &amp; -15
-\end{bmatrix}
-\xrightarrow{\rowopmult{\frac{1}{5}}{2}}
-\begin{bmatrix}
- 1 &amp; 2 &amp; -4 \\
- 0 &amp; 1 &amp; -3 \\
- 0 &amp; 5 &amp; -15
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{-2}{2}{1}}
-&amp;
-\begin{bmatrix}
- 1 &amp; 0 &amp; 2 \\
- 0 &amp; 1 &amp; -3 \\
- 0 &amp; 5 &amp; -15
-\end{bmatrix}
-\xrightarrow{\rowopadd{-5}{2}{3}}
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 2 \\
- 0 &amp; \leading{1} &amp; -3 \\
- 0 &amp; 0 &amp; 0
-\end{bmatrix}</mrow>
-                        </md>
-                    </p>
+                    <p><md>
+                        <mrow>&amp;
+                        \begin{bmatrix}
+                         1 &amp; 2 &amp; -4 \\
+                         -3 &amp; -1 &amp; -3 \\
+                         -2 &amp; 1 &amp; -7
+                        \end{bmatrix}
+                        \xrightarrow{\rowopadd{3}{1}{2}}
+                        \begin{bmatrix}
+                         1 &amp; 2 &amp; -4 \\
+                         0 &amp; 5 &amp; -15 \\
+                         -2 &amp; 1 &amp; -7
+                        \end{bmatrix}</mrow>
+                        <mrow>\xrightarrow{\rowopadd{2}{1}{3}}
+                        &amp;
+                        \begin{bmatrix}
+                         1 &amp; 2 &amp; -4 \\
+                         0 &amp; 5 &amp; -15 \\
+                         0 &amp; 5 &amp; -15
+                        \end{bmatrix}
+                        \xrightarrow{\rowopmult{\frac{1}{5}}{2}}
+                        \begin{bmatrix}
+                         1 &amp; 2 &amp; -4 \\
+                         0 &amp; 1 &amp; -3 \\
+                         0 &amp; 5 &amp; -15
+                        \end{bmatrix}</mrow>
+                        <mrow>\xrightarrow{\rowopadd{-2}{2}{1}}
+                        &amp;
+                        \begin{bmatrix}
+                         1 &amp; 0 &amp; 2 \\
+                         0 &amp; 1 &amp; -3 \\
+                         0 &amp; 5 &amp; -15
+                        \end{bmatrix}
+                        \xrightarrow{\rowopadd{-5}{2}{3}}
+                        \begin{bmatrix}
+                         \leading{1} &amp; 0 &amp; 2 \\
+                         0 &amp; \leading{1} &amp; -3 \\
+                         0 &amp; 0 &amp; 0
+                        \end{bmatrix}</mrow>
+                    </md></p>
                 </solution>
             </exercise>
             <exercise number="C32" xml:id="exercise-RREF-C32">
                 <statement>
-                    <p>
-                        <md>
-                            <mrow>\begin{bmatrix}
-1 &amp; 1 &amp; 1 \\
--4 &amp; -3 &amp; -2 \\
-3 &amp; 2 &amp; 1
-\end{bmatrix}</mrow>
-                        </md>
-                    </p>
+                    <p><md>
+                        <mrow>\begin{bmatrix}
+                        1 &amp; 1 &amp; 1 \\
+                        -4 &amp; -3 &amp; -2 \\
+                        3 &amp; 2 &amp; 1
+                        \end{bmatrix}</mrow>
+                    </md></p>
                 </statement>
                 <solution xml:id="solution-RREF-C32">
-                    <p>Following the algorithm of <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/>, and working to create pivot columns from left to right, we have
-<md><mrow>\begin{bmatrix}
-1 &amp; 1 &amp; 1 \\
--4 &amp; -3 &amp; -2 \\
-3 &amp; 2 &amp; 1
-\end{bmatrix}
-\xrightarrow{\rowopadd{4}{1}{2}}
-&amp;
-\begin{bmatrix}
-1 &amp; 1 &amp; 1 \\
-0 &amp; 1 &amp; 2 \\
-3 &amp; 2 &amp; 1
-\end{bmatrix}
-\xrightarrow{\rowopadd{-3}{1}{3}}
-\begin{bmatrix}
-\leading{1} &amp; 1 &amp; 1 \\
-0 &amp; 1 &amp; 2 \\
-0 &amp; -1 &amp; -2
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{-1}{2}{1}}
-&amp;
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; -1 \\
-0 &amp; 1 &amp; 2 \\
-0 &amp; -1 &amp; -2
-\end{bmatrix}
-\xrightarrow{\rowopadd{1}{2}{3}}
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; -1 \\
-0 &amp; \leading{1} &amp; 2 \\
-0 &amp; 0 &amp; 0
-\end{bmatrix}</mrow></md>
-</p>
+                    <p>Following the algorithm of <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/>, and working to create pivot columns from left to right, we have<md>
+                        <mrow>\begin{bmatrix}
+                        1 &amp; 1 &amp; 1 \\
+                        -4 &amp; -3 &amp; -2 \\
+                        3 &amp; 2 &amp; 1
+                        \end{bmatrix}
+                        \xrightarrow{\rowopadd{4}{1}{2}}
+                        &amp;
+                        \begin{bmatrix}
+                        1 &amp; 1 &amp; 1 \\
+                        0 &amp; 1 &amp; 2 \\
+                        3 &amp; 2 &amp; 1
+                        \end{bmatrix}
+                        \xrightarrow{\rowopadd{-3}{1}{3}}
+                        \begin{bmatrix}
+                        \leading{1} &amp; 1 &amp; 1 \\
+                        0 &amp; 1 &amp; 2 \\
+                        0 &amp; -1 &amp; -2
+                        \end{bmatrix}</mrow>
+                        <mrow>\xrightarrow{\rowopadd{-1}{2}{1}}
+                        &amp;
+                        \begin{bmatrix}
+                        \leading{1} &amp; 0 &amp; -1 \\
+                        0 &amp; 1 &amp; 2 \\
+                        0 &amp; -1 &amp; -2
+                        \end{bmatrix}
+                        \xrightarrow{\rowopadd{1}{2}{3}}
+                        \begin{bmatrix}
+                        \leading{1} &amp; 0 &amp; -1 \\
+                        0 &amp; \leading{1} &amp; 2 \\
+                        0 &amp; 0 &amp; 0
+                        \end{bmatrix}</mrow>
+                    </md></p>
                 </solution>
             </exercise>
             <exercise number="C33" xml:id="exercise-RREF-C33">
                 <statement>
-                    <p>
-                        <md>
-                            <mrow>\begin{bmatrix}
-1 &amp; 2 &amp; -1 &amp; -1 \\
-2 &amp; 4 &amp; -1 &amp; 4 \\
--1 &amp; -2 &amp; 3 &amp; 5
-\end{bmatrix}</mrow>
-                        </md>
-                    </p>
+                    <p><md>
+                        <mrow>\begin{bmatrix}
+                        1 &amp; 2 &amp; -1 &amp; -1 \\
+                        2 &amp; 4 &amp; -1 &amp; 4 \\
+                        -1 &amp; -2 &amp; 3 &amp; 5
+                        \end{bmatrix}</mrow>
+                    </md></p>
                 </statement>
                 <solution xml:id="solution-RREF-C33">
-                    <p>Following the algorithm of <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/>, and working to create pivot columns from left to right, we have
-<md><mrow>&amp;
-\begin{bmatrix}
-1 &amp; 2 &amp; -1 &amp; -1 \\
-2 &amp; 4 &amp; -1 &amp; 4 \\
--1 &amp; -2 &amp; 3 &amp; 5
-\end{bmatrix}
-\xrightarrow{\rowopadd{-2}{1}{2}}
-\begin{bmatrix}
-1 &amp; 2 &amp; -1 &amp; -1 \\
-0 &amp; 0 &amp; 1 &amp; 6 \\
--1 &amp; -2 &amp; 3 &amp; 5
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{1}{1}{3}}
-&amp;
-\begin{bmatrix}
-\leading{1} &amp; 2 &amp; -1 &amp; -1 \\
-0 &amp; 0 &amp; 1 &amp; 6 \\
-0 &amp; 0 &amp; 2 &amp; 4
-\end{bmatrix}
-\xrightarrow{\rowopadd{1}{2}{1}}
-\begin{bmatrix}
-\leading{1} &amp; 2 &amp; 0 &amp; 5 \\
-0 &amp; 0 &amp; 1 &amp; 6 \\
-0 &amp; 0 &amp; 2 &amp; 4
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{-2}{2}{3}}
-&amp;
-\begin{bmatrix}
-\leading{1} &amp; 2 &amp; 0 &amp; 5 \\
-0 &amp; 0 &amp; \leading{1} &amp; 6 \\
-0 &amp; 0 &amp; 0 &amp; -8
-\end{bmatrix}
-\xrightarrow{\rowopmult{-\frac{1}{8}}{3}}
-\begin{bmatrix}
-\leading{1} &amp; 2 &amp; 0 &amp; 5 \\
-0 &amp; 0 &amp; \leading{1} &amp; 6 \\
-0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}\\
-\xrightarrow{\rowopadd{-6}{3}{2}}
-&amp;
-\begin{bmatrix}
-\leading{1} &amp; 2 &amp; 0 &amp; 5 \\
-0 &amp; 0 &amp; \leading{1} &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-\xrightarrow{\rowopadd{-5}{3}{1}}
-\begin{bmatrix}
-\leading{1} &amp; 2 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; \leading{1} &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; \leading{1}
-\end{bmatrix}</mrow></md>
-</p>
+                    <p>Following the algorithm of <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/>, and working to create pivot columns from left to right, we have<md>
+                        <mrow>&amp;
+                        \begin{bmatrix}
+                        1 &amp; 2 &amp; -1 &amp; -1 \\
+                        2 &amp; 4 &amp; -1 &amp; 4 \\
+                        -1 &amp; -2 &amp; 3 &amp; 5
+                        \end{bmatrix}
+                        \xrightarrow{\rowopadd{-2}{1}{2}}
+                        \begin{bmatrix}
+                        1 &amp; 2 &amp; -1 &amp; -1 \\
+                        0 &amp; 0 &amp; 1 &amp; 6 \\
+                        -1 &amp; -2 &amp; 3 &amp; 5
+                        \end{bmatrix}</mrow>
+                        <mrow>\xrightarrow{\rowopadd{1}{1}{3}}
+                        &amp;
+                        \begin{bmatrix}
+                        \leading{1} &amp; 2 &amp; -1 &amp; -1 \\
+                        0 &amp; 0 &amp; 1 &amp; 6 \\
+                        0 &amp; 0 &amp; 2 &amp; 4
+                        \end{bmatrix}
+                        \xrightarrow{\rowopadd{1}{2}{1}}
+                        \begin{bmatrix}
+                        \leading{1} &amp; 2 &amp; 0 &amp; 5 \\
+                        0 &amp; 0 &amp; 1 &amp; 6 \\
+                        0 &amp; 0 &amp; 2 &amp; 4
+                        \end{bmatrix}</mrow>
+                        <mrow>\xrightarrow{\rowopadd{-2}{2}{3}}
+                        &amp;
+                        \begin{bmatrix}
+                        \leading{1} &amp; 2 &amp; 0 &amp; 5 \\
+                        0 &amp; 0 &amp; \leading{1} &amp; 6 \\
+                        0 &amp; 0 &amp; 0 &amp; -8
+                        \end{bmatrix}
+                        \xrightarrow{\rowopmult{-\frac{1}{8}}{3}}
+                        \begin{bmatrix}
+                        \leading{1} &amp; 2 &amp; 0 &amp; 5 \\
+                        0 &amp; 0 &amp; \leading{1} &amp; 6 \\
+                        0 &amp; 0 &amp; 0 &amp; 1
+                        \end{bmatrix}</mrow>
+                        <mrow>\xrightarrow{\rowopadd{-6}{3}{2}}
+                        &amp;
+                        \begin{bmatrix}
+                        \leading{1} &amp; 2 &amp; 0 &amp; 5 \\
+                        0 &amp; 0 &amp; \leading{1} &amp; 0 \\
+                        0 &amp; 0 &amp; 0 &amp; 1
+                        \end{bmatrix}
+                        \xrightarrow{\rowopadd{-5}{3}{1}}
+                        \begin{bmatrix}
+                        \leading{1} &amp; 2 &amp; 0 &amp; 0 \\
+                        0 &amp; 0 &amp; \leading{1} &amp; 0 \\
+                        0 &amp; 0 &amp; 0 &amp; \leading{1}
+                        \end{bmatrix}</mrow>
+                    </md></p>
                 </solution>
             </exercise>
         </exercisegroup>
         <exercise number="M40" xml:id="exercise-RREF-M40">
             <statement>
-                <p>Consider the two <m>3\times 4</m> matrices below
-<md><mrow>B&amp;=
-\begin{bmatrix}
-1 &amp; 3 &amp; -2 &amp; 2 \\
--1 &amp; -2 &amp; -1 &amp; -1 \\
--1 &amp; -5 &amp; 8 &amp; -3
-\end{bmatrix}
-&amp;
-C&amp;=
-\begin{bmatrix}
-1 &amp; 2 &amp; 1 &amp; 2 \\
-1 &amp; 1 &amp; 4 &amp; 0 \\
--1 &amp; -1 &amp; -4 &amp; 1
-\end{bmatrix}</mrow></md>
-</p>
-                <p>
-                    <ol>
-                        <li>Row-reduce each matrix and determine that the reduced row-echelon forms of <m>B</m> and <m>C</m> are identical.  From this argue that <m>B</m> and <m>C</m> are row-equivalent.</li>
-                        <li>In the proof of <xref ref="theorem-RREFU" acro="RREFU" autoname="yes"/>, we begin by arguing that entries of row-equivalent matrices are related by way of certain scalars and sums.  In this example, we would write that entries of <m>B</m> from row <m>i</m> that are in column <m>j</m> are linearly related to the entries of <m>C</m> in column <m>j</m> from all three rows
-<md><mrow>\matrixentry{B}{ij}
-&amp;=
-\delta_{i1}\matrixentry{C}{1j}+
-\delta_{i2}\matrixentry{C}{2j}+
-\delta_{i3}\matrixentry{C}{3j}
-&amp;
-1&amp;\leq j\leq 4</mrow></md>
-For each <m>1\leq i\leq 3</m> find the corresponding three scalars in this relationship.  So your answer will be nine scalars, determined three at a time.</li>
-                    </ol>
-                </p>
+                <p>Consider the two <m>3\times 4</m> matrices below<md>
+                    <mrow>B&amp;=
+                    \begin{bmatrix}
+                    1 &amp; 3 &amp; -2 &amp; 2 \\
+                    -1 &amp; -2 &amp; -1 &amp; -1 \\
+                    -1 &amp; -5 &amp; 8 &amp; -3
+                    \end{bmatrix}
+                    &amp;
+                    C&amp;=
+                    \begin{bmatrix}
+                    1 &amp; 2 &amp; 1 &amp; 2 \\
+                    1 &amp; 1 &amp; 4 &amp; 0 \\
+                    -1 &amp; -1 &amp; -4 &amp; 1
+                    \end{bmatrix}</mrow>
+                </md></p>
+                <p><ol>
+                    <li>Row-reduce each matrix and determine that the reduced row-echelon forms of <m>B</m> and <m>C</m> are identical.  From this argue that <m>B</m> and <m>C</m> are row-equivalent.</li>
+                    <li>In the proof of <xref ref="theorem-RREFU" acro="RREFU" autoname="yes"/>, we begin by arguing that entries of row-equivalent matrices are related by way of certain scalars and sums.  In this example, we would write that entries of <m>B</m> from row <m>i</m> that are in column <m>j</m> are linearly related to the entries of <m>C</m> in column <m>j</m> from all three rows<md>
+                        <mrow>\matrixentry{B}{ij}
+                        &amp;=
+                        \delta_{i1}\matrixentry{C}{1j}+
+                        \delta_{i2}\matrixentry{C}{2j}+
+                        \delta_{i3}\matrixentry{C}{3j}
+                        &amp;
+                        1&amp;\leq j\leq 4</mrow>
+                    </md>For each <m>1\leq i\leq 3</m> find the corresponding three scalars in this relationship.  So your answer will be nine scalars, determined three at a time.</li>
+                </ol></p>
             </statement>
             <solution xml:id="solution-RREF-M40">
-                <p>
-                    <ol>
-                        <li>Let <m>R</m> be the common reduced row-echelon form of <m>B</m> and <m>C</m>.  A sequence of row operations converts <m>B</m> to <m>R</m> and a second sequence of row operations converts <m>C</m> to <m>R</m>. If we <q>reverse</q> the second sequence's order, and reverse each individual row operation (see <xref ref="exercise-RREF-T10" acro="RREF.T10" autoname="yes"/>) then we can begin with <m>B</m>, convert to <m>R</m> with the first sequence, and then convert to <m>C</m> with the reversed sequence.  Satisfying <xref ref="definition-REM" acro="REM" autoname="yes"/> we can say <m>B</m> and <m>C</m> are row-equivalent matrices.</li>
-                        <li>We will work this carefully for the first row of <m>B</m> and just give the solution for the next two rows.  For row 1 of <m>B</m> take <m>i=1</m> and we have
-<md><mrow>\matrixentry{B}{1j}
-&amp;=
-\delta_{11}\matrixentry{C}{1j}+
-\delta_{12}\matrixentry{C}{2j}+
-\delta_{13}\matrixentry{C}{3j}
-&amp;
-1&amp;\leq j\leq 4</mrow></md>
-If we substitute the four values for <m>j</m> we arrive at four linear equations in the three unknowns <m>\delta_{11}, \delta_{12}, \delta_{13}</m>,
-<md><mrow>(j=1)&amp;
-&amp;
-\matrixentry{B}{11}
-&amp;=
-\delta_{11}\matrixentry{C}{11}+
-\delta_{12}\matrixentry{C}{21}+
-\delta_{13}\matrixentry{C}{31}
-&amp;
-&amp;\Rightarrow
-&amp;
-1
-&amp;=
-\delta_{11}(1)+
-\delta_{12}(1)+
-\delta_{13}(-1)</mrow><mrow>(j=2)&amp;
-&amp;
-\matrixentry{B}{12}
-&amp;=
-\delta_{11}\matrixentry{C}{12}+
-\delta_{12}\matrixentry{C}{22}+
-\delta_{13}\matrixentry{C}{32}
-&amp;
-&amp;\Rightarrow
-&amp;
-3
-&amp;=
-\delta_{11}(2)+
-\delta_{12}(1)+
-\delta_{13}(-1)</mrow><mrow>(j=3)&amp;
-&amp;
-\matrixentry{B}{13}
-&amp;=
-\delta_{11}\matrixentry{C}{13}+
-\delta_{12}\matrixentry{C}{23}+
-\delta_{13}\matrixentry{C}{33}
-&amp;
-&amp;\Rightarrow
-&amp;
--2
-&amp;=
-\delta_{11}(1)+
-\delta_{12}(4)+
-\delta_{13}(-4)</mrow><mrow>(j=4)&amp;
-&amp;
-\matrixentry{B}{14}
-&amp;=
-\delta_{11}\matrixentry{C}{14}+
-\delta_{12}\matrixentry{C}{24}+
-\delta_{13}\matrixentry{C}{34}
-&amp;
-&amp;\Rightarrow
-&amp;
-2
-&amp;=
-\delta_{11}(2)+
-\delta_{12}(0)+
-\delta_{13}(1)</mrow></md>
-We form the augmented matrix of this system and row-reduce to find the solutions,
-<md><mrow>\begin{bmatrix}
-1 &amp; 1 &amp; -1 &amp; 1 \\
-2 &amp; 1 &amp; -1 &amp; 3 \\
-1 &amp; 4 &amp; -4 &amp; -2 \\
-2 &amp; 0 &amp; 1 &amp; 2
-\end{bmatrix}
-&amp;\rref
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 0 &amp; 2 \\
-0 &amp; \leading{1} &amp; 0 &amp; -3 \\
-0 &amp; 0 &amp; \leading{1} &amp; -2 \\
-0 &amp; 0 &amp; 0 &amp; 0
-\end{bmatrix}</mrow></md>
-So the unique solution is <m>\delta_{11}=2</m>, <m>\delta_{12}=-3</m>, <m>\delta_{13}=-2</m>.  Entirely similar work will lead you to
-<md><mrow>\delta_{21}&amp;=-1
-&amp;
-\delta_{22}&amp;=1
-&amp;
-\delta_{23}&amp;=1</mrow><intertext>and</intertext><mrow>\delta_{31}&amp;=-4
-&amp;
-\delta_{32}&amp;=8
-&amp;
-\delta_{33}&amp;=5</mrow></md>
-</li>
-                    </ol>
-                </p>
+                <p><ol>
+                    <li>Let <m>R</m> be the common reduced row-echelon form of <m>B</m> and <m>C</m>.  A sequence of row operations converts <m>B</m> to <m>R</m> and a second sequence of row operations converts <m>C</m> to <m>R</m>. If we <q>reverse</q> the second sequence's order, and reverse each individual row operation (see <xref ref="exercise-RREF-T10" acro="RREF.T10" autoname="yes"/>) then we can begin with <m>B</m>, convert to <m>R</m> with the first sequence, and then convert to <m>C</m> with the reversed sequence.  Satisfying <xref ref="definition-REM" acro="REM" autoname="yes"/> we can say <m>B</m> and <m>C</m> are row-equivalent matrices.</li>
+                     <li>We will work this carefully for the first row of <m>B</m> and just give the solution for the next two rows.  For row 1 of <m>B</m> take <m>i=1</m> and we have<md>
+                        <mrow>\matrixentry{B}{1j}
+                        &amp;=
+                        \delta_{11}\matrixentry{C}{1j}+
+                        \delta_{12}\matrixentry{C}{2j}+
+                        \delta_{13}\matrixentry{C}{3j}
+                        &amp;
+                        1&amp;\leq j\leq 4</mrow></md>
+                        If we substitute the four values for <m>j</m> we arrive at four linear equations in the three unknowns <m>\delta_{11}, \delta_{12}, \delta_{13}</m>,
+                        <md><mrow>(j=1)&amp;
+                        &amp;
+                        \matrixentry{B}{11}
+                        &amp;=
+                        \delta_{11}\matrixentry{C}{11}+
+                        \delta_{12}\matrixentry{C}{21}+
+                        \delta_{13}\matrixentry{C}{31}
+                        &amp;
+                        &amp;\Rightarrow
+                        &amp;
+                        1
+                        &amp;=
+                        \delta_{11}(1)+
+                        \delta_{12}(1)+
+                        \delta_{13}(-1)</mrow>
+                        <mrow>(j=2)&amp;
+                        &amp;
+                        \matrixentry{B}{12}
+                        &amp;=
+                        \delta_{11}\matrixentry{C}{12}+
+                        \delta_{12}\matrixentry{C}{22}+
+                        \delta_{13}\matrixentry{C}{32}
+                        &amp;
+                        &amp;\Rightarrow
+                        &amp;
+                        3
+                        &amp;=
+                        \delta_{11}(2)+
+                        \delta_{12}(1)+
+                        \delta_{13}(-1)</mrow>
+                        <mrow>(j=3)&amp;
+                        &amp;
+                        \matrixentry{B}{13}
+                        &amp;=
+                        \delta_{11}\matrixentry{C}{13}+
+                        \delta_{12}\matrixentry{C}{23}+
+                        \delta_{13}\matrixentry{C}{33}
+                        &amp;
+                        &amp;\Rightarrow
+                        &amp;
+                        -2
+                        &amp;=
+                        \delta_{11}(1)+
+                        \delta_{12}(4)+
+                        \delta_{13}(-4)</mrow>
+                        <mrow>(j=4)&amp;
+                        &amp;
+                        \matrixentry{B}{14}
+                        &amp;=
+                        \delta_{11}\matrixentry{C}{14}+
+                        \delta_{12}\matrixentry{C}{24}+
+                        \delta_{13}\matrixentry{C}{34}
+                        &amp;
+                        &amp;\Rightarrow
+                        &amp;
+                        2
+                        &amp;=
+                        \delta_{11}(2)+
+                        \delta_{12}(0)+
+                        \delta_{13}(1)</mrow>
+                    </md>We form the augmented matrix of this system and row-reduce to find the solutions,<md>
+                        <mrow>\begin{bmatrix}
+                        1 &amp; 1 &amp; -1 &amp; 1 \\
+                        2 &amp; 1 &amp; -1 &amp; 3 \\
+                        1 &amp; 4 &amp; -4 &amp; -2 \\
+                        2 &amp; 0 &amp; 1 &amp; 2
+                        \end{bmatrix}
+                        &amp;\rref
+                        \begin{bmatrix}
+                        \leading{1} &amp; 0 &amp; 0 &amp; 2 \\
+                        0 &amp; \leading{1} &amp; 0 &amp; -3 \\
+                        0 &amp; 0 &amp; \leading{1} &amp; -2 \\
+                        0 &amp; 0 &amp; 0 &amp; 0
+                        \end{bmatrix}</mrow>
+                    </md>So the unique solution is <m>\delta_{11}=2</m>, <m>\delta_{12}=-3</m>, <m>\delta_{13}=-2</m>.  Entirely similar work will lead you to<md>
+                        <mrow>\delta_{21}&amp;=-1
+                        &amp;
+                        \delta_{22}&amp;=1
+                        &amp;
+                        \delta_{23}&amp;=1</mrow>
+                        <intertext>and</intertext>
+                        <mrow>\delta_{31}&amp;=-4
+                        &amp;
+                        \delta_{32}&amp;=8
+                        &amp;
+                        \delta_{33}&amp;=5</mrow>
+                    </md></li>
+                </ol></p>
             </solution>
         </exercise>
         <exercise number="M45" xml:id="exercise-RREF-M45">
             <statement contributor="chrisblack">
-                <p>You keep a number of lizards, mice and peacocks as pets.  There are a total of 108 legs and 30 tails in your menagerie.  You have twice as many mice as lizards.  How many of each creature do you have?
-</p>
+                <p>You keep a number of lizards, mice and peacocks as pets.  There are a total of 108 legs and 30 tails in your menagerie.  You have twice as many mice as lizards.  How many of each creature do you have?</p>
             </statement>
             <solution xml:id="solution-RREF-M45" contributor="chrisblack">
-                <p>Let <m>l, m, p</m> denote the number of lizards, mice and peacocks.  Then the statements from the problem yield the equations:
-<md><mrow>4l+4m+2p&amp;=108</mrow><mrow>l+m+p &amp;= 30</mrow><mrow>2l-m&amp;=0</mrow></md>
-We form the augmented matrix for this system and row-reduce
-<md><mrow>\begin{bmatrix}
-4 &amp; 4 &amp; 2 &amp; 108\\
-1 &amp; 1 &amp; 1 &amp; 30\\
-2 &amp; -1 &amp; 0 &amp; 0
-\end{bmatrix}
-&amp;\rref
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 0 &amp;  8\\
-0 &amp; \leading{1} &amp; 0 &amp;  16\\
-0 &amp; 0 &amp; \leading{1} &amp;  6
-\end{bmatrix}</mrow></md>
-From the row-reduced matrix, we see that we have an equivalent system <m>l=8</m>, <m>m=16</m>, and <m>p=6</m>, which means that you have 8 lizards, 16 mice and 6 peacocks.
-</p>
+                <p>Let <m>l, m, p</m> denote the number of lizards, mice and peacocks.  Then the statements from the problem yield the equations:<md>
+                    <mrow>4l+4m+2p&amp;=108</mrow>
+                    <mrow>l+m+p &amp;= 30</mrow>
+                    <mrow>2l-m&amp;=0</mrow>
+                </md>We form the augmented matrix for this system and row-reduce<md>
+                    <mrow>\begin{bmatrix}
+                    4 &amp; 4 &amp; 2 &amp; 108\\
+                    1 &amp; 1 &amp; 1 &amp; 30\\
+                    2 &amp; -1 &amp; 0 &amp; 0
+                    \end{bmatrix}
+                    &amp;\rref
+                    \begin{bmatrix}
+                    \leading{1} &amp; 0 &amp; 0 &amp;  8\\
+                    0 &amp; \leading{1} &amp; 0 &amp;  16\\
+                    0 &amp; 0 &amp; \leading{1} &amp;  6
+                    \end{bmatrix}</mrow>
+                </md>From the row-reduced matrix, we see that we have an equivalent system <m>l=8</m>, <m>m=16</m>, and <m>p=6</m>, which means that you have 8 lizards, 16 mice and 6 peacocks.</p>
             </solution>
         </exercise>
         <exercise number="M50" xml:id="exercise-RREF-M50">
             <statement>
-                <p>A parking lot has 66 vehicles (cars, trucks, motorcycles and bicycles)  in it.  There are four times as many cars as trucks.  The total number of tires (4 per car or truck, 2 per motorcycle or bicycle) is 252.  How many cars are there?  How many bicycles?
-</p>
+                <p>A parking lot has 66 vehicles (cars, trucks, motorcycles and bicycles)  in it.  There are four times as many cars as trucks.  The total number of tires (4 per car or truck, 2 per motorcycle or bicycle) is 252.  How many cars are there?  How many bicycles?</p>
             </statement>
             <solution xml:id="solution-RREF-M50">
-                <p>Let <m>c,\,t,\,m,\,b</m> denote the number of cars, trucks, motorcycles, and bicycles.  Then the statements from the problem yield the equations:
-<md><mrow>c+t+m+b&amp;=66</mrow><mrow>c-4t&amp;=0</mrow><mrow>4c+4t+2m+2b&amp;=252</mrow></md>
-We form the augmented matrix for this system and row-reduce
-<md><mrow>\begin{bmatrix}
-1 &amp; 1 &amp; 1 &amp; 1 &amp; 66\\
-1 &amp; -4 &amp; 0 &amp; 0 &amp; 0\\
-4 &amp; 4 &amp; 2 &amp; 2 &amp; 252
-\end{bmatrix}
-&amp;\rref
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 48\\
-0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; 12\\
-0 &amp; 0 &amp; \leading{1} &amp; 1 &amp; 6
-\end{bmatrix}</mrow></md>
-The first  row of the matrix represents the equation <m>c=48</m>, so there are 48 cars.
-The second row of the matrix represents the equation <m>t=12</m>, so there are 12 trucks.
-The third  row of the matrix represents the equation <m>m+b=6</m> so there are anywhere from 0 to 6 bicycles.
-We can also say that <m>b</m> is a free variable, but the context of the problem limits it to 7 integer values since you cannot have a negative number of motorcycles.
-</p>
+                <p>Let <m>c,\,t,\,m,\,b</m> denote the number of cars, trucks, motorcycles, and bicycles.  Then the statements from the problem yield the equations:<md>
+                    <mrow>c+t+m+b&amp;=66</mrow>
+                    <mrow>c-4t&amp;=0</mrow>
+                    <mrow>4c+4t+2m+2b&amp;=252</mrow>
+                </md>We form the augmented matrix for this system and row-reduce<md>
+                    <mrow>\begin{bmatrix}
+                    1 &amp; 1 &amp; 1 &amp; 1 &amp; 66\\
+                    1 &amp; -4 &amp; 0 &amp; 0 &amp; 0\\
+                    4 &amp; 4 &amp; 2 &amp; 2 &amp; 252
+                    \end{bmatrix}
+                    &amp;\rref
+                    \begin{bmatrix}
+                    \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 48\\
+                    0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; 12\\
+                    0 &amp; 0 &amp; \leading{1} &amp; 1 &amp; 6
+                    \end{bmatrix}</mrow>
+                </md>The first  row of the matrix represents the equation <m>c=48</m>, so there are 48 cars.  The second row of the matrix represents the equation <m>t=12</m>, so there are 12 trucks.  The third  row of the matrix represents the equation <m>m+b=6</m> so there are anywhere from 0 to 6 bicycles.  We can also say that <m>b</m> is a free variable, but the context of the problem limits it to 7 integer values since you cannot have a negative number of motorcycles.</p>
             </solution>
         </exercise>
         <exercise number="T10" xml:id="exercise-RREF-T10">
             <statement>
-                <p>Prove that each of the three row operations (<xref ref="definition-RO" acro="RO" autoname="yes"/>) is reversible.  More precisely, if the matrix <m>B</m> is obtained from <m>A</m> by application of a single row operation, show that there is a single row operation that will transform <m>B</m> back into <m>A</m>.
-</p>
+                <p>Prove that each of the three row operations (<xref ref="definition-RO" acro="RO" autoname="yes"/>) is reversible.  More precisely, if the matrix <m>B</m> is obtained from <m>A</m> by application of a single row operation, show that there is a single row operation that will transform <m>B</m> back into <m>A</m>.</p>
             </statement>
             <solution xml:id="solution-RREF-T10">
-                <p>If we can reverse each row operation individually, then we can reverse a sequence of row operations.  The operations that reverse each operation are listed below, using our shorthand notation.  Notice how requiring the scalar <m>\alpha</m> to be nonzero makes the second operation reversible.
-<md><mrow>\rowopswap{i}{j}&amp;\quad\quad\rowopswap{i}{j}</mrow><mrow>\rowopmult{\alpha}{i},\,\alpha\neq 0&amp;\quad\quad\rowopmult{\frac{1}{\alpha}}{i}</mrow><mrow>\rowopadd{\alpha}{i}{j}&amp;\quad\quad\rowopadd{-\alpha}{i}{j}</mrow></md>
-</p>
+                <p>If we can reverse each row operation individually, then we can reverse a sequence of row operations.  The operations that reverse each operation are listed below, using our shorthand notation.  Notice how requiring the scalar <m>\alpha</m> to be nonzero makes the second operation reversible.<md>
+                    <mrow>\rowopswap{i}{j}&amp;\quad\quad\rowopswap{i}{j}</mrow>
+                    <mrow>\rowopmult{\alpha}{i},\,\alpha\neq 0&amp;\quad\quad\rowopmult{\frac{1}{\alpha}}{i}</mrow>
+                    <mrow>\rowopadd{\alpha}{i}{j}&amp;\quad\quad\rowopadd{-\alpha}{i}{j}</mrow>
+                </md></p>
             </solution>
         </exercise>
         <exercise number="T11" xml:id="exercise-RREF-T11">
             <statement>
-                <p>Suppose that <m>A</m>, <m>B</m> and <m>C</m> are <m>m\times n</m> matrices.  Use the definition of row-equivalence (<xref ref="definition-REM" acro="REM" autoname="yes"/>) to prove the following three facts.
-<ol><li><m>A</m> is row-equivalent to <m>A</m>.
-</li><li> If <m>A</m> is row-equivalent to <m>B</m>, then <m>B</m> is row-equivalent to <m>A</m>.
-</li><li> If <m>A</m> is row-equivalent to <m>B</m>, and <m>B</m> is row-equivalent to <m>C</m>, then <m>A</m> is row-equivalent to <m>C</m>.
-</li></ol>
-A relationship that satisfies these three properties is known as an <term>equivalence relation</term>, an important idea in the study of various algebras.  This is a formal way of saying that a relationship behaves like equality, without requiring the relationship to be as strict as equality itself.   We will see it again in <xref ref="theorem-SER" acro="SER" autoname="yes"/>.
-</p>
+                <p>Suppose that <m>A</m>, <m>B</m> and <m>C</m> are <m>m\times n</m> matrices.  Use the definition of row-equivalence (<xref ref="definition-REM" acro="REM" autoname="yes"/>) to prove the following three facts. <ol>
+                    <li><m>A</m> is row-equivalent to <m>A</m>. </li><li> If <m>A</m> is row-equivalent to <m>B</m>, then <m>B</m> is row-equivalent to <m>A</m>. </li>
+                    <li> If <m>A</m> is row-equivalent to <m>B</m>, and <m>B</m> is row-equivalent to <m>C</m>, then <m>A</m> is row-equivalent to <m>C</m>. </li>
+                </ol>A relationship that satisfies these three properties is known as an <term>equivalence relation</term>, an important idea in the study of various algebras.  This is a formal way of saying that a relationship behaves like equality, without requiring the relationship to be as strict as equality itself.   We will see it again in <xref ref="theorem-SER" acro="SER" autoname="yes"/>.</p>
             </statement>
         </exercise>
         <exercise number="T12" xml:id="exercise-RREF-T12">
             <statement>
-                <p>Suppose that <m>B</m> is an <m>m\times n</m> matrix in reduced row-echelon form.  Build a new, likely smaller, <m>k\times\ell</m> matrix <m>C</m> as follows.  Keep any collection of <m>k</m> adjacent rows, <m>k\leq m</m>.  From these rows, keep columns <m>1</m> through <m>\ell</m>, <m>\ell\leq n</m>.  Prove that <m>C</m> is in reduced row-echelon form.
-</p>
+                <p>Suppose that <m>B</m> is an <m>m\times n</m> matrix in reduced row-echelon form.  Build a new, likely smaller, <m>k\times\ell</m> matrix <m>C</m> as follows.  Keep any collection of <m>k</m> adjacent rows, <m>k\leq m</m>.  From these rows, keep columns <m>1</m> through <m>\ell</m>, <m>\ell\leq n</m>.  Prove that <m>C</m> is in reduced row-echelon form.</p>
             </statement>
         </exercise>
         <exercise number="T13" xml:id="exercise-RREF-T13">
             <statement>
-                <p>Generalize <xref ref="exercise-RREF-T12" acro="RREF.T12" autoname="yes"/> by just keeping any <m>k</m> rows, and not requiring the rows to be adjacent.  Prove that any such matrix <m>C</m> is in reduced row-echelon form.
-</p>
+                <p>Generalize <xref ref="exercise-RREF-T12" acro="RREF.T12" autoname="yes"/> by just keeping any <m>k</m> rows, and not requiring the rows to be adjacent.  Prove that any such matrix <m>C</m> is in reduced row-echelon form.</p>
             </statement>
         </exercise>
     </exercises>
