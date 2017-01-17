@@ -1,0 +1,977 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="section-TSS" acro="TSS">
+    <title>Types of Solution Sets</title>
+    <!-- %%%%%%%%%% -->
+    <!-- % -->
+    <!-- %  Section TSS -->
+    <!-- %  Types of Solution Sets -->
+    <!-- % -->
+    <!-- %%%%%%%%%% -->
+    <introduction>
+        <p>We will now be more careful about analyzing the reduced row-echelon form derived from the  augmented matrix of a system of linear equations.    In particular, we will see how to systematically handle the situation when we have infinitely many solutions to a system, and we will prove that every system of linear equations has either zero, one or infinitely many solutions.  With these tools, we will be able to routinely solve any linear system.</p>
+    </introduction>
+    <subsection xml:id="subsection-TSS-CS" acro="CS">
+        <title>Consistent Systems</title>
+        <p>The computer scientist Donald Knuth said, <q>Science is what we understand well enough to explain to a computer. Art is everything else.</q>  In this section we will remove solving systems of equations from the realm of art, and into the realm of science.  We begin with a definition.</p>
+        <definition xml:id="definition-CS" acro="CS">
+            <title>Consistent System</title>
+            <index>
+                <main>consistent system</main>
+            </index>
+            <statement>
+                <p>A system of linear equations is <term>consistent</term> if it has at least one solution.  Otherwise, the system is called <term>inconsistent</term>.</p>
+            </statement>
+        </definition>
+        <p>We will want to first recognize when a system is inconsistent or consistent, and in the case of consistent systems we will be able to further refine the types of solutions possible.  We will do this by analyzing the reduced row-echelon form of a matrix, using the value of <m>r</m>, and the sets of column indices, <m>D</m> and <m>F</m>, first defined back in <xref ref="definition-RREF" acro="RREF" autoname="yes"/>.</p>
+        <p>Use of the notation for the elements of <m>D</m> and <m>F</m> can be a bit confusing, since we have subscripted variables that are in turn equal to integers used to index the matrix.  However, many questions about matrices and systems of equations can be answered once we know <m>r</m>, <m>D</m> and <m>F</m>.  The choice of the letters <m>D</m> and <m>F</m> refer to our upcoming definition of dependent and free variables (<xref ref="definition-IDV" acro="IDV" autoname="yes"/>).  An example will help us begin to get comfortable with this aspect of reduced row-echelon form.</p>
+        <example xml:id="example-RREFN" acro="RREFN">
+            <index>
+                <main>reduced row-echelon form</main>
+                <sub>notation</sub>
+            </index>
+            <title>Reduced row-echelon form notation</title>
+            <p>For the <m>5\times 9</m> matrix
+<md><mrow>B&amp;=
+\begin{bmatrix}
+\leading{1}&amp;5&amp;0&amp;0&amp;2&amp;8&amp;0&amp;5&amp;-1\\
+0&amp;0&amp;\leading{1}&amp;0&amp;4&amp;7&amp;0&amp;2&amp;0\\
+0&amp;0&amp;0&amp;\leading{1}&amp;3&amp;9&amp;0&amp;3&amp;-6\\
+0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;\leading{1}&amp;4&amp;2\\
+0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0&amp;0
+\end{bmatrix}</mrow></md>
+in reduced row-echelon form we have
+<md><mrow>r&amp;=4</mrow><mrow>d_1&amp;=1
+&amp;
+d_2&amp;=3
+&amp;
+d_3&amp;=4
+&amp;
+d_4&amp;=7</mrow><mrow>f_1&amp;=2
+&amp;
+f_2&amp;=5
+&amp;
+f_3&amp;=6
+&amp;
+f_4&amp;=8
+&amp;
+f_5&amp;=9</mrow></md>
+</p>
+            <p>Notice that the sets
+<md><mrow>D&amp;=\set{d_1,\,d_2,\,d_3,\,d_4}=\set{1,\,3,\,4,\,7}
+&amp;
+F=\set{f_1,\,f_2,\,f_3,\,f_4,\,f_5}=\set{2,\,5,\,6,\,8,\,9}</mrow></md>
+have nothing in common and together account for all of the columns of <m>B</m> (we say it is a <term>partition</term> of the set of column indices).
+</p>
+        </example>
+        <p>The number <m>r</m> is the single most important piece of information we can get from the reduced row-echelon form of a matrix.  It is defined as the number of nonzero rows, but since each nonzero row has a leading 1, it is also the number of leading 1's present.   For each leading 1, we have a pivot column, so <m>r</m> is also the number of pivot columns.  Repeating ourselves, <m>r</m> is the number of nonzero rows, the number of leading 1's <em>and</em> the number of pivot columns.  Across different situations, each of these interpretations of the meaning of <m>r</m> will be useful, though it may be most helpful to think in terms of pivot columns.</p>
+        <p>Before proving some theorems about the possibilities for solution sets to systems of equations, let us analyze one particular system with an infinite solution set very carefully as an example.  We will use this technique frequently, and shortly we will refine it slightly.</p>
+        <p>Archetypes I and J are both fairly large for doing computations by hand (though not impossibly large).  Their properties are very similar, so we will frequently analyze the situation in Archetype I, and leave you the joy of analyzing Archetype J yourself.  So work through Archetype I with the text,  by hand and/or with a computer, and then tackle Archetype J yourself (and check your results with those listed).  Notice too that the archetypes describing systems of equations each lists the values of <m>r</m>, <m>D</m> and <m>F</m>.  Here we go<ellipsis/></p>
+        <example xml:id="example-ISSI" acro="ISSI">
+            <index>
+                <main>infinite solution set</main>
+            </index>
+            <title>Describing infinite solution sets, Archetype I</title>
+            <p>Archetype<nbsp/><xref ref="archetype-I" acro="I" autoname="no"/> is the system of <m>m=4</m> equations in <m>n=7</m> variables.
+<!-- Archetype I, Part systemdefn --><systemdefn><md><mrow>x_1 +4x_2  - x_4  + 7x_6 - 9x_7 &amp;= 3</mrow><mrow>2x_1 + 8x_2 - x_3 + 3x_4 + 9x_5 - 13x_6 + 7x_7 &amp;= 9</mrow><mrow> 2x_3 -3x_4 -4x_5 +12x_6 -8x_7 &amp;= 1</mrow><mrow>-x_1  - 4x_2 + 2x_3 +4x_4 + 8x_5 - 31x_6 + 37x_7 &amp;= 4</mrow></md></systemdefn>
+This system has a <m>4\times 8</m> augmented matrix that is row-equivalent to the following matrix (check this!), and which is in reduced row-echelon form (the existence of this matrix is guaranteed by <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/> and its uniqueness is guaranteed by <xref ref="theorem-RREFU" acro="RREFU" autoname="yes"/>),
+<md><mrow><!-- Archetype I, Part augmentedreduced -->\begin{bmatrix}
+\leading{1} &amp; 4 &amp; 0 &amp; 0 &amp; 2 &amp; 1 &amp; -3 &amp; 4 \\
+0 &amp; 0 &amp; \leading{1}  &amp;  0 &amp; 1 &amp;  -3 &amp; 5 &amp; 2 \\
+0 &amp; 0 &amp;  0 &amp; \leading{1} &amp; 2 &amp;  -6 &amp; 6 &amp; 1 \\
+0 &amp; 0 &amp;  0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}</mrow></md>
+</p>
+            <p>So we find that <m>r=3</m> and
+<md><mrow>D&amp;=\set{d_1,\,d_2,\,d_3}=\set{1,\,3,\,4}
+&amp;
+F&amp;=\set{f_1,\,f_2,\,f_3,\,f_4,\,f_5}=\set{2,\,5,\,6,\,7,\,8}</mrow></md>
+Let <m>i</m> denote any one of the <m>r=3</m> nonzero rows.  Then the index <m>d_i</m> is a pivot column.  It will be easy in this case to use the equation represented by row <m>i</m> to write an expression for the variable <m>x_{d_i}</m>.  It will be a linear function of the variables <m>x_{f_1},\,x_{f_2},\,x_{f_3},\,x_{f_4}</m> (notice that <m>f_5=8</m> does not reference a variable, but does tell us the final column is not a pivot column).  We will now construct these three expressions.  Notice that using subscripts upon subscripts takes some getting used to.
+<md><mrow>(i=1)&amp; &amp; x_{d_1}&amp;=x_1=4-4x_2-2x_5-x_6+3x_7</mrow><mrow>(i=2)&amp; &amp; x_{d_2}&amp;=x_3=2-x_5+3x_6-5x_7</mrow><mrow>(i=3)&amp; &amp; x_{d_3}&amp;=x_4=1-2x_5+6x_6-6x_7</mrow></md>
+</p>
+            <p>Each element of the set <m>F=\set{f_1,\,f_2,\,f_3,\,f_4,\,f_5}=\set{2,\,5,\,6,\,7,\,8}</m> is the index of a variable, except for <m>f_5=8</m>.  We refer to <m>x_{f_1}=x_2</m>, <m>x_{f_2}=x_5</m>, <m>x_{f_3}=x_6</m> and <m>x_{f_4}=x_7</m> as <q>free</q> (or <q>independent</q>) variables since they are allowed to assume any possible combination of values that we can imagine and we can continue on to build a solution to the system by solving individual equations for the values of the other (<q>dependent</q>) variables.</p>
+            <p>Each element of the set <m>D=\set{d_1,\,d_2,\,d_3}=\set{1,\,3,\,4}</m> is the index of a variable.  We refer to the variables <m>x_{d_1}=x_1</m>, <m>x_{d_2}=x_3</m> and <m>x_{d_3}=x_4</m> as  <q>dependent</q> variables since they <em>depend</em> on the <em>independent</em> variables.  More precisely, for each possible choice of values for the independent variables we get <em>exactly one</em> set of values for the dependent variables that combine to form a solution of the system.</p>
+            <p>To express the solutions as a set, we write
+<me>\setparts{
+\colvector{
+4-4x_2-2x_5-x_6+3x_7\\
+x_2\\
+2-x_5+3x_6-5x_7\\
+1-2x_5+6x_6-6x_7\\
+x_5\\
+x_6\\
+x_7
+}
+}{
+x_2,\,x_5,\,x_6,\,x_7\in\complexes
+}</me>
+</p>
+            <p>The condition that <m>x_2,\,x_5,\,x_6,\,x_7\in\complexes</m> is how we specify that the variables <m>x_2,\,x_5,\,x_6,\,x_7</m> are <q>free</q> to assume any possible values.</p>
+            <p>This systematic approach to solving a system of equations will allow us to create a precise description of the solution set for any consistent system once we have found the reduced row-echelon form of the augmented matrix.  It will work just as well when the set of free variables is empty and we get just a single solution.  And we could program a computer to do it!  Now have a whack at Archetype J (<xref ref="exercise-TSS-C10" acro="TSS.C10" autoname="yes"/>), mimicking the discussion in this example.  We'll still be here when you get back.</p>
+        </example>
+        <p>Using the reduced row-echelon form of the augmented matrix of a system of equations to determine the nature of the solution set of the system is a very key idea.  So let us look at one more example like the last one.  But first a definition, and then the example.   We mix our metaphors a bit when we call variables free versus dependent.  Maybe we should call dependent variables <q>enslaved</q>?</p>
+        <definition xml:id="definition-IDV" acro="IDV">
+            <title>Independent and Dependent Variables</title>
+            <index>
+                <main>independent, dependent variables</main>
+            </index>
+            <statement>
+                <p>Suppose <m>A</m> is the augmented matrix of a consistent system of linear equations and <m>B</m> is a row-equivalent matrix in reduced row-echelon form.  Suppose <m>j</m> is the index of a pivot column of <m>B</m>.  Then the variable <m>x_j</m> is <term>dependent</term>.  A variable that is not dependent is called <term>independent</term> or <term>free</term>.</p>
+            </statement>
+        </definition>
+        <p>If you studied this definition carefully, you might wonder what to do if the system has <m>n</m> variables and column <m>n+1</m> is a pivot column?  We will see shortly, by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>, that this never happens for a consistent system.</p>
+        <example xml:id="example-FDV" acro="FDV">
+            <index>
+                <main>free, independent variables</main>
+            </index>
+            <title>Free and dependent variables</title>
+            <p>Consider the system of five equations in five variables,
+<md><mrow> x_1  - x_2  -2 x_3 +  x_4 + 11 x_5 &amp;= 13 </mrow><mrow>x_1 - x_2 +  x_3+  x_4 + 5 x_5 &amp;= 16 </mrow><mrow> 2 x_1  -2 x_2       +  x_4 + 10 x_5 &amp;= 21 </mrow><mrow> 2 x_1  -2 x_2  - x_3 + 3 x_4 + 20 x_5 &amp;= 38 </mrow><mrow> 2 x_1  -2 x_ 2 +  x_3 +  x_4 + 8 x_ 5&amp;= 22</mrow></md>
+whose augmented matrix row-reduces to
+<me>\begin{bmatrix}
+ \leading{1} &amp; -1 &amp; 0 &amp; 0 &amp; 3 &amp; 6 \\
+ 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; -2 &amp; 1 \\
+ 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 4 &amp; 9 \\
+ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}</me>
+</p>
+            <p>Columns 1, 3 and 4 are pivot columns, so <m>D=\set{1,\,3,\,4}</m>.  From this we know that the variables <m>x_1</m>, <m>x_3</m> and <m>x_4</m> will be dependent variables, and each of the <m>r=3</m> nonzero rows of the row-reduced matrix will yield an expression for one of these three variables.  The set <m>F</m> is all the remaining column indices, <m>F=\set{2,\,5,\,6}</m>.  The column index <m>6</m> in <m>F</m> means that the final column is not a pivot column, and thus the system is consistent (<xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>).  The remaining indices in <m>F</m> indicate free variables, so <m>x_2</m> and <m>x_5</m> (the remaining variables) are our free variables.  The resulting three equations that describe our solution set are then,
+<md><mrow>(x_{d_1}=x_1)&amp; &amp; x_1&amp;=6+x_2-3x_5</mrow><mrow>(x_{d_2}=x_3)&amp; &amp; x_3&amp;=1+2x_5</mrow><mrow>(x_{d_3}=x_4)&amp; &amp; x_4&amp;=9-4x_5</mrow></md>
+</p>
+            <p>Make sure you understand where these three equations came from, and notice how the location of the pivot columns determined the variables on the left-hand side of each equation.  We can compactly describe the solution set as,
+<me>S=
+\setparts{
+\colvector{6+x_2-3x_5\\x_2\\1+2x_5\\9-4x_5\\x_5}
+}{x_2,\,x_5\in\complexes}</me>
+</p>
+            <p>Notice how we express the freedom for <m>x_2</m> and <m>x_5</m>: <m>x_2,\,x_5\in\complexes</m>.</p>
+        </example>
+        <computation xml:id="sage-FDV" acro="FDV">
+            <title>Free and Dependent Variables</title>
+            <index>
+                <main>free, dependent variables</main>
+            </index>
+            <p>Sage has the matrix method <c>.pivot()</c> to quickly and easily identify the pivot columns of the reduced row-echelon form of a matrix.  Notice that we do not have to row-reduce the matrix first, we just ask which columns of a matrix <m>A</m> <em>would be</em> the pivot columns of the matrix <m>B</m> that is row-equivalent to <m>A</m> and in reduced row-echelon form.  By <xref ref="definition-IDV" acro="IDV" autoname="yes"/>, the indices of the pivot columns for an augmented matrix of a system of equations are the indices of the dependent variables.  And the remainder are free variables.  But be careful, Sage numbers columns starting from zero and mathematicians typically number variables starting from one.</p>
+            <p>Let us reprise <xref ref="example-ISSI" acro="ISSI" autoname="yes"/>.</p>
+            <sage xml:id="sagecell-FDV-1">
+                <input>
+coeff = matrix(QQ, [[ 1,  4, 0, -1,  0,   7, -9],
+                    [ 2,  8,-1,  3,  9, -13,  7],
+                    [ 0,  0, 2, -3, -4,  12, -8],
+                    [-1, -4, 2,  4,  8, -31, 37]])
+const = vector(QQ, [3, 9, 1, 4])
+aug = coeff.augment(const)
+dependent = aug.pivots()
+dependent
+</input>
+                <output>
+(0, 2, 3)
+</output>
+            </sage>
+            <p>So, incrementing each column index by 1 gives us the same set <m>D</m> of indices for the dependent variables.  To get the free variables, we can use the following code.  Study it and then read the explanation following.</p>
+            <sage xml:id="sagecell-FDV-2">
+                <input>
+free = [index for index in range(7) if not index in dependent]
+free
+</input>
+                <output>
+[1, 4, 5, 6]
+</output>
+            </sage>
+            <p>This is a Python programming construction known as a <q>list comprehension</q> but in this setting I prefer to call it <q>set builder notation.</q>  Let us dissect the command in pieces.  The brackets (<c>[,]</c>) create a new list.  The items in the list will be values of the variable <c>index</c>.  <c>range(7)</c> is another list, integers starting at <c>0</c> and stopping <em>just before</em> <c>7</c>.  (While perhaps a bit odd, this works very well when we consistently start counting at zero.) So <c>range(7)</c> is the list <c>[0,1,2,3,4,5,6]</c>.  Think of these as candidate values for <c>index</c>, which are generated by <c>for index in range(7)</c>.  Then we test each candidate, and keep it in the new list if it is <em>not</em> in the list <c>dependent</c>.</p>
+            <p>This is entirely analogous to the following mathematics:</p>
+            <md>
+                <mrow>F &amp;= \setparts{f}{1\leq f\leq 7, f\not\in D}</mrow>
+            </md>
+            <p>where <m>F</m> is <c>free</c>, <m>f</m> is <c>index</c>, and <m>D</m> is <c>dependent</c>, and we make the 0/1 counting adjustments.  This ability to construct sets in Sage with notation so closely mirroring the mathematics is a powerful feature worth mastering.  We will use it repeatedly.</p>
+            <p>It was a good exercise to use a list comprehension to form the list of columns that are not pivot columns.  However, Sage has us covered.</p>
+            <sage xml:id="sagecell-FDV-3">
+                <input>
+free_and_easy = coeff.nonpivots()
+free_and_easy
+</input>
+                <output>
+(1, 4, 5, 6)
+</output>
+            </sage>
+            <p>Can you use this new matrix method to make a simpler version of the <c>consistent()</c> function we designed above?</p>
+        </computation>
+        <p>Sets are an important part of algebra, and we have seen a few already.  Being comfortable with sets is important for understanding and writing proofs.  If you have not already, pay a visit now to <xref ref="section-SET" acro="SET" autoname="yes"/>.</p>
+        <p>We can now use the values of <m>m</m>, <m>n</m>, <m>r</m>, and the independent and dependent variables to categorize the solution sets for linear systems through a sequence of theorems.</p>
+        <p>Through the following sequence of proofs, you will want to consult three proof techniques. See Proof Technique<nbsp/><xref ref="technique-E" acro="E" autoname="no"/>, Proof Technique<nbsp/><xref ref="technique-N" acro="N" autoname="no"/>, Proof Technique<nbsp/><xref ref="technique-CP" acro="CP" autoname="no"/>.</p>
+        <p>First we have an important theorem that explores the distinction between consistent and inconsistent linear systems.</p>
+        <theorem xml:id="theorem-RCLS" acro="RCLS">
+            <index>
+                <main>linear system</main>
+                <sub>consistent</sub>
+            </index>
+            <title>Recognizing Consistency of a Linear System</title>
+            <statement>
+                <index>
+                    <main>consistent linear system</main>
+                </index>
+                <p>Suppose <m>A</m> is the augmented matrix of a system of linear equations with <m>n</m> variables.  Suppose also that <m>B</m> is a row-equivalent matrix in reduced row-echelon form with <m>r</m> nonzero rows.  Then the system of equations is inconsistent if and only if column <m>n+1</m> of <m>B</m> is a pivot column.</p>
+            </statement>
+            <proof>
+                <case direction="backward">
+                    <!-- MBX: move end of case -->
+                </case>
+                <p>  The first half of the proof begins with the assumption that column <m>n+1</m> of <m>B</m> is a pivot column.  Then the leading 1 of row <m>r</m> is located in column <m>n+1</m> of <m>B</m> and so row <m>r</m> of <m>B</m> begins with <m>n</m> consecutive zeros, finishing with the leading 1.  This is a representation of the equation <m>0=1</m>, which is false.  Since this equation is false for any collection of values we might choose for the variables, there are no solutions for the system of equations, and the system is inconsistent.</p>
+                <case direction="forward">
+                    <!-- MBX: move end of case -->
+                </case>
+                <p>  For the second half of the proof, we wish to show that if we assume the system is inconsistent, then column <m>n+1</m> of <m>B</m> is a pivot column.  But instead of proving this directly, we will form the logically equivalent statement that is the contrapositive, and prove that instead (see Proof Technique<nbsp/><xref ref="technique-CP" acro="CP" autoname="no"/>).  Turning the implication around, and negating each portion, we arrive at the logically equivalent statement:  if column <m>n+1</m> of <m>B</m> is not a pivot column, then the system of equations is consistent.</p>
+                <p>If column <m>n+1</m> of <m>B</m> is not a pivot column, the leading 1 for row <m>r</m> is located somewhere in columns 1 through <m>n</m>.  Then <em>every</em> preceding row's leading 1 is also located in columns 1 through <m>n</m>.  In other words, since the last leading 1 is not in the last column, no leading 1 for any row is in the last column, due to the echelon layout of the leading 1's (<xref ref="definition-RREF" acro="RREF" autoname="yes"/>).  We will now construct a solution to the system by setting each dependent variable to the entry of the final column in the row with the corresponding leading 1, and setting each free variable to zero.  That sentence is pretty vague, so let us be more precise.  Using our notation for the sets <m>D</m> and <m>F</m> from the reduced row-echelon form (<xref ref="definition-RREF" acro="RREF" autoname="yes"/>):
+<md><mrow>x_{d_i}&amp;=\matrixentry{B}{i,n+1},\quad 1\leq i\leq r
+&amp;
+x_{f_i}&amp;=0,\quad 1\leq i\leq n-r</mrow></md>
+</p>
+                <p>These values for the variables make the equations represented by the first <m>r</m> rows of <m>B</m> all true (convince yourself of this).  Rows numbered greater than <m>r</m> (if any) are all zero rows, hence represent the equation <m>0=0</m> and are also all true.  We have now identified one solution to the system represented by <m>B</m>, and hence a solution to the system represented by <m>A</m> (<xref ref="theorem-REMES" acro="REMES" autoname="yes"/>).  So we can say the system is consistent (<xref ref="definition-CS" acro="CS" autoname="yes"/>).
+</p>
+            </proof>
+        </theorem>
+        <p>The beauty of this theorem being an equivalence is that we can unequivocally test to see if a system is consistent or inconsistent by looking at just a single entry of the reduced row-echelon form matrix.  We could program a computer to do it!</p>
+        <computation xml:id="sage-RCLS" acro="RCLS">
+            <title>Recognizing Consistency of a Linear System</title>
+            <index>
+                <main>consistent linear systems</main>
+            </index>
+            <p>Another way of expressing <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> is to say a system is consistent if and only if column <m>n+1</m> is not a pivot column of <m>B</m>.  Sage has the matrix method <c>.pivot()</c> to easily identify the pivot columns of a matrix.  Let us use Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/> as an example.</p>
+            <sage xml:id="sagecell-RCLS-1">
+                <input>
+coeff = matrix(QQ, [[ 2, 1,  7, -7],
+                    [-3, 4, -5, -6],
+                    [ 1, 1,  4, -5]])
+const = vector(QQ, [2, 3, 2])
+aug = coeff.augment(const)
+aug.rref()
+</input>
+                <output>
+[ 1  0  3 -2  0]
+[ 0  1  1 -3  0]
+[ 0  0  0  0  1]
+</output>
+            </sage>
+            <sage xml:id="sagecell-RCLS-2">
+                <input>
+aug.pivots()
+</input>
+                <output>
+(0, 1, 4)
+</output>
+            </sage>
+            <p>We can <em>look</em> at the reduced row-echelon form of the augmented matrix and see a pivot column in the final column, so we know the system is inconsistent.  However, we could just as easily not form the reduced row-echelon form and just look at the list of pivot columns computed by <c>aug.pivots()</c>.  Since <c>aug</c> has 5 columns, the final column is numbered <c>4</c>, which is present in the list of pivot columns, as we expect.</p>
+            <p>One feature of Sage is that we can easily extend its capabilities by defining new commands.  Here will create a function that checks if an augmented matrix represents a consistent system of equations.  The syntax is just a bit complicated.  <c>lambda</c> is the word that indicates we are making a new function, the input is temporarily named <c>A</c> (think <c>A</c>ugmented), and the <em>name</em> of the function is <c>consistent</c>.  Everything following the colon will be evaluated and reported back as the output.</p>
+            <sage xml:id="sagecell-RCLS-3">
+                <input>
+consistent = lambda A: not(A.ncols()-1 in A.pivots())
+</input>
+            </sage>
+            <p>Execute this block above.  There will not be any output, but now the <c>consistent</c> function will be defined and available.  Now give it a try (after making sure to have run the code above that defines <c>aug</c>).  Note that the output of <c>consistent()</c> will be either <c>True</c> or <c>False</c>.</p>
+            <sage xml:id="sagecell-RCLS-4">
+                <input>
+consistent(aug)
+</input>
+                <output>
+False
+</output>
+            </sage>
+            <p>The <c>consistent()</c> command works by simply checking to see if the last column of <c>A</c> is <em>not</em> in the list of pivots.  We can now test many different augmented matrices, such as perhaps changing the vector of constants while keeping the coefficient matrix fixed.  Again, make sure you execute the code above that defines <c>coeff</c> and <c>const</c>.</p>
+            <sage xml:id="sagecell-RCLS-5">
+                <input>
+consistent(coeff.augment(const))
+</input>
+                <output>
+False
+</output>
+            </sage>
+            <sage xml:id="sagecell-RCLS-6">
+                <input>
+w = vector(QQ, [3,1,2])
+consistent(coeff.augment(w))
+</input>
+                <output>
+True
+</output>
+            </sage>
+            <sage xml:id="sagecell-RCLS-7">
+                <input>
+u = vector(QQ, [1,3,1])
+consistent(coeff.augment(u))
+</input>
+                <output>
+False
+</output>
+            </sage>
+            <p>Why do some vectors of constants lead to a consistent system with this coefficient matrix, while others do not?  This is a fundamental question, which we will come to understand in several different ways.</p>
+        </computation>
+        <p>Notice that for a consistent system the row-reduced augmented matrix has <m>n+1\in F</m>, so the largest element of <m>F</m> does not refer to a variable.  Also, for an inconsistent system, <m>n+1\in D</m>, and it then does not make much sense to discuss whether or not variables are free or dependent since there is no solution.  Take a look back at <xref ref="definition-IDV" acro="IDV" autoname="yes"/> and see why we did not need to consider the possibility of referencing <m>x_{n+1}</m> as a dependent variable.</p>
+        <p>With the characterization of <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>, we can explore the relationships between <m>r</m> and <m>n</m> for a consistent system.  We can distinguish between the case of a unique solution and infinitely many solutions, and furthermore, we recognize that these are the only two possibilities.</p>
+        <theorem xml:id="theorem-CSRN" acro="CSRN">
+            <index>
+                <main>consistent linear systems</main>
+            </index>
+            <title>Consistent Systems, <m>r</m> and <m>n</m></title>
+            <statement>
+                <p>Suppose <m>A</m> is the augmented matrix of a <em>consistent</em> system of linear equations with <m>n</m> variables.  Suppose also that <m>B</m> is a row-equivalent matrix in reduced row-echelon form with <m>r</m> pivot columns.  Then <m>r\leq n</m>.  If <m>r=n</m>, then the system has a unique solution, and if <m>r&lt;n</m>, then the system has infinitely many solutions.</p>
+            </statement>
+            <proof>
+                <p>This theorem contains three implications that we must establish.  Notice first that <m>B</m> has <m>n+1</m> columns, so there can be at most <m>n+1</m> pivot columns, <ie/> <m>r\leq n+1</m>.  If <m>r=n+1</m>, then every column of <m>B</m> is a pivot column, and in particular, the last column is a pivot column.  So <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> tells us that the system is inconsistent, contrary to our hypothesis. We are left with <m>r\leq n</m>.</p>
+                <p>When <m>r=n</m>, we find <m>n-r=0</m> free variables (<ie/> <m>F=\set{n+1}</m>) and the only solution is given by setting the <m>n</m> variables to the the first <m>n</m> entries of column <m>n+1</m> of <m>B</m>.</p>
+                <p>When <m>r&lt;n</m>, we have <m>n-r&gt;0</m> free variables.  Choose one free variable and set all the other free variables to zero.  Now, set the chosen free variable to any fixed value.  It is possible to then determine the values of the dependent variables to create a solution to the system.  By setting the chosen free variable to different values,  in this manner we can create infinitely many solutions.</p>
+            </proof>
+        </theorem>
+    </subsection>
+    <subsection xml:id="subsection-TSS-FV" acro="FV">
+        <title>Free Variables</title>
+        <p>The next theorem simply states a conclusion from the final paragraph of the previous proof, allowing us to state explicitly the number of free variables for a consistent system.</p>
+        <theorem xml:id="theorem-FVCS" acro="FVCS">
+            <index>
+                <main>free variables, number</main>
+            </index>
+            <title>Free Variables for Consistent Systems</title>
+            <statement>
+                <p>Suppose <m>A</m> is the augmented matrix of a <em>consistent</em> system of linear equations with <m>n</m> variables.  Suppose also that <m>B</m> is a row-equivalent matrix in reduced row-echelon form with <m>r</m> rows that are not completely zeros.  Then the solution set can be described with <m>n-r</m> free variables.</p>
+            </statement>
+            <proof>
+                <p>See the proof of <xref ref="theorem-CSRN" acro="CSRN" autoname="yes"/>.</p>
+            </proof>
+        </theorem>
+        <example xml:id="example-CFV" acro="CFV">
+            <index>
+                <main>free variables</main>
+            </index>
+            <title>Counting free variables</title>
+            <p>For each archetype that is a system of equations, the values of <m>n</m> and <m>r</m> are listed.  Many also contain a few sample solutions.  We can use this information profitably, as illustrated by four examples.
+<ol><li> Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/> has <m>n=3</m> and <m>r=2</m>.  It can be seen to be consistent by the sample solutions given.  Its solution set then has <m>n-r=1</m> free variables, and therefore will be infinite.
+</li><li> Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/> has <m>n=3</m> and <m>r=3</m>.  It can be seen to be consistent by the single sample solution given.  Its solution set can then be described with <m>n-r=0</m> free variables, and therefore will have just the single solution.
+</li><li> Archetype<nbsp/><xref ref="archetype-H" acro="H" autoname="no"/> has <m>n=2</m> and <m>r=3</m>.  In this case, column 3 must be a pivot column, so by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>, the system is inconsistent.  We should not try to apply <xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/> to count free variables, since the theorem only applies to consistent systems. (What would happen if you did try to incorrectly apply <xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/>?)
+</li><li> Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/> has <m>n=4</m> and <m>r=3</m>.  However, by looking at the reduced row-echelon form of the augmented matrix, we find that column 5 is a pivot column.  By <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> we recognize the system as inconsistent.
+</li></ol>
+</p>
+        </example>
+        <p>We have accomplished a lot so far, but our main goal has been the following theorem, which is now very simple to prove.  The proof is so simple that we ought to call it a corollary, but the result is important enough that it deserves to be called a theorem.    (See Proof Technique<nbsp/><xref ref="technique-LC" acro="LC" autoname="no"/>.)  Notice that this theorem was presaged first by <xref ref="example-TTS" acro="TTS" autoname="yes"/> and further foreshadowed by other examples.</p>
+        <theorem xml:id="theorem-PSSLS" acro="PSSLS">
+            <index>
+                <main>solution sets</main>
+                <sub>possibilities</sub>
+            </index>
+            <title>Possible Solution Sets for Linear Systems</title>
+            <statement>
+                <p>
+                    <subject key="math.la.t.linsys.zoi"/>
+                </p>
+                <p>A system of linear equations has no solutions, a unique solution or infinitely many solutions.</p>
+            </statement>
+            <proof>
+                <p>By its definition, a system is either inconsistent or consistent (<xref ref="definition-CS" acro="CS" autoname="yes"/>).  The first case describes systems with no solutions.  For consistent systems, we have the remaining two possibilities as guaranteed by, and described in, <xref ref="theorem-CSRN" acro="CSRN" autoname="yes"/>.</p>
+            </proof>
+        </theorem>
+        <p>Here is a diagram that consolidates several of our theorems from this section, and which is of practical use when you analyze systems of equations.  Note this presumes we have the reduced row-echelon form of the augmented matrix of the system to analyze.
+<figure xml:id="figure-DTSLS" acro="DTSLS"><caption>Decision Tree for Solving Linear Systems</caption><!-- <tikz>
+\matrix (m) [matrix of math nodes, row sep=4em,
+column sep=0em, text height=1.5ex, text depth=0.25ex]
+{                        &amp;                    &amp; \text{Theorem RCLS}   &amp; \\
+                         &amp; \text{Consistent}  &amp;                       &amp;\text{Inconsistent}\\
+                         &amp; \text{Theorem CSRN}&amp;                       &amp; \\
+\text{Infinite Solutions}&amp;                    &amp; \text{Unique Solution}&amp; \\
+};
+
+\path[->]
+(m-1-3) edge[thick] node[left,xshift=-1em, yshift=0.5em]
+{\(\begin{aligned}&amp;\text{no pivot column in}\\&amp;\text{column }n+1\end{aligned}\)} (m-2-2)
+(m-1-3) edge[thick] node[right,xshift=1em, yshift=0.5em]
+{\(\begin{aligned}&amp;\text{pivot column in}\\&amp;\text{column }n+1\end{aligned}\)} (m-2-4)
+%
+(m-2-2) edge[thick]                                     (m-3-2)
+(m-3-2) edge[thick] node[left, xshift=-1em] {\(r &lt; n\)} (m-4-1)
+(m-3-2) edge[thick] node[right, xshift=1em] {\(r = n\)} (m-4-3);
+</tikz>
+ --></figure>
+</p>
+        <p>We have one more theorem to round out our set of tools for determining solution sets to systems of linear equations.</p>
+        <theorem xml:id="theorem-CMVEI" acro="CMVEI">
+            <index>
+                <main>more variables than equations</main>
+            </index>
+            <title>Consistent, More Variables than Equations, Infinite solutions</title>
+            <statement>
+                <p>Suppose a consistent system of linear equations has <m>m</m> equations in <m>n</m> variables.  If <m>n&gt;m</m>, then the system has infinitely many solutions.</p>
+            </statement>
+            <proof>
+                <p>Suppose that the augmented matrix of the system of equations is row-equivalent to <m>B</m>, a matrix in reduced row-echelon form with <m>r</m> nonzero rows.
+Because <m>B</m> has <m>m</m> rows in total, the number of nonzero rows is less than or equal to <m>m</m>.  In other words, <m>r\leq m</m>.
+Follow this with the hypothesis that <m>n&gt;m</m> and we find that the system has a solution set described by at least one free variable because
+<me>n-r\geq n-m&gt;0.</me></p>
+                <p>A consistent system with free variables will have an infinite number of solutions, as given by <xref ref="theorem-CSRN" acro="CSRN" autoname="yes"/>.</p>
+            </proof>
+        </theorem>
+        <p>Notice that to use this theorem we need only know that the system is consistent, together with the values of <m>m</m> and <m>n</m>.  We do not necessarily have to compute a row-equivalent reduced row-echelon form matrix, even though we discussed such a matrix in the proof.  This is the substance of the following example.</p>
+        <example xml:id="example-OSGMD" acro="OSGMD">
+            <index>
+                <main>more variables than equations</main>
+            </index>
+            <title>One solution gives many, Archetype D</title>
+            <p>Archetype D is the system of <m>m=3</m> equations in <m>n=4</m> variables,
+<!-- Archetype D, Part systemdefn --><systemdefn><md><mrow>2x_1  + x_2 + 7x_3 - 7x_4 &amp;= 8 </mrow><mrow>-3x_1 + 4x_2 -5x_3 - 6x_4 &amp;=  -12 </mrow><mrow>x_1 +x_2 + 4x_3 - 5x_4 &amp;=  4</mrow></md></systemdefn>
+and the solution <m>x_1 = 0</m>, <m>x_2 = 1</m>, <m>x_3 = 2</m>, <m>x_4 = 1</m> can be checked easily by substitution.  Having been <em>handed</em> this solution, we know the system is consistent.  This, together with <m>n&gt;m</m>, allows us to apply <xref ref="theorem-CMVEI" acro="CMVEI" autoname="yes"/> and conclude that the system has infinitely many solutions.
+</p>
+        </example>
+        <p>These theorems give us the procedures and implications that allow us to completely solve any system of linear equations.  The main computational tool is using row operations to convert an augmented matrix into reduced row-echelon form.  Here is a broad outline of how we would instruct a computer to solve  a system of linear equations.
+<ol><li>  Represent a system of linear equations in <m>n</m> variables by an augmented matrix (an array is the appropriate data structure in most computer languages).
+</li><li>  Convert the matrix to a row-equivalent matrix in reduced row-echelon form using the procedure from the proof of <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/>.  Identify the location of the pivot columns, and their number <m>r</m>.
+</li><li>  If column <m>n+1</m> is a pivot column, output the statement that the system is inconsistent and halt.
+</li><li><p>If column <m>n+1</m> is not a pivot column, there are two possibilities:
+<ol><li><m>r=n</m> and the solution is unique.  It can be read off directly from the entries in rows 1 through <m>n</m> of column <m>n+1</m>.
+</li><li><m>r\lt n</m> and there are infinitely many solutions.
+If only a single solution is needed, set all the free variables to zero and read off the dependent variable values from column <m>n+1</m>, as in the second half of the proof of <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>.  If the entire solution set is required, figure out some nice compact way to describe it, since your finite computer is not big enough to hold all the solutions (we will have such a way soon).
+</li></ol></p></li></ol>
+</p>
+        <p>The above makes it all sound a bit simpler than it really is.  In practice, row operations employ division (usually to get a leading entry of a row to convert to a leading 1) and that will introduce round-off errors.  Entries that should be zero sometimes end up being very, very small nonzero entries, or small entries lead to overflow errors when used as divisors.  A variety of strategies can be employed to minimize these sorts of errors, and this is one of the main topics in the important subject known as numerical linear algebra.</p>
+        <p>In this section we have gained a foolproof procedure for solving any system of linear equations, no matter how many equations or variables.  We also have a handful of theorems that allow us to determine partial information about a solution set without actually constructing the whole set itself.  Donald Knuth would be proud.</p>
+        <computation xml:id="sage-SS1" acro="SS1">
+            <title>Solving Systems, Part 1</title>
+            <index>
+                <main>solving linear systems</main>
+            </index>
+            <p>Sage has a built-in command that will solve a linear system of equations, given a coefficient matrix and a vector of constants.  We need to learn some more theory before we can entirely understand this command, but we can begin to explore its use.  For now, consider these methods experimental and do not let it replace row-reducing augmented matrices.</p>
+            <p>The matrix method <c>A.solve_right(b)</c> will provide information about solutions to the linear system of equations with coefficient matrix <c>A</c> and vector of constants <c>b</c>.  The reason for the <q>right</q> (and the corresponding command named with <q>left</q>) will have to wait for Sage<nbsp/><xref ref="sage-MVP" acro="MVP" autoname="no"/>.  For now, it is generally correct in this course to use the <q>right</q> variant of any Sage linear algebra command that has both <q>left</q> and <q>right</q> variants.</p>
+            <p>Let us apply the <c>.solve_right()</c> command to a system with no solutions, in particular Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/>.  We have already seen in Sage<nbsp/><xref ref="sage-RCLS" acro="RCLS" autoname="no"/> that this system is inconsistent.</p>
+            <sage xml:id="sagecell-SS1-1">
+                <input>
+coeff = matrix(QQ, [[ 2, 1,  7, -7],
+                    [-3, 4, -5, -6],
+                    [ 1, 1,  4, -5]])
+const = vector(QQ, [2, 3, 2])
+coeff.solve_right(const)
+</input>
+                <output>
+Traceback (most recent call last):
+...
+ValueError: matrix equation has no solutions
+</output>
+            </sage>
+            <p>This is our first discussion of Sage error messages, though undoubtedly you have seen several already!  First, here we only show the first and last lines of the message since typically it contains a lot of information specific to whichever computer you may be using.  but we always begin with the last line as the most important indication of what has happened.  Here the <q>problem</q> is quite evident: we get an <q>error</q> message telling us that the <c>matrix equation has no solutions</c>.  We can debate whether or not this is really an error, but that is the design decision taken in Sage <mdash/> we just need to be aware of it, the <c>.solve_right()</c> is really only valuable when there is a solution.</p>
+            <p>Generally, when deciphering Sage error messages, you want to start at the bottom of the <q>traceback</q> and read up through the various routines that have been called.  Execute the block above and you may see references to matrix methods such as <c>._solve_right_general()</c> and then <c>.solve_right()</c>.  With time and practice, these mysterious messages will become more and more helpful, so spend some time reading them in tandem with locating the real source of any problems you encounter.</p>
+            <p>What does <c>.solve_right()</c> do with a system that does have solutions?  Let us take a look at <xref ref="example-ISSI" acro="ISSI" autoname="yes"/> again, as we did in Sage<nbsp/><xref ref="sage-FDV" acro="FDV" autoname="no"/>.</p>
+            <sage xml:id="sagecell-SS1-2">
+                <input>
+coeff = matrix(QQ, [[ 1,  4,  0, -1,  0,   7, -9],
+                    [ 2,  8, -1,  3,  9, -13,  7],
+                    [ 0,  0,  2, -3, -4,  12, -8],
+                    [-1, -4,  2,  4,  8, -31, 37]])
+const = vector(QQ, [3, 9, 1, 4])
+coeff.solve_right(const)
+</input>
+                <output>
+(4, 0, 2, 1, 0, 0, 0)
+</output>
+            </sage>
+            <p>This vector with 7 entries is indeed a solution to the system of equations (check this!).  But from <xref ref="example-ISSI" acro="ISSI" autoname="yes"/> we know this system has <em>infinitely</em> many solutions.  Why does Sage give us just one solution?  Of the infinitely many solutions, why this one?  How can a finite computer <em>ever</em> present us with infinitely many solutions?  Do we have the time to read through an infinite list of solutions?  Is there a <q>best</q> solution?  This behavior should prompt these questions, and maybe more.</p>
+            <p>In order to totally understand the behavior of the <c>.solve_right()</c> command, we need to understand more of the theory of linear algebra.  In good time.  So for now, <c>.solve_right()</c> is a curiosity we will fully understand soon <mdash/> specifically in Sage<nbsp/><xref ref="sage-SS2" acro="SS2" autoname="no"/> and Sage<nbsp/><xref ref="sage-SS3" acro="SS3" autoname="no"/>.</p>
+        </computation>
+    </subsection>
+    <!--   End  tss.tex -->
+    <exercises>
+        <title>Reading Questions</title>
+        <exercise>
+            <statement>
+                <p>How can we <em>easily</em> recognize when a system of linear equations is inconsistent or not?
+</p>
+            </statement>
+        </exercise>
+        <exercise>
+            <statement>
+                <p>Suppose we have converted the augmented matrix of a system of equations into reduced row-echelon form.  How do we then identify the dependent and independent (free) variables?
+</p>
+            </statement>
+        </exercise>
+        <exercise>
+            <statement>
+                <p>What are the possible solution sets for a system of linear equations?
+</p>
+            </statement>
+        </exercise>
+    </exercises>
+    <exercises>
+        <title>Exercises</title>
+        <exercise number="C10" xml:id="exercise-TSS-C10">
+            <statement>
+                <p>In the spirit of <xref ref="example-ISSI" acro="ISSI" autoname="yes"/>, describe the infinite solution set for Archetype<nbsp/><xref ref="archetype-J" acro="J" autoname="no"/>.
+</p>
+            </statement>
+        </exercise>
+        <exercisegroup>
+            <introduction>
+                <p>For Exercises C21<ndash/>C28, find the solution set of the system of linear equations. Give the values of <m>n</m> and <m>r</m>, and interpret your answers in light of the theorems of this section.</p>
+            </introduction>
+            <exercise number="C21" xml:id="exercise-TSS-C21">
+                <statement contributor="chrisblack">
+                    <p>
+                        <md>
+                            <mrow>x_1 + 4x_2 + 3x_3 - x_4 &amp;= 5</mrow>
+                            <mrow>x_1 - x_2 + x_3 + 2x_4 &amp;= 6</mrow>
+                            <mrow>4x_1 + x_2 + 6x_3 + 5x_4 &amp;= 9</mrow>
+                        </md>
+                    </p>
+                </statement>
+                <solution xml:id="solution-TSS-C21" contributor="chrisblack">
+                    <p>The augmented matrix for the given linear system and its row-reduced form are:
+<md><mrow>\begin{bmatrix}
+1 &amp; 4 &amp; 3 &amp; -1 &amp; 5\\
+1 &amp; -1 &amp; 1 &amp; 2 &amp; 6\\
+4 &amp; 1 &amp; 6 &amp; 5 &amp; 9
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+\leading{1} &amp; 0 &amp; 7/5 &amp; 7/5 &amp; 0\\
+0 &amp; \leading{1} &amp; 2/5 &amp; -3/5 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}
+\end{bmatrix}.</mrow></md>
+For this system, we have <m>n = 4</m> and <m>r = 3</m>.  However, with a pivot column in the last column we see that the original system has no solution by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="C22" xml:id="exercise-TSS-C22">
+                <statement contributor="chrisblack">
+                    <p>
+                        <md>
+                            <mrow>x_1 - 2x_2 + x_3 - x_4 &amp;= 3</mrow>
+                            <mrow>2x_1 - 4x_2 + x_3 + x_4 &amp;= 2</mrow>
+                            <mrow>x_1 - 2x_2 - 2x_3 + 3x_4 &amp;= 1</mrow>
+                        </md>
+                    </p>
+                </statement>
+                <solution xml:id="solution-TSS-C22" contributor="chrisblack">
+                    <p>The augmented matrix for the given linear system and its row-reduced form are:
+<md><mrow>\begin{bmatrix}
+1 &amp; -2 &amp; 1 &amp; -1 &amp; 3\\
+2 &amp; -4 &amp; 1 &amp; 1 &amp; 2\\
+1 &amp; -2 &amp; -2 &amp; 3 &amp; 1
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+\leading{1}  &amp; -2 &amp; 0 &amp; 0 &amp; 3\\
+0 &amp; 0 &amp; \leading{1}  &amp; 0 &amp; -2\\
+0 &amp; 0 &amp; 0 &amp; \leading{1}  &amp; -2
+\end{bmatrix}.</mrow></md>
+Thus, we see we have an equivalent system for any scalar <m>x_2</m>:
+<md><mrow>x_1 &amp;= 3 + 2x_2</mrow><mrow>x_3 &amp;= -2</mrow><mrow>x_4 &amp;= -2.</mrow></md>
+For this system, <m>n = 4</m> and <m>r = 3</m>.  Since it is a consistent system by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>,  <xref ref="theorem-CSRN" acro="CSRN" autoname="yes"/> guarantees an infinite number of solutions.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="C23" xml:id="exercise-TSS-C23">
+                <statement contributor="chrisblack">
+                    <p>
+                        <md>
+                            <mrow>x_1 - 2x_2 + x_3 - x_4 &amp;= 3</mrow>
+                            <mrow>x_1 + x_2 + x_3 - x_4 &amp;= 1</mrow>
+                            <mrow>x_1 \quad + x_3 - x_4 &amp;= 2</mrow>
+                        </md>
+                    </p>
+                </statement>
+                <solution xml:id="solution-TSS-C23" contributor="chrisblack">
+                    <p>The augmented matrix for the given linear system and its row-reduced form are:
+<md><mrow>\begin{bmatrix}
+1 &amp; -2 &amp; 1 &amp; -1 &amp; 3\\
+1 &amp; 1 &amp; 1 &amp; -1 &amp; 1\\
+1 &amp; 0 &amp; 1 &amp; -1 &amp; 2
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+\leading{1} &amp; 0 &amp; 1 &amp; -1 &amp; 0\\
+0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0  &amp; 0 &amp; 0 &amp; \leading{1}
+\end{bmatrix}.</mrow></md>
+For this system, we have <m>n = 4</m> and <m>r = 3</m>.  However, with a pivot column in the last column we see that the original system has no solution by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="C24" xml:id="exercise-TSS-C24">
+                <statement contributor="chrisblack">
+                    <p>
+                        <md>
+                            <mrow>x_1 - 2x_2 + x_3 - x_4 &amp;= 2</mrow>
+                            <mrow>x_1 + x_2 + x_3 - x_4 &amp;= 2</mrow>
+                            <mrow>x_1 \quad + x_3 - x_4 &amp;= 2</mrow>
+                        </md>
+                    </p>
+                </statement>
+                <solution xml:id="solution-TSS-C24" contributor="chrisblack">
+                    <p>The augmented matrix for the given linear system and its row-reduced form are:
+<md><mrow>\begin{bmatrix}
+1 &amp; -2 &amp; 1 &amp; -1 &amp; 2\\
+1 &amp; 1 &amp; 1 &amp; -1 &amp; 2\\
+1 &amp; 0 &amp; 1 &amp; -1 &amp; 2
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+\leading{1} &amp; 0 &amp; 1 &amp; -1 &amp; 2\\
+0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}.</mrow></md>
+Thus, we see that an equivalent system is
+<md><mrow>x_1 &amp;= 2 - x_3 + x_4</mrow><mrow>x_2 &amp;= 0,</mrow></md>
+and the solution set is
+<m>\setparts{\colvector{2 - x_3 + x_4\\ 0 \\ x_3 \\ x_4}}{x_3, x_4 \in\complexes}</m>.  For this system, <m>n = 4</m> and <m>r = 2</m>.  Since it is a consistent system by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>,  <xref ref="theorem-CSRN" acro="CSRN" autoname="yes"/> guarantees an infinite number of solutions.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="C25" xml:id="exercise-TSS-C25">
+                <statement contributor="chrisblack">
+                    <p>
+                        <md>
+                            <mrow>x_1 + 2x_2 + 3x_3 &amp;= 1</mrow>
+                            <mrow>2x_1 - x_2 + x_3 &amp;= 2</mrow>
+                            <mrow>3x_1 + x_2 + x_3 &amp;= 4</mrow>
+                            <mrow>\quad x_2 + 2x_3 &amp;= 6</mrow>
+                        </md>
+                    </p>
+                </statement>
+                <solution xml:id="solution-TSS-C25" contributor="chrisblack">
+                    <p>The augmented matrix for the given linear system and its row-reduced form are:
+<md><mrow>\begin{bmatrix}
+1 &amp; 2 &amp; 3 &amp; 1\\
+2 &amp; -1 &amp; 1 &amp; 2\\
+3 &amp; 1 &amp; 1 &amp; 4\\
+0 &amp; 1 &amp; 2 &amp; 6
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+\leading{1} &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; \leading{1} &amp; 0  &amp; 0\\
+0 &amp; 0 &amp; \leading{1} &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; \leading{1}
+\end{bmatrix}.</mrow></md>
+Since <m>n = 3</m> and <m>r = 4 = n+1</m>,  the last column is a pivot column and <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> guarantees that the system is inconsistent.  Thus, we see that the given system has no solution.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="C26" xml:id="exercise-TSS-C26">
+                <statement contributor="chrisblack">
+                    <p>
+                        <md>
+                            <mrow>x_1 + 2x_2 + 3x_3 &amp;= 1</mrow>
+                            <mrow>2x_1 - x_2 + x_3 &amp;= 2</mrow>
+                            <mrow>3x_1 + x_2 + x_3 &amp;= 4</mrow>
+                            <mrow>\quad 5x_2 + 2x_3 &amp;= 1</mrow>
+                        </md>
+                    </p>
+                </statement>
+                <solution xml:id="solution-TSS-C26" contributor="chrisblack">
+                    <p>The augmented matrix for the given linear system and its row-reduced form are:
+<md><mrow>\begin{bmatrix}
+1 &amp; 2 &amp; 3 &amp; 1\\
+2 &amp; -1 &amp; 1 &amp; 2\\
+3 &amp; 1 &amp; 1 &amp; 4\\
+0 &amp; 5 &amp; 2 &amp; 1
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+\leading{1} &amp; 0 &amp; 0 &amp; 4/3\\
+0 &amp; \leading{1} &amp; 0 &amp; 1/3\\
+0 &amp; 0 &amp; \leading{1} &amp; -1/3\\
+0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}.</mrow></md>
+Since <m>r = n = 3</m> and the system is consistent by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>,  <xref ref="theorem-CSRN" acro="CSRN" autoname="yes"/> guarantees a unique solution, which is
+<md><mrow>x_1 &amp;= 4/3</mrow><mrow>x_2 &amp;= 1/3</mrow><mrow>x_3 &amp;= -1/3.</mrow></md>
+</p>
+                </solution>
+            </exercise>
+            <exercise number="C27" xml:id="exercise-TSS-C27">
+                <statement contributor="chrisblack">
+                    <p>
+                        <md>
+                            <mrow>x_1 + 2x_2 + 3x_3 &amp;= 0</mrow>
+                            <mrow>2x_1 - x_2 + x_3 &amp;= 2</mrow>
+                            <mrow>x_1 - 8x_2 - 7x_3 &amp;= 1</mrow>
+                            <mrow>\quad x_2 + x_3 &amp;= 0</mrow>
+                        </md>
+                    </p>
+                </statement>
+                <solution xml:id="solution-TSS-C27" contributor="chrisblack">
+                    <p>The augmented matrix for the given linear system and its row-reduced form are:
+<md><mrow>\begin{bmatrix}
+1 &amp; 2 &amp; 3 &amp; 0\\
+2 &amp; -1 &amp; 1 &amp; 2\\
+1 &amp; -8 &amp; -7 &amp; 1\\
+0 &amp; 1 &amp; 1 &amp; 0
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+\leading{1} &amp; 0 &amp; 1 &amp; 0\\
+0 &amp; \leading{1} &amp; 1 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; \leading{1}\\
+0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}.</mrow></md>
+For this system, we have <m>n = 3</m> and <m>r = 3</m>.  However, with a pivot column in the last column we see that the original system has no solution by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="C28" xml:id="exercise-TSS-C28">
+                <statement contributor="chrisblack">
+                    <p>
+                        <md>
+                            <mrow>x_1 + 2x_2 + 3x_3 &amp;= 1</mrow>
+                            <mrow>2x_1 - x_2 + x_3 &amp;= 2</mrow>
+                            <mrow>x_1 - 8x_2 - 7x_3 &amp;= 1</mrow>
+                            <mrow>\quad x_2 + x_3 &amp;= 0</mrow>
+                        </md>
+                    </p>
+                </statement>
+                <solution xml:id="solution-TSS-C28" contributor="chrisblack">
+                    <p>The augmented matrix for the given linear system and its row-reduced form are:
+<md><mrow>\begin{bmatrix}
+1 &amp; 2 &amp; 3 &amp; 1\\
+2 &amp; -1 &amp; 1 &amp; 2\\
+1 &amp; -8 &amp; -7 &amp; 1\\
+0 &amp; 1 &amp; 1 &amp; 0
+\end{bmatrix}
+\rref
+\begin{bmatrix}
+\leading{1} &amp; 0 &amp; 1 &amp; 1\\
+0 &amp; \leading{1} &amp; 1 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}.</mrow></md>
+For this system, <m>n = 3</m> and <m>r = 2</m>.
+Since it is a consistent system by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>,  <xref ref="theorem-CSRN" acro="CSRN" autoname="yes"/> guarantees an infinite number of solutions.  An equivalent system is
+<md><mrow>x_1 &amp;= 1 - x_3</mrow><mrow>x_2 &amp;= -x_3,</mrow></md>
+where <m>x_3</m> is any scalar.  So we can express the solution set as
+<md><mrow>\setparts{\colvector{1 - x_3\\ -x_3\\x_3}}{x_3\in\complexes}</mrow></md>
+</p>
+                </solution>
+            </exercise>
+        </exercisegroup>
+        <exercise number="M45" xml:id="exercise-TSS-M45">
+            <statement>
+                <p>The details for Archetype<nbsp/><xref ref="archetype-J" acro="J" autoname="no"/> include several sample solutions.  Verify that one of these solutions is correct (any one, but just one).  Based <em>only</em> on this evidence, and especially without doing any row operations, explain how you know this system of linear equations has infinitely many solutions.
+</p>
+            </statement>
+            <solution xml:id="solution-TSS-M45">
+                <p>Demonstrate that the system is consistent by verifying any one of the four sample solutions provided.  Then because <m>n=9&gt;6=m</m>, <xref ref="theorem-CMVEI" acro="CMVEI" autoname="yes"/> gives us the conclusion that the system has infinitely many solutions.  Notice that we only know the system will have <em>at least</em> <m>9-6=3</m> free variables, but very well could have more.  We do not know know that <m>r=6</m>, only that <m>r\leq 6</m>.
+</p>
+            </solution>
+        </exercise>
+        <exercise number="M46" xml:id="exercise-TSS-M46">
+            <statement contributor="manleyperkel">
+                <p>Consider Archetype<nbsp/><xref ref="archetype-J" acro="J" autoname="no"/>, and specifically the row-reduced version of the augmented matrix of the system of equations, denoted as <m>B</m> here, and the values of <m>r</m>, <m>D</m> and <m>F</m> immediately following.  Determine the values of the entries
+<md><mrow>\matrixentry{B}{1,d_1}&amp;
+&amp;
+\matrixentry{B}{3,d_3}&amp;
+&amp;
+\matrixentry{B}{1,d_3}&amp;
+&amp;
+\matrixentry{B}{3,d_1}&amp;
+&amp;
+\matrixentry{B}{d_1,1}&amp;
+&amp;
+\matrixentry{B}{d_3,3}&amp;
+&amp;
+\matrixentry{B}{d_1,3}&amp;
+&amp;
+\matrixentry{B}{d_3,1}&amp;
+&amp;
+\matrixentry{B}{1,f_1}&amp;
+&amp;
+\matrixentry{B}{3,f_1}&amp;</mrow></md>
+(See <xref ref="exercise-TSS-M70" acro="TSS.M70" autoname="yes"/> for a generalization.)
+</p>
+            </statement>
+        </exercise>
+        <exercisegroup>
+            <introduction>
+                <p>For Exercises M51<ndash/>M57  say <b>as much as possible</b> about each system's solution set.  Be sure to make it clear which theorems you are using to reach your conclusions.</p>
+            </introduction>
+            <exercise number="M51" xml:id="exercise-TSS-M51">
+                <statement>
+                    <p>A consistent system of 8 equations in 6 variables.
+</p>
+                </statement>
+                <solution xml:id="solution-TSS-M51">
+                    <p>Consistent means there is at least one solution (<xref ref="definition-CS" acro="CS" autoname="yes"/>).  It will have either a unique solution or infinitely many solutions (<xref ref="theorem-PSSLS" acro="PSSLS" autoname="yes"/>).
+</p>
+                </solution>
+            </exercise>
+            <exercise number="M52" xml:id="exercise-TSS-M52">
+                <statement>
+                    <p>A consistent system of 6 equations in 8 variables.
+</p>
+                </statement>
+                <solution xml:id="solution-TSS-M52">
+                    <p>With 6 rows in the augmented matrix, the row-reduced version will have <m>r\leq 6</m>.  Since the system is consistent, apply <xref ref="theorem-CSRN" acro="CSRN" autoname="yes"/> to see that <m>n-r\geq 2</m> implies infinitely many solutions.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="M53" xml:id="exercise-TSS-M53">
+                <statement>
+                    <p>A system of 5 equations in 9 variables.
+</p>
+                </statement>
+                <solution xml:id="solution-TSS-M53">
+                    <p>The system could be inconsistent.  If it is consistent, then because it has more variables than equations <xref ref="theorem-CMVEI" acro="CMVEI" autoname="yes"/> implies that there would be infinitely many solutions.  So, of all the possibilities in <xref ref="theorem-PSSLS" acro="PSSLS" autoname="yes"/>, only the case of a unique solution can be ruled out.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="M54" xml:id="exercise-TSS-M54">
+                <statement>
+                    <p>A system with 12 equations in 35 variables.
+</p>
+                </statement>
+                <solution xml:id="solution-TSS-M54">
+                    <p>The system could be inconsistent.  If it is consistent, then <xref ref="theorem-CMVEI" acro="CMVEI" autoname="yes"/> tells us the solution set will be infinite.  So we can be certain that there is not a unique solution.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="M56" xml:id="exercise-TSS-M56">
+                <statement>
+                    <p>A system with 6 equations in 12 variables.
+</p>
+                </statement>
+                <solution xml:id="solution-TSS-M56">
+                    <p>The system could be inconsistent.  If it is consistent, and since <m>12&gt;6</m>, then <xref ref="theorem-CMVEI" acro="CMVEI" autoname="yes"/> says we will have infinitely many solutions.  So there are two possibilities.  <xref ref="theorem-PSSLS" acro="PSSLS" autoname="yes"/> allows to state equivalently that a unique solution is an impossibility.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="M57" xml:id="exercise-TSS-M57">
+                <statement>
+                    <p>A system with 8 equations and 6 variables.  The reduced row-echelon form of the augmented matrix of the system has 7 pivot columns.
+</p>
+                </statement>
+                <solution xml:id="solution-TSS-M57">
+                    <p>7 pivot columns implies that there are <m>r=7</m> nonzero rows (so row 8 is all zeros in the reduced row-echelon form).  The last column must be a pivot column and <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> allows to conclude that the system is inconsistent.
+</p>
+                </solution>
+            </exercise>
+        </exercisegroup>
+        <exercise number="M60" xml:id="exercise-TSS-M60">
+            <statement>
+                <p>Without doing any computations, and without examining any solutions, say as much as possible about the form of the solution set for each archetype that is a system of equations.</p>
+                <p>
+Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-C" acro="C" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-F" acro="F" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-G" acro="G" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-H" acro="H" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-I" acro="I" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-J" acro="J" autoname="no"/>
+</p>
+            </statement>
+        </exercise>
+        <exercise number="M70" xml:id="exercise-TSS-M70">
+            <statement contributor="manleyperkel">
+                <p>Suppose that <m>B</m> is a matrix in reduced row-echelon form that is equivalent to the augmented matrix of a system of equations with <m>m</m> equations in <m>n</m> variables.  Let <m>r</m>, <m>D</m> and <m>F</m> be as defined in <xref ref="definition-RREF" acro="RREF" autoname="yes"/>. What can you conclude, in general, about the following entries?
+<md><mrow>\matrixentry{B}{1,d_1}&amp;
+&amp;
+\matrixentry{B}{3,d_3}&amp;
+&amp;
+\matrixentry{B}{1,d_3}&amp;
+&amp;
+\matrixentry{B}{3,d_1}&amp;
+&amp;
+\matrixentry{B}{d_1,1}&amp;
+&amp;
+\matrixentry{B}{d_3,3}&amp;
+&amp;
+\matrixentry{B}{d_1,3}&amp;
+&amp;
+\matrixentry{B}{d_3,1}&amp;
+&amp;
+\matrixentry{B}{1,f_1}&amp;
+&amp;
+\matrixentry{B}{3,f_1}&amp;</mrow></md>
+If you cannot conclude anything about an entry, then say so.  (See <xref ref="exercise-TSS-M46" acro="TSS.M46" autoname="yes"/>.)
+</p>
+            </statement>
+        </exercise>
+        <exercise number="T10" xml:id="exercise-TSS-T10">
+            <statement>
+                <p>An inconsistent system may have <m>r&gt;n</m>.  If we try (incorrectly!) to apply <xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/> to such a system, how many free variables would we discover?
+</p>
+            </statement>
+            <solution xml:id="solution-TSS-T10">
+                <p><xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/> will indicate a negative number of free variables, but we can say even more.  If <m>r&gt;n</m>, then the only possibility is that <m>r=n+1</m>, and then we compute <m>n-r=n-(n+1)=-1</m> free variables.
+</p>
+            </solution>
+        </exercise>
+        <exercise number="T11" xml:id="exercise-TSS-T11">
+            <statement>
+                <p>Suppose <m>A</m> is the augmented matrix of a system of linear equations in <m>n</m> variables.  and that <m>B</m> is a row-equivalent matrix in reduced row-echelon form with <m>r</m> pivot columns.  If <m>r=n+1</m>, prove that the system of equations is inconsistent.
+</p>
+            </statement>
+            <solution xml:id="solution-TSS-T11">
+                <p>If  <m>r=n+1</m>, then <m>D=\set{1,\,2,\,3,\,\ldots,\,n,\,n+1}</m> and every column of <m>B</m> is a pivot column.  In particular, column <m>n+1</m> is a pivot column.  By <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> the system is inconsistent.
+</p>
+            </solution>
+        </exercise>
+        <exercise number="T20" xml:id="exercise-TSS-T20">
+            <statement contributor="manleyperkel">
+                <p>Suppose that <m>B</m> is a matrix in reduced row-echelon form that is equivalent to the augmented matrix of a system of equations with <m>m</m> equations in <m>n</m> variables.  Let <m>r</m>, <m>D</m> and <m>F</m> be as defined in <xref ref="definition-RREF" acro="RREF" autoname="yes"/>.  Prove that <m>d_k\geq k</m> for all <m>1\leq k\leq r</m>.  Then suppose that <m>r\geq 2</m> and <m>1\leq k\lt\ell\leq r</m> and determine what can you conclude, in general, about the following entries.
+<md><mrow>\matrixentry{B}{k,d_k}&amp;
+&amp;
+\matrixentry{B}{k,d_\ell}&amp;
+&amp;
+\matrixentry{B}{\ell,d_k}&amp;
+&amp;
+\matrixentry{B}{d_k,k}&amp;
+&amp;
+\matrixentry{B}{d_k,\ell}&amp;
+&amp;
+\matrixentry{B}{d_\ell,k}&amp;
+&amp;
+\matrixentry{B}{d_k,f_\ell}&amp;
+&amp;
+\matrixentry{B}{d_\ell,f_k}&amp;</mrow></md>
+If you cannot conclude anything about an entry, then say so.  (See <xref ref="exercise-TSS-M46" acro="TSS.M46" autoname="yes"/> and <xref ref="exercise-TSS-M70" acro="TSS.M70" autoname="yes"/>.)
+</p>
+            </statement>
+        </exercise>
+        <exercise number="T40" xml:id="exercise-TSS-T40">
+            <statement>
+                <p>Suppose that the coefficient matrix of a consistent system of linear equations has two columns that are identical.  Prove that the system has infinitely many solutions.
+</p>
+            </statement>
+            <solution xml:id="solution-TSS-T40">
+                <p>Since the system is consistent, we know there is either a unique solution, or infinitely many solutions (<xref ref="theorem-PSSLS" acro="PSSLS" autoname="yes"/>).  If we perform row operations (<xref ref="definition-RO" acro="RO" autoname="yes"/>) on the augmented matrix of the system, the two equal columns of the coefficient matrix will suffer the same fate, and remain equal in the final reduced row-echelon form.  Suppose both of these columns are pivot columns (<xref ref="definition-RREF" acro="RREF" autoname="yes"/>).  Then there is single row containing the two leading 1's of the two pivot columns, a violation of reduced row-echelon form (<xref ref="definition-RREF" acro="RREF" autoname="yes"/>).  So at least one of these columns is not a pivot column, and the column index indicates a free variable in the description of the solution set (<xref ref="definition-IDV" acro="IDV" autoname="yes"/>).  With a free variable, we arrive at an infinite solution set (<xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/>).
+</p>
+            </solution>
+        </exercise>
+        <exercise number="T41" xml:id="exercise-TSS-T41">
+            <statement>
+                <p>Consider the system of linear equations <m>\linearsystem{A}{\vect{b}}</m>, and suppose that every element of the vector of constants <m>\vect{b}</m> is a common multiple of the corresponding element of a certain column of <m>A</m>.  More precisely, there is a complex number <m>\alpha</m>, and a column index <m>j</m>, such that <m>\vectorentry{\vect{b}}{i}=\alpha\matrixentry{A}{ij}</m> for all <m>i</m>.  Prove that the system is consistent.
+</p>
+            </statement>
+            <solution xml:id="solution-TSS-T41">
+                <p>The condition about the multiple of the column of constants will allow you to show that the following values form a solution of the system <m>\linearsystem{A}{\vect{b}}</m>,
+<md><mrow>x_1&amp;=0
+&amp;
+x_2&amp;=0
+&amp;
+&amp;\ldots
+&amp;
+x_{j-1}&amp;=0
+&amp;
+x_j&amp;=\alpha
+&amp;
+x_{j+1}&amp;=0
+&amp;
+&amp;\ldots
+&amp;
+x_{n-1}&amp;=0
+&amp;
+x_n&amp;=0
+&amp;</mrow></md>
+With one solution of the system known, we can say the system is consistent (<xref ref="definition-CS" acro="CS" autoname="yes"/>).</p>
+                <p>
+A more involved proof can be built using <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>.  Begin by proving that each of the three row operations (<xref ref="definition-RO" acro="RO" autoname="yes"/>) will convert the augmented matrix of the system into another matrix where column <m>j</m> is <m>\alpha</m> times the entry of the same row in the last column.  In other words, the <q>column multiple property</q> is preserved under row operations.  These proofs will get successively more involved as you work through the three operations.</p>
+                <p>
+Now construct a proof by contradiction (Proof Technique<nbsp/><xref ref="technique-CD" acro="CD" autoname="no"/>), by supposing that the system is inconsistent.  Then the last column of the reduced row-echelon form of the augmented matrix is a pivot column (<xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>).  Then column <m>j</m> must have a zero in the same row as the leading 1 of the final column.  But the <q>column multiple property</q> implies that there is an <m>\alpha</m> in column <m>j</m> in the same row as the leading <m>1</m>.  So <m>\alpha = 0</m>.  By hypothesis, then the vector of constants is the zero vector.  However, if we began with a final column of zeros, row operations would never have created a leading 1 in the final column.  This contradicts the final column being a pivot column, and therefore the system cannot be inconsistent.
+</p>
+            </solution>
+        </exercise>
+    </exercises>
+</section>
