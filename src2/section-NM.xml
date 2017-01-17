@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="section-NM" acro="NM">
+    <title>Nonsingular Matrices</title>
+    <!-- %%%%%%%%%% -->
+    <!-- % -->
+    <!-- %  Section NM -->
+    <!-- %  Nonsingular Matrices -->
+    <!-- % -->
+    <!-- %%%%%%%%%% -->
+    <introduction>
+        <p>In this section we specialize further and consider matrices with equal numbers of rows and columns, which when considered as coefficient matrices lead to systems with equal numbers of equations and variables.  We will see in the second half of the course (<xref ref="chapter-D" acro="D" autoname="yes"/>, <xref ref="chapter-E" acro="E" autoname="yes"/>, <xref ref="chapter-LT" acro="LT" autoname="yes"/>, <xref ref="chapter-R" acro="R" autoname="yes"/>) that these matrices are especially important.</p>
+    </introduction>
+    <subsection xml:id="subsection-NM-NM" acro="NM">
+        <title>Nonsingular Matrices</title>
+        <p>Our theorems will now establish connections between systems of equations (homogeneous or otherwise), augmented matrices representing those systems, coefficient matrices, constant vectors, the reduced row-echelon form of matrices (augmented and coefficient) and solution sets.  Be very careful in your reading, writing and speaking about systems of equations, matrices and sets of vectors.  A system of equations is not a matrix, a matrix is not a solution set, and a solution set is not a system of equations.  Now would be a great time to review the discussion about speaking and writing mathematics in Proof Technique<nbsp/><xref ref="technique-L" acro="L" autoname="no"/>.</p>
+        <definition xml:id="definition-SQM" acro="SQM">
+            <title>Square Matrix</title>
+            <index>
+                <main>matrix</main>
+                <sub>square</sub>
+            </index>
+            <statement>
+                <p>A matrix with <m>m</m> rows and <m>n</m> columns is <term>square</term> if <m>m=n</m>.  In this case, we say the matrix has <term>size</term> <m>n</m>.  To emphasize the situation when a matrix is not square, we will call it <term>rectangular</term>.</p>
+            </statement>
+        </definition>
+        <p>We can now present one of the central definitions of linear algebra.</p>
+        <definition xml:id="definition-NM" acro="NM">
+            <title>Nonsingular Matrix</title>
+            <index>
+                <main>matrix</main>
+                <sub>nonsingular</sub>
+            </index>
+            <statement>
+                <p>Suppose <m>A</m> is a square matrix.  Suppose further that the solution set to the homogeneous linear system of equations <m>\linearsystem{A}{\zerovector}</m> is <m>\set{\zerovector}</m>, in other words, the system has <em>only</em> the trivial solution.  Then we say that <m>A</m> is a <term>nonsingular</term> matrix.  Otherwise we say <m>A</m> is a <term>singular</term> matrix.</p>
+            </statement>
+        </definition>
+        <p>We can investigate whether any square matrix is nonsingular or not, no matter if the matrix is derived somehow from a system of equations or if it is simply a matrix.  The definition says that to perform this investigation we must construct a very specific system of equations (homogeneous, with the matrix as the coefficient matrix) and look at its solution set.  We will have theorems in this section that connect nonsingular matrices with systems of equations, creating more opportunities for confusion.  Convince yourself now of two observations, (1) we can decide nonsingularity for any square matrix, and (2) the determination of nonsingularity involves the solution set for a certain homogeneous system of equations.</p>
+        <p>Notice that it makes no sense to call a system of equations nonsingular (the term does not apply to a system of equations), nor does it make any sense to call a <m>5\times 7</m> matrix singular (the matrix is not square).</p>
+        <example xml:id="example-S" acro="S">
+            <index>
+                <main>singular matrix</main>
+                <sub>Archetype A</sub>
+            </index>
+            <title>A singular matrix, Archetype A</title>
+            <index>
+                <main>Archetype A</main>
+                <sub>singular matrix</sub>
+            </index>
+            <p><xref ref="example-HISAA" acro="HISAA" autoname="yes"/> shows that the coefficient matrix derived from Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/>, specifically the <m>3\times 3</m> matrix,
+<me>A=<!-- Archetype A, Part purematrix -->\begin{bmatrix}
+1 &amp; -1 &amp; 2\\
+2 &amp; 1 &amp; 1\\
+1 &amp; 1 &amp; 0
+\end{bmatrix}
+</me>
+is a singular matrix since there are nontrivial solutions to the homogeneous system <m>\homosystem{A}</m>.
+</p>
+        </example>
+        <example xml:id="example-NM" acro="NM">
+            <index>
+                <main>nonsingular matrix</main>
+                <sub>Archetype B</sub>
+            </index>
+            <title>A nonsingular matrix, Archetype B</title>
+            <index>
+                <main>Archetype B</main>
+                <sub>nonsingular matrix</sub>
+            </index>
+            <p><xref ref="example-HUSAB" acro="HUSAB" autoname="yes"/> shows that the coefficient matrix derived from Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/>, specifically the <m>3\times 3</m> matrix,
+<me>B=<!-- Archetype B, Part purematrix -->\begin{bmatrix}
+-7&amp;-6&amp;-12\\
+ 5&amp;5&amp;7\\
+ 1&amp;0&amp;4
+\end{bmatrix}
+</me>
+is a nonsingular matrix since the homogeneous system, <m>\homosystem{B}</m>, has only the trivial solution.
+</p>
+        </example>
+        <p>Notice that we will not discuss <xref ref="example-HISAD" acro="HISAD" autoname="yes"/> as being a  singular or nonsingular coefficient matrix since the matrix is not square.</p>
+        <computation xml:id="sage-NM" acro="NM">
+            <title>Nonsingular Matrix</title>
+            <index>
+                <main>nonsingular matrix</main>
+            </index>
+            <p>Being nonsingular is an important matrix property, and in such cases Sage contains commands that quickly and easily determine if the mathematical object does, or does not, have the property.  The names of these types of methods universally begin with <c>.is_</c>, and these might be referred to as <q>predicates</q> or <q>queries.</q>.  In the Sage notebook, define a simple matrix <c>A</c>, and then in a cell type <c>A.is_</c>, followed by pressing the tab key rather than evaluating the cell.  You will get a list of numerous properties that you can investigate for the matrix <c>A</c>.  (This will not work as advertised with the Sage cell server.)</p>
+            <p>The other convention is to name these properties in a positive way, so the relevant command for nonsingular matrices is <c>.is_singular()</c>.  We will redo <xref ref="example-S" acro="S" autoname="yes"/> and <xref ref="example-NM" acro="NM" autoname="yes"/>.  Note the use of <c>not</c> in the last compute cell.</p>
+            <sage xml:id="sagecell-NM-1">
+                <input>
+A = matrix(QQ, [[1, -1, 2],
+                [2,  1, 1],
+                [1,  1, 0]])
+A.is_singular()
+</input>
+                <output>
+True
+</output>
+            </sage>
+            <sage xml:id="sagecell-NM-2">
+                <input>
+B = matrix(QQ, [[-7, -6, -12],
+                [ 5,  5,   7],
+                [ 1,  0,   4]])
+B.is_singular()
+</input>
+                <output>
+False
+</output>
+            </sage>
+            <sage xml:id="sagecell-NM-3">
+                <input>
+not(B.is_singular())
+</input>
+                <output>
+True
+</output>
+            </sage>
+        </computation>
+        <p>The next theorem combines with our main computational technique (row reducing a matrix) to make it easy to recognize a nonsingular matrix.  But first a definition.</p>
+        <definition xml:id="definition-IM" acro="IM">
+            <title>Identity Matrix</title>
+            <index>
+                <main>matrix</main>
+                <sub>identity</sub>
+            </index>
+            <statement>
+                <p>
+                    <subject key="math.la.d.mat.identity"/>
+                </p>
+                <p>The <m>m\times m</m> <term>identity matrix</term>, <m>I_m</m>, is defined by
+<md><mrow>\matrixentry{I_m}{ij}&amp;=
+\begin{cases}
+1 &amp; i=j</mrow><mrow>0 &amp; i\neq j
+\end{cases}
+\quad\quad
+1\leq i,\,j\leq m</mrow></md>
+</p>
+            </statement>
+            <notation xml:id="notation-IM" acro="IM">
+                <index>
+                    <main>identity matrix</main>
+                    <sub>notation</sub>
+                </index>
+                <description>Identity Matrix</description>
+                <usage>
+                    <m>I_m</m>
+                </usage>
+            </notation>
+        </definition>
+        <example xml:id="example-IM" acro="IM">
+            <index>
+                <main>identity matrix</main>
+            </index>
+            <title>An identity matrix</title>
+            <p>The <m>4\times 4</m> identity matrix is
+<me>I_4=
+\begin{bmatrix}
+1&amp;0&amp;0&amp;0\\
+0&amp;1&amp;0&amp;0\\
+0&amp;0&amp;1&amp;0\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}.</me>
+</p>
+        </example>
+        <p>Notice that an identity matrix is square, and in reduced row-echelon form.  Also, every column is a pivot column, and every possible pivot column appears once.</p>
+        <computation xml:id="sage-IM" acro="IM">
+            <title>Identity Matrix</title>
+            <index>
+                <main>identity matrix</main>
+            </index>
+            <p>It is straightforward to create an identity matrix in Sage.  Just specify the number system and the number of rows (which will equal the number of columns, so you do not specify that since it would be redundant).  The number system can be left out, but the result will have entries from the integers (<c>ZZ</c>), which in this course is unlikely to be what you really want.</p>
+            <sage xml:id="sagecell-IM-1">
+                <input>
+id5 = identity_matrix(QQ, 5)
+id5
+</input>
+                <output>
+[1 0 0 0 0]
+[0 1 0 0 0]
+[0 0 1 0 0]
+[0 0 0 1 0]
+[0 0 0 0 1]
+</output>
+            </sage>
+            <sage xml:id="sagecell-IM-2">
+                <input>
+id4 = identity_matrix(4)
+id4.base_ring()
+</input>
+                <output>
+Integer Ring
+</output>
+            </sage>
+            <p>Notice that we do not use the now-familiar dot notation to <em>create</em> an identity matrix.  What would we use the dot notation on anyway?  For these reasons we call the <c>identity_matrix()</c> function a <term>constructor</term>, since it builds something from scratch, in this case a very particular type of matrix.</p>
+            <p>We mentioned above that an identity matrix is in reduced row-echelon form.  What happens if we try to row-reduce a matrix that is already in reduced row-echelon form?  By the uniqueness of the result, there should be no change.  The following code illustrates this.  Notice that <c>=</c> is used to <em>assign</em> an object to a new name, while <c>==</c> is used to <em>test equality</em> of two objects.  I frequently make the mistake of forgetting the second equal sign when I mean to test equality.</p>
+            <sage xml:id="sagecell-IM-3">
+                <input>
+id50 = identity_matrix(QQ, 50)
+id50 == id50.rref()
+</input>
+                <output>
+True
+</output>
+            </sage>
+        </computation>
+        <theorem xml:id="theorem-NMRRI" acro="NMRRI">
+            <index>
+                <main>nonsingular matrix</main>
+                <sub>row-reduced</sub>
+            </index>
+            <title>Nonsingular Matrices Row Reduce to the Identity matrix</title>
+            <statement>
+                <p>Suppose that <m>A</m> is a square matrix and <m>B</m> is a row-equivalent matrix in reduced row-echelon form.  Then <m>A</m> is nonsingular if and only if <m>B</m> is the identity matrix.</p>
+            </statement>
+            <proof>
+                <case direction="backward">
+                    <!-- MBX: move end of case -->
+                </case>
+                <p>  Suppose <m>B</m> is the identity matrix.  When the augmented matrix <m>\augmented{A}{\zerovector}</m> is row-reduced, the result is <m>\augmented{B}{\zerovector}=\augmented{I_n}{\zerovector}</m>.  The number of nonzero rows is equal to the number of variables in the linear system of equations <m>\linearsystem{A}{\zerovector}</m>, so <m>n=r</m> and <xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/> gives <m>n-r=0</m> free variables.  Thus, the homogeneous system <m>\homosystem{A}</m> has just one solution, which must be the trivial solution.  This is exactly the definition of a nonsingular matrix (<xref ref="definition-NM" acro="NM" autoname="yes"/>).</p>
+                <case direction="forward">
+                    <!-- MBX: move end of case -->
+                </case>
+                <p>  If <m>A</m> is nonsingular, then the homogeneous system <m>\linearsystem{A}{\zerovector}</m> has a unique solution, and has no free variables in the description of the solution set.  The homogeneous system is consistent (<xref ref="theorem-HSC" acro="HSC" autoname="yes"/>) so <xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/>  applies and tells us there are <m>n-r</m> free variables.  Thus, <m>n-r=0</m>, and so <m>n=r</m>.  So <m>B</m> has <m>n</m> pivot columns among its total of <m>n</m> columns.  This is enough to force <m>B</m> to be the <m>n\times n</m> identity matrix <m>I_n</m> (see <xref ref="exercise-NM-T12" acro="NM.T12" autoname="yes"/>).</p>
+            </proof>
+        </theorem>
+        <p>Notice that since this theorem is an equivalence it will always allow us to determine if a matrix is either nonsingular or singular.  Here are two examples of this, continuing our study of Archetype A and Archetype B.</p>
+        <example xml:id="example-SRR" acro="SRR">
+            <index>
+                <main>singular matrix, row-reduced</main>
+            </index>
+            <title>Singular matrix, row-reduced</title>
+            <p>We have the coefficient matrix for Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/> and a row-equivalent matrix <m>B</m> in reduced row-echelon form, 
+<me>A=<!-- Archetype A, Part purematrix -->\begin{bmatrix}
+1 &amp; -1 &amp; 2\\
+2 &amp; 1 &amp; 1\\
+1 &amp; 1 &amp; 0
+\end{bmatrix}
+\rref<!-- Archetype A, Part matrixreduced -->\begin{bmatrix}
+\leading{1} &amp; 0 &amp; 1\\
+0 &amp; \leading{1} &amp; -1\\
+0 &amp; 0 &amp; 0
+\end{bmatrix}=B</me>
+</p>
+            <p>Since <m>B</m> is not the <m>3\times 3</m> identity matrix, <xref ref="theorem-NMRRI" acro="NMRRI" autoname="yes"/> tells us that <m>A</m> is a singular matrix.</p>
+        </example>
+        <example xml:id="example-NSR" acro="NSR">
+            <index>
+                <main>nonsingular matrix, row-reduced</main>
+            </index>
+            <title>Nonsingular matrix, row-reduced</title>
+            <p>We have the coefficient matrix for Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/> and a row-equivalent matrix <m>B</m> in reduced row-echelon form, 
+<me>A=<!-- Archetype B, Part purematrix -->\begin{bmatrix}
+-7&amp;-6&amp;-12\\
+ 5&amp;5&amp;7\\
+ 1&amp;0&amp;4
+\end{bmatrix}
+\rref<!-- Archetype B, Part matrixreduced -->\begin{bmatrix}
+ \leading{1} &amp; 0 &amp; 0\\
+ 0 &amp; \leading{1} &amp; 0\\
+ 0 &amp; 0 &amp; \leading{1}
+\end{bmatrix}
+=B</me>
+</p>
+            <p>Since <m>B</m> is the <m>3\times 3</m> identity matrix, <xref ref="theorem-NMRRI" acro="NMRRI" autoname="yes"/> tells us that <m>A</m> is a nonsingular matrix.</p>
+        </example>
+    </subsection>
+    <subsection xml:id="subsection-NM-NSNM" acro="NSNM">
+        <title>Null Space of a Nonsingular Matrix</title>
+        <p>Nonsingular matrices and their null spaces are intimately related, as the next two examples illustrate.</p>
+        <example xml:id="example-NSS" acro="NSS">
+            <index>
+                <main>singular matrix</main>
+                <sub>null space</sub>
+            </index>
+            <title>Null space of a singular matrix</title>
+            <index>
+                <main>null space</main>
+                <sub>singular matrix</sub>
+            </index>
+            <p>Given the singular coefficient matrix from Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/>, the null space is the set of solutions to the homogeneous system of equations <m>\homosystem{A}</m>, which has a solution set and null space constructed in <xref ref="example-HISAA" acro="HISAA" autoname="yes"/> as an infinite set of vectors.
+<!-- Watch blank line -->
+<md><mrow>A&amp;=<!-- Archetype A, Part purematrix -->\begin{bmatrix}
+1 &amp; -1 &amp; 2\\
+2 &amp; 1 &amp; 1\\
+1 &amp; 1 &amp; 0
+\end{bmatrix}
+&amp;\nsp{A}&amp;=\setparts{\colvector{-x_3\\x_3\\x_3}}{x_3\in\complexes}</mrow></md>
+</p>
+        </example>
+        <example xml:id="example-NSNM" acro="NSNM">
+            <index>
+                <main>nonsingular matrix</main>
+                <sub>null space</sub>
+            </index>
+            <title>Null space of a nonsingular matrix</title>
+            <index>
+                <main>null space</main>
+                <sub>nonsingular matrix</sub>
+            </index>
+            <p>Given the nonsingular coefficient matrix from Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/>, the solution set to the homogeneous system <m>\homosystem{A}</m> is constructed in <xref ref="example-HUSAB" acro="HUSAB" autoname="yes"/> and contains only the trivial solution, so the null space of <m>A</m> has only a single element,
+<!-- Watch blank line -->
+<md><mrow>A&amp;=<!-- Archetype B, Part purematrix -->\begin{bmatrix}
+-7&amp;-6&amp;-12\\
+ 5&amp;5&amp;7\\
+ 1&amp;0&amp;4
+\end{bmatrix}
+&amp;\nsp{A}&amp;=\set{\colvector{0\\0\\0}}</mrow></md>
+</p>
+        </example>
+        <p>These two examples illustrate the next theorem, which is another equivalence.</p>
+        <theorem xml:id="theorem-NMTNS" acro="NMTNS">
+            <index>
+                <main>nonsingular matrix</main>
+                <sub>trivial null space</sub>
+            </index>
+            <title>Nonsingular Matrices have Trivial Null Spaces</title>
+            <statement>
+                <p>Suppose that <m>A</m> is a square matrix.  Then <m>A</m> is nonsingular if and only if the null space of <m>A</m> is the set containing only the zero vector, <ie/> <m>\nsp{A}=\set{\zerovector}</m>.</p>
+            </statement>
+            <proof>
+                <p>The null space of a square <em>matrix</em>, <m>A</m>, is equal to the set of solutions to the homogeneous <em>system</em>, <m>\homosystem{A}</m>.  A <em>matrix</em> is nonsingular if and only if the set of solutions to the homogeneous <em>system</em>, <m>\linearsystem{A}{\zerovector}</m>, has only a trivial solution.  These two observations may be chained together to construct the two proofs necessary for each half of this theorem.</p>
+            </proof>
+        </theorem>
+        <p>The next theorem pulls a lot of big ideas together.
+<xref ref="theorem-NMUS" acro="NMUS" autoname="yes"/> tells us that we can learn much about solutions to a system of linear equations with a square coefficient matrix by just examining a similar homogeneous system.</p>
+        <theorem xml:id="theorem-NMUS" acro="NMUS">
+            <index>
+                <main>nonsingular matrix</main>
+                <sub>unique solutions</sub>
+            </index>
+            <title>Nonsingular Matrices and Unique Solutions</title>
+            <statement>
+                <p>Suppose that <m>A</m> is a square matrix.  <m>A</m> is a nonsingular matrix if and only if the system <m>\linearsystem{A}{\vect{b}}</m> has a unique solution for every choice of the constant vector <m>\vect{b}</m>.</p>
+            </statement>
+            <proof>
+                <case direction="backward">
+                    <!-- MBX: move end of case -->
+                </case>
+                <p>  The hypothesis for this half of the proof is that the system <m>\linearsystem{A}{\vect{b}}</m> has a unique solution for <em>every</em> choice of the constant vector <m>\vect{b}</m>.  We will make a very specific choice for <m>\vect{b}</m>:  <m>\vect{b}=\zerovector</m>.  Then we know that the system <m>\linearsystem{A}{\zerovector}</m> has a unique solution.  But this is precisely the definition of what it means for <m>A</m> to be nonsingular (<xref ref="definition-NM" acro="NM" autoname="yes"/>).  That almost seems too easy!  Notice that we have not used the full power of our hypothesis, but there is nothing that says we must use a hypothesis to its fullest.</p>
+                <case direction="forward">
+                    <!-- MBX: move end of case -->
+                </case>
+                <p>  We assume that <m>A</m> is nonsingular of size <m>n\times n</m>, so we know there is a sequence of row operations that will convert <m>A</m> into the identity matrix <m>I_n</m> (<xref ref="theorem-NMRRI" acro="NMRRI" autoname="yes"/>).  Form the augmented matrix <m>A^\prime=\augmented{A}{\vect{b}}</m> and apply this same sequence of row operations to <m>A^\prime</m>.  The result will be the matrix <m>B^\prime=\augmented{I_n}{\vect{c}}</m>, which is in reduced row-echelon form with <m>r=n</m>.  Then the augmented matrix <m>B^\prime</m> represents the (extremely simple) system of equations <m>x_i=\vectorentry{\vect{c}}{i}</m>, <m>1\leq i\leq n</m>.  The vector <m>\vect{c}</m> is clearly a solution, so the system is consistent (<xref ref="definition-CS" acro="CS" autoname="yes"/>).  With a consistent system, we use <xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/> to count free variables.  We find that there are <m>n-r=n-n=0</m> free variables, and so we therefore know that the solution is unique.  (This half of the proof was suggested by Asa Scherer.)</p>
+            </proof>
+        </theorem>
+        <p>This theorem helps to explain part of our interest in nonsingular matrices.  If a matrix is nonsingular, then no matter what vector of constants we pair it with, using the matrix as the  coefficient matrix will <em>always</em> yield a linear system of equations with a solution, and the solution is unique.    To determine if a matrix has this property (nonsingularity) it is enough to just solve one linear system, the homogeneous system with the matrix as coefficient matrix and the zero vector as the vector of constants (or any other vector of constants, see <xref ref="exercise-MM-T10" acro="MM.T10" autoname="yes"/>).</p>
+        <p>Formulating the negation of the second part of this theorem is a good exercise.  A singular matrix has the property that for <em>some</em> value of the vector <m>\vect{b}</m>, the system <m>\linearsystem{A}{\vect{b}}</m> does not have a unique solution (which means that it has no solution or infinitely many solutions).  We will be able to say more about this case later (see the discussion following <xref ref="theorem-PSPHS" acro="PSPHS" autoname="yes"/>).</p>
+        <p>Square matrices that are nonsingular have a long list of interesting properties, which we will start to catalog in the following, recurring, theorem.  Of course, singular matrices will then have all of the opposite properties.  The following theorem is a list of equivalences.</p>
+        <p>We want to understand just what is involved with understanding and proving a theorem that says several conditions are equivalent. So have a look at Proof Technique<nbsp/><xref ref="technique-ME" acro="ME" autoname="no"/> before studying the first in this series of theorems.</p>
+        <theorem xml:id="theorem-NME1" acro="NME1">
+            <index>
+                <main>nonsingular matrix</main>
+                <sub>equivalences</sub>
+            </index>
+            <title>Nonsingular Matrix Equivalences, Round 1</title>
+            <statement>
+                <p>Suppose that <m>A</m> is a square matrix.  The following are equivalent.
+<ol><li><m>A</m> is nonsingular.
+</li><li><m>A</m> row-reduces to the identity matrix.
+</li><li> The null space of <m>A</m> contains only the zero vector, <m>\nsp{A}=\set{\zerovector}</m>.
+</li><li> The linear system <m>\linearsystem{A}{\vect{b}}</m> has a unique solution for every possible choice of <m>\vect{b}</m>.
+</li></ol></p>
+            </statement>
+            <proof>
+                <p>The statement that <m>A</m> is nonsingular is equivalent to each of the subsequent statements by, in turn,
+<xref ref="theorem-NMRRI" acro="NMRRI" autoname="yes"/>,
+<xref ref="theorem-NMTNS" acro="NMTNS" autoname="yes"/> and
+<xref ref="theorem-NMUS" acro="NMUS" autoname="yes"/>.  So the statement of this theorem is just a convenient way to organize all these results.</p>
+            </proof>
+        </theorem>
+        <computation xml:id="sage-NME1" acro="NME1">
+            <title>Nonsingular Matrix Equivalences, Round 1</title>
+            <index>
+                <main>nonsingular matrix equivalences</main>
+            </index>
+            <p>Sage will create random matrices and vectors, sometimes with various properties.  These can be very useful for quick experiments, and they are also useful for <em>illustrating</em> that theorems hold for any object satisfying the hypotheses of the theorem.  But this will never replace a proof.</p>
+            <p>We will illustrate <xref ref="theorem-NME1" acro="NME1" autoname="yes"/> using Sage.  We will use a variant of the <c>random_matrix()</c> constructor that uses the <c>algorithm='unimodular'</c> keyword.  We will have to wait for <xref ref="chapter-D" acro="D" autoname="yes"/> before we can give a full explanation, but for now, understand that this command will <em>always</em> create a square matrix that is nonsingular.  Also realize that there are square nonsingular matrices which will never be the output of this command.  In other words, this command creates elements of just a subset of all possible nonsingular matrices.</p>
+            <p>So we are using random matrices below to illustrate properties predicted by <xref ref="theorem-NME1" acro="NME1" autoname="yes"/>.  Execute the first command to create a random nonsingular matrix, and notice that we only have to mark the output of <c>A</c> as random for our automated testing process.  After a few runs, notice that you can also edit the value of <c>n</c> to create matrices of different sizes.  With a matrix <c>A</c> defined, run the next three cells, which by <xref ref="theorem-NME1" acro="NME1" autoname="yes"/> each always produce <c>True</c> as their output, <em>no matter what value</em> <c>A</c> <em>has</em>, so long as <c>A</c> is nonsingular.  Read the code and try to determine exactly how they correspond to the parts of the theorem (some commentary along these lines follows).</p>
+            <sage xml:id="sagecell-NME1-1">
+                <input>
+n = 6
+A = random_matrix(QQ, n, algorithm='unimodular')
+A               # random
+</input>
+                <output>
+[   1   -4    8   14    8   55]
+[   4  -15   29   50   30  203]
+[  -4   17  -34  -59  -35 -235]
+[  -1    3   -8  -16   -5  -48]
+[  -5   16  -33  -66  -16 -195]
+[   1   -2    2    7   -2   10]
+</output>
+            </sage>
+            <sage xml:id="sagecell-NME1-2">
+                <input>
+A.rref() == identity_matrix(QQ, n)
+</input>
+                <output>
+True
+</output>
+            </sage>
+            <sage xml:id="sagecell-NME1-3">
+                <input>
+nsp = A.right_kernel(basis='pivot')
+nsp.list() == [zero_vector(QQ, n)]
+</input>
+                <output>
+True
+</output>
+            </sage>
+            <sage xml:id="sagecell-NME1-4">
+                <input>
+b = random_vector(QQ, n)
+aug = A.augment(b)
+aug.pivots() == tuple(range(n))
+</input>
+                <output>
+True
+</output>
+            </sage>
+            <p>The only portion of these commands that may be unfamilar is the last one.  The command <c>range(n)</c> is incredibly useful, as it will create a list of the integers from <c>0</c> up to, <em>but not including</em>, <c>n</c>.  (We saw this command briefly in Sage<nbsp/><xref ref="sage-FDV" acro="FDV" autoname="no"/>.)  So, for example, <c>range(3) == [0,1,2]</c> is <c>True</c>.  Pivots are returned as a <q>tuple</q> which is very much like a list, except we cannot change the contents.  We can see the difference by the way the tuple prints with parentheses (<c>(,)</c>) rather than brackets (<c>[,]</c>).  We can convert a list to a tuple with the <c>tuple()</c> command, in order to make the comparison succeed.</p>
+            <p>How do we tell if the reduced row-echelon form of the augmented matrix of a system of equations represents a system with a unique solution?  First, the system must be consistent, which by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> means the last column is not a pivot column.  Then with a consistent system we need to insure there are no free variables.  This happens if and only if the remaining columns are all pivot columns, according to <xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/>, thus the test used in the last compute cell.</p>
+        </computation>
+        <p>Finally, you may have wondered why we refer to a matrix as <em>nonsingular</em> when it creates systems of equations with <em>single</em> solutions (<xref ref="theorem-NMUS" acro="NMUS" autoname="yes"/>)!  I have wondered the same thing.  We will have an opportunity to address this when we get to <xref ref="theorem-SMZD" acro="SMZD" autoname="yes"/>.  Can you wait that long?</p>
+    </subsection>
+    <!--   End  nsm.tex -->
+    <exercises>
+        <title>Reading Questions</title>
+        <exercise>
+            <statement>
+                <p>In your own words state the definition of a nonsingular matrix.
+</p>
+            </statement>
+        </exercise>
+        <exercise>
+            <statement>
+                <p>What is the <em>easiest</em> way to recognize if a square matrix is nonsingular or not?
+</p>
+            </statement>
+        </exercise>
+        <exercise>
+            <statement>
+                <p>Suppose we have a system of equations and its coefficient matrix is nonsingular.  What can you say about the solution set for this system?
+</p>
+            </statement>
+        </exercise>
+    </exercises>
+    <exercises>
+        <title>Exercises</title>
+        <exercisegroup>
+            <introduction>
+                <p>In Exercises C30<ndash/>C33 determine if the matrix is nonsingular or singular.  Give reasons for your answer.</p>
+            </introduction>
+            <exercise number="C30" xml:id="exercise-NM-C30">
+                <statement>
+                    <p>
+                        <me>\begin{bmatrix}
+-3 &amp; 1 &amp; 2 &amp; 8\\
+2 &amp; 0 &amp; 3 &amp; 4\\
+1 &amp; 2 &amp; 7 &amp; -4\\
+5 &amp; -1 &amp; 2 &amp; 0
+\end{bmatrix}</me>
+                    </p>
+                </statement>
+                <solution xml:id="solution-NM-C30">
+                    <p>The matrix row-reduces to
+<me>\begin{bmatrix}
+\leading{1}&amp;  0 &amp;  0 &amp;  0\\
+0 &amp; \leading{1} &amp;  0 &amp;  0\\
+0 &amp;  0 &amp; \leading{1} &amp;  0\\
+0 &amp;  0 &amp;  0 &amp; \leading{1}
+\end{bmatrix}</me>
+which is the <m>4\times 4</m> identity matrix.  By <xref ref="theorem-NMRRI" acro="NMRRI" autoname="yes"/> the original matrix must be nonsingular.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="C31" xml:id="exercise-NM-C31">
+                <statement>
+                    <p>
+                        <me>\begin{bmatrix}
+2 &amp; 3 &amp; 1 &amp; 4\\
+1 &amp; 1 &amp; 1 &amp; 0\\
+-1 &amp; 2 &amp; 3 &amp; 5\\
+1 &amp; 2 &amp; 1 &amp; 3
+\end{bmatrix}</me>
+                    </p>
+                </statement>
+                <solution xml:id="solution-NM-C31">
+                    <p>Row-reducing the matrix yields,
+<me>\begin{bmatrix}
+\leading{1} &amp; 0 &amp; 0 &amp; -2\\
+0 &amp; \leading{1} &amp; 0 &amp; 3\\
+0 &amp; 0 &amp; \leading{1} &amp; -1\\
+0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}</me>
+Since this is not the <m>4\times 4</m> identity matrix, <xref ref="theorem-NMRRI" acro="NMRRI" autoname="yes"/> tells us the matrix is singular.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="C32" xml:id="exercise-NM-C32">
+                <statement>
+                    <p>
+                        <me>\begin{bmatrix}
+9 &amp; 3 &amp; 2 &amp; 4\\
+5 &amp; -6 &amp; 1 &amp; 3\\
+4 &amp; 1 &amp; 3 &amp; -5
+\end{bmatrix}</me>
+                    </p>
+                </statement>
+                <solution xml:id="solution-NM-C32">
+                    <p>The matrix is not square, so neither term is applicable.  See <xref ref="definition-NM" acro="NM" autoname="yes"/>, which is stated for just square matrices.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="C33" xml:id="exercise-NM-C33">
+                <statement>
+                    <p>
+                        <me>\begin{bmatrix}
+ -1 &amp; 2 &amp; 0 &amp; 3 \\
+ 1 &amp; -3 &amp; -2 &amp; 4 \\
+ -2 &amp; 0 &amp; 4 &amp; 3 \\
+ -3 &amp; 1 &amp; -2 &amp; 3
+\end{bmatrix}</me>
+                    </p>
+                </statement>
+                <solution xml:id="solution-NM-C33">
+                    <p><xref ref="theorem-NMRRI" acro="NMRRI" autoname="yes"/> tells us we can answer this question by simply row-reducing the matrix.  Doing this we obtain,
+<me>\begin{bmatrix}
+ \leading{1} &amp; 0 &amp; 0 &amp; 0 \\
+ 0 &amp; \leading{1} &amp; 0 &amp; 0 \\
+ 0 &amp; 0 &amp; \leading{1} &amp; 0 \\
+ 0 &amp; 0 &amp; 0 &amp; \leading{1}
+\end{bmatrix}</me>
+Since the reduced row-echelon form of the matrix is the <m>4\times 4</m> identity matrix <m>I_4</m>, we know that <m>B</m> is nonsingular.
+</p>
+                </solution>
+            </exercise>
+        </exercisegroup>
+        <exercise number="C40" xml:id="exercise-NM-C40">
+            <statement>
+                <p>Each of the archetypes below is a system of equations with a square coefficient matrix, or is itself a square matrix.  Determine if these matrices are nonsingular, or singular.  Comment on the null space of each matrix.</p>
+                <p>
+Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-F" acro="F" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-K" acro="K" autoname="no"/>,
+Archetype<nbsp/><xref ref="archetype-L" acro="L" autoname="no"/>
+</p>
+            </statement>
+        </exercise>
+        <exercise number="C50" xml:id="exercise-NM-C50">
+            <statement>
+                <p>Find the null space of the matrix <m>E</m> below.
+<md><mrow>E&amp;=
+\begin{bmatrix}
+2 &amp; 1 &amp; -1 &amp; -9 \\
+2 &amp; 2 &amp; -6 &amp; -6 \\
+1 &amp; 2 &amp; -8 &amp; 0 \\
+-1 &amp; 2 &amp; -12 &amp; 12
+\end{bmatrix}</mrow></md>
+</p>
+            </statement>
+            <solution xml:id="solution-NM-C50">
+                <p>We form the augmented matrix of the homogeneous system <m>\homosystem{E}</m> and row-reduce the matrix,
+<md><mrow>\begin{bmatrix}
+2 &amp; 1 &amp; -1 &amp; -9 &amp; 0 \\
+2 &amp; 2 &amp; -6 &amp; -6 &amp; 0 \\
+1 &amp; 2 &amp; -8 &amp; 0 &amp; 0 \\
+-1 &amp; 2 &amp; -12 &amp; 12 &amp; 0
+\end{bmatrix}
+&amp;\rref
+\begin{bmatrix}
+\leading{1} &amp; 0 &amp; 2 &amp; -6 &amp; 0 \\
+0 &amp; \leading{1} &amp; -5 &amp; 3 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}</mrow></md>
+We knew ahead of time that this system would be consistent (<xref ref="theorem-HSC" acro="HSC" autoname="yes"/>), but we can now see there are <m>n-r=4-2=2</m> free variables, namely <m>x_3</m> and <m>x_4</m> since <m>F=\set{3,4,5}</m> (<xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/>).  Based on this analysis, we can rearrange the equations associated with each nonzero row of the reduced row-echelon form into an expression for the lone dependent variable as a function of the free variables.  We arrive at the solution set to this homogeneous system, which is the null space of the matrix by <xref ref="definition-NSM" acro="NSM" autoname="yes"/>,
+<md><mrow>\nsp{E}=\setparts{\colvector{-2x_3+6x_4\\5x_3-3x_4\\x_3\\x_4}}{x_3,\,x_4\in\complexes}</mrow></md>
+</p>
+            </solution>
+        </exercise>
+        <exercise number="M30" xml:id="exercise-NM-M30">
+            <statement>
+                <p>Let <m>A</m> be the coefficient matrix of the system of equations below.  Is <m>A</m> nonsingular or singular?  Explain what you could infer about the solution set for the system based only on what you have learned about <m>A</m> being singular or nonsingular.
+<md><mrow>-x_1+5x_2&amp;=-8</mrow><mrow>-2x_1+5x_2+5x_3+2x_4&amp;=9</mrow><mrow>-3x_1-x_2+3x_3+x_4&amp;=3</mrow><mrow>7x_1+6x_2+5x_3+x_4&amp;=30</mrow></md>
+</p>
+            </statement>
+            <solution xml:id="solution-NM-M30">
+                <p>We row-reduce the coefficient matrix of the system of equations,
+<md><mrow>\begin{bmatrix}
+ -1 &amp; 5 &amp; 0 &amp; 0  \\
+ -2 &amp; 5 &amp; 5 &amp; 2  \\
+ -3 &amp; -1 &amp; 3 &amp; 1  \\
+ 7 &amp; 6 &amp; 5 &amp; 1
+\end{bmatrix}
+&amp;\rref
+\begin{bmatrix}
+ \leading{1} &amp; 0 &amp; 0 &amp; 0  \\
+ 0 &amp; \leading{1} &amp; 0 &amp; 0  \\
+ 0 &amp; 0 &amp; \leading{1} &amp; 0  \\
+ 0 &amp; 0 &amp; 0 &amp; \leading{1}
+\end{bmatrix}</mrow></md>
+Since the row-reduced version of the coefficient matrix is the <m>4\times 4</m> identity matrix, <m>I_4</m> (<xref ref="definition-IM" acro="IM" autoname="yes"/> by<xref ref="theorem-NMRRI" acro="NMRRI" autoname="yes"/>, we know the coefficient matrix is nonsingular.  According to <xref ref="theorem-NMUS" acro="NMUS" autoname="yes"/> we know that the system is guaranteed to have a unique solution, based only on the extra information that the coefficient matrix is nonsingular.
+</p>
+            </solution>
+        </exercise>
+        <exercisegroup>
+            <introduction>
+                <p>For Exercises M51<ndash/>M52  say <b>as much as possible</b> about each system's solution set.  Be sure to make it clear which theorems you are using to reach your conclusions.</p>
+            </introduction>
+            <exercise number="M51" xml:id="exercise-NM-M51">
+                <statement>
+                    <p>6 equations in 6 variables, singular coefficient matrix.
+</p>
+                </statement>
+                <solution xml:id="solution-NM-M51">
+                    <p><xref ref="theorem-NMRRI" acro="NMRRI" autoname="yes"/> tells us that the coefficient matrix will not row-reduce to the identity matrix.  So if we were to row-reduce the augmented matrix of this system of equations, we would not get a unique solution.  So by <xref ref="theorem-PSSLS" acro="PSSLS" autoname="yes"/> the remaining possibilities are no solutions, or infinitely many.
+</p>
+                </solution>
+            </exercise>
+            <exercise number="M52" xml:id="exercise-NM-M52">
+                <statement>
+                    <p>A system with a nonsingular coefficient matrix, not homogeneous.
+</p>
+                </statement>
+                <solution xml:id="solution-NM-M52">
+                    <p>Any system with a nonsingular coefficient matrix will have a unique solution by <xref ref="theorem-NMUS" acro="NMUS" autoname="yes"/>.  If the system is not homogeneous, the solution cannot be the zero vector (<xref ref="exercise-HSE-T10" acro="HSE.T10" autoname="yes"/>).
+</p>
+                </solution>
+            </exercise>
+        </exercisegroup>
+        <exercise number="T10" xml:id="exercise-NM-T10">
+            <statement>
+                <p>Suppose that <m>A</m> is a square matrix, and <m>B</m> is a matrix in reduced row-echelon form that is row-equivalent to <m>A</m>.  Prove that if <m>A</m> is singular, then the last row of <m>B</m> is a zero row.
+</p>
+            </statement>
+            <solution xml:id="solution-NM-T10">
+                <p>Let <m>n</m> denote the size of the square matrix <m>A</m>.  By <xref ref="theorem-NMRRI" acro="NMRRI" autoname="yes"/> the hypothesis that <m>A</m> is singular implies that <m>B</m> is not the identity matrix <m>I_n</m>.  If <m>B</m> has <m>n</m> pivot columns, then it would have to be <m>I_n</m>, so <m>B</m> must have fewer than <m>n</m> pivot columns.  But the number of nonzero rows in <m>B</m> (<m>r</m>) is equal to the number of pivot columns as well.  So the <m>n</m> rows of <m>B</m> have fewer than <m>n</m> nonzero rows, and <m>B</m> must contain at least one zero row.  By <xref ref="definition-RREF" acro="RREF" autoname="yes"/>, this row must be at the bottom of <m>B</m>.</p>
+                <p>
+A proof can also be formulated by first forming the contrapositive of the statement (Proof Technique<nbsp/><xref ref="technique-CP" acro="CP" autoname="no"/>) and proving this statement.
+</p>
+            </solution>
+        </exercise>
+        <exercise number="T12" xml:id="exercise-NM-T12">
+            <statement>
+                <p>Using (<xref ref="definition-RREF" acro="RREF" autoname="yes"/>) and  (<xref ref="definition-IM" acro="IM" autoname="yes"/>) carefully, give a proof of the following equivalence:  <m>A</m> is a square matrix in reduced row-echelon form where every column is a pivot column if and only if <m>A</m> is the identity matrix.
+</p>
+            </statement>
+        </exercise>
+        <exercise number="T30" xml:id="exercise-NM-T30">
+            <statement>
+                <p>Suppose that <m>A</m> is a nonsingular matrix and <m>A</m> is row-equivalent to the matrix <m>B</m>.  Prove that <m>B</m> is nonsingular.
+</p>
+            </statement>
+            <solution xml:id="solution-NM-T30">
+                <p>Since <m>A</m> and <m>B</m> are row-equivalent matrices, consideration of the three row operations (<xref ref="definition-RO" acro="RO" autoname="yes"/>) will show that the augmented matrices, <m>\augmented{A}{\zerovector}</m> and <m>\augmented{B}{\zerovector}</m>, are also row-equivalent matrices.  This says that the two homogeneous systems, <m>\homosystem{A}</m> and <m>\homosystem{B}</m> are equivalent systems.  <m>\homosystem{A}</m> has only the zero vector as a solution (<xref ref="definition-NM" acro="NM" autoname="yes"/>), thus <m>\homosystem{B}</m> has only the zero vector as a solution.  Finally, by <xref ref="definition-NM" acro="NM" autoname="yes"/>, we see that <m>B</m> is nonsingular.</p>
+                <p>
+Form a similar theorem replacing <q>nonsingular</q> by <q>singular</q> in both the hypothesis and the conclusion. Prove this new theorem with an approach just like the one above, and/or employ the result about nonsingular matrices in a proof by contradiction.
+</p>
+            </solution>
+        </exercise>
+        <exercise number="T31" xml:id="exercise-NM-T31">
+            <statement>
+                <p>Suppose that <m>A</m> is a square matrix of size <m>n\times n</m> and that we know there is a <em>single</em> vector <m>\vect{b}\in\complex{n}</m> such that the system <m>\linearsystem{A}{\vect{b}}</m> has a unique solution.  Prove that <m>A</m> is a nonsingular matrix.  (Notice that this is very similar to <xref ref="theorem-NMUS" acro="NMUS" autoname="yes"/>, but is not exactly the same.)
+</p>
+            </statement>
+            <solution xml:id="solution-NM-T31">
+                <p>Let <m>B</m> be the reduced row-echelon form of the augmented matrix <m>\augmented{A}{\vect{b}}</m>.   Because the system <m>\linearsystem{A}{\vect{b}}</m> is consistent, we know by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> that the last column of <m>B</m> is not a pivot column.  Suppose now that <m>r&lt;n</m>.  Then by <xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/> the system would have infinitely many solutions.  From this contradiction, we see that <m>r=n</m> and the first <m>n</m> columns of <m>B</m> are each pivot columns.  Then the sequence of row operations that converts <m>\augmented{A}{\vect{b}}</m> to <m>B</m> will also convert <m>A</m> to <m>I_n</m>.  Applying <xref ref="theorem-NMRRI" acro="NMRRI" autoname="yes"/> we conclude that <m>A</m> is nonsingular.
+</p>
+            </solution>
+        </exercise>
+        <exercise number="T90" xml:id="exercise-NM-T90">
+            <statement>
+                <p>Provide an alternative for the second half of the proof of <xref ref="theorem-NMUS" acro="NMUS" autoname="yes"/>, without appealing to properties of the reduced row-echelon form of the coefficient matrix.  In other words, prove that if <m>A</m> is nonsingular, then <m>\linearsystem{A}{\vect{b}}</m> has a unique solution for every choice of the constant vector <m>\vect{b}</m>.  Construct this proof without using <xref ref="theorem-REMEF" acro="REMEF" autoname="yes"/> or <xref ref="theorem-RREFU" acro="RREFU" autoname="yes"/>.
+</p>
+            </statement>
+            <solution xml:id="solution-NM-T90">
+                <p>We assume <m>A</m> is nonsingular, and try to solve the system <m>\linearsystem{A}{\vect{b}}</m> without making any assumptions about <m>\vect{b}</m>.  To do this we will begin by constructing a new homogeneous linear system of equations that looks very much like the original.  Suppose <m>A</m> has size <m>n</m> (why must it be square?) and write the original system as,
+<md><mrow>a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n&amp;=b_1</mrow><mrow>a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n&amp;=b_2</mrow><mrow>a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n&amp;=b_3</mrow><mrow>\vdots&amp;\tag{*}</mrow><mrow>a_{n1}x_1+a_{n2}x_2+a_{n3}x_3+\dots+a_{nn}x_n&amp;=b_n</mrow></md>
+Form the new, homogeneous system in <m>n</m> equations with <m>n+1</m> variables, by adding a new variable <m>y</m>, whose coefficients are the negatives of the constant terms,
+<md><mrow>a_{11}x_1+a_{12}x_2+a_{13}x_3+\dots+a_{1n}x_n-b_1y&amp;=0</mrow><mrow>a_{21}x_1+a_{22}x_2+a_{23}x_3+\dots+a_{2n}x_n-b_2y&amp;=0</mrow><mrow>a_{31}x_1+a_{32}x_2+a_{33}x_3+\dots+a_{3n}x_n-b_3y&amp;=0</mrow><mrow>\vdots&amp;\tag{**}</mrow><mrow>a_{n1}x_1+a_{n2}x_2+a_{n3}x_3+\dots+a_{nn}x_n-b_ny&amp;=0</mrow></md>
+Since this is a homogeneous system with more variables than equations (<m>m=n+1&gt;n</m>), <xref ref="theorem-HMVEI" acro="HMVEI" autoname="yes"/> says that the system has infinitely many solutions.  We will choose one of these solutions, <em>any</em> one of these solutions, so long as it is <em>not</em> the trivial solution.  Write this solution as
+<md><mrow>x_1=c_1&amp;&amp;x_2=c_2&amp;&amp;x_3=c_3&amp;&amp;\ldots&amp;&amp;x_n=c_n&amp;&amp;y=c_{n+1}</mrow></md>
+We know that at least one value of the <m>c_i</m> is nonzero, but we will now show that in particular <m>c_{n+1}\neq 0</m>.  We do this using a proof by contradiction (Proof Technique<nbsp/><xref ref="technique-CD" acro="CD" autoname="no"/>).  So suppose the <m>c_i</m> form a solution as described, and in addition that <m>c_{n+1}=0</m>.  Then we can write the <m>i</m>-th equation of system <m>(**)</m> as,
+<md><mrow>a_{i1}c_1+a_{i2}c_2+a_{i3}c_3+\dots+a_{in}c_n-b_i(0)&amp;=0\\</mrow><intertext>which becomes</intertext><mrow>a_{i1}c_1+a_{i2}c_2+a_{i3}c_3+\dots+a_{in}c_n&amp;=0\\</mrow></md>
+Since this is true for each <m>i</m>, we have that <m>x_1=c_1,\,x_2=c_2,\,x_3=c_3,\ldots,\,x_n=c_n</m> is a solution to the homogeneous system <m>\homosystem{A}</m> formed with a nonsingular coefficient matrix.  This means that the only possible solution is the trivial solution, so <m>c_1=0,\,c_2=0,\,c_3=0,\,\ldots,\,c_n=0</m>.  So, assuming simply that <m>c_{n+1}=0</m>, we conclude that <em>all</em> of the <m>c_i</m> are zero.  But this contradicts our choice of the <m>c_i</m> as not being the trivial solution to the system <m>(**)</m>.  So <m>c_{n+1}\neq 0</m>.</p>
+                <p>
+We now propose and verify a solution to the original system <m>(*)</m>.  Set
+<md><mrow>x_1=\frac{c_1}{c_{n+1}}&amp;&amp;x_2=\frac{c_2}{c_{n+1}}&amp;&amp;x_3=\frac{c_3}{c_{n+1}}&amp;&amp;\ldots&amp;&amp;x_n=\frac{c_n}{c_{n+1}}</mrow></md>
+Notice how it was necessary that we know that <m>c_{n+1}\neq 0</m> for this step to succeed.  Now, evaluate the <m>i</m>-th equation of system <m>(*)</m> with this proposed solution, and recognize in the third line that <m>c_1</m> through <m>c_{n+1}</m>  appear as if they were substituted into the left-hand side of the <m>i</m>-th equation of system <m>(**)</m>,
+<md><mrow>&amp;a_{i1}\frac{c_1}{c_{n+1}}+a_{i2}\frac{c_2}{c_{n+1}}+a_{i3}\frac{c_3}{c_{n+1}}+\dots+a_{in}\frac{c_n}{c_{n+1}}</mrow><mrow>&amp;=\frac{1}{c_{n+1}}\left(a_{i1}c_1+a_{i2}c_2+a_{i3}c_3+\dots+a_{in}c_n\right)</mrow><mrow>&amp;=\frac{1}{c_{n+1}}\left(a_{i1}c_1+a_{i2}c_2+a_{i3}c_3+\dots+a_{in}c_n-b_ic_{n+1}\right)+b_i</mrow><mrow>&amp;=\frac{1}{c_{n+1}}\left(0\right)+b_i</mrow><mrow>&amp;=b_i</mrow></md>
+Since this equation is true for every <m>i</m>, we have found a solution to system <m>(*)</m>.  To finish, we still need to establish that this solution is <em>unique</em>.</p>
+                <p>
+With one solution in hand, we will entertain the possibility of a second solution.  So assume system <m>(*)</m> has two solutions,
+<md><mrow>x_1=d_1&amp;&amp;x_2=d_2&amp;&amp;x_3=d_3&amp;&amp;\ldots&amp;&amp;x_n=d_n</mrow><mrow>x_1=e_1&amp;&amp;x_2=e_2&amp;&amp;x_3=e_3&amp;&amp;\ldots&amp;&amp;x_n=e_n</mrow></md>
+Then,
+<md><mrow>&amp;\left(a_{i1}(d_1-e_1)+a_{i2}(d_2-e_2)+a_{i3}(d_3-e_3)+\dots+a_{in}(d_n-e_n)\right)</mrow><mrow>&amp;=\left(a_{i1}d_1+a_{i2}d_2+a_{i3}d_3+\dots+a_{in}d_n\right)-\left(a_{i1}e_1+a_{i2}e_2+a_{i3}e_3+\dots+a_{in}e_n\right)</mrow><mrow>&amp;=b_i-b_i</mrow><mrow>&amp;=0</mrow></md>
+This is the <m>i</m>-th equation of the homogeneous system <m>\homosystem{A}</m> evaluated with <m>x_j=d_j-e_j</m>, <m>1\leq j\leq n</m>.  Since <m>A</m> is nonsingular, we must conclude that this solution is the trivial solution, and so <m>0=d_j-e_j</m>, <m>1\leq j\leq n</m>.  That is, <m>d_j=e_j</m> for all <m>j</m> and the two solutions are identical, meaning any solution to <m>(*)</m> is unique.</p>
+                <p>
+Notice that the proposed solution (<m>x_i=\frac{c_i}{c_{n+1}}</m>) appeared in this proof with no motivation whatsoever.  This is just fine in a proof.  A proof should <em>convince</em> you that a theorem is <em>true</em>.  It is your job to <em>read</em> the proof and be convinced of every assertion.  Questions like <q>Where did that come from?</q> or <q>How would I think of that?</q> have no bearing on the <em>validity</em> of the proof.
+</p>
+            </solution>
+        </exercise>
+    </exercises>
+</section>
