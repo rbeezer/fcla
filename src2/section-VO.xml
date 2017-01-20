@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="section-VO" acro="VO">
+    <title>Vector Operations</title>
+    <!-- %%%%%%%%%% -->
+    <!-- % -->
+    <!-- %  Section VO -->
+    <!-- %  Vector Operations -->
+    <!-- % -->
+    <!-- %%%%%%%%%% -->
+    <introduction>
+        <p>In this section we define some new operations involving vectors, and collect some basic properties of these operations.  Begin by recalling our definition of a column vector as an ordered list of complex numbers, written vertically (<xref ref="definition-CV" acro="CV" autoname="yes"/>).  The collection of all possible vectors of a fixed size is a commonly used set, so we start with its definition.</p>
+    </introduction>
+    <subsection xml:id="subsection-VO-CV" acro="CV">
+        <title>Column Vectors</title>
+        <definition xml:id="definition-VSCV" acro="VSCV">
+            <title>Vector Space of Column Vectors</title>
+            <index>
+                <main>vector space</main>
+                <sub>column vectors</sub>
+            </index>
+            <statement>
+                <p>The vector space <m>\complex{m}</m> is the set of all column vectors (<xref ref="definition-CV" acro="CV" autoname="yes"/>) of size <m>m</m> with entries from the set of complex numbers, <m>\complexes</m>.</p>
+            </statement>
+            <notation xml:id="notation-VSCV" acro="VSCV">
+                <index>
+                    <main>vector space of column vectors</main>
+                    <sub>notation</sub>
+                </index>
+                <description>Vector Space of Column Vectors</description>
+                <usage>
+                    <m>\complex{m}</m>
+                </usage>
+            </notation>
+        </definition>
+        <p>When a set similar to this is defined using only column vectors where all the entries are from the real numbers, it is written as <m>{\mathbb R}^m</m> and is known as <term>Euclidean <m>m</m>-space</term>.</p>
+        <p>The term <term>vector</term> is used in a variety of different ways.  We have defined it as an ordered list written vertically.  It could simply be an ordered list of numbers, and perhaps written as <m>\left\langle 2,\,3,\,-1,\,6\right\rangle</m>.  Or it could be interpreted as a point in <m>m</m> dimensions, such as <m>\left(3,\,4,\,-2\right)</m> representing a point in three dimensions relative to <m>x</m>, <m>y</m> and <m>z</m> axes.  With an interpretation as a point, we can construct an arrow from the origin to the point which is consistent with the notion that a vector has direction and magnitude.</p>
+        <p>All of these ideas can be shown to be related and equivalent, so keep that in mind as you connect the ideas of this course with ideas from other disciplines.  For now, we will stick with the idea that a vector is just a list of numbers, in some particular order.</p>
+        <computation xml:id="sage-VSCV" acro="VSCV">
+            <title>Vector Spaces of Column Vectors</title>
+            <index>
+                <main>vector spaces</main>
+                <sub>column vectors</sub>
+            </index>
+            <p>It is possible to construct vector spaces several ways in Sage.  For now, we will show you two basic ways.  Remember that while our theory is all developed over the complex numbers, <m>\complexes</m>, it is better to initially illustrate these ideas in Sage using the rationals, <c>QQ</c>.</p>
+            <p>To create a vector space, we use the <c>VectorSpace()</c> constructor, which requires the name of the number system for the entries and the number of entries in each vector.  We can display some information about the vector space, and with tab-completion you can see what functions are available.  We will not do too much with these methods immediately, but instead learn about them as we progress through the theory.</p>
+            <sage xml:id="sagecell-VSCV-1">
+                <input>
+V = VectorSpace(QQ, 8)
+V
+</input>
+                <output>
+Vector space of dimension 8 over Rational Field
+</output>
+            </sage>
+            <p>Notice that the word <q>dimension</q> is used to refer to the number of entries in a vector contained in the vector space, whereas we have used the word <q>degree</q> before.  Try pressing the Tab key while in the next cell to see the range of methods you can use on a vector space.</p>
+            <sage xml:id="sagecell-VSCV-2">
+                <input>
+V.
+</input>
+            </sage>
+            <p>We can easily create <q>random</q> elements of any vector space, much as we did earlier for the kernel of a matrix.  Try executing the next compute cell several times.</p>
+            <sage xml:id="sagecell-VSCV-3">
+                <input>
+w = V.random_element()
+w             # random
+</input>
+                <output>
+(2, -1/9, 0, 2, 2/3, 0, -1/3, 1)
+</output>
+            </sage>
+            <p>Vector spaces are a fundamental objects in Sage and in mathematics, and Sage has a nice compact way to create them, mimicking the notation we use when working on paper.</p>
+            <sage xml:id="sagecell-VSCV-4">
+                <input>
+U = CC^5
+U
+</input>
+                <output>
+Vector space of dimension 5 over
+Complex Field with 53 bits of precision
+</output>
+            </sage>
+            <sage xml:id="sagecell-VSCV-5">
+                <input>
+W = QQ^3
+W
+</input>
+                <output>
+Vector space of dimension 3 over Rational Field
+</output>
+            </sage>
+            <p>Sage can determine if two vector spaces are the same.  Notice that we use two equals sign to test equality, since we use a single equals sign to make assignments.</p>
+            <sage xml:id="sagecell-VSCV-6">
+                <input>
+X = VectorSpace(QQ, 3)
+W = QQ^3
+X == W
+</input>
+                <output>
+True
+</output>
+            </sage>
+        </computation>
+    </subsection>
+    <subsection xml:id="subsection-VO-VEASM" acro="VEASM">
+        <title>Vector Equality, Addition, Scalar Multiplication</title>
+        <p>We start our study of this set by first defining what it means for two vectors to be the same.</p>
+        <definition xml:id="definition-CVE" acro="CVE">
+            <title>Column Vector Equality</title>
+            <index>
+                <main>vector</main>
+                <sub>equality</sub>
+            </index>
+            <statement>
+                <p>Suppose that <m>\vect{u},\,\vect{v}\in\complex{m}</m>.  Then <m>\vect{u}</m> and <m>\vect{v}</m> are <term>equal</term>, written <m>\vect{u}=\vect{v}</m> if
+<md><mrow>\vectorentry{\vect{u}}{i}&amp;=\vectorentry{\vect{v}}{i}
+&amp;&amp;1\leq i\leq m</mrow></md></p>
+            </statement>
+            <notation xml:id="notation-CVE" acro="CVE">
+                <index>
+                    <main>vector</main>
+                    <sub>equality</sub>
+                    <sub>notation</sub>
+                </index>
+                <description>Column Vector Equality</description>
+                <usage>
+                    <m>\vect{u}=\vect{v}</m>
+                </usage>
+            </notation>
+        </definition>
+        <p>Now this may seem like a silly (or even stupid) thing to say so carefully.  Of course two vectors are equal if they are equal for each corresponding entry!  Well, this is not as silly as it appears.  We will see a few occasions later where the obvious definition is <em>not</em> the right one.  And besides, in doing mathematics we need to be very careful about making all the necessary definitions and making them unambiguous.  And we have done that here.</p>
+        <p>Notice now that the symbol <q>=</q> is now doing triple-duty.  We know from our earlier education what it means for two numbers (real or complex) to be equal, and we take this for granted.  In <xref ref="definition-SE" acro="SE" autoname="yes"/> we defined what it meant for two sets to be equal.  Now we have defined what it means for two vectors to be equal, and that definition builds on our definition for when two numbers are equal when we use the condition <m>u_i=v_i</m> for all <m>1\leq i\leq m</m>.  So think carefully about your objects when you see an equal sign and think about just which notion of equality you have encountered.  This will be especially important when you are asked to construct proofs whose conclusion states that two objects are equal.  If you have an electronic copy of the book, such as the PDF version, searching on <q>Definition CVE</q> can be an instructive exercise.  See how often, and where, the definition is employed.</p>
+        <p>OK, let us do an example of vector equality that begins to hint at the utility of this definition.</p>
+        <example xml:id="example-VESE" acro="VESE">
+            <index>
+                <main>system of equations</main>
+                <sub>vector equality</sub>
+            </index>
+            <title>Vector equality for a system of equations</title>
+            <index>
+                <main>Archetype B</main>
+                <sub>vector equality</sub>
+            </index>
+            <p>Consider the system of linear equations in Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/>,
+<!-- Archetype B, Part systemdefn --><systemdefn><md><mrow>-7x_1 -6 x_2 - 12x_3 &amp;=-33</mrow><mrow> 5x_1  + 5x_2 + 7x_3 &amp;=24</mrow><mrow> x_1 +4x_3 &amp;=5</mrow></md></systemdefn>
+</p>
+            <p>Note the use of three equals signs <mdash/> each indicates an equality of numbers (the linear expressions are numbers when we evaluate them with fixed values of the variable quantities).  Now write the vector equality,
+<me>\colvector{-7x_1 -6 x_2 - 12x_3\\ 5x_1  + 5x_2 + 7x_3\\ x_1 +4x_3}
+=
+\colvector{-33\\24\\5}.</me>
+By <xref ref="definition-CVE" acro="CVE" autoname="yes"/>, this <em>single</em> equality (of two column vectors) translates into <em>three</em> simultaneous equalities of numbers that form the system of equations.  So with this new notion of vector equality we can become less reliant on referring to <em>systems</em> of <em>simultaneous</em> equations.  There is more to vector equality than just this, but this is a good example for starters and we will develop it further.</p>
+        </example>
+        <p>We will now define two operations on the set <m>\complex{m}</m>.  By this we mean well-defined procedures that somehow convert vectors into other vectors.  Here are two of the most basic definitions of the entire course.</p>
+        <definition xml:id="definition-CVA" acro="CVA">
+            <title>Column Vector Addition</title>
+            <index>
+                <main>vector</main>
+                <sub>addition</sub>
+            </index>
+            <statement>
+                <p>Suppose that <m>\vect{u},\,\vect{v}\in\complex{m}</m>. The <term>sum</term> of <m>\vect{u}</m> and <m>\vect{v}</m> is the vector <m>\vect{u}+\vect{v}</m> defined by
+<md><mrow>\vectorentry{\vect{u}+\vect{v}}{i}
+&amp;=\vectorentry{\vect{u}}{i}+\vectorentry{\vect{v}}{i}
+&amp;&amp;1\leq i\leq m</mrow></md></p>
+            </statement>
+            <notation xml:id="notation-CVA" acro="CVA">
+                <index>
+                    <main>column vector addition</main>
+                    <sub>notation</sub>
+                </index>
+                <description>Column Vector Addition</description>
+                <usage>
+                    <m>\vect{u}+\vect{v}</m>
+                </usage>
+            </notation>
+        </definition>
+        <p>So vector addition takes two vectors of the same size and combines them (in a natural way!) to create a new vector of the same size.  Notice that this definition is required, even if we agree that this is the obvious, right, natural or correct way to do it.  Notice too that the symbol `+' is being recycled.  We all know how to add <em>numbers</em>, but now we have the same symbol extended to double-duty and we use it to indicate how to add two new objects, vectors.  And this definition of our new meaning is built on our previous meaning of addition via the expressions <m>u_i+v_i</m>.  Think about your objects, especially when doing proofs.  Vector addition is easy, here is an example from <m>\complex{4}</m>.</p>
+        <example xml:id="example-VA" acro="VA">
+            <index>vector addition</index>
+            <title>Addition of two vectors in <m>\complex{4}</m></title>
+            <p>If
+<md><mrow>\vect{u}=\colvector{2\\-3\\4\\2}&amp;&amp;\vect{v}=\colvector{-1\\5\\2\\-7}</mrow></md>
+then
+<me>\vect{u}+\vect{v}=
+\colvector{2\\-3\\4\\2}+\colvector{-1\\5\\2\\-7}=
+\colvector{2+(-1)\\-3+5\\4+2\\2+(-7)}=
+\colvector{1\\2\\6\\-5}</me>
+</p>
+        </example>
+        <p>Our second operation takes two objects of different types, specifically a number and a vector, and combines them to create another vector.  In this context we call a number a <term>scalar</term> in order to emphasize that it is not a vector.</p>
+        <definition xml:id="definition-CVSM" acro="CVSM">
+            <title>Column Vector Scalar Multiplication</title>
+            <index>
+                <main>vector</main>
+                <sub>scalar multiplication</sub>
+            </index>
+            <statement>
+                <p>Suppose <m>\vect{u}\in\complex{m}</m> and <m>\alpha\in\complexes</m>, then the <term>scalar multiple</term> of <m>\vect{u}</m> by <m>\alpha</m> is the vector <m>\alpha\vect{u}</m> defined by
+<md><mrow>\vectorentry{\alpha\vect{u}}{i}
+&amp;=\alpha\vectorentry{\vect{u}}{i}
+&amp;&amp;1\leq i\leq m</mrow></md>
+</p>
+            </statement>
+            <notation xml:id="notation-CVSM" acro="CVSM">
+                <index>
+                    <main>column vector scalar multiplication</main>
+                    <sub>notation</sub>
+                </index>
+                <description>Column Vector Scalar Multiplication</description>
+                <usage>
+                    <m>\alpha\vect{u}</m>
+                </usage>
+            </notation>
+        </definition>
+        <p>Notice that we are doing a kind of multiplication here, but we are <em>defining</em> a new type, perhaps in what appears to be a natural way.  We use juxtaposition (smashing two symbols together side-by-side) to denote this operation rather than using a symbol like we did with vector addition.  So this can be another source of confusion.  When two symbols are next to each other, are we doing regular old multiplication, the kind we have done for years, or are we doing scalar vector multiplication, the operation we just defined?  Think about your objects <mdash/> if the first object is a scalar, and the second is a vector, then it <em>must</em> be that we are doing our new operation, and the <em>result</em> of this operation will be another vector.</p>
+        <p>Notice how consistency in notation can be an aid here.  If we write scalars as lower case Greek letters from the start of the alphabet (such as <m>\alpha</m>, <m>\beta</m>, <ellipsis/>) and write vectors in bold Latin letters from the end of the alphabet (<m>\vect{u}</m>, <m>\vect{v}</m>,  <ellipsis/>), then we have some hints about what type of objects we are working with.  This can be a blessing <em>and</em> a curse, since when we go read another book about linear algebra, or read an application in another discipline (physics, economics,  <ellipsis/>) the types of notation employed may be very different and hence unfamiliar.</p>
+        <p>Again, computationally, vector scalar multiplication is very easy.</p>
+        <example xml:id="example-CVSM" acro="CVSM">
+            <index>vector scalar multiplication</index>
+            <title>Scalar multiplication in <m>\complex{5}</m></title>
+            <p>If
+<me>\vect{u}=\colvector{3\\1\\-2\\4\\-1}</me>
+and <m>\alpha=6</m>, then
+<me>\alpha\vect{u}=
+6\colvector{3\\1\\-2\\4\\-1}=
+\colvector{6(3)\\6(1)\\6(-2)\\6(4)\\6(-1)}=
+\colvector{18\\6\\-12\\24\\-6}.</me>
+</p>
+        </example>
+        <computation xml:id="sage-VO" acro="VO">
+            <title>Vector Operations</title>
+            <index>vector operations</index>
+            <p>Sage can easily perform the two basic operations with vectors, vector addition, <c>+</c>,  and scalar vector multiplication, <c>*</c>.  Notice that Sage is not confused by an ambiguity due to multiple meanings for the symbols <c>+</c> and <c>*</c> <mdash/> for example, Sage knows that <c>3 + 12</c> is different than the vector additions below.</p>
+            <sage xml:id="sagecell-VO-1">
+                <input>
+x = vector(QQ, [1, 2, 3])
+y = vector(QQ, [10, 20, 30])
+5*x
+</input>
+                <output>
+(5, 10, 15)
+</output>
+            </sage>
+            <sage xml:id="sagecell-VO-2">
+                <input>
+x + y
+</input>
+                <output>
+(11, 22, 33)
+</output>
+            </sage>
+            <sage xml:id="sagecell-VO-3">
+                <input>
+3*x + 4*y
+</input>
+                <output>
+(43, 86, 129)
+</output>
+            </sage>
+            <sage xml:id="sagecell-VO-4">
+                <input>
+-y
+</input>
+                <output>
+(-10, -20, -30)
+</output>
+            </sage>
+            <sage xml:id="sagecell-VO-5">
+                <input>
+w = (-4/3)*x - (1/10)*y
+w
+</input>
+                <output>
+(-7/3, -14/3, -7)
+</output>
+            </sage>
+        </computation>
+    </subsection>
+    <subsection xml:id="subsection-VO-VSP" acro="VSP">
+        <title>Vector Space Properties</title>
+        <p>With definitions of vector addition and scalar multiplication we can state, and prove, several properties of each operation, and some properties that involve their interplay.  We now collect ten of them here for later reference.</p>
+        <theorem xml:id="theorem-VSPCV" acro="VSPCV">
+            <index>
+                <main>vector space properties</main>
+                <sub>column vectors</sub>
+            </index>
+            <title>Vector Space Properties of Column Vectors</title>
+            <statement>
+                <p>Suppose that <m>\complex{m}</m> is the set of column vectors of size <m>m</m> (<xref ref="definition-VSCV" acro="VSCV" autoname="yes"/>) with addition and scalar multiplication as defined in <xref ref="definition-CVA" acro="CVA" autoname="yes"/> and <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/>.  Then
+</p>
+                <dl>
+                    <li xml:id="property-ACC" acro="ACC">
+                        <title>ACC Additive Closure, Column Vectors</title>
+                        <index>
+                            <main>additive closure</main>
+                            <sub>column vectors</sub>
+                        </index>
+                        <p>If <m>\vect{u},\,\vect{v}\in\complex{m}</m>, then <m>\vect{u}+\vect{v}\in\complex{m}</m>.</p>
+                    </li>
+                    <li xml:id="property-SCC" acro="SCC">
+                        <title>SCC Scalar Closure, Column Vectors</title>
+                        <index>
+                            <main>scalar closure</main>
+                            <sub>column vectors</sub>
+                        </index>
+                        <p>If <m>\alpha\in\complexes</m> and <m>\vect{u}\in\complex{m}</m>, then <m>\alpha\vect{u}\in\complex{m}</m>.</p>
+                    </li>
+                    <li xml:id="property-CC" acro="CC">
+                        <title>CC Commutativity, Column Vectors</title>
+                        <index>
+                            <main>commutativity</main>
+                            <sub>column vectors</sub>
+                        </index>
+                        <p>If <m>\vect{u},\,\vect{v}\in\complex{m}</m>, then <m>\vect{u}+\vect{v}=\vect{v}+\vect{u}</m>.</p>
+                    </li>
+                    <li xml:id="property-AAC" acro="AAC">
+                        <title>AAC Additive Associativity, Column Vectors</title>
+                        <index>
+                            <main>additive associativity</main>
+                            <sub>column vectors</sub>
+                        </index>
+                        <p>If <m>\vect{u},\,\vect{v},\,\vect{w}\in\complex{m}</m>, then <m>\vect{u}+\left(\vect{v}+\vect{w}\right)=\left(\vect{u}+\vect{v}\right)+\vect{w}</m>.</p>
+                    </li>
+                    <li xml:id="property-ZC" acro="ZC">
+                        <title>ZC Zero Vector, Column Vectors</title>
+                        <index>
+                            <main>zero vector</main>
+                            <sub>column vectors</sub>
+                        </index>
+                        <p>There is a vector, <m>\zerovector</m>, called the <term>zero vector</term>, such that  <m>\vect{u}+\zerovector=\vect{u}</m>  for all <m>\vect{u}\in\complex{m}</m>.</p>
+                    </li>
+                    <li xml:id="property-AIC" acro="AIC">
+                        <title>AIC Additive Inverses, Column Vectors</title>
+                        <index>
+                            <main>additive inverses</main>
+                            <sub>column vectors</sub>
+                        </index>
+                        <p>If  <m>\vect{u}\in\complex{m}</m>, then there exists a vector <m>\vect{-u}\in\complex{m}</m> so that <m>\vect{u}+ (\vect{-u})=\zerovector</m>.</p>
+                    </li>
+                    <li xml:id="property-SMAC" acro="SMAC">
+                        <title>SMAC Scalar Multiplication Associativity, Column Vectors</title>
+                        <index>
+                            <main>scalar multiplication associativity</main>
+                            <sub>column vectors</sub>
+                        </index>
+                        <p>If <m>\alpha,\,\beta\in\complexes</m> and <m>\vect{u}\in\complex{m}</m>, then <m>\alpha(\beta\vect{u})=(\alpha\beta)\vect{u}</m>.</p>
+                    </li>
+                    <li xml:id="property-DVAC" acro="DVAC">
+                        <title>DVAC Distributivity across Vector Addition, Column Vectors</title>
+                        <index>
+                            <main>distributivity, vector addition</main>
+                            <sub>column vectors</sub>
+                        </index>
+                        <p>If <m>\alpha\in\complexes</m> and <m>\vect{u},\,\vect{v}\in\complex{m}</m>, then <m>\alpha(\vect{u}+\vect{v})=\alpha\vect{u}+\alpha\vect{v}</m>.</p>
+                    </li>
+                    <li xml:id="property-DSAC" acro="DSAC">
+                        <title>DSAC Distributivity across Scalar Addition, Column Vectors</title>
+                        <index>
+                            <main>distributivity, scalar addition</main>
+                            <sub>column vectors</sub>
+                        </index>
+                        <p>If <m>\alpha,\,\beta\in\complexes</m> and <m>\vect{u}\in\complex{m}</m>, then<m>(\alpha+\beta)\vect{u}=\alpha\vect{u}+\beta\vect{u}</m>.</p>
+                    </li>
+                    <li xml:id="property-OC" acro="OC">
+                        <title>OC One, Column Vectors</title>
+                        <index>
+                            <main>one</main>
+                            <sub>column vectors</sub>
+                        </index>
+                        <p>If <m>\vect{u}\in\complex{m}</m>, then <m>1\vect{u}=\vect{u}</m>.</p>
+                    </li>
+                </dl>
+                <p>
+
+</p>
+            </statement>
+            <proof>
+                <p>
+While some of these properties seem very obvious, they all require proof.  However, the proofs are not very interesting, and border on tedious. We will prove one version of distributivity very carefully, and you can test your proof-building skills on some of the others.  We need to establish an equality, so we will do so by beginning with one side of the equality, apply various definitions and theorems (listed to the right of each step) to massage the expression from the left into the expression on the right.   Here we go with a proof of <xref ref="property-DSAC" acro="DSAC" autoname="yes"/>.</p>
+                <p>For <m>1\leq i\leq m</m>,
+<md><mrow>\vectorentry{(\alpha+\beta)\vect{u}}{i}
+&amp;=(\alpha+\beta)\vectorentry{\vect{u}}{i}
+&amp;&amp;<xref ref="definition-CVSM" acro="CVSM" autoname="yes"/></mrow><mrow>&amp;=\alpha\vectorentry{\vect{u}}{i}+\beta\vectorentry{\vect{u}}{i}
+&amp;&amp;<xref ref="property-DCN" acro="DCN" autoname="yes"/></mrow><mrow>&amp;=\vectorentry{\alpha\vect{u}}{i}+\vectorentry{\beta\vect{u}}{i}
+&amp;&amp;<xref ref="definition-CVSM" acro="CVSM" autoname="yes"/></mrow><mrow>&amp;=\vectorentry{\alpha\vect{u}+\beta\vect{u}}{i}
+&amp;&amp;<xref ref="definition-CVA" acro="CVA" autoname="yes"/></mrow></md>
+</p>
+                <p>Since the individual components of the vectors <m>(\alpha+\beta)\vect{u}</m> and <m>\alpha\vect{u}+\beta\vect{u}</m> are equal for <em>all</em> <m>i</m>, <m>1\leq i\leq m</m>, <xref ref="definition-CVE" acro="CVE" autoname="yes"/> tells us the vectors are equal.</p>
+            </proof>
+        </theorem>
+        <p>Many of the conclusions of our theorems can be characterized as <q>identities,</q>  especially when we are establishing basic properties of operations such as those in this section.  Most of the properties listed in <xref ref="theorem-VSPCV" acro="VSPCV" autoname="yes"/> are examples.  So some advice about the style we use for proving identities is appropriate right now.  Have a look at Proof Technique<nbsp/><xref ref="technique-PI" acro="PI" autoname="no"/>.</p>
+        <p>Be careful with the notion of the vector <m>\vect{-u}</m>.  This is a vector that we add to <m>\vect{u}</m> so that the result is the particular vector <m>\zerovector</m>.  This is basically a property of vector addition.  It happens that we can compute <m>\vect{-u}</m> using the <em>other</em> operation, scalar multiplication.  We can prove this directly by writing that
+<me>\vectorentry{\vect{-u}}{i}
+=-\vectorentry{\vect{u}}{i}
+=(-1)\vectorentry{\vect{u}}{i}
+=\vectorentry{(-1)\vect{u}}{i}</me>
+We will see later how to derive this property as a <em>consequence</em> of several of the ten properties listed in <xref ref="theorem-VSPCV" acro="VSPCV" autoname="yes"/>.
+</p>
+        <p>Similarly, we will often write something you would immediately recognize as <q>vector subtraction.</q>  This could be placed on a firm theoretical foundation <mdash/> as you can do yourself with <xref ref="exercise-VO-T30" acro="VO.T30" autoname="yes"/>.</p>
+        <p>A final note.  <xref ref="property-AAC" acro="AAC" autoname="yes"/> implies that we do not have to be careful about how we <q>parenthesize</q> the addition of vectors.  In other words, there is nothing to be gained by writing
+<m>\left(\vect{u}+\vect{v}\right)+\left(\vect{w}+\left(\vect{x}+\vect{y}\right)\right)</m>
+rather than
+<m>\vect{u}+\vect{v}+\vect{w}+\vect{x}+\vect{y}</m>, since we get the same result no matter which order we choose to perform the four additions.  So we will not be careful about using parentheses this way.</p>
+        <computation xml:id="sage-ANC" acro="ANC">
+            <title>A Note on Coercion</title>
+            <index>coercion</index>
+            <p>Study the following sequence of commands, while cognizant of the failure to specify a number system for <c>x</c>.</p>
+            <sage xml:id="sagecell-ANC-1">
+                <input>
+x = vector([1, 2, 3])
+u = 3*x
+u
+</input>
+                <output>
+(3, 6, 9)
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-2">
+                <input>
+v = (1/3)*x
+v
+</input>
+                <output>
+(1/3, 2/3, 1)
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-3">
+                <input>
+y = vector(QQ, [4, 5, 6])
+w = 8*y
+w
+</input>
+                <output>
+(32, 40, 48)
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-4">
+                <input>
+z = x + y
+z
+</input>
+                <output>
+(5, 7, 9)
+</output>
+            </sage>
+            <p>None of this should be too much of a surprise, and the results should be what we would have expected.  Though for <c>x</c> we never specified if <c>1, 2, 3</c> are integers, rationals, reals, complexes, or <ellipsis/>?  Let us dig a little deeper and examine the parents of the five vectors involved.</p>
+            <sage xml:id="sagecell-ANC-5">
+                <input>
+x.parent()
+</input>
+                <output>
+Ambient free module of rank 3 over
+the principal ideal domain Integer Ring
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-6">
+                <input>
+u.parent()
+</input>
+                <output>
+Ambient free module of rank 3 over
+the principal ideal domain Integer Ring
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-7">
+                <input>
+v.parent()
+</input>
+                <output>
+Vector space of dimension 3 over Rational Field
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-8">
+                <input>
+y.parent()
+</input>
+                <output>
+Vector space of dimension 3 over Rational Field
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-9">
+                <input>
+w.parent()
+</input>
+                <output>
+Vector space of dimension 3 over Rational Field
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-10">
+                <input>
+z.parent()
+</input>
+                <output>
+Vector space of dimension 3 over Rational Field
+</output>
+            </sage>
+            <p>So <c>x</c> and <c>u</c> belong to something called an <q>ambient free module,</q> whatever that is.  What is important here is that the parent of <c>x</c> uses the integers as its number system.  How about <c>u</c>, <c>v</c>, <c>y</c>, <c>w</c>, <c>z</c>?  All but the first has a parent that uses the rationals for its number system.</p>
+            <p>Three of the final four vectors are examples of a process that Sage calls <q>coercion.</q>  Mathematical elements get converted to a new parent, as necessary, when the conversion is totally unambiguous.  In the examples above:</p>
+            <ul>
+                <li><c>u</c> is the result of scalar multiplication by an integer, so the computation and result can all be accommodated within the integers as the number system.
+</li>
+                <li><c>v</c> involves scalar multiplication by a scalar that is not an integer, and which could be construed as a rational number.  So the result needs to have a parent whose number system is the rationals.
+</li>
+                <li><c>y</c> is created <em>explicitly</em> as a vector whose entries are rational numbers.
+</li>
+                <li> Even though <c>w</c> is created only with products of integers, the fact that <c>y</c> has entries considered as rational numbers, so too does the result.
+</li>
+                <li> The creation of <c>z</c> is the result of adding a vector of integers to a vector of rationals.  This is the best example of coercion <mdash/> Sage promotes <c>x</c> to a vector of rationals and therefore returns a result that is a vector of rationals.  Notice that there is no ambiguity and no argument about how to promote <c>x</c>, and the same would be true for any vector full of integers.
+</li>
+            </ul>
+            <p>The coercion above is automatic, but we can also usually force it to happen without employing an operation.</p>
+            <sage xml:id="sagecell-ANC-11">
+                <input>
+t = vector([10, 20, 30])
+t.parent()
+</input>
+                <output>
+Ambient free module of rank 3 over
+the principal ideal domain Integer Ring
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-12">
+                <input>
+V = QQ^3
+t_rational = V(t)
+t_rational
+</input>
+                <output>
+(10, 20, 30)
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-13">
+                <input>
+t_rational.parent()
+</input>
+                <output>
+Vector space of dimension 3 over Rational Field
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-14">
+                <input>
+W = CC^3
+t_complex = W(t)
+t_complex
+</input>
+                <output>
+(10.0000000000000, 20.0000000000000, 30.0000000000000)
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-15">
+                <input>
+t_complex.parent()
+</input>
+                <output>
+Vector space of dimension 3 over
+Complex Field with 53 bits of precision
+</output>
+            </sage>
+            <p>So the syntax is to use the name of the parent like a function and <em>coerce</em> the element into the new parent.  This can fail if there is no natural way to make the conversion.</p>
+            <sage xml:id="sagecell-ANC-16">
+                <input>
+u = vector(CC, [5*I, 4-I])
+u
+</input>
+                <output>
+(5.00000000000000*I, 4.00000000000000 - 1.00000000000000*I)
+</output>
+            </sage>
+            <sage xml:id="sagecell-ANC-17">
+                <input>
+V = QQ^2
+V(u)
+</input>
+                <output>
+Traceback (most recent call last):
+...
+TypeError: Unable to coerce 5.00000000000000*I
+(&lt;type 'sage.rings.complex_number.ComplexNumber'&gt;) to Rational
+</output>
+            </sage>
+            <p>Coercion is one of the more mysterious aspects of Sage, and the above discussion may not be very clear the first time though.  But if you get an error (like the one above) talking about coercion, you know to come back here and have another read through.  For now, be sure to create all your vectors and matrices over <c>QQ</c> and you should not have any difficulties.</p>
+        </computation>
+    </subsection>
+    <!--   End  vo.tex -->
+    <exercises>
+        <title>Reading Questions</title>
+        <exercise>
+            <statement>
+                <p> Where have you seen vectors used before in other courses?  How were they different?
+</p>
+            </statement>
+        </exercise>
+        <exercise>
+            <statement>
+                <p>In words only, when are two vectors equal?
+</p>
+            </statement>
+        </exercise>
+        <exercise>
+            <statement>
+                <p>Perform the following computation with vector operations
+<me>2\colvector{1\\5\\0} + (-3)\colvector{7\\6\\5}</me>
+</p>
+            </statement>
+        </exercise>
+    </exercises>
+    <exercises>
+        <title>Exercises</title>
+        <exercise number="C10" xml:id="exercise-VO-C10">
+            <statement>
+                <p>Compute
+<me>    4\colvector{2\\-3\\4\\1\\0}+
+(-2)\colvector{1\\2\\-5\\2\\4}+
+      \colvector{-1\\3\\0\\1\\2}</me>
+</p>
+            </statement>
+            <solution xml:id="solution-VO-C10">
+                <p>
+                    <m>\colvector{5\\-13\\26\\1\\-6}</m>
+                </p>
+            </solution>
+        </exercise>
+        <exercise number="C11" xml:id="exercise-VO-C11">
+            <statement contributor="chrisblack">
+                <p>Solve the given vector equation for <m>x</m>, or explain why no solution exists:
+<me>    3\colvector{1\\2\\-1}+
+   4\colvector{2\\0\\x}=
+      \colvector{11\\6\\17}</me>
+</p>
+            </statement>
+            <solution xml:id="solution-VO-C11" contributor="chrisblack">
+                <p>Performing the indicated operations (<xref ref="definition-CVA" acro="CVA" autoname="yes"/>, <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/>), we obtain the vector equations
+<md><mrow>\colvector{11\\6\\17}
+&amp;= 3\colvector{1\\2\\-1} + 4\colvector{2 \\ 0 \\ x}
+= \colvector{11\\6\\ -3 + 4x}</mrow></md>
+Since the entries of the vectors must be equal by <xref ref="definition-CVE" acro="CVE" autoname="yes"/>, we have <m>-3 + 4x = 17</m>, which leads to <m>x = 5</m>.
+</p>
+            </solution>
+        </exercise>
+        <exercise number="C12" xml:id="exercise-VO-C12">
+            <statement contributor="chrisblack">
+                <p>Solve the given vector equation for <m>\alpha</m>, or explain why no solution exists:
+<me>\alpha\colvector{1\\2\\-1}+
+4\colvector{3\\4\\2}
+=
+\colvector{-1\\0\\4}</me>
+</p>
+            </statement>
+            <solution xml:id="solution-VO-C12" contributor="chrisblack">
+                <p>Performing the indicated operations (<xref ref="definition-CVA" acro="CVA" autoname="yes"/>, <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/>), we obtain the vector equations
+<md><mrow>\colvector{\alpha \\ 2\alpha\\ -\alpha} + \colvector{12\\16\\8}
+&amp;=\colvector{\alpha + 12 \\ 2\alpha + 16\\ -\alpha + 8}
+=\colvector{-1\\0\\4}</mrow></md>
+Thus, if a solution <m>\alpha</m> exists, by <xref ref="definition-CVE" acro="CVE" autoname="yes"/> then <m>\alpha</m> must satisfy the three equations:
+<md><mrow>\alpha + 12 &amp;= -1</mrow><mrow>2\alpha + 16 &amp;= 0</mrow><mrow>-\alpha + 8 &amp;= 4</mrow></md>
+which leads to <m>\alpha = -13</m>, <m>\alpha = -8</m> and <m>\alpha = 4</m>.
+Since <m>\alpha</m> cannot simultaneously have three different values, there is no solution to the original vector equation.
+</p>
+            </solution>
+        </exercise>
+        <exercise number="C13" xml:id="exercise-VO-C13">
+            <statement contributor="chrisblack">
+                <p>Solve the given vector equation for <m>\alpha</m>, or explain why no solution exists:
+<me>\alpha\colvector{3\\2\\-2}+
+\colvector{6\\1\\2}
+=
+\colvector{0\\-3\\6}</me>
+</p>
+            </statement>
+            <solution xml:id="solution-VO-C13" contributor="chrisblack">
+                <p>Performing the indicated operations (<xref ref="definition-CVA" acro="CVA" autoname="yes"/>, <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/>), we obtain the vector equations
+<md><mrow>\colvector{3\alpha \\ 2\alpha\\ - 2\alpha} + \colvector{6\\1\\2}
+&amp;= \colvector{3\alpha + 6 \\ 2\alpha + 1\\ -2\alpha + 2}
+ = \colvector{0\\-3\\6}</mrow></md>
+Thus, if a solution <m>\alpha</m> exists, by <xref ref="definition-CVE" acro="CVE" autoname="yes"/> then <m>\alpha</m> must satisfy the three equations:
+<md><mrow>3\alpha + 6 &amp;= 0</mrow><mrow>2\alpha + 1 &amp;= -3</mrow><mrow>-2 \alpha + 2 &amp;= 6</mrow></md>
+which leads to <m>3\alpha = -6</m>, <m>2\alpha = -4</m> and <m>-2\alpha = 4</m>.
+And thus, the solution to the given vector equation is <m>\alpha = -2</m>.
+</p>
+            </solution>
+        </exercise>
+        <exercise number="C14" xml:id="exercise-VO-C14">
+            <statement contributor="chrisblack">
+                <p>Find <m>\alpha</m> and <m>\beta</m> that solve the vector equation.
+<me>\alpha\colvector{1\\0}+
+\beta\colvector{0\\1}
+=
+\colvector{3\\2}</me>
+</p>
+            </statement>
+            <solution xml:id="solution-VO-C14" contributor="chrisblack">
+                <p>Performing the indicated operations (<xref ref="definition-CVA" acro="CVA" autoname="yes"/>, <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/>), we obtain the vector equations
+<md><mrow>\colvector{3\\2}
+&amp;=\alpha\colvector{1\\0} + \beta\colvector{0\\1}
+=\colvector{\alpha + 0 \\ 0 + \beta}
+=\colvector{\alpha\\ \beta}</mrow></md>
+Since the entries of the vectors must be equal by <xref ref="definition-CVE" acro="CVE" autoname="yes"/>, we have <m>\alpha = 3</m> and <m>\beta = 2</m>.
+</p>
+            </solution>
+        </exercise>
+        <exercise number="C15" xml:id="exercise-VO-C15">
+            <statement contributor="chrisblack">
+                <p>Find <m>\alpha</m> and <m>\beta</m> that solve the vector equation.
+<me>\alpha\colvector{2\\1}+
+\beta\colvector{1\\3
+}=
+\colvector{5\\0}</me>
+</p>
+            </statement>
+            <solution xml:id="solution-VO-C15" contributor="chrisblack">
+                <p>Performing the indicated operations (<xref ref="definition-CVA" acro="CVA" autoname="yes"/>, <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/>), we obtain the vector equations
+<md><mrow>\colvector{5\\0}
+&amp;= \alpha\colvector{2\\1} + \beta\colvector{1\\3}
+= \colvector{2\alpha + \beta \\ \alpha + 3\beta}</mrow></md>
+Since the entries of the vectors must be equal by <xref ref="definition-CVE" acro="CVE" autoname="yes"/>, we obtain the system of equations
+<md><mrow>2\alpha + \beta &amp;= 5</mrow><mrow>\alpha + 3\beta &amp;= 0.</mrow></md>
+which we can solve by row-reducing the augmented matrix of the system,
+<md><mrow>\begin{bmatrix}
+2 &amp; 1 &amp; 5\\
+1 &amp; 3 &amp; 0
+\end{bmatrix}
+&amp;\rref
+\begin{bmatrix}
+\leading{1} &amp; 0 &amp; 3\\
+0 &amp; \leading{1} &amp; -1
+\end{bmatrix}</mrow></md>
+Thus, the only solution is <m>\alpha = 3</m>, <m>\beta = -1</m>.
+</p>
+            </solution>
+        </exercise>
+        <exercise number="T05" xml:id="exercise-VO-T05">
+            <statement contributor="chrisblack">
+                <p>Provide reasons (mostly vector space properties) as justification for each of the seven steps of the following proof.</p>
+                <p><b>Theorem</b>
+For any vectors <m>\vect{u},\,\vect{v},\,\vect{w}\in\complex{m}</m>,
+if <m>\vect{u} + \vect{v} = \vect{u} + \vect{w}</m>, then <m>\vect{v} = \vect{w}</m>.</p>
+                <p><b>Proof</b>: Let <m>\vect{u},\,\vect{v},\,\vect{w}\in\complex{m}</m>,
+and suppose <m>\vect{u} + \vect{v} = \vect{u} + \vect{w}</m>.
+<md><mrow>\vect{v}
+&amp;= \zerovector + \vect{v}</mrow><mrow>&amp;= (-\vect{u} + \vect{u}) + \vect{v}</mrow><mrow>&amp;= -\vect{u} + (\vect{u} + \vect{v})</mrow><mrow>&amp;= -\vect{u} + (\vect{u} + \vect{w})</mrow><mrow>&amp;= (-\vect{u} + \vect{u}) + \vect{w}</mrow><mrow>&amp;= \zerovector + \vect{w}</mrow><mrow>&amp;= \vect{w}</mrow></md></p>
+            </statement>
+            <solution xml:id="solution-VO-T05" contributor="chrisblack">
+                <p>
+                    <md>
+                        <mrow>\vect{v}
+&amp;= \zerovector + \vect{v}&amp;&amp;<xref ref="property-ZC" acro="ZC" autoname="yes"/></mrow>
+                        <mrow>&amp;= (-\vect{u} + \vect{u}) + \vect{v}&amp;&amp;<xref ref="property-AIC" acro="AIC" autoname="yes"/></mrow>
+                        <mrow>&amp;= -\vect{u} + (\vect{u} + \vect{v})&amp;&amp;<xref ref="property-AAC" acro="AAC" autoname="yes"/></mrow>
+                        <mrow>&amp;= -\vect{u} + (\vect{u} + \vect{w})&amp;&amp;\text{Hypothesis}</mrow>
+                        <mrow>&amp;= (-\vect{u} + \vect{u}) + \vect{w}&amp;&amp;<xref ref="property-AAC" acro="AAC" autoname="yes"/></mrow>
+                        <mrow>&amp;= \zerovector + \vect{w}&amp;&amp;<xref ref="property-AIC" acro="AIC" autoname="yes"/></mrow>
+                        <mrow>&amp;= \vect{w}&amp;&amp;<xref ref="property-ZC" acro="ZC" autoname="yes"/>\\</mrow>
+                    </md>
+                </p>
+            </solution>
+        </exercise>
+        <exercise number="T06" xml:id="exercise-VO-T06">
+            <statement contributor="chrisblack">
+                <p>Provide reasons (mostly vector space properties) as justification for each of the six steps of the following proof.</p>
+                <p><b>Theorem</b>
+For any vector <m>\vect{u}\in\complex{m}</m>, <m>0\vect{u}=\zerovector.</m></p>
+                <p><b>Proof</b>: Let <m>\vect{u}\in\complex{m}</m>.</p>
+                <p>
+                    <md>
+                        <mrow>\zerovector
+&amp;= 0\vect{u} +(-0\vect{u})</mrow>
+                        <mrow>&amp;= (0+0)\vect{u} + (-0\vect{u})</mrow>
+                        <mrow>&amp;= (0\vect{u}+0\vect{u}) + (-0\vect{u})</mrow>
+                        <mrow>&amp;= 0\vect{u} + (0\vect{u} + (-0\vect{u}))</mrow>
+                        <mrow>&amp;= 0\vect{u} + \zerovector</mrow>
+                        <mrow>&amp;= 0\vect{u}</mrow>
+                    </md>
+                </p>
+            </statement>
+            <solution xml:id="solution-VO-T06" contributor="chrisblack">
+                <p>
+                    <md>
+                        <mrow>\zerovector
+&amp;= 0\vect{u} +(-0\vect{u})&amp;&amp;<xref ref="property-AIC" acro="AIC" autoname="yes"/></mrow>
+                        <mrow>&amp;= (0+0)\vect{u} + (-0\vect{u})&amp;&amp;<xref ref="property-ZCN" acro="ZCN" autoname="yes"/></mrow>
+                        <mrow>&amp;= (0\vect{u}+0\vect{u}) + (-0\vect{u})&amp;&amp;<xref ref="property-DSAC" acro="DSAC" autoname="yes"/></mrow>
+                        <mrow>&amp;= 0\vect{u} + (0\vect{u} + (-0\vect{u}))&amp;&amp;<xref ref="property-AAC" acro="AAC" autoname="yes"/></mrow>
+                        <mrow>&amp;= 0\vect{u} + \zerovector&amp;&amp;<xref ref="property-AIC" acro="AIC" autoname="yes"/></mrow>
+                        <mrow>&amp;= 0\vect{u}&amp;&amp;<xref ref="property-ZC" acro="ZC" autoname="yes"/></mrow>
+                    </md>
+                </p>
+            </solution>
+        </exercise>
+        <exercise number="T07" xml:id="exercise-VO-T07">
+            <statement contributor="chrisblack">
+                <p>Provide reasons (mostly vector space properties) as justification for each of the six steps of the following proof.</p>
+                <p><b>Theorem</b>
+For any scalar <m>c</m>,  <m>c\,\zerovector = \zerovector</m>.</p>
+                <p><b>Proof</b>: Let <m>c</m> be an arbitrary scalar.</p>
+                <p>
+                    <md>
+                        <mrow>\zerovector
+&amp;= c\zerovector + (-c\zerovector)</mrow>
+                        <mrow>&amp;= c(\zerovector + \zerovector) + (-c\zerovector)</mrow>
+                        <mrow>&amp;= (c\zerovector + c\zerovector) + (-c\zerovector)</mrow>
+                        <mrow>&amp;= c\zerovector + (c\zerovector + (-c\zerovector))</mrow>
+                        <mrow>&amp;= c\zerovector + \zerovector</mrow>
+                        <mrow>&amp;= c\zerovector</mrow>
+                    </md>
+                </p>
+            </statement>
+            <solution xml:id="solution-VO-T07" contributor="chrisblack">
+                <p>
+                    <md>
+                        <mrow>\zerovector
+&amp;= c\zerovector + (-c\zerovector)&amp;&amp;<xref ref="property-AIC" acro="AIC" autoname="yes"/></mrow>
+                        <mrow>&amp;= c(\zerovector + \zerovector) + (-c\zerovector)&amp;&amp;<xref ref="property-ZC" acro="ZC" autoname="yes"/></mrow>
+                        <mrow>&amp;= (c\zerovector + c\zerovector) + (-c\zerovector)&amp;&amp;<xref ref="property-DVAC" acro="DVAC" autoname="yes"/></mrow>
+                        <mrow>&amp;= c\zerovector + (c\zerovector + (-c\zerovector))&amp;&amp;<xref ref="property-AAC" acro="AAC" autoname="yes"/></mrow>
+                        <mrow>&amp;= c\zerovector + \zerovector&amp;&amp;<xref ref="property-AIC" acro="AIC" autoname="yes"/></mrow>
+                        <mrow>&amp;= c\zerovector&amp;&amp;<xref ref="property-ZC" acro="ZC" autoname="yes"/></mrow>
+                    </md>
+                </p>
+            </solution>
+        </exercise>
+        <!--                                  % 10 axioms to prove, number consecutively -->
+        <exercise number="T13" xml:id="exercise-VO-T13">
+            <statement>
+                <p>Prove <xref ref="property-CC" acro="CC" autoname="yes"/> of <xref ref="theorem-VSPCV" acro="VSPCV" autoname="yes"/>.  Write your proof in the style of the proof of <xref ref="property-DSAC" acro="DSAC" autoname="yes"/> given in this section.
+</p>
+            </statement>
+            <solution xml:id="solution-VO-T13">
+                <p>For all <m>1\leq i\leq m</m>,
+<md><mrow>\vectorentry{\vect{u}+\vect{v}}{i}
+&amp;=\vectorentry{\vect{u}}{i}+\vectorentry{\vect{v}}{i}
+&amp;&amp;<xref ref="definition-CVA" acro="CVA" autoname="yes"/></mrow><mrow>&amp;=\vectorentry{\vect{v}}{i}+\vectorentry{\vect{u}}{i}
+&amp;&amp;\text{Commutativity in<m>\complexes</m>}</mrow><mrow>&amp;=\vectorentry{\vect{v}+\vect{u}}{i}
+&amp;&amp;<xref ref="definition-CVA" acro="CVA" autoname="yes"/></mrow></md>
+With equality of each component of the vectors <m>\vect{u}+\vect{v}</m> and <m>\vect{v}+\vect{u}</m> being equal <xref ref="definition-CVE" acro="CVE" autoname="yes"/> tells us the two vectors are equal.
+</p>
+            </solution>
+        </exercise>
+        <exercise number="T17" xml:id="exercise-VO-T17">
+            <statement>
+                <p>Prove <xref ref="property-SMAC" acro="SMAC" autoname="yes"/> of <xref ref="theorem-VSPCV" acro="VSPCV" autoname="yes"/>.    Write your proof in the style of the proof of <xref ref="property-DSAC" acro="DSAC" autoname="yes"/> given in this section.
+</p>
+            </statement>
+        </exercise>
+        <exercise number="T18" xml:id="exercise-VO-T18">
+            <statement>
+                <p>Prove <xref ref="property-DVAC" acro="DVAC" autoname="yes"/> of <xref ref="theorem-VSPCV" acro="VSPCV" autoname="yes"/>.    Write your proof in the style of the proof of <xref ref="property-DSAC" acro="DSAC" autoname="yes"/> given in this section.
+</p>
+            </statement>
+        </exercise>
+        <exercisegroup>
+            <introduction>
+                <p>Exercises T30, T31 and T32 are about making a careful definition of <q>vector subtraction</q>.</p>
+            </introduction>
+            <exercise number="T30" xml:id="exercise-VO-T30">
+                <statement>
+                    <p>Suppose <m>\vect{u}</m> and <m>\vect{v}</m> are two vectors in <m>\complex{m}</m>.  Define a new operation, called <q>subtraction,</q> as the new vector denoted <m>\vect{u}-\vect{v}</m> and defined by
+<md><mrow>\vectorentry{\vect{u}-\vect{v}}{i}=\vectorentry{\vect{u}}{i}-\vectorentry{\vect{v}}{i}&amp;&amp;1\leq i\leq m</mrow></md>
+Prove that we can express the subtraction of two vectors in terms of our two basic operations.  More precisely, prove that <m>\vect{u}-\vect{v}=\vect{u}+(-1)\vect{v}</m>.  So in a sense, subtraction is not something new and different, but is just a convenience.  Mimic the style of similar proofs in this section.
+</p>
+                </statement>
+            </exercise>
+            <exercise number="T31" xml:id="exercise-VO-T31">
+                <statement>
+                    <p>Prove, by giving counterexamples, that vector subtraction is  not commutative and not associative.
+</p>
+                </statement>
+            </exercise>
+            <exercise number="T32" xml:id="exercise-VO-T32">
+                <statement>
+                    <p>Prove that vector subtraction obeys a distributive property.  Specifically, prove that <m>\alpha\left(\vect{u}-\vect{v}\right)=\alpha\vect{u}-\alpha\vect{v}</m>.</p>
+                    <p>
+Can you give two different proofs? Distinguish your two proofs by using the alternate descriptions of vector subtraction provided by <xref ref="exercise-VO-T30" acro="VO.T30" autoname="yes"/>.
+</p>
+                </statement>
+            </exercise>
+        </exercisegroup>
+    </exercises>
+</section>
