@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xml:id="section-VO" acro="VO">
+    <title>Vector Operations</title>
     <introduction>
         <p>In this section we define some new operations involving vectors, and collect some basic properties of these operations.  Begin by recalling our definition of a column vector as an ordered list of complex numbers, written vertically (<xref ref="definition-CV" acro="CV" autoname="yes"/>).  The collection of all possible vectors of a fixed size is a commonly used set, so we start with its definition.</p>
     </introduction>
@@ -34,7 +35,7 @@
                 Vector space of dimension 8 over Rational Field
                 </output>
             </sage>
-            <p>Notice that the word <q>dimension</q> is used to refer to the number of entries in a vector contained in the vector space, whereas we have used the word <q>degree</q> before.  Try pressing the Tab key while in the next cell to see the range of methods you can use on a vector space.</p>
+            <p>Notice that the word <q>dimension</q> is used to refer to the number of entries in a vector contained in the vector space, whereas we have used the word <q>degree</q> before.  If the way you use Sage provides tab-completion, then press the <c>TAB</c> key while in the next cell to see the range of methods you can use on a vector space.</p>
             <sage xml:id="sagecell-VSCV-2">
                 <input>
                 V.
@@ -50,7 +51,7 @@
                 (2, -1/9, 0, 2, 2/3, 0, -1/3, 1)
                 </output>
             </sage>
-            <p>Vector spaces are a fundamental objects in Sage and in mathematics, and Sage has a nice compact way to create them, mimicking the notation we use when working on paper.</p>
+            <p>Vector spaces are a fundamental objects in Sage and in mathematics, and Sage has a nice compact way to create them, mimicking the notation we use when working on paper.  While the next example includes teh Sage version of the complex numbers, remember to be sure to do all your calculations with the rationals, <c>QQ</c>.</p>
             <sage xml:id="sagecell-VSCV-4">
                 <input>
                 U = CC^5
@@ -91,8 +92,9 @@
             <index><main>vector</main><sub>equality</sub></index>
             <index><main>vector</main><sub>equality</sub><sub>notation</sub></index>
             <statement>
-                <p>Suppose that <m>\vect{u},\,\vect{v}\in\complex{m}</m>.  Then <m>\vect{u}</m> and <m>\vect{v}</m> are <term>equal</term>, written <m>\vect{u}=\vect{v}</m> if<md>
-                    <mrow>\vectorentry{\vect{u}}{i}&amp;=\vectorentry{\vect{v}}{i}&amp;&amp;1\leq i\leq m</mrow></md></p>
+                <p>Suppose that <m>\vect{u},\,\vect{v}\in\complex{m}</m>.  Then <m>\vect{u}</m> and <m>\vect{v}</m> are <term>equal</term>, written <m>\vect{u}=\vect{v}</m> if <md>
+                    <mrow>\vectorentry{\vect{u}}{i}=\vectorentry{\vect{v}}{i}</mrow>
+                </md>for all <m>1\leq i\leq m</m>.</p>
             </statement>
             <notation xml:id="notation-CVE" acro="CVE">
                 <description>Column Vector Equality</description>
@@ -100,7 +102,7 @@
             </notation>
         </definition>
         <p>Now this may seem like a silly (or even stupid) thing to say so carefully.  Of course two vectors are equal if they are equal for each corresponding entry!  Well, this is not as silly as it appears.  We will see a few occasions later where the obvious definition is <em>not</em> the right one.  And besides, in doing mathematics we need to be very careful about making all the necessary definitions and making them unambiguous.  And we have done that here.</p>
-        <p>Notice now that the symbol <q>=</q> is now doing triple-duty.  We know from our earlier education what it means for two numbers (real or complex) to be equal, and we take this for granted.  In <xref ref="definition-SE" acro="SE" autoname="yes"/> we defined what it meant for two sets to be equal.  Now we have defined what it means for two vectors to be equal, and that definition builds on our definition for when two numbers are equal when we use the condition <m>u_i=v_i</m> for all <m>1\leq i\leq m</m>.  So think carefully about your objects when you see an equal sign and think about just which notion of equality you have encountered.  This will be especially important when you are asked to construct proofs whose conclusion states that two objects are equal.  If you have an electronic copy of the book, such as the PDF version, searching on <q>Definition CVE</q> can be an instructive exercise.  See how often, and where, the definition is employed.</p>
+        <p>Notice now that the symbol <q>=</q> is now doing triple-duty.  We know from our earlier education what it means for two numbers (real or complex) to be equal, and we take this for granted.  In <xref ref="definition-SE" acro="SE" autoname="yes"/> we defined what it meant for two sets to be equal.  Now we have defined what it means for two vectors to be equal, and this new definition builds on our prior definition for when two numbers are equal when we use the condition <m>\vectorentry{\vect{u}}{i}=\vectorentry{\vect{v}}{i}</m> repeatedly, for all <m>1\leq i\leq m</m>.  So think carefully about your objects when you see an equal sign and think about just which notion of equality you have encountered.  This will be especially important when you are asked to construct proofs whose conclusion states that two objects are equal.  If you have an electronic copy of the book, such as the PDF version, searching on <q>Definition CVE</q> can be an instructive exercise.  See how often, and where, the definition is employed.</p>
         <p>OK, let us do an example of vector equality that begins to hint at the utility of this definition.</p>
         <example xml:id="example-VESE" acro="VESE">
             <title>Vector equality for a system of equations</title>
@@ -121,40 +123,38 @@
             <index><main>column vector addition</main><sub>notation</sub></index>
             <statement>
                 <p>Suppose that <m>\vect{u},\,\vect{v}\in\complex{m}</m>. The <term>sum</term> of <m>\vect{u}</m> and <m>\vect{v}</m> is the vector <m>\vect{u}+\vect{v}</m> defined by<md>
-                <mrow>\vectorentry{\vect{u}+\vect{v}}{i}
-                &amp;=\vectorentry{\vect{u}}{i}+\vectorentry{\vect{v}}{i}
-                &amp;&amp;1\leq i\leq m</mrow>
-            </md></p>
+                    <mrow>\vectorentry{\vect{u}+\vect{v}}{i}=\vectorentry{\vect{u}}{i}+\vectorentry{\vect{v}}{i}</mrow>
+                </md>for <m>1\leq i\leq m</m>.</p>
             </statement>
             <notation xml:id="notation-CVA" acro="CVA">
                 <description>Column Vector Addition</description>
                 <usage><m>\vect{u}+\vect{v}</m></usage>
             </notation>
         </definition>
-        <p>So vector addition takes two vectors of the same size and combines them (in a natural way!) to create a new vector of the same size.  Notice that this definition is required, even if we agree that this is the obvious, right, natural or correct way to do it.  Notice too that the symbol `+' is being recycled.  We all know how to add <em>numbers</em>, but now we have the same symbol extended to double-duty and we use it to indicate how to add two new objects, vectors.  And this definition of our new meaning is built on our previous meaning of addition via the expressions <m>u_i+v_i</m>.  Think about your objects, especially when doing proofs.  Vector addition is easy, here is an example from <m>\complex{4}</m>.</p>
+        <p>So vector addition takes two vectors of the same size and combines them (in a natural way!) to create a new vector of the same size.  Notice that this definition is required, even if we agree that this is the obvious, right, natural or correct way to do it.  Notice too that the symbol <sq>+</sq> is being recycled.  We all know how to add <em>numbers</em>, but now we have the same symbol extended to double-duty and we use it to indicate how to add two new objects, vectors.  And this definition of our new addition of vectors is built on our prior meaning of addition of numbers in the expressions <m>\vectorentry{\vect{u}}{i}+\vectorentry{\vect{v}}{i}</m>.  Think about your objects, especially when doing proofs.  Vector addition is easy, here is an example from <m>\complex{4}</m>.</p>
         <example xml:id="example-VA" acro="VA">
             <index>vector addition</index>
             <title>Addition of two vectors in <m>\complex{4}</m></title>
-            <p>If<md>
-                <mrow>\vect{u}=\colvector{2\\-3\\4\\2}&amp;&amp;\vect{v}=\colvector{-1\\5\\2\\-7}</mrow>
-            </md>then<md>
-                <mrow>\vect{u}+\vect{v}=
+            <p>For vectors <m>\vect{u},\,\vect{v}</m>, their sum is<md>
+                <mrow>\vect{u}&amp;=\colvector{2\\-3\\4\\2}
+                &amp;
+                \vect{v}&amp;=\colvector{-1\\5\\2\\-7}
+                &amp;
+                \vect{u}+\vect{v}&amp;=
                 \colvector{2\\-3\\4\\2}+\colvector{-1\\5\\2\\-7}=
                 \colvector{2+(-1)\\-3+5\\4+2\\2+(-7)}=
                 \colvector{1\\2\\6\\-5}</mrow>
-            </md></p>
+            </md>.</p>
         </example>
-        <p>Our second operation takes two objects of different types, specifically a number and a vector, and combines them to create another vector.  In this context we call a number a <term>scalar</term> in order to emphasize that it is not a vector.</p>
+        <p>Our second operation takes two objects of different types, specifically a number and a vector, and combines them to create another vector.  In this context we call the number a <term>scalar</term> in order to emphasize that it is not a vector.</p>
         <definition xml:id="definition-CVSM" acro="CVSM">
             <title>Column Vector Scalar Multiplication</title>
             <index><main>vector</main><sub>scalar multiplication</sub></index>
             <index><main>column vector scalar multiplication</main><sub>notation</sub> </index>
             <statement>
                 <p>Suppose <m>\vect{u}\in\complex{m}</m> and <m>\alpha\in\complexes</m>, then the <term>scalar multiple</term> of <m>\vect{u}</m> by <m>\alpha</m> is the vector <m>\alpha\vect{u}</m> defined by<md>
-                    <mrow>\vectorentry{\alpha\vect{u}}{i}
-                    &amp;=\alpha\vectorentry{\vect{u}}{i}
-                    &amp;&amp;1\leq i\leq m</mrow>
-                </md></p>
+                    <mrow>\vectorentry{\alpha\vect{u}}{i}=\alpha\vectorentry{\vect{u}}{i}</mrow>
+                </md>for <m>1\leq i\leq m</m>.</p>
             </statement>
             <notation xml:id="notation-CVSM" acro="CVSM">
                 <description>Column Vector Scalar Multiplication</description>
@@ -167,8 +167,10 @@
         <example xml:id="example-CVSM" acro="CVSM">
             <index>vector scalar multiplication</index>
             <title>Scalar multiplication in <m>\complex{5}</m></title>
-            <p>If<me>\vect{u}=\colvector{3\\1\\-2\\4\\-1}</me>and <m>\alpha=6</m>, then<md>
-                <mrow>\alpha\vect{u}=
+            <p>For <m>\vect{u}</m> and  <m>\alpha=6</m> we have<md>
+                <mrow>\vect{u}&amp;=\colvector{3\\1\\-2\\4\\-1}
+                &amp;
+                \alpha\vect{u}&amp;=
                 6\colvector{3\\1\\-2\\4\\-1}=
                 \colvector{6(3)\\6(1)\\6(-2)\\6(4)\\6(-1)}=
                 \colvector{18\\6\\-12\\24\\-6}</mrow>
@@ -314,17 +316,18 @@
                 </dl></p>
             </statement>
             <proof>
-                <p>While some of these properties seem very obvious, they all require proof.  However, the proofs are not very interesting, and border on tedious. We will prove one version of distributivity very carefully, and you can test your proof-building skills on some of the others.  We need to establish an equality, so we will do so by beginning with one side of the equality, apply various definitions and theorems (listed to the right of each step) to massage the expression from the left into the expression on the right.   Here we go with a proof of <xref ref="property-DSAC" acro="DSAC" autoname="yes"/>.</p>
+                <p>While some of these properties seem very obvious, they all require proof.  However, the proofs are not very interesting, and border on tedious. We will prove one version of distributivity very carefully, and you can test your proof-building skills on some of the others.  <xref ref="exercise-VO-T13" acro="VO.T13" autoname="yes" /> has a proof in the solution, while Exercises<nbsp /><xref ref="exercise-VO-T17" acro="VO.T17" autoname="no" /> and <xref ref="exercise-VO-T18" acro="VO.T18" autoname="no" /> are excellent practice.</p>
+                <p>We need to establish an equality, so we will do so by beginning with one side of the equality, apply various definitions and theorems (listed to the right of each step) to massage the expression from the left into the expression on the right.   Here we go with a proof of <xref ref="property-DSAC" acro="DSAC" autoname="yes" />.</p>
                 <p>For <m>1\leq i\leq m</m>,<md>
-                    <mrow>\vectorentry{(\alpha+\beta)\vect{u}}{i} &amp;=(\alpha+\beta)\vectorentry{\vect{u}}{i}
-                    &amp;&amp;<xref ref="definition-CVSM" acro="CVSM" autoname="yes"/></mrow>
-                    <mrow>&amp;=\alpha\vectorentry{\vect{u}}{i}+\beta\vectorentry{\vect{u}}{i}
-                    &amp;&amp;<xref ref="property-DCN" acro="DCN" autoname="yes"/></mrow>
-                    <mrow>&amp;=\vectorentry{\alpha\vect{u}}{i}+\vectorentry{\beta\vect{u}}{i} &amp;&amp;<xref ref="definition-CVSM" acro="CVSM" autoname="yes"/></mrow>
-                    <mrow>&amp;=\vectorentry{\alpha\vect{u}+\beta\vect{u}}{i}
-                    &amp;&amp;<xref ref="definition-CVA" acro="CVA" autoname="yes"/></mrow>
-                </md></p>
-                <p>Since the individual components of the vectors <m>(\alpha+\beta)\vect{u}</m> and <m>\alpha\vect{u}+\beta\vect{u}</m> are equal for <em>all</em> <m>i</m>, <m>1\leq i\leq m</m>, <xref ref="definition-CVE" acro="CVE" autoname="yes"/> tells us the vectors are equal.</p>
+                    <mrow>\vectorentry{(\alpha+\beta)\vect{u}}{i}&amp;=(\alpha+\beta)\vectorentry{\vect{u}}{i}&amp;&amp;
+                        <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/></mrow>
+                    <mrow>&amp;=\alpha\vectorentry{\vect{u}}{i}+\beta\vectorentry{\vect{u}}{i}&amp;&amp;
+                        <xref ref="property-DCN" acro="DCN" autoname="yes"/></mrow>
+                    <mrow>&amp;=\vectorentry{\alpha\vect{u}}{i}+\vectorentry{\beta\vect{u}}{i}&amp;&amp;
+                        <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/></mrow>
+                    <mrow>&amp;=\vectorentry{\alpha\vect{u}+\beta\vect{u}}{i}&amp;&amp;
+                        <xref ref="definition-CVA" acro="CVA" autoname="yes"/></mrow>
+                </md>.  Since the individual components of the vectors <m>(\alpha+\beta)\vect{u}</m> and <m>\alpha\vect{u}+\beta\vect{u}</m> are equal for <em>all</em> <m>i</m>, <m>1\leq i\leq m</m>, <xref ref="definition-CVE" acro="CVE" autoname="yes"/> tells us the vectors are equal.</p>
             </proof>
         </theorem>
         <p>Many of the conclusions of our theorems can be characterized as <q>identities,</q>  especially when we are establishing basic properties of operations such as those in this section.  Most of the properties listed in <xref ref="theorem-VSPCV" acro="VSPCV" autoname="yes"/> are examples.  So some advice about the style we use for proving identities is appropriate right now.  Have a look at Proof Technique<nbsp/><xref ref="technique-PI" acro="PI" autoname="no"/>.</p>
@@ -334,7 +337,7 @@
             =(-1)\vectorentry{\vect{u}}{i}
             =\vectorentry{(-1)\vect{u}}{i}</mrow>
         </md>We will see later how to derive this property as a <em>consequence</em> of several of the ten properties listed in <xref ref="theorem-VSPCV" acro="VSPCV" autoname="yes"/>.</p>
-        <p>Similarly, we will often write something you would immediately recognize as <q>vector subtraction.</q>  This could be placed on a firm theoretical foundation <mdash/> as you can do yourself with <xref ref="exercise-VO-T30" acro="VO.T30" autoname="yes"/>.</p>
+        <p>Similarly, we will often write something you would immediately recognize as <term>vector subtraction</term>.  This could be placed on a firm theoretical foundation <mdash/> as you can do yourself with <xref ref="exercise-VO-T30" acro="VO.T30" autoname="yes"/>.</p>
         <p>A final note.  <xref ref="property-AAC" acro="AAC" autoname="yes"/> implies that we do not have to be careful about how we <q>parenthesize</q> the addition of vectors.  In other words, there is nothing to be gained by writing<m>\left(\vect{u}+\vect{v}\right)+\left(\vect{w}+\left(\vect{x}+\vect{y}\right)\right)</m> rather than <m>\vect{u}+\vect{v}+\vect{w}+\vect{x}+\vect{y}</m>, since we get the same result no matter which order we choose to perform the four additions.  So we will not be careful about using parentheses this way.</p>
         <computation xml:id="sage-ANC" acro="ANC">
             <title>A Note on Coercion</title>
@@ -533,39 +536,44 @@
         <title>Exercises</title>
         <exercise number="C10" xml:id="exercise-VO-C10">
             <statement>
-                <p>Compute<me>4\colvector{2\\-3\\4\\1\\0}+ (-2)\colvector{1\\2\\-5\\2\\4}+ \colvector{-1\\3\\0\\1\\2}</me></p> </statement>
+                <p>Compute<me>4\colvector{2\\-3\\4\\1\\0}+ (-2)\colvector{1\\2\\-5\\2\\4}+ \colvector{-1\\3\\0\\1\\2}</me>.</p>
+            </statement>
             <solution xml:id="solution-VO-C10">
-                <p><m>\colvector{5\\-13\\26\\1\\-6}</m></p>
+                <p><m>\colvector{5\\-13\\26\\1\\-6}</m>.</p>
             </solution>
         </exercise>
         <exercise number="C11" xml:id="exercise-VO-C11">
             <statement contributor="chrisblack">
-                <p>Solve the given vector equation for <m>x</m>, or explain why no solution exists:<me>3\colvector{1\\2\\-1}+ 4\colvector{2\\0\\x}= \colvector{11\\6\\17}</me></p>
+                <p>Solve the given vector equation for <m>x</m>, or explain why no solution exists.<me>3\colvector{1\\2\\-1}+ 4\colvector{2\\0\\x}= \colvector{11\\6\\17}</me></p>
             </statement>
             <solution xml:id="solution-VO-C11" contributor="chrisblack">
                 <p>Performing the indicated operations (<xref ref="definition-CVA" acro="CVA" autoname="yes"/>, <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/>), we obtain the vector equations <md>
                     <mrow>\colvector{11\\6\\17} &amp;= 3\colvector{1\\2\\-1} + 4\colvector{2 \\ 0 \\ x} = \colvector{11\\6\\ -3 + 4x}</mrow>
-                </md>Since the entries of the vectors must be equal by <xref ref="definition-CVE" acro="CVE" autoname="yes"/>, we have <m>-3 + 4x = 17</m>, which leads to <m>x = 5</m>.</p>
+                </md>.  Since the entries of the vectors must be equal by <xref ref="definition-CVE" acro="CVE" autoname="yes"/>, we have <m>-3 + 4x = 17</m>, which leads to <m>x = 5</m>.</p>
             </solution>
         </exercise>
         <exercise number="C12" xml:id="exercise-VO-C12">
             <statement contributor="chrisblack">
-                <p>Solve the given vector equation for <m>\alpha</m>, or explain why no solution exists:<me>\alpha\colvector{1\\2\\-1}+ 4\colvector{3\\4\\2} = \colvector{-1\\0\\4}</me></p>
+                <p>Solve the given vector equation for <m>\alpha</m>, or explain why no solution exists.<me>\alpha\colvector{1\\2\\-1}+ 4\colvector{3\\4\\2} = \colvector{-1\\0\\4}</me></p>
             </statement>
             <solution xml:id="solution-VO-C12" contributor="chrisblack">
                 <p>Performing the indicated operations (<xref ref="definition-CVA" acro="CVA" autoname="yes"/>, <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/>), we obtain the vector equations<md>
                 <mrow>\colvector{\alpha \\ 2\alpha\\ -\alpha} + \colvector{12\\16\\8} &amp;=\colvector{\alpha + 12 \\ 2\alpha + 16\\ -\alpha + 8} =\colvector{-1\\0\\4}</mrow>
-            </md>Thus, if a solution <m>\alpha</m> exists, by <xref ref="definition-CVE" acro="CVE" autoname="yes"/> then <m>\alpha</m> must satisfy the three equations: <md><mrow>\alpha + 12 &amp;= -1</mrow><mrow>2\alpha + 16 &amp;= 0</mrow><mrow>-\alpha + 8 &amp;= 4</mrow></md> which leads to <m>\alpha = -13</m>, <m>\alpha = -8</m> and <m>\alpha = 4</m>. Since <m>\alpha</m> cannot simultaneously have three different values, there is no solution to the original vector equation.</p>
+            </md>.  Thus, if a solution <m>\alpha</m> exists, by <xref ref="definition-CVE" acro="CVE" autoname="yes"/> then <m>\alpha</m> must satisfy the three equations<md>
+                <mrow>\alpha + 12 &amp;= -1</mrow>
+                <mrow>2\alpha + 16 &amp;= 0</mrow>
+                <mrow>-\alpha + 8 &amp;= 4</mrow>
+            </md>which leads to <m>\alpha = -13</m>, <m>\alpha = -8</m> and <m>\alpha = 4</m>. Since <m>\alpha</m> cannot simultaneously have three different values, there is no solution to the original vector equation.</p>
             </solution>
         </exercise>
         <exercise number="C13" xml:id="exercise-VO-C13">
             <statement contributor="chrisblack">
-                <p>Solve the given vector equation for <m>\alpha</m>, or explain why no solution exists:<me>\alpha\colvector{3\\2\\-2}+ \colvector{6\\1\\2} = \colvector{0\\-3\\6}</me></p>
+                <p>Solve the given vector equation for <m>\alpha</m>, or explain why no solution exists.<me>\alpha\colvector{3\\2\\-2}+ \colvector{6\\1\\2} = \colvector{0\\-3\\6}</me></p>
             </statement>
             <solution xml:id="solution-VO-C13" contributor="chrisblack">
                 <p>Performing the indicated operations (<xref ref="definition-CVA" acro="CVA" autoname="yes"/>, <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/>), we obtain the vector equations <md>
                     <mrow>\colvector{3\alpha \\ 2\alpha\\ - 2\alpha} + \colvector{6\\1\\2} &amp;= \colvector{3\alpha + 6 \\ 2\alpha + 1\\ -2\alpha + 2} = \colvector{0\\-3\\6}</mrow>
-                </md>Thus, if a solution <m>\alpha</m> exists, by <xref ref="definition-CVE" acro="CVE" autoname="yes"/> then <m>\alpha</m> must satisfy the three equations: <md>
+                </md>.  Thus, if a solution <m>\alpha</m> exists, by <xref ref="definition-CVE" acro="CVE" autoname="yes"/> then <m>\alpha</m> must satisfy the three equations<md>
                     <mrow>3\alpha + 6 &amp;= 0</mrow>
                     <mrow>2\alpha + 1 &amp;= -3</mrow>
                     <mrow>-2 \alpha + 2 &amp;= 6</mrow>
@@ -574,12 +582,12 @@
         </exercise>
         <exercise number="C14" xml:id="exercise-VO-C14">
             <statement contributor="chrisblack">
-                <p>Find <m>\alpha</m> and <m>\beta</m> that solve the vector equation.<me>\alpha\colvector{1\\0}+\beta\colvector{0\\1} = \colvector{3\\2}</me></p>
+                <p>Find <m>\alpha</m> and <m>\beta</m> that solve the vector equation<me>\alpha\colvector{1\\0}+\beta\colvector{0\\1} = \colvector{3\\2}</me>.</p>
             </statement>
             <solution xml:id="solution-VO-C14" contributor="chrisblack">
                 <p>Performing the indicated operations (<xref ref="definition-CVA" acro="CVA" autoname="yes"/>, <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/>), we obtain the vector equations <md>
                     <mrow>\colvector{3\\2} &amp;=\alpha\colvector{1\\0} + \beta\colvector{0\\1} =\colvector{\alpha + 0 \\ 0 + \beta} =\colvector{\alpha\\ \beta}</mrow>
-                </md>Since the entries of the vectors must be equal by <xref ref="definition-CVE" acro="CVE" autoname="yes"/>, we have <m>\alpha = 3</m> and <m>\beta = 2</m>.</p> </solution>
+                </md>.  Since the entries of the vectors must be equal by <xref ref="definition-CVE" acro="CVE" autoname="yes"/>, we have <m>\alpha = 3</m> and <m>\beta = 2</m>.</p> </solution>
         </exercise>
         <exercise number="C15" xml:id="exercise-VO-C15">
             <statement contributor="chrisblack">
@@ -588,10 +596,10 @@
             <solution xml:id="solution-VO-C15" contributor="chrisblack">
                 <p>Performing the indicated operations (<xref ref="definition-CVA" acro="CVA" autoname="yes"/>, <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/>), we obtain the vector equations <md>
                     <mrow>\colvector{5\\0} &amp;= \alpha\colvector{2\\1} + \beta\colvector{1\\3} = \colvector{2\alpha + \beta \\ \alpha + 3\beta}</mrow>
-                </md>Since the entries of the vectors must be equal by <xref ref="definition-CVE" acro="CVE" autoname="yes"/>, we obtain the system of equations<md>
+                </md>.  Since the entries of the vectors must be equal by <xref ref="definition-CVE" acro="CVE" autoname="yes"/>, we obtain the system of equations<md>
                     <mrow>2\alpha + \beta &amp;= 5</mrow>
-                    <mrow>\alpha + 3\beta &amp;= 0.</mrow>
-                </md>which we can solve by row-reducing the augmented matrix of the system, <md>
+                    <mrow>\alpha + 3\beta &amp;= 0</mrow>
+                </md>which we can solve by row-reducing the augmented matrix of the system<md>
                 <mrow>\begin{bmatrix} 2 &amp; 1 &amp; 5\\
                     1 &amp; 3 &amp; 0 
                     \end{bmatrix} &amp;
@@ -600,20 +608,21 @@
                     \leading{1} &amp; 0 &amp; 3\\
                     0 &amp; \leading{1} &amp; -1
                     \end{bmatrix}</mrow>
-                </md>Thus, the only solution is <m>\alpha = 3</m>, <m>\beta = -1</m>.</p>
+                </md>.  Thus, the only solution is <m>\alpha = 3</m>, <m>\beta = -1</m>.</p>
             </solution>
         </exercise>
         <exercise number="T05" xml:id="exercise-VO-T05">
             <statement contributor="chrisblack">
-                <p>Provide reasons (mostly vector space properties) as justification for each of the seven steps of the following proof.</p>
-                <p><b>Theorem</b> For any vectors <m>\vect{u},\,\vect{v},\,\vect{w}\in\complex{m}</m>, if <m>\vect{u} + \vect{v} = \vect{u} + \vect{w}</m>, then <m>\vect{v} = \vect{w}</m>.</p> <p><b>Proof</b>: Let <m>\vect{u},\,\vect{v},\,\vect{w}\in\complex{m}</m>, and suppose <m>\vect{u} + \vect{v} = \vect{u} + \vect{w}</m>.<md>
-                    <mrow>\vect{v} &amp;= \zerovector + \vect{v}</mrow>
-                    <mrow>&amp;= (-\vect{u} + \vect{u}) + \vect{v}</mrow>
-                    <mrow>&amp;= -\vect{u} + (\vect{u} + \vect{v})</mrow>
-                    <mrow>&amp;= -\vect{u} + (\vect{u} + \vect{w})</mrow>
-                    <mrow>&amp;= (-\vect{u} + \vect{u}) + \vect{w}</mrow>
-                    <mrow>&amp;= \zerovector + \vect{w}</mrow>
-                    <mrow>&amp;= \vect{w}</mrow>
+                <p>Provide reasons (mostly vector space properties) as justification for each of the seven steps of the proof of the following theorem.</p>
+                <p>For any vectors <m>\vect{u},\,\vect{v},\,\vect{w}\in\complex{m}</m>, if <m>\vect{u} + \vect{v} = \vect{u} + \vect{w}</m>, then <m>\vect{v} = \vect{w}</m>.</p>
+                <p>Proof: Let <m>\vect{u},\,\vect{v},\,\vect{w}\in\complex{m}</m>, and suppose <m>\vect{u} + \vect{v} = \vect{u} + \vect{w}</m>.<md>
+                    <mrow>\vect{v}&amp;=\zerovector + \vect{v}&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;=(-\vect{u} + \vect{u}) + \vect{v}&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;=-\vect{u} + (\vect{u} + \vect{v})&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;=-\vect{u} + (\vect{u} + \vect{w})&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;=(-\vect{u} + \vect{u}) + \vect{w}&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;=\zerovector + \vect{w}&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;=\vect{w}&amp;&amp;<fillin characters="20" /></mrow>
                 </md></p>
             </statement>
             <solution xml:id="solution-VO-T05" contributor="chrisblack">
@@ -638,16 +647,15 @@
         </exercise>
         <exercise number="T06" xml:id="exercise-VO-T06">
             <statement contributor="chrisblack">
-                <p>Provide reasons (mostly vector space properties) as justification for each of the six steps of the following proof.</p>
-                <p><b>Theorem</b>For any vector <m>\vect{u}\in\complex{m}</m>, <m>0\vect{u}=\zerovector.</m></p>
-                <p><b>Proof</b>: Let <m>\vect{u}\in\complex{m}</m>.</p>
-                <p><md>
-                    <mrow>\zerovector&amp;= 0\vect{u} +(-0\vect{u})</mrow>
-                    <mrow>&amp;= (0+0)\vect{u} + (-0\vect{u})</mrow>
-                    <mrow>&amp;= (0\vect{u}+0\vect{u}) + (-0\vect{u})</mrow>
-                    <mrow>&amp;= 0\vect{u} + (0\vect{u} + (-0\vect{u}))</mrow>
-                    <mrow>&amp;= 0\vect{u} + \zerovector</mrow>
-                    <mrow>&amp;= 0\vect{u}</mrow>
+                <p>Provide reasons (mostly vector space properties) as justification for each of the six steps of the proof of the following theorem.</p>
+                <p>For any vector <m>\vect{u}\in\complex{m}</m>, <m>0\vect{u}=\zerovector.</m></p>
+                <p>Proof: Let <m>\vect{u}\in\complex{m}</m>.<md>
+                    <mrow>\zerovector&amp;= 0\vect{u} +(-0\vect{u})&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;= (0+0)\vect{u} + (-0\vect{u})&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;= (0\vect{u}+0\vect{u}) + (-0\vect{u})&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;= 0\vect{u} + (0\vect{u} + (-0\vect{u}))&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;= 0\vect{u} + \zerovector&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;= 0\vect{u}&amp;&amp;<fillin characters="20" /></mrow>
                 </md></p>
             </statement>
             <solution xml:id="solution-VO-T06" contributor="chrisblack">
@@ -670,16 +678,15 @@
         </exercise>
         <exercise number="T07" xml:id="exercise-VO-T07">
             <statement contributor="chrisblack">
-                <p>Provide reasons (mostly vector space properties) as justification for each of the six steps of the following proof.</p>
-                <p><b>Theorem</b> For any scalar <m>c</m>,  <m>c\,\zerovector = \zerovector</m>.</p>
-                <p><b>Proof</b>: Let <m>c</m> be an arbitrary scalar.</p>
-                <p><md>
-                    <mrow>\zerovector&amp;= c\zerovector + (-c\zerovector)</mrow>
-                    <mrow>&amp;= c(\zerovector + \zerovector) + (-c\zerovector)</mrow>
-                    <mrow>&amp;= (c\zerovector + c\zerovector) + (-c\zerovector)</mrow>
-                    <mrow>&amp;= c\zerovector + (c\zerovector + (-c\zerovector))</mrow>
-                    <mrow>&amp;= c\zerovector + \zerovector</mrow>
-                    <mrow>&amp;= c\zerovector</mrow>
+                <p>Provide reasons (mostly vector space properties) as justification for each of the six steps of the proof of the following theorem.</p>
+                <p>For any scalar <m>c</m>,  <m>c\,\zerovector = \zerovector</m>.</p>
+                <p>Proof: Let <m>c</m> be an arbitrary scalar.<md>
+                    <mrow>\zerovector&amp;= c\zerovector + (-c\zerovector)&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;= c(\zerovector + \zerovector) + (-c\zerovector)&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;= (c\zerovector + c\zerovector) + (-c\zerovector)&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;= c\zerovector + (c\zerovector + (-c\zerovector))&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;= c\zerovector + \zerovector&amp;&amp;<fillin characters="20" /></mrow>
+                    <mrow>&amp;= c\zerovector&amp;&amp;<fillin characters="20" /></mrow>
                 </md></p>
             </statement>
             <solution xml:id="solution-VO-T07" contributor="chrisblack">
@@ -712,7 +719,7 @@
                         \text{Commutativity in<m>\complexes</m>}</mrow>
                     <mrow>&amp;=\vectorentry{\vect{v}+\vect{u}}{i} &amp;&amp;
                         <xref ref="definition-CVA" acro="CVA" autoname="yes"/></mrow>
-                </md>With equality of each component of the vectors <m>\vect{u}+\vect{v}</m> and <m>\vect{v}+\vect{u}</m> being equal <xref ref="definition-CVE" acro="CVE" autoname="yes"/> tells us the two vectors are equal.</p> </solution>
+                </md>.  With equality of each component of the vectors <m>\vect{u}+\vect{v}</m> and <m>\vect{v}+\vect{u}</m> being equal <xref ref="definition-CVE" acro="CVE" autoname="yes"/> tells us the two vectors are equal.</p> </solution>
         </exercise>
         <exercise number="T17" xml:id="exercise-VO-T17">
             <statement>
@@ -731,8 +738,8 @@
             <exercise number="T30" xml:id="exercise-VO-T30">
                 <statement>
                     <p>Suppose <m>\vect{u}</m> and <m>\vect{v}</m> are two vectors in <m>\complex{m}</m>.  Define a new operation, called <q>subtraction,</q> as the new vector denoted <m>\vect{u}-\vect{v}</m> and defined by <md>
-                        <mrow>\vectorentry{\vect{u}-\vect{v}}{i}=\vectorentry{\vect{u}}{i}-\vectorentry{\vect{v}}{i}&amp;&amp;1\leq i\leq m</mrow>
-                    </md>Prove that we can express the subtraction of two vectors in terms of our two basic operations.  More precisely, prove that <m>\vect{u}-\vect{v}=\vect{u}+(-1)\vect{v}</m>.  So in a sense, subtraction is not something new and different, but is just a convenience.  Mimic the style of similar proofs in this section.</p>
+                        <mrow>\vectorentry{\vect{u}-\vect{v}}{i}=\vectorentry{\vect{u}}{i}-\vectorentry{\vect{v}}{i}</mrow>
+                    </md> for <m>1\leq i\leq m</m>.  Prove that we can express the subtraction of two vectors in terms of our two basic operations.  More precisely, prove that <m>\vect{u}-\vect{v}=\vect{u}+(-1)\vect{v}</m>.  So in a sense, subtraction is not something new and different, but is just a convenience.  Mimic the style of similar proofs in this section.</p>
                 </statement>
             </exercise>
             <exercise number="T31" xml:id="exercise-VO-T31">
