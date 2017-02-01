@@ -22,7 +22,7 @@
                 <usage><m>\spn{S}</m></usage>
             </notation>
         </definition>
-        <p>The span is just a set of vectors, though in all but one situation it is an infinite set.  (Just when is it not infinite?)  So we start with a finite collection of vectors <m>S</m> (<m>p</m> of them to be precise), and use this finite set to describe an infinite set of vectors, <m>\spn{S}</m>.  Confusing the <em>finite</em> set <m>S</m> with the <em>infinite</em> set <m>\spn{S}</m> is one of the most persistent problems in understanding introductory linear algebra.  We will see this construction repeatedly, so let us work through some examples to get comfortable with it.  The most obvious question about a set is if a particular item of the correct type is in the set, or not in the set.</p>
+        <p>The span is just a set of vectors, though in all but one situation it is an infinite set.  (Just when is it not infinite?  See <xref ref="exercise-SS-T30" autoname="yes" />.)  So we start with a finite collection of vectors <m>S</m> (<m>p</m> of them to be precise), and use this finite set to describe an infinite set of vectors, <m>\spn{S}</m>.  Confusing the <em>finite</em> set <m>S</m> with the <em>infinite</em> set <m>\spn{S}</m> is one of the most persistent problems in understanding introductory linear algebra.  We will see this construction repeatedly, so let us work through some examples to get comfortable with it.  The most obvious question about a set is if a particular item of the correct type is in the set, or not in the set.</p>
         <example xml:id="example-ABS" acro="ABS">
             <index>
                 <main>span</main>
@@ -77,17 +77,21 @@
             \alpha_5\colvector{-1 \\ 0 \\ 9 \\ 0}
             =\vect{u}
             =\colvector{-15\\-6\\19\\5}</me>?</p>
-            <p>Applying <xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/> we recognize the search for these scalars as a solution to a linear system of equations with augmented matrix<me>\begin{bmatrix}
-             1 &amp; 2 &amp; 7 &amp; 1 &amp; -1 &amp; -15 \\
-             1 &amp; 1 &amp; 3 &amp; 1 &amp; 0 &amp; -6 \\
-             3 &amp; 2 &amp; 5 &amp; -1 &amp; 9 &amp; 19 \\
-             1 &amp; -1 &amp; -5 &amp; 2 &amp; 0 &amp; 5
-            \end{bmatrix}</me>which row-reduces to<me>\begin{bmatrix} 
-            \leading{1} &amp; 0 &amp; -1 &amp; 0 &amp; 3 &amp; 10 \\
-            0 &amp; \leading{1} &amp; 4 &amp; 0 &amp; -1 &amp; -9 \\
-            0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2 &amp; -7 \\
-            0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
-            \end{bmatrix}</me>.</p>
+            <p>Applying <xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/> we recognize the search for these scalars as a solution to a linear system of equations with augmented matrix and reduced row-echelon form<md>
+                <mrow>\begin{bmatrix}
+                 1 &amp; 2 &amp; 7 &amp; 1 &amp; -1 &amp; -15 \\
+                 1 &amp; 1 &amp; 3 &amp; 1 &amp; 0 &amp; -6 \\
+                 3 &amp; 2 &amp; 5 &amp; -1 &amp; 9 &amp; 19 \\
+                 1 &amp; -1 &amp; -5 &amp; 2 &amp; 0 &amp; 5
+                \end{bmatrix}
+                &amp;\rref
+                \begin{bmatrix} 
+                \leading{1} &amp; 0 &amp; -1 &amp; 0 &amp; 3 &amp; 10 \\
+                0 &amp; \leading{1} &amp; 4 &amp; 0 &amp; -1 &amp; -9 \\
+                0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2 &amp; -7 \\
+                0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+                \end{bmatrix}</mrow>
+            </md>.</p>
             <p>At this point, we see that the system is consistent (<xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>), so we know there <em>is</em> a solution for the five scalars <m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\alpha_4,\,\alpha_5</m>.  This is enough evidence for us to say that <m>\vect{u}\in\spn{S}</m>.  If we wished further evidence, we could compute an actual solution, say<md>
                 <mrow>\alpha_1&amp;=2
                 &amp;
@@ -105,7 +109,7 @@
             (-3)\colvector{1 \\ 1 \\ -1 \\ 2}+
             (2)\colvector{-1 \\ 0 \\ 9 \\ 0}
             =\vect{u}
-            =\colvector{-15\\-6\\19\\5}</me>making it even more obvious that<m>\vect{u}\in\spn{S}</m>.</p>
+            =\colvector{-15\\-6\\19\\5}</me>making it even more obvious that <m>\vect{u}\in\spn{S}</m>.</p>
             <p>Let us do it again.   Is <m>\vect{v}=\colvector{3\\1\\2\\-1}</m> an element of <m>\spn{S}</m>?  We are asking if there are scalars <m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\alpha_4,\,\alpha_5</m> such that<me>\alpha_1\colvector{1 \\ 1 \\ 3 \\ 1}+
             \alpha_2\colvector{2 \\ 1 \\ 2 \\ -1}+
             \alpha_3\colvector{7 \\ 3 \\ 5 \\ -5}+
@@ -113,17 +117,21 @@
             \alpha_5\colvector{-1 \\ 0 \\ 9 \\ 0}
             =\vect{v}
             =\colvector{3\\1\\2\\-1}</me>?</p>
-            <p>Applying <xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/> we recognize the search for these scalars as a solution to a linear system of equations with augmented matrix<me>\begin{bmatrix}
-             1 &amp; 2 &amp; 7 &amp; 1 &amp; -1 &amp; 3 \\
-             1 &amp; 1 &amp; 3 &amp; 1 &amp; 0 &amp; 1 \\
-             3 &amp; 2 &amp; 5 &amp; -1 &amp; 9 &amp; 2 \\
-             1 &amp; -1 &amp; -5 &amp; 2 &amp; 0 &amp; -1
-            \end{bmatrix}</me>which row-reduces to<me>\begin{bmatrix}
-             \leading{1} &amp; 0 &amp; -1 &amp; 0 &amp; 3 &amp; 0 \\
-             0 &amp; \leading{1} &amp; 4 &amp; 0 &amp; -1 &amp; 0 \\
-             0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2 &amp; 0 \\
-             0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}
-            \end{bmatrix}</me>.</p>
+            <p>Applying <xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/> we recognize the search for these scalars as a solution to a linear system of equations with augmented matrix and reduced row-echelon form<md>
+                <mrow>\begin{bmatrix}
+                 1 &amp; 2 &amp; 7 &amp; 1 &amp; -1 &amp; 3 \\
+                 1 &amp; 1 &amp; 3 &amp; 1 &amp; 0 &amp; 1 \\
+                 3 &amp; 2 &amp; 5 &amp; -1 &amp; 9 &amp; 2 \\
+                 1 &amp; -1 &amp; -5 &amp; 2 &amp; 0 &amp; -1
+                \end{bmatrix}
+                &amp;\rref
+                \begin{bmatrix}
+                 \leading{1} &amp; 0 &amp; -1 &amp; 0 &amp; 3 &amp; 0 \\
+                 0 &amp; \leading{1} &amp; 4 &amp; 0 &amp; -1 &amp; 0 \\
+                 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2 &amp; 0 \\
+                 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}
+                \end{bmatrix}</mrow>
+            </md>.</p>
             <p>At this point, we see that the system is inconsistent by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>, so we know there <em>is not</em> a solution for the five scalars <m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\alpha_4,\,\alpha_5</m>.  This is enough evidence for us to say that <m>\vect{v}\not\in\spn{S}</m>.  End of story.</p>
         </example>
         <example xml:id="example-SCAA" acro="SCAA">
@@ -152,19 +160,8 @@
                 0 &amp; 0 &amp; 0 &amp; 0
                 \end{bmatrix}</mrow>
             </md>.</p>
-            <p>This system has infinitely many solutions (there is a free variable in <m>x_3</m>), but all we need is one solution vector.  The solution,<md>
-                <mrow>\alpha_1 &amp;= 2
-                &amp;
-                \alpha_2 &amp;= 3
-                &amp;
-                \alpha_3 &amp;= 1</mrow>
-            </md>tells us that<me>(2)\vect{u}_1+(3)\vect{u}_2+(1)\vect{u}_3=\vect{w}</me>so we are convinced that <m>\vect{w}</m> really is in <m>\spn{S}</m>.  Notice that there are an infinite number of ways to answer this question affirmatively.  We could choose a different solution, this time choosing the free variable to be zero,<md>
-                <mrow>\alpha_1 &amp;= 3
-                &amp;
-                \alpha_2 &amp;= 2
-                &amp;
-                \alpha_3 &amp;= 0</mrow>
-            </md>shows us that<me>(3)\vect{u}_1+(2)\vect{u}_2+(0)\vect{u}_3=\vect{w}</me>.</p>
+            <p>This system has infinitely many solutions (there is a free variable in <m>x_3</m>), but all we need is one solution vector.  The solution <m>\alpha_1 = 2</m>, <m>\alpha_2 = 3</m>, <m>\alpha_3 = 1</m>, tells us that<me>(2)\vect{u}_1+(3)\vect{u}_2+(1)\vect{u}_3=\vect{w}</me>so we are convinced that <m>\vect{w}</m> really is in <m>\spn{S}</m>.  Notice that there are an infinite number of ways to answer this question affirmatively.</p>
+            <p>We could choose a different solution, this time choosing the free variable to be zero. Then <m>\alpha_1 = 3</m>, <m>\alpha_2 = 2</m>, <m>\alpha_3 = 0</m>, shows us that<me>(3)\vect{u}_1+(2)\vect{u}_2+(0)\vect{u}_3=\vect{w}</me>.</p>
             <p>Verifying the arithmetic in this second solution will make it obvious that <m>\vect{w}</m> is in this span.  And of course, we now realize that there are an infinite number of ways to realize <m>\vect{w}</m> as element of <m>\spn{S}</m>.</p>
             <p>Let us ask the same type of question again, but this time with <m>\vect{y}=\colvector{2\\4\\3}</m>, <ie/> is  <m>\vect{y}\in\spn{S}</m>?</p>
             <p>So we will look for scalars <m>\alpha_1,\,\alpha_2,\,\alpha_3</m> so that<md>
@@ -209,9 +206,7 @@
                     0&amp;0&amp;\leading{1}&amp;2
                     \end{bmatrix}</mrow>
                 </md>.</p>
-            <p>This system has a unique solution,<md>
-                <mrow>\alpha_1 = -3&amp;&amp;\alpha_2 = 5&amp;&amp;\alpha_3 = 2</mrow>
-            </md>telling us that<me>(-3)\vect{v}_1+(5)\vect{v}_2+(2)\vect{v}_3=\vect{z}</me>so we are convinced that <m>\vect{z}</m> really is in <m>\spn{R}</m>.  Notice that in this case we have only one way to answer the question affirmatively since the solution is unique.</p>
+            <p>This system has a unique solution, <m>\alpha_1 = -3</m>, <m>\alpha_2 = 5</m>, <m>\alpha_3 = 2</m>, telling us that<me>(-3)\vect{v}_1+(5)\vect{v}_2+(2)\vect{v}_3=\vect{z}</me>so we are convinced that <m>\vect{z}</m> really is in <m>\spn{R}</m>.  Notice that in this case we have only one way to answer the question affirmatively since the solution is unique.</p>
             <p>Let us ask about another vector, say is <m>\vect{x}=\colvector{-7\\8\\-3}</m> in <m>\spn{R}</m>?  Is <m>\vect{x}\in\spn{R}</m>?</p>
             <p>We desire scalars <m>\alpha_1,\,\alpha_2,\,\alpha_3</m> so that<md>
                 <mrow>\alpha_1\vect{v}_1+\alpha_2\vect{v}_2+\alpha_3\vect{v}_3&amp;=\vect{x}</mrow>
@@ -226,9 +221,7 @@
                 0 &amp; 0 &amp; \leading{1} &amp; -1
                 \end{bmatrix}</mrow>
             </md>.</p>
-            <p>This system has a unique solution,<md>
-                <mrow>\alpha_1 = 1&amp;&amp;\alpha_2 = 2&amp;&amp;\alpha_3 = -1</mrow>
-            </md>telling us that<me>(1)\vect{v}_1+(2)\vect{v}_2+(-1)\vect{v}_3=\vect{x}</me>so we are convinced that <m>\vect{x}</m> really is in <m>\spn{R}</m>.  Notice that in this case we again have only one way to answer the question affirmatively since the solution is again unique.</p>
+            <p>This system has a unique solution, <m>\alpha_1 = 1</m>, <m>\alpha_2 = 2</m>, <m>\alpha_3 = -1</m>, telling us that<me>(1)\vect{v}_1+(2)\vect{v}_2+(-1)\vect{v}_3=\vect{x}</me>so we are convinced that <m>\vect{x}</m> really is in <m>\spn{R}</m>.  Notice that in this case we again have only one way to answer the question affirmatively since the solution is again unique.</p>
             <p>We could continue to test other vectors for membership in <m>\spn{R}</m>, but there is no point.   A question about membership in <m>\spn{R}</m> inevitably leads to a system of three equations in the three variables <m>\alpha_1,\,\alpha_2,\,\alpha_3</m> with a coefficient matrix whose columns are the vectors <m>\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3</m>.  This particular coefficient matrix is nonsingular, so by <xref ref="theorem-NMUS" acro="NMUS" autoname="yes"/>, the system is guaranteed to have a solution.  (This solution is unique, but that is not critical here.)  So <em>no matter</em> which vector we might have chosen for <m>\vect{z}</m>, we would have been <em>certain</em> to discover that it was an element of <m>\spn{R}</m>.  Stated differently, every vector of size 3 is in <m>\spn{R}</m>, or <m>\spn{R}=\complex{3}</m>.</p>
             <p>Compare this example with <xref ref="example-SCAA" acro="SCAA" autoname="yes"/>, and see if you can connect <m>\vect{z}</m> with some aspects of the write-up for Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/>.</p>
         </example>
@@ -297,8 +290,8 @@
             <p>Most of the above should be fairly self-explanatory, but a few comments are in order.  The span, <c>W</c>, is created in the first compute cell with the <c>.span()</c> method, which accepts a list of vectors and needs to be employed as a method of a vector space.  The information about <c>W</c> printed when we just input the span itself may be somewhat confusing, and as before, we need to learn some more theory to totally understand it all.  For now you can see the number system (<c>Rational Field</c>) and the number of entries in each vector (<c>degree 4</c>).  The <c>dimension</c> may be more complicated than you first suspect.</p>
             <p>Sets are all about membership, and we see that we can easily check membership in a span.  We know the vector <c>x</c> will be in the span <c>W</c> since we built it as a linear combination of <c>v1</c> and <c>v2</c>.  The vectors <c>y</c> and <c>u</c> are a bit more mysterious, but Sage can answer the membership question easily for both.</p>
             <p>The last compute cell is something new.  The symbol <c>&lt;=</c> is meant here to be the <q>subset of</q> relation, <ie/> a slight abuse of the mathematical symbol <m>\subseteq</m>, and then we are not surprised to learn that <c>W</c> really is a subset of <c>V</c>.</p>
-            <p>It is important to realize that the span is a <em>construction</em> that begins with a finite set, yet creates an infinite set.  With a loop (the <c>for</c> command) and the <c>.random_element()</c> vector space method we can create <em>many</em>, but not all, of the elements of a span.  In the examples below, you can edit the total number of random vectors produced, and you may need to click through to another file of output if you ask for more than about 100 vectors.</p>
-            <p>Each example is designed to illustrate some aspect of the behavior of the span command and to provoke some questions.  So put on your mathematician's hat, evaluate the compute cells to create some sample elements, and then <em>study</em> the output carefully looking for patterns and maybe even conjecture some explanations for the behavior.  The puzzle gets just a bit harder for each new example.  (We use the <c>Sequence()</c> command to get nicely-formatted line-by-line output of the list, and notice that we are only providing a portion of the output here.  You will want to evalaute the computation of <c>vecs</c> and then evaluate the next cell in the Sage notebook for maximum effect.)</p>
+            <p>It is important to realize that the span is a <em>construction</em> that begins with a finite set, yet creates an infinite set.  With a loop (the <c>for</c> command) and the <c>.random_element()</c> vector space method we can create <em>many</em>, but not all, of the elements of a span.  In the examples below, you can edit the total number of random vectors produced, and if you create too many you may make it difficult (or impossible) to wade through them all.</p>
+            <p>Each example is designed to illustrate some aspect of the behavior of the span command and to provoke some questions.  So put on your mathematician's hat, evaluate the compute cells to create some sample elements, and then <em>study</em> the output carefully looking for patterns and maybe even conjecture some explanations for the behavior.  The puzzle gets just a bit harder for each new example.  (We use the <c>Sequence()</c> command to get nicely-formatted line-by-line output of the list, and notice that we are only providing a portion of the output here.  You will want to evalaute the computation of <c>vecs</c> and then evaluate the susequent cell for maximum effect.)</p>
             <sage xml:id="sagecell-SS-7">
                 <input>
                 V = QQ^4
@@ -462,7 +455,8 @@
                 [(0, 0, 0, 0)]
                 </output>
             </sage>
-            <p>The system is consistent, as we have shown, so we can apply <xref ref="theorem-PSPHS" acro="PSPHS" autoname="yes"/>. We can read <xref ref="theorem-PSPHS" acro="PSPHS" autoname="yes"/> as saying <em>any</em> two different solutions of the system will differ by an element of the null space, and the only possibility for this null space vector is just the zero vector.  In other words, any two solutions <em>cannot</em> be different.</p>
+            <p>So with a trivial null space, we know the matrix is nonsingular by <xref ref="theorem-NMTNS" acro="NMTNS" autoname="yes"/>.  Then a nonsingular coefficient matrix always creates a system with a unique solution by <xref ref="theorem-NMUS" acro="NMUS" autoname="yes"/>.</p>
+            <p>The system is consistent, as we have shown, so we can apply <xref ref="theorem-PSPHS" acro="PSPHS" autoname="yes"/>. We can read <xref ref="theorem-PSPHS" acro="PSPHS" autoname="yes"/> as saying <em>any</em> two different solutions of the system will differ by an element of the null space, and the only possibility for this null space vector is just the zero vector.  In other words, any two solutions <em>cannot</em> be different, so the solution is unique.</p>
         </computation>
     </subsection>
     <subsection xml:id="subsection-SS-SSNS" acro="SSNS">
@@ -474,9 +468,9 @@
             <statement>
                 <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix, and <m>B</m> is a row-equivalent matrix in reduced row-echelon form.  Suppose that <m>B</m> has <m>r</m> pivot columns, with indices given by <m>D=\set{d_1,\,d_2,\,d_3,\,\ldots,\,d_r}</m>, while the <m>n-r</m> non-pivot columns have indices <m>F=\set{f_1,\,f_2,\,f_3,\,\ldots,\,f_{n-r},\,n+1}</m>.  Construct the <m>n-r</m> vectors <m>\vect{z}_j</m>, <m>1\leq j\leq n-r</m> of size <m>n</m>,<me>\vectorentry{\vect{z}_j}{i}=
                 \begin{cases}
-                1&amp;\text{if<m>i\in F</m>,<m>i=f_j</m>}\\
-                0&amp;\text{if<m>i\in F</m>,<m>i\neq f_j</m>}\\
-                -\matrixentry{B}{k,f_j}&amp;\text{if<m>i\in D</m>,<m>i=d_k</m>}
+                1&amp;\text{if }i\in F, i=f_j\\
+                0&amp;\text{if }i\in F, i\neq f_j\\
+                -\matrixentry{B}{k,f_j}&amp;\text{if }i\in D, i=d_k
                 \end{cases}</me>.</p>
                 <p>Then the null space of <m>A</m> is given by<me>\nsp{A}=\spn{\left\{\vectorlist{z}{n-r}\right\}}</me>.</p>
             </statement>
@@ -520,11 +514,14 @@
             \colvector{-6x_3-4x_5\\x_3+2x_5\\x_3\\-3x_5\\x_5}=
             x_3\colvector{-6\\1\\1\\0\\0}+
             x_5\colvector{-4\\2\\0\\-3\\1}</me>.</p>
-            <p>Then in the notation of <xref ref="theorem-SSNS" acro="SSNS" autoname="yes"/>,<md>
-                <mrow>\vect{z}_1&amp;=\colvector{-6\\1\\1\\0\\0}&amp;\vect{z}_2&amp;=\colvector{-4\\2\\0\\-3\\1}</mrow>
-            </md>and<me>\nsp{A}
-            =\spn{\set{\vect{z}_1,\,\vect{z}_2}}
-            =\spn{\set{\colvector{-6\\1\\1\\0\\0},\,\colvector{-4\\2\\0\\-3\\1}}}</me>.</p>
+            <p>Then in the notation of <xref ref="theorem-SSNS" acro="SSNS" autoname="yes"/><md>
+                <mrow>\vect{z}_1&amp;=\colvector{-6\\1\\1\\0\\0}
+                &amp;
+                \vect{z}_2&amp;=\colvector{-4\\2\\0\\-3\\1}
+                &amp;
+                \nsp{A}&amp;=\spn{\set{\vect{z}_1,\,\vect{z}_2}}
+                =\spn{\set{\colvector{-6\\1\\1\\0\\0},\,\colvector{-4\\2\\0\\-3\\1}}}</mrow>
+            </md>.</p>
         </example>
         <example xml:id="example-NSDS" acro="NSDS">
             <index>
@@ -680,13 +677,17 @@
                 <sub>Archetype D</sub>
             </index>
             <title>Span of the columns of Archetype D</title>
-            <p>Begin with the set of four vectors of size <m>3</m><me>T=\set{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3,\,\vect{w}_4}
-            =\set{
-            \colvector{2\\-3\\1},\,
-            \colvector{1\\4\\1},\,
-            \colvector{7\\-5\\4},\,
-            \colvector{-7\\-6\\-5}
-            }</me>and consider the infinite set <m>W=\spn{T}</m>.  The vectors of <m>T</m> have been chosen as the four columns of the coefficient matrix in Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/>.  Check that the vector<me>\vect{z}_2=\colvector{2\\3\\0\\1}</me>is a solution to the homogeneous system <m>\homosystem{D}</m> (it is the  vector <m>\vect{z}_2</m> provided by the description of the null space of the coefficient matrix <m>D</m> from <xref ref="theorem-SSNS" acro="SSNS" autoname="yes"/>).</p>
+            <p>Begin with <m>T</m>, a the set of four vectors of size <m>3</m> chosen as the four columns of the coefficient matrix in Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/>.  Check that the vector <m>\vect{z}_2</m> is in the null space of the coefficient matrix of Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/><m>D</m>. In fact, it is one of the vectors provided by <xref ref="theorem-SSNS" acro="SSNS" autoname="yes"/>.<md>
+                <mrow>T&amp;=\set{\vect{w}_1,\,\vect{w}_2,\,\vect{w}_3,\,\vect{w}_4}
+                =\set{
+                \colvector{2\\-3\\1},\,
+                \colvector{1\\4\\1},\,
+                \colvector{7\\-5\\4},\,
+                \colvector{-7\\-6\\-5}
+                }
+                &amp;
+                \vect{z}_2&amp;=\colvector{2\\3\\0\\1}</mrow>
+            </md>Now consider the infinite set <m>W=\spn{T}</m>.</p>
             <p>Applying <xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/>, we can write the linear combination<me>2\vect{w}_1+3\vect{w}_2+0\vect{w}_3+1\vect{w}_4=\zerovector</me>which we can solve for <m>\vect{w}_4</m><me>\vect{w}_4=(-2)\vect{w}_1+(-3)\vect{w}_2</me>.</p>
             <p>This equation says that whenever we encounter the vector <m>\vect{w}_4</m>, we can replace it with a specific linear combination of the vectors <m>\vect{w}_1</m> and <m>\vect{w}_2</m>.  So using <m>\vect{w}_4</m> in the set <m>T</m>, along with <m>\vect{w}_1</m> and <m>\vect{w}_2</m>, is excessive.  An example of what we mean here can be illustrated by the computation<md>
                 <mrow>5\vect{w}_1&amp;+(-4)\vect{w}_2+6\vect{w}_3+(-3)\vect{w}_4</mrow>
@@ -1119,6 +1120,14 @@
             <statement>
                 <p>Suppose that <m>S</m> is a set of vectors from <m>\complex{m}</m>, <m>\alpha\in\complexes</m>, and <m>\vect{x}\in\spn{S}</m>.  Prove that <m>\alpha\vect{x}\in\spn{S}</m>.</p>
             </statement>
+        </exercise>
+        <exercise number="T30" xml:id="exercise-SS-T30">
+            <statement>
+                <p>For which sets <m>S</m> is <m>\spn{S}</m> a finite set?  Give a proof for your answer.</p>
+            </statement>
+            <solution xml:id="solution-SS-T30">
+                <p>If <m>S</m> is empty or <m>S=\set{\zerovector}</m> then <m>\spn{S}=\set{\zerovector}</m> and is finite.  If <m>S</m> contains any nonzero vector, then all of the scalar multiples of that vector are in the span, and hence the span is infinite.</p>
+            </solution>
         </exercise>
     </exercises>
 </section>
