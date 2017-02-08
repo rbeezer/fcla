@@ -131,7 +131,7 @@
                 <mrow>\vect{w}=\colvector{2\\4\\-3\\2\\8}&amp;&amp;\text{and}&amp;&amp; \vect{x}=\colvector{3\\1\\0\\-1\\-2}</mrow>
             </md>is<md>
                 <mrow>\innerproduct{\vect{w}}{\vect{x}}&amp;= (\conjugate{2})3+(\conjugate{4})1+(\conjugate{-3})0+(\conjugate{2})(-1)+(\conjugate{8})(-2)</mrow>
-                <mrow>&amp;=2(3)+4(1)+(-3)0+2(-1)+8(-2)=-8.</mrow>
+                <mrow>&amp;=2(3)+4(1)+(-3)0+2(-1)+8(-2)=-8</mrow>
             </md>.</p>
         </example>
         <p>In the case where the entries of our vectors are all real numbers (as in the second part of <xref ref="example-CSIP" acro="CSIP" autoname="yes"/>), the computation of the inner product may look familiar and be known to you as a <term>dot product</term> or <term>scalar product</term>.  So you can view the inner product as a generalization of the scalar product to vectors from <m>\complex{m}</m> (rather than <m>{\mathbb R}^m</m>).</p>
@@ -172,11 +172,11 @@
             </proof>
         </theorem>
         <theorem xml:id="theorem-IPSM" acro="IPSM">
+            <title>Inner Product and Scalar Multiplication</title>
             <index>
                 <main>inner product</main>
                 <sub>scalar multiplication</sub>
             </index>
-            <title>Inner Product and Scalar Multiplication</title>
             <statement>
                 <p>Suppose <m>\vect{u},\,\vect{v}\in\complex{m}</m> and <m>\alpha\in\complexes</m>.  Then <ol>
                     <li><m>\innerproduct{\alpha\vect{u}}{\vect{v}}=\conjugate{\alpha}\innerproduct{\vect{u}}{\vect{v}}</m>.</li>
@@ -283,7 +283,7 @@
                     <main>norm</main>
                     <sub>inner product</sub>
                 </index>
-                <p>Suppose that <m>\vect{u}</m> is a vector in <m>\complex{m}</m>.  Then<m>\norm{\vect{u}}^2=\innerproduct{\vect{u}}{\vect{u}}</m>.</p>
+                <p>Suppose that <m>\vect{u}</m> is a vector in <m>\complex{m}</m>.  Then <m>\norm{\vect{u}}^2=\innerproduct{\vect{u}}{\vect{u}}</m>.</p>
             </statement>
             <proof>
                 <p><md>
@@ -305,7 +305,7 @@
                 <sub>positive</sub>
             </index>
             <statement>
-                <p>Suppose that <m>\vect{u}</m> is a vector in <m>\complex{m}</m>.  Then<m>\innerproduct{\vect{u}}{\vect{u}}\geq 0</m> with equality if and only if <m>\vect{u}=\zerovector</m>.</p>
+                <p>Suppose that <m>\vect{u}</m> is a vector in <m>\complex{m}</m>.  Then <m>\innerproduct{\vect{u}}{\vect{u}}\geq 0</m> with equality if and only if <m>\vect{u}=\zerovector</m>.</p>
             </statement>
             <proof>
                 <p>From the proof of <xref ref="theorem-IPN" acro="IPN" autoname="yes"/>  we see that<me>\innerproduct{\vect{u}}{\vect{u}}
@@ -327,19 +327,21 @@
             </proof>
         </theorem>
         <p>Notice that <xref ref="theorem-PIP" acro="PIP" autoname="yes"/> contains <em>three</em> implications<md>
-            <mrow>\vect{u}\in\complex{m}&amp;\Rightarrow\innerproduct{\vect{u}}{\vect{u}}\geq 0</mrow>
-            <mrow>\vect{u}=\zerovector&amp;\Rightarrow\innerproduct{\vect{u}}{\vect{u}}=0</mrow>
-            <mrow>\innerproduct{\vect{u}}{\vect{u}}=0&amp;\Rightarrow\vect{u}=\zerovector</mrow>
+            <mrow>\vect{u}\in\complex{m}&amp;\Rightarrow\innerproduct{\vect{u}}{\vect{u}}\geq 0
+            &amp;
+            \vect{u}=\zerovector&amp;\Rightarrow\innerproduct{\vect{u}}{\vect{u}}=0
+            &amp;
+            \innerproduct{\vect{u}}{\vect{u}}=0&amp;\Rightarrow\vect{u}=\zerovector</mrow>
         </md>.</p>
         <p>The results contained in <xref ref="theorem-PIP" acro="PIP" autoname="yes"/> are summarized by saying <q>the inner product is <term>positive definite</term>.</q></p>
         <computation xml:id="sage-EVIC" acro="EVIC">
             <title>Exact Versus Inexact Computations</title>
             <index>exact vs.\ inexact computations</index>
-            <p>We are now at a crossroads in our use of Sage.  So far our computations have involved rational numbers: fractions of two integers.  Sage is able to work with integers of seemingly unlimited size, and then can work with rational numbers exactly.  So all of our computations have been exactly correct so far.  In practice, many computations, especially those that originate with data, are not so precise.  Then we <em>represent</em> real numbers by <q>floating point numbers.</q>  Since the real numbers are infinite, finite computers must fake it with an extremely large, but still finite, collection of numbers.  The price we pay is that some computations will be just slightly imprecise when there is no number available that represents the exact answer.</p>
-            <p>You should now appreciate two problems that occur.  If we were to row-reduce a matrix with floating point numbers, there are potentially many computations and if a small amount of imprecision arises in each one, these errors can accumulate and lead to wildly incorrect answers.  When we row-reduce a matrix, whether or not an entry is zero or not is critically important in the decisions we make about which row operation to perform.  If we have an extremely small number (like <m>10^{-16}</m>) how can we be sure if it is zero or not?</p>
-            <p>Why discuss this now?  What is <m>\alpha=\sqrt{\frac{7}{3}}</m>?  Hard to say exactly, but it is definitely not a rational number.  Norms of vectors will feature prominently in all our discussions about orthogonal vectors, so we now have to recognize the need to work with square roots properly.  We have two strategies in Sage.</p>
-            <p>The number system <c>QQbar</c>, also known as the <q>field of algebraic numbers,</q> is a truly amazing feature of Sage.  It contains the rational numbers, plus <em>every</em> root of <em>every</em> polynomial with coefficients that are rational numbers.  For example, notice that <m>\alpha</m> above is one solution to the polynomial equation <m>3x^2-7=0</m> and thus is a number in <c>QQbar</c>, so Sage can work with it <em>exactly</em>.  These numbers are called <q>algebraic numbers</q> and you can recognize them since they print with a question mark near the end to remind you that when printed as a decimal they are approximations of numbers that Sage carries internally as exact quantities.  For example <m>\alpha</m> can be created with <c>QQbar(sqrt(7/3))</c> and will print as <c>1.527525231651947</c>?.  Notice that complex numbers begin with the introduction of the imaginary number <m>i</m>, which is a root of the polynomial equation <m>x^2+1=0</m>, so the field of algebraic numbers contains many complex numbers.  The downside of <c>QQbar</c> is that computations are slow (relatively speaking), so this number system is most useful for examples and demonstrations.</p>
-            <p>The other strategy is to work strictly with approximate numbers, cognizant of the potential for inaccuracies.  Sage has two such number systems: <c>RDF</c> and <c>CDF</c>, which are comprised of <q>double precision</q> floating point numbers, first limited to just the reals, then expanded to the complexes.  Double-precision refers to the use of 64 bits to store the sign, mantissa and exponent in the representation of a real number.  This gives 53 bits of precision.  Do not confuse these fields with <c>RR</c> and <c>CC</c>, which are similar in appearance but very different in implementation.  Sage has implementations of several computations designed exclusively for <c>RDF</c> and <c>CDF</c>, such as the norm.  And they are very, very fast.  But some computations, like echelon form, can be wildly unreliable with these approximate numbers.  We will have more to say about this as we go.  In practice, you can use <c>CDF</c>, since <c>RDF</c> is a subset and only different in very limited cases.</p>
+            <p>We are now at a crossroads in our use of Sage.  So far our computations have involved rational numbers: fractions of two integers.  Sage is able to work with integers of seemingly unlimited size, and then can work with rational numbers exactly.  So all of our computations have been exactly correct so far.  In practice, many computations, especially those that originate with data, are not so precise.  Then we <em>represent</em> real numbers by <term>floating point numbers</term>.  Since the real numbers are infinite, finite computers must fake it with an extremely large, but still finite, collection of numbers.  The price we pay is that some computations will be just slightly imprecise when there is no number available that represents the exact answer.</p>
+            <p>You should now appreciate two problems that occur.  If we were to row-reduce a matrix with floating point numbers, there are potentially many computations and if a small amount of imprecision arises in each one, these errors can accumulate and lead to wildly incorrect answers.  When we row-reduce a matrix, whether or not an entry is zero or not is critically important in the decisions we make about which row operation to perform.  If we have an extremely small number, such as <m>10^{-16}</m>, how can we be sure if it is zero or not?</p>
+            <p>Why discuss this now?  What is <m>\alpha=\sqrt{7/3}</m>?  Hard to say exactly, but it is definitely not a rational number.  Norms of vectors will feature prominently in all our discussions about orthogonal vectors, so we now have to recognize the need to work with square roots properly.  We have two strategies in Sage.</p>
+            <p>The number system <c>QQbar</c>, also known as the <term>field of algebraic numbers</term>, is a truly amazing feature of Sage.  It contains the rational numbers, plus <em>every</em> root of <em>every</em> polynomial with coefficients that are rational numbers.  For example, notice that <m>\alpha</m> above is one solution to the polynomial equation <m>3x^2-7=0</m> and thus is a number in <c>QQbar</c>, so Sage can work with it <em>exactly</em>.  These numbers are called <q>algebraic numbers</q> and you can recognize them since they print with a question mark near the end to remind you that when printed as a decimal they are approximations of numbers that Sage carries internally as exact quantities.  For example <m>\alpha</m> can be created with <c>QQbar(sqrt(7/3))</c> and will print as <c>1.527525231651947</c>?.  Notice that complex numbers begin with the introduction of the imaginary number <m>i</m>, which is a root of the polynomial equation <m>x^2+1=0</m>, so the field of algebraic numbers contains many complex numbers.  The downside of <c>QQbar</c> is that computations are slow (relatively speaking), so this number system is most useful for examples and demonstrations.</p>
+            <p>The other strategy is to work strictly with approximate numbers, cognizant of the potential for inaccuracies.  Sage has two such number systems: <c>RDF</c> and <c>CDF</c>, which are comprised of <term>double precision</term> floating point numbers, first limited to just the reals, then expanded to the complexes.  Double-precision refers to the use of 64 bits to store the sign, mantissa and exponent in the representation of a real number.  This gives 53 bits of precision.  Do not confuse these fields with <c>RR</c> and <c>CC</c>, which are similar in appearance but very different in implementation.  Sage has implementations of several computations designed exclusively for <c>RDF</c> and <c>CDF</c>, such as the norm.  And they are very, very fast.  But some computations, like echelon form, can be wildly unreliable with these approximate numbers.  We will have more to say about this as we go.  In practice, you can use <c>CDF</c>, since <c>RDF</c> is a subset and only different in very limited cases.</p>
             <p>In summary, <c>QQbar</c> is an extension of <c>QQ</c> which allows exact computations, but can be slow for large examples.  <c>RDF</c> and <c>CDF</c> are fast, with special algorithms to control much of the imprecision in some, but not all, computations.  So we need to be vigilant and skeptical when we work with these approximate numbers.  We will use both strategies, as appropriate.</p>
         </computation>
         <computation xml:id="sage-CNIP" acro="CNIP">
@@ -382,7 +384,7 @@
                 (5.0 + 3.0*I, 2.0 - 6.0*I)
                 </output>
             </sage>
-            <p>The term <q>inner product</q> means slightly different things to different people.  For some, it is the <q>dot product</q> that you may have seen in a calculus or physics course.  Our inner product could be called the <q>Hermitian inner product</q> to emphasize the use of vectors over the complex numbers and conjugating some of the entries.  So Sage has a <c>.dot_product()</c>, <c>.inner_product()</c>, and <c>.hermitian_inner_product()</c> <mdash/> we want to use the last one.</p>
+            <p>The term <term>inner product</term> means slightly different things to different people.  For some, it is the <term>dot product</term> that you may have seen in a calculus or physics course.  Our inner product could be called the <term>Hermitian inner product</term> to emphasize the use of vectors over the complex numbers and conjugating some of the entries.  So Sage has a <c>.dot_product()</c>, <c>.inner_product()</c>, and <c>.hermitian_inner_product()</c> <mdash/> we want to use the last one.</p>
             <p>From now on, when we mention an inner product in the context of using Sage, we will mean <c>.hermitian_inner_product()</c>.  We will redo the first part of <xref ref="example-CSIP" acro="CSIP" autoname="yes"/>.  Notice that the syntax is a bit asymmetric.</p>
             <sage xml:id="sagecell-CNIP-5">
                 <input>
@@ -459,7 +461,7 @@
     </subsection>
     <subsection xml:id="subsection-O-OV" acro="OV">
         <title>Orthogonal Vectors</title>
-        <p><q>Orthogonal</q> is a generalization of <q>perpendicular.</q>  You may have used mutually perpendicular vectors in a physics class, or you may recall from a calculus class that perpendicular vectors have a zero dot product.  We will now extend these ideas into the realm of higher dimensions and complex scalars.</p>
+        <p><term>Orthogonal</term> is a generalization of <term>perpendicular</term>.  You may have used mutually perpendicular vectors in a physics class, or you may recall from a calculus class that perpendicular vectors have a zero dot product.  We will now extend these ideas into the realm of higher dimensions and complex scalars.</p>
         <definition xml:id="definition-OV" acro="OV">
             <title>Orthogonal Vectors</title>
             <index>
@@ -471,8 +473,8 @@
             </statement>
         </definition>
         <example xml:id="example-TOV" acro="TOV">
-            <index>orthogonal vectors</index>
             <title>Two orthogonal vectors</title>
+            <index>orthogonal vectors</index>
             <p>The vectors<md>
                 <mrow>\vect{u}&amp;=\colvector{2 + 3i\\4 - 2i\\1 + i\\1 + i}
                 &amp;
@@ -545,11 +547,11 @@
         <!--  GramSchmidt[{{1+I,1, 1-I,I},{I,1+I,-1, -I}, {I,-I, -1+I,1}, {-1-I,I,1,-1}}, -->
         <!--  InnerProduct(arrow)(Conjugate[#1].#2&)]//Simplify -->
         <example xml:id="example-AOS" acro="AOS">
+            <title>An orthogonal set</title>
             <index>
                 <main>orthogonal</main>
                 <sub>set</sub>
             </index>
-            <title>An orthogonal set</title>
             <p>The set<me>\set{\vect{x}_1,\,\vect{x}_2,\,\vect{x}_3,\,\vect{x}_4}=
             \set{
             \colvector{1+i\\1\\1-i\\i},\,
@@ -616,13 +618,13 @@
     <subsection xml:id="subsection-O-GSP" acro="GSP">
         <title>Gram-Schmidt Procedure</title>
         <p>The Gram-Schmidt Procedure is really a theorem.  It says that if we begin with a linearly independent set of <m>p</m> vectors, <m>S</m>, then we can do a number of calculations with these vectors and produce an orthogonal set of <m>p</m> vectors, <m>T</m>, so that <m>\spn{S}=\spn{T}</m>.  Given the large number of computations involved, it is indeed a procedure to do all the necessary computations, and it is best employed on a computer.  However, it also has value in proofs where we may on occasion wish to replace a linearly independent set by an orthogonal set.</p>
-        <p>This is our first occasion to use the technique of <q>mathematical induction</q> for a proof, a technique we will see again several times, especially in <xref ref="chapter-D" acro="D" autoname="yes"/>.  So study the simple example described in Proof Technique<nbsp/><xref ref="technique-I" acro="I" autoname="no"/> first.</p>
+        <p>This is our first occasion to use the technique of <term>mathematical induction</term> for a proof, a technique we will see again several times, especially in <xref ref="chapter-D" acro="D" autoname="yes"/>.  So study the simple example described in Proof Technique<nbsp/><xref ref="technique-I" acro="I" autoname="no"/> first.</p>
         <theorem xml:id="theorem-GSP" acro="GSP">
+            <title>Gram-Schmidt Procedure</title>
             <index>
                 <main>Gram-Schmidt</main>
                 <sub>column vectors</sub>
             </index>
-            <title>Gram-Schmidt Procedure</title>
             <statement>
                 <p>Suppose that <m>S=\set{\vectorlist{v}{p}}</m> is a linearly independent set of vectors in <m>\complex{m}</m>.  Define the vectors <m>\vect{u}_i</m>, <m>1\leq i\leq p</m> by<me>\vect{u}_i=\vect{v}_i
                 -\frac{\innerproduct{\vect{u}_1}{\vect{v}_i}}{\innerproduct{\vect{u}_1}{\vect{u}_1}}\vect{u}_1
@@ -643,7 +645,7 @@
                 <p>We show that <m>\spn{T}=\spn{S}</m>, by first establishing that <m>\spn{T}\subseteq\spn{S}</m>.  Suppose <m>\vect{x}\in\spn{T}</m>, so<me>\vect{x}=\lincombo{a}{u}{p}</me>.  The term <m>a_p\vect{u}_p</m> is a linear combination of vectors from <m>T^\prime</m> and the vector <m>\vect{v}_p</m>, while the remaining terms are a linear combination of vectors from <m>T^\prime</m>.  Since <m>\spn{T^\prime}=\spn{S^\prime}</m>, any term that is a multiple of a vector from <m>T^\prime</m> can be rewritten as a linear combination of vectors from <m>S^\prime</m>.  The remaining term <m>a_p\vect{v}_p</m> is a multiple of a vector in <m>S</m>.  So we see that <m>\vect{x}</m> can be rewritten as a linear combination of vectors from <m>S</m>, <ie/> <m>\vect{x}\in\spn{S}</m>.</p>
                 <p>To show that <m>\spn{S}\subseteq\spn{T}</m>, begin with <m>\vect{y}\in\spn{S}</m>, so<me>\vect{y}=\lincombo{a}{v}{p}</me>.</p>
                 <p>Rearrange our defining equation for <m>\vect{u}_p</m> by solving for <m>\vect{v}_p</m>.  Then the term <m>a_p\vect{v}_p</m> is a multiple of a linear combination of elements of <m>T</m>.  The remaining terms are a linear combination of <m>\vectorlist{v}{p-1}</m>, hence an element of <m>\spn{S^\prime}=\spn{T^\prime}</m>.  Thus these remaining terms can be written as a linear combination of the vectors in <m>T^\prime</m>.   So <m>\vect{y}</m> is a linear combination of vectors from <m>T</m>, <ie/> <m>\vect{y}\in\spn{T}</m>.</p>
-                <p>The elements of <m>T^\prime</m> are nonzero, but what about <m>\vect{u}_p</m>?  Suppose to the contrary that <m>\vect{u}_p=\zerovector</m>,<md>
+                <p>The elements of <m>T^\prime</m> are nonzero, but what about <m>\vect{u}_p</m>?  Suppose to the contrary that <m>\vect{u}_p=\zerovector</m><md>
                 <mrow>\zerovector&amp;=\vect{u}_p=\vect{v}_p
                 -\frac{\innerproduct{\vect{u}_1}{\vect{v}_p}}{\innerproduct{\vect{u}_1}{\vect{u}_1}}\vect{u}_1
                 -\frac{\innerproduct{\vect{u}_2}{\vect{v}_p}}{\innerproduct{\vect{u}_2}{\vect{u}_2}}\vect{u}_2
@@ -698,19 +700,20 @@
             </proof>
         </theorem>
         <example xml:id="example-GSTV" acro="GSTV">
+            <title>Gram-Schmidt of three vectors</title>
             <index>
                 <main>Gram-Schmidt</main>
                 <sub>three vectors</sub>
             </index>
-            <title>Gram-Schmidt of three vectors</title>
             <p>We will illustrate the Gram-Schmidt process with three vectors.  Begin with the linearly independent (check this!) set<me>S=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3}=\set{
             \colvector{1\\1+i\\1},\,
             \colvector{-i\\1\\1+i},\,
             \colvector{0\\i\\i}
             }</me>.</p>
             <p>Then<md>
-                <mrow>\vect{u}_1&amp;=\vect{v_1}=\colvector{1\\1+i\\1}</mrow>
-                <mrow>\vect{u}_2&amp;=\vect{v}_2
+                <mrow>\vect{u}_1&amp;=\vect{v_1}=\colvector{1\\1+i\\1}
+                \qquad
+                \vect{u}_2=\vect{v}_2
                 -\frac{\innerproduct{\vect{u}_1}{\vect{v}_2}}{\innerproduct{\vect{u}_1}{\vect{u}_1}}\vect{u}_1
                 =\frac{1}{4}\colvector{-2-3i\\1-i\\2+5i}</mrow>
                 <mrow>\vect{u}_3&amp;=\vect{v}_3
@@ -751,8 +754,9 @@
                 \norm{\vect{u}_3}=\frac{\sqrt{2}}{\sqrt{11}}</mrow>.
             </md></p>
             <p>Converting each vector to a norm of <m>1</m>, yields an orthonormal set<md>
-                <mrow>\vect{w}_1&amp;=\frac{1}{2}\colvector{1\\1+i\\1}</mrow>
-                <mrow>\vect{w}_2&amp;=\frac{1}{\frac{1}{2}\sqrt{11}}\frac{1}{4}\colvector{-2-3i\\1-i\\2+5i}=\frac{1}{2\sqrt{11}}\colvector{-2-3i\\1-i\\2+5i}</mrow>
+                <mrow>\vect{w}_1&amp;=\frac{1}{2}\colvector{1\\1+i\\1}
+                \qquad
+                \vect{w}_2=\frac{1}{\frac{1}{2}\sqrt{11}}\frac{1}{4}\colvector{-2-3i\\1-i\\2+5i}=\frac{1}{2\sqrt{11}}\colvector{-2-3i\\1-i\\2+5i}</mrow>
                 <mrow>\vect{w}_3&amp;=\frac{1}{\frac{\sqrt{2}}{\sqrt{11}}}\frac{1}{11}\colvector{-3-i\\1+3i\\-1-i}=\frac{1}{\sqrt{22}}\colvector{-3-i\\1+3i\\-1-i}</mrow>
             </md>.</p>
         </example>
