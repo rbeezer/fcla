@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      A First Course in Linear Algebra        -->
+<!--                                              -->
+<!-- Copyright (C) 2004-2017  Robert A. Beezer    -->
+<!-- See the file COPYING for copying conditions. -->
+
 <section xml:id="section-FS" acro="FS">
     <title>Four Subsets</title>
-    <!-- %%%%%%%%%% -->
-    <!-- % -->
-    <!-- %  Section FS -->
-    <!-- %  Four Subsets -->
-    <!-- % -->
-    <!-- %%%%%%%%%% -->
     <introduction>
         <p>There are four natural subsets associated with a matrix.  We have met three already: the null space, the column space and the row space.  In this section we will introduce a fourth, the left null space.  The objective of this section is to describe one procedure that will allow us to find linearly independent sets that span each of these four sets of column vectors.  Along the way, we will make a connection with the inverse of a matrix, so <xref ref="theorem-FS" acro="FS" autoname="yes"/> will tie together most all of this chapter (and the entire course so far).</p>
     </introduction>
@@ -29,48 +31,43 @@
                 </usage>
             </notation>
         </definition>
-        <p>The left null space will not feature prominently in the sequel, but we can explain its name and connect it to row operations.   Suppose <m>\vect{y}\in\lns{A}</m>.  Then by <xref ref="definition-LNS" acro="LNS" autoname="yes"/>, <m>\transpose{A}\vect{y}=\zerovector</m>.  We can then write
-<md><mrow>\transpose{\zerovector}
-&amp;=\transpose{\left(\transpose{A}\vect{y}\right)}
-&amp;&amp;<xref ref="definition-LNS" acro="LNS" autoname="yes"/></mrow><mrow>&amp;=\transpose{\vect{y}}\transpose{\left(\transpose{A}\right)}
-&amp;&amp;<xref ref="theorem-MMT" acro="MMT" autoname="yes"/></mrow><mrow>&amp;=\transpose{\vect{y}}A
-&amp;&amp;<xref ref="theorem-TT" acro="TT" autoname="yes"/></mrow></md>
-</p>
+        <p>The left null space will not feature prominently in the sequel, but we can explain its name and connect it to row operations.   Suppose <m>\vect{y}\in\lns{A}</m>.  Then by <xref ref="definition-LNS" acro="LNS" autoname="yes"/>, <m>\transpose{A}\vect{y}=\zerovector</m>.  We can then write<md>
+            <mrow>\transpose{\zerovector}
+            &amp;=\transpose{\left(\transpose{A}\vect{y}\right)}&amp;&amp;
+                <xref ref="definition-LNS" acro="LNS" autoname="yes"/></mrow>
+            <mrow>&amp;=\transpose{\vect{y}}\transpose{\left(\transpose{A}\right)}&amp;&amp;
+                <xref ref="theorem-MMT" acro="MMT" autoname="yes"/></mrow>
+            <mrow>&amp;=\transpose{\vect{y}}A&amp;&amp;
+                <xref ref="theorem-TT" acro="TT" autoname="yes"/></mrow>
+        </md>.</p>
         <p>The product <m>\transpose{\vect{y}}A</m> can be viewed as the components of <m>\vect{y}</m> acting as the scalars in a linear combination of the <em>rows</em> of <m>A</m>.  And the result is a <q>row vector</q>, <m>\transpose{\zerovector}</m> that is totally zeros.  When we apply a sequence of row operations to a matrix, each row of the resulting matrix is some linear combination of the rows.  These observations tell us that the vectors in the left null space are scalars that record a sequence of row operations that result in a row of zeros in the row-reduced version of the matrix.  We will see this idea more explicitly in the course of proving <xref ref="theorem-FS" acro="FS" autoname="yes"/>.</p>
         <example xml:id="example-LNS" acro="LNS">
-            <index>left null space</index>
             <title>Left null space</title>
-            <p>We will find the left null space of
-<me>A=
-\begin{bmatrix}
- 1 &amp; -3 &amp; 1 \\
- -2 &amp; 1 &amp; 1 \\
- 1 &amp; 5 &amp; 1 \\
- 9 &amp; -4 &amp; 0
-\end{bmatrix}</me>
-</p>
-            <p>We transpose <m>A</m> and row-reduce,
-<me>\transpose{A}=
-\begin{bmatrix}
- 1 &amp; -2 &amp; 1 &amp; 9 \\
- -3 &amp; 1 &amp; 5 &amp; -4 \\
- 1 &amp; 1 &amp; 1 &amp; 0
-\end{bmatrix}
-\rref
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 0 &amp; 2 \\
- 0 &amp; \leading{1} &amp; 0 &amp; -3 \\
- 0 &amp; 0 &amp; \leading{1} &amp; 1
-\end{bmatrix}</me>
-</p>
-            <p>Applying <xref ref="definition-LNS" acro="LNS" autoname="yes"/> and <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> we have
-<me>\lns{A}=\nsp{\transpose{A}}=
-\spn{\set{
-\colvector{-2\\3\\-1\\1}
-}}</me>
-</p>
-            <p>If you row-reduce <m>A</m> you will discover one zero row in the reduced row-echelon form.  This zero row is created by a sequence of row operations, which in total amounts to a linear combination, with scalars <m>a_1=-2</m>, <m>a_2=3</m>, <m>a_3=-1</m> and <m>a_4=1</m>, on the rows of <m>A</m> and which results in the zero vector (check this!).  So the components of the vector describing the left null space of <m>A</m> provide a relation of linear dependence on the rows of <m>A</m>.
-</p>
+            <index>left null space</index>
+            <p>We will find the left null space of<me>A=
+            \begin{bmatrix}
+             1 &amp; -3 &amp; 1 \\
+             -2 &amp; 1 &amp; 1 \\
+             1 &amp; 5 &amp; 1 \\
+             9 &amp; -4 &amp; 0
+            \end{bmatrix}</me>.</p>
+            <p>We transpose <m>A</m> and row-reduce,<me>\transpose{A}=
+            \begin{bmatrix}
+             1 &amp; -2 &amp; 1 &amp; 9 \\
+             -3 &amp; 1 &amp; 5 &amp; -4 \\
+             1 &amp; 1 &amp; 1 &amp; 0
+            \end{bmatrix}
+            \rref
+            \begin{bmatrix}
+             \leading{1} &amp; 0 &amp; 0 &amp; 2 \\
+             0 &amp; \leading{1} &amp; 0 &amp; -3 \\
+             0 &amp; 0 &amp; \leading{1} &amp; 1
+            \end{bmatrix}</me>.</p>
+            <p>Applying <xref ref="definition-LNS" acro="LNS" autoname="yes"/> and <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> we have<me>\lns{A}=\nsp{\transpose{A}}=
+            \spn{\set{
+            \colvector{-2\\3\\-1\\1}
+            }}</me>.</p>
+            <p>If you row-reduce <m>A</m> you will discover one zero row in the reduced row-echelon form.  This zero row is created by a sequence of row operations, which in total amounts to a linear combination, with scalars <m>a_1=-2</m>, <m>a_2=3</m>, <m>a_3=-1</m> and <m>a_4=1</m>, on the rows of <m>A</m> and which results in the zero vector (check this!).  So the components of the vector describing the left null space of <m>A</m> provide a relation of linear dependence on the rows of <m>A</m>.</p>
         </example>
         <computation xml:id="sage-LNS" acro="LNS">
             <title>Left Null Spaces</title>
@@ -79,17 +76,17 @@
             <p>Given Sage's preference for row vectors, the simpler name <c>.kernel()</c> is a synonym for <c>.left_kernel()</c>.  Given your text's preference for column vectors, we will continue to rely on the <c>.right_kernel()</c>.  Left kernels in Sage have the same options as right kernels and produce vector spaces as output in the same manner.  Once created, a vector space all by itself (with no history) is neither left or right.  Here is a quick repeat of <xref ref="example-LNS" acro="LNS" autoname="yes"/>.</p>
             <sage xml:id="sagecell-LNS-1">
                 <input>
-A = matrix(QQ, [[ 1, -3, 1],
-                [-2,  1, 1],
-                [ 1,  5, 1],
-                [ 9, -4, 0]])
-A.left_kernel(basis='pivot')
-</input>
+                A = matrix(QQ, [[ 1, -3, 1],
+                                [-2,  1, 1],
+                                [ 1,  5, 1],
+                                [ 9, -4, 0]])
+                A.left_kernel(basis='pivot')
+                </input>
                 <output>
-Vector space of degree 4 and dimension 1 over Rational Field
-User basis matrix:
-[-2  3 -1  1]
-</output>
+                Vector space of degree 4 and dimension 1 over Rational Field
+                User basis matrix:
+                [-2  3 -1  1]
+                </output>
             </sage>
         </computation>
     </subsection>
@@ -98,120 +95,105 @@ User basis matrix:
         <p>We have three ways to build the column space of a matrix.  First, we can use just the definition, <xref ref="definition-CSM" acro="CSM" autoname="yes"/>, and express the column space as a span of the columns of the matrix.  A second approach gives us the column space as the span of <em>some</em> of the columns of the matrix, and additionally, this set is linearly independent (<xref ref="theorem-BCS" acro="BCS" autoname="yes"/>).  Finally, we can transpose the matrix, row-reduce the transpose, kick out zero rows, and write the remaining rows as column vectors.  <xref ref="theorem-CSRST" acro="CSRST" autoname="yes"/> and <xref ref="theorem-BRS" acro="BRS" autoname="yes"/> tell us that the resulting vectors are linearly independent and their span is the column space of the original matrix.</p>
         <p>We will now demonstrate a fourth method by way of a rather complicated example.  Study this example carefully, but realize that its main purpose is to motivate a theorem that simplifies much of the apparent complexity.  So other than an instructive exercise or two, the procedure we are about to describe will not be a usual approach to computing a column space.</p>
         <example xml:id="example-CSANS" acro="CSANS">
+            <title>Column space as null space</title>
             <index>
                 <main>column space</main>
                 <sub>as null space</sub>
             </index>
-            <title>Column space as null space</title>
-            <p>Let us find the column space of the matrix <m>A</m> below with a new approach.
-<me>A=
-\begin{bmatrix}
- 10 &amp; 0 &amp; 3 &amp; 8 &amp; 7 \\
- -16 &amp; -1 &amp; -4 &amp; -10 &amp; -13 \\
- -6 &amp; 1 &amp; -3 &amp; -6 &amp; -6 \\
- 0 &amp; 2 &amp; -2 &amp; -3 &amp; -2 \\
- 3 &amp; 0 &amp; 1 &amp; 2 &amp; 3 \\
- -1 &amp; -1 &amp; 1 &amp; 1 &amp; 0
-\end{bmatrix}</me>
-</p>
-            <p>By <xref ref="theorem-CSCS" acro="CSCS" autoname="yes"/> we know that the column vector <m>\vect{b}</m> is in the column space of <m>A</m> if and only if the linear system <m>\linearsystem{A}{\vect{b}}</m> is consistent.  So let us try to solve this system in full generality, using a vector of variables for the vector of constants.  In other words, which vectors <m>\vect{b}</m> lead to consistent systems?  Begin by forming the augmented matrix <m>\augmented{A}{\vect{b}}</m> with a general version of <m>\vect{b}</m>,
-<me>\augmented{A}{\vect{b}}=
-\begin{bmatrix}
- 10 &amp; 0 &amp; 3 &amp; 8 &amp; 7 &amp; b_1 \\
- -16 &amp; -1 &amp; -4 &amp; -10 &amp; -13 &amp; b_2 \\
- -6 &amp; 1 &amp; -3 &amp; -6 &amp; -6 &amp; b_3 \\
- 0 &amp; 2 &amp; -2 &amp; -3 &amp; -2 &amp; b_4 \\
- 3 &amp; 0 &amp; 1 &amp; 2 &amp; 3 &amp; b_ 5\\
- -1 &amp; -1 &amp; 1 &amp; 1 &amp; 0 &amp; b_ 6
-\end{bmatrix}</me>
-</p>
-            <p>To identify solutions we will bring this matrix to reduced row-echelon form.  Despite the presence of variables in the last column, there is nothing to stop us from doing this, except numerical computational routines cannot be used, and even some of the symbolic algebra routines do some unexpected maneuvers with this computation.  So do it by hand.  Yes, it is a bit of work.  But worth it.  We'll still be here when you get back.  Notice along the way that the row operations are <em>exactly</em> the same ones you would do if you were just row-reducing the coefficient matrix alone, say in connection with a homogeneous system of equations.  The column with the <m>b_i</m> acts as a sort of bookkeeping device.  There are many different possibilities for the result, depending on what order you choose to perform the row operations, but shortly we will all be on the same page.  If you want to match our work right now, use row 5 to remove any occurrence of <m>b_1</m> from the other entries of the last column, and use row 6 to remove any occurrence of <m>b_2</m> from the last columns. We have:
-<md><mrow>\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 2 &amp; b_3 - b_4 + 2 b_5 - b_6\\
- 0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; -3 &amp; -2 b_3 + 3 b_4 - 3 b_5 + 3 b_6\\
- 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 1 &amp; b_3 + b_4 + 3 b_5 + 3 b_6\\
- 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2 &amp; -2 b_3 + b_4 - 4 b_5\\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; b_1 + 3 b_3 - b_4 + 3 b_5 + b_6\\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; b_2 - 2 b_3 + b_4 + b_5 - b_6
-\end{bmatrix}</mrow></md>
-</p>
-            <p>Our goal is to identify those vectors <m>\vect{b}</m> which make <m>\linearsystem{A}{\vect{b}}</m> consistent.  By <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> we know that the consistent systems are precisely those without a pivot column in the last column.  Are the expressions in the last column of rows 5 and 6 equal to zero, or are they leading 1's?  The answer is: maybe.  It depends on <m>\vect{b}</m>.  With a nonzero value for either of these expressions, we would scale the row and produce a leading 1.   So we get a consistent system, and <m>\vect{b}</m> is in the column space, if and only if these two expressions are both simultaneously zero.  In other words, members of the column space of <m>A</m> are exactly those vectors <m>\vect{b}</m> that satisfy
-<md><mrow>b_1 + 3 b_3 - b_4 + 3 b_5 + b_6 &amp; = 0</mrow><mrow>b_2 - 2 b_3 + b_4 + b_5 - b_6 &amp; = 0</mrow></md>
-</p>
-            <p>Hmmm.  Looks suspiciously like a homogeneous system of two equations with six variables.  If you have been playing along (and we hope you have) then you may have a slightly different system, but you should have just two equations.  Form the coefficient matrix and row-reduce (notice that the system above has a coefficient matrix that is already in reduced row-echelon form).  We should all be together now with the same matrix,
-<me>L=
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 3 &amp; -1 &amp; 3 &amp; 1 \\
- 0 &amp; \leading{1} &amp; -2 &amp; 1 &amp; 1 &amp; -1
-\end{bmatrix}</me>
-</p>
-            <p>So, <m>\csp{A}=\nsp{L}</m> and we can apply <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> to obtain a linearly independent set to use in a span construction,
-<me>\csp{A}=\nsp{L}=\spn{\set{
-\colvector{-3\\2\\1\\0\\0\\0},\,
-\colvector{1\\-1\\0\\1\\0\\0},\,
-\colvector{-3\\-1\\0\\0\\1\\0},\,
-\colvector{-1\\1\\0\\0\\0\\1}
-}}</me>
-</p>
+            <p>Let us find the column space of the matrix <m>A</m> below with a new approach.<me>A=
+            \begin{bmatrix}
+             10 &amp; 0 &amp; 3 &amp; 8 &amp; 7 \\
+             -16 &amp; -1 &amp; -4 &amp; -10 &amp; -13 \\
+             -6 &amp; 1 &amp; -3 &amp; -6 &amp; -6 \\
+             0 &amp; 2 &amp; -2 &amp; -3 &amp; -2 \\
+             3 &amp; 0 &amp; 1 &amp; 2 &amp; 3 \\
+             -1 &amp; -1 &amp; 1 &amp; 1 &amp; 0
+            \end{bmatrix}</me>.</p>
+            <p>By <xref ref="theorem-CSCS" acro="CSCS" autoname="yes"/> we know that the column vector <m>\vect{b}</m> is in the column space of <m>A</m> if and only if the linear system <m>\linearsystem{A}{\vect{b}}</m> is consistent.  So let us try to solve this system in full generality, using a vector of variables for the vector of constants.  In other words, which vectors <m>\vect{b}</m> lead to consistent systems?  Begin by forming the augmented matrix <m>\augmented{A}{\vect{b}}</m> with a general version of <m>\vect{b}</m><me>\augmented{A}{\vect{b}}=
+            \begin{bmatrix}
+             10 &amp; 0 &amp; 3 &amp; 8 &amp; 7 &amp; b_1 \\
+             -16 &amp; -1 &amp; -4 &amp; -10 &amp; -13 &amp; b_2 \\
+             -6 &amp; 1 &amp; -3 &amp; -6 &amp; -6 &amp; b_3 \\
+             0 &amp; 2 &amp; -2 &amp; -3 &amp; -2 &amp; b_4 \\
+             3 &amp; 0 &amp; 1 &amp; 2 &amp; 3 &amp; b_ 5\\
+             -1 &amp; -1 &amp; 1 &amp; 1 &amp; 0 &amp; b_ 6
+            \end{bmatrix}</me>.</p>
+            <p>To identify solutions we will bring this matrix to reduced row-echelon form.  Despite the presence of variables in the last column, there is nothing to stop us from doing this, except numerical computational routines cannot be used, and even some of the symbolic algebra routines do some unexpected maneuvers with this computation.  So do it by hand.  Yes, it is a bit of work.  But worth it.  We'll still be here when you get back.  Notice along the way that the row operations are <em>exactly</em> the same ones you would do if you were just row-reducing the coefficient matrix alone, say in connection with a homogeneous system of equations.  The column with the <m>b_i</m> acts as a sort of bookkeeping device.  There are many different possibilities for the result, depending on what order you choose to perform the row operations, but shortly we will all be on the same page.  If you want to match our work right now, use row 5 to remove any occurrence of <m>b_1</m> from the other entries of the last column, and use row 6 to remove any occurrence of <m>b_2</m> from the last columns. We have<md>
+                <mrow>\begin{bmatrix}
+                 \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 2 &amp; b_3 - b_4 + 2 b_5 - b_6\\
+                 0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; -3 &amp; -2 b_3 + 3 b_4 - 3 b_5 + 3 b_6\\
+                 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 1 &amp; b_3 + b_4 + 3 b_5 + 3 b_6\\
+                 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2 &amp; -2 b_3 + b_4 - 4 b_5\\
+                 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; b_1 + 3 b_3 - b_4 + 3 b_5 + b_6\\
+                 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; b_2 - 2 b_3 + b_4 + b_5 - b_6
+                \end{bmatrix}</mrow>
+            </md>.</p>
+            <p>Our goal is to identify those vectors <m>\vect{b}</m> which make <m>\linearsystem{A}{\vect{b}}</m> consistent.  By <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> we know that the consistent systems are precisely those without a pivot column in the last column.  Are the expressions in the last column of rows 5 and 6 equal to zero, or are they leading 1's?  The answer is: maybe.  It depends on <m>\vect{b}</m>.  With a nonzero value for either of these expressions, we would scale the row and produce a leading 1.   So we get a consistent system, and <m>\vect{b}</m> is in the column space, if and only if these two expressions are both simultaneously zero.  In other words, members of the column space of <m>A</m> are exactly those vectors <m>\vect{b}</m> that satisfy<md>
+                <mrow>b_1 + 3 b_3 - b_4 + 3 b_5 + b_6 &amp; = 0</mrow>
+                <mrow>b_2 - 2 b_3 + b_4 + b_5 - b_6 &amp; = 0</mrow>
+                </md>.</p>
+            <p>Hmmm.  Looks suspiciously like a homogeneous system of two equations with six variables.  If you have been playing along (and we hope you have) then you may have a slightly different system, but you should have just two equations.  Form the coefficient matrix and row-reduce (notice that the system above has a coefficient matrix that is already in reduced row-echelon form).  We should all be together now with the same matrix<me>L=
+            \begin{bmatrix}
+             \leading{1} &amp; 0 &amp; 3 &amp; -1 &amp; 3 &amp; 1 \\
+             0 &amp; \leading{1} &amp; -2 &amp; 1 &amp; 1 &amp; -1
+            \end{bmatrix}</me>.</p>
+            <p>So, <m>\csp{A}=\nsp{L}</m> and we can apply <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> to obtain a linearly independent set to use in a span construction<me>\csp{A}=\nsp{L}=\spn{\set{
+            \colvector{-3\\2\\1\\0\\0\\0},\,
+            \colvector{1\\-1\\0\\1\\0\\0},\,
+            \colvector{-3\\-1\\0\\0\\1\\0},\,
+            \colvector{-1\\1\\0\\0\\0\\1}
+            }}</me>.</p>
             <p>Whew!  As a postscript to this central example, you may wish to convince yourself that the four vectors above really are elements of the column space.  Do they create consistent systems with <m>A</m> as coefficient matrix?  Can you recognize the constant vector in your description of these solution sets?</p>
-            <p>OK, that was so much fun, let us do it again.  But simpler this time.  And we will all get the same results all the way through.  Doing row operations by hand with variables can be a bit error prone, so let us see if we can improve the process some.  Rather than row-reduce a column vector <m>\vect{b}</m> full of variables, let us write <m>\vect{b}=I_6\vect{b}</m> and we will row-reduce the matrix <m>I_6</m> and when we finish row-reducing, <em>then</em> we will compute the matrix-vector product.  You should first convince yourself that we can operate like this (this is the subject of a future homework exercise).
-<!-- %TODO (see <acroref type="exercise" acro="XX-commutingops-todo" /> on commuting operations). -->
-Rather than augmenting <m>A</m> with <m>\vect{b}</m>, we will instead augment it with <m>I_6</m> (does this feel familiar?),
-<me>M=
-\begin{bmatrix}
- 10 &amp; 0 &amp; 3 &amp; 8 &amp; 7 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
- -16 &amp; -1 &amp; -4 &amp; -10 &amp; -13 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
- -6 &amp; 1 &amp; -3 &amp; -6 &amp; -6 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
- 0 &amp; 2 &amp; -2 &amp; -3 &amp; -2 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
- 3 &amp; 0 &amp; 1 &amp; 2 &amp; 3 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
- -1 &amp; -1 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}</me>
-</p>
-            <p>We want to row-reduce the left-hand side of this matrix, but we will apply the same row operations to the right-hand side as well.  And once we get the left-hand side in reduced row-echelon form, we will continue on to put leading 1's in the final two rows, as well as making pivot columns that contain these two additional leading 1's.  It is these additional row operations that will ensure that we all get to the same place, since the reduced row-echelon form is unique (<xref ref="theorem-RREFU" acro="RREFU" autoname="yes"/>),
-<me>N=
-\begin{bmatrix}
- 1 &amp; 0 &amp; 0 &amp; 0 &amp; 2 &amp; 0 &amp; 0 &amp; 1 &amp; -1 &amp; 2 &amp; -1 \\
- 0 &amp; 1 &amp; 0 &amp; 0 &amp; -3 &amp; 0 &amp; 0 &amp; -2 &amp; 3 &amp; -3 &amp; 3 \\
- 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 3 &amp; 3 \\
- 0 &amp; 0 &amp; 0 &amp; 1 &amp; -2 &amp; 0 &amp; 0 &amp; -2 &amp; 1 &amp; -4 &amp; 0 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 3 &amp; -1 &amp; 3 &amp; 1 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; -2 &amp; 1 &amp; 1 &amp; -1
-\end{bmatrix}</me>
-</p>
-            <p>We are after the final six columns of this matrix, which we will multiply by <m>\vect{b}</m>
-<me>J=
-\begin{bmatrix}
- 0 &amp; 0 &amp; 1 &amp; -1 &amp; 2 &amp; -1 \\
-0 &amp; 0 &amp; -2 &amp; 3 &amp; -3 &amp; 3 \\
-0 &amp; 0 &amp; 1 &amp; 1 &amp; 3 &amp; 3 \\
-0 &amp; 0 &amp; -2 &amp; 1 &amp; -4 &amp; 0 \\
-1 &amp; 0 &amp; 3 &amp; -1 &amp; 3 &amp; 1 \\
-0 &amp; 1 &amp; -2 &amp; 1 &amp; 1 &amp; -1
-\end{bmatrix}</me>
-so
-<me>J\vect{b}=
-\begin{bmatrix}
-0 &amp; 0 &amp; 1 &amp; -1 &amp; 2 &amp; -1 \\
-0 &amp; 0 &amp; -2 &amp; 3 &amp; -3 &amp; 3 \\
-0 &amp; 0 &amp; 1 &amp; 1 &amp; 3 &amp; 3 \\
-0 &amp; 0 &amp; -2 &amp; 1 &amp; -4 &amp; 0 \\
-1 &amp; 0 &amp; 3 &amp; -1 &amp; 3 &amp; 1 \\
-0 &amp; 1 &amp; -2 &amp; 1 &amp; 1 &amp; -1
-\end{bmatrix}
-\colvector{b_1\\b_2\\b_3\\b_4\\b_5\\b_6}
-=
-\colvector{
-b_3 - b_4 + 2 b_5 - b_6\\
--2 b_3 + 3 b_4 - 3 b_5 + 3 b_6\\
-b_3 + b_4 + 3 b_5 + 3 b_6\\
--2 b_3 + b_4 - 4 b_5\\
-b_1 + 3 b_3 - b_4 + 3 b_5 + b_6\\
-b_2 - 2 b_3 + b_4 + b_5 - b_6\\
-}</me>
-</p>
-            <p>So by applying  the same row operations that row-reduce <m>A</m> to the identity matrix (which we could do computationally once <m>I_6</m> is placed alongside of <m>A</m>), we can then arrive at the result of row-reducing a column of symbols where the vector of constants usually resides.  Since the row-reduced version of <m>A</m> has two zero rows, for a consistent system we require that
-<md><mrow>b_1 + 3 b_3 - b_4 + 3 b_5 + b_6 &amp; = 0</mrow><mrow>b_2 - 2 b_3 + b_4 + b_5 - b_6 &amp; = 0</mrow></md>
-</p>
+            <!-- %TODO (see <acroref type="exercise" acro="XX-commutingops-todo" /> on commuting operations). -->
+            <p>OK, that was so much fun, let us do it again.  But simpler this time.  And we will all get the same results all the way through.  Doing row operations by hand with variables can be a bit error prone, so let us see if we can improve the process some.  Rather than row-reduce a column vector <m>\vect{b}</m> full of variables, let us write <m>\vect{b}=I_6\vect{b}</m> and we will row-reduce the matrix <m>I_6</m> and when we finish row-reducing, <em>then</em> we will compute the matrix-vector product.  You should first convince yourself that we can operate like this (this is the subject of a future homework exercise).  Rather than augmenting <m>A</m> with <m>\vect{b}</m>, we will instead augment it with <m>I_6</m> (does this feel familiar?).<me>M=
+            \begin{bmatrix}
+             10 &amp; 0 &amp; 3 &amp; 8 &amp; 7 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+             -16 &amp; -1 &amp; -4 &amp; -10 &amp; -13 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+             -6 &amp; 1 &amp; -3 &amp; -6 &amp; -6 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+             0 &amp; 2 &amp; -2 &amp; -3 &amp; -2 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+             3 &amp; 0 &amp; 1 &amp; 2 &amp; 3 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+             -1 &amp; -1 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
+            \end{bmatrix}</me></p>
+            <p>We want to row-reduce the left-hand side of this matrix, but we will apply the same row operations to the right-hand side as well.  And once we get the left-hand side in reduced row-echelon form, we will continue on to put leading 1's in the final two rows, as well as making pivot columns that contain these two additional leading 1's.  It is these additional row operations that will ensure that we all get to the same place, since the reduced row-echelon form is unique (<xref ref="theorem-RREFU" acro="RREFU" autoname="yes"/>).<me>N=
+            \begin{bmatrix}
+             1 &amp; 0 &amp; 0 &amp; 0 &amp; 2 &amp; 0 &amp; 0 &amp; 1 &amp; -1 &amp; 2 &amp; -1 \\
+             0 &amp; 1 &amp; 0 &amp; 0 &amp; -3 &amp; 0 &amp; 0 &amp; -2 &amp; 3 &amp; -3 &amp; 3 \\
+             0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 3 &amp; 3 \\
+             0 &amp; 0 &amp; 0 &amp; 1 &amp; -2 &amp; 0 &amp; 0 &amp; -2 &amp; 1 &amp; -4 &amp; 0 \\
+             0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 3 &amp; -1 &amp; 3 &amp; 1 \\
+             0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; -2 &amp; 1 &amp; 1 &amp; -1
+            \end{bmatrix}</me></p>
+            <p>We are after the final six columns of this matrix, which we will multiply by <m>\vect{b}</m>.<me>J=
+            \begin{bmatrix}
+             0 &amp; 0 &amp; 1 &amp; -1 &amp; 2 &amp; -1 \\
+            0 &amp; 0 &amp; -2 &amp; 3 &amp; -3 &amp; 3 \\
+            0 &amp; 0 &amp; 1 &amp; 1 &amp; 3 &amp; 3 \\
+            0 &amp; 0 &amp; -2 &amp; 1 &amp; -4 &amp; 0 \\
+            1 &amp; 0 &amp; 3 &amp; -1 &amp; 3 &amp; 1 \\
+            0 &amp; 1 &amp; -2 &amp; 1 &amp; 1 &amp; -1
+            \end{bmatrix}</me>so<me>J\vect{b}=
+            \begin{bmatrix}
+            0 &amp; 0 &amp; 1 &amp; -1 &amp; 2 &amp; -1 \\
+            0 &amp; 0 &amp; -2 &amp; 3 &amp; -3 &amp; 3 \\
+            0 &amp; 0 &amp; 1 &amp; 1 &amp; 3 &amp; 3 \\
+            0 &amp; 0 &amp; -2 &amp; 1 &amp; -4 &amp; 0 \\
+            1 &amp; 0 &amp; 3 &amp; -1 &amp; 3 &amp; 1 \\
+            0 &amp; 1 &amp; -2 &amp; 1 &amp; 1 &amp; -1
+            \end{bmatrix}
+            \colvector{b_1\\b_2\\b_3\\b_4\\b_5\\b_6}
+            =
+            \colvector{
+            b_3 - b_4 + 2 b_5 - b_6\\
+            -2 b_3 + 3 b_4 - 3 b_5 + 3 b_6\\
+            b_3 + b_4 + 3 b_5 + 3 b_6\\
+            -2 b_3 + b_4 - 4 b_5\\
+            b_1 + 3 b_3 - b_4 + 3 b_5 + b_6\\
+            b_2 - 2 b_3 + b_4 + b_5 - b_6\\
+            }</me></p>
+            <p>So by applying  the same row operations that row-reduce <m>A</m> to the identity matrix (which we could do computationally once <m>I_6</m> is placed alongside of <m>A</m>), we can then arrive at the result of row-reducing a column of symbols where the vector of constants usually resides.  Since the row-reduced version of <m>A</m> has two zero rows, for a consistent system we require that<md>
+                <mrow>b_1 + 3 b_3 - b_4 + 3 b_5 + b_6 &amp; = 0</mrow>
+                <mrow>b_2 - 2 b_3 + b_4 + b_5 - b_6 &amp; = 0</mrow>
+                </md></p>
             <p>Now we are exactly back where we were on the first go-round.  Notice that we obtain the matrix <m>L</m> as simply the last two rows and last six columns of <m>N</m>.</p>
         </example>
         <p>This example motivates the remainder of this section, so it is worth careful study.  You might attempt to mimic the second approach with the coefficient matrices of Archetype<nbsp/><xref ref="archetype-I" acro="I" autoname="no"/> and Archetype<nbsp/><xref ref="archetype-J" acro="J" autoname="no"/>.  We will see shortly that the matrix <m>L</m> contains more information about <m>A</m> than just the column space.</p>
@@ -225,102 +207,102 @@ b_2 - 2 b_3 + b_4 + b_5 - b_6\\
             <p>However, we can perform row operations on the final two rows of <c>B</c> to bring Sage's result in line with what we used above for the final two entries of the last column, which are the most critical.  Notice that since the final two rows are almost all zeros, any sequence of row operations on just these two rows will preserve the zeros (and we need only display the final column to keep track of our progress).</p>
             <sage xml:id="sagecell-RRSM-1">
                 <input>
-R.&lt;b1,b2,b3,b4,b5,b6&gt; = QQ[]
-A = matrix(R, [[ 10,  0,  3,   8,   7, b1],
-               [-16, -1, -4, -10, -13, b2],
-               [ -6,  1, -3,  -6,  -6, b3],
-               [  0,  2, -2,  -3,  -2, b4],
-               [  3,  0,  1,   2,   3, b5],
-               [ -1, -1,  1,   1,   0, b6]])
-A
-</input>
+                R.&lt;b1,b2,b3,b4,b5,b6&gt; = QQ[]
+                A = matrix(R, [[ 10,  0,  3,   8,   7, b1],
+                               [-16, -1, -4, -10, -13, b2],
+                               [ -6,  1, -3,  -6,  -6, b3],
+                               [  0,  2, -2,  -3,  -2, b4],
+                               [  3,  0,  1,   2,   3, b5],
+                               [ -1, -1,  1,   1,   0, b6]])
+                A
+                </input>
                 <output>
-[ 10   0   3   8   7  b1]
-[-16  -1  -4 -10 -13  b2]
-[ -6   1  -3  -6  -6  b3]
-[  0   2  -2  -3  -2  b4]
-[  3   0   1   2   3  b5]
-[ -1  -1   1   1   0  b6]
-</output>
+                [ 10   0   3   8   7  b1]
+                [-16  -1  -4 -10 -13  b2]
+                [ -6   1  -3  -6  -6  b3]
+                [  0   2  -2  -3  -2  b4]
+                [  3   0   1   2   3  b5]
+                [ -1  -1   1   1   0  b6]
+                </output>
             </sage>
             <sage xml:id="sagecell-RRSM-2">
                 <input>
-B = copy(A.echelon_form())
-B[0:6,0:5]
-</input>
+                B = copy(A.echelon_form())
+                B[0:6,0:5]
+                </input>
                 <output>
-[ 1  0  0  0  2]
-[ 0  1  0  0 -3]
-[ 0  0  1  0  1]
-[ 0  0  0  1 -2]
-[ 0  0  0  0  0]
-[ 0  0  0  0  0]
-</output>
+                [ 1  0  0  0  2]
+                [ 0  1  0  0 -3]
+                [ 0  0  1  0  1]
+                [ 0  0  0  1 -2]
+                [ 0  0  0  0  0]
+                [ 0  0  0  0  0]
+                </output>
             </sage>
             <sage xml:id="sagecell-RRSM-3">
                 <input>
-B[0:6,5]
-</input>
+                B[0:6,5]
+                </input>
                 <output>
-[ -1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
-[                3*b2 - 8*b3 + 6*b4]
-[ -3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
-[                 b1 + b2 - b3 + b4]
-[     1/4*b1 + 1/4*b2 + 1/4*b3 + b5]
-[1/4*b1 - 3/4*b2 + 9/4*b3 - b4 + b6]
-</output>
+                [ -1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+                [                3*b2 - 8*b3 + 6*b4]
+                [ -3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+                [                 b1 + b2 - b3 + b4]
+                [     1/4*b1 + 1/4*b2 + 1/4*b3 + b5]
+                [1/4*b1 - 3/4*b2 + 9/4*b3 - b4 + b6]
+                </output>
             </sage>
             <sage xml:id="sagecell-RRSM-4">
                 <input>
-B.rescale_row(4, 4); B[0:6, 5]
-</input>
+                B.rescale_row(4, 4); B[0:6, 5]
+                </input>
                 <output>
-[ -1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
-[                3*b2 - 8*b3 + 6*b4]
-[ -3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
-[                 b1 + b2 - b3 + b4]
-[               b1 + b2 + b3 + 4*b5]
-[1/4*b1 - 3/4*b2 + 9/4*b3 - b4 + b6]
-</output>
+                [ -1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+                [                3*b2 - 8*b3 + 6*b4]
+                [ -3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+                [                 b1 + b2 - b3 + b4]
+                [               b1 + b2 + b3 + 4*b5]
+                [1/4*b1 - 3/4*b2 + 9/4*b3 - b4 + b6]
+                </output>
             </sage>
             <sage xml:id="sagecell-RRSM-5">
                 <input>
-B.add_multiple_of_row(5, 4, -1/4); B[0:6, 5]
-</input>
+                B.add_multiple_of_row(5, 4, -1/4); B[0:6, 5]
+                </input>
                 <output>
-[-1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
-[               3*b2 - 8*b3 + 6*b4]
-[-3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
-[                b1 + b2 - b3 + b4]
-[              b1 + b2 + b3 + 4*b5]
-[        -b2 + 2*b3 - b4 - b5 + b6]
-</output>
+                [-1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+                [               3*b2 - 8*b3 + 6*b4]
+                [-3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+                [                b1 + b2 - b3 + b4]
+                [              b1 + b2 + b3 + 4*b5]
+                [        -b2 + 2*b3 - b4 - b5 + b6]
+                </output>
             </sage>
             <sage xml:id="sagecell-RRSM-6">
                 <input>
-B.rescale_row(5, -1); B[0:6, 5]
-</input>
+                B.rescale_row(5, -1); B[0:6, 5]
+                </input>
                 <output>
-[-1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
-[               3*b2 - 8*b3 + 6*b4]
-[-3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
-[                b1 + b2 - b3 + b4]
-[              b1 + b2 + b3 + 4*b5]
-[         b2 - 2*b3 + b4 + b5 - b6]
-</output>
+                [-1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+                [               3*b2 - 8*b3 + 6*b4]
+                [-3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+                [                b1 + b2 - b3 + b4]
+                [              b1 + b2 + b3 + 4*b5]
+                [         b2 - 2*b3 + b4 + b5 - b6]
+                </output>
             </sage>
             <sage xml:id="sagecell-RRSM-7">
                 <input>
-B.add_multiple_of_row(4, 5,-1); B[0:6, 5]
-</input>
+                B.add_multiple_of_row(4, 5,-1); B[0:6, 5]
+                </input>
                 <output>
-[-1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
-[               3*b2 - 8*b3 + 6*b4]
-[-3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
-[                b1 + b2 - b3 + b4]
-[       b1 + 3*b3 - b4 + 3*b5 + b6]
-[         b2 - 2*b3 + b4 + b5 - b6]
-</output>
+                [-1/4*b1 - 5/4*b2 + 11/4*b3 - 2*b4]
+                [               3*b2 - 8*b3 + 6*b4]
+                [-3/2*b1 + 3/2*b2 - 13/2*b3 + 4*b4]
+                [                b1 + b2 - b3 + b4]
+                [       b1 + 3*b3 - b4 + 3*b5 + b6]
+                [         b2 - 2*b3 + b4 + b5 - b6]
+                </output>
             </sage>
             <p>Notice that the last two entries of the final column now have just a single <c>b1</c> and a single <c>B2</c>. We could continue to perform more row operations by hand, using the last two rows to progressively eliminate <c>b1</c> and <c>b2</c> from the other four expressions of the last column.  Since the two last rows have zeros in their first five entries, only the entries in the final column would change.  You will see that much of this section is about how to automate these final calculations.</p>
         </computation>
@@ -336,109 +318,99 @@ B.add_multiple_of_row(4, 5,-1); B[0:6, 5]
             </index>
             <statement>
                 <p>Suppose <m>A</m> is an <m>m\times n</m> matrix.  Extend <m>A</m> on its right side with the addition of an <m>m\times m</m> identity matrix to form an <m>m\times (n + m)</m> matrix <m>M</m>.  Use row operations to bring <m>M</m> to reduced row-echelon form and call the result <m>N</m>.  <m>N</m> is the <term>extended reduced row-echelon form</term> of <m>A</m>, and we will standardize on names for five submatrices (<m>B</m>, <m>C</m>, <m>J</m>, <m>K</m>, <m>L</m>) of <m>N</m>.</p>
-                <p>Let <m>B</m> denote the <m>m\times n</m> matrix formed from the first <m>n</m> columns of <m>N</m> and let <m>J</m> denote the <m>m\times m</m> matrix formed from the last <m>m</m> columns of <m>N</m>.  Suppose that <m>B</m> has <m>r</m> nonzero rows.  Further partition <m>N</m> by letting <m>C</m> denote the <m>r\times n</m> matrix formed from all of the nonzero rows of <m>B</m>.  Let <m>K</m> be the <m>r\times m</m> matrix formed from the first <m>r</m> rows of <m>J</m>, while <m>L</m> will be the <m>(m-r)\times m</m> matrix formed from the bottom <m>m-r</m> rows of <m>J</m>.  Pictorially,
-<me>M=[A\vert I_m]
-\rref
-N=[B\vert J]
-=
-\left[\begin{array}{c|c}C&amp;K\\\hline0&amp;L\end{array}\right]</me>
-</p>
+                <p>Let <m>B</m> denote the <m>m\times n</m> matrix formed from the first <m>n</m> columns of <m>N</m> and let <m>J</m> denote the <m>m\times m</m> matrix formed from the last <m>m</m> columns of <m>N</m>.  Suppose that <m>B</m> has <m>r</m> nonzero rows.  Further partition <m>N</m> by letting <m>C</m> denote the <m>r\times n</m> matrix formed from all of the nonzero rows of <m>B</m>.  Let <m>K</m> be the <m>r\times m</m> matrix formed from the first <m>r</m> rows of <m>J</m>, while <m>L</m> will be the <m>(m-r)\times m</m> matrix formed from the bottom <m>m-r</m> rows of <m>J</m>.  Pictorially,<me>M=[A\vert I_m]
+                \rref
+                N=[B\vert J]
+                =
+                \left[\begin{array}{c|c}C&amp;K\\\hline0&amp;L\end{array}\right]</me>.</p>
             </statement>
         </definition>
         <example xml:id="example-SEEF" acro="SEEF">
+            <title>Submatrices of extended echelon form</title>
             <index>
                 <main>extended echelon form</main>
                 <sub>submatrices</sub>
             </index>
-            <title>Submatrices of extended echelon form</title>
-            <p>We illustrate <xref ref="definition-EEF" acro="EEF" autoname="yes"/> with the matrix <m>A</m>,
-<me>A=
-\begin{bmatrix}
- 1 &amp; -1 &amp; -2 &amp; 7 &amp; 1 &amp; 6 \\
- -6 &amp; 2 &amp; -4 &amp; -18 &amp; -3 &amp; -26 \\
- 4 &amp; -1 &amp; 4 &amp; 10 &amp; 2 &amp; 17 \\
- 3 &amp; -1 &amp; 2 &amp; 9 &amp; 1 &amp; 12
-\end{bmatrix}</me>
-</p>
-            <p>Augmenting with the <m>4\times 4</m> identity matrix,
-<me>M=
-\begin{bmatrix}
- 1 &amp; -1 &amp; -2 &amp; 7 &amp; 1 &amp; 6 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
- -6 &amp; 2 &amp; -4 &amp; -18 &amp; -3 &amp; -26 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
- 4 &amp; -1 &amp; 4 &amp; 10 &amp; 2 &amp; 17 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
- 3 &amp; -1 &amp; 2 &amp; 9 &amp; 1 &amp; 12 &amp; 0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}</me>
-and row-reducing, we obtain
-<me>N=
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 2 &amp; 1 &amp; 0 &amp; 3 &amp; 0 &amp; 1 &amp; 1 &amp; 1\\
- 0 &amp; \leading{1} &amp; 4 &amp; -6 &amp; 0 &amp; -1 &amp; 0 &amp; 2 &amp; 3 &amp; 0 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 2 &amp; 0 &amp; -1 &amp; 0 &amp; -2 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 2 &amp; 2 &amp; 1
-\end{bmatrix}</me>
-</p>
-            <p>So we then obtain
-<md><mrow>B&amp;=
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 2 &amp; 1 &amp; 0 &amp; 3 \\
- 0 &amp; \leading{1} &amp; 4 &amp; -6 &amp; 0 &amp; -1 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 2 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
-\end{bmatrix}\\
-C&amp;=
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 2 &amp; 1 &amp; 0 &amp; 3 \\
- 0 &amp; \leading{1} &amp; 4 &amp; -6 &amp; 0 &amp; -1 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 2
-\end{bmatrix}\\
-J&amp;=
-\begin{bmatrix}
-0 &amp; 1 &amp; 1 &amp; 1\\
-0 &amp; 2 &amp; 3 &amp; 0 \\
-0 &amp; -1 &amp; 0 &amp; -2 \\
-\leading{1} &amp; 2 &amp; 2 &amp; 1
-\end{bmatrix}\\
-K&amp;=
-\begin{bmatrix}
-0 &amp; 1 &amp; 1 &amp; 1\\
-0 &amp; 2 &amp; 3 &amp; 0 \\
-0 &amp; -1 &amp; 0 &amp; -2
-\end{bmatrix}\\
-L&amp;=
-\begin{bmatrix}
-\leading{1} &amp; 2 &amp; 2 &amp; 1
-\end{bmatrix}</mrow></md>
-</p>
+            <p>We illustrate <xref ref="definition-EEF" acro="EEF" autoname="yes"/> with the matrix <m>A</m>.<me>A=
+            \begin{bmatrix}
+             1 &amp; -1 &amp; -2 &amp; 7 &amp; 1 &amp; 6 \\
+             -6 &amp; 2 &amp; -4 &amp; -18 &amp; -3 &amp; -26 \\
+             4 &amp; -1 &amp; 4 &amp; 10 &amp; 2 &amp; 17 \\
+             3 &amp; -1 &amp; 2 &amp; 9 &amp; 1 &amp; 12
+            \end{bmatrix}</me></p>
+            <p>Augmenting with the <m>4\times 4</m> identity matrix,<me>M=
+            \begin{bmatrix}
+             1 &amp; -1 &amp; -2 &amp; 7 &amp; 1 &amp; 6 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+             -6 &amp; 2 &amp; -4 &amp; -18 &amp; -3 &amp; -26 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+             4 &amp; -1 &amp; 4 &amp; 10 &amp; 2 &amp; 17 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+             3 &amp; -1 &amp; 2 &amp; 9 &amp; 1 &amp; 12 &amp; 0 &amp; 0 &amp; 0 &amp; 1
+            \end{bmatrix}</me>and row-reducing, we obtain<me>N=
+            \begin{bmatrix}
+             \leading{1} &amp; 0 &amp; 2 &amp; 1 &amp; 0 &amp; 3 &amp; 0 &amp; 1 &amp; 1 &amp; 1\\
+             0 &amp; \leading{1} &amp; 4 &amp; -6 &amp; 0 &amp; -1 &amp; 0 &amp; 2 &amp; 3 &amp; 0 \\
+             0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 2 &amp; 0 &amp; -1 &amp; 0 &amp; -2 \\
+             0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 2 &amp; 2 &amp; 1
+            \end{bmatrix}</me>.</p>
+            <p>So we then obtain<md>
+            <mrow>B&amp;=
+            \begin{bmatrix}
+             \leading{1} &amp; 0 &amp; 2 &amp; 1 &amp; 0 &amp; 3 \\
+             0 &amp; \leading{1} &amp; 4 &amp; -6 &amp; 0 &amp; -1 \\
+             0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 2 \\
+             0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+            \end{bmatrix}\\
+            C&amp;=
+            \begin{bmatrix}
+             \leading{1} &amp; 0 &amp; 2 &amp; 1 &amp; 0 &amp; 3 \\
+             0 &amp; \leading{1} &amp; 4 &amp; -6 &amp; 0 &amp; -1 \\
+             0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 2
+            \end{bmatrix}\\
+            J&amp;=
+            \begin{bmatrix}
+            0 &amp; 1 &amp; 1 &amp; 1\\
+            0 &amp; 2 &amp; 3 &amp; 0 \\
+            0 &amp; -1 &amp; 0 &amp; -2 \\
+            \leading{1} &amp; 2 &amp; 2 &amp; 1
+            \end{bmatrix}\\
+            K&amp;=
+            \begin{bmatrix}
+            0 &amp; 1 &amp; 1 &amp; 1\\
+            0 &amp; 2 &amp; 3 &amp; 0 \\
+            0 &amp; -1 &amp; 0 &amp; -2
+            \end{bmatrix}\\
+            L&amp;=
+            \begin{bmatrix}
+            \leading{1} &amp; 2 &amp; 2 &amp; 1
+            \end{bmatrix}</mrow>
+            </md>.</p>
             <p>You can observe (or verify) the properties of the following theorem with this example.</p>
         </example>
         <theorem xml:id="theorem-PEEF" acro="PEEF">
+            <title>Properties of Extended Echelon Form</title>
             <index>
                 <main>extended reduced row-echelon form</main>
                 <sub>properties</sub>
             </index>
-            <title>Properties of Extended Echelon Form</title>
             <statement>
-                <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix and that <m>N</m> is its extended echelon form.  Then
-<ol><li><m>J</m> is nonsingular.
-</li><li><m>B=JA</m>.
-</li><li> If <m>\vect{x}\in\complex{n}</m> and <m>\vect{y}\in\complex{m}</m>, then <m>A\vect{x}=\vect{y}</m> if and only if <m>B\vect{x}=J\vect{y}</m>.
-</li><li><m>C</m> is in reduced row-echelon form, has no zero rows and has <m>r</m> pivot columns.
-</li><li><m>L</m> is in reduced row-echelon form, has no zero rows and has <m>m-r</m> pivot columns.
-</li></ol>
-</p>
+                <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix and that <m>N</m> is its extended echelon form.  Then<ol>
+                    <li><m>J</m> is nonsingular.</li>
+                    <li><m>B=JA</m>.</li>
+                    <li>If <m>\vect{x}\in\complex{n}</m> and <m>\vect{y}\in\complex{m}</m>, then <m>A\vect{x}=\vect{y}</m> if and only if <m>B\vect{x}=J\vect{y}</m>.</li>
+                    <li><m>C</m> is in reduced row-echelon form, has no zero rows and has <m>r</m> pivot columns.</li>
+                    <li><m>L</m> is in reduced row-echelon form, has no zero rows and has <m>m-r</m> pivot columns.</li>
+                </ol></p>
             </statement>
             <proof>
                 <p><m>J</m> is the result of applying a sequence of row operations to <m>I_m</m>, and therefore <m>J</m> and <m>I_m</m> are row-equivalent.  <m>\homosystem{I_m}</m> has only the zero solution, since <m>I_m</m> is nonsingular (<xref ref="theorem-NMRRI" acro="NMRRI" autoname="yes"/>).  Thus, <m>\homosystem{J}</m> also has only the zero solution (<xref ref="theorem-REMES" acro="REMES" autoname="yes"/>, <xref ref="definition-ESYS" acro="ESYS" autoname="yes"/>) and <m>J</m> is therefore nonsingular (<xref ref="definition-NSM" acro="NSM" autoname="yes"/>).</p>
-                <p>To prove the second part of this conclusion, first convince yourself that row operations and the matrix-vector product are associative operations.  By this we mean the following.
-Suppose that <m>F</m> is an <m>m\times n</m> matrix that is row-equivalent to the matrix <m>G</m>.  Apply to the column vector <m>F\vect{w}</m> the same sequence of row operations that converts <m>F</m> to <m>G</m>.  Then the result is <m>G\vect{w}</m>.  So we can do row operations on the matrix, then do a matrix-vector product, <em>or</em> do a matrix-vector product and then do row operations on a column vector, and the result will be the same either way.  Since matrix multiplication is defined by a collection of matrix-vector products (<xref ref="definition-MM" acro="MM" autoname="yes"/>), the matrix product <m>FH</m> will become <m>GH</m> if we apply the same sequence of row operations to <m>FH</m> that convert <m>F</m> to <m>G</m>.  (This argument can be made more rigorous using elementary matrices from the upcoming <xref ref="subsection-DM-EM" acro="DM.EM" autoname="yes"/> and the associative property of matrix multiplication established in <xref ref="theorem-MMA" acro="MMA" autoname="yes"/>.)  Now apply these observations to <m>A</m>.</p>
+                <p>To prove the second part of this conclusion, first convince yourself that row operations and the matrix-vector product are associative operations.  By this we mean the following.  Suppose that <m>F</m> is an <m>m\times n</m> matrix that is row-equivalent to the matrix <m>G</m>.  Apply to the column vector <m>F\vect{w}</m> the same sequence of row operations that converts <m>F</m> to <m>G</m>.  Then the result is <m>G\vect{w}</m>.  So we can do row operations on the matrix, then do a matrix-vector product, <em>or</em> do a matrix-vector product and then do row operations on a column vector, and the result will be the same either way.  Since matrix multiplication is defined by a collection of matrix-vector products (<xref ref="definition-MM" acro="MM" autoname="yes"/>), the matrix product <m>FH</m> will become <m>GH</m> if we apply the same sequence of row operations to <m>FH</m> that convert <m>F</m> to <m>G</m>.  (This argument can be made more rigorous using elementary matrices from the upcoming <xref ref="subsection-DM-EM" acro="DM.EM" autoname="yes"/> and the associative property of matrix multiplication established in <xref ref="theorem-MMA" acro="MMA" autoname="yes"/>.)  Now apply these observations to <m>A</m>.</p>
                 <p>Write <m>AI_n=I_mA</m> and apply the row operations that convert <m>M</m> to <m>N</m>.  <m>A</m> is converted to <m>B</m>, while <m>I_m</m> is converted to <m>J</m>, so we have <m>BI_n=JA</m>.  Simplifying the left side gives the desired conclusion.</p>
-                <p>For the third conclusion, we now establish the two equivalences
-<md><mrow>A\vect{x}&amp;=\vect{y} &amp;
-&amp;\iff &amp;
-JA\vect{x}&amp;=J\vect{y} &amp;
-&amp;\iff &amp;
-B\vect{x}&amp;=J\vect{y}</mrow></md>
-</p>
+                <p>For the third conclusion, we now establish the two equivalences<md>
+                    <mrow>A\vect{x}&amp;=\vect{y} &amp;
+                    &amp;\iff &amp;
+                    JA\vect{x}&amp;=J\vect{y} &amp;
+                    &amp;\iff &amp;
+                    B\vect{x}&amp;=J\vect{y}</mrow>
+                    </md></p>
                 <p>The forward direction of the first equivalence is accomplished by multiplying both sides of the matrix equality by <m>J</m>, while the backward direction is accomplished by multiplying by the inverse of <m>J</m> (which we know exists by <xref ref="theorem-NI" acro="NI" autoname="yes"/> since <m>J</m> is nonsingular).  The second equivalence is obtained simply by the substitutions given by <m>JA=B</m>.</p>
                 <p>The first <m>r</m> rows of <m>N</m> are in reduced row-echelon form, since any contiguous collection of rows taken from a matrix in reduced row-echelon form will form a matrix that is again in reduced row-echelon form (<xref ref="exercise-RREF-T12" acro="RREF.T12" autoname="yes"/>).   Since the matrix <m>C</m> is formed by removing the last <m>n</m> entries of each these rows, the remainder is still in reduced row-echelon form.  By its construction, <m>C</m> has no zero rows. <m>C</m> has <m>r</m> rows and each contains a leading 1, so there are <m>r</m> pivot columns in <m>C</m>.</p>
                 <p>The final <m>m-r</m> rows of <m>N</m> are in reduced row-echelon form, since any contiguous collection of rows taken from a matrix in reduced row-echelon form will form a matrix that is again in reduced row-echelon form.  Since the matrix <m>L</m> is formed by removing the first <m>n</m> entries of each these rows, and these entries are all zero (they form the zero rows of <m>B</m>), the remainder is still in reduced row-echelon form.  <m>L</m> is the final <m>m-r</m> rows of the nonsingular matrix <m>J</m>, so none of these rows can be totally zero, or <m>J</m> would not row-reduce to the identity matrix.  <m>L</m> has <m>m-r</m> rows and each contains a leading 1, so there are <m>m-r</m> pivot columns in <m>L</m>.</p>
@@ -451,119 +423,140 @@ B\vect{x}&amp;=J\vect{y}</mrow></md>
         <title>Four Subsets</title>
         <p>With all the preliminaries in place we can state our main result for this section.  In essence this result will allow us to say that we can find linearly independent sets to use in span constructions for all four subsets (null space, column space, row space, left null space) by analyzing only the extended echelon form of the matrix, and specifically, just the two submatrices <m>C</m> and <m>L</m>, which will be ripe for analysis since they are already in reduced row-echelon form (<xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/>).</p>
         <theorem xml:id="theorem-FS" acro="FS">
+            <title>Four Subsets</title>
             <index>
                 <main>column space</main>
                 <sub> as null space</sub>
             </index>
-            <title>Four Subsets</title>
             <statement>
                 <index>
                     <main>left null space</main>
                     <sub>as row space</sub>
                 </index>
-                <p>Suppose <m>A</m> is an <m>m\times n</m> matrix with extended echelon form <m>N</m>.  Suppose the reduced row-echelon form of <m>A</m> has <m>r</m> nonzero rows.  Then <m>C</m> is the submatrix of <m>N</m> formed from the first <m>r</m> rows and the first <m>n</m> columns and <m>L</m> is the submatrix of <m>N</m> formed from the last <m>m</m> columns and the last <m>m-r</m> rows.  Then
-<ol><li> The null space of <m>A</m> is the null space of <m>C</m>, <m>\nsp{A}=\nsp{C}</m>.
-</li><li> The row space of <m>A</m> is the row space of <m>C</m>, <m>\rsp{A}=\rsp{C}</m>.
-</li><li> The column space of <m>A</m> is the null space of <m>L</m>, <m>\csp{A}=\nsp{L}</m>.
-</li><li> The left null space of <m>A</m> is the row space of <m>L</m>, <m>\lns{A}=\rsp{L}</m>.
-</li></ol>
-</p>
+                <p>Suppose <m>A</m> is an <m>m\times n</m> matrix with extended echelon form <m>N</m>.  Suppose the reduced row-echelon form of <m>A</m> has <m>r</m> nonzero rows.  Then <m>C</m> is the submatrix of <m>N</m> formed from the first <m>r</m> rows and the first <m>n</m> columns and <m>L</m> is the submatrix of <m>N</m> formed from the last <m>m</m> columns and the last <m>m-r</m> rows.  Then<ol>
+                    <li>The null space of <m>A</m> is the null space of <m>C</m>, <m>\nsp{A}=\nsp{C}</m>.</li>
+                    <li>The row space of <m>A</m> is the row space of <m>C</m>, <m>\rsp{A}=\rsp{C}</m>.</li>
+                    <li>The column space of <m>A</m> is the null space of <m>L</m>, <m>\csp{A}=\nsp{L}</m>.</li>
+                    <li>The left null space of <m>A</m> is the row space of <m>L</m>, <m>\lns{A}=\rsp{L}</m>.</li>
+                </ol></p>
             </statement>
             <proof>
                 <p>First, <m>\nsp{A}=\nsp{B}</m> since <m>B</m> is row-equivalent to <m>A</m> (<xref ref="theorem-REMES" acro="REMES" autoname="yes"/>).  The zero rows of <m>B</m> represent equations that are always true in the homogeneous system <m>\homosystem{B}</m>, so the removal of these equations will not change the solution set.  Thus, in turn, <m>\nsp{B}=\nsp{C}</m>.</p>
                 <p>Second, <m>\rsp{A}=\rsp{B}</m> since <m>B</m> is row-equivalent to <m>A</m> (<xref ref="theorem-REMRS" acro="REMRS" autoname="yes"/>).  The zero rows of <m>B</m> contribute nothing to the span that is the row space of <m>B</m>, so the removal of these rows will not change the row space.  Thus, in turn, <m>\rsp{B}=\rsp{C}</m>.</p>
-                <p>Third, we prove the set equality <m>\csp{A}=\nsp{L}</m> with <xref ref="definition-SE" acro="SE" autoname="yes"/>.  Begin by showing that <m>\csp{A}\subseteq\nsp{L}</m>.  Choose <m>\vect{y}\in\csp{A}\subseteq\complex{m}</m>.  Then there exists a vector <m>\vect{x}\in\complex{n}</m> such that <m>A\vect{x}=\vect{y}</m> (<xref ref="theorem-CSCS" acro="CSCS" autoname="yes"/>).  Then for <m>1\leq k\leq m-r</m>,
-<md><mrow>\vectorentry{L\vect{y}}{k}
-&amp;=\vectorentry{J\vect{y}}{r+k}
-&amp;&amp;\text{<m>L</m> a submatrix of<m>J</m>}</mrow><mrow>&amp;=\vectorentry{B\vect{x}}{r+k}
-&amp;&amp;<xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/></mrow><mrow>&amp;=\vectorentry{\zeromatrix\vect{x}}{k}
-&amp;&amp;\text{Zero matrix a submatrix of<m>B</m>}</mrow><mrow>&amp;=\vectorentry{\zerovector}{k}
-&amp;&amp;<xref ref="theorem-MMZM" acro="MMZM" autoname="yes"/></mrow></md>
-</p>
+                <p>Third, we prove the set equality <m>\csp{A}=\nsp{L}</m> with <xref ref="definition-SE" acro="SE" autoname="yes"/>.  Begin by showing that <m>\csp{A}\subseteq\nsp{L}</m>.  Choose <m>\vect{y}\in\csp{A}\subseteq\complex{m}</m>.  Then there exists a vector <m>\vect{x}\in\complex{n}</m> such that <m>A\vect{x}=\vect{y}</m> (<xref ref="theorem-CSCS" acro="CSCS" autoname="yes"/>).  Then for <m>1\leq k\leq m-r</m>,<md>
+                    <mrow>\vectorentry{L\vect{y}}{k}
+                    &amp;=\vectorentry{J\vect{y}}{r+k}&amp;&amp;\text{<m>L</m> a submatrix of<m>J</m>}</mrow>
+                    <mrow>&amp;=\vectorentry{B\vect{x}}{r+k}&amp;&amp;
+                        <xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\vectorentry{\zeromatrix\vect{x}}{k}&amp;&amp;\text{Zero matrix a submatrix of<m>B</m>}</mrow>
+                    <mrow>&amp;=\vectorentry{\zerovector}{k}&amp;&amp;
+                        <xref ref="theorem-MMZM" acro="MMZM" autoname="yes"/></mrow>
+                </md>.</p>
                 <p>So, for all <m>1\leq k\leq m-r</m>, <m>\vectorentry{L\vect{y}}{k}=\vectorentry{\zerovector}{k}</m>.  So by <xref ref="definition-CVE" acro="CVE" autoname="yes"/> we have <m>L\vect{y}=\zerovector</m> and thus <m>\vect{y}\in\nsp{L}</m>.</p>
                 <p>Now, show that <m>\nsp{L}\subseteq\csp{A}</m>.  Choose <m>\vect{y}\in\nsp{L}\subseteq\complex{m}</m>.  Form the vector <m>K\vect{y}\in\complex{r}</m>.  The linear system <m>\linearsystem{C}{K\vect{y}}</m> is consistent since <m>C</m> is in reduced row-echelon form and has no zero rows (<xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/>).  Let <m>\vect{x}\in\complex{n}</m> denote a solution to <m>\linearsystem{C}{K\vect{y}}</m>.</p>
-                <p>Then for <m>1\leq j\leq r</m>,
-<md><mrow>\vectorentry{B\vect{x}}{j}
-&amp;=\vectorentry{C\vect{x}}{j}
-&amp;&amp;\text{<m>C</m> a submatrix of<m>B</m>}</mrow><mrow>&amp;=\vectorentry{K\vect{y}}{j}
-&amp;&amp;\text{<m>\vect{x}</m> a solution to<m>\linearsystem{C}{K\vect{y}}</m>}</mrow><mrow>&amp;=\vectorentry{J\vect{y}}{j}
-&amp;&amp;\text{<m>K</m> a submatrix of<m>J</m>}\\</mrow></md>
-</p>
-                <p>And for <m>r+1\leq k\leq m</m>,
-<md><mrow>\vectorentry{B\vect{x}}{k}
-&amp;=\vectorentry{\zeromatrix\vect{x}}{k-r}
-&amp;&amp;\text{Zero matrix a submatrix of<m>B</m>}</mrow><mrow>&amp;=\vectorentry{\zerovector}{k-r}
-&amp;&amp;<xref ref="theorem-MMZM" acro="MMZM" autoname="yes"/></mrow><mrow>&amp;=\vectorentry{L\vect{y}}{k-r}
-&amp;&amp;\text{<m>\vect{y}</m> in<m>\nsp{L}</m>}</mrow><mrow>&amp;=\vectorentry{J\vect{y}}{k}
-&amp;&amp;\text{<m>L</m> a submatrix of<m>J</m>}\\</mrow></md>
-</p>
+                <p>Then for <m>1\leq j\leq r</m>,<md>
+                    <mrow>\vectorentry{B\vect{x}}{j}
+                    &amp;=\vectorentry{C\vect{x}}{j}&amp;&amp;
+                        C\text{ a submatrix of }B</mrow>
+                    <mrow>&amp;=\vectorentry{K\vect{y}}{j}&amp;&amp;
+                        \vect{x}\text{ a solution to }\linearsystem{C}{K\vect{y}}</mrow>
+                    <mrow>&amp;=\vectorentry{J\vect{y}}{j}&amp;&amp;
+                        K\text{ a submatrix of }J</mrow>
+                </md>.</p>
+                <p>And for <m>r+1\leq k\leq m</m>,<md>
+                    <mrow>\vectorentry{B\vect{x}}{k}
+                    &amp;=\vectorentry{\zeromatrix\vect{x}}{k-r}&amp;&amp;
+                        \text{Zero matrix a submatrix of }B</mrow>
+                    <mrow>&amp;=\vectorentry{\zerovector}{k-r}&amp;&amp;
+                        <xref ref="theorem-MMZM" acro="MMZM" autoname="yes"/></mrow>
+                    <mrow>&amp;=\vectorentry{L\vect{y}}{k-r}&amp;&amp;
+                        \vect{y}\in\nsp{L}</mrow>
+                    <mrow>&amp;=\vectorentry{J\vect{y}}{k}&amp;&amp;
+                        L\text{ a submatrix of }J</mrow>
+                </md>.</p>
                 <p>So for all <m>1\leq i\leq m</m>, <m>\vectorentry{B\vect{x}}{i}=\vectorentry{J\vect{y}}{i}</m> and by <xref ref="definition-CVE" acro="CVE" autoname="yes"/> we have <m>B\vect{x}=J\vect{y}</m>.  From <xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/> we know then that <m>A\vect{x}=\vect{y}</m>, and therefore <m>\vect{y}\in\csp{A}</m> (<xref ref="theorem-CSCS" acro="CSCS" autoname="yes"/>).  By <xref ref="definition-SE" acro="SE" autoname="yes"/> we now have <m>\csp{A}=\nsp{L}</m>.</p>
-                <p>Fourth, we prove the set equality <m>\lns{A}=\rsp{L}</m> with <xref ref="definition-SE" acro="SE" autoname="yes"/>.  Begin by showing that <m>\rsp{L}\subseteq\lns{A}</m>.  Choose <m>\vect{y}\in\rsp{L}\subseteq\complex{m}</m>.  Then there exists a vector <m>\vect{w}\in\complex{m-r}</m> such that <m>\vect{y}=\transpose{L}\vect{w}</m> (<xref ref="definition-RSM" acro="RSM" autoname="yes"/>, <xref ref="theorem-CSCS" acro="CSCS" autoname="yes"/>).  Then for <m>1\leq i\leq n</m>,
-<md><mrow>\vectorentry{\transpose{A}\vect{y}}{i}
-&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\vectorentry{\vect{y}}{k}
-&amp;&amp;<xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\vectorentry{\transpose{L}\vect{w}}{k}
-&amp;&amp;\text{Definition of<m>\vect{w}</m>}</mrow><mrow>&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\sum_{\ell=1}^{m-r}\matrixentry{\transpose{L}}{k\ell}\vectorentry{\vect{w}}{\ell}
-&amp;&amp;<xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{m}\sum_{\ell=1}^{m-r}\matrixentry{\transpose{A}}{ik}\matrixentry{\transpose{L}}{k\ell}\vectorentry{\vect{w}}{\ell}
-&amp;&amp;<xref ref="property-DCN" acro="DCN" autoname="yes"/></mrow><mrow>&amp;=\sum_{\ell=1}^{m-r}\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\matrixentry{\transpose{L}}{k\ell}\vectorentry{\vect{w}}{\ell}
-&amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow><mrow>&amp;=\sum_{\ell=1}^{m-r}\left(\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\matrixentry{\transpose{L}}{k\ell}\right)\vectorentry{\vect{w}}{\ell}
-&amp;&amp;<xref ref="property-DCN" acro="DCN" autoname="yes"/></mrow><mrow>&amp;=\sum_{\ell=1}^{m-r}\left(\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\matrixentry{\transpose{J}}{k,r+\ell}\right)\vectorentry{\vect{w}}{\ell}
-&amp;&amp;\text{<m>L</m> a submatrix of<m>J</m>}</mrow><mrow>&amp;=\sum_{\ell=1}^{m-r}\matrixentry{\transpose{A}\transpose{J}}{i,r+\ell}\vectorentry{\vect{w}}{\ell}
-&amp;&amp;<xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow><mrow>&amp;=\sum_{\ell=1}^{m-r}\matrixentry{\transpose{\left(JA\right)}}{i,r+\ell}\vectorentry{\vect{w}}{\ell}
-&amp;&amp;<xref ref="theorem-MMT" acro="MMT" autoname="yes"/></mrow><mrow>&amp;=\sum_{\ell=1}^{m-r}\matrixentry{\transpose{B}}{i,r+\ell}\vectorentry{\vect{w}}{\ell}
-&amp;&amp;<xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/></mrow><mrow>&amp;=\sum_{\ell=1}^{m-r}0\vectorentry{\vect{w}}{\ell}
-&amp;&amp;\text{Zero rows in<m>B</m>}</mrow><mrow>&amp;=0
-&amp;&amp;<xref ref="property-ZCN" acro="ZCN" autoname="yes"/></mrow><mrow>&amp;=\vectorentry{\zerovector}{i}
-&amp;&amp;<xref ref="definition-ZCV" acro="ZCV" autoname="yes"/></mrow></md>
-</p>
+                <p>Fourth, we prove the set equality <m>\lns{A}=\rsp{L}</m> with <xref ref="definition-SE" acro="SE" autoname="yes"/>.  Begin by showing that <m>\rsp{L}\subseteq\lns{A}</m>.  Choose <m>\vect{y}\in\rsp{L}\subseteq\complex{m}</m>.  Then there exists a vector <m>\vect{w}\in\complex{m-r}</m> such that <m>\vect{y}=\transpose{L}\vect{w}</m> (<xref ref="definition-RSM" acro="RSM" autoname="yes"/>, <xref ref="theorem-CSCS" acro="CSCS" autoname="yes"/>).  Then for <m>1\leq i\leq n</m>,<md>
+                    <mrow>\vectorentry{\transpose{A}\vect{y}}{i}
+                    &amp;=\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\vectorentry{\vect{y}}{k}&amp;&amp;
+                        <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\vectorentry{\transpose{L}\vect{w}}{k}&amp;&amp;\text{Definition of<m>\vect{w}</m>}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\sum_{\ell=1}^{m-r}\matrixentry{\transpose{L}}{k\ell}\vectorentry{\vect{w}}{\ell}&amp;&amp;
+                        <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\sum_{\ell=1}^{m-r}\matrixentry{\transpose{A}}{ik}\matrixentry{\transpose{L}}{k\ell}\vectorentry{\vect{w}}{\ell}&amp;&amp;
+                        <xref ref="property-DCN" acro="DCN" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{\ell=1}^{m-r}\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\matrixentry{\transpose{L}}{k\ell}\vectorentry{\vect{w}}{\ell}&amp;&amp;
+                        <xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{\ell=1}^{m-r}\left(\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\matrixentry{\transpose{L}}{k\ell}\right)\vectorentry{\vect{w}}{\ell}&amp;&amp;
+                        <xref ref="property-DCN" acro="DCN" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{\ell=1}^{m-r}\left(\sum_{k=1}^{m}\matrixentry{\transpose{A}}{ik}\matrixentry{\transpose{J}}{k,r+\ell}\right)\vectorentry{\vect{w}}{\ell}&amp;&amp;\text{<m>L</m> a submatrix of<m>J</m>}</mrow>
+                    <mrow>&amp;=\sum_{\ell=1}^{m-r}\matrixentry{\transpose{A}\transpose{J}}{i,r+\ell}\vectorentry{\vect{w}}{\ell}&amp;&amp;
+                        <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{\ell=1}^{m-r}\matrixentry{\transpose{\left(JA\right)}}{i,r+\ell}\vectorentry{\vect{w}}{\ell}&amp;&amp;
+                        <xref ref="theorem-MMT" acro="MMT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{\ell=1}^{m-r}\matrixentry{\transpose{B}}{i,r+\ell}\vectorentry{\vect{w}}{\ell}&amp;&amp;
+                        <xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{\ell=1}^{m-r}0\vectorentry{\vect{w}}{\ell}&amp;&amp;\text{Zero rows in<m>B</m>}</mrow>
+                    <mrow>&amp;=0&amp;&amp;
+                        <xref ref="property-ZCN" acro="ZCN" autoname="yes"/></mrow>
+                    <mrow>&amp;=\vectorentry{\zerovector}{i}&amp;&amp;
+                        <xref ref="definition-ZCV" acro="ZCV" autoname="yes"/></mrow>
+                </md>.</p>
                 <p>Since <m>\vectorentry{\transpose{A}\vect{y}}{i}=\vectorentry{\zerovector}{i}</m> for <m>1\leq i\leq n</m>, <xref ref="definition-CVE" acro="CVE" autoname="yes"/> implies that <m>\transpose{A}\vect{y}=\zerovector</m>.  This means that <m>\vect{y}\in\nsp{\transpose{A}}</m>.</p>
-                <p>Now, show that <m>\lns{A}\subseteq\rsp{L}</m>.  Choose <m>\vect{y}\in\lns{A}\subseteq\complex{m}</m>.  The matrix <m>J</m> is nonsingular (<xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/>), so <m>\transpose{J}</m> is also nonsingular (<xref ref="theorem-MIT" acro="MIT" autoname="yes"/>) and therefore the linear system <m>\linearsystem{\transpose{J}}{\vect{y}}</m> has a unique solution.  Denote this solution as <m>\vect{x}\in\complex{m}</m>.  We will need to work with two <q>halves</q> of <m>\vect{x}</m>, which we will denote as <m>\vect{z}</m> and <m>\vect{w}</m> with formal definitions given by
-<md><mrow>\vectorentry{z}{j}&amp;=\vectorentry{x}{i}
-&amp;
-&amp;1\leq j\leq r,
-&amp;&amp;&amp;
-\vectorentry{w}{k}&amp;=\vectorentry{x}{r+k}
-&amp;
-&amp;1\leq k\leq m-r</mrow></md>
-</p>
-                <p>Now, for <m>1\leq j\leq r</m>,
-<md><mrow>\vectorentry{\transpose{C}\vect{z}}{j}
-&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{C}}{jk}\vectorentry{\vect{z}}{k}
-&amp;&amp;<xref ref="theorem-EMP" acro="EMP" autoname="yes"/>\\
-&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{C}}{jk}\vectorentry{\vect{z}}{k}+
-\sum_{\ell=1}^{m-r}\matrixentry{\zeromatrix}{j\ell}\vectorentry{\vect{w}}{\ell}
-&amp;&amp;<xref ref="definition-ZM" acro="ZM" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{z}}{k}+
-\sum_{\ell=1}^{m-r}\matrixentry{\transpose{B}}{j,r+\ell}\vectorentry{\vect{w}}{\ell}
-&amp;&amp;\text{<m>C</m>,<m>\zeromatrix</m> submatrices of<m>B</m>}</mrow><mrow>&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{x}}{k}+
-\sum_{\ell=1}^{m-r}\matrixentry{\transpose{B}}{j,r+\ell}\vectorentry{\vect{x}}{r+\ell}
-&amp;&amp;\text{Definitions of<m>\vect{z}</m> and<m>\vect{w}</m>}</mrow><mrow>&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{x}}{k}+
-\sum_{k=r+1}^{m}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{x}}{k}
-&amp;&amp;\text{Re-index second sum}</mrow><mrow>&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{x}}{k}
-&amp;&amp;\text{Combine sums}</mrow><mrow>&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{\left(JA\right)}}{jk}\vectorentry{\vect{x}}{k}
-&amp;&amp;<xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{A}\transpose{J}}{jk}\vectorentry{\vect{x}}{k}
-&amp;&amp;<xref ref="theorem-MMT" acro="MMT" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{m}\sum_{\ell=1}^{m}\matrixentry{\transpose{A}}{j\ell}\matrixentry{\transpose{J}}{\ell k}\vectorentry{\vect{x}}{k}
-&amp;&amp;<xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow><mrow>&amp;=\sum_{\ell=1}^{m}\sum_{k=1}^{m}\matrixentry{\transpose{A}}{j\ell}\matrixentry{\transpose{J}}{\ell k}\vectorentry{\vect{x}}{k}
-&amp;&amp;<xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow><mrow>&amp;=\sum_{\ell=1}^{m}\matrixentry{\transpose{A}}{j\ell}\left(\sum_{k=1}^{m}\matrixentry{\transpose{J}}{\ell k}\vectorentry{\vect{x}}{k}\right)
-&amp;&amp;<xref ref="property-DCN" acro="DCN" autoname="yes"/></mrow><mrow>&amp;=\sum_{\ell=1}^{m}\matrixentry{\transpose{A}}{j\ell}\vectorentry{\transpose{J}\vect{x}}{\ell}
-&amp;&amp;<xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow><mrow>&amp;=\sum_{\ell=1}^{m}\matrixentry{\transpose{A}}{j\ell}\vectorentry{\vect{y}}{\ell}
-&amp;&amp;\text{Definition of<m>\vect{x}</m>}</mrow><mrow>&amp;=\vectorentry{\transpose{A}\vect{y}}{j}
-&amp;&amp;<xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow><mrow>&amp;=\vectorentry{\zerovector}{j}
-&amp;&amp;\text{<m>\vect{y}\in\lns{A}</m>}</mrow></md>
-</p>
+                <p>Now, show that <m>\lns{A}\subseteq\rsp{L}</m>.  Choose <m>\vect{y}\in\lns{A}\subseteq\complex{m}</m>.  The matrix <m>J</m> is nonsingular (<xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/>), so <m>\transpose{J}</m> is also nonsingular (<xref ref="theorem-MIT" acro="MIT" autoname="yes"/>) and therefore the linear system <m>\linearsystem{\transpose{J}}{\vect{y}}</m> has a unique solution.  Denote this solution as <m>\vect{x}\in\complex{m}</m>.  We will need to work with two <q>halves</q> of <m>\vect{x}</m>, which we will denote as <m>\vect{z}</m> and <m>\vect{w}</m> with formal definitions given by<md>
+                    <mrow>\vectorentry{z}{j}&amp;=\vectorentry{x}{i}
+                    &amp;
+                    &amp;1\leq j\leq r,&amp;&amp;&amp;
+                    \vectorentry{w}{k}&amp;=\vectorentry{x}{r+k}
+                    &amp;
+                    &amp;1\leq k\leq m-r</mrow>
+                </md>.</p>
+                <p>Now, for <m>1\leq j\leq r</m>,<md>
+                    <mrow>\vectorentry{\transpose{C}\vect{z}}{j}
+                    &amp;=\sum_{k=1}^{r}\matrixentry{\transpose{C}}{jk}\vectorentry{\vect{z}}{k}&amp;&amp;
+                        <xref ref="theorem-EMP" acro="EMP" autoname="yes"/>\\
+                    &amp;=\sum_{k=1}^{r}\matrixentry{\transpose{C}}{jk}\vectorentry{\vect{z}}{k}+
+                    \sum_{\ell=1}^{m-r}\matrixentry{\zeromatrix}{j\ell}\vectorentry{\vect{w}}{\ell}&amp;&amp;
+                        <xref ref="definition-ZM" acro="ZM" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{z}}{k}+
+                    \sum_{\ell=1}^{m-r}\matrixentry{\transpose{B}}{j,r+\ell}\vectorentry{\vect{w}}{\ell}&amp;&amp;\text{<m>C</m>,<m>\zeromatrix</m> submatrices of<m>B</m>}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{x}}{k}+
+                    \sum_{\ell=1}^{m-r}\matrixentry{\transpose{B}}{j,r+\ell}\vectorentry{\vect{x}}{r+\ell}&amp;&amp;\text{Definitions of<m>\vect{z}</m> and<m>\vect{w}</m>}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{x}}{k}+
+                    \sum_{k=r+1}^{m}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{x}}{k}&amp;&amp;\text{Re-index second sum}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{B}}{jk}\vectorentry{\vect{x}}{k}&amp;&amp;\text{Combine sums}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{\left(JA\right)}}{jk}\vectorentry{\vect{x}}{k}&amp;&amp;
+                        <xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{A}\transpose{J}}{jk}\vectorentry{\vect{x}}{k}&amp;&amp;
+                        <xref ref="theorem-MMT" acro="MMT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\sum_{\ell=1}^{m}\matrixentry{\transpose{A}}{j\ell}\matrixentry{\transpose{J}}{\ell k}\vectorentry{\vect{x}}{k}&amp;&amp;
+                        <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{\ell=1}^{m}\sum_{k=1}^{m}\matrixentry{\transpose{A}}{j\ell}\matrixentry{\transpose{J}}{\ell k}\vectorentry{\vect{x}}{k}&amp;&amp;
+                        <xref ref="property-CACN" acro="CACN" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{\ell=1}^{m}\matrixentry{\transpose{A}}{j\ell}\left(\sum_{k=1}^{m}\matrixentry{\transpose{J}}{\ell k}\vectorentry{\vect{x}}{k}\right)&amp;&amp;
+                        <xref ref="property-DCN" acro="DCN" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{\ell=1}^{m}\matrixentry{\transpose{A}}{j\ell}\vectorentry{\transpose{J}\vect{x}}{\ell}&amp;&amp;
+                        <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{\ell=1}^{m}\matrixentry{\transpose{A}}{j\ell}\vectorentry{\vect{y}}{\ell}&amp;&amp;\text{Definition of<m>\vect{x}</m>}</mrow>
+                    <mrow>&amp;=\vectorentry{\transpose{A}\vect{y}}{j}&amp;&amp;
+                        <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
+                    <mrow>&amp;=\vectorentry{\zerovector}{j}&amp;&amp;\text{<m>\vect{y}\in\lns{A}</m>}</mrow>
+                </md>.</p>
                 <p>So, by <xref ref="definition-CVE" acro="CVE" autoname="yes"/>, <m>\transpose{C}\vect{z}=\zerovector</m> and the vector <m>\vect{z}</m> gives us a linear combination of the columns of <m>\transpose{C}</m> that equals the zero vector.  In other words, <m>\vect{z}</m> gives a relation of linear dependence on the the rows of <m>C</m>.  However, the rows of <m>C</m> are a linearly independent set by <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>.  According to <xref ref="definition-LICV" acro="LICV" autoname="yes"/> we must conclude that the entries of <m>\vect{z}</m> are all zero, <ie/> <m>\vect{z}=\zerovector</m>.</p>
-                <p>Now, for <m>1\leq i\leq m</m>, we have
-<md><mrow>\vectorentry{\vect{y}}{i}
-&amp;=\vectorentry{\transpose{J}\vect{x}}{i}
-&amp;&amp;\text{Definition of<m>\vect{x}</m>}</mrow><mrow>&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{x}}{k}
-&amp;&amp;<xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow><mrow>&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{x}}{k}+
-\sum_{k=r+1}^{m}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{x}}{k}
-&amp;&amp;\text{Break apart sum}</mrow><mrow>&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{z}}{k}+
-\sum_{k=r+1}^{m}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{w}}{k-r}
-&amp;&amp;\text{Definition of<m>\vect{z}</m> and<m>\vect{w}</m>}</mrow><mrow>&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{J}}{ik}0+
-\sum_{\ell=1}^{m-r}\matrixentry{\transpose{J}}{i,r+\ell}\vectorentry{\vect{w}}{\ell}
-&amp;&amp;\text{<m>\vect{z}=\zerovector</m>, re-index}</mrow><mrow>&amp;=0+\sum_{\ell=1}^{m-r}\matrixentry{\transpose{L}}{i,\ell}\vectorentry{\vect{w}}{\ell}
-&amp;&amp;\text{<m>L</m> a submatrix of<m>J</m>}</mrow><mrow>&amp;=\vectorentry{\transpose{L}\vect{w}}{i}
-&amp;&amp;<xref ref="theorem-EMP" acro="EMP" autoname="yes"/>\\</mrow></md>
-</p>
+                <p>Now, for <m>1\leq i\leq m</m>, we have<md>
+                    <mrow>\vectorentry{\vect{y}}{i}
+                    &amp;=\vectorentry{\transpose{J}\vect{x}}{i}&amp;&amp;\text{Definition of<m>\vect{x}</m>}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{m}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{x}}{k}&amp;&amp;
+                        <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{x}}{k}+
+                    \sum_{k=r+1}^{m}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{x}}{k}&amp;&amp;\text{Break apart sum}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{z}}{k}+
+                    \sum_{k=r+1}^{m}\matrixentry{\transpose{J}}{ik}\vectorentry{\vect{w}}{k-r}&amp;&amp;\text{Definition of<m>\vect{z}</m> and<m>\vect{w}</m>}</mrow>
+                    <mrow>&amp;=\sum_{k=1}^{r}\matrixentry{\transpose{J}}{ik}0+
+                    \sum_{\ell=1}^{m-r}\matrixentry{\transpose{J}}{i,r+\ell}\vectorentry{\vect{w}}{\ell}&amp;&amp;\text{<m>\vect{z}=\zerovector</m>, re-index}</mrow>
+                    <mrow>&amp;=0+\sum_{\ell=1}^{m-r}\matrixentry{\transpose{L}}{i,\ell}\vectorentry{\vect{w}}{\ell}&amp;&amp;\text{<m>L</m> a submatrix of<m>J</m>}</mrow>
+                    <mrow>&amp;=\vectorentry{\transpose{L}\vect{w}}{i}&amp;&amp;
+                        <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
+                </md>.</p>
                 <p>So by <xref ref="definition-CVE" acro="CVE" autoname="yes"/>, <m>\vect{y}=\transpose{L}\vect{w}</m>.  The existence of <m>\vect{w}</m> implies that <m>\vect{y}\in\rsp{L}</m>, and therefore <m>\lns{A}\subseteq\rsp{L}</m>.  So by <xref ref="definition-SE" acro="SE" autoname="yes"/> we have <m>\lns{A}=\rsp{L}</m>.</p>
             </proof>
         </theorem>
@@ -574,211 +567,212 @@ B\vect{x}&amp;=J\vect{y}</mrow></md>
         <p>Additionally, the rows of <m>J</m> are the scalars in linear combinations of the rows of <m>A</m> that create the rows of <m>B</m>.  That is, the rows of <m>J</m> record the net effect of the sequence of row operations that takes <m>A</m> to its reduced row-echelon form, <m>B</m>.  This can be seen in the equation <m>JA=B</m> (<xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/>).  As such, the rows of <m>L</m> are scalars for linear combinations of the rows of <m>A</m> that yield zero rows.  But such linear combinations are precisely the elements of the left null space.  So any element of the row space of <m>L</m> is also an element of the left null space of <m>A</m>.</p>
         <p>We will now illustrate <xref ref="theorem-FS" acro="FS" autoname="yes"/> with a few examples.</p>
         <example xml:id="example-FS1" acro="FS1">
-            <index>four subsets</index>
             <title>Four subsets, no. 1</title>
-            <p>In <xref ref="example-SEEF" acro="SEEF" autoname="yes"/> we found the five relevant submatrices of the extended echelon form for the matrix
-<me>A=
-\begin{bmatrix}
- 1 &amp; -1 &amp; -2 &amp; 7 &amp; 1 &amp; 6 \\
- -6 &amp; 2 &amp; -4 &amp; -18 &amp; -3 &amp; -26 \\
- 4 &amp; -1 &amp; 4 &amp; 10 &amp; 2 &amp; 17 \\
- 3 &amp; -1 &amp; 2 &amp; 9 &amp; 1 &amp; 12
-\end{bmatrix}</me>
-</p>
-            <p>To apply <xref ref="theorem-FS" acro="FS" autoname="yes"/> we only need <m>C</m> and <m>L</m>,
-<md><mrow>C&amp;=
-\begin{bmatrix}
- \leading{1} &amp;                0 &amp; 2 &amp; 1 &amp;                0 &amp; 3 \\
-                0 &amp; \leading{1} &amp; 4 &amp; -6 &amp;               0 &amp; -1 \\
-                0 &amp;                0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 2
-\end{bmatrix}
-&amp;
-L&amp;=
-\begin{bmatrix}
-\leading{1} &amp; 2 &amp; 2 &amp; 1
-\end{bmatrix}</mrow></md>
-</p>
-            <p>Then we use <xref ref="theorem-FS" acro="FS" autoname="yes"/>  to obtain
-<md><mrow>\nsp{A}&amp;=\nsp{C}=
-\spn{\set{
-\colvector{-2\\-4\\1\\0\\0\\0},\,
-\colvector{-1\\6\\0\\1\\0\\0},\,
-\colvector{-3\\1\\0\\0\\-2\\1}
-}}
-&amp;&amp;<xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow><mrow>\rsp{A}&amp;=\rsp{C}=
-\spn{\set{
-\colvector{1\\0\\2\\1\\0\\3 },\,
-\colvector{0\\1\\4\\-6\\0\\-1},\,
-\colvector{0\\0\\0\\0\\1\\2}
-}}
-&amp;&amp;<xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow><mrow>\csp{A}&amp;=\nsp{L}=
-\spn{\set{
-\colvector{-2\\1\\0\\0},\,
-\colvector{-2\\0\\1\\0},\,
-\colvector{-1\\0\\0\\1}
-}}
-&amp;&amp;<xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow><mrow>\lns{A}&amp;=\rsp{L}=
-\spn{\set{
-\colvector{1\\2\\2\\1}
-}}
-&amp;&amp;<xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow></md></p>
+            <index>four subsets</index>
+            <p>In <xref ref="example-SEEF" acro="SEEF" autoname="yes"/> we found the five relevant submatrices of the extended echelon form for the matrix<me>A=
+            \begin{bmatrix}
+             1 &amp; -1 &amp; -2 &amp; 7 &amp; 1 &amp; 6 \\
+             -6 &amp; 2 &amp; -4 &amp; -18 &amp; -3 &amp; -26 \\
+             4 &amp; -1 &amp; 4 &amp; 10 &amp; 2 &amp; 17 \\
+             3 &amp; -1 &amp; 2 &amp; 9 &amp; 1 &amp; 12
+            \end{bmatrix}</me>.</p>
+            <p>To apply <xref ref="theorem-FS" acro="FS" autoname="yes"/> we only need <m>C</m> and <m>L</m>,<md>
+                <mrow>C&amp;=
+                \begin{bmatrix}
+                 \leading{1} &amp;                0 &amp; 2 &amp; 1 &amp;                0 &amp; 3 \\
+                                0 &amp; \leading{1} &amp; 4 &amp; -6 &amp;               0 &amp; -1 \\
+                                0 &amp;                0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 2
+                \end{bmatrix}
+                &amp;
+                L&amp;=
+                \begin{bmatrix}
+                \leading{1} &amp; 2 &amp; 2 &amp; 1
+                \end{bmatrix}</mrow>
+            </md>.</p>
+            <p>Then we use <xref ref="theorem-FS" acro="FS" autoname="yes"/>  to obtain<md>
+                <mrow>\nsp{A}&amp;=\nsp{C}=
+                \spn{\set{
+                \colvector{-2\\-4\\1\\0\\0\\0},\,
+                \colvector{-1\\6\\0\\1\\0\\0},\,
+                \colvector{-3\\1\\0\\0\\-2\\1}
+                }}&amp;&amp;
+                    <xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow>
+                <mrow>\rsp{A}&amp;=\rsp{C}=
+                \spn{\set{
+                \colvector{1\\0\\2\\1\\0\\3 },\,
+                \colvector{0\\1\\4\\-6\\0\\-1},\,
+                \colvector{0\\0\\0\\0\\1\\2}
+                }}&amp;&amp;
+                    <xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow>
+                <mrow>\csp{A}&amp;=\nsp{L}=
+                \spn{\set{
+                \colvector{-2\\1\\0\\0},\,
+                \colvector{-2\\0\\1\\0},\,
+                \colvector{-1\\0\\0\\1}
+                }}&amp;&amp;
+                    <xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow>
+                <mrow>\lns{A}&amp;=\rsp{L}=
+                \spn{\set{
+                \colvector{1\\2\\2\\1}
+                }}&amp;&amp;
+                    <xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow>
+                </md>.</p>
             <p>Boom!</p>
         </example>
         <example xml:id="example-FS2" acro="FS2">
-            <index>four subsets</index>
             <title>Four subsets, no. 2</title>
-            <p>Now let us return to the matrix <m>A</m> that we used to motivate this section in <xref ref="example-CSANS" acro="CSANS" autoname="yes"/>,
-<me>A=
-\begin{bmatrix}
- 10 &amp; 0 &amp; 3 &amp; 8 &amp; 7 \\
- -16 &amp; -1 &amp; -4 &amp; -10 &amp; -13 \\
- -6 &amp; 1 &amp; -3 &amp; -6 &amp; -6 \\
- 0 &amp; 2 &amp; -2 &amp; -3 &amp; -2 \\
- 3 &amp; 0 &amp; 1 &amp; 2 &amp; 3 \\
- -1 &amp; -1 &amp; 1 &amp; 1 &amp; 0
-\end{bmatrix}</me></p>
-            <p>We form the matrix <m>M</m> by adjoining the <m>6\times 6</m> identity matrix <m>I_6</m>,
-<me>M=
-\begin{bmatrix}
- 10 &amp; 0 &amp; 3 &amp; 8 &amp; 7 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
- -16 &amp; -1 &amp; -4 &amp; -10 &amp; -13 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
- -6 &amp; 1 &amp; -3 &amp; -6 &amp; -6 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
- 0 &amp; 2 &amp; -2 &amp; -3 &amp; -2 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
- 3 &amp; 0 &amp; 1 &amp; 2 &amp; 3 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
- -1 &amp; -1 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}</me>
-and row-reduce to obtain <m>N</m>
-<me>N=
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 2 &amp; 0 &amp; 0 &amp; 1 &amp; -1 &amp; 2 &amp; -1 \\
- 0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; -3 &amp; 0 &amp; 0 &amp; -2 &amp; 3 &amp; -3 &amp; 3 \\
- 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 3 &amp; 3 \\
- 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2 &amp; 0 &amp; 0 &amp; -2 &amp; 1 &amp; -4 &amp; 0 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 3 &amp; -1 &amp; 3 &amp; 1 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2 &amp; 1 &amp; 1 &amp; -1
-\end{bmatrix}</me>
-</p>
-            <p>To find the four subsets for <m>A</m>, we only need identify the <m>4\times 5</m> matrix <m>C</m> and the <m>2\times 6</m> matrix <m>L</m>,
-<md><mrow>C&amp;=
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 2\\
- 0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; -3\\
- 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 1\\
- 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2
-\end{bmatrix}
-&amp;
-L&amp;=
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 3 &amp; -1 &amp; 3 &amp; 1 \\
- 0 &amp; \leading{1} &amp; -2 &amp; 1 &amp; 1 &amp; -1
-\end{bmatrix}</mrow></md>
-</p>
-            <p>Then we apply <xref ref="theorem-FS" acro="FS" autoname="yes"/>,
-<md><mrow>\nsp{A}&amp;=\nsp{C}=
-\spn{\set{
-\colvector{-2\\3\\-1\\2\\1}
-}}
-&amp;&amp;<xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow><mrow>\rsp{A}&amp;=\rsp{C}=
-\spn{\set{
-\colvector{1 \\ 0 \\ 0 \\ 0 \\ 2},\,
-\colvector{0 \\ 1 \\ 0 \\ 0 \\ -3},\,
-\colvector{0 \\ 0 \\ 1 \\ 0 \\ 1},\,
-\colvector{0 \\ 0 \\ 0 \\ 1 \\ -2}
-}}
-&amp;&amp;<xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow><mrow>\csp{A}&amp;=\nsp{L}=
-\spn{\set{
-\colvector{-3\\2\\1\\0\\0\\0},\,
-\colvector{1\\-1\\0\\1\\0\\0},\,
-\colvector{-3\\-1\\0\\0\\1\\0},\,
-\colvector{-1\\1\\0\\0\\0\\1}
-}}
-&amp;&amp;<xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow><mrow>\lns{A}&amp;=\rsp{L}=
-\spn{\set{
-\colvector{1 \\ 0 \\ 3 \\ -1 \\ 3 \\ 1},\,
-\colvector{0 \\ 1 \\ -2 \\ 1 \\ 1 \\ -1}
-}}
-&amp;&amp;<xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow></md>
-</p>
+            <index>four subsets</index>
+            <p>Now let us return to the matrix <m>A</m> that we used to motivate this section in <xref ref="example-CSANS" acro="CSANS" autoname="yes"/><me>A=
+            \begin{bmatrix}
+             10 &amp; 0 &amp; 3 &amp; 8 &amp; 7 \\
+             -16 &amp; -1 &amp; -4 &amp; -10 &amp; -13 \\
+             -6 &amp; 1 &amp; -3 &amp; -6 &amp; -6 \\
+             0 &amp; 2 &amp; -2 &amp; -3 &amp; -2 \\
+             3 &amp; 0 &amp; 1 &amp; 2 &amp; 3 \\
+             -1 &amp; -1 &amp; 1 &amp; 1 &amp; 0
+            \end{bmatrix}</me>.</p>
+            <p>We form the matrix <m>M</m> by adjoining the <m>6\times 6</m> identity matrix <m>I_6</m>.<me>M=
+            \begin{bmatrix}
+             10 &amp; 0 &amp; 3 &amp; 8 &amp; 7 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+             -16 &amp; -1 &amp; -4 &amp; -10 &amp; -13 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+             -6 &amp; 1 &amp; -3 &amp; -6 &amp; -6 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+             0 &amp; 2 &amp; -2 &amp; -3 &amp; -2 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+             3 &amp; 0 &amp; 1 &amp; 2 &amp; 3 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+             -1 &amp; -1 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
+            \end{bmatrix}</me>and row-reduce to obtain <m>N</m><me>N=
+            \begin{bmatrix}
+             \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 2 &amp; 0 &amp; 0 &amp; 1 &amp; -1 &amp; 2 &amp; -1 \\
+             0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; -3 &amp; 0 &amp; 0 &amp; -2 &amp; 3 &amp; -3 &amp; 3 \\
+             0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 3 &amp; 3 \\
+             0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2 &amp; 0 &amp; 0 &amp; -2 &amp; 1 &amp; -4 &amp; 0 \\
+             0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 3 &amp; -1 &amp; 3 &amp; 1 \\
+             0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2 &amp; 1 &amp; 1 &amp; -1
+            \end{bmatrix}</me></p>
+            <p>To find the four subsets for <m>A</m>, we only need identify the <m>4\times 5</m> matrix <m>C</m> and the <m>2\times 6</m> matrix <m>L</m>.<md>
+                <mrow>C&amp;=
+                \begin{bmatrix}
+                 \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 2\\
+                 0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; -3\\
+                 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 1\\
+                 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2
+                \end{bmatrix}
+                &amp;
+                L&amp;=
+                \begin{bmatrix}
+                 \leading{1} &amp; 0 &amp; 3 &amp; -1 &amp; 3 &amp; 1 \\
+                 0 &amp; \leading{1} &amp; -2 &amp; 1 &amp; 1 &amp; -1
+                \end{bmatrix}</mrow>
+                </md></p>
+            <p>Then we apply <xref ref="theorem-FS" acro="FS" autoname="yes"/><md>
+                <mrow>\nsp{A}&amp;=\nsp{C}=
+                \spn{\set{
+                \colvector{-2\\3\\-1\\2\\1}
+                }}&amp;&amp;
+                    <xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow>
+                <mrow>\rsp{A}&amp;=\rsp{C}=
+                \spn{\set{
+                \colvector{1 \\ 0 \\ 0 \\ 0 \\ 2},\,
+                \colvector{0 \\ 1 \\ 0 \\ 0 \\ -3},\,
+                \colvector{0 \\ 0 \\ 1 \\ 0 \\ 1},\,
+                \colvector{0 \\ 0 \\ 0 \\ 1 \\ -2}
+                }}&amp;&amp;
+                    <xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow>
+                <mrow>\csp{A}&amp;=\nsp{L}=
+                \spn{\set{
+                \colvector{-3\\2\\1\\0\\0\\0},\,
+                \colvector{1\\-1\\0\\1\\0\\0},\,
+                \colvector{-3\\-1\\0\\0\\1\\0},\,
+                \colvector{-1\\1\\0\\0\\0\\1}
+                }}&amp;&amp;
+                    <xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow>
+                <mrow>\lns{A}&amp;=\rsp{L}=
+                \spn{\set{
+                \colvector{1 \\ 0 \\ 3 \\ -1 \\ 3 \\ 1},\,
+                \colvector{0 \\ 1 \\ -2 \\ 1 \\ 1 \\ -1}
+                }}&amp;&amp;
+                    <xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow>
+                </md>.</p>
         </example>
         <p>The next example is just a bit different since the matrix has more rows than columns, and a trivial null space.</p>
         <example xml:id="example-FSAG" acro="FSAG">
+            <title>Four subsets, Archetype G</title>
             <index>
                 <main>column space</main>
                 <sub>as null space, Archetype G</sub>
             </index>
-            <title>Four subsets, Archetype G</title>
-            <p>Archetype<nbsp/><xref ref="archetype-G" acro="G" autoname="no"/> and Archetype<nbsp/><xref ref="archetype-H" acro="H" autoname="no"/> are both systems of <m>m=5</m> equations in <m>n=2</m> variables.  They have identical coefficient matrices, which we will denote here as the matrix <m>G</m>,
-<me>G=<!-- Archetype G, Part purematrix -->\begin{bmatrix}
-2 &amp; 3\\
--1 &amp; 4 \\
-3 &amp; 10\\
-3 &amp;  -1\\
-6 &amp; 9
-\end{bmatrix}
-</me>
-</p>
-            <p>Adjoin the <m>5\times 5</m> identity matrix, <m>I_5</m>, to form
-<me>M=
-\begin{bmatrix}
-2 &amp; 3 &amp; 1&amp;0&amp;0&amp;0&amp;0\\
--1 &amp; 4 &amp; 0&amp;1&amp;0&amp;0&amp;0\\
-3 &amp; 10 &amp; 0&amp;0&amp;1&amp;0&amp;0\\
-3 &amp;  -1 &amp; 0&amp;0&amp;0&amp;1&amp;0\\
-6 &amp; 9 &amp; 0&amp;0&amp;0&amp;0&amp;1
-\end{bmatrix}</me>
-</p>
-            <p>This row-reduces to
-<me>N=
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \frac{3}{11} &amp; \frac{1}{33}\\
-0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; -\frac{2}{11} &amp; \frac{1}{11}\\
-0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; -\frac{1}{3}\\
-0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 1 &amp; -\frac{1}{3}\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 1 &amp; -1
-\end{bmatrix}</me>
-</p>
-            <p>The first <m>n=2</m> columns contain <m>r=2</m> leading 1's, so we obtain <m>C</m> as the <m>2\times 2</m> identity matrix and extract <m>L</m> from the final <m>m-r=3</m> rows in the final <m>m=5</m> columns.
-<md><mrow>C&amp;=
-\begin{bmatrix}
-\leading{1} &amp; 0\\
-0 &amp; \leading{1}
-\end{bmatrix}
-&amp;
-L&amp;=
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; -\frac{1}{3}\\
-0 &amp; \leading{1}  &amp; 0 &amp; 1 &amp; -\frac{1}{3}\\
-0 &amp; 0 &amp; \leading{1}  &amp; 1 &amp; -1
-\end{bmatrix}</mrow></md>
-</p>
-            <p>Then we apply <xref ref="theorem-FS" acro="FS" autoname="yes"/>,
-<md><mrow>\nsp{G}=\nsp{C}&amp;=
-\spn{\emptyset}
-=\set{\zerovector}
-&amp;&amp;<xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow><mrow>\rsp{G}=\rsp{C}&amp;=
-\spn{\set{
-\colvector{1 \\ 0},\,
-\colvector{0 \\ 1}
-}}
-=\complex{2}
-&amp;&amp;<xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow><mrow>\csp{G}=\nsp{L}&amp;=
-\spn{\set{
-\colvector{0\\-1\\-1\\1\\0},\,
-\colvector{\frac{1}{3}\\\frac{1}{3}\\1\\0\\1}
-}}&amp;&amp;<xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow><mrow>&amp;=\spn{\set{
-\colvector{0\\-1\\-1\\1\\0},\,
-\colvector{1\\1\\3\\0\\3}
-}}</mrow><mrow>\lns{G}=\rsp{L}&amp;=
-\spn{\set{
-\colvector{1 \\ 0 \\ 0 \\ 0 \\ -\frac{1}{3}},\,
-\colvector{0 \\ 1  \\ 0 \\ 1 \\ -\frac{1}{3}},\,
-\colvector{0 \\ 0 \\ 1  \\ 1 \\ -1}
-}}&amp;&amp;<xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow><mrow>&amp;=\spn{\set{
-\colvector{3 \\ 0 \\ 0 \\ 0 \\ -1},\,
-\colvector{0 \\ 3  \\ 0 \\ 3\ \\ -1},\,
-\colvector{0 \\ 0 \\ 1  \\ 1 \\ -1}
-}}</mrow></md>
-</p>
+            <!-- Archetype G, Part purematrix -->
+            <p>Archetype<nbsp/><xref ref="archetype-G" acro="G" autoname="no"/> and Archetype<nbsp/><xref ref="archetype-H" acro="H" autoname="no"/> are both systems of <m>m=5</m> equations in <m>n=2</m> variables.  They have identical coefficient matrices, which we will denote here as the matrix <m>G</m>.<me>G=\begin{bmatrix}
+            2 &amp; 3\\
+            -1 &amp; 4 \\
+            3 &amp; 10\\
+            3 &amp;  -1\\
+            6 &amp; 9
+            \end{bmatrix}</me></p>
+            <p>Adjoin the <m>5\times 5</m> identity matrix, <m>I_5</m>, to form<me>M=
+            \begin{bmatrix}
+            2 &amp; 3 &amp; 1&amp;0&amp;0&amp;0&amp;0\\
+            -1 &amp; 4 &amp; 0&amp;1&amp;0&amp;0&amp;0\\
+            3 &amp; 10 &amp; 0&amp;0&amp;1&amp;0&amp;0\\
+            3 &amp;  -1 &amp; 0&amp;0&amp;0&amp;1&amp;0\\
+            6 &amp; 9 &amp; 0&amp;0&amp;0&amp;0&amp;1
+            \end{bmatrix}</me>.</p>
+            <p>This row-reduces to<me>N=
+            \begin{bmatrix}
+            \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \frac{3}{11} &amp; \frac{1}{33}\\
+            0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; -\frac{2}{11} &amp; \frac{1}{11}\\
+            0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; -\frac{1}{3}\\
+            0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 1 &amp; -\frac{1}{3}\\
+            0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 1 &amp; -1
+            \end{bmatrix}</me>.</p>
+            <p>The first <m>n=2</m> columns contain <m>r=2</m> leading 1's, so we obtain <m>C</m> as the <m>2\times 2</m> identity matrix and extract <m>L</m> from the final <m>m-r=3</m> rows in the final <m>m=5</m> columns.<md>
+                <mrow>C&amp;=
+                \begin{bmatrix}
+                \leading{1} &amp; 0\\
+                0 &amp; \leading{1}
+                \end{bmatrix}
+                &amp;
+                L&amp;=
+                \begin{bmatrix}
+                \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; -\frac{1}{3}\\
+                0 &amp; \leading{1}  &amp; 0 &amp; 1 &amp; -\frac{1}{3}\\
+                0 &amp; 0 &amp; \leading{1}  &amp; 1 &amp; -1
+                \end{bmatrix}</mrow>
+            </md></p>
+            <p>Then we apply <xref ref="theorem-FS" acro="FS" autoname="yes"/><md>
+            <mrow>\nsp{G}=\nsp{C}&amp;=
+            \spn{\emptyset}
+            =\set{\zerovector}&amp;&amp;
+                <xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow>
+            <mrow>\rsp{G}=\rsp{C}&amp;=
+            \spn{\set{
+            \colvector{1 \\ 0},\,
+            \colvector{0 \\ 1}
+            }}
+            =\complex{2}&amp;&amp;
+                <xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow>
+            <mrow>\csp{G}=\nsp{L}&amp;=
+            \spn{\set{
+            \colvector{0\\-1\\-1\\1\\0},\,
+            \colvector{\frac{1}{3}\\\frac{1}{3}\\1\\0\\1}
+            }}&amp;&amp;
+                <xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow>
+            <mrow>&amp;=\spn{\set{
+            \colvector{0\\-1\\-1\\1\\0},\,
+            \colvector{1\\1\\3\\0\\3}
+            }}</mrow>
+            <mrow>\lns{G}=\rsp{L}&amp;=
+            \spn{\set{
+            \colvector{1 \\ 0 \\ 0 \\ 0 \\ -\frac{1}{3}},\,
+            \colvector{0 \\ 1  \\ 0 \\ 1 \\ -\frac{1}{3}},\,
+            \colvector{0 \\ 0 \\ 1  \\ 1 \\ -1}
+            }}&amp;&amp;
+                <xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow>
+            <mrow>&amp;=\spn{\set{
+            \colvector{3 \\ 0 \\ 0 \\ 0 \\ -1},\,
+            \colvector{0 \\ 3  \\ 0 \\ 3\ \\ -1},\,
+            \colvector{0 \\ 0 \\ 1  \\ 1 \\ -1}
+            }}</mrow>
+            </md>.</p>
             <p>As mentioned earlier, Archetype<nbsp/><xref ref="archetype-G" acro="G" autoname="no"/> is consistent, while Archetype<nbsp/><xref ref="archetype-H" acro="H" autoname="no"/> is inconsistent.  See if you can write the two different vectors of constants from these two archetypes as linear combinations of the two vectors that form the spanning set for <m>\csp{G}</m>.  How about the two columns of <m>G</m>?  Can you write each individually as a linear combination of the two vectors that form the spanning set for <m>\csp{G}</m>?  They must be in the column space of <m>G</m> also.  Are your answers unique?  Do you notice anything about the scalars that appear in the linear combinations you are forming?</p>
         </example>
         <computation xml:id="sage-EEF" acro="EEF">
@@ -787,206 +781,224 @@ L&amp;=
             <p>Sage will compute the extended echelon form, an improvement over what we did <q>by hand</q> in Sage<nbsp/><xref ref="sage-MISLE" acro="MISLE" autoname="no"/>.  And the output can be requested as a <q>subdivided</q> matrix so that we can easily work with the pieces <m>C</m> and <m>L</m>.  Pieces of subdivided matrices can be extracted with indices entirely similar to how we index the actual entries of a matrix.  We will redo <xref ref="example-FS2" acro="FS2" autoname="yes"/> as an illustration of <xref ref="theorem-FS" acro="FS" autoname="yes"/> and <xref ref="theorem-PEEF" acro="PEEF" autoname="yes"/>.</p>
             <sage xml:id="sagecell-EEF-1">
                 <input>
-A = matrix(QQ,[[ 10,  0,  3,   8,   7],
-               [-16, -1, -4, -10, -13],
-               [ -6,  1, -3,  -6,  -6],
-               [  0,  2, -2,  -3,  -2],
-               [  3,  0,  1,   2,   3],
-               [ -1, -1,  1,   1,   0]])
-N = A.extended_echelon_form(subdivide=True); N
-</input>
+                A = matrix(QQ,[[ 10,  0,  3,   8,   7],
+                               [-16, -1, -4, -10, -13],
+                               [ -6,  1, -3,  -6,  -6],
+                               [  0,  2, -2,  -3,  -2],
+                               [  3,  0,  1,   2,   3],
+                               [ -1, -1,  1,   1,   0]])
+                N = A.extended_echelon_form(subdivide=True); N
+                </input>
                 <output>
-[ 1  0  0  0  2| 0  0  1 -1  2 -1]
-[ 0  1  0  0 -3| 0  0 -2  3 -3  3]
-[ 0  0  1  0  1| 0  0  1  1  3  3]
-[ 0  0  0  1 -2| 0  0 -2  1 -4  0]
-[--------------+-----------------]
-[ 0  0  0  0  0| 1  0  3 -1  3  1]
-[ 0  0  0  0  0| 0  1 -2  1  1 -1]
-</output>
+                [ 1  0  0  0  2| 0  0  1 -1  2 -1]
+                [ 0  1  0  0 -3| 0  0 -2  3 -3  3]
+                [ 0  0  1  0  1| 0  0  1  1  3  3]
+                [ 0  0  0  1 -2| 0  0 -2  1 -4  0]
+                [--------------+-----------------]
+                [ 0  0  0  0  0| 1  0  3 -1  3  1]
+                [ 0  0  0  0  0| 0  1 -2  1  1 -1]
+                </output>
             </sage>
             <sage xml:id="sagecell-EEF-2">
                 <input>
-C = N.subdivision(0,0); C
-</input>
-                <output>
-[ 1  0  0  0  2]
-[ 0  1  0  0 -3]
-[ 0  0  1  0  1]
-[ 0  0  0  1 -2]
-</output>
+            C = N.subdivision(0,0); C
+            </input>
+                            <output>
+            [ 1  0  0  0  2]
+            [ 0  1  0  0 -3]
+            [ 0  0  1  0  1]
+            [ 0  0  0  1 -2]
+            </output>
             </sage>
             <sage xml:id="sagecell-EEF-3">
                 <input>
-L = N.subdivision(1,1); L
-</input>
+                L = N.subdivision(1,1); L
+                </input>
                 <output>
-[ 1  0  3 -1  3  1]
-[ 0  1 -2  1  1 -1]
-</output>
+                [ 1  0  3 -1  3  1]
+                [ 0  1 -2  1  1 -1]
+                </output>
             </sage>
             <sage xml:id="sagecell-EEF-4">
                 <input>
-K = N.subdivision(0,1); K
-</input>
+                K = N.subdivision(0,1); K
+                </input>
                 <output>
-[ 0  0  1 -1  2 -1]
-[ 0  0 -2  3 -3  3]
-[ 0  0  1  1  3  3]
-[ 0  0 -2  1 -4  0]
-</output>
+                [ 0  0  1 -1  2 -1]
+                [ 0  0 -2  3 -3  3]
+                [ 0  0  1  1  3  3]
+                [ 0  0 -2  1 -4  0]
+                </output>
             </sage>
             <sage xml:id="sagecell-EEF-5">
                 <input>
-C.rref() == C
-</input>
+                C.rref() == C
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <sage xml:id="sagecell-EEF-6">
                 <input>
-L.rref() == L
-</input>
+                L.rref() == L
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <sage xml:id="sagecell-EEF-7">
                 <input>
-A.right_kernel() == C.right_kernel()
-</input>
+                A.right_kernel() == C.right_kernel()
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <sage xml:id="sagecell-EEF-8">
                 <input>
-A.row_space() == C.row_space()
-</input>
+                A.row_space() == C.row_space()
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <sage xml:id="sagecell-EEF-9">
                 <input>
-A.column_space() == L.right_kernel()
-</input>
+                A.column_space() == L.right_kernel()
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <sage xml:id="sagecell-EEF-10">
                 <input>
-A.left_kernel() == L.row_space()
-</input>
+                A.left_kernel() == L.row_space()
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <sage xml:id="sagecell-EEF-11">
                 <input>
-J = N.matrix_from_columns(range(5, 11)); J
-</input>
+                J = N.matrix_from_columns(range(5, 11)); J
+                </input>
                 <output>
-[ 0  0  1 -1  2 -1]
-[ 0  0 -2  3 -3  3]
-[ 0  0  1  1  3  3]
-[ 0  0 -2  1 -4  0]
-[ 1  0  3 -1  3  1]
-[ 0  1 -2  1  1 -1]
-</output>
+                [ 0  0  1 -1  2 -1]
+                [ 0  0 -2  3 -3  3]
+                [ 0  0  1  1  3  3]
+                [ 0  0 -2  1 -4  0]
+                [ 1  0  3 -1  3  1]
+                [ 0  1 -2  1  1 -1]
+                </output>
             </sage>
             <sage xml:id="sagecell-EEF-12">
                 <input>
-J.is_singular()
-</input>
+                J.is_singular()
+                </input>
                 <output>
-False
-</output>
+                False
+                </output>
             </sage>
             <sage xml:id="sagecell-EEF-13">
                 <input>
-J*A
-</input>
+                J*A
+                </input>
                 <output>
-[ 1  0  0  0  2]
-[ 0  1  0  0 -3]
-[ 0  0  1  0  1]
-[ 0  0  0  1 -2]
-[ 0  0  0  0  0]
-[ 0  0  0  0  0]
-</output>
+                [ 1  0  0  0  2]
+                [ 0  1  0  0 -3]
+                [ 0  0  1  0  1]
+                [ 0  0  0  1 -2]
+                [ 0  0  0  0  0]
+                [ 0  0  0  0  0]
+                </output>
             </sage>
             <sage xml:id="sagecell-EEF-14">
                 <input>
-J*A == A.rref()
-</input>
+                J*A == A.rref()
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <p>Notice how we can employ the uniqueness of reduced row-echelon form (<xref ref="theorem-RREFU" acro="RREFU" autoname="yes"/>) to verify that <c>C</c> and <c>L</c> are in reduced row-echelon form.  Realize too, that subdivided output is an optional behavior of the <c>.extended_echelon_form()</c> method and must be requested with <c>subdivide=True</c>.</p>
             <p>Additionally, it is the uniquely determined matrix <c>J</c> that provides us with a standard version of the final column of the row-reduced augmented matrix using variables in the vector of constants, as first shown back in <xref ref="example-CSANS" acro="CSANS" autoname="yes"/> and verified here with variables defined as in Sage<nbsp/><xref ref="sage-RRSM" acro="RRSM" autoname="no"/>.  (The vector method <c>.column()</c> converts a vector into a 1-column matrix, used here to format the matrix-vector product nicely.)</p>
             <sage xml:id="sagecell-EEF-15">
                 <input>
-R.&lt;b1,b2,b3,b4,b5,b6&gt; = QQ[]
-const = vector(R, [b1, b2, b3, b4, b5, b6])
-(J*const).column()
-</input>
-                <output>
-[       b3 - b4 + 2*b5 - b6]
-[-2*b3 + 3*b4 - 3*b5 + 3*b6]
-[     b3 + b4 + 3*b5 + 3*b6]
-[         -2*b3 + b4 - 4*b5]
-[b1 + 3*b3 - b4 + 3*b5 + b6]
-[  b2 - 2*b3 + b4 + b5 - b6]
-</output>
+                R.&lt;b1,b2,b3,b4,b5,b6&gt; = QQ[]
+                const = vector(R, [b1, b2, b3, b4, b5, b6])
+                (J*const).column()
+                </input>
+                                <output>
+                [       b3 - b4 + 2*b5 - b6]
+                [-2*b3 + 3*b4 - 3*b5 + 3*b6]
+                [     b3 + b4 + 3*b5 + 3*b6]
+                [         -2*b3 + b4 - 4*b5]
+                [b1 + 3*b3 - b4 + 3*b5 + b6]
+                [  b2 - 2*b3 + b4 + b5 - b6]
+                </output>
             </sage>
         </computation>
         <p><xref ref="example-COV" acro="COV" autoname="yes"/> and <xref ref="example-CSROI" acro="CSROI" autoname="yes"/> each describes the column space of the coefficient matrix from Archetype<nbsp/><xref ref="archetype-I" acro="I" autoname="no"/> as the span of a set of <m>r=3</m> linearly independent vectors.  It is no accident that these two different sets both have the same size.  If we (you?) were to calculate the column space of this matrix using the null space of the matrix <m>L</m> from <xref ref="theorem-FS" acro="FS" autoname="yes"/> then we would again find a set of 3 linearly independent vectors that span the range.  More on this later.</p>
         <p>So we have three different methods to obtain a description of the column space of a matrix as the span of a linearly independent set.  <xref ref="theorem-BCS" acro="BCS" autoname="yes"/> is sometimes useful since the vectors it specifies are equal to actual columns of the matrix. <xref ref="theorem-BRS" acro="BRS" autoname="yes"/> and <xref ref="theorem-CSRST" acro="CSRST" autoname="yes"/> combine to create vectors with lots of zeros, and strategically placed 1's near the top of the vector.   <xref ref="theorem-FS" acro="FS" autoname="yes"/> and the matrix <m>L</m> from the extended echelon form gives us a third method, which tends to create vectors with lots of zeros, and strategically placed 1's near the bottom of the vector.   If we do not care about linear independence we can also appeal to <xref ref="definition-CSM" acro="CSM" autoname="yes"/> and simply express the column space as the span of all the columns of the matrix, giving us a fourth description.</p>
-        <p>With <xref ref="theorem-CSRST" acro="CSRST" autoname="yes"/> and <xref ref="definition-RSM" acro="RSM" autoname="yes"/>, we can compute column spaces with theorems about row spaces, and we can compute row spaces with theorems about column spaces, but in each case we must transpose the matrix first.  At this point you may be overwhelmed by all the possibilities for computing column and row spaces.  <xref ref="figure-CSRST" acro="CSRST" autoname="yes"/> is meant to help.  For both the column space and row space, it suggests four techniques.  One is to appeal to the definition, another yields a span of a linearly independent set, and a third uses <xref ref="theorem-FS" acro="FS" autoname="yes"/>.  A fourth suggests transposing the matrix and the dashed line implies that then the companion set of techniques can be applied.  This can lead to a bit of silliness, since if you were to follow the dashed lines <em>twice</em> you would transpose the matrix twice, and by <xref ref="theorem-TT" acro="TT" autoname="yes"/> would accomplish nothing productive.
-<figure xml:id="figure-CSRST" acro="CSRST"><caption>Column Space and Row Space Techniques</caption><image xml:id="image-CSRST"><latex-image-code>\begin{tikzpicture}
-\draw
-node at (0,0)[right=-3mm]{\Large GET TIKZ CODE}
-;
-\end{tikzpicture}
-</latex-image-code></image></figure>
-</p>
+        <p>With <xref ref="theorem-CSRST" acro="CSRST" autoname="yes"/> and <xref ref="definition-RSM" acro="RSM" autoname="yes"/>, we can compute column spaces with theorems about row spaces, and we can compute row spaces with theorems about column spaces, but in each case we must transpose the matrix first.  At this point you may be overwhelmed by all the possibilities for computing column and row spaces.  <xref ref="figure-CSRST" acro="CSRST" autoname="yes"/> is meant to help.  For both the column space and row space, it suggests four techniques.  One is to appeal to the definition, another yields a span of a linearly independent set, and a third uses <xref ref="theorem-FS" acro="FS" autoname="yes"/>.  A fourth suggests transposing the matrix and the dashed line implies that then the companion set of techniques can be applied.  This can lead to a bit of silliness, since if you were to follow the dashed lines <em>twice</em> you would transpose the matrix twice, and by <xref ref="theorem-TT" acro="TT" autoname="yes"/> would accomplish nothing productive.</p>
+        <figure xml:id="figure-CSRST" acro="CSRST">
+            <caption>Column Space and Row Space Techniques</caption>
+            <image xml:id="image-CSRST">
+                <latex-image-code>
+                \begin{tikzpicture}
+                \node (CA)  at (0em, 13em) [shape=rectangle             ] {$\csp{A}$};
+                \node (CSM) at (6em, 16em) [shape=rectangle, anchor=west] {Definition CSM};
+                \node (BCS) at (6em, 14em) [shape=rectangle, anchor=west] {Theorem BCS};
+                \node (FSL) at (6em, 12em) [shape=rectangle, anchor=west] {Theorem FS, $\nsp{L}$};
+                \node (CSR) at (6em, 10em) [shape=rectangle, anchor=west] {Theorem CSRST, $\rsp{\transpose{A}}$};
+                \node (RA)  at (0em,  3em) [shape=rectangle             ] {$\rsp{A}$};
+                \node (RST) at (6em,  6em) [shape=rectangle, anchor=west] {Definition RSM, $\csp{\transpose{A}}$};
+                \node (FSC) at (6em,  4em) [shape=rectangle, anchor=west] {Theorem FS, $\rsp{C}$};
+                \node (BRS) at (6em,  2em) [shape=rectangle, anchor=west] {Theorem BRS};
+                \node (RSM) at (6em,  0em) [shape=rectangle, anchor=west] {Definition RSM};
+                \draw[->,thick] (CA) to  (CSM.west);
+                \draw[->,thick] (CA) to  (BCS.west);
+                \draw[->,thick] (CA) to  (FSL.west);
+                \draw[->,thick] (CA) to  (CSR.west);
+                \draw[->,thick] (RA) to  (RST.west);
+                \draw[->,thick] (RA) to  (FSC.west);
+                \draw[->,thick] (RA) to  (BRS.west);
+                \draw[->,thick] (RA) to  (RSM.west);
+                \draw[->,densely dashed,thick]
+                (RST.east) .. controls ([xshift=9em,yshift=3em]RST.east)    and ([yshift=-1em]RST.west) .. (CA.south);
+                \draw[->,densely dashed,thick]
+                (CSR.east) .. controls ([xshift=6.5em,yshift=-3em]CSR.east) and ([yshift=5em]RST.west)  .. (RA.north);
+                \end{tikzpicture}
+                </latex-image-code>
+            </image>
+        </figure>
         <p>Although we have many ways to describe a column space, notice that one tempting strategy will usually fail.  It is not possible to simply row-reduce a matrix directly and then use the columns of the row-reduced matrix as a set whose span equals the column space.  In other words, row operations <em>do not</em> preserve column spaces (however row operations do preserve row spaces, <xref ref="theorem-REMRS" acro="REMRS" autoname="yes"/>).  See <xref ref="exercise-CRS-M21" acro="CRS.M21" autoname="yes"/>.</p>
     </subsection>
-    <!--   End  fs.tex -->
     <exercises>
         <title>Reading Questions</title>
         <exercise>
             <statement>
-                <p> Find a nontrivial element of the left null space of <m>A</m>.
-<me>A=
-\begin{bmatrix}
-2  &amp;  1 &amp; -3 &amp; 4\\
--1 &amp; -1 &amp; 2  &amp; -1\\
-0  &amp; -1 &amp; 1  &amp; 2
-\end{bmatrix}</me>
-</p>
+                <p>Find a nontrivial element of the left null space of <m>A</m>.<me>A=
+                \begin{bmatrix}
+                2  &amp;  1 &amp; -3 &amp; 4\\
+                -1 &amp; -1 &amp; 2  &amp; -1\\
+                0  &amp; -1 &amp; 1  &amp; 2
+                \end{bmatrix}</me></p>
             </statement>
         </exercise>
         <exercise>
             <statement>
-                <p> Find the matrices <m>C</m> and <m>L</m> in the extended echelon form of <m>A</m>.
-<me>A=
-\begin{bmatrix}
- -9 &amp; 5 &amp; -3 \\
- 2 &amp; -1 &amp; 1 \\
- -5 &amp; 3 &amp; -1
-\end{bmatrix}</me>
-</p>
+                <p>Find the matrices <m>C</m> and <m>L</m> in the extended echelon form of <m>A</m>.<me>A=
+                \begin{bmatrix}
+                 -9 &amp; 5 &amp; -3 \\
+                 2 &amp; -1 &amp; 1 \\
+                 -5 &amp; 3 &amp; -1
+                \end{bmatrix}</me></p>
             </statement>
         </exercise>
         <exercise>
             <statement>
-                <p> Why is <xref ref="theorem-FS" acro="FS" autoname="yes"/> a great conclusion to <xref ref="chapter-M" acro="M" autoname="yes"/>?
-</p>
+                <p> Why is <xref ref="theorem-FS" acro="FS" autoname="yes"/> a great conclusion to <xref ref="chapter-M" acro="M" autoname="yes"/>?</p>
             </statement>
         </exercise>
     </exercises>
@@ -994,281 +1006,259 @@ node at (0,0)[right=-3mm]{\Large GET TIKZ CODE}
         <title>Exercises</title>
         <exercise number="C20" xml:id="exercise-FS-C20">
             <statement>
-                <p><xref ref="example-FSAG" acro="FSAG" autoname="yes"/> concludes with several questions.  Perform the analysis suggested by these questions.
-</p>
+                <p><xref ref="example-FSAG" acro="FSAG" autoname="yes"/> concludes with several questions.  Perform the analysis suggested by these questions.</p>
             </statement>
         </exercise>
         <exercise number="C25" xml:id="exercise-FS-C25">
             <statement>
-                <p>Given the matrix <m>A</m> below, use the extended echelon form of <m>A</m> to answer each part of this problem.  In each part, find a linearly independent set of vectors, <m>S</m>, so that the span of <m>S</m>, <m>\spn{S}</m>, equals the specified set of vectors.
-<me>A=
-\begin{bmatrix}
- -5 &amp; 3 &amp; -1 \\
- -1 &amp; 1 &amp; 1 \\
- -8 &amp; 5 &amp; -1 \\
- 3 &amp; -2 &amp; 0
-\end{bmatrix}</me>
-<ol><li>The row space of <m>A</m>, <m>\rsp{A}</m>.</li><li>The column space of <m>A</m>, <m>\csp{A}</m>.</li><li>The null space of <m>A</m>, <m>\nsp{A}</m>.</li><li>The left null space of <m>A</m>, <m>\lns{A}</m>.</li></ol>
-</p>
+                <p>Given the matrix <m>A</m> below, use the extended echelon form of <m>A</m> to answer each part of this problem.  In each part, find a linearly independent set of vectors, <m>S</m>, so that the span of <m>S</m>, <m>\spn{S}</m>, equals the specified set of vectors.<ol>
+                    <li>The row space of <m>A</m>, <m>\rsp{A}</m>.</li>
+                    <li>The column space of <m>A</m>, <m>\csp{A}</m>.</li>
+                    <li>The null space of <m>A</m>, <m>\nsp{A}</m>.</li>
+                    <li>The left null space of <m>A</m>, <m>\lns{A}</m>.</li>
+                </ol><me>A=
+                \begin{bmatrix}
+                 -5 &amp; 3 &amp; -1 \\
+                 -1 &amp; 1 &amp; 1 \\
+                 -8 &amp; 5 &amp; -1 \\
+                 3 &amp; -2 &amp; 0
+                \end{bmatrix}</me></p>
             </statement>
             <solution xml:id="solution-FS-C25">
-                <p>Add a <m>4\times 4</m> identity matrix to the right of <m>A</m> to form the matrix <m>M</m> and then row-reduce to the matrix <m>N</m>,
-<me>M=
-\begin{bmatrix}
- -5 &amp; 3 &amp; -1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
- -1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
- -8 &amp; 5 &amp; -1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
- 3 &amp; -2 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-\rref
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 2 &amp; 0 &amp; 0 &amp; -2 &amp; -5 \\
- 0 &amp; \leading{1} &amp; 3 &amp; 0 &amp; 0 &amp; -3 &amp; -8 \\
- 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; -1 &amp; -1 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 1 &amp; 3
-\end{bmatrix}
-=N</me>
-To apply <xref ref="theorem-FS" acro="FS" autoname="yes"/> in each of these four parts, we need the two matrices,
-<md><mrow>C&amp;=
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 2 \\
- 0 &amp; \leading{1} &amp; 3
-\end{bmatrix}
-&amp;
-L&amp;=
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; -1 &amp; -1 \\
-0 &amp; \leading{1} &amp; 1 &amp; 3
-\end{bmatrix}</mrow></md>
-(a)
-<md><mrow>\rsp{A}
-&amp;=\rsp{C}&amp;&amp;<xref ref="theorem-FS" acro="FS" autoname="yes"/></mrow><mrow>&amp;=\spn{\set{\colvector{1\\0\\2},\,\colvector{0\\1\\3}}}&amp;&amp;<xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow></md>
-(b)
-<md><mrow>\csp{A}
-&amp;=\nsp{L}&amp;&amp;<xref ref="theorem-FS" acro="FS" autoname="yes"/></mrow><mrow>&amp;=\spn{\set{\colvector{1\\-1\\1\\0},\,\colvector{1\\-3\\0\\1}}}&amp;&amp;<xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow></md>
-(c)
-<md><mrow>\nsp{A}
-&amp;=\nsp{C}&amp;&amp;<xref ref="theorem-FS" acro="FS" autoname="yes"/></mrow><mrow>&amp;=\spn{\set{\colvector{-2\\-3\\1}}}&amp;&amp;<xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow></md>
-(d)
-<md><mrow>\lns{A}
-&amp;=\rsp{L}&amp;&amp;<xref ref="theorem-FS" acro="FS" autoname="yes"/></mrow><mrow>&amp;=\spn{\set{\colvector{1\\0\\-1\\-1},\,\colvector{0\\1\\1\\3}}}&amp;&amp;<xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow></md>
-</p>
+                <p>Add a <m>4\times 4</m> identity matrix to the right of <m>A</m> to form the matrix <m>M</m> and then row-reduce to the matrix <m>N</m>,<me>M=
+                \begin{bmatrix}
+                 -5 &amp; 3 &amp; -1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+                 -1 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+                 -8 &amp; 5 &amp; -1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+                 3 &amp; -2 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1
+                \end{bmatrix}
+                \rref
+                \begin{bmatrix}
+                 \leading{1} &amp; 0 &amp; 2 &amp; 0 &amp; 0 &amp; -2 &amp; -5 \\
+                 0 &amp; \leading{1} &amp; 3 &amp; 0 &amp; 0 &amp; -3 &amp; -8 \\
+                 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; -1 &amp; -1 \\
+                 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 1 &amp; 3
+                \end{bmatrix}
+                =N</me>To apply <xref ref="theorem-FS" acro="FS" autoname="yes"/> in each of these four parts, we need the two matrices,<md>
+                    <mrow>C&amp;=
+                    \begin{bmatrix}
+                     \leading{1} &amp; 0 &amp; 2 \\
+                     0 &amp; \leading{1} &amp; 3
+                    \end{bmatrix}
+                    &amp;
+                    L&amp;=
+                    \begin{bmatrix}
+                    \leading{1} &amp; 0 &amp; -1 &amp; -1 \\
+                    0 &amp; \leading{1} &amp; 1 &amp; 3
+                    \end{bmatrix}</mrow>
+                </md>(a)<md>
+                    <mrow>\rsp{A}
+                    &amp;=\rsp{C}&amp;&amp;
+                        <xref ref="theorem-FS" acro="FS" autoname="yes"/></mrow>
+                    <mrow>&amp;=\spn{\set{\colvector{1\\0\\2},\,\colvector{0\\1\\3}}}&amp;&amp;
+                        <xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow>
+                </md>(b)<md>
+                    <mrow>\csp{A}
+                    &amp;=\nsp{L}&amp;&amp;
+                        <xref ref="theorem-FS" acro="FS" autoname="yes"/></mrow>
+                    <mrow>&amp;=\spn{\set{\colvector{1\\-1\\1\\0},\,\colvector{1\\-3\\0\\1}}}&amp;&amp;
+                        <xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow>
+                </md>(c)<md>
+                    <mrow>\nsp{A}
+                    &amp;=\nsp{C}&amp;&amp;
+                        <xref ref="theorem-FS" acro="FS" autoname="yes"/></mrow>
+                    <mrow>&amp;=\spn{\set{\colvector{-2\\-3\\1}}}&amp;&amp;
+                        <xref ref="theorem-BNS" acro="BNS" autoname="yes"/></mrow>
+                </md>(d)<md>
+                    <mrow>\lns{A}
+                    &amp;=\rsp{L}&amp;&amp;
+                        <xref ref="theorem-FS" acro="FS" autoname="yes"/></mrow>
+                    <mrow>&amp;=\spn{\set{\colvector{1\\0\\-1\\-1},\,\colvector{0\\1\\1\\3}}}&amp;&amp;
+                        <xref ref="theorem-BRS" acro="BRS" autoname="yes"/></mrow>
+                </md></p>
             </solution>
         </exercise>
         <exercise number="C26" xml:id="exercise-FS-C26">
             <statement>
-                <p>For the matrix <m>D</m> below use the extended echelon form to find:
-<ol><li>A linearly independent set whose span is the column space of <m>D</m>.</li><li>A linearly independent set whose span is the left null space of <m>D</m>.</li></ol>
-<md><mrow>D&amp;=
-\begin{bmatrix}
- -7 &amp; -11 &amp; -19 &amp; -15\\
- 6 &amp; 10 &amp; 18 &amp; 14 \\
- 3 &amp; 5 &amp; 9 &amp; 7 \\
--1 &amp; -2 &amp; -4 &amp; -3
-\end{bmatrix}</mrow></md>
-</p>
+                <p>For the matrix <m>D</m> below use the extended echelon form to find:<ol>
+                    <li>A linearly independent set whose span is the column space of <m>D</m>.</li>
+                    <li>A linearly independent set whose span is the left null space of <m>D</m>.</li>
+                </ol><md>
+                    <mrow>D&amp;=
+                    \begin{bmatrix}
+                     -7 &amp; -11 &amp; -19 &amp; -15\\
+                     6 &amp; 10 &amp; 18 &amp; 14 \\
+                     3 &amp; 5 &amp; 9 &amp; 7 \\
+                    -1 &amp; -2 &amp; -4 &amp; -3
+                    \end{bmatrix}</mrow>
+                </md></p>
             </statement>
             <solution xml:id="solution-FS-C26">
-                <p>For both parts, we need the extended echelon form of the matrix.
-<md><mrow>\begin{bmatrix}
- -7 &amp; -11 &amp; -19 &amp; -15 &amp; 1 &amp; 0 &amp; 0 &amp; 0\\
- 6 &amp; 10 &amp; 18 &amp; 14 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
- 3 &amp; 5 &amp; 9 &amp; 7 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
- -1 &amp; -2 &amp; -4 &amp; -3 &amp; 0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-\rref
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; -2 &amp; -1 &amp; 0 &amp; 0 &amp; 2 &amp; 5 \\
- 0 &amp; \leading{1} &amp; 3 &amp; 2 &amp; 0 &amp; 0 &amp; -1 &amp; -3 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 3 &amp; 2 \\
- 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2 &amp; 0
-\end{bmatrix}</mrow></md>
-From this matrix we extract the last two rows, in the last four columns to form the matrix <m>L</m>,
-<md><mrow>L
-=
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 3 &amp; 2 \\
- 0 &amp; \leading{1} &amp; -2 &amp; 0
-\end{bmatrix}</mrow></md>
-By <xref ref="theorem-FS" acro="FS" autoname="yes"/> and <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> we have
-<md><mrow>\csp{D}=\nsp{L}=\spn{\set{
-\colvector{-3\\2\\1\\0},\,
-\colvector{-2\\0\\0\\1}
-}}</mrow></md>
-By <xref ref="theorem-FS" acro="FS" autoname="yes"/> and <xref ref="theorem-BRS" acro="BRS" autoname="yes"/> we have
-<md><mrow>\lns{D}=\rsp{L}=\spn{\set{
-\colvector{1\\0\\3\\2},\,
-\colvector{0\\1\\-2\\0}
-}}</mrow></md>
-</p>
+                <p>For both parts, we need the extended echelon form of the matrix.<md>
+                <mrow>\begin{bmatrix}
+                 -7 &amp; -11 &amp; -19 &amp; -15 &amp; 1 &amp; 0 &amp; 0 &amp; 0\\
+                 6 &amp; 10 &amp; 18 &amp; 14 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+                 3 &amp; 5 &amp; 9 &amp; 7 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+                 -1 &amp; -2 &amp; -4 &amp; -3 &amp; 0 &amp; 0 &amp; 0 &amp; 1
+                \end{bmatrix}
+                \rref
+                \begin{bmatrix}
+                 \leading{1} &amp; 0 &amp; -2 &amp; -1 &amp; 0 &amp; 0 &amp; 2 &amp; 5 \\
+                 0 &amp; \leading{1} &amp; 3 &amp; 2 &amp; 0 &amp; 0 &amp; -1 &amp; -3 \\
+                 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; 3 &amp; 2 \\
+                 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -2 &amp; 0
+                \end{bmatrix}</mrow>
+            </md>From this matrix we extract the last two rows, in the last four columns to form the matrix <m>L</m>,<md>
+                <mrow>L
+                =
+                \begin{bmatrix}
+                \leading{1} &amp; 0 &amp; 3 &amp; 2 \\
+                 0 &amp; \leading{1} &amp; -2 &amp; 0
+                \end{bmatrix}</mrow>
+            </md>By <xref ref="theorem-FS" acro="FS" autoname="yes"/> and <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> we have<md>
+                <mrow>\csp{D}=\nsp{L}=\spn{\set{
+                \colvector{-3\\2\\1\\0},\,
+                \colvector{-2\\0\\0\\1}
+                }}</mrow>
+            </md>By <xref ref="theorem-FS" acro="FS" autoname="yes"/> and <xref ref="theorem-BRS" acro="BRS" autoname="yes"/> we have<md>
+                <mrow>\lns{D}=\rsp{L}=\spn{\set{
+                \colvector{1\\0\\3\\2},\,
+                \colvector{0\\1\\-2\\0}
+                }}</mrow>
+            </md></p>
             </solution>
         </exercise>
         <exercise number="C41" xml:id="exercise-FS-C41">
             <statement>
                 <p>The following archetypes are systems of equations.  For each system, write the vector of constants as a linear combination of the vectors in the span construction for the column space provided by <xref ref="theorem-FS" acro="FS" autoname="yes"/> and <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> (these vectors are listed for each of these archetypes).</p>
-                <p>
-Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-C" acro="C" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-F" acro="F" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-G" acro="G" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-H" acro="H" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-I" acro="I" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-J" acro="J" autoname="no"/>
-</p>
+                <p>Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-C" acro="C" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-F" acro="F" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-G" acro="G" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-H" acro="H" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-I" acro="I" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-J" acro="J" autoname="no"/></p>
             </statement>
         </exercise>
         <exercise number="C43" xml:id="exercise-FS-C43">
             <statement>
                 <p>The following archetypes are either matrices or systems of equations with coefficient matrices.  For each matrix, compute the extended echelon form <m>N</m> and identify the matrices <m>C</m> and <m>L</m>.  Using <xref ref="theorem-FS" acro="FS" autoname="yes"/>,  <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> and <xref ref="theorem-BRS" acro="BRS" autoname="yes"/> express the null space, the row space, the column space and left null space of each coefficient matrix as a span of a linearly independent set.</p>
-                <p>
-Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-C" acro="C" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/>/Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-F" acro="F" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-G" acro="G" autoname="no"/>/Archetype<nbsp/><xref ref="archetype-H" acro="H" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-I" acro="I" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-J" acro="J" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-K" acro="K" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-L" acro="L" autoname="no"/>
-</p>
+                <p> Archetype<nbsp/><xref ref="archetype-A" acro="A" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-B" acro="B" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-C" acro="C" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/>/Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-F" acro="F" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-G" acro="G" autoname="no"/>/Archetype<nbsp/><xref ref="archetype-H" acro="H" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-I" acro="I" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-J" acro="J" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-K" acro="K" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-L" acro="L" autoname="no"/></p>
             </statement>
         </exercise>
         <exercise number="C60" xml:id="exercise-FS-C60">
             <statement>
-                <p>For the matrix <m>B</m> below, find sets of vectors whose span equals the column space of <m>B</m> (<m>\csp{B}</m>) and which individually meet the following extra requirements.
-<ol><li>The set illustrates the definition of the column space.</li><li>The set is linearly independent and the members of the set are columns of <m>B</m>.</li><li>The set is linearly independent with a <q>nice pattern of zeros and ones</q> at the <em>top</em> of each vector.</li><li>The set is linearly independent with a <q>nice pattern of zeros and ones</q> at the <em>bottom</em> of each vector.</li></ol>
-<me>B=
-\begin{bmatrix}
-2 &amp; 3 &amp; 1 &amp; 1\\
-1 &amp; 1 &amp; 0 &amp; 1\\
--1 &amp; 2 &amp; 3 &amp; -4
-\end{bmatrix}</me>
-</p>
+                <p>For the matrix <m>B</m> below, find sets of vectors whose span equals the column space of <m>B</m> (<m>\csp{B}</m>) and which individually meet the following extra requirements.<ol>
+                    <li>The set illustrates the definition of the column space.</li>
+                    <li>The set is linearly independent and the members of the set are columns of <m>B</m>.</li>
+                    <li>The set is linearly independent with a <q>nice pattern of zeros and ones</q> at the <em>top</em> of each vector.</li>
+                    <li>The set is linearly independent with a <q>nice pattern of zeros and ones</q> at the <em>bottom</em> of each vector.</li>
+                </ol><me>B=
+                \begin{bmatrix}
+                2 &amp; 3 &amp; 1 &amp; 1\\
+                1 &amp; 1 &amp; 0 &amp; 1\\
+                -1 &amp; 2 &amp; 3 &amp; -4
+                \end{bmatrix}</me></p>
             </statement>
             <solution xml:id="solution-FS-C60">
-                <p>The definition of the column space is the span of the set of columns (<xref ref="definition-CSM" acro="CSM" autoname="yes"/>).  So the desired set is just the four columns of <m>B</m>,
-<me>S=\set{
-\colvector{2\\1\\-1},\,
-\colvector{3\\1\\2},\,
-\colvector{1\\0\\3},\,
-\colvector{1\\1\\-4}
-}</me>
-<xref ref="theorem-BCS" acro="BCS" autoname="yes"/> suggests row-reducing the matrix and using the columns of <m>B</m> with the same indices as the pivot columns.
-<me>B\rref
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; -1 &amp; 2\\
-0 &amp; \leading{1} &amp; 1 &amp; -1\\
-0 &amp; 0 &amp; 0 &amp; 0
-\end{bmatrix}</me>
-So the pivot columns are numbered by elements of <m>D=\set{1,\,2}</m>, so the requested set is
-<me>S=\set{
-\colvector{2\\1\\-1},\,
-\colvector{3\\1\\2}}</me>
-We can find this set by row-reducing the transpose of <m>B</m>, deleting the zero rows, and using the nonzero rows as column vectors in the set.  This is an application of <xref ref="theorem-CSRST" acro="CSRST" autoname="yes"/> followed by <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>.
-<me>\transpose{B}\rref
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 3\\
-0 &amp; \leading{1} &amp; -7\\
-0 &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; 0
-\end{bmatrix}</me>
-So the requested set is
-<me>S=\set{
-\colvector{1\\0\\3},\,
-\colvector{0\\1\\-7}
-}</me>
-With the column space expressed as a null space, the vectors obtained via <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> will be of the desired shape.  So we first proceed with <xref ref="theorem-FS" acro="FS" autoname="yes"/> and create the extended echelon form,
-<me>\augmented{B}{I_3}=
-\begin{bmatrix}
-2 &amp; 3 &amp; 1 &amp; 1 &amp; 1 &amp; 0 &amp; 0\\
-1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0\\
--1 &amp; 2 &amp; 3 &amp; -4 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-\rref
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; -1 &amp; 2 &amp; 0 &amp; \frac{2}{3} &amp; \frac{-1}{3}\\
-0 &amp; \leading{1} &amp; 1 &amp; -1 &amp; 0 &amp; \frac{1}{3} &amp; \frac{1}{3}\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; \frac{-7}{3} &amp; \frac{-1}{3}
-\end{bmatrix}</me>
-So, employing <xref ref="theorem-FS" acro="FS" autoname="yes"/>, we have <m>\csp{B}=\nsp{L}</m>, where
-<me>L=
-\begin{bmatrix}
-\leading{1} &amp; \frac{-7}{3} &amp; \frac{-1}{3}
-\end{bmatrix}</me>
-We can find the desired set of vectors from <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> as
-<me>S=\set{
-\colvector{\frac{7}{3}\\1\\0},\,
-\colvector{\frac{1}{3}\\0\\1}
-}</me>
-</p>
+                <p>The definition of the column space is the span of the set of columns (<xref ref="definition-CSM" acro="CSM" autoname="yes"/>).  So the desired set is just the four columns of <m>B</m>,<me>S=\set{
+                \colvector{2\\1\\-1},\,
+                \colvector{3\\1\\2},\,
+                \colvector{1\\0\\3},\,
+                \colvector{1\\1\\-4}
+                }</me>.  <xref ref="theorem-BCS" acro="BCS" autoname="yes"/> suggests row-reducing the matrix and using the columns of <m>B</m> with the same indices as the pivot columns.<me>B\rref
+                \begin{bmatrix}
+                \leading{1} &amp; 0 &amp; -1 &amp; 2\\
+                0 &amp; \leading{1} &amp; 1 &amp; -1\\
+                0 &amp; 0 &amp; 0 &amp; 0
+                \end{bmatrix}</me>So the pivot columns are numbered by elements of <m>D=\set{1,\,2}</m>, so the requested set is<me>S=\set{
+                \colvector{2\\1\\-1},\,
+                \colvector{3\\1\\2}}</me>.  We can find this set by row-reducing the transpose of <m>B</m>, deleting the zero rows, and using the nonzero rows as column vectors in the set.  This is an application of <xref ref="theorem-CSRST" acro="CSRST" autoname="yes"/> followed by <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>.<me>\transpose{B}\rref
+                \begin{bmatrix}
+                \leading{1} &amp; 0 &amp; 3\\
+                0 &amp; \leading{1} &amp; -7\\
+                0 &amp; 0 &amp; 0\\
+                0 &amp; 0 &amp; 0
+                \end{bmatrix}</me>So the requested set is<me>S=\set{
+                \colvector{1\\0\\3},\,
+                \colvector{0\\1\\-7}
+                }</me>With the column space expressed as a null space, the vectors obtained via <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> will be of the desired shape.  So we first proceed with <xref ref="theorem-FS" acro="FS" autoname="yes"/> and create the extended echelon form<me>\augmented{B}{I_3}=
+                \begin{bmatrix}
+                2 &amp; 3 &amp; 1 &amp; 1 &amp; 1 &amp; 0 &amp; 0\\
+                1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0\\
+                -1 &amp; 2 &amp; 3 &amp; -4 &amp; 0 &amp; 0 &amp; 1
+                \end{bmatrix}
+                \rref
+                \begin{bmatrix}
+                \leading{1} &amp; 0 &amp; -1 &amp; 2 &amp; 0 &amp; \frac{2}{3} &amp; \frac{-1}{3}\\
+                0 &amp; \leading{1} &amp; 1 &amp; -1 &amp; 0 &amp; \frac{1}{3} &amp; \frac{1}{3}\\
+                0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; \frac{-7}{3} &amp; \frac{-1}{3}
+                \end{bmatrix}</me>.  So, employing <xref ref="theorem-FS" acro="FS" autoname="yes"/>, we have <m>\csp{B}=\nsp{L}</m>, where<me>L=
+                \begin{bmatrix}
+                \leading{1} &amp; \frac{-7}{3} &amp; \frac{-1}{3}
+                \end{bmatrix}</me>We can find the desired set of vectors from <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> as<me>S=\set{
+                \colvector{\frac{7}{3}\\1\\0},\,
+                \colvector{\frac{1}{3}\\0\\1}
+                }</me>.</p>
             </solution>
         </exercise>
         <exercise number="C61" xml:id="exercise-FS-C61">
             <statement>
-                <p>Let <m>A</m> be the matrix below, and find the indicated sets with the requested properties.
-<me>A=
-\begin{bmatrix}
-2 &amp; -1 &amp; 5 &amp; -3\\
--5 &amp; 3 &amp; -12 &amp; 7\\
-1 &amp; 1 &amp; 4 &amp; -3
-\end{bmatrix}</me>
-<ol><li>A linearly independent set <m>S</m> so that <m>\csp{A}=\spn{S}</m> and <m>S</m> is composed of columns of <m>A</m>.</li><li>A linearly independent set <m>S</m> so that <m>\csp{A}=\spn{S}</m> and the vectors in <m>S</m> have a nice pattern of zeros and ones at the top of the vectors.</li><li>A linearly independent set <m>S</m> so that <m>\csp{A}=\spn{S}</m> and the vectors in <m>S</m> have a nice pattern of zeros and ones at the bottom of the vectors.</li><li>A linearly independent set <m>S</m> so that <m>\rsp{A}=\spn{S}</m>.</li></ol>
-</p>
+                <p>Let <m>A</m> be the matrix below, and find the indicated sets with the requested properties.<ol>
+                <li>A linearly independent set <m>S</m> so that <m>\csp{A}=\spn{S}</m> and <m>S</m> is composed of columns of <m>A</m>.</li>
+                <li>A linearly independent set <m>S</m> so that <m>\csp{A}=\spn{S}</m> and the vectors in <m>S</m> have a nice pattern of zeros and ones at the top of the vectors.</li>
+                <li>A linearly independent set <m>S</m> so that <m>\csp{A}=\spn{S}</m> and the vectors in <m>S</m> have a nice pattern of zeros and ones at the bottom of the vectors.</li>
+                <li>A linearly independent set <m>S</m> so that <m>\rsp{A}=\spn{S}</m>.</li>
+            </ol><me>A=
+                \begin{bmatrix}
+                2 &amp; -1 &amp; 5 &amp; -3\\
+                -5 &amp; 3 &amp; -12 &amp; 7\\
+                1 &amp; 1 &amp; 4 &amp; -3
+                \end{bmatrix}</me></p>
             </statement>
             <solution xml:id="solution-FS-C61">
-                <p>First find a matrix <m>B</m> that is row-equivalent to <m>A</m> and in reduced row-echelon form
-<me>B=
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 3 &amp; -2\\
-0 &amp; \leading{1} &amp; 1 &amp; -1\\
-0 &amp; 0 &amp; 0 &amp; 0
-\end{bmatrix}</me>
-By <xref ref="theorem-BCS" acro="BCS" autoname="yes"/> we can choose the columns of <m>A</m> that have the same indices as the pivot columns (<m>D=\set{1,2}</m>) as the elements of <m>S</m> and obtain the desired properties.  So
-<me>S=\set{\colvector{2\\-5\\1},\,\colvector{-1\\3\\1}}</me>
-We can write the column space of <m>A</m> as the row space of the transpose (<xref ref="theorem-CSRST" acro="CSRST" autoname="yes"/>).  So we row-reduce the transpose of <m>A</m> to obtain the row-equivalent matrix <m>C</m> in reduced row-echelon form
-<me>C=
-\begin{bmatrix}
-1 &amp; 0 &amp; 8\\
-0 &amp; 1 &amp; 3\\
-0 &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; 0
-\end{bmatrix}</me>
-The nonzero rows (written as columns) will be a linearly independent set that spans the row space of <m>\transpose{A}</m>, by <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>, and the zeros and ones will be at the top of the vectors,
-<me>S=\set{\colvector{1\\0\\8},\,\colvector{0\\1\\3}}</me>
-In preparation for <xref ref="theorem-FS" acro="FS" autoname="yes"/>, augment <m>A</m> with the <m>3\times 3</m> identity matrix <m>I_3</m> and row-reduce to obtain the extended echelon form,
-<me>\begin{bmatrix}
-1 &amp; 0 &amp; 3 &amp; -2 &amp; 0 &amp; -\frac{1}{8} &amp; \frac{3}{8}\\
-0 &amp; 1 &amp; 1 &amp; -1 &amp; 0 &amp; \frac{1}{8} &amp; \frac{5}{8}\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; \frac{3}{8} &amp; -\frac{1}{8}
-\end{bmatrix}</me>
-Then since the first four columns of row 3 are all zeros, we extract
-<me>L=
-\begin{bmatrix}
-\leading{1} &amp; \frac{3}{8} &amp; -\frac{1}{8}
-\end{bmatrix}</me>
-<xref ref="theorem-FS" acro="FS" autoname="yes"/> says that <m>\csp{A}=\nsp{L}</m>.  We can then use  <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> to construct the desired set <m>S</m>, based on the free variables with indices in <m>F=\set{2,3}</m> for the homogeneous system <m>\homosystem{L}</m>, so
-<me>S=\set{\colvector{-\frac{3}{8}\\1\\0},\,\colvector{\frac{1}{8}\\0\\1}}</me>
-Notice that the zeros and ones are at the bottom of the vectors.</p>
-                <p>
-This is a straightforward application of <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>.  Use the row-reduced matrix <m>B</m> from part (a), grab the nonzero rows, and write them as column vectors,
-<me>S=\set{\colvector{1\\0\\3\\-2},\,\colvector{0\\1\\1\\-1}}</me>
-</p>
+                <p>First find a matrix <m>B</m> that is row-equivalent to <m>A</m> and in reduced row-echelon form.<me>B=
+                \begin{bmatrix}
+                \leading{1} &amp; 0 &amp; 3 &amp; -2\\
+                0 &amp; \leading{1} &amp; 1 &amp; -1\\
+                0 &amp; 0 &amp; 0 &amp; 0
+                \end{bmatrix}</me>By <xref ref="theorem-BCS" acro="BCS" autoname="yes"/> we can choose the columns of <m>A</m> that have the same indices as the pivot columns (<m>D=\set{1,2}</m>) as the elements of <m>S</m> and obtain the desired properties.  So<me>S=\set{\colvector{2\\-5\\1},\,\colvector{-1\\3\\1}}</me>We can write the column space of <m>A</m> as the row space of the transpose (<xref ref="theorem-CSRST" acro="CSRST" autoname="yes"/>).  So we row-reduce the transpose of <m>A</m> to obtain the row-equivalent matrix <m>C</m> in reduced row-echelon form.<me>C=
+                \begin{bmatrix}
+                1 &amp; 0 &amp; 8\\
+                0 &amp; 1 &amp; 3\\
+                0 &amp; 0 &amp; 0\\
+                0 &amp; 0 &amp; 0
+                \end{bmatrix}</me>The nonzero rows (written as columns) will be a linearly independent set that spans the row space of <m>\transpose{A}</m>, by <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>, and the zeros and ones will be at the top of the vectors,<me>S=\set{\colvector{1\\0\\8},\,\colvector{0\\1\\3}}</me>In preparation for <xref ref="theorem-FS" acro="FS" autoname="yes"/>, augment <m>A</m> with the <m>3\times 3</m> identity matrix <m>I_3</m> and row-reduce to obtain the extended echelon form.<me>\begin{bmatrix}
+                1 &amp; 0 &amp; 3 &amp; -2 &amp; 0 &amp; -\frac{1}{8} &amp; \frac{3}{8}\\
+                0 &amp; 1 &amp; 1 &amp; -1 &amp; 0 &amp; \frac{1}{8} &amp; \frac{5}{8}\\
+                0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; \frac{3}{8} &amp; -\frac{1}{8}
+                \end{bmatrix}</me>Then since the first four columns of row 3 are all zeros, we extract<me>L=
+                \begin{bmatrix}
+                \leading{1} &amp; \frac{3}{8} &amp; -\frac{1}{8}
+                \end{bmatrix}</me><xref ref="theorem-FS" acro="FS" autoname="yes"/> says that <m>\csp{A}=\nsp{L}</m>.  We can then use  <xref ref="theorem-BNS" acro="BNS" autoname="yes"/> to construct the desired set <m>S</m>, based on the free variables with indices in <m>F=\set{2,3}</m> for the homogeneous system <m>\homosystem{L}</m>, so<me>S=\set{\colvector{-\frac{3}{8}\\1\\0},\,\colvector{\frac{1}{8}\\0\\1}}</me>Notice that the zeros and ones are at the bottom of the vectors.</p>
+                <p>This is a straightforward application of <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>.  Use the row-reduced matrix <m>B</m> from part (a), grab the nonzero rows, and write them as column vectors,<me>S=\set{\colvector{1\\0\\3\\-2},\,\colvector{0\\1\\1\\-1}}</me></p>
             </solution>
         </exercise>
         <exercise number="M50" xml:id="exercise-FS-M50">
             <statement>
-                <p>Suppose that <m>A</m> is a nonsingular matrix.  Extend the four conclusions of <xref ref="theorem-FS" acro="FS" autoname="yes"/> in this special case and discuss connections with previous results (such as <xref ref="theorem-NME4" acro="NME4" autoname="yes"/>).
-</p>
+                <p>Suppose that <m>A</m> is a nonsingular matrix.  Extend the four conclusions of <xref ref="theorem-FS" acro="FS" autoname="yes"/> in this special case and discuss connections with previous results (such as <xref ref="theorem-NME4" acro="NME4" autoname="yes"/>).</p>
             </statement>
         </exercise>
         <exercise number="M51" xml:id="exercise-FS-M51">
             <statement>
-                <p>Suppose that <m>A</m> is a singular matrix.  Extend the four conclusions of <xref ref="theorem-FS" acro="FS" autoname="yes"/> in this special case and discuss connections with previous results (such as <xref ref="theorem-NME4" acro="NME4" autoname="yes"/>).
-</p>
+                <p>Suppose that <m>A</m> is a singular matrix.  Extend the four conclusions of <xref ref="theorem-FS" acro="FS" autoname="yes"/> in this special case and discuss connections with previous results (such as <xref ref="theorem-NME4" acro="NME4" autoname="yes"/>).</p>
             </statement>
         </exercise>
     </exercises>
