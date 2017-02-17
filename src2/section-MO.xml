@@ -62,9 +62,7 @@
                 <sub>addition</sub>
             </index>
             <statement>
-                <p>Given the <m>m\times n</m> matrices  <m>A</m> and <m>B</m>, define the <term>sum</term> of <m>A</m> and <m>B</m> as an <m>m\times n</m> matrix, written <m>A+B</m>, according to<md>
-                    <mrow>\matrixentry{A+B}{ij}&amp;=\matrixentry{A}{ij}+\matrixentry{B}{ij}&amp;&amp;1\leq i\leq m,\,1\leq j\leq n</mrow>
-                </md>.</p>
+                <p>Given the <m>m\times n</m> matrices  <m>A</m> and <m>B</m>, define the <term>sum</term> of <m>A</m> and <m>B</m> as an <m>m\times n</m> matrix, written <m>A+B</m>, by <m>\matrixentry{A+B}{ij}=\matrixentry{A}{ij}+\matrixentry{B}{ij}</m>, for <m>1\leq i\leq m,\,1\leq j\leq n</m>.</p>
             </statement>
             <notation xml:id="notation-MA" acro="MA">
                 <index>
@@ -104,8 +102,8 @@
                 \begin{bmatrix}
                 6&amp;2&amp;-4\\
                 3&amp;5&amp;2
-                \end{bmatrix}\\
-                &amp;=
+                \end{bmatrix}</mrow>
+                <mrow>&amp;=
                 \begin{bmatrix}
                 2+6&amp;-3+2&amp;4+(-4)\\
                 1+3&amp;0+5&amp;-7+2
@@ -124,9 +122,7 @@
                 <sub>scalar multiplication</sub>
             </index>
             <statement>
-                <p>Given the <m>m\times n</m> matrix <m>A</m> and the scalar <m>\alpha\in\complexes</m>, the <term>scalar multiple</term> of <m>A</m> is an <m>m\times n</m> matrix, written <m>\alpha A</m> and defined according to<md>
-                    <mrow>\matrixentry{\alpha A}{ij}&amp;=\alpha\matrixentry{A}{ij}&amp;&amp;\quad 1\leq i\leq m,\,1\leq j\leq n</mrow>
-                </md>.</p>
+                <p>Given the <m>m\times n</m> matrix <m>A</m> and the scalar <m>\alpha\in\complexes</m>, the <term>scalar multiple</term> of <m>A</m> is the <m>m\times n</m> matrix, written <m>\alpha A</m>, and defined by <m>\matrixentry{\alpha A}{ij}=\alpha\matrixentry{A}{ij}</m>, for <m>1\leq i\leq m,\,1\leq j\leq n</m>.</p>
             </statement>
             <notation xml:id="notation-MSM" acro="MSM">
                 <index>
@@ -144,16 +140,20 @@
         <example xml:id="example-MSM" acro="MSM">
             <title>Scalar multiplication in <m>M_{32}</m></title>
             <index>matrix scalar multiplication</index>
-            <p>If<me>A=
-            \begin{bmatrix}
-            2&amp;8\\
-            -3&amp;5\\0&amp;1
-            \end{bmatrix}</me>
-            and <m>\alpha=7</m>, then
-            <me>\alpha A=
-            7\begin{bmatrix}2&amp;8\\-3&amp;5\\0&amp;1\end{bmatrix}=
-            \begin{bmatrix}7(2)&amp;7(8)\\7(-3)&amp;7(5)\\7(0)&amp;7(1)\end{bmatrix}=
-            \begin{bmatrix}14&amp;56\\-21&amp;35\\0&amp;7\end{bmatrix}</me>.</p>
+            <p>For the scalar <m>\alpha=7</m> and the matrix <m>A</m>,<md>
+                <mrow>A&amp;=
+                \begin{bmatrix}
+                2&amp;8\\
+                -3&amp;5\\0&amp;1
+                \end{bmatrix}
+                &amp;
+                \alpha A&amp;=
+                7\begin{bmatrix}2&amp;8\\-3&amp;5\\0&amp;1\end{bmatrix}
+                =
+                \begin{bmatrix}7(2)&amp;7(8)\\7(-3)&amp;7(5)\\7(0)&amp;7(1)\end{bmatrix}
+                =
+                \begin{bmatrix}14&amp;56\\-21&amp;35\\0&amp;7\end{bmatrix}</mrow>
+            </md>.</p>
         </example>
         <computation xml:id="sage-MS" acro="MS">
             <title>Matrix Spaces</title>
@@ -310,11 +310,11 @@
             <proof>
                 <p>While some of these properties seem very obvious, they all require proof.  However, the proofs are not very interesting, and border on tedious. We will prove one version of distributivity very carefully, and you can test your proof-building skills on some of the others.  We will give our new notation for matrix entries a workout here.  Compare the style of the proofs here with those given for vectors in <xref ref="theorem-VSPCV" acro="VSPCV" autoname="yes"/> <mdash/> while the objects here are more complicated, our notation makes the proofs cleaner.</p>
                 <p>To prove <xref ref="property-DSAM" acro="DSAM" autoname="yes"/>,  <m>(\alpha+\beta)A=\alpha A+\beta A</m>, we need to establish the equality of two matrices (see Proof Technique<nbsp/><xref ref="technique-GS" acro="GS" autoname="no"/>).  <xref ref="definition-ME" acro="ME" autoname="yes"/> says we need to establish the equality of their entries, one-by-one.  How do we do this, when we do not even know how many entries the two matrices might have?  This is where the notation for matrix entries, given in <xref ref="definition-M" acro="M" autoname="yes"/>, comes into play.  Ready?  Here we go.</p>
-                <p>For <em>any</em> <m>i</m> and <m>j</m>, <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m><md>
+                <p>For <em>any</em> <m>i</m> and <m>j</m>, <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>,<md>
                     <mrow>\matrixentry{(\alpha+\beta)A}{ij}&amp;=(\alpha+\beta)\matrixentry{A}{ij}&amp;&amp;
                         <xref ref="definition-MSM" acro="MSM" autoname="yes"/></mrow>
                     <mrow>&amp;=\alpha\matrixentry{A}{ij}+\beta\matrixentry{A}{ij}&amp;&amp;
-                        \text{Distributivity in<m>\complexes</m>}</mrow>
+                        <xref ref="property-DCN" acro="DCN" autoname="yes" /></mrow>
                     <mrow>&amp;=\matrixentry{\alpha A}{ij}+\matrixentry{\beta A}{ij}&amp;&amp;
                         <xref ref="definition-MSM" acro="MSM" autoname="yes"/></mrow>
                     <mrow>&amp;=\matrixentry{\alpha A+\beta A}{ij}&amp;&amp;
@@ -356,7 +356,7 @@
                 <sub>transpose</sub>
             </index>
             <statement>
-                <p>Given an <m>m\times n</m> matrix <m>A</m>, its <term>transpose</term> is the <m>n\times m</m> matrix <m>\transpose{A}</m> given by<me>\matrixentry{\transpose{A}}{ij}=\matrixentry{A}{ji},\quad 1\leq i\leq n,\,1\leq j\leq m</me>.</p>
+                <p>Given an <m>m\times n</m> matrix <m>A</m>, its <term>transpose</term> is the <m>n\times m</m> matrix <m>\transpose{A}</m> given by <m>\matrixentry{\transpose{A}}{ij}=\matrixentry{A}{ji}</m>,for <m>1\leq i\leq n,\,1\leq j\leq m</m>.</p>
             </statement>
             <notation xml:id="notation-TM" acro="TM">
                 <index>
@@ -372,20 +372,23 @@
         <example xml:id="example-TM" acro="TM">
             <title>Transpose of a <m>3\times 4</m> matrix</title>
             <index>transpose</index>
-            <p>Suppose<me>D=
-            \begin{bmatrix}
-            3&amp;7&amp;2&amp;-3\\
-            -1&amp;4&amp;2&amp;8\\
-            0&amp;3&amp;-2&amp;5
-            \end{bmatrix}</me>.</p>
-            <p>We could formulate the transpose, entry-by-entry, using the definition.  But it is easier to just systematically rewrite rows as columns (or vice-versa).  The form of the definition given will be more useful in proofs.  So we have
-            <me>\transpose{D}=
-            \begin{bmatrix}
-            3&amp;-1&amp;0\\
-            7&amp;4&amp;3\\
-            2&amp;2&amp;-2\\
-            -3&amp;8&amp;5
-            \end{bmatrix}</me>.</p>
+            <p>Suppose<me></me>.</p>
+            <p>We could formulate the transpose, entry-by-entry, using the definition.  But it is easier to just systematically rewrite rows as columns (or vice-versa).  The form of the definition given will be more useful in proofs.  So for the <m>3\times 4</m> matrix <m>D</m> we have<md>
+                <mrow>D&amp;=
+                \begin{bmatrix}
+                3&amp;7&amp;2&amp;-3\\
+                -1&amp;4&amp;2&amp;8\\
+                0&amp;3&amp;-2&amp;5
+                \end{bmatrix}
+                &amp;
+                \transpose{D}&amp;=
+                \begin{bmatrix}
+                3&amp;-1&amp;0\\
+                7&amp;4&amp;3\\
+                2&amp;2&amp;-2\\
+                -3&amp;8&amp;5
+                \end{bmatrix}</mrow>
+            </md>.</p>
         </example>
         <p>It will sometimes happen that a matrix is equal to its transpose.  In this case, we will call a matrix <term>symmetric</term>.  These matrices occur naturally in certain situations, and also have some nice properties, so it is worth stating the definition carefully.  Informally a matrix is symmetric if we can <q>flip</q> it about the main diagonal (upper-left corner, running down to the lower-right corner) and have it look unchanged.</p>
         <definition xml:id="definition-SYM" acro="SYM">
@@ -401,15 +404,14 @@
         <example xml:id="example-SYM" acro="SYM">
             <title>A symmetric <m>5\times 5</m> matrix</title>
             <index>symmetric matrix</index>
-            <p>The matrix
-            <me>E=
+            <p>The matrix <m>E</m> below is symmetric.<me>E=
             \begin{bmatrix}
             2&amp;3&amp;-9&amp;5&amp;7\\
             3&amp;1&amp;6&amp;-2&amp;-3\\
             -9&amp;6&amp;0&amp;-1&amp;9\\
             5&amp;-2&amp;-1&amp;4&amp;-8\\
             7&amp;-3&amp;9&amp;-8&amp;-3
-            \end{bmatrix}</me>is symmetric.</p>
+            \end{bmatrix}</me>.</p>
         </example>
         <p>You might have noticed that <xref ref="definition-SYM" acro="SYM" autoname="yes"/> did not specify the size of the matrix <m>A</m>, as has been our custom.  That is because it was not necessary.  An alternative would have been to state the definition just for square matrices, but this is the substance of the next proof.</p>
         <p>Before reading the next proof, we want to offer you some advice about how to become more proficient at constructing proofs.  Perhaps you can apply this advice to the next theorem.  Have a peek at Proof Technique<nbsp/><xref ref="technique-P" acro="P" autoname="no"/> now.</p>
@@ -434,7 +436,7 @@
                 <p>Suppose that <m>A</m> and <m>B</m> are <m>m\times n</m> matrices.  Then  <m>\transpose{(A+B)}=\transpose{A}+\transpose{B}</m>.</p>
             </statement>
             <proof>
-                <p>The statement to be proved is an equality of matrices, so we work entry-by-entry and use <xref ref="definition-ME" acro="ME" autoname="yes"/>.  Think carefully about the objects involved here, and the many uses of the plus sign.  Realize too that while <m>A</m> and <m>B</m> are <m>m\times n</m> matrices, the conclusion is a statement about the equality of two <m>n\times m</m> matrices.  So we begin with: for <m>1\leq i\leq n</m>, <m>1\leq j\leq m</m><md>
+                <p>The statement to be proved is an equality of matrices, so we work entry-by-entry and use <xref ref="definition-ME" acro="ME" autoname="yes"/>.  Think carefully about the objects involved here, and the many uses of the plus sign.  Realize too that while <m>A</m> and <m>B</m> are <m>m\times n</m> matrices, the conclusion is a statement about the equality of two <m>n\times m</m> matrices!  So we begin with a preparation for <xref ref="definition-ME" acro="ME" autoname="yes"/>. For <m>1\leq i\leq n</m>, <m>1\leq j\leq m</m>,<md>
                     <mrow>\matrixentry{\transpose{(A+B)}}{ij}&amp;=
                     \matrixentry{A+B}{ji}&amp;&amp;
                         <xref ref="definition-TM" acro="TM" autoname="yes"/></mrow>
@@ -458,7 +460,7 @@
                 <p>Suppose that <m>\alpha\in\complexes</m> and <m>A</m> is an <m>m\times n</m> matrix.  Then <m>\transpose{(\alpha A)}=\alpha\transpose{A}</m>.</p>
             </statement>
             <proof>
-                <p>The statement to be proved is an equality of matrices, so we work entry-by-entry and use <xref ref="definition-ME" acro="ME" autoname="yes"/>.  Notice that the desired equality is of <m>n\times m</m> matrices, and think carefully about the objects involved here, plus the many uses of juxtaposition.  For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m><md>
+                <p>The statement to be proved is an equality of matrices, so we work entry-by-entry and use <xref ref="definition-ME" acro="ME" autoname="yes"/>.  Notice that the desired equality is of <m>n\times m</m> matrices, and think carefully about the objects involved here, plus the many uses of juxtaposition.  For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>,<md>
                     <mrow>\matrixentry{\transpose{(\alpha A)}}{ji}&amp;= \matrixentry{\alpha A}{ij}&amp;&amp;
                         <xref ref="definition-TM" acro="TM" autoname="yes"/></mrow>
                     <mrow>&amp;=\alpha\matrixentry{A}{ij}&amp;&amp;
@@ -482,7 +484,7 @@
                 <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix.  Then <m>\transpose{\left(\transpose{A}\right)}=A</m>.</p>
             </statement>
             <proof>
-                <p>We again want to prove an equality of matrices, so we work entry-by-entry and use <xref ref="definition-ME" acro="ME" autoname="yes"/>.  For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m><md>
+                <p>We again want to prove an equality of matrices, so we work entry-by-entry and use <xref ref="definition-ME" acro="ME" autoname="yes"/>.  For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>,<md>
                     <mrow>\matrixentry{\transpose{\left(\transpose{A}\right)}}{ij}&amp;=
                     \matrixentry{\transpose{A}}{ji}&amp;&amp;
                         <xref ref="definition-TM" acro="TM" autoname="yes"/></mrow>
@@ -503,7 +505,7 @@
                 <sub>matrix</sub>
             </index>
             <statement>
-                <p>Suppose <m>A</m> is an <m>m\times n</m> matrix.  Then the <term>conjugate</term> of <m>A</m>, written <m>\conjugate{A}</m> is an <m>m\times n</m> matrix defined by<me>\matrixentry{\conjugate{A}}{ij}=\conjugate{\matrixentry{A}{ij}}</me>.</p>
+                <p>Suppose <m>A</m> is an <m>m\times n</m> matrix.  Then the <term>conjugate</term> of <m>A</m>, written <m>\conjugate{A}</m> is an <m>m\times n</m> matrix defined by <m>\matrixentry{\conjugate{A}}{ij}=\conjugate{\matrixentry{A}{ij}}</m> for <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>.</p>
             </statement>
             <notation xml:id="notation-CCM" acro="CCM">
                 <index>
@@ -523,15 +525,19 @@
                 <main>matrix</main>
                 <sub>complex conjugate</sub>
             </index>
-            <p>If<me>A=
-            \begin{bmatrix}
-            2-i &amp; 3 &amp; 5+4i\\
-            -3+6i &amp; 2-3i &amp; 0
-            \end{bmatrix}</me>then<me>\conjugate{A}=
-            \begin{bmatrix}
-            2+i &amp; 3 &amp; 5-4i\\
-            -3-6i &amp; 2+3i &amp; 0
-            \end{bmatrix}</me></p>
+            <p>For the <m>2\times 3</m> matrix <m>A</m>, we compute the conjugate of <m>A</m>, <m>\conjugate{A}</m>.<md>
+                <mrow>A&amp;=
+                \begin{bmatrix}
+                2-i &amp; 3 &amp; 5+4i\\
+                -3+6i &amp; 2-3i &amp; 0
+                \end{bmatrix}
+                &amp;
+                \conjugate{A}&amp;=
+                \begin{bmatrix}
+                2+i &amp; 3 &amp; 5-4i\\
+                -3-6i &amp; 2+3i &amp; 0
+                \end{bmatrix}</mrow>
+            </md></p>
         </example>
         <p>The interplay between the conjugate of a matrix and the two operations on matrices is what you might expect.</p>
         <theorem xml:id="theorem-CRMA" acro="CRMA">
@@ -544,7 +550,7 @@
                 <p>Suppose that <m>A</m> and <m>B</m> are <m>m\times n</m> matrices.  Then <m>\conjugate{A+B}=\conjugate{A}+\conjugate{B}</m>.</p>
             </statement>
             <proof>
-                <p>For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m><md>
+                <p>For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>,<md>
                     <mrow>\matrixentry{\conjugate{A+B}}{ij} &amp;=\conjugate{\matrixentry{A+B}{ij}}&amp;&amp;
                         <xref ref="definition-CCM" acro="CCM" autoname="yes"/></mrow>
                     <mrow>&amp;=\conjugate{\matrixentry{A}{ij}+\matrixentry{B}{ij}}&amp;&amp;
@@ -569,7 +575,7 @@
                 <p>Suppose that <m>\alpha\in\complexes</m> and <m>A</m> is an <m>m\times n</m> matrix.  Then <m>\conjugate{\alpha A}=\conjugate{\alpha}\conjugate{A}</m>.</p>
             </statement>
             <proof>
-                <p>For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m><md>
+                <p>For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>,<md>
                     <mrow>\matrixentry{\conjugate{\alpha A}}{ij}&amp;=
                     \conjugate{\matrixentry{\alpha A}{ij}}&amp;&amp;
                         <xref ref="definition-CCM" acro="CCM" autoname="yes"/></mrow>
@@ -595,7 +601,7 @@
                 <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix.  Then <m>\conjugate{\left(\conjugate{A}\right)}=A</m>.</p>
             </statement>
             <proof>
-                <p>For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m><md>
+                <p>For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>,<md>
                     <mrow>\matrixentry{\conjugate{\left(\conjugate{A}\right)}}{ij}&amp;=
                     \conjugate{\matrixentry{\conjugate{A}}{ij}}&amp;&amp;
                         <xref ref="definition-CCM" acro="CCM" autoname="yes"/></mrow>
@@ -618,7 +624,7 @@
                 <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix.  Then <m>\conjugate{\left(\transpose{A}\right)}=\transpose{\left(\conjugate{A}\right)}</m>.</p>
             </statement>
             <proof>
-                <p>For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m><md>
+                <p>For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>,<md>
                     <mrow>\matrixentry{\conjugate{\left(\transpose{A}\right)}}{ji}&amp;=
                     \conjugate{\matrixentry{\transpose{A}}{ji}}&amp;&amp;
                         <xref ref="definition-CCM" acro="CCM" autoname="yes"/></mrow>
@@ -789,7 +795,7 @@
                 [3 - 4*I       6]
                 </output>
             </sage>
-            <p>With these constructions, we can test, or demonstrate, some of the theorems above.  Of course, this does not make the theorems true, but is satisfying nonetheless.  This can be an effective technique when you are learning new Sage commands or new linear algebra <mdash/> if your computations are not consistent with theorems, then your understanding of the linear algebra may be flawed, or your understanding of Sage may be flawed, or Sage may have a bug!  Note in the following how we use comparison (<c>==</c>) between matrices as an implementation of matrix equality (<xref ref="definition-ME" acro="ME" autoname="yes"/>).</p>
+            <p>With these constructions, we can test, or demonstrate, some of the theorems above.  Of course, this does not make the theorems true, but is satisfying nonetheless.  This can be an effective technique when you are learning new Sage commands or new linear algebra <mdash/> if your computations are not consistent with theorems, then your understanding of the linear algebra may be flawed, or your understanding of Sage may be flawed, or Sage may have a bug!  Note in the following how we use comparison (<c>==</c>) between matrices as the implementation of matrix equality (<xref ref="definition-ME" acro="ME" autoname="yes"/>).</p>
             <sage xml:id="sagecell-MO-7">
                 <input>
                 A = matrix(QQ, [[ 1, -1, 3],
@@ -1035,8 +1041,8 @@
                     \begin{bmatrix}
                     4 &amp; 3 &amp; -6 \\
                     0 &amp; 1 &amp; 1
-                    \end{bmatrix}\\
-                    &amp;=
+                    \end{bmatrix}</mrow>
+                    <mrow>&amp;=
                     \begin{bmatrix}
                     \alpha &amp; 3\alpha &amp; 4\alpha \\
                     2\alpha &amp; \alpha &amp; -\alpha
@@ -1045,8 +1051,8 @@
                     \begin{bmatrix}
                     4 &amp; 3 &amp; -6 \\
                     0 &amp; 1 &amp; 1
-                    \end{bmatrix}\\
-                    &amp;=
+                    \end{bmatrix}</mrow>
+                    <mrow>&amp;=
                     \begin{bmatrix}
                     4 + \alpha &amp; 3 + 3\alpha &amp; -6 + 4\alpha \\
                     2\alpha &amp; 1 + \alpha &amp; 1 - \alpha
@@ -1233,8 +1239,8 @@
                         \begin{bmatrix}
                         -13 &amp; 24 &amp; 2\\
                         -8 &amp; -2 &amp; -20
-                        \end{bmatrix}\\
-                        S&amp;=\set{
+                        \end{bmatrix}</mrow>
+                        <mrow>S&amp;=\set{
                         \begin{bmatrix} -2 &amp; 3 &amp; 4 \\ -1 &amp; 3 &amp; -2 \end{bmatrix},\,
                         \begin{bmatrix} 4 &amp; -2 &amp; 2 \\ 0 &amp; -1 &amp; 1 \end{bmatrix},\,
                         \begin{bmatrix}-1 &amp; -2 &amp; -2 \\ 2 &amp; 2 &amp; 2 \end{bmatrix},\,
@@ -1294,7 +1300,7 @@
                 <p>Prove <xref ref="property-CM" acro="CM" autoname="yes"/> of <xref ref="theorem-VSPM" acro="VSPM" autoname="yes"/>.  Write your proof in the style of the proof of <xref ref="property-DSAM" acro="DSAM" autoname="yes"/> given in this section.</p>
             </statement>
             <solution xml:id="solution-MO-T13">
-                <p>For all <m>A,\,B\in M_{mn}</m> and for all <m>1\leq i\leq m</m>,  <m>1\leq j\leq n</m><md>
+                <p>For all <m>A,\,B\in M_{mn}</m> and for all <m>1\leq i\leq m</m>,  <m>1\leq j\leq n</m>,<md>
                     <mrow>\matrixentry{A+B}{ij}&amp;=\matrixentry{A}{ij}+\matrixentry{B}{ij}&amp;&amp;
                         <xref ref="definition-MA" acro="MA" autoname="yes"/></mrow>
                     <mrow>&amp;=\matrixentry{B}{ij}+\matrixentry{A}{ij}&amp;&amp;
