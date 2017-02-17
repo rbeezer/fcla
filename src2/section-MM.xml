@@ -10,7 +10,7 @@
 <section xml:id="section-MM" acro="MM">
     <title>Matrix Multiplication</title>
     <introduction>
-        <p>We know how to add vectors and how to multiply them by scalars.  Together, these operations give us the possibility of making linear combinations.  Similarly, we know how to add matrices and how to multiply matrices by scalars.  In this section we mix all these ideas together and produce an operation known as <q>matrix multiplication.</q>  This will lead to some results that are both surprising and central.  We begin with a definition of how to multiply a vector by a matrix.</p>
+        <p>We know how to add vectors and how to multiply them by scalars.  Together, these operations give us the possibility of making linear combinations.  Similarly, we know how to add matrices and how to multiply matrices by scalars.  In this section we mix all these ideas together and produce an operation known as <term>matrix multiplication</term>.  This will lead to some results that are both surprising and central.  We begin with a definition of how to multiply a vector by a matrix.</p>
     </introduction>
     <subsection xml:id="subsection-MM-MVP" acro="MVP">
         <title>Matrix-Vector Product</title>
@@ -40,7 +40,7 @@
                 </usage>
             </notation>
         </definition>
-        <p>So, the matrix-vector product is yet another version of <q>multiplication,</q> at least in the sense that we have yet again overloaded juxtaposition of two symbols as our notation.  Remember your objects, an <m>m\times n</m> matrix times a vector of size <m>n</m> will create a vector of size <m>m</m>.  So if <m>A</m> is rectangular, then the size of the vector changes.  With all the linear combinations we have performed so far, this computation should now seem second nature.</p>
+        <p>So, the matrix-vector product is yet another version of <q>multiplication,</q> at least in the sense that we have yet again overloaded juxtaposition of two symbols as our notation.  Remember your objects, an <m>m\times n</m> matrix times a vector of size <m>n</m> will create a vector of size <m>m</m>.  So if <m>A</m> is rectangular, then the size of the <q>output</q> vector is different from the size of the <q>input</q> vector.  With all the linear combinations we have performed so far, this computation should now seem second nature.</p>
         <example xml:id="example-MTV" acro="MTV">
             <title>A matrix times a vector</title>
             <index>matrix-vector product</index>
@@ -113,8 +113,8 @@
                 <main>best cities</main>
                 <sub>money magazine</sub>
             </index>
-            <p>Every year <i>Money</i> magazine selects several cities in the United States as the <q>best</q> cities to live in, based on a wide array of statistics about each city.  This is an example of how the editors of <i>Money</i> might arrive at a single number that consolidates the statistics about a city.  We will analyze Los Angeles, Chicago and New York City, based on four criteria:  average high temperature in July (Farenheit), number of colleges and universities in a 30-mile radius, number of toxic waste sites in the Superfund environmental clean-up program and a personal crime index based on FBI statistics (average = 100, smaller is safer).  It should be apparent how to generalize the example to a greater number of cities and a greater number of statistics.</p>
-            <p>We begin by building a table of statistics.  The rows will be labeled with the cities, and the columns with statistical categories.  These values are from <i>Money</i>'s website in early 2005.</p>
+            <p>Every year <booktitle>Money</booktitle> magazine selects several cities in the United States as the <q>best</q> cities to live in, based on a wide array of statistics about each city.  This is a small example of how the editors of <booktitle>Money</booktitle> might arrive at a single number that consolidates the statistics about a city.  We will analyze Los Angeles, Chicago and New York City, based on four criteria:  average high temperature in July (Farenheit), number of colleges and universities in a 30-mile radius, number of toxic waste sites in the Superfund environmental clean-up program and a personal crime index based on FBI statistics (average = 100, smaller is safer).  It should be apparent how to generalize the example to a greater number of cities and a greater number of statistics.</p>
+            <p>We begin by building a table of statistics.  The rows will be labeled with the cities, and the columns with statistical categories.  These values are from <booktitle>Money</booktitle>'s website in early 2005.</p>
             <table>
                 <tabular halign="center" top="medium">
                     <col halign="left"/>
@@ -167,7 +167,7 @@
             =
             \colvector{-24.86\\-40.05\\26.21}</me>.</p>
             <p>This vector contains a single number for each of the cities being studied, so the editors would rank New York best (<m>26.21</m>), Los Angeles next (<m>-24.86</m>), and Chicago third (<m>-40.05</m>).  Of course, the mayor's offices in Chicago and Los Angeles are free to counter with a different set of weights that cause their city to be ranked best.  These alternative weights would be chosen to play to each cities' strengths, and minimize their problem areas.</p>
-            <p>If a speadsheet were used to make these computations, a row of weights would be entered somewhere near the table of data and the formulas in the spreadsheet would effect a matrix-vector product.  This example is meant to illustrate how <q>linear</q> computations (addition, multiplication) can be organized as a matrix-vector product.</p>
+            <p>Notice how the vector of weights, <m>\vect{w}</m>, is naturally indexed by the four statistics used, while the matrix-vector product, <m>T\vect{w}</m>, is naturally indexed by the three cities.  If a speadsheet were used to make these computations, a row of weights would be entered somewhere near the table of data and the formulas in the spreadsheet would effect a matrix-vector product.  This example is meant to illustrate how <q>linear</q> computations (addition, multiplication) can be organized as a matrix-vector product.</p>
             <p>Another example would be the matrix of numerical scores on examinations and exercises for students in a class.  The rows would be indexed by students and the columns would be indexed by exams and assignments.  The instructor could then assign weights to the different exams and assignments, and via a matrix-vector product, compute a single score for each student.</p>
         </example>
         <p>Later (much later) we will need the following theorem, which is really a technical lemma (see Proof Technique<nbsp/><xref ref="technique-LC" acro="LC" autoname="no"/>).  Since we are in a position to prove it now, we will.  But you can safely skip it for the moment, if you promise to come back later to study the proof when the theorem is employed.  At that point you will also be able to understand the comments in the paragraph following the proof.</p>
@@ -181,7 +181,7 @@
                 <p>Suppose that <m>A</m> and <m>B</m> are <m>m\times n</m> matrices such that <m>A\vect{x}=B\vect{x}</m> for every <m>\vect{x}\in\complex{n}</m>.  Then <m>A=B</m>.</p>
             </statement>
             <proof>
-                <p>We are assuming <m>A\vect{x}=B\vect{x}</m> for all <m>\vect{x}\in\complex{n}</m>, so we can employ this equality for <em>any</em> choice of the vector <m>\vect{x}</m>.  However, we will limit our use of this equality to the standard unit vectors, <m>\vect{e}_j</m>, <m>1\leq j\leq n</m> (<xref ref="definition-SUV" acro="SUV" autoname="yes"/>).  For all <m>1\leq j\leq n</m>, <m>1\leq i\leq m</m><md>
+                <p>We are assuming <m>A\vect{x}=B\vect{x}</m> for all <m>\vect{x}\in\complex{n}</m>, so we can employ this equality for <em>any</em> choice of the vector <m>\vect{x}</m>.  However, we will limit our use of this equality to the standard unit vectors, <m>\vect{e}_j</m>, <m>1\leq j\leq n</m> (<xref ref="definition-SUV" acro="SUV" autoname="yes"/>).  For all <m>1\leq j\leq n</m>, <m>1\leq i\leq m</m>,<md>
                     <mrow>&amp;\matrixentry{A}{ij}</mrow>
                     <mrow>&amp;=
                     0\matrixentry{A}{i1}+
@@ -472,7 +472,7 @@
                 </md>.</p>
             </statement>
             <proof>
-                <p>Let the vectors <m>\vectorlist{A}{n}</m> denote the columns of <m>A</m> and let the vectors <m>\vectorlist{B}{p}</m> denote the columns of <m>B</m>.  Then for <m>1\leq i\leq m</m>, <m>1\leq j\leq p</m><md>
+                <p>Let the vectors <m>\vectorlist{A}{n}</m> denote the columns of <m>A</m> and let the vectors <m>\vectorlist{B}{p}</m> denote the columns of <m>B</m>.  Then for <m>1\leq i\leq m</m>, <m>1\leq j\leq p</m>,<md>
                     <mrow>\matrixentry{AB}{ij}
                     &amp;=\vectorentry{A\vect{B}_j}{i}&amp;&amp;
                         <xref ref="definition-MM" acro="MM" autoname="yes"/></mrow>
@@ -507,7 +507,8 @@
                     \cdots+
                     \matrixentry{A}{in}\matrixentry{B}{nj}&amp;&amp;
                         <xref ref="property-CMCN" acro="CMCN" autoname="yes"/></mrow>
-                    <mrow>&amp;=\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}</mrow>
+                    <!-- push qed far right in last line -->
+                    <mrow>&amp;=\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}&amp;&amp;</mrow>
                 </md></p>
             </proof>
         </theorem>
@@ -613,7 +614,7 @@
                 </ol></p>
             </statement>
             <proof>
-                <p>We will prove (1) and leave (2) to you.  Entry-by-entry, for <m>1\leq i\leq m</m>, <m>1\leq j\leq p</m><md>
+                <p>We will prove (1) and leave (2) to you.  Entry-by-entry, for <m>1\leq i\leq m</m>, <m>1\leq j\leq p</m>,<md>
                     <mrow>\matrixentry{A\zeromatrix_{n\times p}}{ij}
                     &amp;=\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{\zeromatrix_{n\times p}}{kj}&amp;&amp;
                         <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
@@ -637,7 +638,7 @@
                 <p>Suppose <m>A</m> is an <m>m\times n</m> matrix.  Then<ol><li><m>AI_n=A</m></li><li><m>I_mA=A</m></li></ol></p>
             </statement>
             <proof>
-                <p>Again, we will prove (1) and leave (2) to you.  Entry-by-entry,    For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m><md>
+                <p>Again, we will prove (1) and leave (2) to you.  Entry-by-entry,    For <m>1\leq i\leq m</m>, <m>1\leq j\leq n</m>,<md>
                     <mrow>\matrixentry{AI_n}{ij}=&amp;\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{I_n}{kj}&amp;&amp;
                         <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
                     <mrow>&amp;=\matrixentry{A}{ij}\matrixentry{I_n}{jj}+\sum_{\substack{k=1\\k\neq j}}^{n}\matrixentry{A}{ik}\matrixentry{I_n}{kj}&amp;&amp;
@@ -664,7 +665,7 @@
                 </ol></p>
             </statement>
             <proof>
-                <p>We will do (1), you do (2).  Entry-by-entry, for <m>1\leq i\leq m</m>, <m>1\leq j\leq p</m><md>
+                <p>We will do (1), you do (2).  Entry-by-entry, for <m>1\leq i\leq m</m>, <m>1\leq j\leq p</m>,<md>
                     <mrow>\matrixentry{A(B+C)}{ij}&amp;=\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B+C}{kj}&amp;&amp;
                         <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
                     <mrow>&amp;=\sum_{k=1}^{n}\matrixentry{A}{ik}(\matrixentry{B}{kj}+\matrixentry{C}{kj})&amp;&amp;
@@ -690,7 +691,7 @@
                 <p>Suppose <m>A</m> is an <m>m\times n</m> matrix and <m>B</m> is an <m>n\times p</m> matrix.  Let <m>\alpha</m> be a scalar.  Then <m>\alpha(AB)=(\alpha A)B=A(\alpha B)</m>.</p>
             </statement>
             <proof>
-                <p>These are equalities of matrices.  We will do the first one, the second is similar and will be good practice for you.    For <m>1\leq i\leq m</m>, <m>1\leq j\leq p</m><md>
+                <p>These are equalities of matrices.  We will do the first one, the second is similar and will be good practice for you.    For <m>1\leq i\leq m</m>, <m>1\leq j\leq p</m>,<md>
                     <mrow>\matrixentry{\alpha(AB)}{ij}&amp;=\alpha\matrixentry{AB}{ij}&amp;&amp;
                         <xref ref="definition-MSM" acro="MSM" autoname="yes"/></mrow>
                     <mrow>&amp;=\alpha\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}&amp;&amp;
@@ -715,7 +716,7 @@
                 <p>Suppose <m>A</m> is an <m>m\times n</m> matrix, <m>B</m> is an <m>n\times p</m> matrix and <m>D</m> is a <m>p\times s</m> matrix.  Then  <m>A(BD)=(AB)D</m>.</p>
             </statement>
             <proof>
-                <p>A matrix equality, so we will go entry-by-entry, no surprise there.    For <m>1\leq i\leq m</m>, <m>1\leq j\leq s</m><md>
+                <p>A matrix equality, so we will go entry-by-entry, no surprise there.    For <m>1\leq i\leq m</m>, <m>1\leq j\leq s</m>,<md>
                     <mrow>\matrixentry{A(BD)}{ij}&amp;=\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{BD}{kj}&amp;&amp;
                         <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
                     <mrow>&amp;=\sum_{k=1}^{n}\matrixentry{A}{ik}\left(\sum_{\ell=1}^{p}\matrixentry{B}{k\ell}\matrixentry{D}{\ell j}\right)&amp;&amp;
@@ -747,11 +748,9 @@
                 <sub>inner product</sub>
             </index>
             <statement>
-                <p>If we consider the vectors <m>\vect{u},\,\vect{v}\in\complex{m}</m> as <m>m\times 1</m> matrices then<md>
-                    <mrow>\innerproduct{\vect{u}}{\vect{v}}&amp;
-                        =\transpose{\conjugate{\vect{u}}}\vect{v}
-                        =\adjoint{\vect{u}}\vect{v}</mrow>
-                </md>.</p>
+                <p>If we consider the vectors <m>\vect{u},\,\vect{v}\in\complex{m}</m> as <m>m\times 1</m> matrices then <m>\innerproduct{\vect{u}}{\vect{v}}
+                =\transpose{\conjugate{\vect{u}}}\vect{v}
+                =\adjoint{\vect{u}}\vect{v}</m>.</p>
             </statement>
             <proof>
                 <p><md>
@@ -779,7 +778,7 @@
                 <p>Suppose <m>A</m> is an <m>m\times n</m> matrix and <m>B</m> is an <m>n\times p</m> matrix.  Then <m>\conjugate{AB}=\conjugate{A}\,\conjugate{B}</m>.</p>
             </statement>
             <proof>
-                <p>To obtain this matrix equality, we will work entry-by-entry.  For <m>1\leq i\leq m</m>, <m>1\leq j\leq p</m><md>
+                <p>To obtain this matrix equality, we will work entry-by-entry.  For <m>1\leq i\leq m</m>, <m>1\leq j\leq p</m>,<md>
                     <mrow>\matrixentry{\conjugate{AB}}{ij}&amp;=\conjugate{\matrixentry{AB}{ij}}&amp;&amp;
                         <xref ref="definition-CCM" acro="CCM" autoname="yes"/></mrow>
                     <mrow>&amp;=\conjugate{\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}}&amp;&amp;
@@ -808,7 +807,7 @@
             </statement>
             <proof>
                 <p>This theorem may be surprising but if we check the sizes of the matrices involved, then maybe it will not seem so far-fetched.  First, <m>AB</m> has size <m>m\times p</m>, so its transpose has size <m>p\times m</m>.  The product of <m>\transpose{B}</m> with <m>\transpose{A}</m> is a <m>p\times n</m> matrix times an <m>n\times m</m> matrix, also resulting in a <m>p\times m</m> matrix.  So at least our objects are compatible for equality (and would not be, in general, if we did not reverse the order of the matrix multiplication).</p>
-                <p>Here we go again, entry-by-entry.  For <m>1\leq i\leq m</m>, <m>1\leq j\leq p</m><md>
+                <p>Here we go again, entry-by-entry.  For <m>1\leq i\leq m</m>, <m>1\leq j\leq p</m>,<md>
                     <mrow>\matrixentry{\transpose{(AB)}}{ji}=&amp;\matrixentry{AB}{ij}&amp;&amp;
                         <xref ref="definition-TM" acro="TM" autoname="yes"/></mrow>
                     <mrow>&amp;=\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}&amp;&amp;
@@ -1196,9 +1195,11 @@
             </statement>
             <solution xml:id="solution-MM-C30" contributor="chrisblack">
                 <p><md>
-                    <mrow>A^2 &amp;= \begin{bmatrix}1 &amp; 4\\ 0 &amp; 1\end{bmatrix}&amp;&amp;
-                          A^3 &amp;= \begin{bmatrix}1 &amp; 6\\ 0 &amp; 1\end{bmatrix}&amp;&amp;
-                          A^4 &amp;= \begin{bmatrix}1 &amp; 8\\ 0 &amp; 1\end{bmatrix}</mrow>
+                    <mrow>A^2 &amp;= \begin{bmatrix}1 &amp; 4\\ 0 &amp; 1\end{bmatrix}
+                    &amp;
+                    A^3 &amp;= \begin{bmatrix}1 &amp; 6\\ 0 &amp; 1\end{bmatrix}
+                    &amp;
+                    A^4 &amp;= \begin{bmatrix}1 &amp; 8\\ 0 &amp; 1\end{bmatrix}</mrow>
                     </md>From this pattern, we see that<me>A^n = \begin{bmatrix}1 &amp; 2n\\ 0 &amp; 1\end{bmatrix}</me>.</p>
             </solution>
         </exercise>
@@ -1208,9 +1209,11 @@
             </statement>
             <solution xml:id="solution-MM-C31" contributor="chrisblack">
                 <p><md>
-                    <mrow>A^2 &amp;= \begin{bmatrix}1 &amp; -2\\ 0 &amp; 1\end{bmatrix}&amp;&amp;
-                          A^3 &amp;= \begin{bmatrix}1 &amp; -3\\ 0 &amp; 1\end{bmatrix}&amp;&amp;
-                          A^4 &amp;= \begin{bmatrix}1 &amp; -4\\ 0 &amp; 1\end{bmatrix}</mrow>
+                    <mrow>A^2 &amp;= \begin{bmatrix}1 &amp; -2\\ 0 &amp; 1\end{bmatrix}
+                    &amp;
+                    A^3 &amp;= \begin{bmatrix}1 &amp; -3\\ 0 &amp; 1\end{bmatrix}
+                    &amp;
+                    A^4 &amp;= \begin{bmatrix}1 &amp; -4\\ 0 &amp; 1\end{bmatrix}</mrow>
                     </md>From this pattern, we see that
                 <me>A^n = \begin{bmatrix}1 &amp; -n\\ 0 &amp; 1\end{bmatrix}</me>.</p>
             </solution>
@@ -1221,9 +1224,11 @@
             </statement>
             <solution xml:id="solution-MM-C32" contributor="chrisblack">
                 <p><md>
-                    <mrow>A^{2} &amp;= \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 4 &amp; 0\\ 0 &amp; 0 &amp; 9\end{bmatrix}&amp;&amp;
-                        A^{3} &amp;= \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 8 &amp; 0\\ 0 &amp; 0 &amp; 27\end{bmatrix}&amp;&amp;
-                        A^{4} &amp;= \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 16 &amp; 0\\ 0 &amp; 0 &amp; 81\end{bmatrix}</mrow>
+                    <mrow>A^{2} &amp;= \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 4 &amp; 0\\ 0 &amp; 0 &amp; 9\end{bmatrix}
+                    &amp;
+                    A^{3} &amp;= \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 8 &amp; 0\\ 0 &amp; 0 &amp; 27\end{bmatrix}
+                    &amp;
+                    A^{4} &amp;= \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 16 &amp; 0\\ 0 &amp; 0 &amp; 81\end{bmatrix}</mrow>
                 </md>The pattern emerges, and we see that<me>A^{n} = \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 2^n &amp; 0\\ 0 &amp; 0 &amp; 3^n\end{bmatrix}</me>.</p>
             </solution>
         </exercise>
@@ -1233,7 +1238,8 @@
             </statement>
             <solution xml:id="solution-MM-C33" contributor="chrisblack">
                 <p>We quickly compute<md>
-                    <mrow>A^2 &amp;= \begin{bmatrix} 0 &amp; 0 &amp; 1\\ 0 &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; 0\end{bmatrix}&amp;&amp;
+                    <mrow>A^2 &amp;= \begin{bmatrix} 0 &amp; 0 &amp; 1\\ 0 &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; 0\end{bmatrix}
+                    &amp;
                     A^3 &amp;=\begin{bmatrix} 0 &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; 0\end{bmatrix}</mrow>
                 </md>and we then see that all subsequent powers of <m>A</m> are the <m>3 \times 3</m> zero matrix.
                 That is, <m>A^n = \zeromatrix</m> for <m>n\geq 3</m>.</p>
@@ -1279,9 +1285,9 @@
                     <mrow>=&amp;\alpha\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}&amp;&amp;
                         <xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
                     <mrow>=&amp;\sum_{k=1}^{n}\alpha\matrixentry{A}{ik}\matrixentry{B}{kj}&amp;&amp;
-                        \text{Distributivity in<m>\complexes</m>}</mrow>
+                        <xref ref="property-DCN" acro="DCN" autoname="yes"/></mrow>
                     <mrow>=&amp;\sum_{k=1}^{n}\matrixentry{A}{ik}\alpha\matrixentry{B}{kj}&amp;&amp;
-                        \text{Commutativity in<m>\complexes</m>}</mrow>
+                        <xref ref="property-CMCN" acro="CMCN" autoname="yes"/></mrow>
                     <mrow>=&amp;\sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{\alpha B}{kj}&amp;&amp;
                         <xref ref="definition-MSM" acro="MSM" autoname="yes"/></mrow>
                     <mrow>=&amp;\matrixentry{A(\alpha B)}{ij}&amp;&amp;<xref ref="theorem-EMP" acro="EMP" autoname="yes"/></mrow>
