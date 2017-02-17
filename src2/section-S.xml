@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      A First Course in Linear Algebra        -->
+<!--                                              -->
+<!-- Copyright (C) 2004-2017  Robert A. Beezer    -->
+<!-- See the file COPYING for copying conditions. -->
+
 <section xml:id="section-S" acro="S">
     <title>Subspaces</title>
-    <!-- %%%%%%%%%% -->
-    <!-- % -->
-    <!-- %  Section S -->
-    <!-- %  Subspaces -->
-    <!-- % -->
-    <!-- %%%%%%%%%% -->
     <introduction>
         <p>A subspace is a vector space that is contained within another vector space.  So every subspace is a vector space in its own right, but it is also defined relative to some other (larger) vector space.  We will discover shortly that we are already familiar with a wide variety of subspaces from previous sections.</p>
     </introduction>
@@ -17,39 +19,44 @@
             <title>Subspace</title>
             <index>subspace</index>
             <statement>
-                <p>Suppose that <m>V</m> and <m>W</m> are two vector spaces that have identical definitions of vector addition and scalar multiplication, and that <m>W</m> is a subset of <m>V</m>, <m>W\subseteq V</m>.  Then <m>W</m> is a <term>subspace</term> of <m>V</m>.</p>
+                <p>Suppose that <m>V</m> and <m>W</m> are two vector spaces that have identical definitions of vector addition and scalar multiplication, and suppose that <m>W</m> is a subset of <m>V</m>, <m>W\subseteq V</m>.  Then <m>W</m> is a <term>subspace</term> of <m>V</m>.</p>
             </statement>
         </definition>
         <p>Let us look at an example of a vector space inside another vector space.</p>
         <example xml:id="example-SC3" acro="SC3">
+            <title>A subspace of <m>\complex{3}</m></title>
             <index>
                 <main>subspace</main>
                 <sub>verification</sub>
             </index>
-            <title>A subspace of <m>\complex{3}</m></title>
-            <p>We know that <m>\complex{3}</m> is a vector space (<xref ref="example-VSCV" acro="VSCV" autoname="yes"/>).  Consider the subset,
-<me>W=\setparts{\colvector{x_1\\x_2\\x_3}}{2x_1-5x_2+7x_3=0}</me></p>
+            <p>We know that <m>\complex{3}</m> is a vector space (<xref ref="example-VSCV" acro="VSCV" autoname="yes"/>).  Consider the subset,<me>W=\setparts{\colvector{x_1\\x_2\\x_3}}{2x_1-5x_2+7x_3=0}</me></p>
             <p>It is clear that <m>W\subseteq\complex{3}</m>, since the objects in <m>W</m> are column vectors of size 3.  But is <m>W</m> a vector space?  Does it satisfy the ten properties of <xref ref="definition-VS" acro="VS" autoname="yes"/> when we use the same operations?  That is the main question.</p>
-            <p>Suppose <m>\vect{x}=\colvector{x_1\\x_2\\x_3}</m> and <m>\vect{y}=\colvector{y_1\\y_2\\y_3}</m> are vectors from <m>W</m>.  Then we know that these vectors cannot be totally arbitrary, they must have gained membership in <m>W</m> by virtue of meeting the membership test.  For example, we know that <m>\vect{x}</m> must satisfy <m>2x_1-5x_2+7x_3=0</m> while <m>\vect{y}</m> must satisfy <m>2y_1-5y_2+7y_3=0</m>.  Our first property (<xref ref="property-AC" acro="AC" autoname="yes"/>) asks the question, is <m>\vect{x}+\vect{y}\in W</m>?  When our set of vectors was <m>\complex{3}</m>, this was an easy question to answer.  Now it is not so obvious.  Notice first that
-<me>\vect{x}+\vect{y}=\colvector{x_1\\x_2\\x_3}+\colvector{y_1\\y_2\\y_3}=
-\colvector{x_1+y_1\\x_2+y_2\\x_3+y_3}</me>
-and we can test this vector for membership in <m>W</m> as follows.  Because <m>\vect{x}\in W</m> we know <m>2x_1-5x_2+7x_3=0</m> and because <m>\vect{y}\in W</m> we know <m>2y_1-5y_2+7y_3=0</m>.  Therefore,
-<md><mrow>2(x_1+y_1)-5(x_2+y_2)+7(x_3+y_3)
-&amp;=2x_1+2y_1-5x_2-5y_2+7x_3+7y_3</mrow><mrow>&amp;=(2x_1-5x_2+7x_3)+(2y_1-5y_2+7y_3)</mrow><mrow>&amp;=0 + 0</mrow><mrow>&amp;=0</mrow></md>
-and by this computation we see that <m>\vect{x}+\vect{y}\in W</m>.  One property down, nine to go.</p>
-            <p>If <m>\alpha</m> is a scalar and <m>\vect{x}\in W</m>, is it always true that <m>\alpha\vect{x}\in W</m>?  This is what we need to establish <xref ref="property-SC" acro="SC" autoname="yes"/>.  Again, the answer is not as obvious as it was when our set of vectors was all of <m>\complex{3}</m>.  Let us see.  First, note that because <m>\vect{x}\in W</m> we know <m>2x_1-5x_2+7x_3=0</m>.  Therefore,
-<me>\alpha\vect{x}=\alpha\colvector{x_1\\x_2\\x_3}=\colvector{\alpha x_1\\\alpha x_2\\\alpha x_3}</me>
-and we can test this vector for membership in <m>W</m>.  First, note that because <m>\vect{x}\in W</m> we know <m>2x_1-5x_2+7x_3=0</m>.  Therefore,
-<md><mrow>2(\alpha x_1)-5(\alpha x_2)+7(\alpha x_3)
-&amp;=\alpha(2x_1-5x_2+7x_3)</mrow><mrow>&amp;=\alpha 0</mrow><mrow>&amp;=0</mrow></md>
-and we see that indeed <m>\alpha\vect{x}\in W</m>.  Always.</p>
+            <p>Suppose we have two vectors from <m>W</m>,<md>
+                <mrow>\vect{x}&amp;=\colvector{x_1\\x_2\\x_3}\in W
+                    &amp;
+                    \vect{y}=\colvector{y_1\\y_2\\y_3}\in W</mrow>
+                </md>.  Then we know that these vectors cannot be totally arbitrary, they must have gained membership in <m>W</m> by virtue of meeting the membership test.  For example, we know that <m>\vect{x}</m> must satisfy <m>2x_1-5x_2+7x_3=0</m> while <m>\vect{y}</m> must satisfy <m>2y_1-5y_2+7y_3=0</m>.  Our first property (<xref ref="property-AC" acro="AC" autoname="yes"/>) asks the question, is <m>\vect{x}+\vect{y}\in W</m>?  When our set of vectors was <m>\complex{3}</m>, this was an easy question to answer.  Now it is not so obvious.  Notice first that<me>\vect{x}+\vect{y}=
+            \colvector{x_1\\x_2\\x_3}+\colvector{y_1\\y_2\\y_3}=
+            \colvector{x_1+y_1\\x_2+y_2\\x_3+y_3}</me>and we can test this vector for membership in <m>W</m> as follows.  Because <m>\vect{x}\in W</m> we know <m>2x_1-5x_2+7x_3=0</m> and because <m>\vect{y}\in W</m> we know <m>2y_1-5y_2+7y_3=0</m>.  Therefore,<md>
+                <mrow>2(x_1+y_1)-5(x_2+y_2)+7(x_3+y_3)
+                &amp;=2x_1+2y_1-5x_2-5y_2+7x_3+7y_3</mrow>
+                <mrow>&amp;=(2x_1-5x_2+7x_3)+(2y_1-5y_2+7y_3)</mrow>
+                <mrow>&amp;=0 + 0</mrow>
+                <mrow>&amp;=0</mrow>
+            </md>and by this computation we see that <m>\vect{x}+\vect{y}\in W</m>.  One property down, nine to go.</p>
+            <p>If <m>\alpha</m> is a scalar and <m>\vect{x}\in W</m>, is it always true that <m>\alpha\vect{x}\in W</m>?  This is what we need to establish <xref ref="property-SC" acro="SC" autoname="yes"/>.  Again, the answer is not as obvious as it was when our set of vectors was all of <m>\complex{3}</m>.  Let us see.  First, note that because <m>\vect{x}\in W</m> we know <m>2x_1-5x_2+7x_3=0</m>.  Therefore,<me>\alpha\vect{x}=\alpha\colvector{x_1\\x_2\\x_3}=\colvector{\alpha x_1\\\alpha x_2\\\alpha x_3}</me>and we can test this vector for membership in <m>W</m>.  First, note that because <m>\vect{x}\in W</m> we know <m>2x_1-5x_2+7x_3=0</m>.  Therefore,<md>
+                <mrow>2(\alpha x_1)-5(\alpha x_2)+7(\alpha x_3)
+                &amp;=\alpha(2x_1-5x_2+7x_3)</mrow>
+                <mrow>&amp;=\alpha 0</mrow>
+                <mrow>&amp;=0</mrow>
+            </md>and we see that indeed <m>\alpha\vect{x}\in W</m>.  Always.</p>
             <p>If <m>W</m> has a zero vector, it will be unique (<xref ref="theorem-ZVU" acro="ZVU" autoname="yes"/>).  The zero vector for <m>\complex{3}</m> should also perform the required duties when added to elements of <m>W</m>.  So the likely candidate for a zero vector in <m>W</m> is the same zero vector that we know <m>\complex{3}</m> has.  You can check that <m>\zerovector=\colvector{0\\0\\0}</m> is a zero vector in <m>W</m> too (<xref ref="property-Z" acro="Z" autoname="yes"/>).</p>
-            <p>With a zero vector, we can now ask about additive inverses (<xref ref="property-AI" acro="AI" autoname="yes"/>).  As you might suspect, the natural candidate for an additive inverse in <m>W</m> is the same as the additive inverse from <m>\complex{3}</m>.  However, we must insure that these additive inverses actually are elements of <m>W</m>.  Given <m>\vect{x}\in W</m>, is <m>\vect{-x}\in W</m>?
-<me>\vect{-x}=\colvector{-x_1\\-x_2\\-x_3}</me>
-and we can test this vector for membership in <m>W</m>.  As before, because <m>\vect{x}\in W</m> we know <m>2x_1-5x_2+7x_3=0</m>.
-<md><mrow>2(-x_1)-5(-x_2)+7(-x_3)
-&amp;=-(2x_1-5x_2+7x_3)</mrow><mrow>&amp;=-0</mrow><mrow>&amp;=0</mrow></md>
-and we now believe that <m>\vect{-x}\in W</m>.</p>
+            <p>With a zero vector, we can now ask about additive inverses (<xref ref="property-AI" acro="AI" autoname="yes"/>).  As you might suspect, the natural candidate for an additive inverse in <m>W</m> is the same as the additive inverse from <m>\complex{3}</m>.  However, we must insure that these additive inverses actually are elements of <m>W</m>.  Given <m>\vect{x}\in W</m>, is <m>\vect{-x}\in W</m>?<me>\vect{-x}=\colvector{-x_1\\-x_2\\-x_3}</me>and we can test this vector for membership in <m>W</m>.  As before, because <m>\vect{x}\in W</m> we know <m>2x_1-5x_2+7x_3=0</m>.<md>
+                <mrow>2(-x_1)-5(-x_2)+7(-x_3)
+                &amp;=-(2x_1-5x_2+7x_3)</mrow>
+                <mrow>&amp;=-0</mrow>
+                <mrow>&amp;=0</mrow>
+            </md>and we now believe that <m>\vect{-x}\in W</m>.</p>
             <p>Is the vector addition in <m>W</m> commutative (<xref ref="property-C" acro="C" autoname="yes"/>)?  Is <m>\vect{x}+\vect{y}=\vect{y}+\vect{x}</m>?  Of course!  Nothing about restricting the scope of our set of vectors will prevent the operation from still being commutative.  Indeed, the remaining five properties are unaffected by the transition to a smaller set of vectors, and so remain true.  That was convenient.</p>
             <p>So <m>W</m> satisfies all ten properties, is therefore a vector space, and thus earns the title of being a subspace of <m>\complex{3}</m>.</p>
         </example>
@@ -58,103 +65,80 @@ and we now believe that <m>\vect{-x}\in W</m>.</p>
         <title>Testing Subspaces</title>
         <p>In <xref ref="example-SC3" acro="SC3" autoname="yes"/> we proceeded through all ten of the vector space properties before believing that a subset was a subspace.  But six of the properties were easy to prove, and we can lean on some of the properties of the vector space (the superset) to make the other four easier.  Here is a theorem that will make it easier to test if a subset is a vector space.  A shortcut if there ever was one.</p>
         <theorem xml:id="theorem-TSS" acro="TSS">
+            <title>Testing Subsets for Subspaces</title>
             <index>
                 <main>subspace</main>
                 <sub>testing</sub>
             </index>
-            <title>Testing Subsets for Subspaces</title>
             <statement>
-                <p>Suppose that <m>V</m> is a vector space and <m>W</m> is a subset of <m>V</m>, <m>W\subseteq V</m>.  Endow <m>W</m> with the same operations as <m>V</m>.  Then <m>W</m> is a subspace if and only if three conditions are met
-<ol><li><m>W</m> is nonempty, <m>W\neq\emptyset</m>.
-</li><li> If <m>\vect{x}\in W</m> and <m>\vect{y}\in W</m>, then <m>\vect{x}+\vect{y}\in W</m>.
-</li><li> If <m>\alpha\in\complexes</m> and <m>\vect{x}\in W</m>, then <m>\alpha\vect{x}\in W</m>.
-</li></ol>
-</p>
+                <p>Suppose that <m>V</m> is a vector space and <m>W</m> is a subset of <m>V</m>, <m>W\subseteq V</m>.  Endow <m>W</m> with the same operations as <m>V</m>.  Then <m>W</m> is a subspace if and only if three conditions are met,<ol>
+                    <li><m>W</m> is nonempty, <m>W\neq\emptyset</m>.</li>
+                    <li>If <m>\vect{x}\in W</m> and <m>\vect{y}\in W</m>, then <m>\vect{x}+\vect{y}\in W</m>.</li>
+                    <li>If <m>\alpha\in\complexes</m> and <m>\vect{x}\in W</m>, then <m>\alpha\vect{x}\in W</m>.</li>
+                </ol></p>
             </statement>
             <proof>
                 <case direction="forward">
-                    <!-- MBX: move end of case -->
+                    <p>We have the hypothesis that <m>W</m> is a subspace, so by <xref ref="property-Z" acro="Z" autoname="yes"/> we know that <m>W</m> contains a zero vector.  This is enough to show that <m>W\neq\emptyset</m>.  Also, since <m>W</m> is a vector space it satisfies the additive and scalar multiplication closure properties (<xref ref="property-AC" acro="AC" autoname="yes"/>, <xref ref="property-SC" acro="SC" autoname="yes"/>), and so exactly meets the second and third conditions.  If that was easy, the other direction might require a bit more work.</p>
                 </case>
-                <p>  We have the hypothesis that <m>W</m> is a subspace, so by <xref ref="property-Z" acro="Z" autoname="yes"/> we know that <m>W</m> contains a zero vector.  This is enough to show that <m>W\neq\emptyset</m>.  Also, since <m>W</m> is a vector space it satisfies the additive and scalar multiplication closure properties (<xref ref="property-AC" acro="AC" autoname="yes"/>, <xref ref="property-SC" acro="SC" autoname="yes"/>), and so exactly meets the second and third conditions.  If that was easy, the other direction might require a bit more work.</p>
                 <case direction="backward">
-                    <!-- MBX: move end of case -->
+                    <p>We have three properties for our hypothesis, and from this we should conclude that <m>W</m> has the ten defining properties of a vector space.  The second and third conditions of our hypothesis are exactly <xref ref="property-AC" acro="AC" autoname="yes"/> and <xref ref="property-SC" acro="SC" autoname="yes"/>.  Our hypothesis that <m>V</m> is a vector space implies that <xref ref="property-C" acro="C" autoname="yes"/>, <xref ref="property-AA" acro="AA" autoname="yes"/>, <xref ref="property-SMA" acro="SMA" autoname="yes"/>, <xref ref="property-DVA" acro="DVA" autoname="yes"/>, <xref ref="property-DSA" acro="DSA" autoname="yes"/> and <xref ref="property-O" acro="O" autoname="yes"/> all hold.  They continue to be true for vectors from <m>W</m> since passing to a subset, and keeping the operation the same, leaves their statements unchanged.  Eight down, two to go.</p>
+                    <p>Suppose <m>\vect{x}\in W</m>.  Then by the third part of our hypothesis (scalar closure), we know that <m>(-1)\vect{x}\in W</m>.  By <xref ref="theorem-AISM" acro="AISM" autoname="yes"/> <m>(-1)\vect{x}=\vect{-x}</m>, so together these statements show us that <m>\vect{-x}\in W</m>.  <m>\vect{-x}</m> is the additive inverse of <m>\vect{x}</m> in <m>V</m>, but will continue in this role when viewed as an element of the subset <m>W</m>.  So every element of <m>W</m> has an additive inverse that is an element of <m>W</m> and <xref ref="property-AI" acro="AI" autoname="yes"/> is completed.  Just one property left.</p>
+                    <p>While we have implicitly discussed the zero vector in the previous paragraph, we need to be certain that the zero vector (of <m>V</m>) really lives in <m>W</m>.   Since <m>W</m> is nonempty, we can choose some vector <m>\vect{z}\in W</m>.  Then by the argument in the previous paragraph, we know <m>\vect{-z}\in W</m>.  Now by <xref ref="property-AI" acro="AI" autoname="yes"/> for <m>V</m> and then by the second part of our hypothesis (additive closure) we see that<me>\zerovector=\vect{z}+(\vect{-z})\in W</me></p>
+                    <p>So <m>W</m> contains the zero vector from <m>V</m>.  Since this vector performs the required duties of a zero vector in <m>V</m>, it will continue in that role as an element of <m>W</m>. This gives us, <xref ref="property-Z" acro="Z" autoname="yes"/>, the final property of the ten required.  (<xref ref="sarahfellez"/> contributed to this proof.)</p>
                 </case>
-                <p> We have three properties for our hypothesis, and from this we should conclude that <m>W</m> has the ten defining properties of a vector space.  The second and third conditions of our hypothesis are exactly <xref ref="property-AC" acro="AC" autoname="yes"/> and <xref ref="property-SC" acro="SC" autoname="yes"/>.
-Our hypothesis that <m>V</m> is a vector space implies that
-<xref ref="property-C" acro="C" autoname="yes"/>,
-<xref ref="property-AA" acro="AA" autoname="yes"/>,
-<xref ref="property-SMA" acro="SMA" autoname="yes"/>,
-<xref ref="property-DVA" acro="DVA" autoname="yes"/>,
-<xref ref="property-DSA" acro="DSA" autoname="yes"/> and
-<xref ref="property-O" acro="O" autoname="yes"/>
-all hold.  They continue to be true for vectors from <m>W</m> since passing to a subset, and keeping the operation the same, leaves their statements unchanged.  Eight down, two to go.</p>
-                <p>Suppose <m>\vect{x}\in W</m>.  Then by the third part of our hypothesis (scalar closure), we know that <m>(-1)\vect{x}\in W</m>.  By <xref ref="theorem-AISM" acro="AISM" autoname="yes"/> <m>(-1)\vect{x}=\vect{-x}</m>, so together these statements show us that <m>\vect{-x}\in W</m>.  <m>\vect{-x}</m> is the additive inverse of <m>\vect{x}</m> in <m>V</m>, but will continue in this role when viewed as an element of the subset <m>W</m>.  So every element of <m>W</m> has an additive inverse that is an element of <m>W</m> and <xref ref="property-AI" acro="AI" autoname="yes"/> is completed.  Just one property left.</p>
-                <p>While we have implicitly discussed the zero vector in the previous paragraph, we need to be certain that the zero vector (of <m>V</m>) really lives in <m>W</m>.   Since <m>W</m> is nonempty, we can choose some vector <m>\vect{z}\in W</m>.  Then by the argument in the previous paragraph, we know <m>\vect{-z}\in W</m>.  Now by <xref ref="property-AI" acro="AI" autoname="yes"/> for <m>V</m> and then by the second part of our hypothesis (additive closure) we see that
-<me>\zerovector=\vect{z}+(\vect{-z})\in W</me>
-</p>
-                <p>So <m>W</m> contains the zero vector from <m>V</m>.  Since this vector performs the required duties of a zero vector in <m>V</m>, it will continue in that role as an element of <m>W</m>. This gives us, <xref ref="property-Z" acro="Z" autoname="yes"/>, the final property of the ten required.  (<xref ref="sarahfellez"/> contributed to this proof.)</p>
             </proof>
         </theorem>
-        <p>So just three conditions, plus being a subset of a known vector space, gets us all ten properties.  Fabulous!
-This theorem can be paraphrased by saying that a subspace is <q>a nonempty subset (of a vector space) that is closed under vector addition and scalar multiplication.</q></p>
+        <p>So just three conditions, plus being a subset of a known vector space, gets us all ten properties.  Fabulous!  This theorem can be paraphrased by saying that a subspace is <q>a nonempty subset (of a vector space) that is closed under vector addition and scalar multiplication.</q></p>
         <p>You might want to go back and rework <xref ref="example-SC3" acro="SC3" autoname="yes"/> in light of this result, perhaps seeing where we can now economize or where the work done in the example mirrored the proof and where it did not.  We will press on and apply this theorem in a slightly more abstract setting.</p>
-        <!-- MBX: index entry may have math needing adjustment -->
         <example xml:id="example-SP4" acro="SP4">
+            <title>A subspace of <m>P_4</m></title>
             <index>
                 <main>subspace</main>
-                <sub>in P4</sub>
+                <sub>in <m>P_4</m></sub>
             </index>
-            <title>A subspace of <m>P_4</m></title>
-            <p><m>P_4</m> is the vector space of polynomials with degree at most <m>4</m> (<xref ref="example-VSP" acro="VSP" autoname="yes"/>).  Define a subset <m>W</m> as
-<me>W=\setparts{p(x)}{p\in P_4,\ p(2)=0}</me>
-so <m>W</m> is the collection of those polynomials (with degree 4 or less) whose graphs  cross the <m>x</m>-axis at <m>x=2</m>.  Whenever we encounter a new set it is a good idea to gain a better understanding of the set by finding a few elements in the set, and a few outside it.  For example <m>x^2-x-2\in W</m>, while <m>x^4+x^3-7\not\in W</m>.</p>
+            <p><m>P_4</m> is the vector space of polynomials with degree at most <m>4</m> (<xref ref="example-VSP" acro="VSP" autoname="yes"/>).  Define a subset <m>W</m> as<me>W=\setparts{p(x)}{p\in P_4,\ p(2)=0}</me>so <m>W</m> is the collection of those polynomials (with degree 4 or less) whose graphs  cross the <m>x</m>-axis at <m>x=2</m>.  Whenever we encounter a new set it is a good idea to gain a better understanding of the set by finding a few elements in the set, and a few outside it.  For example <m>x^2-x-2\in W</m>, while <m>x^4+x^3-7\not\in W</m>.</p>
             <p>Is <m>W</m> nonempty?  Yes, <m>x-2\in W</m>.</p>
-            <p>Additive closure?  Suppose <m>p\in W</m> and <m>q\in W</m>.  Is <m>p+q\in W</m>?  <m>p</m> and <m>q</m> are not totally arbitrary, we know that <m>p(2)=0</m> and <m>q(2)=0</m>.  Then we can check <m>p+q</m> for membership in <m>W</m>,
-<md><mrow>(p+q)(2)&amp;=p(2)+q(2)&amp;&amp;\text{Addition in }P_4</mrow><mrow>&amp;=0+0&amp;&amp;p\in W,\,q\in W</mrow><mrow>&amp;=0</mrow></md>
-so we see that <m>p+q</m> qualifies for membership in <m>W</m>.</p>
-            <p>Scalar multiplication closure?  Suppose that <m>\alpha\in\complexes</m> and <m>p\in W</m>.  Then we know that <m>p(2)=0</m>.  Testing <m>\alpha p</m> for membership,
-<md><mrow>(\alpha p)(2)&amp;=\alpha p(2)&amp;&amp;\text{Scalar multiplication in }P_4</mrow><mrow>&amp;=\alpha 0&amp;&amp;p\in W</mrow><mrow>&amp;=0</mrow></md>
-so <m>\alpha p\in W</m>.</p>
+            <p>Additive closure?  Suppose <m>p\in W</m> and <m>q\in W</m>.  Is <m>p+q\in W</m>?  <m>p</m> and <m>q</m> are not totally arbitrary, we know that <m>p(2)=0</m> and <m>q(2)=0</m>.  Then we can check <m>p+q</m> for membership in <m>W</m>,<md>
+                <mrow>(p+q)(2)&amp;=p(2)+q(2)&amp;&amp;\text{Addition in }P_4</mrow>
+                <mrow>&amp;=0+0&amp;&amp;p\in W,\,q\in W</mrow>
+                <mrow>&amp;=0&amp;&amp;<xref ref="property-ZCN" acro="ZCN" autoname="yes"/></mrow>
+            </md>so we see that <m>p+q</m> qualifies for membership in <m>W</m>.</p>
+            <p>Scalar multiplication closure?  Suppose that <m>\alpha\in\complexes</m> and <m>p\in W</m>.  Then we know that <m>p(2)=0</m>.  Testing <m>\alpha p</m> for membership,<md>
+                <mrow>(\alpha p)(2)&amp;=\alpha p(2)&amp;&amp;\text{Scalar multiplication in }P_4</mrow>
+                <mrow>&amp;=\alpha 0&amp;&amp;p\in W</mrow>
+                <mrow>&amp;=0&amp;&amp;<xref ref="theorem-ZPCN" acro="ZPCN" autoname="yes"/></mrow>
+            </md>so <m>\alpha p\in W</m>.</p>
             <p>We have shown that <m>W</m> meets the three conditions of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> and so qualifies as a subspace of <m>P_4</m>.  Notice that by <xref ref="definition-S" acro="S" autoname="yes"/> we now know that <m>W</m> is also a vector space.  So all the properties of a vector space (<xref ref="definition-VS" acro="VS" autoname="yes"/>) and the theorems of <xref ref="section-VS" acro="VS" autoname="yes"/> apply in full.</p>
         </example>
         <p>Much of the power of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> is that we can easily establish new vector spaces if we can locate them as subsets of other vector spaces, such as the vector spaces presented in <xref ref="subsection-VS-EVS" acro="VS.EVS" autoname="yes"/>.</p>
         <p>It can be as instructive to consider some subsets that are <em>not</em> subspaces.  Since <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> is an equivalence (see Proof Technique<nbsp/><xref ref="technique-E" acro="E" autoname="no"/>) we can be assured that a subset is not a subspace if it violates one of the three conditions, and in any example of interest this will not be the <q>nonempty</q> condition.  However, since a subspace has to be a vector space in its own right, we can also search for a violation of any one of the ten defining properties in <xref ref="definition-VS" acro="VS" autoname="yes"/> or any inherent property of a vector space, such as those given by the basic theorems of <xref ref="subsection-VS-VSP" acro="VS.VSP" autoname="yes"/>.  Notice also that a violation need only be for a specific vector or pair of vectors.</p>
         <example xml:id="example-NSC2Z" acro="NSC2Z">
+            <title>A non-subspace in <m>\complex{2}</m>, zero vector</title>
             <index>
                 <main>subspace</main>
                 <sub>not, zero vector</sub>
             </index>
-            <title>A non-subspace in <m>\complex{2}</m>, zero vector</title>
-            <p>Consider the subset <m>W</m> below as a candidate for being a subspace of <m>\complex{2}</m>
-<me>W=\setparts{\colvector{x_1\\x_2}}{3x_1-5x_2=12}</me>
-</p>
+            <p>Consider the subset <m>W</m> below as a candidate for being a subspace of <m>\complex{2}</m><me>W=\setparts{\colvector{x_1\\x_2}}{3x_1-5x_2=12}</me></p>
             <p>The zero vector of <m>\complex{2}</m>, <m>\zerovector=\colvector{0\\0}</m> will need to be the zero vector in <m>W</m> also.  However, <m>\zerovector\not\in W</m> since <m>3(0)-5(0)=0\neq 12</m>.  So <m>W</m> has no zero vector and fails <xref ref="property-Z" acro="Z" autoname="yes"/> of <xref ref="definition-VS" acro="VS" autoname="yes"/>.  This subspace also fails to be closed under addition and scalar multiplication.  Can you find examples of this?</p>
         </example>
         <example xml:id="example-NSC2A" acro="NSC2A">
+            <title>A non-subspace in <m>\complex{2}</m>, additive closure</title>
             <index>
                 <main>subspace</main>
                 <sub>not, additive closure</sub>
             </index>
-            <title>A non-subspace in <m>\complex{2}</m>, additive closure</title>
-            <p>Consider the subset <m>X</m> below as a candidate for being a subspace of <m>\complex{2}</m>
-<me>X=\setparts{\colvector{x_1\\x_2}}{x_1x_2=0}</me>
-</p>
-            <p>You can check that <m>\zerovector\in X</m>, so the approach of the last example will not get us anywhere.  However, notice that <m>\vect{x}=\colvector{1\\0}\in X</m> and <m>\vect{y}=\colvector{0\\1}\in X</m>.  Yet
-<me>\vect{x}+\vect{y}=\colvector{1\\0}+\colvector{0\\1}=\colvector{1\\1}\not\in X</me>
-</p>
+            <p>Consider the subset <m>X</m> below as a candidate for being a subspace of <m>\complex{2}</m><me>X=\setparts{\colvector{x_1\\x_2}}{x_1x_2=0}</me></p>
+            <p>You can check that <m>\zerovector\in X</m>, so the approach of the last example will not get us anywhere.  However, notice that <m>\vect{x}=\colvector{1\\0}\in X</m> and <m>\vect{y}=\colvector{0\\1}\in X</m>.  Yet<me>\vect{x}+\vect{y}=\colvector{1\\0}+\colvector{0\\1}=\colvector{1\\1}\not\in X</me></p>
             <p>So <m>X</m> fails the additive closure requirement of either <xref ref="property-AC" acro="AC" autoname="yes"/> or <xref ref="theorem-TSS" acro="TSS" autoname="yes"/>, and is therefore not a subspace.</p>
         </example>
         <example xml:id="example-NSC2S" acro="NSC2S">
+            <title>A non-subspace in <m>\complex{2}</m>, scalar multiplication closure</title>
             <index>
                 <main>subspace</main>
                 <sub>not, scalar closure</sub>
             </index>
-            <title>A non-subspace in <m>\complex{2}</m>, scalar multiplication closure</title>
-            <p>Consider the subset <m>Y</m> below as a candidate for being a subspace of <m>\complex{2}</m>
-<me>Y=\setparts{\colvector{x_1\\x_2}}{x_1\in{\mathbb Z},\,x_2\in{\mathbb Z}}</me>
-<m>{\mathbb Z}</m> is the set of integers, so we are only allowing <q>whole numbers</q> as the constituents of our vectors.  Now, <m>\zerovector\in Y</m>, and additive closure also holds (can you prove these claims?).  So we will have to try something different.  Note that <m>\alpha = \frac{1}{2}\in\complexes</m> and <m>\colvector{2\\3}\in Y</m>, but
-<me>\alpha\vect{x}=\frac{1}{2}\colvector{2\\3}=\colvector{1\\\frac{3}{2}}\not\in Y</me>
-So <m>Y</m> fails the scalar multiplication closure requirement of either <xref ref="property-SC" acro="SC" autoname="yes"/> or <xref ref="theorem-TSS" acro="TSS" autoname="yes"/>, and is therefore not a subspace.</p>
+            <p>Consider the subset <m>Y</m> below as a candidate for being a subspace of <m>\complex{2}</m><me>Y=\setparts{\colvector{x_1\\x_2}}{x_1\in{\mathbb Z},\,x_2\in{\mathbb Z}}</me><m>{\mathbb Z}</m> is the set of integers, so we are only allowing <q>whole numbers</q> as the constituents of our vectors.  Now, <m>\zerovector\in Y</m>, and additive closure also holds (can you prove these claims?).  So we will have to try something different.  Note that <m>\alpha = \frac{1}{2}\in\complexes</m> and <m>\colvector{2\\3}\in Y</m>, but<me>\alpha\vect{x}=\frac{1}{2}\colvector{2\\3}=\colvector{1\\\frac{3}{2}}\not\in Y</me>So <m>Y</m> fails the scalar multiplication closure requirement of either <xref ref="property-SC" acro="SC" autoname="yes"/> or <xref ref="theorem-TSS" acro="TSS" autoname="yes"/>, and is therefore not a subspace.</p>
         </example>
         <p>There are two examples of subspaces that are trivial.  Suppose that <m>V</m> is any vector space.  Then <m>V</m> is a subset of itself and is a vector space.  By <xref ref="definition-S" acro="S" autoname="yes"/>, <m>V</m> qualifies as a subspace of itself.  The set containing just the zero vector <m>Z=\set{\zerovector}</m> is also a subspace as can be seen by applying <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> or by simple modifications of the techniques hinted at in <xref ref="example-VSS" acro="VSS" autoname="yes"/>.  Since these subspaces are so obvious (and therefore not too interesting) we will refer to them as being trivial.</p>
         <definition xml:id="definition-TS" acro="TS">
@@ -169,48 +153,53 @@ So <m>Y</m> fails the scalar multiplication closure requirement of either <xref 
         </definition>
         <p>We can also use <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> to prove more general statements about subspaces, as illustrated in the next theorem.</p>
         <theorem xml:id="theorem-NSMS" acro="NSMS">
+            <title>Null Space of a Matrix is a Subspace</title>
             <index>
                 <main>null space</main>
                 <sub>subspace</sub>
             </index>
-            <title>Null Space of a Matrix is a Subspace</title>
             <statement>
                 <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix.  Then the null space of <m>A</m>, <m>\nsp{A}</m>, is a subspace of <m>\complex{n}</m>.</p>
             </statement>
             <proof>
                 <p>We will examine the three requirements of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/>.  Recall that <xref ref="definition-NSM" acro="NSM" autoname="yes"/> can be formulated as <m>\nsp{A}=\setparts{\vect{x}\in\complex{n}}{A\vect{x}=\zerovector}</m>.</p>
                 <p>First, <m>\zerovector\in\nsp{A}</m>, which can be inferred as a consequence of <xref ref="theorem-HSC" acro="HSC" autoname="yes"/>.  So <m>\nsp{A}\neq\emptyset</m>.</p>
-                <p>Second, check additive closure by supposing that <m>\vect{x}\in\nsp{A}</m> and <m>\vect{y}\in\nsp{A}</m>.  So we know a little something about <m>\vect{x}</m> and <m>\vect{y}</m>:  <m>A\vect{x}=\zerovector</m> and <m>A\vect{y}=\zerovector</m>, and that is all we know.  Question:  Is <m>\vect{x}+\vect{y}\in\nsp{A}</m>?  Let us check.
-<md><mrow>A(\vect{x}+\vect{y})&amp;=A\vect{x}+A\vect{y}&amp;&amp;<xref ref="theorem-MMDAA" acro="MMDAA" autoname="yes"/></mrow><mrow>&amp;=\zerovector+\zerovector&amp;&amp;\vect{x}\in\nsp{A},\ \vect{y}\in\nsp{A}</mrow><mrow>&amp;=\zerovector&amp;&amp;<xref ref="theorem-VSPCV" acro="VSPCV" autoname="yes"/></mrow></md>
-So, yes, <m>\vect{x}+\vect{y}</m> qualifies for membership in <m>\nsp{A}</m>.</p>
-                <p>Third, check scalar multiplication closure by supposing that <m>\alpha\in\complexes</m> and <m>\vect{x}\in\nsp{A}</m>.  So we know a little something about <m>\vect{x}</m>:  <m>A\vect{x}=\zerovector</m>, and that is all we know.  Question:  Is <m>\alpha\vect{x}\in\nsp{A}</m>?  Let us check.
-<md><mrow>A(\alpha\vect{x})&amp;=\alpha(A\vect{x})&amp;&amp;<xref ref="theorem-MMSMM" acro="MMSMM" autoname="yes"/></mrow><mrow>&amp;=\alpha\zerovector&amp;&amp;\vect{x}\in\nsp{A}</mrow><mrow>&amp;=\zerovector&amp;&amp;<xref ref="theorem-ZVSM" acro="ZVSM" autoname="yes"/></mrow></md>
-So, yes, <m>\alpha\vect{x}</m> qualifies for membership in <m>\nsp{A}</m>.</p>
+                <p>Second, check additive closure by supposing that <m>\vect{x}\in\nsp{A}</m> and <m>\vect{y}\in\nsp{A}</m>.  So we know a little something about <m>\vect{x}</m> and <m>\vect{y}</m>:  <m>A\vect{x}=\zerovector</m> and <m>A\vect{y}=\zerovector</m>, and that is all we know.  Question:  Is <m>\vect{x}+\vect{y}\in\nsp{A}</m>?  Let us check.<md>
+                    <mrow>A(\vect{x}+\vect{y})&amp;=A\vect{x}+A\vect{y}&amp;&amp;
+                        <xref ref="theorem-MMDAA" acro="MMDAA" autoname="yes"/></mrow>
+                    <mrow>&amp;=\zerovector+\zerovector&amp;&amp;\vect{x}\in\nsp{A},\ \vect{y}\in\nsp{A}</mrow>
+                    <mrow>&amp;=\zerovector&amp;&amp;
+                        <xref ref="theorem-VSPCV" acro="VSPCV" autoname="yes"/></mrow>
+                </md>So, yes, <m>\vect{x}+\vect{y}</m> qualifies for membership in <m>\nsp{A}</m>.</p>
+                <p>Third, check scalar multiplication closure by supposing that <m>\alpha\in\complexes</m> and <m>\vect{x}\in\nsp{A}</m>.  So we know a little something about <m>\vect{x}</m>:  <m>A\vect{x}=\zerovector</m>, and that is all we know.  Question:  Is <m>\alpha\vect{x}\in\nsp{A}</m>?  Let us check.<md>
+                    <mrow>A(\alpha\vect{x})&amp;=\alpha(A\vect{x})&amp;&amp;
+                        <xref ref="theorem-MMSMM" acro="MMSMM" autoname="yes"/></mrow>
+                    <mrow>&amp;=\alpha\zerovector&amp;&amp;\vect{x}\in\nsp{A}</mrow>
+                    <mrow>&amp;=\zerovector&amp;&amp;
+                        <xref ref="theorem-ZVSM" acro="ZVSM" autoname="yes"/></mrow>
+                </md>So, yes, <m>\alpha\vect{x}</m> qualifies for membership in <m>\nsp{A}</m>.</p>
                 <p>Having met the three conditions in <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> we can now say that the null space of a matrix is a subspace (and hence a vector space in its own right!).</p>
             </proof>
         </theorem>
         <p>Here is an example where we can exercise <xref ref="theorem-NSMS" acro="NSMS" autoname="yes"/>.</p>
         <example xml:id="example-RSNS" acro="RSNS">
+            <title>Recasting a subspace as a null space</title>
             <index>
                 <main>subspace</main>
                 <sub>as null space</sub>
             </index>
-            <title>Recasting a subspace as a null space</title>
-            <p>Consider the subset of <m>\complex{5}</m> defined as
-<me>W =\setparts{\colvector{x_1\\x_2\\x_3\\x_4\\x_5}}{
-\begin{array}{l}
-3x_1+x_2-5x_3+7x_4+x_5=0,\\
-4x_1+6x_2+3x_3-6x_4-5x_5=0,\\
--2x_1+4x_2+7x_4+x_5=0
-\end{array}
-}</me></p>
-            <p>It is possible to show that <m>W</m> is a subspace of <m>\complex{5}</m> by checking the three conditions of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> directly, but it will get tedious rather quickly.  Instead, give <m>W</m> a fresh look and notice that it is a set of solutions to a homogeneous system of equations.  Define the matrix
-<me>A=\begin{bmatrix}
-3&amp;1&amp;-5&amp;7&amp;1\\
-4&amp;6&amp;3&amp;-6&amp;-5\\
--2&amp;4&amp;0&amp;7&amp;1
-\end{bmatrix}</me>
-and then recognize that <m>W=\nsp{A}</m>.  By <xref ref="theorem-NSMS" acro="NSMS" autoname="yes"/> we can immediately see that <m>W</m> is a subspace.  Boom!</p>
+            <p>Consider the subset of <m>\complex{5}</m> defined as<me>W =\setparts{\colvector{x_1\\x_2\\x_3\\x_4\\x_5}}{
+            \begin{array}{l}
+            3x_1+x_2-5x_3+7x_4+x_5=0,\\
+            4x_1+6x_2+3x_3-6x_4-5x_5=0,\\
+            -2x_1+4x_2+7x_4+x_5=0
+            \end{array}
+            }</me>.</p>
+            <p>It is possible to show that <m>W</m> is a subspace of <m>\complex{5}</m> by checking the three conditions of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> directly, but it will get tedious rather quickly.  Instead, give <m>W</m> a fresh look and notice that it is a set of solutions to a homogeneous system of equations.  Define the matrix<me>A=\begin{bmatrix}
+            3&amp;1&amp;-5&amp;7&amp;1\\
+            4&amp;6&amp;3&amp;-6&amp;-5\\
+            -2&amp;4&amp;0&amp;7&amp;1
+            \end{bmatrix}</me>and then recognize that <m>W=\nsp{A}</m>.  By <xref ref="theorem-NSMS" acro="NSMS" autoname="yes"/> we can immediately see that <m>W</m> is a subspace.  Boom!</p>
         </example>
     </subsection>
     <subsection xml:id="subsection-S-TSS" acro="TSS">
@@ -220,348 +209,353 @@ and then recognize that <m>W=\nsp{A}</m>.  By <xref ref="theorem-NSMS" acro="NSM
             <title>Linear Combination</title>
             <index>linear combination</index>
             <statement>
-                <p>Suppose that <m>V</m> is a vector space.
-Given <m>n</m> vectors <m>\vectorlist{u}{n}</m> and <m>n</m> scalars <m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\ldots,\,\alpha_n</m>, their <term>linear combination</term> is the vector
-<me>\lincombo{\alpha}{u}{n}.</me>
-</p>
+                <p>Suppose that <m>V</m> is a vector space.  Given <m>n</m> vectors <m>\vectorlist{u}{n}</m> and <m>n</m> scalars <m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\ldots,\,\alpha_n</m>, their <term>linear combination</term> is the vector<me>\lincombo{\alpha}{u}{n}.</me></p>
             </statement>
         </definition>
         <example xml:id="example-LCM" acro="LCM">
+            <title>A linear combination of matrices</title>
             <index>
                 <main>linear combination</main>
                 <sub>matrices</sub>
             </index>
-            <title>A linear combination of matrices</title>
-            <p>In the vector space <m>M_{23}</m> of <m>2\times 3</m> matrices, we have the vectors
-<md><mrow>\vect{x}&amp;=
-\begin{bmatrix}
-1&amp;3&amp;-2\\
-2&amp;0&amp;7
-\end{bmatrix}
-&amp;
-\vect{y}&amp;=
-\begin{bmatrix}
-3&amp;-1&amp;2\\
-5&amp;5&amp;1
-\end{bmatrix}
-&amp;
-\vect{z}&amp;=
-\begin{bmatrix}
-4&amp;2&amp;-4\\
-1&amp;1&amp;1
-\end{bmatrix}</mrow></md>
-and we can form linear combinations such as
-<md><mrow>2\vect{x}+4\vect{y}+(-1)\vect{z}&amp;=
-2
-\begin{bmatrix}
-1&amp;3&amp;-2\\
-2&amp;0&amp;7
-\end{bmatrix}
-+4
-\begin{bmatrix}
-3&amp;-1&amp;2\\
-5&amp;5&amp;1
-\end{bmatrix}
-+(-1)
-\begin{bmatrix}
-4&amp;2&amp;-4\\
-1&amp;1&amp;1
-\end{bmatrix}\\
-&amp;=
-\begin{bmatrix}
-2&amp;6&amp;-4\\
-4&amp;0&amp;14
-\end{bmatrix}
-+
-\begin{bmatrix}
-12&amp;-4&amp;8\\
-20&amp;20&amp;4
-\end{bmatrix}
-+
-\begin{bmatrix}
--4&amp;-2&amp;4\\
--1&amp;-1&amp;-1
-\end{bmatrix}\\
-&amp;=
-\begin{bmatrix}
-10&amp;0&amp;8\\
-23&amp;19&amp;17
-\end{bmatrix}</mrow><intertext>or,</intertext><mrow>4\vect{x}-2\vect{y}+3\vect{z}&amp;=
-4
-\begin{bmatrix}
-1&amp;3&amp;-2\\
-2&amp;0&amp;7
-\end{bmatrix}
--2
-\begin{bmatrix}
-3&amp;-1&amp;2\\
-5&amp;5&amp;1
-\end{bmatrix}
-+3
-\begin{bmatrix}
-4&amp;2&amp;-4\\
-1&amp;1&amp;1
-\end{bmatrix}\\
-&amp;=
-\begin{bmatrix}
-4&amp;12&amp;-8\\
-8&amp;0&amp;28
-\end{bmatrix}
-+
-\begin{bmatrix}
--6&amp;2&amp;-4\\
--10&amp;-10&amp;-2
-\end{bmatrix}
-+
-\begin{bmatrix}
-12&amp;6&amp;-12\\
-3&amp;3&amp;3
-\end{bmatrix}\\
-&amp;=
-\begin{bmatrix}
-10&amp;20&amp;-24\\
-1&amp;-7&amp;29
-\end{bmatrix}</mrow></md>
-</p>
+            <p>In the vector space <m>M_{23}</m> of <m>2\times 3</m> matrices, we have the vectors<md>
+                <mrow>\vect{x}&amp;=
+                \begin{bmatrix}
+                1&amp;3&amp;-2\\
+                2&amp;0&amp;7
+                \end{bmatrix}
+                &amp;
+                \vect{y}&amp;=
+                \begin{bmatrix}
+                3&amp;-1&amp;2\\
+                5&amp;5&amp;1
+                \end{bmatrix}
+                &amp;
+                \vect{z}&amp;=
+                \begin{bmatrix}
+                4&amp;2&amp;-4\\
+                1&amp;1&amp;1
+                \end{bmatrix}</mrow>
+            </md>and we can form linear combinations such as<md>
+                <mrow>2\vect{x}+4\vect{y}+(-1)\vect{z}&amp;=
+                2
+                \begin{bmatrix}
+                1&amp;3&amp;-2\\
+                2&amp;0&amp;7
+                \end{bmatrix}
+                +4
+                \begin{bmatrix}
+                3&amp;-1&amp;2\\
+                5&amp;5&amp;1
+                \end{bmatrix}
+                +(-1)
+                \begin{bmatrix}
+                4&amp;2&amp;-4\\
+                1&amp;1&amp;1
+                \end{bmatrix}</mrow>
+                <mrow>&amp;=
+                \begin{bmatrix}
+                2&amp;6&amp;-4\\
+                4&amp;0&amp;14
+                \end{bmatrix}
+                +
+                \begin{bmatrix}
+                12&amp;-4&amp;8\\
+                20&amp;20&amp;4
+                \end{bmatrix}
+                +
+                \begin{bmatrix}
+                -4&amp;-2&amp;4\\
+                -1&amp;-1&amp;-1
+                \end{bmatrix}
+                =
+                \begin{bmatrix}
+                10&amp;0&amp;8\\
+                23&amp;19&amp;17
+                \end{bmatrix}</mrow>
+                <intertext>or,</intertext><mrow>4\vect{x}-2\vect{y}+3\vect{z}&amp;=
+                4
+                \begin{bmatrix}
+                1&amp;3&amp;-2\\
+                2&amp;0&amp;7
+                \end{bmatrix}
+                -2
+                \begin{bmatrix}
+                3&amp;-1&amp;2\\
+                5&amp;5&amp;1
+                \end{bmatrix}
+                +3
+                \begin{bmatrix}
+                4&amp;2&amp;-4\\
+                1&amp;1&amp;1
+                \end{bmatrix}</mrow>
+                <mrow>&amp;=
+                \begin{bmatrix}
+                4&amp;12&amp;-8\\
+                8&amp;0&amp;28
+                \end{bmatrix}
+                +
+                \begin{bmatrix}
+                -6&amp;2&amp;-4\\
+                -10&amp;-10&amp;-2
+                \end{bmatrix}
+                +
+                \begin{bmatrix}
+                12&amp;6&amp;-12\\
+                3&amp;3&amp;3
+                \end{bmatrix}
+                =
+                \begin{bmatrix}
+                10&amp;20&amp;-24\\
+                1&amp;-7&amp;29
+                \end{bmatrix}</mrow>
+            </md>.</p>
         </example>
         <p>When we realize that we can form linear combinations in any vector space, then it is natural to revisit our definition of the span of a set, since it is the set of <em>all</em> possible linear combinations of a set of vectors.</p>
         <definition xml:id="definition-SS" acro="SS">
             <title>Span of a Set</title>
             <index>span</index>
             <statement>
-                <p>Suppose that <m>V</m> is a vector space.
-Given a set of vectors <m>S=\{\vectorlist{u}{t}\}</m>, their <term>span</term>, <m>\spn{S}</m>, is the set of all possible linear combinations of <m>\vectorlist{u}{t}</m>.  Symbolically,
-<md><mrow>\spn{S}&amp;=\setparts{\lincombo{\alpha}{u}{t}}{\alpha_i\in\complexes,\,1\leq i\leq t}</mrow><mrow>&amp;=\setparts{\sum_{i=1}^{t}\alpha_i\vect{u}_i}{\alpha_i\in\complexes,\,1\leq i\leq t}</mrow></md>
-</p>
+                <p>Suppose that <m>V</m> is a vector space.  Given a set of vectors <m>S=\{\vectorlist{u}{t}\}</m>, their <term>span</term>, <m>\spn{S}</m>, is the set of all possible linear combinations of <m>\vectorlist{u}{t}</m>.  Symbolically,<md>
+                    <mrow>\spn{S}&amp;=\setparts{\lincombo{\alpha}{u}{t}}{\alpha_i\in\complexes,\,1\leq i\leq t}</mrow>
+                    <mrow>&amp;=\setparts{\sum_{i=1}^{t}\alpha_i\vect{u}_i}{\alpha_i\in\complexes,\,1\leq i\leq t}</mrow>
+                </md>.</p>
             </statement>
         </definition>
         <theorem xml:id="theorem-SSS" acro="SSS">
+            <title>Span of a Set is a Subspace</title>
             <index>
                 <main>span</main>
                 <sub>subspace</sub>
             </index>
-            <title>Span of a Set is a Subspace</title>
             <statement>
                 <p>Suppose <m>V</m> is a vector space.  Given a set of vectors <m>S=\{\vectorlist{u}{t}\}\subseteq V</m>, their span, <m>\spn{S}</m>, is a subspace.</p>
             </statement>
             <proof>
                 <p>By <xref ref="definition-SS" acro="SS" autoname="yes"/>, the span contains linear combinations of vectors from the vector space <m>V</m>, so by repeated use of the closure properties, <xref ref="property-AC" acro="AC" autoname="yes"/> and <xref ref="property-SC" acro="SC" autoname="yes"/>, <m>\spn{S}</m> can be seen to be a subset of <m>V</m>.</p>
-                <p>We will then verify the three conditions of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/>.  First,
-<md><mrow>\zerovector
-&amp;=\zerovector+\zerovector+\zerovector+\ldots+\zerovector&amp;&amp;<xref ref="property-Z" acro="Z" autoname="yes"/></mrow><mrow>&amp;=0\vect{u}_1+0\vect{u}_2+0\vect{u}_3+\cdots+0\vect{u}_t&amp;&amp;<xref ref="theorem-ZSSM" acro="ZSSM" autoname="yes"/></mrow></md>
-</p>
+                <p>We will then verify the three conditions of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/>.  First,<md>
+                    <mrow>\zerovector
+                    &amp;=\zerovector+\zerovector+\zerovector+\ldots+\zerovector&amp;&amp;
+                        <xref ref="property-Z" acro="Z" autoname="yes"/></mrow>
+                    <mrow>&amp;=0\vect{u}_1+0\vect{u}_2+0\vect{u}_3+\cdots+0\vect{u}_t&amp;&amp;
+                        <xref ref="theorem-ZSSM" acro="ZSSM" autoname="yes"/></mrow>
+                </md>.</p>
                 <p>So we have written <m>\zerovector</m> as a linear combination of the vectors in <m>S</m> and by <xref ref="definition-SS" acro="SS" autoname="yes"/><m>, \zerovector\in\spn{S}</m> and therefore <m>\spn{S}\neq\emptyset</m>.</p>
-                <p>Second, suppose <m>\vect{x}\in\spn{S}</m> and <m>\vect{y}\in\spn{S}</m>.  Can we conclude that <m>\vect{x}+\vect{y}\in\spn{S}</m>?  What do we know about <m>\vect{x}</m> and <m>\vect{y}</m> by virtue of their membership in <m>\spn{S}</m>?  There must be scalars from <m>\complexes</m>,
-<m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\ldots,\,\alpha_t</m> and
-<m>\beta_1,\,\beta_2,\,\beta_3,\,\ldots,\,\beta_t</m> so that
-<md><mrow>\vect{x}&amp;=\lincombo{\alpha}{u}{t}</mrow><mrow>\vect{y}&amp;=\lincombo{\beta}{u}{t}</mrow></md>
-Then
-<md><mrow>\vect{x}+\vect{y}&amp;=\lincombo{\alpha}{u}{t}</mrow><mrow>&amp;\quad\quad+\lincombo{\beta}{u}{t}</mrow><mrow>&amp;=\alpha_1\vect{u}_1+\beta_1\vect{u}_1+\alpha_2\vect{u}_2+\beta_2\vect{u}_2</mrow><mrow>&amp;\quad\quad+\alpha_3\vect{u}_3+\beta_3\vect{u}_3+\cdots+\alpha_t\vect{u}_t+\beta_t\vect{u}_t&amp;&amp;<xref ref="property-AA" acro="AA" autoname="yes"/>,<xref ref="property-C" acro="C" autoname="yes"/></mrow><mrow>&amp;=(\alpha_1+\beta_1)\vect{u}_1+(\alpha_2+\beta_2)\vect{u}_2</mrow><mrow>&amp;\quad\quad+(\alpha_3+\beta_3)\vect{u}_3+\cdots+(\alpha_t+\beta_t)\vect{u}_t&amp;&amp;<xref ref="property-DSA" acro="DSA" autoname="yes"/></mrow></md>
-Since each <m>\alpha_i+\beta_i</m> is again a scalar from <m>\complexes</m> we have expressed the vector sum <m>\vect{x}+\vect{y}</m> as a linear combination of the vectors from <m>S</m>, and therefore by <xref ref="definition-SS" acro="SS" autoname="yes"/> we can say that <m>\vect{x}+\vect{y}\in\spn{S}</m>.</p>
-                <p>Third, suppose <m>\alpha\in\complexes</m> and <m>\vect{x}\in\spn{S}</m>.  Can we conclude that <m>\alpha\vect{x}\in\spn{S}</m>?  What do we know about <m>\vect{x}</m>  by virtue of its membership in <m>\spn{S}</m>?  There must be scalars from <m>\complexes</m>,
-<m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\ldots,\,\alpha_t</m> so that
-<md><mrow>\vect{x}&amp;=\lincombo{\alpha}{u}{t}\\</mrow></md>
-Then
-<md><mrow>\alpha\vect{x}&amp;=\alpha\left(\lincombo{\alpha}{u}{t}\right)</mrow><mrow>&amp;=\alpha(\alpha_1\vect{u}_1)+\alpha(\alpha_2\vect{u}_2)+\alpha(\alpha_3\vect{u}_3)+\cdots+\alpha(\alpha_t\vect{u}_t)&amp;&amp;<xref ref="property-DVA" acro="DVA" autoname="yes"/></mrow><mrow>&amp;=(\alpha\alpha_1)\vect{u}_1+(\alpha\alpha_2)\vect{u}_2+(\alpha\alpha_3)\vect{u}_3+\cdots+(\alpha\alpha_t)\vect{u}_t&amp;&amp;<xref ref="property-SMA" acro="SMA" autoname="yes"/>\\</mrow></md>
-Since each <m>\alpha\alpha_i</m> is again a scalar from <m>\complexes</m> we have expressed the scalar multiple <m>\alpha\vect{x}</m> as a linear combination of the vectors from <m>S</m>, and therefore by <xref ref="definition-SS" acro="SS" autoname="yes"/> we can say that <m>\alpha\vect{x}\in\spn{S}</m>.</p>
-                <p>With the three conditions of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> met, we can say that <m>\spn{S}</m> is a subspace (and so is also a vector space, <xref ref="definition-VS" acro="VS" autoname="yes"/>).
-(See <xref ref="exercise-SS-T20" acro="SS.T20" autoname="yes"/>, <xref ref="exercise-SS-T21" acro="SS.T21" autoname="yes"/>, <xref ref="exercise-SS-T22" acro="SS.T22" autoname="yes"/>.)</p>
+                <p>Second, suppose <m>\vect{x}\in\spn{S}</m> and <m>\vect{y}\in\spn{S}</m>.  Can we conclude that <m>\vect{x}+\vect{y}\in\spn{S}</m>?  What do we know about <m>\vect{x}</m> and <m>\vect{y}</m> by virtue of their membership in <m>\spn{S}</m>?  There must be scalars from <m>\complexes</m>,<m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\ldots,\,\alpha_t</m> and<m>\beta_1,\,\beta_2,\,\beta_3,\,\ldots,\,\beta_t</m> so that<md>
+                    <mrow>\vect{x}&amp;=\lincombo{\alpha}{u}{t}</mrow>
+                    <mrow>\vect{y}&amp;=\lincombo{\beta}{u}{t}</mrow>
+                    </md>Then<md>
+                    <mrow>\vect{x}+\vect{y}&amp;=\lincombo{\alpha}{u}{t}</mrow>
+                    <mrow>&amp;\quad\quad+\lincombo{\beta}{u}{t}</mrow>
+                    <mrow>&amp;=\alpha_1\vect{u}_1+\beta_1\vect{u}_1+\alpha_2\vect{u}_2+\beta_2\vect{u}_2</mrow>
+                    <mrow>&amp;\quad\quad+\alpha_3\vect{u}_3+\beta_3\vect{u}_3+\cdots+\alpha_t\vect{u}_t+\beta_t\vect{u}_t&amp;&amp;
+                        <xref ref="property-AA" acro="AA" autoname="yes"/>,<xref ref="property-C" acro="C" autoname="yes"/></mrow>
+                    <mrow>&amp;=(\alpha_1+\beta_1)\vect{u}_1+(\alpha_2+\beta_2)\vect{u}_2</mrow>
+                    <mrow>&amp;\quad\quad+(\alpha_3+\beta_3)\vect{u}_3+\cdots+(\alpha_t+\beta_t)\vect{u}_t&amp;&amp;
+                        <xref ref="property-DSA" acro="DSA" autoname="yes"/></mrow>
+                </md>.  Since each <m>\alpha_i+\beta_i</m> is again a scalar from <m>\complexes</m> we have expressed the vector sum <m>\vect{x}+\vect{y}</m> as a linear combination of the vectors from <m>S</m>, and therefore by <xref ref="definition-SS" acro="SS" autoname="yes"/> we can say that <m>\vect{x}+\vect{y}\in\spn{S}</m>.</p>
+                <p>Third, suppose <m>\alpha\in\complexes</m> and <m>\vect{x}\in\spn{S}</m>.  Can we conclude that <m>\alpha\vect{x}\in\spn{S}</m>?  What do we know about <m>\vect{x}</m>  by virtue of its membership in <m>\spn{S}</m>?  There must be scalars from <m>\complexes</m>, <m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\ldots,\,\alpha_t</m> so that<md>
+                    <mrow>\vect{x}&amp;=\lincombo{\alpha}{u}{t}</mrow>
+                    </md>Then<md>
+                    <mrow>\alpha\vect{x}&amp;=\alpha\left(\lincombo{\alpha}{u}{t}\right)</mrow>
+                    <mrow>&amp;=\alpha(\alpha_1\vect{u}_1)+\alpha(\alpha_2\vect{u}_2)+\alpha(\alpha_3\vect{u}_3)+\cdots+\alpha(\alpha_t\vect{u}_t)&amp;&amp;
+                        <xref ref="property-DVA" acro="DVA" autoname="yes"/></mrow>
+                    <mrow>&amp;=(\alpha\alpha_1)\vect{u}_1+(\alpha\alpha_2)\vect{u}_2+(\alpha\alpha_3)\vect{u}_3+\cdots+(\alpha\alpha_t)\vect{u}_t&amp;&amp;
+                        <xref ref="property-SMA" acro="SMA" autoname="yes"/></mrow>
+                </md>.  Since each <m>\alpha\alpha_i</m> is again a scalar from <m>\complexes</m> we have expressed the scalar multiple <m>\alpha\vect{x}</m> as a linear combination of the vectors from <m>S</m>, and therefore by <xref ref="definition-SS" acro="SS" autoname="yes"/> we can say that <m>\alpha\vect{x}\in\spn{S}</m>.</p>
+                <p>With the three conditions of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> met, we can say that <m>\spn{S}</m> is a subspace (and so is also a vector space, <xref ref="definition-VS" acro="VS" autoname="yes"/>).  (See <xref ref="exercise-SS-T20" acro="SS.T20" autoname="yes"/>, <xref ref="exercise-SS-T21" acro="SS.T21" autoname="yes"/>, <xref ref="exercise-SS-T22" acro="SS.T22" autoname="yes"/>.)</p>
             </proof>
         </theorem>
         <example xml:id="example-SSP" acro="SSP">
+            <title>Span of a set of polynomials</title>
             <index>
                 <main>span</main>
                 <sub>set of polynomials</sub>
             </index>
-            <title>Span of a set of polynomials</title>
-            <p>In <xref ref="example-SP4" acro="SP4" autoname="yes"/> we proved that
-<me>W=\setparts{p(x)}{p\in P_4,\ p(2)=0}</me>
-is a subspace of <m>P_4</m>, the vector space of polynomials of degree at most 4.  Since <m>W</m> is a vector space itself, let us construct a span within <m>W</m>.  First let
-<me>S=\set{x^4-4x^3+5x^2-x-2,\,2x^4-3x^3-6x^2+6x+4}</me>
-and verify that <m>S</m> is a subset of <m>W</m> by checking that each of these two polynomials has <m>x=2</m> as a root.  Now, if we define <m>U=\spn{S}</m>, then <xref ref="theorem-SSS" acro="SSS" autoname="yes"/> tells us that <m>U</m> is a subspace of <m>W</m>.  So quite quickly we have built a chain of subspaces, <m>U</m> inside <m>W</m>, and <m>W</m> inside <m>P_4</m>.</p>
-            <p>Rather than dwell on how quickly we can build subspaces, let us try to gain a better understanding of just how the span construction creates subspaces, in the context of this example.  We can quickly build representative elements of <m>U</m>,
-<me>3(x^4-4x^3+5x^2-x-2)+5(2x^4-3x^3-6x^2+6x+4)=13x^4-27x^3-15x^2+27x+14</me>
-and
-<me>(-2)(x^4-4x^3+5x^2-x-2)+8(2x^4-3x^3-6x^2+6x+4)=14x^4-16x^3-58x^2+50x+36</me>
-and each of these polynomials must be in <m>W</m> since it is closed under addition and scalar multiplication.  But you might check for yourself that both of these polynomials have <m>x=2</m> as a root.</p>
-            <p>I can tell you that <m>\vect{y}=3x^4-7x^3-x^2+7x-2</m> is not in <m>U</m>, but would you believe me?  A first check shows that <m>\vect{y}</m> does have <m>x=2</m> as a root, but that only shows that <m>\vect{y}\in W</m>.  What does <m>\vect{y}</m> have to do to gain membership in <m>U=\spn{S}</m>?  It must be a linear combination of the vectors in <m>S</m>, <m>x^4-4x^3+5x^2-x-2</m> and <m>2x^4-3x^3-6x^2+6x+4</m>.  So let us suppose that <m>\vect{y}</m> is such a linear combination,
-<md><mrow>\vect{y}
-&amp;=3x^4-7x^3-x^2+7x-2</mrow><mrow>&amp;=\alpha_1(x^4-4x^3+5x^2-x-2)+\alpha_2(2x^4-3x^3-6x^2+6x+4)</mrow><mrow>&amp;=
-(\alpha_1+2\alpha_2)x^4+
-(-4\alpha_1-3\alpha_2)x^3+
-(5\alpha_1-6\alpha_2)x^2</mrow><mrow>&amp;\quad\quad+
-(-\alpha_1+6\alpha_2)x+
-(-2\alpha_1+4\alpha_2)</mrow></md>
-</p>
-            <p>Notice that operations above are done in accordance with the definition of the vector space of polynomials (<xref ref="example-VSP" acro="VSP" autoname="yes"/>).  Now, if we equate coefficients, which is the definition of equality for polynomials, then we obtain the system of five linear equations in two variables
-<md><mrow>\alpha_1+2\alpha_2&amp;=3</mrow><mrow>-4\alpha_1-3\alpha_2&amp;=-7</mrow><mrow>5\alpha_1-6\alpha_2&amp;=-1</mrow><mrow>-\alpha_1+6\alpha_2&amp;=7</mrow><mrow>-2\alpha_1+4\alpha_2&amp;=-2</mrow></md>
-</p>
-            <p>Build an augmented matrix from the system and row-reduce,
-<me>\begin{bmatrix}
-1 &amp; 2 &amp; 3\\
--4 &amp; -3 &amp; -7\\
-5 &amp; -6 &amp; -1\\
--1 &amp; 6 &amp; 7\\
--2 &amp; 4 &amp; -2
-\end{bmatrix}
-\rref
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 0\\
-0 &amp; \leading{1} &amp; 0\\
-0 &amp; 0 &amp; \leading{1}\\
-0 &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; 0
-\end{bmatrix}</me>
-</p>
+            <p>In <xref ref="example-SP4" acro="SP4" autoname="yes"/> we proved that<me>W=\setparts{p(x)}{p\in P_4,\ p(2)=0}</me>is a subspace of <m>P_4</m>, the vector space of polynomials of degree at most 4.  Since <m>W</m> is a vector space itself, let us construct a span within <m>W</m>.  First let<me>S=\set{x^4-4x^3+5x^2-x-2,\,2x^4-3x^3-6x^2+6x+4}</me>and verify that <m>S</m> is a subset of <m>W</m> by checking that each of these two polynomials has <m>x=2</m> as a root.  Now, if we define <m>U=\spn{S}</m>, then <xref ref="theorem-SSS" acro="SSS" autoname="yes"/> tells us that <m>U</m> is a subspace of <m>W</m>.  So quite quickly we have built a chain of subspaces, <m>U</m> inside <m>W</m>, and <m>W</m> inside <m>P_4</m>.</p>
+            <p>Rather than dwell on how quickly we can build subspaces, let us try to gain a better understanding of just how the span construction creates subspaces, in the context of this example.  We can quickly build representative elements of <m>U</m>,<me>3(x^4-4x^3+5x^2-x-2)+5(2x^4-3x^3-6x^2+6x+4)=13x^4-27x^3-15x^2+27x+14</me>and<me>(-2)(x^4-4x^3+5x^2-x-2)+8(2x^4-3x^3-6x^2+6x+4)=14x^4-16x^3-58x^2+50x+36</me>and each of these polynomials must be in <m>W</m> since it is closed under addition and scalar multiplication.  But you might check for yourself that both of these polynomials have <m>x=2</m> as a root.</p>
+            <p>I can tell you that <m>\vect{y}=3x^4-7x^3-x^2+7x-2</m> is not in <m>U</m>, but would you believe me?  A first check shows that <m>\vect{y}</m> does have <m>x=2</m> as a root, but that only shows that <m>\vect{y}\in W</m>.  What does <m>\vect{y}</m> have to do to gain membership in <m>U=\spn{S}</m>?  It must be a linear combination of the vectors in <m>S</m>, <m>x^4-4x^3+5x^2-x-2</m> and <m>2x^4-3x^3-6x^2+6x+4</m>.  So let us suppose that <m>\vect{y}</m> is such a linear combination,<md>
+                <mrow>\vect{y}
+                &amp;=3x^4-7x^3-x^2+7x-2</mrow>
+                <mrow>&amp;=\alpha_1(x^4-4x^3+5x^2-x-2)+\alpha_2(2x^4-3x^3-6x^2+6x+4)</mrow>
+                <mrow>&amp;=
+                (\alpha_1+2\alpha_2)x^4+
+                (-4\alpha_1-3\alpha_2)x^3+
+                (5\alpha_1-6\alpha_2)x^2</mrow>
+                <mrow>&amp;\quad\quad+
+                (-\alpha_1+6\alpha_2)x+
+                (-2\alpha_1+4\alpha_2)</mrow>
+            </md>.</p>
+            <p>Notice that operations above are done in accordance with the definition of the vector space of polynomials (<xref ref="example-VSP" acro="VSP" autoname="yes"/>).  Now, if we equate coefficients, which is the definition of equality for polynomials, then we obtain the system of five linear equations in two variables<md>
+                <mrow>\alpha_1+2\alpha_2&amp;=3</mrow>
+                <mrow>-4\alpha_1-3\alpha_2&amp;=-7</mrow>
+                <mrow>5\alpha_1-6\alpha_2&amp;=-1</mrow>
+                <mrow>-\alpha_1+6\alpha_2&amp;=7</mrow>
+                <mrow>-2\alpha_1+4\alpha_2&amp;=-2</mrow>
+            </md>.</p>
+            <p>Build an augmented matrix from the system and row-reduce,<me>\begin{bmatrix}
+            1 &amp; 2 &amp; 3\\
+            -4 &amp; -3 &amp; -7\\
+            5 &amp; -6 &amp; -1\\
+            -1 &amp; 6 &amp; 7\\
+            -2 &amp; 4 &amp; -2
+            \end{bmatrix}
+            \rref
+            \begin{bmatrix}
+            \leading{1} &amp; 0 &amp; 0\\
+            0 &amp; \leading{1} &amp; 0\\
+            0 &amp; 0 &amp; \leading{1}\\
+            0 &amp; 0 &amp; 0\\
+            0 &amp; 0 &amp; 0
+            \end{bmatrix}</me>.</p>
             <p>Since the final column of the row-reduced augmented matrix is a pivot column, <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> tells us the system of equations is inconsistent.  Therefore, there are no scalars, <m>\alpha_1</m> and <m>\alpha_2</m>, to establish <m>\vect{y}</m> as a linear combination of the elements in <m>U</m>.  So  <m>\vect{y}\not\in U</m>.</p>
         </example>
         <p>Let us again examine membership in a span.</p>
         <example xml:id="example-SM32" acro="SM32">
+            <title>A subspace of <m>M_{32}</m></title>
             <index>
                 <main>subspace</main>
                 <sub>verification</sub>
             </index>
-            <title>A subspace of <m>M_{32}</m></title>
-            <p>The set of all <m>3\times 2</m> matrices forms a vector space when we use the operations of matrix addition (<xref ref="definition-MA" acro="MA" autoname="yes"/>) and scalar matrix multiplication (<xref ref="definition-MSM" acro="MSM" autoname="yes"/>), as was shown in <xref ref="example-VSM" acro="VSM" autoname="yes"/>.  Consider the subset
-<me>S=\set{
-\begin{bmatrix}
-3 &amp; 1 \\ 4 &amp; 2 \\ 5 &amp; -5
-\end{bmatrix},\,
-\begin{bmatrix}
-1 &amp; 1 \\ 2 &amp;-1 \\ 14 &amp; -1
-\end{bmatrix},\,
-\begin{bmatrix}
-3 &amp; -1 \\ -1&amp;2 \\ -19 &amp; -11
-\end{bmatrix},\,
-\begin{bmatrix}
-4 &amp; 2 \\ 1 &amp; -2 \\ 14 &amp; -2
-\end{bmatrix},\,
-\begin{bmatrix}
-3 &amp; 1 \\ -4 &amp; 0 \\ -17 &amp; 7
-\end{bmatrix}
-}</me>
-and define a new subset of vectors <m>W</m> in <m>M_{32}</m> using the span (<xref ref="definition-SS" acro="SS" autoname="yes"/>), <m>W=\spn{S}</m>.  So by <xref ref="theorem-SSS" acro="SSS" autoname="yes"/> we know that <m>W</m> is a subspace of <m>M_{32}</m>.  While <m>W</m> is an infinite set, and this is a precise description, it would still be worthwhile to investigate whether or not <m>W</m> contains certain elements.</p>
-            <p>First, is
-<me>\vect{y}=\begin{bmatrix}
-9 &amp; 3 \\ 7 &amp; 3 \\ 10 &amp; -11
-\end{bmatrix}</me>
-in <m>W</m>?  To answer this, we want to determine if <m>\vect{y}</m> can be written as a linear combination of the five matrices in <m>S</m>.  Can we find scalars, <m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\alpha_4,\,\alpha_5</m> so that
-<md><mrow>&amp;\begin{bmatrix}
-9 &amp; 3 \\ 7&amp;3 \\ 10 &amp; -11
-\end{bmatrix}\\
-&amp;=
-\alpha_1
-\begin{bmatrix}
-3 &amp; 1 \\ 4 &amp; 2 \\ 5 &amp; -5
-\end{bmatrix}
-+\alpha_2
-\begin{bmatrix}
-1 &amp; 1 \\ 2 &amp; -1 \\ 14 &amp; -1
-\end{bmatrix}
-+\alpha_3
-\begin{bmatrix}
-3 &amp; -1 \\ -1 &amp; 2 \\ -19 &amp; -11
-\end{bmatrix}
-+\alpha_4
-\begin{bmatrix}
-4 &amp; 2 \\ 1 &amp; -2 \\ 14 &amp; -2
-\end{bmatrix}
-+\alpha_5
-\begin{bmatrix}
-3 &amp; 1 \\ -4 &amp; 0 \\ -17 &amp; 7
-\end{bmatrix}\\
-&amp;=
-\begin{bmatrix}
-3\alpha_1 +\alpha_2 +3\alpha_3 +4\alpha_4 +3\alpha_5 &amp;
-\alpha_1 +\alpha_2 -\alpha_3 +2\alpha_4 +\alpha_5\\
-4\alpha_1 +2\alpha_2 -\alpha_3 +\alpha_4 -4\alpha_5&amp;
-2\alpha_1 -\alpha_2 +2\alpha_3 -2\alpha_4 \\
-5\alpha_1 +14\alpha_2 -19\alpha_3 +14\alpha_4 -17\alpha_5&amp;
--5\alpha_1 -\alpha_2 -11\alpha_3 -2\alpha_4 +7\alpha_5
-\end{bmatrix}</mrow></md>
-</p>
-            <p>Using our definition of matrix equality (<xref ref="definition-ME" acro="ME" autoname="yes"/>) we can translate this statement into six equations in the five unknowns,
-<md><mrow>3\alpha_1 +\alpha_2 +3\alpha_3 +4\alpha_4 +3\alpha_5&amp; =9</mrow><mrow>\alpha_1 +\alpha_2 -\alpha_3 +2\alpha_4 +\alpha_5&amp; =3</mrow><mrow>4\alpha_1 +2\alpha_2 -\alpha_3 +\alpha_4 -4\alpha_5&amp; =7</mrow><mrow>2\alpha_1 -\alpha_2 +2\alpha_3 -2\alpha_4 &amp; =3</mrow><mrow>5\alpha_1 +14\alpha_2 -19\alpha_3 +14\alpha_4 -17\alpha_5&amp; =10</mrow><mrow>-5\alpha_1 -\alpha_2 -11\alpha_3 -2\alpha_4 +7\alpha_5&amp;=-11</mrow></md>
-</p>
-            <p>This is a linear system of equations, which we can represent with an augmented matrix and row-reduce in search of solutions.  The matrix that is row-equivalent to the augmented matrix is
-<me>\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; \frac{5}{8} &amp; 2\\
-0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; \frac{-19}{4} &amp; -1\\
-0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; \frac{-7}{8} &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; \frac{17}{8} &amp; 1\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
-\end{bmatrix}</me>
-</p>
-            <p>So we recognize that the system is consistent since the final column is not a pivot column (<xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>), and compute <m>n-r=5-4=1</m> free variables (<xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/>).  While there are infinitely many solutions, we are only in pursuit of a single solution, so let us choose the free variable <m>\alpha_5=0</m> for simplicity's sake.  Then we easily see that <m>\alpha_1=2</m>, <m>\alpha_2=-1</m>, <m>\alpha_3=0</m>, <m>\alpha_4=1</m>.  So the scalars <m>\alpha_1=2</m>, <m>\alpha_2=-1</m>, <m>\alpha_3=0</m>, <m>\alpha_4=1</m>, <m>\alpha_5=0</m> will provide a linear combination of the elements of <m>S</m> that equals <m>\vect{y}</m>, as we can verify by checking,
-<md><mrow>\begin{bmatrix}
-9 &amp; 3 \\ 7 &amp; 3 \\ 10 &amp; -11
-\end{bmatrix}
-=
-2
-\begin{bmatrix}
-3 &amp; 1 \\ 4 &amp; 2 \\ 5 &amp; -5
-\end{bmatrix}
-+(-1)
-\begin{bmatrix}
-1 &amp; 1 \\ 2 &amp; -1 \\ 14 &amp; -1
-\end{bmatrix}
-+(1)
-\begin{bmatrix}
-4 &amp; 2 \\ 1 &amp; -2 \\ 14 &amp; -2
-\end{bmatrix}</mrow></md>
-So with one particular linear combination in hand, we are convinced that <m>\vect{y}</m> deserves to be a member of <m>W=\spn{S}</m>.</p>
-            <p>Second, is
-<me>\vect{x}=\begin{bmatrix}
-2 &amp; 1 \\ 3 &amp; 1 \\ 4 &amp; -2
-\end{bmatrix}</me>
-in <m>W</m>?  To answer this, we want to determine if <m>\vect{x}</m> can be written as a linear combination of the five matrices in <m>S</m>.  Can we find scalars, <m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\alpha_4,\,\alpha_5</m> so that
-<md><mrow>&amp;\begin{bmatrix}
-2 &amp; 1 \\ 3 &amp; 1 \\ 4 &amp; -2
-\end{bmatrix}\\
-&amp;=
-\alpha_1
-\begin{bmatrix}
-3 &amp; 1 \\ 4 &amp; 2 \\ 5 &amp; -5
-\end{bmatrix}
-+\alpha_2
-\begin{bmatrix}
-1 &amp; 1 \\ 2 &amp; -1 \\ 14 &amp; -1
-\end{bmatrix}
-+\alpha_3
-\begin{bmatrix}
-3 &amp; -1 \\ -1 &amp; 2 \\ -19 &amp; -11
-\end{bmatrix}
-+\alpha_4
-\begin{bmatrix}
-4 &amp; 2 \\ 1 &amp; -2 \\ 14 &amp; -2
-\end{bmatrix}
-+\alpha_5
-\begin{bmatrix}
-3 &amp; 1 \\ -4 &amp; 0 \\ -17 &amp; 7
-\end{bmatrix}\\
-&amp;=
-\begin{bmatrix}
-3\alpha_1 +\alpha_2 +3\alpha_3 +4\alpha_4 +3\alpha_5 &amp;
-\alpha_1 +\alpha_2 -\alpha_3 +2\alpha_4 +\alpha_5\\
-4\alpha_1 +2\alpha_2 -\alpha_3 +\alpha_4 -4\alpha_5&amp;
-2\alpha_1 -\alpha_2 +2\alpha_3 -2\alpha_4 \\
-5\alpha_1 +14\alpha_2 -19\alpha_3 +14\alpha_4 -17\alpha_5&amp;
--5\alpha_1 -\alpha_2 -11\alpha_3 -2\alpha_4 +7\alpha_5
-\end{bmatrix}</mrow></md>
-Using our definition of matrix equality (<xref ref="definition-ME" acro="ME" autoname="yes"/>) we can translate this statement into six equations in the five unknowns,
-<md><mrow>3\alpha_1 +\alpha_2 +3\alpha_3 +4\alpha_4 +3\alpha_5&amp; =2</mrow><mrow>\alpha_1 +\alpha_2 -\alpha_3 +2\alpha_4 +\alpha_5&amp; =1</mrow><mrow>4\alpha_1 +2\alpha_2 -\alpha_3 +\alpha_4 -4\alpha_5&amp; =3</mrow><mrow>2\alpha_1 -\alpha_2 +2\alpha_3 -2\alpha_4 &amp; =1</mrow><mrow>5\alpha_1 +14\alpha_2 -19\alpha_3 +14\alpha_4 -17\alpha_5&amp; =4</mrow><mrow>-5\alpha_1 -\alpha_2 -11\alpha_3 -2\alpha_4 +7\alpha_5&amp;=-2</mrow></md>
-This is a linear system of equations, which we can represent with an augmented matrix and row-reduce in search of solutions.  The matrix that is row-equivalent to the augmented matrix is
-<me>\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; \frac{5}{8} &amp; 0\\
-0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; -\frac{38}{8} &amp; 0\\
-0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; -\frac{7}{8} &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -\frac{17}{8} &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\
-\end{bmatrix}</me>
-Since the last column is a pivot column, <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> tells us that the system is inconsistent.  Therefore, there are no values for the scalars that will place <m>\vect{x}</m> in <m>W</m>, and so we conclude that <m>\vect{x}\not\in W</m>.
-</p>
+            <p>The set of all <m>3\times 2</m> matrices forms a vector space when we use the operations of matrix addition (<xref ref="definition-MA" acro="MA" autoname="yes"/>) and scalar matrix multiplication (<xref ref="definition-MSM" acro="MSM" autoname="yes"/>), as was shown in <xref ref="example-VSM" acro="VSM" autoname="yes"/>.  Consider the subset<me>S=\set{
+            \begin{bmatrix}
+            3 &amp; 1 \\ 4 &amp; 2 \\ 5 &amp; -5
+            \end{bmatrix},\,
+            \begin{bmatrix}
+            1 &amp; 1 \\ 2 &amp;-1 \\ 14 &amp; -1
+            \end{bmatrix},\,
+            \begin{bmatrix}
+            3 &amp; -1 \\ -1&amp;2 \\ -19 &amp; -11
+            \end{bmatrix},\,
+            \begin{bmatrix}
+            4 &amp; 2 \\ 1 &amp; -2 \\ 14 &amp; -2
+            \end{bmatrix},\,
+            \begin{bmatrix}
+            3 &amp; 1 \\ -4 &amp; 0 \\ -17 &amp; 7
+            \end{bmatrix}
+            }</me>and define a new subset of vectors <m>W</m> in <m>M_{32}</m> using the span (<xref ref="definition-SS" acro="SS" autoname="yes"/>), <m>W=\spn{S}</m>.  So by <xref ref="theorem-SSS" acro="SSS" autoname="yes"/> we know that <m>W</m> is a subspace of <m>M_{32}</m>.  While <m>W</m> is an infinite set, and this is a precise description, it would still be worthwhile to investigate whether or not <m>W</m> contains certain elements.</p>
+            <p>First, is<me>\vect{y}=\begin{bmatrix}
+            9 &amp; 3 \\ 7 &amp; 3 \\ 10 &amp; -11
+            \end{bmatrix}</me>in <m>W</m>?  To answer this, we want to determine if <m>\vect{y}</m> can be written as a linear combination of the five matrices in <m>S</m>.  Can we find scalars, <m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\alpha_4,\,\alpha_5</m> so that<md>
+                <mrow>&amp;\begin{bmatrix}
+                9 &amp; 3 \\ 7&amp;3 \\ 10 &amp; -11
+                \end{bmatrix}</mrow>
+                <mrow>&amp;=
+                \alpha_1
+                \begin{bmatrix}
+                3 &amp; 1 \\ 4 &amp; 2 \\ 5 &amp; -5
+                \end{bmatrix}
+                +\alpha_2
+                \begin{bmatrix}
+                1 &amp; 1 \\ 2 &amp; -1 \\ 14 &amp; -1
+                \end{bmatrix}
+                +\alpha_3
+                \begin{bmatrix}
+                3 &amp; -1 \\ -1 &amp; 2 \\ -19 &amp; -11
+                \end{bmatrix}
+                +\alpha_4
+                \begin{bmatrix}
+                4 &amp; 2 \\ 1 &amp; -2 \\ 14 &amp; -2
+                \end{bmatrix}
+                +\alpha_5
+                \begin{bmatrix}
+                3 &amp; 1 \\ -4 &amp; 0 \\ -17 &amp; 7
+                \end{bmatrix}</mrow>
+                <mrow>&amp;=
+                \begin{bmatrix}
+                3\alpha_1 +\alpha_2 +3\alpha_3 +4\alpha_4 +3\alpha_5 &amp;
+                \alpha_1 +\alpha_2 -\alpha_3 +2\alpha_4 +\alpha_5\\
+                4\alpha_1 +2\alpha_2 -\alpha_3 +\alpha_4 -4\alpha_5&amp;
+                2\alpha_1 -\alpha_2 +2\alpha_3 -2\alpha_4 \\
+                5\alpha_1 +14\alpha_2 -19\alpha_3 +14\alpha_4 -17\alpha_5&amp;
+                -5\alpha_1 -\alpha_2 -11\alpha_3 -2\alpha_4 +7\alpha_5
+                \end{bmatrix}</mrow>
+            </md>.</p>
+            <p>Using our definition of matrix equality (<xref ref="definition-ME" acro="ME" autoname="yes"/>) we can translate this statement into six equations in the five unknowns,<md>
+                <mrow>3\alpha_1 +\alpha_2 +3\alpha_3 +4\alpha_4 +3\alpha_5&amp; =9</mrow>
+                <mrow>\alpha_1 +\alpha_2 -\alpha_3 +2\alpha_4 +\alpha_5&amp; =3</mrow>
+                <mrow>4\alpha_1 +2\alpha_2 -\alpha_3 +\alpha_4 -4\alpha_5&amp; =7</mrow>
+                <mrow>2\alpha_1 -\alpha_2 +2\alpha_3 -2\alpha_4 &amp; =3</mrow>
+                <mrow>5\alpha_1 +14\alpha_2 -19\alpha_3 +14\alpha_4 -17\alpha_5&amp; =10</mrow>
+                <mrow>-5\alpha_1 -\alpha_2 -11\alpha_3 -2\alpha_4 +7\alpha_5&amp;=-11</mrow>
+            </md>.</p>
+            <p>This is a linear system of equations, which we can represent with an augmented matrix and row-reduce in search of solutions.  The matrix that is row-equivalent to the augmented matrix is<me>\begin{bmatrix}
+            \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; \frac{5}{8} &amp; 2\\
+            0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; \frac{-19}{4} &amp; -1\\
+            0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; \frac{-7}{8} &amp; 0\\
+            0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; \frac{17}{8} &amp; 1\\
+            0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+            0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+            \end{bmatrix}</me>.</p>
+            <p>So we recognize that the system is consistent since the final column is not a pivot column (<xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>), and compute <m>n-r=5-4=1</m> free variables (<xref ref="theorem-FVCS" acro="FVCS" autoname="yes"/>).  While there are infinitely many solutions, we are only in pursuit of a single solution, so let us choose the free variable <m>\alpha_5=0</m> for simplicity's sake.  Then we easily see that <m>\alpha_1=2</m>, <m>\alpha_2=-1</m>, <m>\alpha_3=0</m>, <m>\alpha_4=1</m>.  So the scalars <m>\alpha_1=2</m>, <m>\alpha_2=-1</m>, <m>\alpha_3=0</m>, <m>\alpha_4=1</m>, <m>\alpha_5=0</m> will provide a linear combination of the elements of <m>S</m> that equals <m>\vect{y}</m>, as we can verify by checking,<md>
+                <mrow>\begin{bmatrix}
+                9 &amp; 3 \\ 7 &amp; 3 \\ 10 &amp; -11
+                \end{bmatrix}
+                =
+                2
+                \begin{bmatrix}
+                3 &amp; 1 \\ 4 &amp; 2 \\ 5 &amp; -5
+                \end{bmatrix}
+                +(-1)
+                \begin{bmatrix}
+                1 &amp; 1 \\ 2 &amp; -1 \\ 14 &amp; -1
+                \end{bmatrix}
+                +(1)
+                \begin{bmatrix}
+                4 &amp; 2 \\ 1 &amp; -2 \\ 14 &amp; -2
+                \end{bmatrix}</mrow>
+            </md>So with one particular linear combination in hand, we are convinced that <m>\vect{y}</m> deserves to be a member of <m>W=\spn{S}</m>.</p>
+            <p>Second, is<me>\vect{x}=\begin{bmatrix}
+            2 &amp; 1 \\ 3 &amp; 1 \\ 4 &amp; -2
+            \end{bmatrix}</me>in <m>W</m>?  To answer this, we want to determine if <m>\vect{x}</m> can be written as a linear combination of the five matrices in <m>S</m>.  Can we find scalars, <m>\alpha_1,\,\alpha_2,\,\alpha_3,\,\alpha_4,\,\alpha_5</m> so that<md>
+                <mrow>&amp;\begin{bmatrix}
+                2 &amp; 1 \\ 3 &amp; 1 \\ 4 &amp; -2
+                \end{bmatrix}</mrow>
+                <mrow>&amp;=
+                \alpha_1
+                \begin{bmatrix}
+                3 &amp; 1 \\ 4 &amp; 2 \\ 5 &amp; -5
+                \end{bmatrix}
+                +\alpha_2
+                \begin{bmatrix}
+                1 &amp; 1 \\ 2 &amp; -1 \\ 14 &amp; -1
+                \end{bmatrix}
+                +\alpha_3
+                \begin{bmatrix}
+                3 &amp; -1 \\ -1 &amp; 2 \\ -19 &amp; -11
+                \end{bmatrix}
+                +\alpha_4
+                \begin{bmatrix}
+                4 &amp; 2 \\ 1 &amp; -2 \\ 14 &amp; -2
+                \end{bmatrix}
+                +\alpha_5
+                \begin{bmatrix}
+                3 &amp; 1 \\ -4 &amp; 0 \\ -17 &amp; 7
+                \end{bmatrix}</mrow>
+                <mrow>&amp;=
+                \begin{bmatrix}
+                3\alpha_1 +\alpha_2 +3\alpha_3 +4\alpha_4 +3\alpha_5 &amp;
+                \alpha_1 +\alpha_2 -\alpha_3 +2\alpha_4 +\alpha_5\\
+                4\alpha_1 +2\alpha_2 -\alpha_3 +\alpha_4 -4\alpha_5&amp;
+                2\alpha_1 -\alpha_2 +2\alpha_3 -2\alpha_4 \\
+                5\alpha_1 +14\alpha_2 -19\alpha_3 +14\alpha_4 -17\alpha_5&amp;
+                -5\alpha_1 -\alpha_2 -11\alpha_3 -2\alpha_4 +7\alpha_5
+                \end{bmatrix}</mrow>
+            </md>.  Using our definition of matrix equality (<xref ref="definition-ME" acro="ME" autoname="yes"/>) we can translate this statement into six equations in the five unknowns,<md>
+                <mrow>3\alpha_1 +\alpha_2 +3\alpha_3 +4\alpha_4 +3\alpha_5&amp; =2</mrow>
+                <mrow>\alpha_1 +\alpha_2 -\alpha_3 +2\alpha_4 +\alpha_5&amp; =1</mrow>
+                <mrow>4\alpha_1 +2\alpha_2 -\alpha_3 +\alpha_4 -4\alpha_5&amp; =3</mrow>
+                <mrow>2\alpha_1 -\alpha_2 +2\alpha_3 -2\alpha_4 &amp; =1</mrow>
+                <mrow>5\alpha_1 +14\alpha_2 -19\alpha_3 +14\alpha_4 -17\alpha_5&amp; =4</mrow>
+                <mrow>-5\alpha_1 -\alpha_2 -11\alpha_3 -2\alpha_4 +7\alpha_5&amp;=-2</mrow>
+            </md>.  This is a linear system of equations, which we can represent with an augmented matrix and row-reduce in search of solutions.  The matrix that is row-equivalent to the augmented matrix is<me>\begin{bmatrix}
+            \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; \frac{5}{8} &amp; 0\\
+            0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; -\frac{38}{8} &amp; 0\\
+            0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; -\frac{7}{8} &amp; 0\\
+            0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -\frac{17}{8} &amp; 0\\
+            0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}\\
+            0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\
+            \end{bmatrix}</me>.  Since the last column is a pivot column, <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> tells us that the system is inconsistent.  Therefore, there are no values for the scalars that will place <m>\vect{x}</m> in <m>W</m>, and so we conclude that <m>\vect{x}\not\in W</m>.</p>
         </example>
         <p>Notice how  <xref ref="example-SSP" acro="SSP" autoname="yes"/> and <xref ref="example-SM32" acro="SM32" autoname="yes"/> contained questions about membership in a span, but these questions quickly became questions about solutions to a system of linear equations.  This will be a common theme going forward.</p>
     </subsection>
@@ -569,11 +563,11 @@ Since the last column is a pivot column, <xref ref="theorem-RCLS" acro="RCLS" au
         <title>Subspace Constructions</title>
         <p>Several of the subsets of vectors spaces that we worked with in <xref ref="chapter-M" acro="M" autoname="yes"/> are also subspaces <mdash/> they are closed under vector addition and scalar multiplication in <m>\complex{m}</m>.</p>
         <theorem xml:id="theorem-CSMS" acro="CSMS">
+            <title>Column Space of a Matrix is a Subspace</title>
             <index>
                 <main>column space</main>
                 <sub>subspace</sub>
             </index>
-            <title>Column Space of a Matrix is a Subspace</title>
             <statement>
                 <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix.  Then <m>\csp{A}</m> is a subspace of <m>\complex{m}</m>.</p>
             </statement>
@@ -583,11 +577,11 @@ Since the last column is a pivot column, <xref ref="theorem-RCLS" acro="RCLS" au
         </theorem>
         <p>That was easy!  Notice that we could have used this same approach to prove that the null space is a subspace, since <xref ref="theorem-SSNS" acro="SSNS" autoname="yes"/> provided a description of the null space of a matrix as the span of a set of vectors.  However, I much prefer the current proof of <xref ref="theorem-NSMS" acro="NSMS" autoname="yes"/>.  Speaking of easy, here is a very easy theorem that exposes another of our constructions as creating subspaces.</p>
         <theorem xml:id="theorem-RSMS" acro="RSMS">
+            <title>Row Space of a Matrix is a Subspace</title>
             <index>
                 <main>row space</main>
                 <sub>subspace</sub>
             </index>
-            <title>Row Space of a Matrix is a Subspace</title>
             <statement>
                 <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix.  Then <m>\rsp{A}</m> is a subspace of <m>\complex{n}</m>.</p>
             </statement>
@@ -597,11 +591,11 @@ Since the last column is a pivot column, <xref ref="theorem-RCLS" acro="RCLS" au
         </theorem>
         <p>One more.</p>
         <theorem xml:id="theorem-LNSMS" acro="LNSMS">
+            <title>Left Null Space of a Matrix is a Subspace</title>
             <index>
                 <main>left null space</main>
                 <sub>subspace</sub>
             </index>
-            <title>Left Null Space of a Matrix is a Subspace</title>
             <statement>
                 <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix.  Then <m>\lns{A}</m> is a subspace of <m>\complex{m}</m>.</p>
             </statement>
@@ -618,58 +612,52 @@ Since the last column is a pivot column, <xref ref="theorem-RCLS" acro="RCLS" au
             <p><xref ref="theorem-SSS" acro="SSS" autoname="yes"/>, <xref ref="theorem-NSMS" acro="NSMS" autoname="yes"/>, <xref ref="theorem-CSMS" acro="CSMS" autoname="yes"/>, <xref ref="theorem-RSMS" acro="RSMS" autoname="yes"/> and  <xref ref="theorem-LNSMS" acro="LNSMS" autoname="yes"/> each tells us that a certain set is a subspace.  The first is the abstract version of creating a subspace via the span of a set of vectors, but still applies to column vectors as a special case.  The remaining four all begin with a matrix and create a subspace of column vectors.  We have created these spaces many times already, but notice now that the description Sage outputs explicitly says they are vector spaces, and that there are still some parts of the output that we need to explain.  Here are two reminders, first a span, and then a vector space created from a matrix.</p>
             <sage xml:id="sagecell-VS-1">
                 <input>
-V = QQ^4
-v1 = vector(QQ, [ 1, -1, 2, 4])
-v2 = vector(QQ, [-3,  0, 2, 1])
-v3 = vector(QQ, [-1, -2, 6, 9])
-W = V.span([v1, v2, v3])
-W
-</input>
+                V = QQ^4
+                v1 = vector(QQ, [ 1, -1, 2, 4])
+                v2 = vector(QQ, [-3,  0, 2, 1])
+                v3 = vector(QQ, [-1, -2, 6, 9])
+                W = V.span([v1, v2, v3])
+                W
+                </input>
                 <output>
-Vector space of degree 4 and dimension 2 over Rational Field
-Basis matrix:
-[    1     0  -2/3  -1/3]
-[    0     1  -8/3 -13/3]
-</output>
+                Vector space of degree 4 and dimension 2 over Rational Field
+                Basis matrix:
+                [    1     0  -2/3  -1/3]
+                [    0     1  -8/3 -13/3]
+                </output>
             </sage>
             <sage xml:id="sagecell-VS-2">
                 <input>
-A = matrix(QQ, [[1, 2, -4,  0, -4],
-                [0, 1, -1, -1, -1],
-                [3, 2, -8,  4, -8]])
-W = A.column_space()
-W
-</input>
+                A = matrix(QQ, [[1, 2, -4,  0, -4],
+                                [0, 1, -1, -1, -1],
+                                [3, 2, -8,  4, -8]])
+                W = A.column_space()
+                W
+                </input>
                 <output>
-Vector space of degree 3 and dimension 2 over Rational Field
-Basis matrix:
-[ 1  0  3]
-[ 0  1 -4]
-</output>
+                Vector space of degree 3 and dimension 2 over Rational Field
+                Basis matrix:
+                [ 1  0  3]
+                [ 0  1 -4]
+                </output>
             </sage>
         </computation>
     </subsection>
-    <!--   End  s.tex -->
     <exercises>
         <title>Reading Questions</title>
         <exercise>
             <statement>
-                <p>Summarize the three conditions that allow us to quickly test if a set is a subspace.
-</p>
+                <p>Summarize the three conditions that allow us to quickly test if a set is a subspace.</p>
             </statement>
         </exercise>
         <exercise>
             <statement>
-                <p>Consider the set of vectors
-<md><mrow>W&amp;=\setparts{\colvector{a\\b\\c}}{3a-2b+c=5}</mrow></md>
-Is the set <m>W</m> a subspace of <m>\complex{3}</m>?  Explain your answer.
-</p>
+                <p>Consider the set of vectors<me>W=\setparts{\colvector{a\\b\\c}}{3a-2b+c=5}</me>.  Is the set <m>W</m> a subspace of <m>\complex{3}</m>?  Explain your answer.</p>
             </statement>
         </exercise>
         <exercise>
             <statement>
-                <p>Name five general constructions of sets of column vectors (subsets of <m>\complex{m}</m>) that we now know as subspaces.
-</p>
+                <p>Name five general constructions of sets of column vectors (subsets of <m>\complex{m}</m>) that we now know as subspaces.</p>
             </statement>
         </exercise>
     </exercises>
@@ -677,286 +665,243 @@ Is the set <m>W</m> a subspace of <m>\complex{3}</m>?  Explain your answer.
         <title>Exercises</title>
         <exercise number="C15" xml:id="exercise-S-C15">
             <statement contributor="chrisblack">
-                <p>Working within the vector space <m>\complex{3}</m>, determine if
-<m>\vect{b} = \colvector{4\\3\\1}</m> is in the subspace <m>W</m>,
-<me>W =
-\spn{\set{
-\colvector{3\\2\\3},
-\colvector{1\\0\\3},
-\colvector{1\\1\\0},
-\colvector{2\\1\\3}
-}}</me>
-</p>
+                <p>Working within the vector space <m>\complex{3}</m>, determine if <m>\vect{b} = \colvector{4\\3\\1}</m> is in the subspace <m>W</m>,<me>W =
+                \spn{\set{
+                \colvector{3\\2\\3},
+                \colvector{1\\0\\3},
+                \colvector{1\\1\\0},
+                \colvector{2\\1\\3}
+                }}</me>.</p>
             </statement>
             <solution xml:id="solution-S-C15" contributor="chrisblack">
-                <p>For <m>\vect{b}</m> to be an element of <m>W=\spn{S}</m> there must be a linear combination of the vectors in <m>S</m> that equals <m>\vect{b}</m> (<xref ref="definition-SSCV" acro="SSCV" autoname="yes"/>).  The existence of such scalars is equivalent to the linear system <m>\linearsystem{A}{\vect{b}}</m> being consistent, where <m>A</m> is the matrix whose columns are the vectors from <m>S</m> (<xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/>).
-<md><mrow>\begin{bmatrix}
-3 &amp; 1 &amp; 1 &amp; 2 &amp; 4\\
-2 &amp; 0 &amp; 1 &amp; 1 &amp; 3\\
-3 &amp; 3 &amp; 0 &amp; 3 &amp; 1
-\end{bmatrix}
-&amp;\rref
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 1/2 &amp; 1/2 &amp; 0\\
-0 &amp; \leading{1} &amp; -1/2 &amp; 1/2 &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}
-\end{bmatrix}</mrow></md>
-So by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> the system is inconsistent, which indicates that <m>\vect{b}</m> is not an element of the subspace <m>W</m>.
-</p>
+                <p>For <m>\vect{b}</m> to be an element of <m>W=\spn{S}</m> there must be a linear combination of the vectors in <m>S</m> that equals <m>\vect{b}</m> (<xref ref="definition-SSCV" acro="SSCV" autoname="yes"/>).  The existence of such scalars is equivalent to the linear system <m>\linearsystem{A}{\vect{b}}</m> being consistent, where <m>A</m> is the matrix whose columns are the vectors from <m>S</m> (<xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/>).<md>
+                    <mrow>\begin{bmatrix}
+                    3 &amp; 1 &amp; 1 &amp; 2 &amp; 4\\
+                    2 &amp; 0 &amp; 1 &amp; 1 &amp; 3\\
+                    3 &amp; 3 &amp; 0 &amp; 3 &amp; 1
+                    \end{bmatrix}
+                    &amp;\rref
+                    \begin{bmatrix}
+                    \leading{1} &amp; 0 &amp; 1/2 &amp; 1/2 &amp; 0\\
+                    0 &amp; \leading{1} &amp; -1/2 &amp; 1/2 &amp; 0\\
+                    0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}
+                    \end{bmatrix}</mrow>
+                </md>.  So by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> the system is inconsistent, which indicates that <m>\vect{b}</m> is not an element of the subspace <m>W</m>.</p>
             </solution>
         </exercise>
         <exercise number="C16" xml:id="exercise-S-C16">
             <statement contributor="chrisblack">
-                <p>Working within the vector space <m>\complex{4}</m>, determine if
-<m>\vect{b} = \colvector{1\\1\\0\\1}</m>
-is in the subspace <m>W</m>,
-<me>W =\spn{\set{
-\colvector{1\\2\\-1\\1},
-\colvector{1\\0\\3\\1},
-\colvector{2\\1\\1\\2}
-}}</me>
-</p>
+                <p>Working within the vector space <m>\complex{4}</m>, determine if <m>\vect{b} = \colvector{1\\1\\0\\1}</m> is in the subspace <m>W</m>,<me>W =\spn{\set{
+                \colvector{1\\2\\-1\\1},
+                \colvector{1\\0\\3\\1},
+                \colvector{2\\1\\1\\2}
+                }}</me>.</p>
             </statement>
             <solution xml:id="solution-S-C16" contributor="chrisblack">
-                <p>For <m>\vect{b}</m> to be an element of <m>W=\spn{S}</m> there must be a linear combination of the vectors in <m>S</m> that equals <m>\vect{b}</m> (<xref ref="definition-SSCV" acro="SSCV" autoname="yes"/>).  The existence of such scalars is equivalent to the linear system <m>\linearsystem{A}{\vect{b}}</m> being consistent, where <m>A</m> is the matrix whose columns are the vectors from <m>S</m> (<xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/>).
-<md><mrow>\begin{bmatrix}
-1 &amp; 1 &amp; 2 &amp; 1\\
-2 &amp; 0 &amp; 1 &amp; 1\\
--1 &amp; 3 &amp; 1 &amp; 0\\
-1 &amp; 1 &amp; 2 &amp; 1
-\end{bmatrix}
-&amp;\rref
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 0 &amp; 1/3\\
-0 &amp; \leading{1} &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; \leading{1} &amp; 1/3 \\
-0 &amp; 0 &amp; 0&amp; 0
-\end{bmatrix}</mrow></md>
-So by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> the system is consistent, which indicates that <m>\vect{b}</m> is in the subspace <m>W</m>.
-</p>
+                <p>For <m>\vect{b}</m> to be an element of <m>W=\spn{S}</m> there must be a linear combination of the vectors in <m>S</m> that equals <m>\vect{b}</m> (<xref ref="definition-SSCV" acro="SSCV" autoname="yes"/>).  The existence of such scalars is equivalent to the linear system <m>\linearsystem{A}{\vect{b}}</m> being consistent, where <m>A</m> is the matrix whose columns are the vectors from <m>S</m> (<xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/>).<md>
+                    <mrow>\begin{bmatrix}
+                    1 &amp; 1 &amp; 2 &amp; 1\\
+                    2 &amp; 0 &amp; 1 &amp; 1\\
+                    -1 &amp; 3 &amp; 1 &amp; 0\\
+                    1 &amp; 1 &amp; 2 &amp; 1
+                    \end{bmatrix}
+                    &amp;\rref
+                    \begin{bmatrix}
+                    \leading{1} &amp; 0 &amp; 0 &amp; 1/3\\
+                    0 &amp; \leading{1} &amp; 0 &amp; 0 \\
+                    0 &amp; 0 &amp; \leading{1} &amp; 1/3 \\
+                    0 &amp; 0 &amp; 0&amp; 0
+                    \end{bmatrix}</mrow>
+                </md>.  So by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> the system is consistent, which indicates that <m>\vect{b}</m> is in the subspace <m>W</m>.</p>
             </solution>
         </exercise>
         <exercise number="C17" xml:id="exercise-S-C17">
             <statement contributor="chrisblack">
-                <p>Working within the vector space <m>\complex{4}</m>, determine if
-<m>\vect{b} = \colvector{2\\1\\2\\1}</m> is in the subspace <m>W</m>,
-<me>W = \spn{\set{
-\colvector{1\\2\\0\\2},
-\colvector{1\\0\\3\\1},
-\colvector{0\\1\\0\\2},
-\colvector{1\\1\\2\\0}
-}}</me>
-</p>
+                <p>Working within the vector space <m>\complex{4}</m>, determine if <m>\vect{b} = \colvector{2\\1\\2\\1}</m> is in the subspace <m>W</m>,<me>W = \spn{\set{
+                \colvector{1\\2\\0\\2},
+                \colvector{1\\0\\3\\1},
+                \colvector{0\\1\\0\\2},
+                \colvector{1\\1\\2\\0}
+                }}</me>.</p>
             </statement>
             <solution xml:id="solution-S-C17" contributor="chrisblack">
-                <p>For <m>\vect{b}</m> to be an element of <m>W=\spn{S}</m> there must be a linear combination of the vectors in <m>S</m> that equals <m>\vect{b}</m> (<xref ref="definition-SSCV" acro="SSCV" autoname="yes"/>).  The existence of such scalars is equivalent to the linear system <m>\linearsystem{A}{\vect{b}}</m> being consistent, where <m>A</m> is the matrix whose columns are the vectors from <m>S</m> (<xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/>).
-<md><mrow>\begin{bmatrix}
-1 &amp; 1 &amp; 0 &amp; 1 &amp; 2\\
-2 &amp; 0 &amp; 1 &amp; 1 &amp; 1\\
-0 &amp; 3 &amp; 0 &amp; 2 &amp; 2\\
-2 &amp; 1 &amp; 2 &amp; 0 &amp; 0
-\end{bmatrix}
-&amp;\rref
-\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 3/2\\
-0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; 1\\
-0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; -3/2 \\
-0 &amp; 0 &amp; 0&amp; \leading{1} &amp; -1/2
-\end{bmatrix}</mrow></md>
-So by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> the system is consistent, which indicates that <m>\vect{b}</m> is in the subspace <m>W</m>.
-</p>
+                <p>For <m>\vect{b}</m> to be an element of <m>W=\spn{S}</m> there must be a linear combination of the vectors in <m>S</m> that equals <m>\vect{b}</m> (<xref ref="definition-SSCV" acro="SSCV" autoname="yes"/>).  The existence of such scalars is equivalent to the linear system <m>\linearsystem{A}{\vect{b}}</m> being consistent, where <m>A</m> is the matrix whose columns are the vectors from <m>S</m> (<xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/>).<md>
+                    <mrow>\begin{bmatrix}
+                    1 &amp; 1 &amp; 0 &amp; 1 &amp; 2\\
+                    2 &amp; 0 &amp; 1 &amp; 1 &amp; 1\\
+                    0 &amp; 3 &amp; 0 &amp; 2 &amp; 2\\
+                    2 &amp; 1 &amp; 2 &amp; 0 &amp; 0
+                    \end{bmatrix}
+                    &amp;\rref
+                    \begin{bmatrix}
+                    \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; 3/2\\
+                    0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; 1\\
+                    0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; -3/2 \\
+                    0 &amp; 0 &amp; 0&amp; \leading{1} &amp; -1/2
+                    \end{bmatrix}</mrow>
+                </md>.  So by <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> the system is consistent, which indicates that <m>\vect{b}</m> is in the subspace <m>W</m>.</p>
             </solution>
         </exercise>
         <exercise number="C20" xml:id="exercise-S-C20">
             <statement>
-                <p>Working within the vector space <m>P_3</m> of polynomials of degree 3 or less, determine if <m>p(x)=x^3+6x+4</m> is in the subspace <m>W</m> below.
-<me>W=\spn{\set{x^3+x^2+x,\,x^3+2x-6,\,x^2-5}}</me>
-</p>
+                <p>Working within the vector space <m>P_3</m> of polynomials of degree 3 or less, determine if <m>p(x)=x^3+6x+4</m> is in the subspace <m>W</m> below.<me>W=\spn{\set{x^3+x^2+x,\,x^3+2x-6,\,x^2-5}}</me></p>
             </statement>
             <solution xml:id="solution-S-C20">
-                <p>The question is if <m>p</m> can be written as a linear combination of the vectors in <m>W</m>.  To check this, we set <m>p</m> equal to a linear combination and massage with the definitions of vector addition and scalar multiplication that we get with <m>P_3</m> (<xref ref="example-VSP" acro="VSP" autoname="yes"/>)
-<md><mrow>p(x)&amp;=a_1(x^3+x^2+x)+a_2(x^3+2x-6)+a_3(x^2-5)</mrow><mrow>x^3+6x+4&amp;=(a_1+a_2)x^3+(a_1+a_3)x^2+(a_1+2a_2)x+(-6a_2-5a_3)\\</mrow></md>
-Equating coefficients of equal powers of <m>x</m>, we get the system of equations,
-<md><mrow>a_1+a_2&amp;=1</mrow><mrow>a_1+a_3&amp;=0</mrow><mrow>a_1+2a_2&amp;=6</mrow><mrow>-6a_2-5a_3&amp;=4</mrow></md>
-The augmented matrix of this system of equations row-reduces to
-<me>\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 0 &amp; 0\\
-0 &amp; \leading{1} &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; \leading{1} &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; \leading{1}
-\end{bmatrix}</me>
-Since the last column is a pivot column, <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> implies that the system is inconsistent.  So there is no way for <m>p</m> to gain membership in <m>W</m>, so <m>p\not\in W</m>.
-</p>
+                <p>The question is if <m>p</m> can be written as a linear combination of the vectors in <m>W</m>.  To check this, we set <m>p</m> equal to a linear combination and massage with the definitions of vector addition and scalar multiplication that we get with <m>P_3</m> (<xref ref="example-VSP" acro="VSP" autoname="yes"/>).<md>
+                    <mrow>p(x)&amp;=a_1(x^3+x^2+x)+a_2(x^3+2x-6)+a_3(x^2-5)</mrow>
+                    <mrow>x^3+6x+4&amp;=(a_1+a_2)x^3+(a_1+a_3)x^2+(a_1+2a_2)x+(-6a_2-5a_3)</mrow>
+                </md>Equating coefficients of equal powers of <m>x</m>, we get the system of equations,<md>
+                    <mrow>a_1+a_2&amp;=1</mrow>
+                    <mrow>a_1+a_3&amp;=0</mrow>
+                    <mrow>a_1+2a_2&amp;=6</mrow>
+                    <mrow>-6a_2-5a_3&amp;=4</mrow>
+                </md>.  The augmented matrix of this system of equations row-reduces to<me>\begin{bmatrix}
+                \leading{1} &amp; 0 &amp; 0 &amp; 0\\
+                0 &amp; \leading{1} &amp; 0 &amp; 0\\
+                0 &amp; 0 &amp; \leading{1} &amp; 0\\
+                0 &amp; 0 &amp; 0 &amp; \leading{1}
+                \end{bmatrix}</me>.  Since the last column is a pivot column, <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> implies that the system is inconsistent.  So there is no way for <m>p</m> to gain membership in <m>W</m>, so <m>p\not\in W</m>.</p>
             </solution>
         </exercise>
         <exercise number="C21" xml:id="exercise-S-C21">
             <statement>
-                <p>Consider the subspace
-<me>W=\spn{\set{
-\begin{bmatrix}
-2 &amp; 1\\3 &amp; -1
-\end{bmatrix}
-,\,
-\begin{bmatrix}
-4 &amp; 0\\2 &amp; 3
-\end{bmatrix}
-,\,
-\begin{bmatrix}
--3 &amp; 1\\2 &amp; 1
-\end{bmatrix}
-}}</me>
-of the vector space of <m>2\times 2</m> matrices, <m>M_{22}</m>.  Is
-$
-C=
-\begin{bmatrix}
--3 &amp; 3\\6 &amp; -4
-\end{bmatrix}
-$
-an element of <m>W</m>?
-</p>
+                <p>Consider the subspace<me>W=\spn{\set{
+                \begin{bmatrix}
+                2 &amp; 1\\3 &amp; -1
+                \end{bmatrix}
+                ,\,
+                \begin{bmatrix}
+                4 &amp; 0\\2 &amp; 3
+                \end{bmatrix}
+                ,\,
+                \begin{bmatrix}
+                -3 &amp; 1\\2 &amp; 1
+                \end{bmatrix}
+                }}</me>of the vector space of <m>2\times 2</m> matrices, <m>M_{22}</m>.  Is <me>C=\begin{bmatrix}
+                -3 &amp; 3\\6 &amp; -4
+                \end{bmatrix}</me> an element of <m>W</m>?</p>
             </statement>
             <solution xml:id="solution-S-C21">
-                <p>In order to belong to <m>W</m>, we must be able to express <m>C</m> as a linear combination of the elements in the spanning set of <m>W</m>.  So we begin with such an expression, using the unknowns <m>a,\,b,\,c</m> for the scalars in the linear combination.
-<me>C=
-\begin{bmatrix}
--3 &amp; 3\\6 &amp; -4
-\end{bmatrix}
-=
-a
-\begin{bmatrix}
-2 &amp; 1\\3 &amp; -1
-\end{bmatrix}
-+b
-\begin{bmatrix}
-4 &amp; 0\\2 &amp; 3
-\end{bmatrix}
-+c
-\begin{bmatrix}
--3 &amp; 1\\2 &amp; 1
-\end{bmatrix}</me>
-Massaging the right-hand side, according to the definition of the vector space operations in <m>M_{22}</m> (<xref ref="example-VSM" acro="VSM" autoname="yes"/>), we find the matrix equality,
-<me>\begin{bmatrix}
--3 &amp; 3\\6 &amp; -4
-\end{bmatrix}
-=
-\begin{bmatrix}
-2a+4b-3c &amp; a+c\\ 3a+2b+2c &amp; -a+3b+c
-\end{bmatrix}</me>
-Matrix equality allows us to form a system of four equations in three variables, whose augmented matrix row-reduces as follows,
-<me>\begin{bmatrix}
- 2 &amp; 4 &amp; -3 &amp; -3 \\
- 1 &amp; 0 &amp; 1 &amp; 3 \\
- 3 &amp; 2 &amp; 2 &amp; 6 \\
- -1 &amp; 3 &amp; 1 &amp; -4
-\end{bmatrix}
-\rref
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 0 &amp; 2 \\
- 0 &amp; \leading{1} &amp; 0 &amp; -1 \\
- 0 &amp; 0 &amp; \leading{1} &amp; 1 \\
- 0 &amp; 0 &amp; 0 &amp; 0
-\end{bmatrix}</me>
-Since this system of equations is consistent (<xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>), a solution will provide values for <m>a,\,b</m> and <m>c</m> that allow us to recognize <m>C</m> as an element of <m>W</m>.
-</p>
+                <p>In order to belong to <m>W</m>, we must be able to express <m>C</m> as a linear combination of the elements in the spanning set of <m>W</m>.  So we begin with such an expression, using the unknowns <m>a,\,b,\,c</m> for the scalars in the linear combination.<me>C=
+                \begin{bmatrix}
+                -3 &amp; 3\\6 &amp; -4
+                \end{bmatrix}
+                =
+                a
+                \begin{bmatrix}
+                2 &amp; 1\\3 &amp; -1
+                \end{bmatrix}
+                +b
+                \begin{bmatrix}
+                4 &amp; 0\\2 &amp; 3
+                \end{bmatrix}
+                +c
+                \begin{bmatrix}
+                -3 &amp; 1\\2 &amp; 1
+                \end{bmatrix}</me>Massaging the right-hand side, according to the definition of the vector space operations in <m>M_{22}</m> (<xref ref="example-VSM" acro="VSM" autoname="yes"/>), we find the matrix equality,<me>\begin{bmatrix}
+                -3 &amp; 3\\6 &amp; -4
+                \end{bmatrix}
+                =
+                \begin{bmatrix}
+                2a+4b-3c &amp; a+c\\ 3a+2b+2c &amp; -a+3b+c
+                \end{bmatrix}</me>Matrix equality allows us to form a system of four equations in three variables, whose augmented matrix row-reduces as follows,<me>\begin{bmatrix}
+                 2 &amp; 4 &amp; -3 &amp; -3 \\
+                 1 &amp; 0 &amp; 1 &amp; 3 \\
+                 3 &amp; 2 &amp; 2 &amp; 6 \\
+                 -1 &amp; 3 &amp; 1 &amp; -4
+                \end{bmatrix}
+                \rref
+                \begin{bmatrix}
+                 \leading{1} &amp; 0 &amp; 0 &amp; 2 \\
+                 0 &amp; \leading{1} &amp; 0 &amp; -1 \\
+                 0 &amp; 0 &amp; \leading{1} &amp; 1 \\
+                 0 &amp; 0 &amp; 0 &amp; 0
+                \end{bmatrix}</me>.  Since this system of equations is consistent (<xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/>), a solution will provide values for <m>a,\,b</m> and <m>c</m> that allow us to recognize <m>C</m> as an element of <m>W</m>.</p>
             </solution>
         </exercise>
         <exercise number="C25" xml:id="exercise-S-C25">
             <statement>
-                <p>Show that the set
-<m>W=\setparts{\colvector{x_1\\x_2}}{3x_1-5x_2=12}</m>
-from <xref ref="example-NSC2Z" acro="NSC2Z" autoname="yes"/> fails <xref ref="property-AC" acro="AC" autoname="yes"/> and <xref ref="property-SC" acro="SC" autoname="yes"/>.
-</p>
+                <p>Show that the set <m>W=\setparts{\colvector{x_1\\x_2}}{3x_1-5x_2=12}</m> from <xref ref="example-NSC2Z" acro="NSC2Z" autoname="yes"/> fails <xref ref="property-AC" acro="AC" autoname="yes"/> and <xref ref="property-SC" acro="SC" autoname="yes"/>.</p>
             </statement>
         </exercise>
         <exercise number="C26" xml:id="exercise-S-C26">
             <statement>
-                <p>Show that the set
-<m>Y=\setparts{\colvector{x_1\\x_2}}{x_1\in{\mathbb Z},\,x_2\in{\mathbb Z}}</m>
-from <xref ref="example-NSC2S" acro="NSC2S" autoname="yes"/> has <xref ref="property-AC" acro="AC" autoname="yes"/>.
-</p>
+                <p>Show that the set <m>Y=\setparts{\colvector{x_1\\x_2}}{x_1\in{\mathbb Z},\,x_2\in{\mathbb Z}}</m> from <xref ref="example-NSC2S" acro="NSC2S" autoname="yes"/> has <xref ref="property-AC" acro="AC" autoname="yes"/>.</p>
             </statement>
         </exercise>
         <exercise number="M20" xml:id="exercise-S-M20">
             <statement>
-                <p>In <m>\complex{3}</m>, the vector space of column vectors of size 3, prove that the set <m>Z</m> is a subspace.
-<me>Z=\setparts{\colvector{x_1\\x_2\\x_3}}{4x_1-x_2+5x_3=0}</me>
-</p>
+                <p>In <m>\complex{3}</m>, the vector space of column vectors of size 3, prove that the set <m>Z</m> is a subspace.<me>Z=\setparts{\colvector{x_1\\x_2\\x_3}}{4x_1-x_2+5x_3=0}</me></p>
             </statement>
             <solution xml:id="solution-S-M20">
                 <p>The membership criteria for <m>Z</m> is a single linear equation, which comprises a homogeneous system of equations.  As such, we can recognize <m>Z</m> as the solutions to this system, and therefore <m>Z</m> is a null space.  Specifically, <m>Z=\nsp{\begin{bmatrix}4&amp;-1&amp;5\end{bmatrix}}</m>. Every null space is a subspace by <xref ref="theorem-NSMS" acro="NSMS" autoname="yes"/>.</p>
-                <p>
-A less direct solution appeals to <xref ref="theorem-TSS" acro="TSS" autoname="yes"/>.</p>
-                <p>
-First, we want to be certain <m>Z</m> is nonempty.  The zero vector of <m>\complex{3}</m>, <m>\zerovector=\colvector{0\\0\\0}</m>, is a good candidate, since if it fails to be in <m>Z</m>, we will know that <m>Z</m> is <em>not</em> a vector space.  Check that
-<me>4(0)-(0)+5(0)=0</me>
-so that <m>\zerovector\in Z</m>.</p>
-                <p>
-Suppose <m>\vect{x}=\colvector{x_1\\x_2\\x_3}</m> and <m>\vect{y}=\colvector{y_1\\y_2\\y_3}</m> are vectors from <m>Z</m>.  Then we know that these vectors cannot be totally arbitrary, they must have gained membership in <m>Z</m> by virtue of meeting the membership test.  For example, we know that <m>\vect{x}</m> must satisfy <m>4x_1-x_2+5x_3=0</m> while <m>\vect{y}</m> must satisfy <m>4y_1-y_2+5y_3=0</m>.  Our second criteria asks the question, is <m>\vect{x}+\vect{y}\in Z</m>?  Notice first that
-<me>\vect{x}+\vect{y}=\colvector{x_1\\x_2\\x_3}+\colvector{y_1\\y_2\\y_3}=
-\colvector{x_1+y_1\\x_2+y_2\\x_3+y_3}</me>
-and we can test this vector for membership in <m>Z</m> as follows,
-<md><mrow>&amp;\ 4(x_1+y_1)-1(x_2+y_2)+5(x_3+y_3)</mrow><mrow>&amp;=4x_1+4y_1-x_2-y_2+5x_3+5y_3</mrow><mrow>&amp;=(4x_1-x_2+5x_3)+(4y_1-y_2+5y_3)</mrow><mrow>&amp;=0 + 0&amp;&amp;\vect{x}\in Z,\ \vect{y}\in Z</mrow><mrow>&amp;=0</mrow></md>
-and by this computation we see that <m>\vect{x}+\vect{y}\in Z</m>.</p>
-                <p>
-If <m>\alpha\in\complexes</m> is a scalar and <m>\vect{x}\in Z</m>, is it always true that <m>\alpha\vect{x}\in Z</m>?    To check our third criteria, we examine
-<me>\alpha\vect{x}=\alpha\colvector{x_1\\x_2\\x_3}=\colvector{\alpha x_1\\\alpha x_2\\\alpha x_3}</me>
-and we can test this vector for membership in <m>Z</m> with
-<md><mrow>&amp;4(\alpha x_1)-(\alpha x_2)+5(\alpha x_3)</mrow><mrow>&amp;\quad\quad=\alpha(4x_1-x_2+5x_3)</mrow><mrow>&amp;\quad\quad=\alpha 0&amp;&amp;\vect{x}\in Z</mrow><mrow>&amp;\quad\quad=0</mrow></md>
-and we see that indeed <m>\alpha\vect{x}\in Z</m>.  With the three conditions of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> fulfilled, we can conclude that <m>Z</m> is a subspace of <m>\complex{3}</m>.
-</p>
+                <p>A less direct solution appeals to <xref ref="theorem-TSS" acro="TSS" autoname="yes"/>.</p>
+                <p>First, we want to be certain <m>Z</m> is nonempty.  The zero vector of <m>\complex{3}</m>, <m>\zerovector=\colvector{0\\0\\0}</m>, is a good candidate, since if it fails to be in <m>Z</m>, we will know that <m>Z</m> is <em>not</em> a vector space.  Check that<me>4(0)-(0)+5(0)=0</me>so that <m>\zerovector\in Z</m>.</p>
+                <p>Suppose <m>\vect{x}=\colvector{x_1\\x_2\\x_3}</m> and <m>\vect{y}=\colvector{y_1\\y_2\\y_3}</m> are vectors from <m>Z</m>.  Then we know that these vectors cannot be totally arbitrary, they must have gained membership in <m>Z</m> by virtue of meeting the membership test.  For example, we know that <m>\vect{x}</m> must satisfy <m>4x_1-x_2+5x_3=0</m> while <m>\vect{y}</m> must satisfy <m>4y_1-y_2+5y_3=0</m>.  Our second criteria asks the question, is <m>\vect{x}+\vect{y}\in Z</m>?  Notice first that<me>\vect{x}+\vect{y}=
+                \colvector{x_1\\x_2\\x_3}+\colvector{y_1\\y_2\\y_3}=
+                \colvector{x_1+y_1\\x_2+y_2\\x_3+y_3}</me>and we can test this vector for membership in <m>Z</m> as follows,<md>
+                    <mrow>&amp;\ 4(x_1+y_1)-1(x_2+y_2)+5(x_3+y_3)</mrow>
+                    <mrow>&amp;=4x_1+4y_1-x_2-y_2+5x_3+5y_3</mrow>
+                    <mrow>&amp;=(4x_1-x_2+5x_3)+(4y_1-y_2+5y_3)</mrow>
+                    <mrow>&amp;=0 + 0&amp;&amp;\vect{x}\in Z,\ \vect{y}\in Z</mrow>
+                    <mrow>&amp;=0</mrow>
+                </md>and by this computation we see that <m>\vect{x}+\vect{y}\in Z</m>.</p>
+                <p>If <m>\alpha\in\complexes</m> is a scalar and <m>\vect{x}\in Z</m>, is it always true that <m>\alpha\vect{x}\in Z</m>?    To check our third criteria, we examine<me>\alpha\vect{x}=\alpha\colvector{x_1\\x_2\\x_3}=\colvector{\alpha x_1\\\alpha x_2\\\alpha x_3}</me>and we can test this vector for membership in <m>Z</m> with<md>
+                    <mrow>&amp;4(\alpha x_1)-(\alpha x_2)+5(\alpha x_3)</mrow>
+                    <mrow>&amp;\quad\quad=\alpha(4x_1-x_2+5x_3)</mrow>
+                    <mrow>&amp;\quad\quad=\alpha 0&amp;&amp;\vect{x}\in Z</mrow>
+                    <mrow>&amp;\quad\quad=0</mrow>
+                </md>and we see that indeed <m>\alpha\vect{x}\in Z</m>.  With the three conditions of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> fulfilled, we can conclude that <m>Z</m> is a subspace of <m>\complex{3}</m>.</p>
             </solution>
         </exercise>
         <exercise number="T20" xml:id="exercise-S-T20">
             <statement>
-                <p>A square matrix <m>A</m> of size <m>n</m> is upper triangular if <m>\matrixentry{A}{ij}=0</m> whenever <m>i&gt;j</m>.  Let <m>UT_n</m> be the set of all upper triangular matrices of size <m>n</m>.  Prove that <m>UT_n</m> is a subspace of the vector space of all square matrices of size <m>n</m>, <m>M_{nn}</m>.
-</p>
+                <p>A square matrix <m>A</m> of size <m>n</m> is upper triangular if <m>\matrixentry{A}{ij}=0</m> whenever <m>i&gt;j</m>.  Let <m>UT_n</m> be the set of all upper triangular matrices of size <m>n</m>.  Prove that <m>UT_n</m> is a subspace of the vector space of all square matrices of size <m>n</m>, <m>M_{nn}</m>.</p>
             </statement>
             <solution xml:id="solution-S-T20">
                 <p>Apply <xref ref="theorem-TSS" acro="TSS" autoname="yes"/>.</p>
-                <p>
-First, the zero vector of <m>M_{nn}</m> is the zero matrix, <m>\zeromatrix</m>, whose entries are all zero (<xref ref="definition-ZM" acro="ZM" autoname="yes"/>).  This matrix then meets the condition that <m>\matrixentry{\zeromatrix}{ij}=0</m> for <m>i&gt;j</m> and so is an element of <m>UT_n</m>.</p>
-                <p>
-Suppose <m>A,B\in UT_n</m>.  Is <m>A+B\in UT_n</m>?  We examine the entries of <m>A+B</m> <q>below</q> the diagonal.  That is, in the following, assume that <m>i&gt;j</m>.
-<md><mrow>\matrixentry{A+B}{ij}
-&amp;=\matrixentry{A}{ij}+\matrixentry{B}{ij}&amp;&amp;<xref ref="definition-MA" acro="MA" autoname="yes"/></mrow><mrow>&amp;=0 + 0&amp;&amp;\text{<m>A,B\in UT_n</m>}</mrow><mrow>&amp;=0</mrow></md>
-which qualifies <m>A+B</m> for membership in <m>UT_n</m>.</p>
-                <p>
-Suppose <m>\alpha\in\complex{}</m> and <m>A\in UT_n</m>.  Is <m>\alpha A\in UT_n</m>?  We examine the entries of <m>\alpha A</m> <q>below</q> the diagonal.  That is, in the following, assume that <m>i&gt;j</m>.
-<md><mrow>\matrixentry{\alpha A}{ij}
-&amp;=\alpha\matrixentry{A}{ij}&amp;&amp;<xref ref="definition-MSM" acro="MSM" autoname="yes"/></mrow><mrow>&amp;=\alpha 0&amp;&amp;\text{<m>A\in UT_n</m>}</mrow><mrow>&amp;=0</mrow></md>
-which qualifies <m>\alpha A</m> for membership in <m>UT_n</m>.</p>
-                <p>
-Having fulfilled the three conditions of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> we see that <m>UT_n</m> is a subspace of <m>M_{nn}</m>.
-</p>
+                <p>First, the zero vector of <m>M_{nn}</m> is the zero matrix, <m>\zeromatrix</m>, whose entries are all zero (<xref ref="definition-ZM" acro="ZM" autoname="yes"/>).  This matrix then meets the condition that <m>\matrixentry{\zeromatrix}{ij}=0</m> for <m>i&gt;j</m> and so is an element of <m>UT_n</m>.</p>
+                <p>Suppose <m>A,B\in UT_n</m>.  Is <m>A+B\in UT_n</m>?  We examine the entries of <m>A+B</m> <q>below</q> the diagonal.  That is, in the following, assume that <m>i&gt;j</m>.<md>
+                    <mrow>\matrixentry{A+B}{ij}
+                    &amp;=\matrixentry{A}{ij}+\matrixentry{B}{ij}&amp;&amp;
+                        <xref ref="definition-MA" acro="MA" autoname="yes"/></mrow>
+                    <mrow>&amp;=0 + 0&amp;&amp;\text{<m>A,B\in UT_n</m>}</mrow>
+                    <mrow>&amp;=0</mrow>
+                </md>which qualifies <m>A+B</m> for membership in <m>UT_n</m>.</p>
+                <p>Suppose <m>\alpha\in\complex{}</m> and <m>A\in UT_n</m>.  Is <m>\alpha A\in UT_n</m>?  We examine the entries of <m>\alpha A</m> <q>below</q> the diagonal.  That is, in the following, assume that <m>i&gt;j</m>.<md>
+                    <mrow>\matrixentry{\alpha A}{ij}
+                    &amp;=\alpha\matrixentry{A}{ij}&amp;&amp;
+                        <xref ref="definition-MSM" acro="MSM" autoname="yes"/></mrow>
+                    <mrow>&amp;=\alpha 0&amp;&amp;\text{<m>A\in UT_n</m>}</mrow>
+                    <mrow>&amp;=0</mrow>
+                </md>which qualifies <m>\alpha A</m> for membership in <m>UT_n</m>.</p>
+                <p>Having fulfilled the three conditions of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> we see that <m>UT_n</m> is a subspace of <m>M_{nn}</m>.</p>
             </solution>
         </exercise>
         <exercise number="T30" xml:id="exercise-S-T30">
             <statement contributor="chrisblack">
-                <p>Let <m>P</m> be the set of all polynomials, of any degree.  The set <m>P</m> is a vector space.  Let <m>E</m> be the subset of <m>P</m> consisting of all polynomials with only terms of even degree.  Prove or disprove:  the set <m>E</m> is a subspace of <m>P</m>.
-</p>
+                <p>Let <m>P</m> be the set of all polynomials, of any degree.  The set <m>P</m> is a vector space.  Let <m>E</m> be the subset of <m>P</m> consisting of all polynomials with only terms of even degree.  Prove or disprove:  the set <m>E</m> is a subspace of <m>P</m>.</p>
             </statement>
             <solution xml:id="solution-S-T30" contributor="chrisblack">
-                <p><b>Proof:</b> Let <m>E</m> be the subset of <m>P</m> comprised of all polynomials with all terms of even degree.  Clearly the set <m>E</m> is nonempty, as <m>z(x) = 0</m> is a polynomial of even degree.  Let <m>p(x)</m> and <m>q(x)</m> be arbitrary elements of <m>E</m>.  Then there exist nonnegative integers <m>m</m> and <m>n</m> so that
-<md><mrow>p(x) &amp;= a_0 + a_2 x^2 + a_4 x^4 + \cdots + a_{2n}x^{2n}</mrow><mrow>q(x) &amp;= b_0 + b_2 x^2 + b_4 x^4 + \cdots + b_{2m}x^{2m}</mrow></md>
-for some constants <m>a_0, a_2, \ldots, a_{2n}</m> and <m>b_0, b_2, \ldots, b_{2m}</m>.  Without loss of generality, we can assume that <m>m \le n</m>.  Thus, we have
-<md><mrow>p(x) + q(x)
-&amp;= (a_0 + b_0) + (a_2 + b_2)x^2 + \cdots + (a_{2m} + b_{2m})x^{2m} + a_{2m +2} x^{2m+2} + \cdots + a_{2n} x^{2n}</mrow></md>
-so <m>p(x) + q(x)</m> has all even terms, and thus <m>p(x) + q(x) \in E</m>.  Similarly, let <m>\alpha</m> be a scalar.  Then
-<md><mrow>\alpha p(x) &amp;= \alpha (a_0 + a_2 x^2 + a_4 x^4 + \cdots + a_{2n}x^{2n}) </mrow><mrow>&amp;= \alpha a_0 + (\alpha a_2) x^2 + (\alpha a_4) x^4 + \cdots + (\alpha a_{2n})x^{2n}</mrow></md>
-so that <m>\alpha p(x)</m> also has only terms of even degree, and <m>\alpha p(x) \in E</m>. Thus, <m>E</m> is a subspace of <m>P</m>.
-</p>
+                <p><b>Proof:</b> Let <m>E</m> be the subset of <m>P</m> comprised of all polynomials with all terms of even degree.  Clearly the set <m>E</m> is nonempty, as <m>z(x) = 0</m> is a polynomial of even degree.  Let <m>p(x)</m> and <m>q(x)</m> be arbitrary elements of <m>E</m>.  Then there exist nonnegative integers <m>m</m> and <m>n</m> so that<md>
+                    <mrow>p(x) &amp;= a_0 + a_2 x^2 + a_4 x^4 + \cdots + a_{2n}x^{2n}</mrow>
+                    <mrow>q(x) &amp;= b_0 + b_2 x^2 + b_4 x^4 + \cdots + b_{2m}x^{2m}</mrow>
+                </md>for some constants <m>a_0, a_2, \ldots, a_{2n}</m> and <m>b_0, b_2, \ldots, b_{2m}</m>.  Without loss of generality, we can assume that <m>m \le n</m>.  Thus, we have<md>
+                    <mrow>p(x) + q(x)
+                    &amp;= (a_0 + b_0) + (a_2 + b_2)x^2 + \cdots + (a_{2m} + b_{2m})x^{2m} + a_{2m +2} x^{2m+2} + \cdots + a_{2n} x^{2n}</mrow>
+                </md>so <m>p(x) + q(x)</m> has all even terms, and thus <m>p(x) + q(x) \in E</m>.  Similarly, let <m>\alpha</m> be a scalar.  Then<md>
+                    <mrow>\alpha p(x) &amp;= \alpha (a_0 + a_2 x^2 + a_4 x^4 + \cdots + a_{2n}x^{2n}) </mrow>
+                    <mrow>&amp;= \alpha a_0 + (\alpha a_2) x^2 + (\alpha a_4) x^4 + \cdots + (\alpha a_{2n})x^{2n}</mrow>
+                </md>so that <m>\alpha p(x)</m> also has only terms of even degree, and <m>\alpha p(x) \in E</m>. Thus, <m>E</m> is a subspace of <m>P</m>.</p>
             </solution>
         </exercise>
         <exercise number="T31" xml:id="exercise-S-T31">
             <statement contributor="chrisblack">
-                <p>Let <m>P</m> be the set of all polynomials, of any degree.  The set <m>P</m> is a vector space.  Let <m>F</m> be the subset of <m>P</m> consisting of all polynomials with only terms of odd degree.  Prove or disprove:  the set <m>F</m> is a subspace of <m>P</m>.
-</p>
+                <p>Let <m>P</m> be the set of all polynomials, of any degree.  The set <m>P</m> is a vector space.  Let <m>F</m> be the subset of <m>P</m> consisting of all polynomials with only terms of odd degree.  Prove or disprove:  the set <m>F</m> is a subspace of <m>P</m>.</p>
             </statement>
             <solution xml:id="solution-S-T31">
-                <p>This conjecture is false.  The polynomials <m>p(x) = x^3 + x^2</m> and <m>q(x) = -x^3 + x^2</m> provide a counterexample to <xref ref="property-AC" acro="AC" autoname="yes"/>.
-
-There is another very technical reason.  Constant polynomials have degree zero, with one exception.  The zero polynomial either does not have a degree, or is defined to have degree <m>-\infty</m>.  The latter definition will work best with our definition of <m>P</m>, the vector space of polynomials of any degree (or for <m>P_n</m>).  One justification of this definition is that we want various properties of arithmetic with polynomials to hold when the zero polynomial is involved.  For example, the degree of the sum of two polynomials should be less than, or equal to, the sum of the degrees of the polynomials.  So the zero polynomial does not have odd degree, and hence is not an element of <m>P</m>.
-</p>
+                <p>This conjecture is false.  The polynomials <m>p(x) = x^3 + x^2</m> and <m>q(x) = -x^3 + x^2</m> provide a counterexample to <xref ref="property-AC" acro="AC" autoname="yes"/>.</p>
+                <p>There is another very technical reason.  Constant polynomials have degree zero, with one exception.  The zero polynomial either does not have a degree, or is defined to have degree <m>-\infty</m>.  The latter definition will work best with our definition of <m>P</m>, the vector space of polynomials of any degree (or for <m>P_n</m>).  One justification of this definition is that we want various properties of arithmetic with polynomials to hold when the zero polynomial is involved.  For example, the degree of the sum of two polynomials should be less than, or equal to, the sum of the degrees of the polynomials.  So the zero polynomial does not have odd degree, and hence is not an element of <m>P</m>.</p>
             </solution>
         </exercise>
     </exercises>
