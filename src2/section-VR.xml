@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="section-VR" acro="VR">
+    <title>Vector Representations</title>
+    <!-- %%%%%%%%%% -->
+    <!-- % -->
+    <!-- %  Section VR -->
+    <!-- %  Vector Representations -->
+    <!-- % -->
+    <!-- %%%%%%%%%% -->
+    <introduction>
+        <p>You may have noticed that many questions about elements of abstract vector spaces eventually become questions about column vectors or systems of equations.  <xref ref="example-SM32" acro="SM32" autoname="yes"/> would be an example of this.  We will make this vague idea more precise in this section.</p>
+    </introduction>
+    <subsection xml:id="subsection-VR-VR" acro="VR">
+        <title>Vector Representation</title>
+        <p>We begin by establishing an invertible linear transformation between any vector space <m>V</m> of dimension <m>n</m> and <m>\complex{n}</m>.  This will allow us to <q>go back and forth</q> between the two vector spaces, no matter how abstract the definition of <m>V</m> might be.</p>
+        <definition xml:id="definition-VR" acro="VR">
+            <title>Vector Representation</title>
+            <index>
+                <main>vector representation</main>
+                <sub>linear transformation</sub>
+            </index>
+            <statement>
+                <p>Suppose that <m>V</m> is a vector space with a basis <m>B=\set{\vectorlist{v}{n}}</m>.  Define a function <m>\ltdefn{\vectrepname{B}}{V}{\complex{n}}</m> as follows.  For <m>\vect{w}\in V</m> define the column vector <m>\vectrep{B}{\vect{w}}\in\complex{n}</m> by
+<md><mrow>\vect{w}
+&amp;=
+\vectorentry{\vectrep{B}{\vect{w}}}{1}\vect{v}_1+
+\vectorentry{\vectrep{B}{\vect{w}}}{2}\vect{v}_2+
+\vectorentry{\vectrep{B}{\vect{w}}}{3}\vect{v}_3+
+\cdots+
+\vectorentry{\vectrep{B}{\vect{w}}}{n}\vect{v}_n</mrow></md>
+</p>
+            </statement>
+            <notation xml:id="notation-VR" acro="VR">
+                <index>
+                    <main>vector representation</main>
+                    <sub>linear transformation</sub>
+                    <sub>notation</sub>
+                </index>
+                <description>Vector Representation</description>
+                <usage>
+                    <m>\vectrep{B}{\vect{w}}</m>
+                </usage>
+            </notation>
+        </definition>
+        <p>This definition looks more complicated than it really is, though the form above will be useful in proofs.  Simply stated, given <m>\vect{w}\in V</m>, we write <m>\vect{w}</m> as a linear combination of the basis elements of <m>B</m>.  It is key to realize that <xref ref="theorem-VRRB" acro="VRRB" autoname="yes"/> guarantees that we can do this for every <m>\vect{w}</m>, and furthermore this expression as a linear combination is unique.  The resulting scalars are just the entries of the vector <m>\vectrep{B}{\vect{w}}</m>.  This discussion should convince you that <m>\vectrepname{B}</m> is <q>well-defined</q> as a function.  We can determine a precise output for any input.  Now we want to establish that <m>\vectrepname{B}</m> is a function with additional properties <mdash/> it is a linear transformation.</p>
+        <theorem xml:id="theorem-VRLT" acro="VRLT">
+            <index>
+                <main>vector representation</main>
+                <sub>linear transformation</sub>
+            </index>
+            <title>Vector Representation is a Linear Transformation</title>
+            <statement>
+                <p>The function <m>\vectrepname{B}</m> (<xref ref="definition-VR" acro="VR" autoname="yes"/>) is a linear transformation.</p>
+            </statement>
+            <proof>
+                <p>We will take a novel approach in this proof.  We will construct another function, which we will easily determine is a linear transformation, and then show that this second function is really <m>\vectrepname{B}</m> in disguise.  Here we go.</p>
+                <p>Since <m>B</m> is a basis, we can define <m>\ltdefn{T}{V}{\complex{n}}</m> to be the unique linear transformation such that <m>\lteval{T}{\vect{v}_i}=\vect{e}_i</m>, <m>1\leq i\leq n</m>, as guaranteed by <xref ref="theorem-LTDB" acro="LTDB" autoname="yes"/>, and where the <m>\vect{e}_i</m> are the standard unit vectors (<xref ref="definition-SUV" acro="SUV" autoname="yes"/>).  Then suppose for an arbitrary <m>\vect{w}\in V</m> we have,
+<md><mrow>\vectorentry{\lteval{T}{\vect{w}}}{i}
+&amp;=
+\vectorentry{\lteval{T}{\sum_{j=1}^{n}\vectorentry{\vectrep{B}{\vect{w}}}{j}\vect{v}_j}}{i}
+&amp;&amp;<xref ref="definition-VR" acro="VR" autoname="yes"/></mrow><mrow>&amp;=
+\vectorentry{\sum_{j=1}^{n}\vectorentry{\vectrep{B}{\vect{w}}}{j}\lteval{T}{\vect{v}_j}}{i}
+&amp;&amp;<xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow><mrow>&amp;=
+\vectorentry{\sum_{j=1}^{n}\vectorentry{\vectrep{B}{\vect{w}}}{j}\vect{e}_j}{i}</mrow><mrow>&amp;=
+\sum_{j=1}^{n}\vectorentry{\vectorentry{\vectrep{B}{\vect{w}}}{j}\vect{e}_j}{i}
+&amp;&amp;<xref ref="definition-CVA" acro="CVA" autoname="yes"/></mrow><mrow>&amp;=
+\sum_{j=1}^{n}\vectorentry{\vectrep{B}{\vect{w}}}{j}\vectorentry{\vect{e}_j}{i}
+&amp;&amp;<xref ref="definition-CVSM" acro="CVSM" autoname="yes"/></mrow><mrow>&amp;=
+\vectorentry{\vectrep{B}{\vect{w}}}{i}\vectorentry{\vect{e}_i}{i}
++
+\sum_{\substack{j=1\\j\neq i}}^{n}\vectorentry{\vectrep{B}{\vect{w}}}{j}\vectorentry{\vect{e}_j}{i}
+&amp;&amp;<xref ref="property-CC" acro="CC" autoname="yes"/></mrow><mrow>&amp;=
+\vectorentry{\vectrep{B}{\vect{w}}}{i}\left(1\right)
++
+\sum_{\substack{j=1\\j\neq i}}^{n}\vectorentry{\vectrep{B}{\vect{w}}}{j}\left(0\right)
+&amp;&amp;<xref ref="definition-SUV" acro="SUV" autoname="yes"/></mrow><mrow>&amp;=
+\vectorentry{\vectrep{B}{\vect{w}}}{i}</mrow></md>
+</p>
+                <p>As column vectors, <xref ref="definition-CVE" acro="CVE" autoname="yes"/> implies that <m>\lteval{T}{\vect{w}}=\vectrep{B}{\vect{w}}</m>.  Since <m>\vect{w}</m> was an arbitrary element of <m>V</m>, as functions <m>T=\vectrepname{B}</m>.  Now, since <m>T</m> is known to be a linear transformation, it must follow that <m>\vectrepname{B}</m> is also a linear transformation.</p>
+            </proof>
+        </theorem>
+        <p>The proof of <xref ref="theorem-VRLT" acro="VRLT" autoname="yes"/> provides an alternate definition of vector representation relative to a basis <m>B</m> that we could state as a corollary (Proof Technique<nbsp/><xref ref="technique-LC" acro="LC" autoname="no"/>):  <m>\vectrepname{B}</m> is the unique linear transformation that takes <m>B</m> to the standard unit basis.</p>
+        <example xml:id="example-VRC4" acro="VRC4">
+            <index>vector representation</index>
+            <title>Vector representation in <m>\complex{4}</m></title>
+            <p>Consider the vector <m>\vect{y}\in\complex{4}</m>
+<me>\vect{y}=\colvector{6\\14\\6\\7}</me>
+</p>
+            <p>We will find several vector representations of <m>\vect{y}</m> in this example.  Notice that <m>\vect{y}</m> never changes, but the <em>representations</em> of <m>\vect{y}</m> do change.
+One basis for <m>\complex{4}</m> is
+<me>B=\set{\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\vect{u}_4}=
+\set{
+\colvector{-2\\1\\2\\-3},\,
+\colvector{3\\-6\\2\\-4},\,
+\colvector{1\\2\\0\\5},\,
+\colvector{4\\3\\1\\6}
+}</me>
+as can be seen by making these vectors the columns of a matrix, checking that the matrix is nonsingular and applying <xref ref="theorem-CNMB" acro="CNMB" autoname="yes"/>.  To find <m>\vectrep{B}{\vect{y}}</m>, we need to find scalars, <m>a_1,\,a_2,\,a_3,\,a_4</m> such that
+<me>\vect{y}=a_1\vect{u}_1+a_2\vect{u}_2+a_3\vect{u}_3+a_4\vect{u}_4</me>
+</p>
+            <p>By <xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/> the desired scalars are a solution to the linear system of equations with a coefficient matrix whose columns are the vectors in <m>B</m> and with a vector of constants <m>\vect{y}</m>.  With a nonsingular coefficient matrix, the solution is unique, but this is no surprise as this is the content of <xref ref="theorem-VRRB" acro="VRRB" autoname="yes"/>.  This unique solution is
+<md><mrow>a_1&amp;=2&amp;a_2&amp;=-1&amp;a_3&amp;=-3&amp;a_4&amp;=4</mrow></md>
+</p>
+            <p>Then by <xref ref="definition-VR" acro="VR" autoname="yes"/>, we have
+<me>\vectrep{B}{\vect{y}}=\colvector{2\\-1\\-3\\4}</me>
+</p>
+            <p>Suppose now that we construct a representation of <m>\vect{y}</m> relative to another basis of <m>\complex{4}</m>,
+<me>C=\set{
+\colvector{-15\\9\\-4\\-2},\,
+\colvector{16\\-14\\5\\2},\,
+\colvector{-26\\14\\-6\\-3},\,
+\colvector{14\\-13\\4\\6}
+}</me>
+</p>
+            <p>As with <m>B</m>, it is easy to check that <m>C</m> is a basis.  Writing <m>\vect{y}</m> as a linear combination of the vectors in <m>C</m> leads to solving a system of four equations in the four unknown scalars with a nonsingular coefficient matrix.  The unique solution can be expressed as
+<me>\vect{y}=\colvector{6\\14\\6\\7}=
+(-28)\colvector{-15\\9\\-4\\-2}+
+(-8)\colvector{16\\-14\\5\\2}+
+11\colvector{-26\\14\\-6\\-3}+
+0\colvector{14\\-13\\4\\6}</me>
+so that <xref ref="definition-VR" acro="VR" autoname="yes"/> gives
+<me>\vectrep{C}{\vect{y}}=\colvector{-28\\-8\\11\\0}</me></p>
+            <p>We often perform representations relative to standard bases, but for vectors in <m>\complex{m}</m> this is a little silly.  Let us find the vector representation of <m>\vect{y}</m> relative to the standard basis (<xref ref="theorem-SUVB" acro="SUVB" autoname="yes"/>),
+<me>D=\set{\vect{e}_1,\,\vect{e}_2,\,\vect{e}_3,\,\vect{e}_4}</me>
+</p>
+            <p>Then, without any computation, we can check that
+<me>\vect{y}=\colvector{6\\14\\6\\7}=6\vect{e}_1+14\vect{e}_2+6\vect{e}_3+7\vect{e}_4</me>
+so by <xref ref="definition-VR" acro="VR" autoname="yes"/>,
+<me>\vectrep{D}{\vect{y}}=\colvector{6\\14\\6\\7}</me>
+which is not very exciting.  Notice however that the <em>order</em> in which we place the vectors in the basis is critical to the representation.  Let us keep the standard unit vectors as our basis, but rearrange the order we place them in the basis.  So a fourth basis is
+<me>E=\set{\vect{e}_3,\,\vect{e}_4,\,\vect{e}_2,\,\vect{e}_1}</me>
+</p>
+            <p>Then,
+<me>\vect{y}=\colvector{6\\14\\6\\7}=6\vect{e}_3+7\vect{e}_4+14\vect{e}_2+6\vect{e}_1</me>
+so by <xref ref="definition-VR" acro="VR" autoname="yes"/>,
+<me>\vectrep{E}{\vect{y}}=\colvector{6\\7\\14\\6}</me>
+</p>
+            <p>So for every possible basis of <m>\complex{4}</m> we could construct a different representation of <m>\vect{y}</m>.</p>
+        </example>
+        <p>Vector representations are most interesting for vector spaces that are not <m>\complex{m}</m>.</p>
+        <example xml:id="example-VRP2" acro="VRP2">
+            <index>
+                <main>vector representations</main>
+                <sub>polynomials</sub>
+            </index>
+            <title>Vector representations in <m>P_2</m></title>
+            <p>Consider the vector <m>\vect{u}=15+10x-6x^2\in P_2</m> from the vector space of polynomials with degree at most 2 (<xref ref="example-VSP" acro="VSP" autoname="yes"/>).  A nice basis for <m>P_2</m> is
+<me>B=\set{1,\,x,\,x^2}</me>
+so that
+<me>\vect{u}=15+10x-6x^2=15(1)+10(x)+(-6)(x^2)</me>
+so by <xref ref="definition-VR" acro="VR" autoname="yes"/>
+<me>\vectrep{B}{\vect{u}}=\colvector{15\\10\\-6}</me>
+</p>
+            <p>Another nice basis for <m>P_2</m> is
+<me>C=\set{1,\,1+x,\,1+x+x^2}</me>
+so that now it takes a bit of computation to determine the scalars for the representation.  We want <m>a_1,\,a_2,\,a_3</m> so that
+<me>15+10x-6x^2=a_1(1)+a_2(1+x)+a_3(1+x+x^2)</me>
+</p>
+            <p>Performing the operations in <m>P_2</m> on the right-hand side, and equating coefficients, gives the three equations in the three unknown scalars,
+<md><mrow>15&amp;=a_1+a_2+a_3</mrow><mrow>10&amp;=a_2+a_3</mrow><mrow>-6&amp;=a_3</mrow></md>
+</p>
+            <p>The coefficient matrix of this sytem is nonsingular, leading to a unique solution (no surprise there, see <xref ref="theorem-VRRB" acro="VRRB" autoname="yes"/>),
+<md><mrow>a_1&amp;=5&amp;a_2&amp;=16&amp;a_3&amp;=-6</mrow></md>
+so by <xref ref="definition-VR" acro="VR" autoname="yes"/>
+<me>\vectrep{C}{\vect{u}}=\colvector{5\\16\\-6}</me>
+</p>
+            <p>While we often form vector representations relative to <q>nice</q> bases, nothing prevents us from forming representations relative to <q>nasty</q> bases.  For example, the set
+<me>D=\set{
+-2-x+3x^2,\,
+1-2x^2,\,
+5+4x+x^2
+}</me>
+can be verified as a basis of <m>P_2</m> by checking linear independence with <xref ref="definition-LI" acro="LI" autoname="yes"/> and then arguing that 3 vectors from <m>P_2</m>, a vector space of dimension 3 (<xref ref="theorem-DP" acro="DP" autoname="yes"/>), must also be a spanning set (<xref ref="theorem-G" acro="G" autoname="yes"/>). </p>
+            <p>Now we desire scalars <m>a_1,\,a_2,\,a_3</m> so that
+<me>15+10x-6x^2=a_1(-2-x+3x^2)+a_2(1-2x^2)+a_3(5+4x+x^2)</me>
+</p>
+            <p>Performing the operations in <m>P_2</m> on the right-hand side, and equating coefficients, gives the three equations in the three unknown scalars,
+<md><mrow>15&amp;=-2a_1+a_2+5a_3</mrow><mrow>10&amp;=-a_1+4a_3</mrow><mrow>-6&amp;=3a_1-2a_2+a_3</mrow></md>
+</p>
+            <p>The coefficient matrix of this sytem is nonsingular, leading to a unique solution (no surprise there, see <xref ref="theorem-VRRB" acro="VRRB" autoname="yes"/>),
+<md><mrow>a_1&amp;=-2&amp;a_2&amp;=1&amp;a_3&amp;=2</mrow></md>
+so by <xref ref="definition-VR" acro="VR" autoname="yes"/>
+<me>\vectrep{D}{\vect{u}}=\colvector{-2\\1\\2}</me>
+</p>
+        </example>
+        <theorem xml:id="theorem-VRI" acro="VRI">
+            <index>
+                <main>vector representation</main>
+                <sub>injective</sub>
+            </index>
+            <title>Vector Representation is Injective</title>
+            <statement>
+                <p>The function <m>\vectrepname{B}</m> (<xref ref="definition-VR" acro="VR" autoname="yes"/>) is an injective linear transformation.</p>
+            </statement>
+            <proof>
+                <p>We will appeal to <xref ref="theorem-KILT" acro="KILT" autoname="yes"/>.  Suppose <m>U</m> is a vector space of dimension <m>n</m>, so vector representation is <m>\ltdefn{\vectrepname{B}}{U}{\complex{n}}</m>.  Let <m>B=\set{\vectorlist{u}{n}}</m> be the basis of <m>U</m> used in the definition of <m>\vectrepname{B}</m>.  Suppose <m>\vect{u}\in\krn{\vectrepname{B}}</m>.  We write <m>\vect{u}</m> as a linear combination of the vectors in the basis <m>B</m> where the scalars are the components of the vector representation, <m>\lt{\vectrepname{B}}{\vect{u}}</m>.
+<md><mrow>\vect{u}
+&amp;=
+\vectorentry{\lt{\vectrepname{B}}{\vect{u}}}{1}\vect{u}_1+
+\vectorentry{\lt{\vectrepname{B}}{\vect{u}}}{2}\vect{u}_2+
+\cdots+
+\vectorentry{\lt{\vectrepname{B}}{\vect{u}}}{n}\vect{u}_n
+&amp;&amp;<xref ref="definition-VR" acro="VR" autoname="yes"/></mrow><mrow>&amp;=
+\vectorentry{\zerovector}{1}\vect{u}_1+
+\vectorentry{\zerovector}{2}\vect{u}_2+
+\cdots+
+\vectorentry{\zerovector}{n}\vect{u}_n
+&amp;&amp;<xref ref="definition-KLT" acro="KLT" autoname="yes"/></mrow><mrow>&amp;= 0\vect{u}_1+ 0\vect{u}_2+ \cdots+ 0\vect{u}_n
+&amp;&amp;<xref ref="definition-ZCV" acro="ZCV" autoname="yes"/></mrow><mrow>&amp;=\zerovector+\zerovector+\cdots+\zerovector
+&amp;&amp;<xref ref="theorem-ZSSM" acro="ZSSM" autoname="yes"/></mrow><mrow>&amp;=\zerovector
+&amp;&amp;<xref ref="property-Z" acro="Z" autoname="yes"/></mrow></md></p>
+                <p>Thus an arbitrary vector, <m>\vect{u}</m>, from the kernel ,<m>\krn{\vectrepname{B}}</m>, must equal the zero vector of <m>U</m>.  So <m>\krn{\vectrepname{B}}=\set{\zerovector}</m> and by <xref ref="theorem-KILT" acro="KILT" autoname="yes"/>, <m>\vectrepname{B}</m> is injective.</p>
+            </proof>
+        </theorem>
+        <theorem xml:id="theorem-VRS" acro="VRS">
+            <index>
+                <main>vector representation</main>
+                <sub>surjective</sub>
+            </index>
+            <title>Vector Representation is Surjective</title>
+            <statement>
+                <p>The function <m>\vectrepname{B}</m> (<xref ref="definition-VR" acro="VR" autoname="yes"/>) is a surjective linear transformation.</p>
+            </statement>
+            <proof>
+                <p>We will appeal to <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>.  Suppose <m>U</m> is a vector space of dimension <m>n</m>, so vector representation is <m>\ltdefn{\vectrepname{B}}{U}{\complex{n}}</m>.  Let <m>B=\set{\vectorlist{u}{n}}</m> be the basis of <m>U</m> used in the definition of <m>\vectrepname{B}</m>.  Suppose <m>\vect{v}\in\complex{n}</m>.
+Define the vector <m>\vect{u}</m> by
+<me>\vect{u}
+=
+\vectorentry{\vect{v}}{1}\vect{u}_1+
+\vectorentry{\vect{v}}{2}\vect{u}_2+
+\vectorentry{\vect{v}}{3}\vect{u}_3+
+\cdots+
+\vectorentry{\vect{v}}{n}\vect{u}_n</me>
+</p>
+                <p>Then for <m>1\leq i\leq n</m>, by <xref ref="definition-VR" acro="VR" autoname="yes"/>,
+<md><mrow>\vectorentry{\vectrep{B}{\vect{u}}}{i}
+&amp;=\vectorentry{\vectrep{B}{
+\vectorentry{\vect{v}}{1}\vect{u}_1+
+\vectorentry{\vect{v}}{2}\vect{u}_2+
+\vectorentry{\vect{v}}{3}\vect{u}_3+
+\cdots+
+\vectorentry{\vect{v}}{n}\vect{u}_n
+}}{i}
+=\vectorentry{\vect{v}}{i}&amp;&amp;\text{}</mrow></md>
+so the entries of vectors <m>\vectrep{B}{\vect{u}}</m> and <m>\vect{v}</m> are equal and <xref ref="definition-CVE" acro="CVE" autoname="yes"/> yields the vector equality <m>\vectrep{B}{\vect{u}}=\vect{v}</m>.  This demonstrates that <m>\vect{v}\in\rng{\vectrepname{B}}</m>, so <m>\complex{n}\subseteq\rng{\vectrepname{B}}</m>.  Since <m>\rng{\vectrepname{B}}\subseteq\complex{n}</m> by <xref ref="definition-RLT" acro="RLT" autoname="yes"/>, we have <m>\rng{\vectrepname{B}}=\complex{n}</m> and <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/> says <m>\vectrepname{B}</m> is surjective.</p>
+            </proof>
+        </theorem>
+        <p>We will have many occasions later to employ the inverse of vector representation, so we will record the fact that vector representation is an invertible linear transformation.</p>
+        <theorem xml:id="theorem-VRILT" acro="VRILT">
+            <index>
+                <main>vector representation</main>
+                <sub>invertible</sub>
+            </index>
+            <title>Vector Representation is an Invertible Linear Transformation</title>
+            <statement>
+                <p>The function <m>\vectrepname{B}</m> (<xref ref="definition-VR" acro="VR" autoname="yes"/>) is an invertible linear transformation.</p>
+            </statement>
+            <proof>
+                <p>The function <m>\vectrepname{B}</m> (<xref ref="definition-VR" acro="VR" autoname="yes"/>) is a linear transformation (<xref ref="theorem-VRLT" acro="VRLT" autoname="yes"/>) that is injective (<xref ref="theorem-VRI" acro="VRI" autoname="yes"/>) and surjective (<xref ref="theorem-VRS" acro="VRS" autoname="yes"/>) with domain <m>V</m> and codomain <m>\complex{n}</m>.  By <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> we then know that <m>\vectrepname{B}</m> is an invertible linear transformation.</p>
+            </proof>
+        </theorem>
+        <p>Informally, we will refer to the application of <m>\vectrepname{B}</m> as <term>coordinatizing</term> a vector, while the application of <m>\ltinverse{\vectrepname{B}}</m> will be referred to as <term>un-coordinatizing</term> a vector.</p>
+        <computation xml:id="sage-VR" acro="VR">
+            <title>Vector Representations</title>
+            <index>vector representations</index>
+            <p>Vector representation is described in the text in a fairly abstract fashion.  Sage will support this view (which will be useful in the next section), as well as provide a more practical approach.  We will explain both approaches.  We begin with an arbitrarily chosen basis.  We then create an alternate version of <c>QQ^4</c> with this basis as a<q>user basis</q>, namely <c>V</c>.</p>
+            <sage xml:id="sagecell-VR-1">
+                <input>
+v0 = vector(QQ, [ 1, 1, 1, 0])
+v1 = vector(QQ, [ 1, 2, 3, 2])
+v2 = vector(QQ, [ 2, 2, 3, 2])
+v3 = vector(QQ, [-1, 3, 5, 5])
+B = [v0, v1, v2, v3]
+V = (QQ^4).subspace_with_basis(B)
+V
+</input>
+                <output>
+Vector space of degree 4 and dimension 4 over Rational Field
+User basis matrix:
+[ 1  1  1  0]
+[ 1  2  3  2]
+[ 2  2  3  2]
+[-1  3  5  5]
+</output>
+            </sage>
+            <sage xml:id="sagecell-VR-2">
+                <input>
+V.echelonized_basis_matrix()
+</input>
+                <output>
+[1 0 0 0]
+[0 1 0 0]
+[0 0 1 0]
+[0 0 0 1]
+</output>
+            </sage>
+            <p>Now, the construction of a linear transformation will use the basis provided for <c>V</c>.  In the proof of <xref ref="theorem-VRLT" acro="VRLT" autoname="yes"/> we defined a linear transformation <m>T</m> that equaled <m>\vectrepname{B}</m>.  <m>T</m> was defined by taking the basis vectors of <m>B</m> to the basis composed of standard unit vectors (<xref ref="definition-SUV" acro="SUV" autoname="yes"/>).  This is exactly what we will accomplish in the following construction.  Note how the basis associated with the domain is automatically paired with the elements of the basis for the codomain.</p>
+            <sage xml:id="sagecell-VR-3">
+                <input>
+rho = linear_transformation(V, QQ^4, (QQ^4).basis())
+rho
+</input>
+                <output>
+Vector space morphism represented by the matrix:
+[1 0 0 0]
+[0 1 0 0]
+[0 0 1 0]
+[0 0 0 1]
+Domain: Vector space of degree 4 and dimension 4 over Rational Field
+User basis matrix:
+[ 1  1  1  0]
+[ 1  2  3  2]
+[ 2  2  3  2]
+[-1  3  5  5]
+Codomain: Vector space of dimension 4 over Rational Field
+</output>
+            </sage>
+            <p>First, we verify <xref ref="theorem-VRILT" acro="VRILT" autoname="yes"/>:</p>
+            <sage xml:id="sagecell-VR-4">
+                <input>
+rho.is_invertible()
+</input>
+                <output>
+True
+</output>
+            </sage>
+            <p>Notice that the matrix of the linear transformation is the identity matrix.  This might look odd now, but we will have a full explanation soon.  Let us see if this linear transformation behaves as it should.  We will <q>coordinatize</q> an arbitrary vector, <c>w</c>.</p>
+            <sage xml:id="sagecell-VR-5">
+                <input>
+w = vector(QQ, [-13, 28, 45, 43])
+rho(w)
+</input>
+                <output>
+(3, 5, -6, 9)
+</output>
+            </sage>
+            <sage xml:id="sagecell-VR-6">
+                <input>
+lincombo = 3*v0 + 5*v1 + (-6)*v2 + 9*v3
+lincombo
+</input>
+                <output>
+(-13, 28, 45, 43)
+</output>
+            </sage>
+            <sage xml:id="sagecell-VR-7">
+                <input>
+lincombo == w
+</input>
+                <output>
+True
+</output>
+            </sage>
+            <p>Notice how the expression for <c>lincombo</c> is exactly the messy expression displayed in <xref ref="definition-VR" acro="VR" autoname="yes"/>. More precisely, we could even write this as:</p>
+            <sage xml:id="sagecell-VR-8">
+                <input>
+w == sum([rho(w)[i]*B[i] for i in range(4)])
+</input>
+                <output>
+True
+</output>
+            </sage>
+            <p>Or we can test this equality repeatedly with random vectors.</p>
+            <sage xml:id="sagecell-VR-9">
+                <input>
+u = random_vector(QQ, 4)
+u == sum([rho(u)[i]*B[i] for i in range(4)])
+</input>
+                <output>
+True
+</output>
+            </sage>
+            <p>Finding a vector representation is such a fundamental operation that Sage has an easier command, bypassing the need to create a linear transformation.  It does still require constructing a vector space with the alternate basis.  Here goes, repeating the prior example.</p>
+            <sage xml:id="sagecell-VR-10">
+                <input>
+w = vector(QQ, [-13, 28, 45, 43])
+V.coordinate_vector(w)
+</input>
+                <output>
+(3, 5, -6, 9)
+</output>
+            </sage>
+            <p>Boom!</p>
+        </computation>
+    </subsection>
+    <subsection xml:id="subsection-VR-CVS" acro="CVS">
+        <title>Characterization of Vector Spaces</title>
+        <p>Limiting our attention to vector spaces with finite dimension, we now describe every possible vector space.  All of them.  Really.</p>
+        <theorem xml:id="theorem-CFDVS" acro="CFDVS">
+            <index>
+                <main>vector space</main>
+                <sub>characterization</sub>
+            </index>
+            <title>Characterization of Finite Dimensional Vector Spaces</title>
+            <statement>
+                <p>Suppose that <m>V</m> is a vector space with dimension <m>n</m>.  Then <m>V</m> is isomorphic to <m>\complex{n}</m>.</p>
+            </statement>
+            <proof>
+                <p>Since <m>V</m> has dimension <m>n</m> we can find a basis of <m>V</m> of size <m>n</m> (<xref ref="definition-D" acro="D" autoname="yes"/>) which we will call <m>B</m>.  The linear transformation <m>\vectrepname{B}</m> is an invertible linear transformation from <m>V</m> to <m>\complex{n}</m>, so by <xref ref="definition-IVS" acro="IVS" autoname="yes"/>, we have that <m>V</m> and <m>\complex{n}</m> are isomorphic.</p>
+            </proof>
+        </theorem>
+        <p><xref ref="theorem-CFDVS" acro="CFDVS" autoname="yes"/> is the first of several surprises in this chapter, though it might be a bit demoralizing too.  It says that there really are not all that many different (finite dimensional) vector spaces, and none are really any more complicated than <m>\complex{n}</m>.  Hmmm.  The following examples should make this point.</p>
+        <example xml:id="example-TIVS" acro="TIVS">
+            <index>isomorphic vector spaces</index>
+            <title>Two isomorphic vector spaces</title>
+            <p>The vector space of polynomials with degree 8 or less, <m>P_8</m>, has dimension 9 (<xref ref="theorem-DP" acro="DP" autoname="yes"/>).  By <xref ref="theorem-CFDVS" acro="CFDVS" autoname="yes"/>, <m>P_8</m> is isomorphic to <m>\complex{9}</m>.</p>
+        </example>
+        <example xml:id="example-CVSR" acro="CVSR">
+            <index>crazy vector space</index>
+            <title>Crazy vector space revealed</title>
+            <p>The crazy vector space, <m>C</m> of <xref ref="example-CVS" acro="CVS" autoname="yes"/>, has dimension 2 by <xref ref="example-DC" acro="DC" autoname="yes"/>.  By <xref ref="theorem-CFDVS" acro="CFDVS" autoname="yes"/>, <m>C</m> is isomorphic to <m>\complex{2}</m>.  Hmmmm.  Not really so crazy after all?</p>
+        </example>
+        <example xml:id="example-ASC" acro="ASC">
+            <index>
+                <main>subspace</main>
+                <sub>characterized</sub>
+            </index>
+            <title>A subspace characterized</title>
+            <p>In <xref ref="example-DSP4" acro="DSP4" autoname="yes"/> we determined that a certain subspace <m>W</m> of <m>P_4</m> has dimension <m>4</m>.  By <xref ref="theorem-CFDVS" acro="CFDVS" autoname="yes"/>, <m>W</m> is isomorphic to <m>\complex{4}</m>.</p>
+        </example>
+        <theorem xml:id="theorem-IFDVS" acro="IFDVS">
+            <index>
+                <main>vector spaces</main>
+                <sub>isomorphic</sub>
+            </index>
+            <title>Isomorphism of Finite Dimensional Vector Spaces</title>
+            <statement>
+                <p>Suppose <m>U</m> and <m>V</m> are both finite-dimensional vector spaces.  Then <m>U</m> and <m>V</m> are isomorphic if and only if <m>\dimension{U}=\dimension{V}</m>.</p>
+            </statement>
+            <proof>
+                <case direction="forward">
+                    <!-- MBX: move end of case -->
+                </case>
+                <p>  This is just the statement proved in <xref ref="theorem-IVSED" acro="IVSED" autoname="yes"/>.</p>
+                <case direction="backward">
+                    <!-- MBX: move end of case -->
+                </case>
+                <p>  This is the advertised converse of <xref ref="theorem-IVSED" acro="IVSED" autoname="yes"/>.  We will assume <m>U</m> and <m>V</m> have equal dimension and discover that they are isomorphic vector spaces.  Let <m>n</m> be the common dimension of <m>U</m> and <m>V</m>.  Then by <xref ref="theorem-CFDVS" acro="CFDVS" autoname="yes"/> there are isomorphisms <m>\ltdefn{T}{U}{\complex{n}}</m> and <m>\ltdefn{S}{V}{\complex{n}}</m>.</p>
+                <p><m>T</m> is therefore an invertible linear transformation by <xref ref="definition-IVS" acro="IVS" autoname="yes"/>.  Similarly, <m>S</m> is an invertible linear transformation, and so <m>\ltinverse{S}</m> is  an invertible linear transformation (<xref ref="theorem-IILT" acro="IILT" autoname="yes"/>).  The composition of invertible linear transformations is again invertible (<xref ref="theorem-CIVLT" acro="CIVLT" autoname="yes"/>)
+so the composition of <m>\ltinverse{S}</m> with <m>T</m> is invertible.  Then <m>\ltdefn{\left(\compose{\ltinverse{S}}{T}\right)}{U}{V}</m> is an invertible linear transformation from <m>U</m> to <m>V</m> and <xref ref="definition-IVS" acro="IVS" autoname="yes"/> says <m>U</m> and <m>V</m> are isomorphic.</p>
+            </proof>
+        </theorem>
+        <example xml:id="example-MIVS" acro="MIVS">
+            <index>
+                <main>isomorphic</main>
+                <sub>multiple vector spaces</sub>
+            </index>
+            <title>Multiple isomorphic vector spaces</title>
+            <p><m>\complex{10}</m>, <m>P_{9}</m>, <m>M_{25}</m> and <m>M_{52}</m> are all vector spaces and each has dimension 10.  By <xref ref="theorem-IFDVS" acro="IFDVS" autoname="yes"/> each is isomorphic to any other.</p>
+            <p>The subspace of <m>M_{44}</m> that contains all the symmetric matrices (<xref ref="definition-SYM" acro="SYM" autoname="yes"/>) has dimension <m>10</m>, so this subspace is also isomorphic to each of the four vector spaces above.</p>
+        </example>
+    </subsection>
+    <subsection xml:id="subsection-VR-CP" acro="CP">
+        <title>Coordinatization Principle</title>
+        <p>With <m>\vectrepname{B}</m> available as an invertible linear transformation, we can translate between vectors in a vector space <m>U</m> of dimension <m>m</m> and <m>\complex{m}</m>.  Furthermore, as a linear transformation, <m>\vectrepname{B}</m> respects the addition and scalar multiplication in <m>U</m>, while <m>\vectrepinvname{B}</m> respects the addition and scalar multiplication in <m>\complex{m}</m>.  Since our definitions of linear independence, spans, bases and dimension are all built up from linear combinations, we will finally be able to translate fundamental properties between abstract vector spaces (<m>U</m>) and concrete vector spaces (<m>\complex{m}</m>).</p>
+        <theorem xml:id="theorem-CLI" acro="CLI">
+            <index>
+                <main>coordinatization</main>
+                <sub>linear independence</sub>
+            </index>
+            <title>Coordinatization and Linear Independence</title>
+            <statement>
+                <p>Suppose that <m>U</m> is a vector space with a basis <m>B</m> of size <m>n</m>.  Then
+<md><mrow>S=\set{\vectorlist{u}{k}}</mrow></md>
+is a linearly independent subset of <m>U</m> if and only if
+<md><mrow>R=\set{\vectrep{B}{\vect{u}_1},\,\vectrep{B}{\vect{u}_2},\,\vectrep{B}{\vect{u}_3},\,\ldots,\,\vectrep{B}{\vect{u}_k}}</mrow></md>
+is a linearly independent subset of <m>\complex{n}</m>.</p>
+            </statement>
+            <proof>
+                <p>The linear transformation <m>\vectrepname{B}</m> is an isomorphism between <m>U</m> and <m>\complex{n}</m> (<xref ref="theorem-VRILT" acro="VRILT" autoname="yes"/>).   As an invertible linear transformation, <m>\vectrepname{B}</m> is an injective linear transformation (<xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>),  and <m>\ltinverse{\vectrepname{B}}</m> is also an injective linear transformation (<xref ref="theorem-IILT" acro="IILT" autoname="yes"/>, <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>).</p>
+                <case direction="forward">
+                    <!-- MBX: move end of case -->
+                </case>
+                <p>  Since <m>\vectrepname{B}</m> is an injective linear transformation and <m>S</m> is linearly independent, <xref ref="theorem-ILTLI" acro="ILTLI" autoname="yes"/> says that <m>R</m> is linearly independent.</p>
+                <case direction="backward">
+                    <!-- MBX: move end of case -->
+                </case>
+                <p>  If we apply <m>\ltinverse{\vectrepname{B}}</m> to each element of <m>R</m>, we will create the set <m>S</m>.  Since we are assuming <m>R</m> is linearly independent and <m>\ltinverse{\vectrepname{B}}</m> is injective, <xref ref="theorem-ILTLI" acro="ILTLI" autoname="yes"/> says that <m>S</m> is linearly independent.</p>
+            </proof>
+        </theorem>
+        <theorem xml:id="theorem-CSS" acro="CSS">
+            <index>
+                <main>coordinatization</main>
+                <sub>spanning sets</sub>
+            </index>
+            <title>Coordinatization and Spanning Sets</title>
+            <statement>
+                <p>Suppose that <m>U</m> is a vector space with a basis <m>B</m> of size <m>n</m>.  Then
+<md><mrow>\vect{u}\in\spn{\set{\vectorlist{u}{k}}}</mrow></md>
+if and only if
+<md><mrow>\vectrep{B}{\vect{u}}\in\spn{\set{\vectrep{B}{\vect{u}_1},\,\vectrep{B}{\vect{u}_2},\,\vectrep{B}{\vect{u}_3},\,\ldots,\,\vectrep{B}{\vect{u}_k}}}</mrow></md>
+</p>
+            </statement>
+            <proof>
+                <case direction="forward">
+                    <!-- MBX: move end of case -->
+                </case>
+                <p>  Suppose <m>\vect{u}\in\spn{\set{\vectorlist{u}{k}}}</m>.  Then we know there are scalars, <m>\scalarlist{a}{k}</m>, such that
+<me>\vect{u}=\lincombo{a}{u}{k}</me>
+</p>
+                <p>Then, by <xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/>,
+<md><mrow>\vectrep{B}{\vect{u}}&amp;=\vectrep{B}{\lincombo{a}{u}{k}}</mrow><mrow>&amp;=a_1\vectrep{B}{\vect{u}_1}+a_2\vectrep{B}{\vect{u}_2}+a_3\vectrep{B}{\vect{u}_3}+\cdots+a_k\vectrep{B}{\vect{u}_k}</mrow></md>
+which says that <m>\vectrep{B}{\vect{u}}\in\spn{\set{\vectrep{B}{\vect{u}_1},\,\vectrep{B}{\vect{u}_2},\,\vectrep{B}{\vect{u}_3},\,\ldots,\,\vectrep{B}{\vect{u}_k}}}</m>.</p>
+                <case direction="backward">
+                    <!-- MBX: move end of case -->
+                </case>
+                <p>  Suppose that <m>\vectrep{B}{\vect{u}}\in\spn{\set{\vectrep{B}{\vect{u}_1},\,\vectrep{B}{\vect{u}_2},\,\vectrep{B}{\vect{u}_3},\,\ldots,\,\vectrep{B}{\vect{u}_k}}}</m>.  Then there are scalars <m>\scalarlist{b}{k}</m> such that
+<me>\vectrep{B}{\vect{u}}=b_1\vectrep{B}{\vect{u}_1}+b_2\vectrep{B}{\vect{u}_2}+b_3\vectrep{B}{\vect{u}_3}+\cdots+b_k\vectrep{B}{\vect{u}_k}</me></p>
+                <p>Recall that <m>\vectrepname{B}</m> is invertible (<xref ref="theorem-VRILT" acro="VRILT" autoname="yes"/>), so
+<md><mrow>\vect{u}&amp;=\lteval{I_U}{\vect{u}}&amp;&amp;<xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow><mrow>&amp;=\lt{\left(\compose{\ltinverse{\vectrepname{B}}}{\vectrepname{B}}\right)}{\vect{u}}&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow><mrow>&amp;=\lteval{\ltinverse{\vectrepname{B}}}{\lt{\vectrepname{B}}{\vect{u}}}&amp;&amp;<xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow><mrow>&amp;=\lteval{\ltinverse{\vectrepname{B}}}{b_1\vectrep{B}{\vect{u}_1}+b_2\vectrep{B}{\vect{u}_2}+\cdots+b_k\vectrep{B}{\vect{u}_k}}</mrow><mrow>&amp;=b_1\lteval{\ltinverse{\vectrepname{B}}}{\vectrep{B}{\vect{u}_1}}+b_2\lteval{\ltinverse{\vectrepname{B}}}{\vectrep{B}{\vect{u}_2}}
++\cdots+b_k\lteval{\ltinverse{\vectrepname{B}}}{\vectrep{B}{\vect{u}_k}}&amp;&amp;<xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow><mrow>&amp;=b_1\lteval{I_U}{\vect{u}_1}+b_2\lteval{I_U}{\vect{u}_2}+\cdots+b_k\lteval{I_U}{\vect{u}_k}&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow><mrow>&amp;=\lincombo{b}{u}{k}&amp;&amp;<xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow></md>
+which says that <m>\vect{u}\in\spn{\set{\vectorlist{u}{k}}}</m>.</p>
+            </proof>
+        </theorem>
+        <p>Here is a fairly simple example that illustrates a very, very important idea.</p>
+        <example xml:id="example-CP2" acro="CP2">
+            <index>
+                <main>coordinatizing</main>
+                <sub>polynomials</sub>
+            </index>
+            <title>Coordinatizing in <m>P_2</m></title>
+            <p>In <xref ref="example-VRP2" acro="VRP2" autoname="yes"/> we needed to know that
+<me>D=\set{
+-2-x+3x^2,\,
+1-2x^2,\,
+5+4x+x^2
+}</me>
+is a basis for <m>P_2</m>.  With <xref ref="theorem-CLI" acro="CLI" autoname="yes"/> and <xref ref="theorem-CSS" acro="CSS" autoname="yes"/> this task is much easier.</p>
+            <p>First, choose a known basis for <m>P_2</m>, a basis that forms vector representations easily.  We will choose
+<me>B=\set{1,\,x,\,x^2}</me>
+</p>
+            <p>Now, form the subset of <m>\complex{3}</m> that is the result of applying <m>\vectrepname{B}</m> to each element of <m>D</m>,
+<md><mrow>F&amp;=\set{\vectrep{B}{-2-x+3x^2},\,\vectrep{B}{1-2x^2},\,\vectrep{B}{5+4x+x^2}}</mrow><mrow>&amp;=
+\set{
+\colvector{-2\\-1\\3},\,
+\colvector{1\\0\\-2},\,
+\colvector{5\\4\\1}
+}</mrow></md>
+and ask if <m>F</m> is a linearly independent spanning set for <m>\complex{3}</m>.  This is easily seen to be the case by forming a matrix <m>A</m> whose columns are the vectors of <m>F</m>, row-reducing <m>A</m> to the identity matrix <m>I_3</m>, and then using the nonsingularity of <m>A</m> to assert that <m>F</m> is a basis for <m>\complex{3}</m> (<xref ref="theorem-CNMB" acro="CNMB" autoname="yes"/>).  Now, since <m>F</m> is a basis for <m>\complex{3}</m>, <xref ref="theorem-CLI" acro="CLI" autoname="yes"/> and <xref ref="theorem-CSS" acro="CSS" autoname="yes"/> tell us that <m>D</m> is also a basis for <m>P_2</m>.</p>
+        </example>
+        <p><xref ref="example-CP2" acro="CP2" autoname="yes"/> illustrates the broad notion that computations in abstract vector spaces can be reduced to computations in <m>\complex{m}</m>.  You may have noticed this phenomenon as you worked through examples in <xref ref="chapter-VS" acro="VS" autoname="yes"/> or <xref ref="chapter-LT" acro="LT" autoname="yes"/> employing vector spaces of matrices or polynomials.  These computations seemed to invariably result in systems of equations or the like from <xref ref="chapter-SLE" acro="SLE" autoname="yes"/>, <xref ref="chapter-V" acro="V" autoname="yes"/> and <xref ref="chapter-M" acro="M" autoname="yes"/>.  It is vector representation, <m>\vectrepname{B}</m>, that allows us to make this connection formal and precise.</p>
+        <p>Knowing that vector representation allows us to translate questions about linear combinations, linear independence and spans from general vector spaces to <m>\complex{m}</m> allows us to prove a great many theorems about how to translate other properties.  Rather than prove these theorems, each of the same style as the other, we will offer some general guidance about how to best employ <xref ref="theorem-VRLT" acro="VRLT" autoname="yes"/>, <xref ref="theorem-CLI" acro="CLI" autoname="yes"/> and <xref ref="theorem-CSS" acro="CSS" autoname="yes"/>.  This comes in the form of a <q>principle</q>: a basic truth, but most definitely not a theorem (hence, no proof).</p>
+        <principle>
+            <title>The Coordinatization Principle</title>
+            <statement>
+                <p>Suppose that <m>U</m> is a vector space with a basis <m>B</m> of size <m>n</m>.   Then any question about <m>U</m>, or its elements, which ultimately depends on the vector addition or scalar multiplication in <m>U</m>, or depends on linear independence or spanning, may be translated into the same question in <m>\complex{n}</m> by application of the linear transformation <m>\vectrepname{B}</m> to the relevant vectors.  Once the question is answered in <m>\complex{n}</m>, the answer may be translated back to <m>U</m> through application of the inverse linear transformation <m>\ltinverse{\vectrepname{B}}</m> (if necessary).</p>
+            </statement>
+        </principle>
+        <example xml:id="example-CM32" acro="CM32">
+            <index>
+                <main>coordinatization</main>
+                <sub>linear combination of matrices</sub>
+            </index>
+            <title>Coordinatization in <m>M_{32}</m></title>
+            <p>This is a simple example of the <miscref type="principle" text="Coordinatization Principle"/>, depending only on the fact that coordinatizing is an invertible linear transformation (<xref ref="theorem-VRILT" acro="VRILT" autoname="yes"/>).  Suppose we have a linear combination to perform in <m>M_{32}</m>, the vector space of <m>3\times 2</m> matrices, but we are adverse to doing the operations of <m>M_{32}</m> (<xref ref="definition-MA" acro="MA" autoname="yes"/>, <xref ref="definition-MSM" acro="MSM" autoname="yes"/>).  More specifically, suppose we are faced with the computation
+<me>6
+\begin{bmatrix}
+3 &amp; 7\\
+-2 &amp; 4\\
+0 &amp; -3
+\end{bmatrix}
++2
+\begin{bmatrix}
+-1 &amp; 3\\
+4 &amp; 8\\
+-2 &amp; 5
+\end{bmatrix}</me>
+</p>
+            <p>We choose a nice basis for <m>M_{32}</m> (or a nasty basis if we are so inclined),
+<me>B=\set{
+\begin{bmatrix}1&amp;0\\0&amp;0\\0&amp;0\end{bmatrix},\,
+\begin{bmatrix}0&amp;0\\1&amp;0\\0&amp;0\end{bmatrix},\,
+\begin{bmatrix}0&amp;0\\0&amp;0\\1&amp;0\end{bmatrix},\,
+\begin{bmatrix}0&amp;1\\0&amp;0\\0&amp;0\end{bmatrix},\,
+\begin{bmatrix}0&amp;0\\0&amp;1\\0&amp;0\end{bmatrix},\,
+\begin{bmatrix}0&amp;0\\0&amp;0\\0&amp;1\end{bmatrix}
+}</me>
+and apply <m>\vectrepname{B}</m> to each vector in the linear combination.  This gives us a new computation, now in the vector space <m>\complex{6}</m>, which we can compute with operations in <m>\complex{6}</m> (<xref ref="definition-CVA" acro="CVA" autoname="yes"/>, <xref ref="definition-CVSM" acro="CVSM" autoname="yes"/>),
+<md><mrow>6\colvector{3\\-2\\0\\7\\4\\-3}+2\colvector{-1\\4\\-2\\3\\8\\5}=\colvector{16\\-4\\-4\\48\\40\\-8}</mrow></md>
+</p>
+            <p>We are after the result of a computation in <m>M_{32}</m>, so we now can apply <m>\ltinverse{\vectrepname{B}}</m> to obtain a <m>3\times 2</m> matrix,
+<md><mrow>&amp;16\begin{bmatrix}1&amp;0\\0&amp;0\\0&amp;0\end{bmatrix}+
+(-4)\begin{bmatrix}0&amp;0\\1&amp;0\\0&amp;0\end{bmatrix}+
+(-4)\begin{bmatrix}0&amp;0\\0&amp;0\\1&amp;0\end{bmatrix}+
+48\begin{bmatrix}0&amp;1\\0&amp;0\\0&amp;0\end{bmatrix}+
+40\begin{bmatrix}0&amp;0\\0&amp;1\\0&amp;0\end{bmatrix}+
+(-8)\begin{bmatrix}0&amp;0\\0&amp;0\\0&amp;1\end{bmatrix}\\
+&amp;\quad\quad=\ \begin{bmatrix}16&amp;48\\-4&amp;40\\-4&amp;-8\end{bmatrix}</mrow></md>
+which is exactly the matrix we would have computed had we just performed the matrix operations in the first place.  So this was not meant to be an <em>easier</em> way to compute a linear combination of two matrices, just a <em>different</em> way.</p>
+        </example>
+        <computation xml:id="sage-SUTH2" acro="SUTH2">
+            <title>Sage Under The Hood, Round 2</title>
+            <index>
+                <main>sage under the hood</main>
+                <sub>round 2</sub>
+            </index>
+            <p>You will have noticed that we have never constructed examples involving our favorite abstract vector spaces, such as the vector space of polynomials with fixed maximum degree, the vector space of matrices of a fixed size, or even the crazy vector space.  There is nothing to stop us (or you) from implementing these examples in Sage as vector spaces.  Maybe someday it will happen.  But since Sage is built to be a tool for serious mathematical research, the designers recognize that this is not necessary.</p>
+            <p><xref ref="theorem-CFDVS" acro="CFDVS" autoname="yes"/> tells us that <em>every</em> finite-dimensional vector space can be described (loosely speaking) by just a field of scalars (for us, <m>\complexes</m> in the text, <c>QQ</c> in Sage) and the dimension.  You can study whatever whacky vector space you might dream up, or whatever very complicated vector space that is important for particle physics, and through vector representation (<q>coordinatization</q>), you can convert your calculations to and from Sage.</p>
+        </computation>
+    </subsection>
+    <!--   End of  vr.tex -->
+    <exercises>
+        <title>Reading Questions</title>
+        <exercise>
+            <statement>
+                <p>The vector space of <m>3\times 5</m> matrices, <m>M_{35}</m> is isomorphic to what fundamental vector space?
+</p>
+            </statement>
+        </exercise>
+        <exercise>
+            <statement>
+                <p>A basis for <m>\complex{3}</m> is
+<me>B=\set{
+\colvector{1\\2\\-1},\,
+\colvector{3\\-1\\2},\,
+\colvector{1\\1\\1}
+}</me>
+Compute <m>\vectrep{B}{\colvector{5\\8\\-1}}</m>.
+</p>
+            </statement>
+        </exercise>
+        <exercise>
+            <statement>
+                <p>What is the first <q>surprise,</q> and why is it surprising?
+</p>
+            </statement>
+        </exercise>
+    </exercises>
+    <exercises>
+        <title>Exercises</title>
+        <exercise number="C10" xml:id="exercise-VR-C10">
+            <statement>
+                <p>In the vector space <m>\complex{3}</m>, compute the vector representation <m>\vectrep{B}{\vect{v}}</m> for the basis <m>B</m> and vector <m>\vect{v}</m> below.
+<md><mrow>B&amp;=\set{
+\colvector{2\\-2\\2},\,
+\colvector{1\\3\\1},\,
+\colvector{3\\5\\2}
+}
+&amp;
+\vect{v}&amp;=\colvector{11\\5\\8}</mrow></md>
+</p>
+            </statement>
+            <solution xml:id="solution-VR-C10">
+                <p>We need to express the vector <m>\vect{v}</m> as a linear combination of the vectors in
+<m>B</m>.  <xref ref="theorem-VRRB" acro="VRRB" autoname="yes"/> tells us we will be able to do this, and do it uniquely.  The vector equation
+<me>a_1\colvector{2\\-2\\2}+
+a_2\colvector{1\\3\\1}+
+a_3\colvector{3\\5\\2}
+=
+\colvector{11\\5\\8}</me>
+becomes (via <xref ref="theorem-SLSLC" acro="SLSLC" autoname="yes"/>) a system of linear equations with augmented matrix,
+<me>\begin{bmatrix}
+2 &amp; 1 &amp; 3 &amp; 11\\
+-2 &amp; 3 &amp; 5 &amp; 5\\
+2 &amp; 1 &amp; 2 &amp; 8
+\end{bmatrix}</me>
+This system has the unique solution <m>a_1=2</m>, <m>a_2=-2</m>, <m>a_3=3</m>.  So by <xref ref="definition-VR" acro="VR" autoname="yes"/>,
+<me>\vectrep{B}{\vect{v}}=\vectrep{B}{\colvector{11\\5\\8}}
+=
+\vectrep{B}{
+2\colvector{2\\-2\\2}+
+(-2)\colvector{1\\3\\1}+
+3\colvector{3\\5\\2}
+}
+=\colvector{2\\-2\\3}</me>
+</p>
+            </solution>
+        </exercise>
+        <exercise number="C20" xml:id="exercise-VR-C20">
+            <statement>
+                <p>Rework <xref ref="example-CM32" acro="CM32" autoname="yes"/> replacing the basis <m>B</m> by the basis
+<me>C=
+\set{
+\begin{bmatrix}
+ -14 &amp; -9 \\ 10 &amp; 10 \\ -6 &amp; -2
+\end{bmatrix},\,
+\begin{bmatrix}
+ -7 &amp; -4 \\ 5 &amp; 5 \\ -3 &amp; -1
+\end{bmatrix},\,
+\begin{bmatrix}
+ -3 &amp; -1 \\ 0 &amp; -2 \\ 1 &amp; 1
+\end{bmatrix},\,
+\begin{bmatrix}
+ -7 &amp; -4 \\ 3 &amp; 2 \\ -1 &amp; 0
+\end{bmatrix},\,
+\begin{bmatrix}
+ 4 &amp; 2 \\ -3 &amp; -3 \\ 2 &amp; 1
+\end{bmatrix},\,
+\begin{bmatrix}
+ 0 &amp; 0 \\ -1 &amp; -2 \\ 1 &amp; 1
+\end{bmatrix}
+}</me>
+</p>
+            </statement>
+            <solution xml:id="solution-VR-C20">
+                <p>The following computations replicate the computations given in <xref ref="example-CM32" acro="CM32" autoname="yes"/>, only using the basis <m>C</m>.
+<md><mrow>\vectrep{C}{\begin{bmatrix}3 &amp; 7 \\ -2 &amp; 4 \\ 0 &amp; -3\end{bmatrix}}&amp;=
+\colvector{-9\\12\\-6\\7\\-2\\-1}
+&amp;
+\vectrep{C}{\begin{bmatrix}-1 &amp; 3 \\ 4 &amp; 8 \\ -2 &amp; 5\end{bmatrix}}&amp;=
+\colvector{-11\\34\\-4\\-1\\16\\5}\\
+6\colvector{-9\\12\\-6\\7\\-2\\-1} + 2\colvector{-11\\34\\-4\\-1\\16\\5}
+&amp;=\colvector{-76\\140\\-44\\40\\20\\4}
+&amp;
+\vectrepinv{C}{\colvector{-76\\140\\-44\\40\\20\\4}}&amp;=
+\begin{bmatrix}16 &amp; 48 \\ -4 &amp; 40 \\ -4 &amp; -8\end{bmatrix}</mrow></md>
+</p>
+            </solution>
+        </exercise>
+        <exercise number="M10" xml:id="exercise-VR-M10">
+            <statement contributor="andyzimmer">
+                <p>Prove that the set <m>S</m> below is a basis for the vector space of <m>2\times 2</m> matrices, <m>M_{22}</m>.  Do this by choosing a natural basis for <m>M_{22}</m> and coordinatizing the elements of <m>S</m> with respect to this basis.  Examine the resulting set of column vectors from <m>\complex{4}</m> and apply the <miscref type="principle" text="Coordinatization Principle"/>.
+<me>S=\set{
+\begin{bmatrix} 33 &amp;99\\ 78 &amp; -9 \end{bmatrix},\,
+\begin{bmatrix} -16 &amp; -47\\ -36 &amp; 2 \end{bmatrix},\,
+\begin{bmatrix} 10 &amp; 27\\ 17 &amp; 3 \end{bmatrix},\,
+\begin{bmatrix} -2 &amp; -7\\ -6 &amp; 4 \end{bmatrix}
+}</me>
+</p>
+            </statement>
+        </exercise>
+        <exercise number="M20" xml:id="exercise-VR-M20">
+            <statement contributor="tylerueltschi">
+                <p>The set <m>B=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}</m> is a basis of the vector space <m>P_3</m>, polynomials with degree 3 or less.  Therefore <m>\vectrepname{B}</m> is a linear transformation, according to <xref ref="theorem-VRLT" acro="VRLT" autoname="yes"/>.  Find a <q>formula</q> for <m>\vectrepname{B}</m>.  In other words, find an expression for <m>\vectrep{B}{a+bx+cx^2+dx^3}</m>.
+<md><mrow>\vect{v}_1&amp;=1 - 5x - 22x^2 + 3x^3
+&amp;
+\vect{v}_2&amp;=-2 + 11x + 49x^2 - 8x^3</mrow><mrow>\vect{v}_3&amp;=-1 + 7x + 33x^2 - 8x^3
+&amp;
+\vect{v}_4&amp;=-1 + 4x + 16x^2 + x^3</mrow></md>
+</p>
+            </statement>
+            <solution xml:id="solution-VR-M20">
+                <p>Our strategy is to determine the values of the linear transformation on a <q>nice</q> basis for the domain, and then apply the ideas of  <xref ref="theorem-LTDB" acro="LTDB" autoname="yes"/> to obtain our formula.   <m>\vectrepname{B}</m> is a linear transformation of the form <m>\ltdefn{\vectrepname{B}}{P_3}{\complex{4}}</m>, so for a basis of the domain we choose a very simple one: <m>C=\set{1,\,x,\,x^2,\,x^3}</m>.  We now give the vector representations of the elements of <m>C</m>, which are obtained by solving the relevant systems of equations obtained from linear combinations of the elements of <m>B</m>.
+<md><mrow>\vectrep{B}{1}  &amp;=\colvector{20 \\ 7 \\ 1 \\ 4}
+&amp;
+\vectrep{B}{x}  &amp;=\colvector{17 \\ 14 \\ -8 \\ -3}
+&amp;
+\vectrep{B}{x^2}&amp;=\colvector{-3 \\ -3 \\ 2 \\ 1}
+&amp;
+\vectrep{B}{x^3}&amp;=\colvector{0 \\ -1 \\ 1 \\ 1}
+&amp;</mrow></md>
+This is enough information to determine the linear transformation uniquely, and in particular, to allow us to use <xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/> to construct a formula.
+<md><mrow>\vectrep{B}{a+bx+cx^2+dx^3} &amp;=
+a\vectrep{B}{1} + b\vectrep{B}{x} + c\vectrep{B}{x^2} + d\vectrep{B}{x^3}</mrow><mrow>&amp;=
+a\colvector{20 \\ 7 \\ 1 \\ 4} +
+b\colvector{17 \\ 14 \\ -8 \\ -3} +
+c\colvector{-3 \\ -3 \\ 2 \\ 1} +
+d\colvector{0 \\ -1 \\ 1 \\ 1}</mrow><mrow>&amp;=
+\colvector{
+20a + 17b - 3c</mrow><mrow>7a + 14b - 3c - d</mrow><mrow>a - 8b + 2c + d</mrow><mrow>4a - 3b + c + d
+}</mrow></md>
+</p>
+            </solution>
+        </exercise>
+    </exercises>
+</section>
