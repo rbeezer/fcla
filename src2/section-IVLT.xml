@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      A First Course in Linear Algebra        -->
+<!--                                              -->
+<!-- Copyright (C) 2004-2017  Robert A. Beezer    -->
+<!-- See the file COPYING for copying conditions. -->
+
 <section xml:id="section-IVLT" acro="IVLT">
     <title>Invertible Linear Transformations</title>
-    <!-- %%%%%%%%%% -->
-    <!-- % -->
-    <!-- %  Section IVLT -->
-    <!-- %  Invertible Linear Transformations -->
-    <!-- % -->
-    <!-- %%%%%%%%%% -->
     <introduction>
         <p>In this section we will conclude our introduction to linear transformations by bringing together the twin properties of injectivity and surjectivity and consider linear transformations with both of these properties.</p>
     </introduction>
@@ -20,9 +22,7 @@
                 <sub>identity</sub>
             </index>
             <statement>
-                <p>The <term>identity linear transformation</term> on the vector space <m>W</m> is defined as
-<me>\ltdefn{I_W}{W}{W},\quad\quad \lteval{I_W}{\vect{w}}=\vect{w}</me>
-</p>
+                <p>The <term>identity linear transformation</term> on the vector space <m>W</m> is defined as<me>\ltdefn{I_W}{W}{W},\quad\quad \lteval{I_W}{\vect{w}}=\vect{w}</me></p>
             </statement>
         </definition>
         <p>Informally, <m>I_W</m> is the <q>do-nothing</q> function.  You should check that <m>I_W</m> is really a linear transformation, as claimed, and then compute its kernel and range to see that it is both injective and surjective.  All of these facts should be straightforward to verify (<xref ref="exercise-IVLT-T05" acro="IVLT.T05" autoname="yes"/>).  With this in hand we can make our main definition.</p>
@@ -33,138 +33,133 @@
                 <sub>invertible</sub>
             </index>
             <statement>
-                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  If there is a function <m>\ltdefn{S}{V}{U}</m> such that
-<md><mrow>\compose{S}{T}&amp;=I_U &amp; \compose{T}{S}&amp;=I_V</mrow></md>
-then <m>T</m> is <term>invertible</term>.  In this case, we call <m>S</m> the <term>inverse</term> of <m>T</m> and write <m>S=\ltinverse{T}</m>.</p>
+                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  If there is a function <m>\ltdefn{S}{V}{U}</m> such that<md>
+                <mrow>\compose{S}{T}&amp;=I_U &amp; \compose{T}{S}&amp;=I_V</mrow>
+            </md>then <m>T</m> is <term>invertible</term>.  In this case, we call <m>S</m> the <term>inverse</term> of <m>T</m> and write <m>S=\ltinverse{T}</m>.</p>
             </statement>
         </definition>
         <p>Informally, a linear transformation <m>T</m> is invertible if there is a companion linear transformation, <m>S</m>, which <q>undoes</q> the action of <m>T</m>.  When the two linear transformations are applied consecutively (composition), in either order, the result is to have no real effect.  It is entirely analogous to squaring a positive number and then taking its (positive) square root.</p>
         <p>Here is an example of a linear transformation that is invertible.  As usual at the beginning of a section, do not be concerned with where <m>S</m> came from, just understand how it illustrates <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/>.</p>
         <example xml:id="example-AIVLT" acro="AIVLT">
+            <title>An invertible linear transformation</title>
             <index>
                 <main>linear transformation</main>
                 <sub>invertible</sub>
             </index>
-            <title>An invertible linear transformation</title>
-            <p>Archetype<nbsp/><xref ref="archetype-V" acro="V" autoname="no"/> is the linear transformation
-<me><!-- Archetype V, Part ltdefn -->\ltdefn{T}{P_3}{M_{22}},\quad\lteval{T}{a+bx+cx^2+dx^3}=
-\begin{bmatrix}
-a+b &amp; a-2c\\
-d &amp; b-d
-\end{bmatrix}
-</me>
-</p>
-            <p>Define the function <m>\ltdefn{S}{M_{22}}{P_3}</m> defined by
-<me>\lteval{S}{\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}}=(a - c - d)+ (c + d)x +\frac{1}{2}(a - b - c - d)x^2+cx^3</me>
-</p>
-            <p>Then
-<md><mrow>&amp;\lteval{\left(\compose{T}{S}\right)}{\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}}\\
-&amp;\quad\quad=\lteval{T}{\lt{S}{\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}}}\\
-&amp;\quad\quad=\lteval{T}{(a - c - d)+ (c + d)x +\frac{1}{2}(a - b - c - d)x^2+cx^3}\\
-&amp;\quad\quad=\begin{bmatrix}
-(a - c - d)+ (c + d)&amp;(a - c - d)-2(\frac{1}{2}(a - b - c - d))\\c&amp;(c + d)-c
-\end{bmatrix}\\
-&amp;\quad\quad=\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}\\
-&amp;\quad\quad=\lt{I_{M_{22}}}{\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}}</mrow><intertext>and</intertext><mrow>&amp;\lteval{\left(\compose{S}{T}\right)}{a+bx+cx^2+dx^3}\\
-&amp;\quad\quad=\lteval{S}{\lt{T}{a+bx+cx^2+dx^3}}\\
-&amp;\quad\quad=\lteval{S}{\begin{bmatrix}
-a+b&amp;a-2c\\d&amp;b-d
-\end{bmatrix}}\\
-&amp;\quad\quad=((a+b)-d-(b-d))+
-(d+(b-d))x\\
-&amp;\quad\quad+\left(\frac{1}{2}((a+b)-(a-2c)-d-(b-d))\right)x^2+
-(d)x^3\\
-&amp;\quad\quad=a+bx+cx^2+dx^3\\
-&amp;\quad\quad=\lt{I_{P_3}}{a+bx+cx^2+dx^3}</mrow></md>
-</p>
+            <!-- Archetype V, Part ltdefn -->
+            <p>Archetype<nbsp/><xref ref="archetype-V" acro="V" autoname="no"/> is the linear transformation<me>\ltdefn{T}{P_3}{M_{22}},\quad\lteval{T}{a+bx+cx^2+dx^3}=
+            \begin{bmatrix}
+            a+b &amp; a-2c\\
+            d &amp; b-d
+            \end{bmatrix}</me></p>
+            <p>Define the function <m>\ltdefn{S}{M_{22}}{P_3}</m> defined by<me>\lteval{S}{\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}}=(a - c - d)+ (c + d)x +\frac{1}{2}(a - b - c - d)x^2+cx^3</me></p>
+            <p>Then<md>
+                <mrow>&amp;\lteval{\left(\compose{T}{S}\right)}{\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}}\\
+                &amp;\quad\quad=\lteval{T}{\lt{S}{\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}}}\\
+                &amp;\quad\quad=\lteval{T}{(a - c - d)+ (c + d)x +\frac{1}{2}(a - b - c - d)x^2+cx^3}\\
+                &amp;\quad\quad=\begin{bmatrix}
+                (a - c - d)+ (c + d)&amp;(a - c - d)-2(\frac{1}{2}(a - b - c - d))\\c&amp;(c + d)-c
+                \end{bmatrix}</mrow>
+                <mrow>&amp;\quad\quad=\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}</mrow>
+                <mrow>&amp;\quad\quad=\lt{I_{M_{22}}}{\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}}</mrow>
+                <intertext>and</intertext>
+                <mrow>&amp;\lteval{\left(\compose{S}{T}\right)}{a+bx+cx^2+dx^3}\\
+                &amp;\quad\quad=\lteval{S}{\lt{T}{a+bx+cx^2+dx^3}}\\
+                &amp;\quad\quad=\lteval{S}{\begin{bmatrix}
+                a+b&amp;a-2c\\d&amp;b-d
+                \end{bmatrix}}\\
+                &amp;\quad\quad=((a+b)-d-(b-d))+
+                (d+(b-d))x\\
+                &amp;\quad\quad+\left(\frac{1}{2}((a+b)-(a-2c)-d-(b-d))\right)x^2+
+                (d)x^3\\
+                &amp;\quad\quad=a+bx+cx^2+dx^3\\
+                &amp;\quad\quad=\lt{I_{P_3}}{a+bx+cx^2+dx^3}</mrow>
+            </md></p>
             <p>For now, understand why these computations show that <m>T</m> is invertible, and that <m>S=T^{-1}</m>.  Maybe even be amazed by how <m>S</m> works so perfectly in concert with <m>T</m>!  We will see later just how to arrive at the correct form of <m>S</m> (when it is possible).</p>
         </example>
         <p>It can be as instructive to study a linear transformation that is not invertible.</p>
         <example xml:id="example-ANILT" acro="ANILT">
+            <title>A non-invertible linear transformation</title>
             <index>
                 <main>linear transformation</main>
                 <sub>not invertible</sub>
             </index>
-            <title>A non-invertible linear transformation</title>
-            <p>Consider the linear transformation <m>\ltdefn{T}{\complex{3}}{M_{22}}</m> defined by
-<me>\lteval{T}{\colvector{a\\b\\c}}=\begin{bmatrix}
-a-b&amp;2a+2b+c\\3a+b+c&amp;-2a-6b-2c
-\end{bmatrix}</me>
-</p>
+            <p>Consider the linear transformation <m>\ltdefn{T}{\complex{3}}{M_{22}}</m> defined by<me>\lteval{T}{\colvector{a\\b\\c}}=\begin{bmatrix}
+            a-b&amp;2a+2b+c\\3a+b+c&amp;-2a-6b-2c
+            \end{bmatrix}</me></p>
             <p>Suppose we were to search for an inverse function <m>\ltdefn{S}{M_{22}}{\complex{3}}</m>.</p>
-            <p>First verify that the <m>2\times 2</m> matrix
-$A=\begin{bmatrix}
-5&amp;3\\8&amp;2
-\end{bmatrix}
-$
-is not in the range of <m>T</m>.  This will amount to finding an input to <m>T</m>, <m>\colvector{a\\b\\c}</m>, such that
-<md><mrow>a-b&amp;=5</mrow><mrow>2a+2b+c&amp;=3</mrow><mrow>3a+b+c&amp;=8</mrow><mrow>-2a-6b-2c&amp;=2</mrow></md>
-</p>
-            <p>As this system of equations is inconsistent, there is no input column vector, and <m>A\not\in\rng{T}</m>.  How should we define <m>\lteval{S}{A}</m>?  Note that
-<me>\lteval{T}{\lt{S}{A}}=\lteval{\left(\compose{T}{S}\right)}{A}=
-\lt{I_{M_{22}}}{A}=A</me>
-</p>
+            <p>First verify that the <m>2\times 2</m> matrix<me>A=\begin{bmatrix} 5&amp;3\\8&amp;2 \end{bmatrix}</me> is not in the range of <m>T</m>.  This will amount to finding an input to <m>T</m>, <m>\colvector{a\\b\\c}</m>, such that<md>
+                <mrow>a-b&amp;=5</mrow>
+                <mrow>2a+2b+c&amp;=3</mrow>
+                <mrow>3a+b+c&amp;=8</mrow>
+                <mrow>-2a-6b-2c&amp;=2</mrow>
+            </md></p>
+            <p>As this system of equations is inconsistent, there is no input column vector, and <m>A\not\in\rng{T}</m>.  How should we define <m>\lteval{S}{A}</m>?  Note that<me>\lteval{T}{\lt{S}{A}}=\lteval{\left(\compose{T}{S}\right)}{A}=
+            \lt{I_{M_{22}}}{A}=A</me></p>
             <p>So any definition we would provide for <m>\lteval{S}{A}</m> must then be a column vector that <m>T</m> sends to <m>A</m> and we would have <m>A\in\rng{T}</m>, contrary to the definition of <m>T</m>.  This is enough to see that there is no function <m>S</m> that will allow us to conclude that <m>T</m> is invertible, since we cannot provide a consistent definition for <m>\lteval{S}{A}</m> if we assume <m>T</m> is invertible.</p>
-            <p>Even though we now know that <m>T</m> is not invertible, let us not leave this example just yet.  Check that
-<md><mrow>\lteval{T}{\colvector{1\\-2\\4}}&amp;=\begin{bmatrix}3&amp;2\\5&amp;2\end{bmatrix}=B&amp;
-\lteval{T}{\colvector{0\\-3\\8}}&amp;=\begin{bmatrix}3&amp;2\\5&amp;2\end{bmatrix}=B</mrow></md>
-</p>
-            <p>How would we define <m>\lteval{S}{B}</m>?
-<md><mrow>\lteval{S}{B}&amp;=\lteval{S}{\lt{T}{\colvector{1\\-2\\4}}}
-=\lteval{\left(\compose{S}{T}\right)}{\colvector{1\\-2\\4}}
-=\lt{I_{\complex{3}}}{\colvector{1\\-2\\4}}=\colvector{1\\-2\\4}</mrow><intertext>or</intertext><mrow>\lteval{S}{B}&amp;=\lteval{S}{\lt{T}{\colvector{0\\-3\\8}}}
-=\lteval{\left(\compose{S}{T}\right)}{\colvector{0\\-3\\8}}
-=\lt{I_{\complex{3}}}{\colvector{0\\-3\\8}}=\colvector{0\\-3\\8}</mrow></md>
-</p>
-            <p>Which definition should we provide for <m>\lteval{S}{B}</m>?  Both are necessary.  But then <m>S</m> is not a function.  So we have a second reason to know that there is no function <m>S</m> that will allow us to conclude that <m>T</m> is invertible.  It happens that there are infinitely many column vectors that <m>S</m> would have to take to <m>B</m>.  Construct the kernel of <m>T</m>,
-<me>\krn{T}=\spn{\set{\colvector{-1\\-1\\4}}}</me>
-</p>
-            <p>Now choose either of the two inputs used above for <m>T</m> and add to it a scalar multiple of the basis vector for the kernel of <m>T</m>.  For example,
-<me>\vect{x}=\colvector{1\\-2\\4}+(-2)\colvector{-1\\-1\\4}=\colvector{3\\0\\-4}</me>
-then verify that <m>\lteval{T}{\vect{x}}=B</m>.  Practice creating a few more inputs for <m>T</m> that would be sent to <m>B</m>, and see why it is hopeless to think that we could ever provide a reasonable definition for <m>\lteval{S}{B}</m>!  There is a <q>whole subspace's worth</q> of values that <m>\lteval{S}{B}</m> would have to take on.</p>
+            <p>Even though we now know that <m>T</m> is not invertible, let us not leave this example just yet.  Check that<md>
+                <mrow>\lteval{T}{\colvector{1\\-2\\4}}&amp;=\begin{bmatrix}3&amp;2\\5&amp;2\end{bmatrix}=B&amp;
+                \lteval{T}{\colvector{0\\-3\\8}}&amp;=\begin{bmatrix}3&amp;2\\5&amp;2\end{bmatrix}=B</mrow>
+            </md></p>
+            <p>How would we define <m>\lteval{S}{B}</m>?<md>
+                <mrow>\lteval{S}{B}&amp;=\lteval{S}{\lt{T}{\colvector{1\\-2\\4}}}
+                =\lteval{\left(\compose{S}{T}\right)}{\colvector{1\\-2\\4}}
+                =\lt{I_{\complex{3}}}{\colvector{1\\-2\\4}}=\colvector{1\\-2\\4}</mrow>
+                <intertext>or</intertext>
+                <mrow>\lteval{S}{B}&amp;=\lteval{S}{\lt{T}{\colvector{0\\-3\\8}}}
+                =\lteval{\left(\compose{S}{T}\right)}{\colvector{0\\-3\\8}}
+                =\lt{I_{\complex{3}}}{\colvector{0\\-3\\8}}=\colvector{0\\-3\\8}</mrow>
+            </md></p>
+            <p>Which definition should we provide for <m>\lteval{S}{B}</m>?  Both are necessary.  But then <m>S</m> is not a function.  So we have a second reason to know that there is no function <m>S</m> that will allow us to conclude that <m>T</m> is invertible.  It happens that there are infinitely many column vectors that <m>S</m> would have to take to <m>B</m>.  Construct the kernel of <m>T</m>,<me>\krn{T}=\spn{\set{\colvector{-1\\-1\\4}}}</me></p>
+            <p>Now choose either of the two inputs used above for <m>T</m> and add to it a scalar multiple of the basis vector for the kernel of <m>T</m>.  For example,<me>\vect{x}=\colvector{1\\-2\\4}+(-2)\colvector{-1\\-1\\4}=\colvector{3\\0\\-4}</me>then verify that <m>\lteval{T}{\vect{x}}=B</m>.  Practice creating a few more inputs for <m>T</m> that would be sent to <m>B</m>, and see why it is hopeless to think that we could ever provide a reasonable definition for <m>\lteval{S}{B}</m>!  There is a <q>whole subspace's worth</q> of values that <m>\lteval{S}{B}</m> would have to take on.</p>
         </example>
         <p>In <xref ref="example-ANILT" acro="ANILT" autoname="yes"/> you may have noticed that <m>T</m> is not surjective, since the matrix <m>A</m> was not in the range of <m>T</m>.  And <m>T</m> is not injective since there are two different input column vectors that <m>T</m> sends to the matrix <m>B</m>.  Linear transformations <m>T</m> that are not surjective lead to putative inverse functions <m>S</m> that are undefined on inputs outside of the range of <m>T</m>.  Linear transformations <m>T</m> that are not injective lead to putative inverse functions <m>S</m> that are multiply-defined on each of their inputs.  We will formalize these ideas in <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>.</p>
         <p>But first notice in <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/> that we only require the inverse (when it exists) to be a function.  When it does exist, it too is a linear transformation.</p>
         <theorem xml:id="theorem-ILTLT" acro="ILTLT">
+            <title>Inverse of a Linear Transformation is a Linear Transformation</title>
             <index>
                 <main>linear transformation</main>
                 <sub>inverse</sub>
             </index>
-            <title>Inverse of a Linear Transformation is a Linear Transformation</title>
             <statement>
                 <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is an invertible linear transformation.  Then the function <m>\ltdefn{\ltinverse{T}}{V}{U}</m> is a linear transformation.</p>
             </statement>
             <proof>
-                <p>We work through verifying <xref ref="definition-LT" acro="LT" autoname="yes"/> for <m>\ltinverse{T}</m>, using the fact that <m>T</m> is a linear transformation to obtain the second equality in each half of the proof.  To this end, suppose <m>\vect{x},\,\vect{y}\in V</m> and <m>\alpha\in\complexes</m>.
-<md><mrow>\lteval{\ltinverse{T}}{\vect{x}+\vect{y}}&amp;=
-\lteval{\ltinverse{T}}{\lteval{T}{\lteval{\ltinverse{T}}{\vect{x}}}+\lteval{T}{\lteval{\ltinverse{T}}{\vect{y}}}}
-&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow><mrow>&amp;=\lteval{\ltinverse{T}}{\lteval{T}{\lteval{\ltinverse{T}}{\vect{x}}+\lteval{\ltinverse{T}}{\vect{y}}}}&amp;&amp;<xref ref="definition-LT" acro="LT" autoname="yes"/></mrow><mrow>&amp;=\lteval{\ltinverse{T}}{\vect{x}}+\lteval{\ltinverse{T}}{\vect{y}}
-&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow></md>
-</p>
-                <p>Now check the second defining property of a linear transformation for <m>\ltinverse{T}</m>,
-<md><mrow>\lteval{\ltinverse{T}}{\alpha\vect{x}}&amp;=
-\lteval{\ltinverse{T}}{\alpha\lteval{T}{\lteval{\ltinverse{T}}{\vect{x}}}}
-&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow><mrow>&amp;=\lteval{\ltinverse{T}}{\lteval{T}{\alpha\lteval{\ltinverse{T}}{\vect{x}}}}
-&amp;&amp;<xref ref="definition-LT" acro="LT" autoname="yes"/></mrow><mrow>&amp;=\alpha\lteval{\ltinverse{T}}{\vect{x}}
-&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow></md>
-</p>
+                <p>We work through verifying <xref ref="definition-LT" acro="LT" autoname="yes"/> for <m>\ltinverse{T}</m>, using the fact that <m>T</m> is a linear transformation to obtain the second equality in each half of the proof.  To this end, suppose <m>\vect{x},\,\vect{y}\in V</m> and <m>\alpha\in\complexes</m>.<md>
+                    <mrow>\lteval{\ltinverse{T}}{\vect{x}+\vect{y}}&amp;=
+                    \lteval{\ltinverse{T}}{\lteval{T}{\lteval{\ltinverse{T}}{\vect{x}}}+\lteval{T}{\lteval{\ltinverse{T}}{\vect{y}}}}&amp;&amp;
+                        <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lteval{\ltinverse{T}}{\lteval{T}{\lteval{\ltinverse{T}}{\vect{x}}+\lteval{\ltinverse{T}}{\vect{y}}}}&amp;&amp;
+                        <xref ref="definition-LT" acro="LT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lteval{\ltinverse{T}}{\vect{x}}+\lteval{\ltinverse{T}}{\vect{y}}&amp;&amp;
+                        <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow>
+                </md></p>
+                <p>Now check the second defining property of a linear transformation for <m>\ltinverse{T}</m>,<md>
+                    <mrow>\lteval{\ltinverse{T}}{\alpha\vect{x}}&amp;=
+                    \lteval{\ltinverse{T}}{\alpha\lteval{T}{\lteval{\ltinverse{T}}{\vect{x}}}}&amp;&amp;
+                        <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lteval{\ltinverse{T}}{\lteval{T}{\alpha\lteval{\ltinverse{T}}{\vect{x}}}}&amp;&amp;
+                        <xref ref="definition-LT" acro="LT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\alpha\lteval{\ltinverse{T}}{\vect{x}}&amp;&amp;
+                        <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow>
+                </md></p>
                 <p>So <m>\ltinverse{T}</m> fulfills the requirements of <xref ref="definition-LT" acro="LT" autoname="yes"/> and is therefore a linear transformation.</p>
             </proof>
         </theorem>
         <p>So when <m>T</m> has an inverse, <m>\ltinverse{T}</m> is also a linear transformation.  Furthermore, <m>\ltinverse{T}</m> is an invertible linear transformation and <em>its</em> inverse is what you might expect.</p>
         <theorem xml:id="theorem-IILT" acro="IILT">
+            <title>Inverse of an Invertible Linear Transformation</title>
             <index>
                 <main>linear transformation</main>
                 <sub>inverse of inverse</sub>
             </index>
-            <title>Inverse of an Invertible Linear Transformation</title>
             <statement>
                 <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is an invertible linear transformation.  Then <m>\ltinverse{T}</m> is an invertible linear transformation and <m>\ltinverse{\left(\ltinverse{T}\right)}=T</m>.</p>
             </statement>
             <proof>
-                <p>Because <m>T</m> is invertible, <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/> tells us there is a function <m>\ltdefn{\ltinverse{T}}{V}{U}</m> such that
-<md><mrow>\compose{\ltinverse{T}}{T}&amp;=I_U &amp; \compose{T}{\ltinverse{T}}&amp;=I_V</mrow></md>
-</p>
+                <p>Because <m>T</m> is invertible, <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/> tells us there is a function <m>\ltdefn{\ltinverse{T}}{V}{U}</m> such that<md>
+                    <mrow>\compose{\ltinverse{T}}{T}&amp;=I_U &amp; \compose{T}{\ltinverse{T}}&amp;=I_V</mrow>
+                </md></p>
                 <p>Additionally, <xref ref="theorem-ILTLT" acro="ILTLT" autoname="yes"/> tells us that <m>\ltinverse{T}</m> is more than just a function, it is a linear transformation.  Now view these two statements as properties of the linear transformation <m>\ltinverse{T}</m>.  In light of <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/>, they together say that <m>\ltinverse{T}</m> is invertible (let <m>T</m> play the role of <m>S</m> in the statement of the definition).  Furthermore, the inverse of <m>\ltinverse{T}</m> is then <m>T</m>, <ie/> <m>\ltinverse{\left(\ltinverse{T}\right)}=T</m>.</p>
             </proof>
         </theorem>
@@ -177,62 +172,62 @@ then verify that <m>\lteval{T}{\vect{x}}=B</m>.  Practice creating a few more in
             <p>Of course, Sage can compute the inverse of a linear transformation.  However, not every linear transformation has an inverse, and we will see shortly how to determine this.  For now, take this example as just an illustration of the basics (both mathematically and for Sage).</p>
             <sage xml:id="sagecell-IVLT-1">
                 <input>
-U = QQ^4
-V = QQ^4
-x1, x2, x3, x4 = var('x1, x2, x3, x4')
-outputs = [   x1 + 2*x2 - 5*x3 - 7*x4,
-                     x2 - 3*x3 - 5*x4,
-              x1 + 2*x2 - 4*x3 - 6*x4,
-           -2*x1 - 2*x2 + 7*x3 + 8*x4 ]
-T_symbolic(x1, x2, x3, x4) = outputs
-T = linear_transformation(U, V, T_symbolic)
-S = T.inverse()
-S
-</input>
+                U = QQ^4
+                V = QQ^4
+                x1, x2, x3, x4 = var('x1, x2, x3, x4')
+                outputs = [   x1 + 2*x2 - 5*x3 - 7*x4,
+                                     x2 - 3*x3 - 5*x4,
+                              x1 + 2*x2 - 4*x3 - 6*x4,
+                           -2*x1 - 2*x2 + 7*x3 + 8*x4 ]
+                T_symbolic(x1, x2, x3, x4) = outputs
+                T = linear_transformation(U, V, T_symbolic)
+                S = T.inverse()
+                S
+                </input>
                 <output>
-Vector space morphism represented by the matrix:
-[-8  7 -6  5]
-[ 2 -3  2 -2]
-[ 5 -3  4 -3]
-[-2  2 -1  1]
-Domain: Vector space of dimension 4 over Rational Field
-Codomain: Vector space of dimension 4 over Rational Field
-</output>
+                Vector space morphism represented by the matrix:
+                [-8  7 -6  5]
+                [ 2 -3  2 -2]
+                [ 5 -3  4 -3]
+                [-2  2 -1  1]
+                Domain: Vector space of dimension 4 over Rational Field
+                Codomain: Vector space of dimension 4 over Rational Field
+                </output>
             </sage>
             <p>We can build the composition of <c>T</c> and its inverse, <c>S</c>, in both orders.  We will optimistically name these as identity linear transformations, as predicted by <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/>.  Run the cells to define the compositions, then run the compute cells with the random vectors repeatedly <mdash/> they should always return <c>True</c>.</p>
             <sage xml:id="sagecell-IVLT-2">
                 <input>
-IU = S*T
-IV = T*S
-</input>
+                IU = S*T
+                IV = T*S
+                </input>
             </sage>
             <sage xml:id="sagecell-IVLT-3">
                 <input>
-u = random_vector(QQ, 4)
-IU(u) == u      # random
-</input>
+                u = random_vector(QQ, 4)
+                IU(u) == u      # random
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <sage xml:id="sagecell-IVLT-4">
                 <input>
-v = random_vector(QQ, 4)
-IV(v) == v      # random
-</input>
+                v = random_vector(QQ, 4)
+                IV(v) == v      # random
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <p>We can also check that the compositions are the same as the identity linear transformation itself.  We will do one, you can try the other.</p>
             <sage xml:id="sagecell-IVLT-5">
                 <input>
-id = linear_transformation(U, U, identity_matrix(QQ, 4))
-IU.is_equal_function(id)
-</input>
+                id = linear_transformation(U, U, identity_matrix(QQ, 4))
+                IU.is_equal_function(id)
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
         </computation>
     </subsection>
@@ -240,166 +235,221 @@ True
         <title>Invertibility</title>
         <p>We now know what an inverse linear transformation is, but just which linear transformations have inverses?  Here is a theorem we have been preparing for all chapter long.</p>
         <theorem xml:id="theorem-ILTIS" acro="ILTIS">
+            <title>Invertible Linear Transformations are Injective and Surjective</title>
             <index>
                 <main>linear transformation</main>
                 <sub>invertible, injective and surjective</sub>
             </index>
-            <title>Invertible Linear Transformations are Injective and Surjective</title>
             <statement>
                 <p>Suppose <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then <m>T</m> is invertible if and only if <m>T</m> is injective and surjective.</p>
             </statement>
             <proof>
                 <case direction="forward">
-                    <!-- MBX: move end of case -->
+                    <p>Since <m>T</m> is presumed invertible, we can employ its inverse, <m>\ltinverse{T}</m> (<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/>).  To see that <m>T</m> is injective, suppose <m>\vect{x},\,\vect{y}\in U</m> and assume that <m>\lteval{T}{\vect{x}}=\lteval{T}{\vect{y}}</m>,<md>
+                        <mrow>\vect{x}
+                        &amp;=\lteval{I_U}{\vect{x}}&amp;&amp;
+                            <xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow>
+                        <mrow>&amp;=\lt{\left(\compose{\ltinverse{T}}{T}\right)}{\vect{x}}&amp;&amp;
+                            <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow>
+                        <mrow>&amp;=\lteval{\ltinverse{T}}{\lteval{T}{\vect{x}}}&amp;&amp;
+                            <xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow>
+                        <mrow>&amp;=\lteval{\ltinverse{T}}{\lteval{T}{\vect{y}}}&amp;&amp;
+                            <xref ref="definition-ILT" acro="ILT" autoname="yes"/></mrow>
+                        <mrow>&amp;=\lt{\left(\compose{\ltinverse{T}}{T}\right)}{\vect{y}}&amp;&amp;
+                            <xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow>
+                        <mrow>&amp;=\lteval{I_U}{\vect{y}}&amp;&amp;
+                            <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow>
+                        <mrow>&amp;=\vect{y}&amp;&amp;
+                            <xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow>
+                    </md>So by <xref ref="definition-ILT" acro="ILT" autoname="yes"/> <m>T</m> is injective.</p>
+                    <p>To check that <m>T</m> is surjective, suppose <m>\vect{v}\in V</m>.  Then <m>\lteval{\ltinverse{T}}{\vect{v}}</m> is a vector in <m>U</m>.  Compute<md>
+                        <mrow>\lteval{T}{\lteval{\ltinverse{T}}{\vect{v}}}
+                        &amp;=\lteval{\left(\compose{T}{\ltinverse{T}}\right)}{\vect{v}}&amp;&amp;
+                            <xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow>
+                        <mrow>&amp;=\lteval{I_V}{\vect{v}}&amp;&amp;
+                            <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow>
+                        <mrow>&amp;=\vect{v}&amp;&amp;
+                            <xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow>
+                    </md>So there is an element from <m>U</m>, when used as an input to <m>T</m> (namely <m>\lteval{\ltinverse{T}}{\vect{v}}</m>) that produces the desired output, <m>\vect{v}</m>, and hence <m>T</m> is surjective by <xref ref="definition-SLT" acro="SLT" autoname="yes"/>.</p>
                 </case>
-                <p>  Since <m>T</m> is presumed invertible, we can employ its inverse, <m>\ltinverse{T}</m> (<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/>).  To see that <m>T</m> is injective, suppose <m>\vect{x},\,\vect{y}\in U</m> and assume that <m>\lteval{T}{\vect{x}}=\lteval{T}{\vect{y}}</m>,
-<md><mrow>\vect{x}
-&amp;=\lteval{I_U}{\vect{x}}&amp;&amp;<xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow><mrow>&amp;=\lt{\left(\compose{\ltinverse{T}}{T}\right)}{\vect{x}}&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow><mrow>&amp;=\lteval{\ltinverse{T}}{\lteval{T}{\vect{x}}}&amp;&amp;<xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow><mrow>&amp;=\lteval{\ltinverse{T}}{\lteval{T}{\vect{y}}}&amp;&amp;<xref ref="definition-ILT" acro="ILT" autoname="yes"/></mrow><mrow>&amp;=\lt{\left(\compose{\ltinverse{T}}{T}\right)}{\vect{y}}&amp;&amp;<xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow><mrow>&amp;=\lteval{I_U}{\vect{y}}&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow><mrow>&amp;=\vect{y}&amp;&amp;<xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow></md>
-So by <xref ref="definition-ILT" acro="ILT" autoname="yes"/> <m>T</m> is injective.</p>
-                <p>To check that <m>T</m> is surjective, suppose <m>\vect{v}\in V</m>.  Then <m>\lteval{\ltinverse{T}}{\vect{v}}</m> is a vector in <m>U</m>.  Compute
-<md><mrow>\lteval{T}{\lteval{\ltinverse{T}}{\vect{v}}}
-&amp;=\lteval{\left(\compose{T}{\ltinverse{T}}\right)}{\vect{v}}&amp;&amp;<xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow><mrow>&amp;=\lteval{I_V}{\vect{v}}&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow><mrow>&amp;=\vect{v}&amp;&amp;<xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow></md>
-So there is an element from <m>U</m>, when used as an input to <m>T</m> (namely <m>\lteval{\ltinverse{T}}{\vect{v}}</m>) that produces the desired output, <m>\vect{v}</m>, and hence <m>T</m> is surjective by <xref ref="definition-SLT" acro="SLT" autoname="yes"/>.</p>
                 <case direction="backward">
-                    <!-- MBX: move end of case -->
+                    <p>Now assume that <m>T</m> is both injective and surjective.  We will build a function <m>\ltdefn{S}{V}{U}</m> that will establish that <m>T</m> is invertible.  To this end, choose any <m>\vect{v}\in V</m>.  Since <m>T</m> is surjective, <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/> says <m>\rng{T}=V</m>, so we have <m>\vect{v}\in\rng{T}</m>.  <xref ref="theorem-RPI" acro="RPI" autoname="yes"/> says that the pre-image of <m>\vect{v}</m>, <m>\preimage{T}{\vect{v}}</m>, is nonempty.  So we can choose a vector from the pre-image of <m>\vect{v}</m>, say <m>\vect{u}</m>.  In other words, there exists <m>\vect{u}\in\preimage{T}{\vect{v}}</m>.</p>
+                    <p>Since <m>\preimage{T}{\vect{v}}</m> is nonempty, <xref ref="theorem-KPI" acro="KPI" autoname="yes"/> then says that<me>\preimage{T}{\vect{v}}=\setparts{\vect{u}+\vect{z}}{\vect{z}\in\krn{T}}</me></p>
+                    <p>However, because <m>T</m> is injective, by <xref ref="theorem-KILT" acro="KILT" autoname="yes"/> the kernel is trivial, <m>\krn{T}=\set{\zerovector}</m>.  So the pre-image is a set with just one element, <m>\preimage{T}{\vect{v}}=\set{\vect{u}}</m>.  Now we can define <m>S</m> by <m>\lteval{S}{\vect{v}}=\vect{u}</m>.  This is the key to this half of this proof.  Normally the preimage of a vector from the codomain might be an empty set, or an infinite set.  But surjectivity requires that the preimage not be empty, and then injectivity limits the preimage to a singleton.  Since our choice of <m>\vect{v}</m> was arbitrary, we know that every pre-image for <m>T</m> is a set with a single element.  This allows us to construct <m>S</m> as a <em>function</em>.  Now that it is defined, verifying that it is the inverse of <m>T</m> will be easy.  Here we go.</p>
+                    <p>Choose <m>\vect{u}\in U</m>.  Define <m>\vect{v}=\lteval{T}{\vect{u}}</m>.  Then <m>\preimage{T}{\vect{v}}=\set{\vect{u}}</m>, so that <m>\lteval{S}{\vect{v}}=\vect{u}</m> and,<me>\lteval{\left(\compose{S}{T}\right)}{\vect{u}}
+                    =\lteval{S}{\lt{T}{\vect{u}}}
+                    =\lteval{S}{\vect{v}}
+                    =\vect{u}
+                    =\lteval{I_U}{\vect{u}}</me>and since our choice of <m>\vect{u}</m> was arbitrary we have function equality, <m>\compose{S}{T}=I_U</m>.</p>
+                    <p>Now choose <m>\vect{v}\in V</m>.  Define <m>\vect{u}</m> to be the single vector in the set <m>\preimage{T}{\vect{v}}</m>, in other words, <m>\vect{u}=\lteval{S}{\vect{v}}</m>.  Then <m>\lteval{T}{\vect{u}}=\vect{v}</m>, so<me>\lteval{\left(\compose{T}{S}\right)}{\vect{v}}
+                    =\lteval{T}{\lt{S}{\vect{v}}}
+                    =\lteval{T}{\vect{u}}
+                    =\vect{v}
+                    =\lteval{I_V}{\vect{v}}</me>and since our choice of <m>\vect{v}</m> was arbitrary we have function equality, <m>\compose{T}{S}=I_V</m>.</p>
                 </case>
-                <p>  Now assume that <m>T</m> is both injective and surjective.  We will build a function <m>\ltdefn{S}{V}{U}</m> that will establish that <m>T</m> is invertible.  To this end, choose any <m>\vect{v}\in V</m>.  Since <m>T</m> is surjective, <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/> says <m>\rng{T}=V</m>, so we have <m>\vect{v}\in\rng{T}</m>.  <xref ref="theorem-RPI" acro="RPI" autoname="yes"/> says that the pre-image of <m>\vect{v}</m>, <m>\preimage{T}{\vect{v}}</m>, is nonempty.  So we can choose a vector from the pre-image of <m>\vect{v}</m>, say <m>\vect{u}</m>.  In other words, there exists <m>\vect{u}\in\preimage{T}{\vect{v}}</m>.</p>
-                <p>Since <m>\preimage{T}{\vect{v}}</m> is nonempty, <xref ref="theorem-KPI" acro="KPI" autoname="yes"/> then says that
-<me>\preimage{T}{\vect{v}}=\setparts{\vect{u}+\vect{z}}{\vect{z}\in\krn{T}}</me>
-</p>
-                <p>However, because <m>T</m> is injective, by <xref ref="theorem-KILT" acro="KILT" autoname="yes"/> the kernel is trivial, <m>\krn{T}=\set{\zerovector}</m>.  So the pre-image is a set with just one element, <m>\preimage{T}{\vect{v}}=\set{\vect{u}}</m>.  Now we can define <m>S</m> by <m>\lteval{S}{\vect{v}}=\vect{u}</m>.  This is the key to this half of this proof.  Normally the preimage of a vector from the codomain might be an empty set, or an infinite set.  But surjectivity requires that the preimage not be empty, and then injectivity limits the preimage to a singleton.  Since our choice of <m>\vect{v}</m> was arbitrary, we know that every pre-image for <m>T</m> is a set with a single element.  This allows us to construct <m>S</m> as a <em>function</em>.  Now that it is defined, verifying that it is the inverse of <m>T</m> will be easy.  Here we go.</p>
-                <p>Choose <m>\vect{u}\in U</m>.  Define <m>\vect{v}=\lteval{T}{\vect{u}}</m>.  Then <m>\preimage{T}{\vect{v}}=\set{\vect{u}}</m>, so that <m>\lteval{S}{\vect{v}}=\vect{u}</m> and,
-<me>\lteval{\left(\compose{S}{T}\right)}{\vect{u}}
-=\lteval{S}{\lt{T}{\vect{u}}}
-=\lteval{S}{\vect{v}}
-=\vect{u}
-=\lteval{I_U}{\vect{u}}</me>
-and since our choice of <m>\vect{u}</m> was arbitrary we have function equality, <m>\compose{S}{T}=I_U</m>.</p>
-                <p>Now choose <m>\vect{v}\in V</m>.  Define <m>\vect{u}</m> to be the single vector in the set <m>\preimage{T}{\vect{v}}</m>, in other words, <m>\vect{u}=\lteval{S}{\vect{v}}</m>.  Then <m>\lteval{T}{\vect{u}}=\vect{v}</m>, so
-<me>\lteval{\left(\compose{T}{S}\right)}{\vect{v}}
-=\lteval{T}{\lt{S}{\vect{v}}}
-=\lteval{T}{\vect{u}}
-=\vect{v}
-=\lteval{I_V}{\vect{v}}</me>
-and since our choice of <m>\vect{v}</m> was arbitrary we have function equality, <m>\compose{T}{S}=I_V</m>.</p>
             </proof>
         </theorem>
-        <p>When a linear transformation is both injective and surjective, the pre-image of any element of the codomain is a set of size one (a <q>singleton</q>).  This fact allowed us to <em>construct</em> the inverse linear transformation in one half of the proof of <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> (see Proof Technique<nbsp/><xref ref="technique-C" acro="C" autoname="no"/>) and is illustrated in the following cartoon.  This should remind you of the very general <xref ref="figure-KPI" acro="KPI" autoname="yes"/> which was used to illustrate <xref ref="theorem-KPI" acro="KPI" autoname="yes"/> about pre-images, only now we have an invertible linear transformation which is therefore surjective and injective (<xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>).  As a surjective linear transformation, there are no vectors depicted in the codomain, <m>V</m>, that have empty pre-images.  More importantly, as an injective linear transformation, the kernel is trivial (<xref ref="theorem-KILT" acro="KILT" autoname="yes"/>), so each pre-image is a single vector.  This makes it possible to <q>turn around</q> all the arrows to create the inverse linear transformation <m>\ltinverse{T}</m>.
-<figure xml:id="figure-IVLT" acro="IVLT"><caption>Invertible Linear Transformation</caption><image xml:id="image-IVLT"><latex-image-code>\begin{tikzpicture}
-\draw
-node at (0,0)[right=-3mm]{\Large GET TIKZ CODE}
-;
-\end{tikzpicture}
-</latex-image-code></image></figure>
-</p>
+        <p>When a linear transformation is both injective and surjective, the pre-image of any element of the codomain is a set of size one (a <q>singleton</q>).  This fact allowed us to <em>construct</em> the inverse linear transformation in one half of the proof of <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> (see Proof Technique<nbsp/><xref ref="technique-C" acro="C" autoname="no"/>) and is illustrated in the following cartoon.  This should remind you of the very general <xref ref="figure-KPI" acro="KPI" autoname="yes"/> which was used to illustrate <xref ref="theorem-KPI" acro="KPI" autoname="yes"/> about pre-images, only now we have an invertible linear transformation which is therefore surjective and injective (<xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>).  As a surjective linear transformation, there are no vectors depicted in the codomain, <m>V</m>, that have empty pre-images.  More importantly, as an injective linear transformation, the kernel is trivial (<xref ref="theorem-KILT" acro="KILT" autoname="yes"/>), so each pre-image is a single vector.  This makes it possible to <q>turn around</q> all the arrows to create the inverse linear transformation <m>\ltinverse{T}</m>.</p>
+        <figure xml:id="figure-IVLT" acro="IVLT">
+            <caption>Invertible Linear Transformation</caption>
+            <image xml:id="image-IVLT">
+                <latex-image-code>
+                \begin{tikzpicture}
+                \tikzset{ltvect/.style={shape=circle, minimum size=0.30em, inner sep=0pt, draw, fill=black}}
+                \tikzset{ltedge/.style={->, bend left=20, thick, shorten \lt=0.1em, shorten >=0.1em}}
+                % base generic picture
+                \draw ( 5em, 8em) circle [x radius=5em, y radius=8em, thick];
+                \draw (20em, 8em) circle [x radius=5em, y radius=8em, thick];
+                \node (U) at ( 5em, -1em) {$U$};
+                \node (V) at (20em, -1em) {$V$};
+                \draw[->, thick, draw] (U) to node[auto] {$T$} (V);
+                % inputs
+                \node (u1)    [ltvect, label=above:$\vect{u}_1$]    at ( 5em, 14em) {};
+                \node (u2)    [ltvect, label=above:$\vect{u}_2$]    at ( 5em, 10em) {};
+                \node (zeroU) [ltvect, label=above:$\zerovector_U$] at ( 5em,  6em) {};
+                \node (u3)    [ltvect, label=above:$\vect{u}_3$]    at ( 5em,  2em) {};
+                % outputs
+                \node (v1)    [ltvect, label=right:$\vect{v}_1$]    at (20em, 14em) {};
+                \node (v2)    [ltvect, label=right:$\vect{v}_2$]    at (20em, 10em) {};
+                \node (zeroV) [ltvect, label=right:$\zerovector_V$] at (20em,  6em) {};
+                \node (v3)    [ltvect, label=right:$\vect{v}_3$]    at (20em,  2em) {};
+                % associations
+                \draw[ltedge] (u1) to (v1);
+                \draw[ltedge] (u2) to (v2);
+                \draw[ltedge] (zeroU) to (zeroV);
+                \draw[ltedge] (u3) to (v3);
+                % inverse associations
+                \draw[->, bend left=7, thick, shorten \lt=0.1em, shorten >=0.1em] (v1) to (u1);
+                \draw[->, bend left=7, thick, shorten \lt=0.1em, shorten >=0.1em] (v2) to (u2);
+                \draw[->, bend left=7, thick, shorten \lt=0.1em, shorten >=0.1em] (zeroV) to (zeroU);
+                \draw[->, bend left=7, thick, shorten \lt=0.1em, shorten >=0.1em] (v3) to (u3);
+                % preimages
+                \node (pre1) at (5em, 12.6em) {$\vect{u}_1 + \set{\zerovector_U}=\set{\vect{u}_1}$};
+                \node (pre2) at (5em,    9em) {$\preimage{T}{\vect{v}_2}=\vect{u}_2 + \set{\zerovector_U}$};
+                \node (pre3) at (4.5em,  5em) {$\preimage{T}{\zerovector_V}=\set{\zerovector_U}$};
+                \node (pre4) at (5em,    1em) {$\preimage{T}{\vect{v}_3}$};
+                % banding, x-coordinates are +/- 5*sqrt(3)/2 off midline
+                \node (b11) [minimum size=0em, inner sep=0pt] at (0.669873em, 12em) {};
+                \node (b12) [minimum size=0em, inner sep=0pt] at (9.330127em, 12em) {};
+                \node (b21) [minimum size=0em, inner sep=0pt] at (       0em,  8em) {};
+                \node (b22) [minimum size=0em, inner sep=0pt] at (      10em,  8em) {};
+                \node (b31) [minimum size=0em, inner sep=0pt] at (0.669873em,  4em) {};
+                \node (b32) [minimum size=0em, inner sep=0pt] at (9.330127em,  4em) {};
+                \draw [-, bend right=10] (b11) to (b12);
+                \draw [-, bend right=10] (b21) to (b22);
+                \draw [-, bend right=10] (b31) to (b32);
+                % inverse map
+                \node (UU) at ( 5em, -2em) {$U$};
+                \node (VV) at (20em, -2em) {$V$};
+                \draw[->, thick, draw] (VV) to node[auto] {$\ltinverse{T}$} (UU);
+                \end{tikzpicture}
+                </latex-image-code>
+            </image>
+        </figure>
         <p>Many will call an injective and surjective function a <term>bijective</term> function or just a <term>bijection</term>.  <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> tells us that this is just a synonym for the term invertible (which we will use exclusively).</p>
         <p>We can follow the constructive approach of the proof of <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> to construct the inverse of a specific linear transformation, as the next example shows.</p>
         <example xml:id="example-CIVLT" acro="CIVLT">
+            <title>Computing the Inverse of a Linear Transformations</title>
             <index>
                 <main>invertible linear transformations</main>
                 <sub>computing</sub>
             </index>
-            <title>Computing the Inverse of a Linear Transformations</title>
-            <p>Consider the linear transformation  <m>\ltdefn{T}{S_{22}}{P_2}</m> defined by
-<md><mrow>\lteval{T}{\begin{bmatrix}a&amp;b\\b&amp;c\end{bmatrix}}
-&amp;=
-\left(a+b+c\right)
-+
-\left(-a+2c\right)x
-+
-\left(2a+3b+6c\right)x^2</mrow></md></p>
+            <p>Consider the linear transformation  <m>\ltdefn{T}{S_{22}}{P_2}</m> defined by<md>
+                <mrow>\lteval{T}{\begin{bmatrix}a&amp;b\\b&amp;c\end{bmatrix}}
+                &amp;=
+                \left(a+b+c\right)
+                +
+                \left(-a+2c\right)x
+                +
+                \left(2a+3b+6c\right)x^2</mrow>
+            </md></p>
             <p><m>T</m> is invertible, which you are able to verify, perhaps by determining that the kernel of <m>T</m> is trivial and the range of <m>T</m> is all of <m>P_2</m>.  This will be easier once we have <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/>, which appears later in this section.</p>
-            <p>By <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> we know <m>\ltinverse{T}</m> exists, and it will be critical shortly to realize that <m>\ltinverse{T}</m> is automatically known to be a linear transformation as well (<xref ref="theorem-ILTLT" acro="ILTLT" autoname="yes"/>).  To determine the complete behavior of <m>\ltdefn{\ltinverse{T}}{P_2}{S_{22}}</m> we can simply determine its action on a basis for the domain, <m>P_2</m>.  This is the substance of <xref ref="theorem-LTDB" acro="LTDB" autoname="yes"/>, and an excellent example of its application.   Choose any basis of <m>P_2</m>, the simpler the better, such as <m>B=\set{1,\,x,\,x^2}</m>.  Values of <m>\ltinverse{T}</m> for these three basis elements will be the single elements of their preimages.  In turn, we have
-<md><mrow>\preimage{T}{1}:&amp;\\
-&amp;&amp;\lteval{T}{\begin{bmatrix}a&amp;b\\b&amp;c\end{bmatrix}}
-&amp;=1+0x+0x^2\\
-&amp;&amp;\begin{bmatrix}
- 1 &amp; 1 &amp; 1 &amp; 1\\
- -1 &amp; 0 &amp; 2 &amp; 0\\
- 2 &amp; 3 &amp; 6 &amp; 0
-\end{bmatrix}
-&amp;\rref
-\begin{bmatrix}
-1 &amp; 0 &amp; 0&amp; -6 \\
-0 &amp; 1 &amp; 0&amp; 10 \\
-0 &amp; 0 &amp; 1&amp; -3
-\end{bmatrix}
-\\
-&amp;\text{(preimage)}&amp;\preimage{T}{1}
-&amp;=\set{\begin{bmatrix}-6&amp;10\\10&amp;-3\end{bmatrix}}\\
-&amp;\text{(function)}&amp;\lteval{\ltinverse{T}}{1}
-&amp;=
-\begin{bmatrix}-6&amp;10\\10&amp;-3\end{bmatrix}\\
-\preimage{T}{x}:&amp;\\
-&amp;&amp;\lteval{T}{\begin{bmatrix}a&amp;b\\b&amp;c\end{bmatrix}}
-&amp;=0+1x+0x^2\\
-&amp;&amp;\begin{bmatrix}
- 1 &amp; 1 &amp; 1 &amp; 0\\
- -1 &amp; 0 &amp; 2 &amp; 1\\
- 2 &amp; 3 &amp; 6 &amp; 0
-\end{bmatrix}
-&amp;\rref
-\begin{bmatrix}
-1 &amp; 0 &amp; 0&amp; -3 \\
-0 &amp; 1 &amp; 0&amp; 4 \\
-0 &amp; 0 &amp; 1&amp;  -1
-\end{bmatrix}
-\\
-&amp;\text{(preimage)}&amp;\preimage{T}{x}
-&amp;=\set{\begin{bmatrix}-3&amp;4\\4&amp;-1\end{bmatrix}}\\
-&amp;\text{(function)}&amp;\lteval{\ltinverse{T}}{x}
-&amp;=
-\begin{bmatrix}-3&amp;4\\4&amp;-1\end{bmatrix}\\
-\preimage{T}{x^2}:&amp;\\
-&amp;&amp;\lteval{T}{\begin{bmatrix}a&amp;b\\b&amp;c\end{bmatrix}}
-&amp;=0+0x+1x^2\\
-&amp;&amp;\begin{bmatrix}
- 1 &amp; 1 &amp; 1 &amp; 0\\
- -1 &amp; 0 &amp; 2 &amp; 0\\
- 2 &amp; 3 &amp; 6 &amp; 1
-\end{bmatrix}
-&amp;\rref
-\begin{bmatrix}
-1 &amp; 0 &amp; 0&amp; 2 \\
-0 &amp; 1 &amp; 0&amp; -3 \\
-0 &amp; 0 &amp; 1&amp;  1
-\end{bmatrix}
-\\
-&amp;\text{(preimage)}&amp;\preimage{T}{x^2}
-&amp;=\set{\begin{bmatrix}2&amp;-3\\-3&amp;1\end{bmatrix}}\\
-&amp;\text{(function)}&amp;\lteval{\ltinverse{T}}{x^2}
-&amp;=
-\begin{bmatrix}2&amp;-3\\-3&amp;1\end{bmatrix}</mrow></md>
-</p>
-            <p><xref ref="theorem-LTDB" acro="LTDB" autoname="yes"/> says, informally, <q>it is enough to know what a linear transformation does to a basis.</q>  Formally, we have the outputs of <m>\ltinverse{T}</m> for a basis, so by <xref ref="theorem-LTDB" acro="LTDB" autoname="yes"/> there is a unique linear transformation with these outputs.  So we put this information to work.  The key step here is that we can convert any element of <m>P_2</m> into a linear combination of the elements of the basis <m>B</m> (<xref ref="theorem-VRRB" acro="VRRB" autoname="yes"/>).  We are after a <q>formula</q> for the value of <m>\ltinverse{T}</m> on a generic element of <m>P_2</m>, say <m>p+qx+rx^2</m>.
-<md><mrow>\lteval{\ltinverse{T}}{p+qx+rx^2}
-&amp;=
-\lteval{\ltinverse{T}}{p(1)+q(x)+r(x^2)}
-&amp;&amp;<xref ref="theorem-VRRB" acro="VRRB" autoname="yes"/></mrow><mrow>&amp;=
-p\lteval{\ltinverse{T}}{1}+
-q\lteval{\ltinverse{T}}{x}+
-r\lteval{\ltinverse{T}}{x^2}
-&amp;&amp;<xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/>\\
-&amp;=
-p\begin{bmatrix}-6&amp;10\\10&amp;-3\end{bmatrix}+
-q\begin{bmatrix}-3&amp;4\\4&amp;-1\end{bmatrix}+
-r\begin{bmatrix}2&amp;-3\\-3&amp;1\end{bmatrix}\\
-&amp;=
-\begin{bmatrix}
--6p-3q+2r &amp; 10p+4q-3r \\
-10p+4q-3r &amp; -3p -q + r
-\end{bmatrix}</mrow></md>
-</p>
+            <p>By <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> we know <m>\ltinverse{T}</m> exists, and it will be critical shortly to realize that <m>\ltinverse{T}</m> is automatically known to be a linear transformation as well (<xref ref="theorem-ILTLT" acro="ILTLT" autoname="yes"/>).  To determine the complete behavior of <m>\ltdefn{\ltinverse{T}}{P_2}{S_{22}}</m> we can simply determine its action on a basis for the domain, <m>P_2</m>.  This is the substance of <xref ref="theorem-LTDB" acro="LTDB" autoname="yes"/>, and an excellent example of its application.   Choose any basis of <m>P_2</m>, the simpler the better, such as <m>B=\set{1,\,x,\,x^2}</m>.  Values of <m>\ltinverse{T}</m> for these three basis elements will be the single elements of their preimages.  In turn, we have<md>
+                <mrow>\preimage{T}{1}:&amp;\\&amp;&amp;\lteval{T}{\begin{bmatrix}a&amp;b\\b&amp;c\end{bmatrix}}
+                &amp;=1+0x+0x^2\\&amp;&amp;\begin{bmatrix}
+                 1 &amp; 1 &amp; 1 &amp; 1\\
+                 -1 &amp; 0 &amp; 2 &amp; 0\\
+                 2 &amp; 3 &amp; 6 &amp; 0
+                \end{bmatrix}
+                &amp;\rref
+                \begin{bmatrix}
+                1 &amp; 0 &amp; 0&amp; -6 \\
+                0 &amp; 1 &amp; 0&amp; 10 \\
+                0 &amp; 0 &amp; 1&amp; -3
+                \end{bmatrix}
+                \\
+                &amp;\text{(preimage)}&amp;\preimage{T}{1}
+                &amp;=\set{\begin{bmatrix}-6&amp;10\\10&amp;-3\end{bmatrix}}\\
+                &amp;\text{(function)}&amp;\lteval{\ltinverse{T}}{1}
+                &amp;=
+                \begin{bmatrix}-6&amp;10\\10&amp;-3\end{bmatrix}</mrow>
+                <mrow>\preimage{T}{x}:&amp;\\&amp;&amp;\lteval{T}{\begin{bmatrix}a&amp;b\\b&amp;c\end{bmatrix}}
+                &amp;=0+1x+0x^2\\&amp;&amp;\begin{bmatrix}
+                 1 &amp; 1 &amp; 1 &amp; 0\\
+                 -1 &amp; 0 &amp; 2 &amp; 1\\
+                 2 &amp; 3 &amp; 6 &amp; 0
+                \end{bmatrix}
+                &amp;\rref
+                \begin{bmatrix}
+                1 &amp; 0 &amp; 0&amp; -3 \\
+                0 &amp; 1 &amp; 0&amp; 4 \\
+                0 &amp; 0 &amp; 1&amp;  -1
+                \end{bmatrix}
+                \\
+                &amp;\text{(preimage)}&amp;\preimage{T}{x}
+                &amp;=\set{\begin{bmatrix}-3&amp;4\\4&amp;-1\end{bmatrix}}\\
+                &amp;\text{(function)}&amp;\lteval{\ltinverse{T}}{x}
+                &amp;=
+                \begin{bmatrix}-3&amp;4\\4&amp;-1\end{bmatrix}</mrow>
+                <mrow>\preimage{T}{x^2}:&amp;\\&amp;&amp;\lteval{T}{\begin{bmatrix}a&amp;b\\b&amp;c\end{bmatrix}}
+                &amp;=0+0x+1x^2\\&amp;&amp;\begin{bmatrix}
+                 1 &amp; 1 &amp; 1 &amp; 0\\
+                 -1 &amp; 0 &amp; 2 &amp; 0\\
+                 2 &amp; 3 &amp; 6 &amp; 1
+                \end{bmatrix}
+                &amp;\rref
+                \begin{bmatrix}
+                1 &amp; 0 &amp; 0&amp; 2 \\
+                0 &amp; 1 &amp; 0&amp; -3 \\
+                0 &amp; 0 &amp; 1&amp;  1
+                \end{bmatrix}
+                \\
+                &amp;\text{(preimage)}&amp;\preimage{T}{x^2}
+                &amp;=\set{\begin{bmatrix}2&amp;-3\\-3&amp;1\end{bmatrix}}\\
+                &amp;\text{(function)}&amp;\lteval{\ltinverse{T}}{x^2}
+                &amp;=
+                \begin{bmatrix}2&amp;-3\\-3&amp;1\end{bmatrix}</mrow>
+            </md></p>
+            <p><xref ref="theorem-LTDB" acro="LTDB" autoname="yes"/> says, informally, <q>it is enough to know what a linear transformation does to a basis.</q>  Formally, we have the outputs of <m>\ltinverse{T}</m> for a basis, so by <xref ref="theorem-LTDB" acro="LTDB" autoname="yes"/> there is a unique linear transformation with these outputs.  So we put this information to work.  The key step here is that we can convert any element of <m>P_2</m> into a linear combination of the elements of the basis <m>B</m> (<xref ref="theorem-VRRB" acro="VRRB" autoname="yes"/>).  We are after a <q>formula</q> for the value of <m>\ltinverse{T}</m> on a generic element of <m>P_2</m>, say <m>p+qx+rx^2</m>.<md>
+                <mrow>\lteval{\ltinverse{T}}{p+qx+rx^2}
+                &amp;=
+                \lteval{\ltinverse{T}}{p(1)+q(x)+r(x^2)}&amp;&amp;
+                    <xref ref="theorem-VRRB" acro="VRRB" autoname="yes"/></mrow>
+                <mrow>&amp;=
+                p\lteval{\ltinverse{T}}{1}+
+                q\lteval{\ltinverse{T}}{x}+
+                r\lteval{\ltinverse{T}}{x^2}&amp;&amp;
+                    <xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow>
+                <mrow>&amp;=
+                p\begin{bmatrix}-6&amp;10\\10&amp;-3\end{bmatrix}+
+                q\begin{bmatrix}-3&amp;4\\4&amp;-1\end{bmatrix}+
+                r\begin{bmatrix}2&amp;-3\\-3&amp;1\end{bmatrix}</mrow>
+                <mrow>&amp;=
+                \begin{bmatrix}
+                -6p-3q+2r &amp; 10p+4q-3r \\
+                10p+4q-3r &amp; -3p -q + r
+                \end{bmatrix}</mrow>
+            </md></p>
             <p>Notice how a linear combination in the domain of <m>\ltinverse{T}</m> has been translated into a linear combination in the codomain of <m>\ltinverse{T}</m> since we know <m>\ltinverse{T}</m> is a linear transformation by <xref ref="theorem-ILTLT" acro="ILTLT" autoname="yes"/>.</p>
             <p>Also, notice how the augmented matrices used to determine the three pre-images could be combined into one calculation of a matrix in extended echelon form, reminiscent of a procedure we know for computing the inverse of a matrix (see <xref ref="example-CMI" acro="CMI" autoname="yes"/>).  Hmmmm.</p>
         </example>
         <p>We will make frequent use of the characterization of invertible linear transformations provided by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>.  The next theorem is a good example of this, and we will use it often, too.</p>
         <theorem xml:id="theorem-CIVLT" acro="CIVLT">
+            <title>Composition of Invertible Linear Transformations</title>
             <index>
                 <main>invertible linear transformations</main>
                 <sub>composition</sub>
             </index>
-            <title>Composition of Invertible Linear Transformations</title>
             <statement>
                 <p>Suppose that <m>\ltdefn{T}{U}{V}</m> and <m>\ltdefn{S}{V}{W}</m> are invertible linear transformations.  Then the composition, <m>\ltdefn{\left(\compose{S}{T}\right)}{U}{W}</m> is an invertible linear transformation.</p>
             </statement>
@@ -409,23 +459,39 @@ r\begin{bmatrix}2&amp;-3\\-3&amp;1\end{bmatrix}\\
         </theorem>
         <p>When a composition is invertible, the inverse is easy to construct.</p>
         <theorem xml:id="theorem-ICLT" acro="ICLT">
+            <title>Inverse of a Composition of Linear Transformations</title>
             <index>
                 <main>inverse</main>
                 <sub>composition of linear transformations</sub>
             </index>
-            <title>Inverse of a Composition of Linear Transformations</title>
             <statement>
                 <p>Suppose that <m>\ltdefn{T}{U}{V}</m> and <m>\ltdefn{S}{V}{W}</m> are invertible linear transformations. Then <m>\compose{S}{T}</m> is invertible and <m>\ltinverse{\left(\compose{S}{T}\right)}=\compose{\ltinverse{T}}{\ltinverse{S}}</m>.</p>
             </statement>
             <proof>
-                <p>Compute, for all <m>\vect{w}\in W</m>
-<md><mrow>\lteval{\left(\compose{\left(\compose{S}{T}\right)}{\left(\compose{\ltinverse{T}}{\ltinverse{S}}\right)}\right)}{\vect{w}}
-&amp;=\lteval{S}{\lt{T}{\lteval{\ltinverse{T}}{\lteval{\ltinverse{S}}{\vect{w}}}}}</mrow><mrow>&amp;=\lteval{S}{\lt{I_V}{\lteval{\ltinverse{S}}{\vect{w}}}}&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow><mrow>&amp;=\lteval{S}{\lteval{\ltinverse{S}}{\vect{w}}}&amp;&amp;<xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow><mrow>&amp;=\vect{w}&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow><mrow>&amp;=\lteval{I_W}{\vect{w}}&amp;&amp;<xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow></md>
-</p>
-                <p>So <m>\compose{\left(\compose{S}{T}\right)}{\left(\compose{\ltinverse{T}}{\ltinverse{S}}\right)}=I_W</m>, and also
-<md><mrow>\lt{\left(\compose{\left(\compose{\ltinverse{T}}{\ltinverse{S}}\right)}{\left(\compose{S}{T}\right)}\right)}{\vect{u}}
-&amp;=\lteval{\ltinverse{T}}{\lteval{\ltinverse{S}}{\lteval{S}{\lt{T}{\vect{u}}}}}</mrow><mrow>&amp;=\lteval{\ltinverse{T}}{\lteval{I_V}{\lt{T}{\vect{u}}}}&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow><mrow>&amp;=\lteval{\ltinverse{T}}{\lteval{T}{\vect{u}}}&amp;&amp;<xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow><mrow>&amp;=\vect{u}&amp;&amp;<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow><mrow>&amp;=\lteval{I_U}{\vect{u}}&amp;&amp;<xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow></md>
-so <m>\compose{\left(\compose{\ltinverse{T}}{\ltinverse{S}}\right)}{\left(\compose{S}{T}\right)}=I_U</m>.</p>
+                <p>Compute, for all <m>\vect{w}\in W</m><md>
+                    <mrow>\lteval{\left(\compose{\left(\compose{S}{T}\right)}{\left(\compose{\ltinverse{T}}{\ltinverse{S}}\right)}\right)}{\vect{w}}
+                    &amp;=\lteval{S}{\lt{T}{\lteval{\ltinverse{T}}{\lteval{\ltinverse{S}}{\vect{w}}}}}</mrow>
+                    <mrow>&amp;=\lteval{S}{\lt{I_V}{\lteval{\ltinverse{S}}{\vect{w}}}}&amp;&amp;
+                        <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lteval{S}{\lteval{\ltinverse{S}}{\vect{w}}}&amp;&amp;
+                        <xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\vect{w}&amp;&amp;
+                        <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lteval{I_W}{\vect{w}}&amp;&amp;
+                        <xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow>
+                </md></p>
+                <p>So <m>\compose{\left(\compose{S}{T}\right)}{\left(\compose{\ltinverse{T}}{\ltinverse{S}}\right)}=I_W</m>, and also<md>
+                    <mrow>\lt{\left(\compose{\left(\compose{\ltinverse{T}}{\ltinverse{S}}\right)}{\left(\compose{S}{T}\right)}\right)}{\vect{u}}
+                    &amp;=\lteval{\ltinverse{T}}{\lteval{\ltinverse{S}}{\lteval{S}{\lt{T}{\vect{u}}}}}</mrow>
+                    <mrow>&amp;=\lteval{\ltinverse{T}}{\lteval{I_V}{\lt{T}{\vect{u}}}}&amp;&amp;
+                        <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lteval{\ltinverse{T}}{\lteval{T}{\vect{u}}}&amp;&amp;
+                        <xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\vect{u}&amp;&amp;
+                        <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lteval{I_U}{\vect{u}}&amp;&amp;
+                        <xref ref="definition-IDLT" acro="IDLT" autoname="yes"/></mrow>
+                </md>so <m>\compose{\left(\compose{\ltinverse{T}}{\ltinverse{S}}\right)}{\left(\compose{S}{T}\right)}=I_U</m>.</p>
                 <p>By <xref ref="definition-IVLT" acro="IVLT" autoname="yes"/>, <m>\compose{S}{T}</m> is invertible and <m>\ltinverse{\left(\compose{S}{T}\right)}=\compose{\ltinverse{T}}{\ltinverse{S}}</m>.</p>
             </proof>
         </theorem>
@@ -440,55 +506,55 @@ so <m>\compose{\left(\compose{\ltinverse{T}}{\ltinverse{S}}\right)}{\left(\compo
             <p><xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> gives us a straightforward condition equivalence for an invertible linear transformation, but of course, it is even easier in Sage.</p>
             <sage xml:id="sagecell-CIVLT-1">
                 <input>
-U = QQ^4
-V = QQ^4
-x1, x2, x3, x4 = var('x1, x2, x3, x4')
-outputs = [   x1 + 2*x2 - 5*x3 - 7*x4,
-                     x2 - 3*x3 - 5*x4,
-              x1 + 2*x2 - 4*x3 - 6*x4,
-           -2*x1 - 2*x2 + 7*x3 + 8*x4 ]
-T_symbolic(x1, x2, x3, x4) = outputs
-T = linear_transformation(U, V, T_symbolic)
-T.is_invertible()
-</input>
+                U = QQ^4
+                V = QQ^4
+                x1, x2, x3, x4 = var('x1, x2, x3, x4')
+                outputs = [   x1 + 2*x2 - 5*x3 - 7*x4,
+                                     x2 - 3*x3 - 5*x4,
+                              x1 + 2*x2 - 4*x3 - 6*x4,
+                           -2*x1 - 2*x2 + 7*x3 + 8*x4 ]
+                T_symbolic(x1, x2, x3, x4) = outputs
+                T = linear_transformation(U, V, T_symbolic)
+                T.is_invertible()
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <p>As easy as that is, it is still instructive to walk through an example similar to <xref ref="example-CIVLT" acro="CIVLT" autoname="yes"/> using Sage, as a further illustration of the second half of the proof of <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>.  Since T is surjective, every element of the codomain has a nonempty pre-image, and since T is injective, the pre-image of each element is a single element.  Keep these facts in mind and convince yourself that the procedure below would never raise an error, and always has a unique result.</p>
             <p>We first compute the pre-image of each element of a basis of the codomain.</p>
             <sage xml:id="sagecell-CIVLT-2">
                 <input>
-preimages = [T.preimage_representative(v) for v in V.basis()]
-preimages
-</input>
+                preimages = [T.preimage_representative(v) for v in V.basis()]
+                preimages
+                </input>
                 <output>
-[(-8, 7, -6, 5), (2, -3, 2, -2), (5, -3, 4, -3), (-2, 2, -1, 1)]
-</output>
+                [(-8, 7, -6, 5), (2, -3, 2, -2), (5, -3, 4, -3), (-2, 2, -1, 1)]
+                </output>
             </sage>
             <p>Then we define a new linear transformation, from <c>V</c> to <c>U</c>, which turns it around and uses the preimages as a set of images defining the new linear transformation.  Explain to yourself how we know that <c>preimages</c> is a basis for <c>U</c>, and why this will create an invertible linear transformation.</p>
             <sage xml:id="sagecell-CIVLT-3">
                 <input>
-S = linear_transformation(V, U, preimages)
-S
-</input>
+                S = linear_transformation(V, U, preimages)
+                S
+                </input>
                 <output>
-Vector space morphism represented by the matrix:
-[-8  7 -6  5]
-[ 2 -3  2 -2]
-[ 5 -3  4 -3]
-[-2  2 -1  1]
-Domain: Vector space of dimension 4 over Rational Field
-Codomain: Vector space of dimension 4 over Rational Field
-</output>
+                Vector space morphism represented by the matrix:
+                [-8  7 -6  5]
+                [ 2 -3  2 -2]
+                [ 5 -3  4 -3]
+                [-2  2 -1  1]
+                Domain: Vector space of dimension 4 over Rational Field
+                Codomain: Vector space of dimension 4 over Rational Field
+                </output>
             </sage>
             <sage xml:id="sagecell-CIVLT-4">
                 <input>
-S.is_equal_function(T.inverse())
-</input>
+                S.is_equal_function(T.inverse())
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <p>While this is a simple two-step procedure (form preimages, construct linear transformation), realize that this is <em>not</em> the process that Sage uses internally.</p>
             <p>Notice that the essence of this construction is that when we work with an invertible linear transformation, the method <c>.preimage_representative()</c> behaves as a function (we mean the precise mathematical definition here) <mdash/> it is always defined and always produces just one well-defined output.  Here the <c>linear_transformation()</c> constructor is extending it to a linear function based on its action on a (finite) basis of the domain.</p>
@@ -510,68 +576,75 @@ True
         </definition>
         <p>A few comments on this definition.  First, be careful with your language (Proof Technique<nbsp/><xref ref="technique-L" acro="L" autoname="no"/>).  Two vector spaces are isomorphic, or not.  It is a yes/no situation and the term only applies to a pair of vector spaces.  Any invertible linear transformation can be called an isomorphism, it is a term that applies to functions.  Second, given a pair of vector spaces there might be several different isomorphisms between the two vector spaces.  But it only takes the existence of one to call the pair isomorphic.  Third,  <m>U</m> isomorphic to <m>V</m>, or <m>V</m> isomorphic to <m>U</m>?  It does not matter, since the inverse linear transformation will provide the needed isomorphism in the <q>opposite</q> direction.  Being <q>isomorphic to</q> is an equivalence relation on the set of all vector spaces (see <xref ref="theorem-SER" acro="SER" autoname="yes"/> for a reminder about equivalence relations).</p>
         <example xml:id="example-IVSAV" acro="IVSAV">
+            <title>Isomorphic vector spaces, Archetype V</title>
             <index>
                 <main>isomorphic</main>
                 <sub>vector spaces</sub>
             </index>
-            <title>Isomorphic vector spaces, Archetype V</title>
-            <p>Archetype<nbsp/><xref ref="archetype-V" acro="V" autoname="no"/> is a linear transformation from <m>P_3</m> to <m>M_{22}</m>,
-<me><!-- Archetype V, Part ltdefn -->\ltdefn{T}{P_3}{M_{22}},\quad\lteval{T}{a+bx+cx^2+dx^3}=
-\begin{bmatrix}
-a+b &amp; a-2c\\
-d &amp; b-d
-\end{bmatrix}
-</me>
-</p>
+            <!-- Archetype V, Part ltdefn -->
+            <!-- Archetype V, Part ltinverse -->
+            <p>Archetype<nbsp/><xref ref="archetype-V" acro="V" autoname="no"/> is a linear transformation from <m>P_3</m> to <m>M_{22}</m>,<me>\ltdefn{T}{P_3}{M_{22}},\quad\lteval{T}{a+bx+cx^2+dx^3}=
+            \begin{bmatrix}
+            a+b &amp; a-2c\\
+            d &amp; b-d
+            \end{bmatrix}</me></p>
             <p>Since it is injective and surjective, <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> tells us that it is an invertible linear transformation.  By <xref ref="definition-IVS" acro="IVS" autoname="yes"/> we say <m>P_3</m> and <m>M_{22}</m> are isomorphic.</p>
             <p>At a basic level, the term <q>isomorphic</q> is nothing more than a codeword for the presence of an invertible linear transformation.  However, it is also a description of a powerful idea, and this power only becomes apparent in the course of studying examples and related theorems.  In this example, we are led to believe that there is nothing <q>structurally</q> different about <m>P_3</m> and <m>M_{22}</m>.  In a certain sense they are the same.  Not equal, but the same.  One is as good as the other.  One is just as interesting as the other.</p>
-            <p>Here is an extremely basic application of this idea.  Suppose we want to compute the following linear combination of polynomials in <m>P_3</m>,
-<me>5(2+3x-4x^2+5x^3)+(-3)(3-5x+3x^2+x^3)</me>
-</p>
-            <p>Rather than doing it straight-away (which is very easy), we will apply the transformation <m>T</m> to convert into a linear combination of matrices, and then compute in <m>M_{22}</m> according to the definitions of the vector space operations there (<xref ref="example-VSM" acro="VSM" autoname="yes"/>),
-<md><mrow>&amp;\lteval{T}{5(2+3x-4x^2+5x^3)+(-3)(3-5x+3x^2+x^3)}</mrow><mrow>&amp;=5\lteval{T}{2+3x-4x^2+5x^3}+(-3)\lteval{T}{3-5x+3x^2+x^3}&amp;&amp;<xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/>\\
-&amp;=5
-\begin{bmatrix}
-5 &amp; 10\\5 &amp; -2
-\end{bmatrix}
-+(-3)
-\begin{bmatrix}
--2 &amp; -3\\1 &amp; -6
-\end{bmatrix}&amp;&amp;\text{Definition of<m>T</m>}\\
-&amp;=
-\begin{bmatrix}
-31 &amp; 59\\22 &amp; 8
-\end{bmatrix}&amp;&amp;\text{Operations in<m>M_{22}</m>}</mrow></md>
-</p>
-            <p>Now we will translate our answer back to <m>P_3</m> by applying <m>\ltinverse{T}</m>, which we demonstrated in <xref ref="example-AIVLT" acro="AIVLT" autoname="yes"/>,
-<me><!-- Archetype V, Part ltinverse -->\ltdefn{\ltinverse{T}}{M_{22}}{P_3},\quad
-\lteval{\ltinverse{T}}{\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}}=(a - c - d)+ (c + d)x +\frac{1}{2}(a - b - c - d)x^2+cx^3
-</me>
-</p>
-            <p>We compute,
-<me>\lteval{\ltinverse{T}}{
-\begin{bmatrix}
-31 &amp; 59\\22 &amp; 8
-\end{bmatrix}
-}
-=1+30x-29x^2+22x^3</me>
-which is, as expected, exactly what we would have computed for the original linear combination had we just used the definitions of the operations in <m>P_3</m> (<xref ref="example-VSP" acro="VSP" autoname="yes"/>).  Notice this is meant only as an <em>illustration</em> and not a suggested route for doing this particular computation.</p>
+            <p>Here is an extremely basic application of this idea.  Suppose we want to compute the following linear combination of polynomials in <m>P_3</m>,<me>5(2+3x-4x^2+5x^3)+(-3)(3-5x+3x^2+x^3)</me></p>
+            <p>Rather than doing it straight-away (which is very easy), we will apply the transformation <m>T</m> to convert into a linear combination of matrices, and then compute in <m>M_{22}</m> according to the definitions of the vector space operations there (<xref ref="example-VSM" acro="VSM" autoname="yes"/>),<md>
+                <mrow>&amp;\lteval{T}{5(2+3x-4x^2+5x^3)+(-3)(3-5x+3x^2+x^3)}</mrow>
+                <mrow>&amp;=5\lteval{T}{2+3x-4x^2+5x^3}+(-3)\lteval{T}{3-5x+3x^2+x^3}&amp;&amp;
+                    <xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/>\\
+                &amp;=5
+                \begin{bmatrix}
+                5 &amp; 10\\5 &amp; -2
+                \end{bmatrix}
+                +(-3)
+                \begin{bmatrix}
+                -2 &amp; -3\\1 &amp; -6
+                \end{bmatrix}&amp;&amp;
+                    \text{Definition of }T</mrow>
+                <mrow>&amp;=
+                \begin{bmatrix}
+                31 &amp; 59\\22 &amp; 8
+                \end{bmatrix}&amp;&amp;
+                    \text{Operations in }M_{22}</mrow>
+            </md></p>
+            <p>Now we will translate our answer back to <m>P_3</m> by applying <m>\ltinverse{T}</m>, which we demonstrated in <xref ref="example-AIVLT" acro="AIVLT" autoname="yes"/>,<me>\ltdefn{\ltinverse{T}}{M_{22}}{P_3},\quad
+            \lteval{\ltinverse{T}}{\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}}=(a - c - d)+ (c + d)x +\frac{1}{2}(a - b - c - d)x^2+cx^3</me></p>
+            <p>We compute,<me>\lteval{\ltinverse{T}}{
+            \begin{bmatrix}
+            31 &amp; 59\\22 &amp; 8
+            \end{bmatrix}
+            }
+            =1+30x-29x^2+22x^3</me>which is, as expected, exactly what we would have computed for the original linear combination had we just used the definitions of the operations in <m>P_3</m> (<xref ref="example-VSP" acro="VSP" autoname="yes"/>).  Notice this is meant only as an <em>illustration</em> and not a suggested route for doing this particular computation.</p>
         </example>
-        <p>In <xref ref="example-IVSAV" acro="IVSAV" autoname="yes"/> we avoided a computation in <m>P_3</m> by a conversion of the computation to a new vector space, <m>M_{22}</m>, via an invertible linear transformation (also known as an isomorphism).  Here is a diagram meant to illustrate the more general situation of two vector spaces, <m>U</m> and <m>V</m>, and an invertible linear transformation, <m>T</m>.  The diagram is simply about a sum of two vectors from <m>U</m>, rather than a more involved linear combination.  It should remind you of <xref ref="figure-DLTA" acro="DLTA" autoname="yes"/>.
-<figure xml:id="figure-AIVS" acro="AIVS"><caption>Addition in Isomorphic Vector Spaces</caption><image xml:id="image-AIVS"><latex-image-code>\begin{tikzpicture}
-\draw
-node at (0,0)[right=-3mm]{\Large GET TIKZ CODE}
-;
-\end{tikzpicture}
-</latex-image-code></image></figure>
-To understand this diagram, begin in the upper-left corner, and by going straight down we can compute the sum of the two vectors using the addition for the vector space <m>U</m>.  The more circuitous alternative, in the spirit of <xref ref="example-IVSAV" acro="IVSAV" autoname="yes"/>, is to begin in the upper-left corner and then proceed clockwise around the other three sides of the rectangle.  Notice that the vector addition is accomplished using the addition in the vector space <m>V</m>.  Then, because <m>T</m> is a linear transformation, we can say that the result of <m>\lteval{T}{\vect{u}_1}+\lteval{T}{\vect{u}_2}</m> is  equal to <m>\lteval{T}{\vect{u}_1+\vect{u}_2}</m>.  Then the key feature is to recognize that applying <m>\ltinverse{T}</m> obviously converts the second version of this result into the sum in the lower-left corner.  So there are two routes to the sum <m>\vect{u}_1+\vect{u}_2</m>, each employing an addition from a different vector space, but one is <q>direct</q> and the other is <q>roundabout</q>.  You might try designing a similar diagram for the case of scalar multiplication (see <xref ref="figure-DLTM" acro="DLTM" autoname="yes"/>) or for a full linear combination.</p>
+        <p>In <xref ref="example-IVSAV" acro="IVSAV" autoname="yes"/> we avoided a computation in <m>P_3</m> by a conversion of the computation to a new vector space, <m>M_{22}</m>, via an invertible linear transformation (also known as an isomorphism).  Here is a diagram meant to illustrate the more general situation of two vector spaces, <m>U</m> and <m>V</m>, and an invertible linear transformation, <m>T</m>.  The diagram is simply about a sum of two vectors from <m>U</m>, rather than a more involved linear combination.  It should remind you of <xref ref="figure-DLTA" acro="DLTA" autoname="yes"/>.</p>
+        <figure xml:id="figure-AIVS" acro="AIVS">
+            <caption>Addition in Isomorphic Vector Spaces</caption>
+            <image xml:id="image-AIVS">
+                <latex-image-code>
+                \begin{tikzpicture}
+                \matrix (m) [matrix of math nodes, row sep=5em, column sep=10em, text height=1.5ex, text depth=0.25ex]
+                { \vect{u}_1,\,\vect{u}_2 \amp \lteval{T}{\vect{u}_1},\,\lteval{T}{\vect{u}_2} \\
+                \vect{u}_1+\vect{u}_2 \amp \lteval{T}{\vect{u}_1+\vect{u}_2}=\lteval{T}{\vect{u}_1}+\lteval{T}{\vect{u}_2)}\\};
+                \path[->]
+                (m-1-1) edge[thick] node[auto] {$T$}             (m-1-2)
+                (m-1-2) edge[thick] node[auto] {$+$}             (m-2-2)
+                (m-1-1) edge[thick] node[auto] {$+$}             (m-2-1)
+                (m-2-2) edge[thick] node[auto] {$\ltinverse{T}$} (m-2-1);
+                \end{tikzpicture}
+                </latex-image-code>
+            </image>
+        </figure>
+        <p>To understand this diagram, begin in the upper-left corner, and by going straight down we can compute the sum of the two vectors using the addition for the vector space <m>U</m>.  The more circuitous alternative, in the spirit of <xref ref="example-IVSAV" acro="IVSAV" autoname="yes"/>, is to begin in the upper-left corner and then proceed clockwise around the other three sides of the rectangle.  Notice that the vector addition is accomplished using the addition in the vector space <m>V</m>.  Then, because <m>T</m> is a linear transformation, we can say that the result of <m>\lteval{T}{\vect{u}_1}+\lteval{T}{\vect{u}_2}</m> is  equal to <m>\lteval{T}{\vect{u}_1+\vect{u}_2}</m>.  Then the key feature is to recognize that applying <m>\ltinverse{T}</m> obviously converts the second version of this result into the sum in the lower-left corner.  So there are two routes to the sum <m>\vect{u}_1+\vect{u}_2</m>, each employing an addition from a different vector space, but one is <q>direct</q> and the other is <q>roundabout</q>.  You might try designing a similar diagram for the case of scalar multiplication (see <xref ref="figure-DLTM" acro="DLTM" autoname="yes"/>) or for a full linear combination.</p>
         <p>Checking the dimensions of two vector spaces can be a quick way to establish that they are not isomorphic.  Here is the theorem.</p>
         <theorem xml:id="theorem-IVSED" acro="IVSED">
+            <title>Isomorphic Vector Spaces have Equal Dimension</title>
             <index>
                 <main>isomorphic vector spaces</main>
                 <sub>dimension</sub>
             </index>
-            <title>Isomorphic Vector Spaces have Equal Dimension</title>
             <statement>
                 <p>Suppose <m>U</m> and <m>V</m> are isomorphic vector spaces.  Then <m>\dimension{U}=\dimension{V}</m>.</p>
             </statement>
@@ -591,8 +664,7 @@ To understand this diagram, begin in the upper-left corner, and by going straigh
                 <sub>linear transformation</sub>
             </index>
             <statement>
-                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then the <term>rank</term> of <m>T</m>, <m>\rank{T}</m>, is the dimension of the range of <m>T</m>,
-<me>\rank{T}=\dimension{\rng{T}}</me></p>
+                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then the <term>rank</term> of <m>T</m>, <m>\rank{T}</m>, is the dimension of the range of <m>T</m>,<me>\rank{T}=\dimension{\rng{T}}</me></p>
             </statement>
             <notation xml:id="notation-ROLT" acro="ROLT">
                 <index>
@@ -612,8 +684,7 @@ To understand this diagram, begin in the upper-left corner, and by going straigh
                 <sub>linear transformation</sub>
             </index>
             <statement>
-                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then the <term>nullity</term> of <m>T</m>, <m>\nullity{T}</m>, is the dimension of the kernel of <m>T</m>,
-<me>\nullity{T}=\dimension{\krn{T}}</me></p>
+                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then the <term>nullity</term> of <m>T</m>, <m>\nullity{T}</m>, is the dimension of the kernel of <m>T</m>,<me>\nullity{T}=\dimension{\krn{T}}</me></p>
             </statement>
             <notation xml:id="notation-NOLT" acro="NOLT">
                 <index>
@@ -628,11 +699,11 @@ To understand this diagram, begin in the upper-left corner, and by going straigh
         </definition>
         <p>Here are two quick theorems.</p>
         <theorem xml:id="theorem-ROSLT" acro="ROSLT">
+            <title>Rank Of a Surjective Linear Transformation</title>
             <index>
                 <main>rank</main>
                 <sub>surjective linear transformation</sub>
             </index>
-            <title>Rank Of a Surjective Linear Transformation</title>
             <statement>
                 <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then the rank of <m>T</m> is the dimension of <m>V</m>, <m>\rank{T}=\dimension{V}</m>, if and only if <m>T</m> is surjective.</p>
             </statement>
@@ -641,11 +712,11 @@ To understand this diagram, begin in the upper-left corner, and by going straigh
             </proof>
         </theorem>
         <theorem xml:id="theorem-NOILT" acro="NOILT">
+            <title>Nullity Of an Injective Linear Transformation</title>
             <index>
                 <main>nullity</main>
                 <sub>injective linear transformation</sub>
             </index>
-            <title>Nullity Of an Injective Linear Transformation</title>
             <statement>
                 <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then the nullity of <m>T</m> is zero, <m>\nullity{T}=0</m>, if and only if <m>T</m> is injective.</p>
             </statement>
@@ -655,60 +726,73 @@ To understand this diagram, begin in the upper-left corner, and by going straigh
         </theorem>
         <p>Just as injectivity and surjectivity come together in invertible linear transformations, there is a clear relationship between rank and nullity of a linear transformation.  If one is big, the other is small.</p>
         <theorem xml:id="theorem-RPNDD" acro="RPNDD">
+            <title>Rank Plus Nullity is Domain Dimension</title>
             <index>
                 <main>linear transformation</main>
                 <sub>rank plus nullity</sub>
             </index>
-            <title>Rank Plus Nullity is Domain Dimension</title>
             <statement>
-                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then
-<me>\rank{T}+\nullity{T}=\dimension{U}</me>
-</p>
+                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then<me>\rank{T}+\nullity{T}=\dimension{U}</me></p>
             </statement>
             <proof>
                 <p>Let <m>r=\rank{T}</m> and <m>s=\nullity{T}</m>.  Suppose that <m>R=\set{\vectorlist{v}{r}}\subseteq V</m> is a basis of the range of <m>T</m>, <m>\rng{T}</m>, and <m>S=\set{\vectorlist{u}{s}}\subseteq U</m> is a basis of the kernel of <m>T</m>, <m>\krn{T}</m>.  Note that <m>R</m> and <m>S</m> are possibly empty, which means that some of the sums in this proof are <q>empty</q> and are equal to the zero vector.</p>
-                <p>Because the elements of <m>R</m> are all in the range of <m>T</m>, each must have a nonempty pre-image by <xref ref="theorem-RPI" acro="RPI" autoname="yes"/>.  Choose vectors <m>\vect{w}_i\in U</m>, <m>1\leq i\leq r</m> such that <m>\vect{w}_i\in\preimage{T}{\vect{v}_i}</m>.  So <m>\lteval{T}{\vect{w}_i}=\vect{v}_i</m>, <m>1\leq i\leq r</m>.  Consider the set
-<me>B=\set{\vectorlist{u}{s},\,\vectorlist{w}{r}}</me>
-We claim that <m>B</m> is a basis for <m>U</m>.</p>
-                <p>To establish linear independence for <m>B</m>, begin with a relation of linear dependence on <m>B</m>.  So suppose there are scalars <m>\scalarlist{a}{s}</m> and <m>\scalarlist{b}{r}</m>
-<me>\zerovector=\lincombo{a}{u}{s}+\lincombo{b}{w}{r}</me>
-</p>
-                <p>Then
-<md><mrow>\zerovector&amp;=\lteval{T}{\zerovector}&amp;&amp;<xref ref="theorem-LTTZZ" acro="LTTZZ" autoname="yes"/></mrow><mrow>&amp;=T\left(\lincombo{a}{u}{s}+\right.</mrow><mrow>&amp;\quad\quad\quad\quad\left.\lincombo{b}{w}{r}\right)&amp;&amp;<xref ref="definition-LI" acro="LI" autoname="yes"/></mrow><mrow>&amp;=a_1\lteval{T}{\vect{u}_1}+a_2\lteval{T}{\vect{u}_2}+a_3\lteval{T}{\vect{u}_3}+\cdots+a_s\lteval{T}{\vect{u}_s}+</mrow><mrow>&amp;\quad\quad b_1\lteval{T}{\vect{w}_1}+b_2\lteval{T}{\vect{w}_2}+b_3\lteval{T}{\vect{w}_3}+\cdots+b_r\lteval{T}{\vect{w}_r}
-&amp;&amp;<xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow><mrow>&amp;=a_1\zerovector+a_2\zerovector+a_3\zerovector+\cdots+a_s\zerovector+</mrow><mrow>&amp;\quad\quad b_1\lteval{T}{\vect{w}_1}+b_2\lteval{T}{\vect{w}_2}+b_3\lteval{T}{\vect{w}_3}+\cdots+b_r\lteval{T}{\vect{w}_r}
-&amp;&amp;<xref ref="definition-KLT" acro="KLT" autoname="yes"/></mrow><mrow>&amp;=\zerovector+\zerovector+\zerovector+\cdots+\zerovector+</mrow><mrow>&amp;\quad\quad b_1\lteval{T}{\vect{w}_1}+b_2\lteval{T}{\vect{w}_2}+b_3\lteval{T}{\vect{w}_3}+\cdots+b_r\lteval{T}{\vect{w}_r}
-&amp;&amp;<xref ref="theorem-ZVSM" acro="ZVSM" autoname="yes"/></mrow><mrow>&amp;=b_1\lteval{T}{\vect{w}_1}+b_2\lteval{T}{\vect{w}_2}+b_3\lteval{T}{\vect{w}_3}+\cdots+b_r\lteval{T}{\vect{w}_r}&amp;&amp;<xref ref="property-Z" acro="Z" autoname="yes"/></mrow><mrow>&amp;=b_1\vect{v}_1+b_2\vect{v}_2+b_3\vect{v}_3+\cdots+b_r\vect{v}_r&amp;&amp;<xref ref="definition-PI" acro="PI" autoname="yes"/></mrow></md>
-</p>
-                <p>This is a relation of linear dependence on <m>R</m> (<xref ref="definition-RLD" acro="RLD" autoname="yes"/>), and since <m>R</m> is a linearly independent set (<xref ref="definition-LI" acro="LI" autoname="yes"/>), we see that <m>b_1=b_2=b_3=\ldots=b_r=0</m>.  Then the original relation of linear dependence on <m>B</m> becomes
-<md><mrow>\zerovector&amp;=\lincombo{a}{u}{s}+0\vect{w}_1+0\vect{w}_2+\ldots+0\vect{w}_r</mrow><mrow>&amp;=\lincombo{a}{u}{s}+\zerovector+\zerovector+\ldots+\zerovector&amp;&amp;<xref ref="theorem-ZSSM" acro="ZSSM" autoname="yes"/></mrow><mrow>&amp;=\lincombo{a}{u}{s}&amp;&amp;<xref ref="property-Z" acro="Z" autoname="yes"/></mrow></md>
-</p>
+                <p>Because the elements of <m>R</m> are all in the range of <m>T</m>, each must have a nonempty pre-image by <xref ref="theorem-RPI" acro="RPI" autoname="yes"/>.  Choose vectors <m>\vect{w}_i\in U</m>, <m>1\leq i\leq r</m> such that <m>\vect{w}_i\in\preimage{T}{\vect{v}_i}</m>.  So <m>\lteval{T}{\vect{w}_i}=\vect{v}_i</m>, <m>1\leq i\leq r</m>.  Consider the set<me>B=\set{\vectorlist{u}{s},\,\vectorlist{w}{r}}</me>We claim that <m>B</m> is a basis for <m>U</m>.</p>
+                <p>To establish linear independence for <m>B</m>, begin with a relation of linear dependence on <m>B</m>.  So suppose there are scalars <m>\scalarlist{a}{s}</m> and <m>\scalarlist{b}{r}</m><me>\zerovector=\lincombo{a}{u}{s}+\lincombo{b}{w}{r}</me></p>
+                <p>Then<md>
+                    <mrow>\zerovector&amp;=\lteval{T}{\zerovector}&amp;&amp;
+                        <xref ref="theorem-LTTZZ" acro="LTTZZ" autoname="yes"/></mrow>
+                    <mrow>&amp;=T\left(\lincombo{a}{u}{s}+\right.</mrow>
+                    <mrow>&amp;\quad\quad\quad\quad\left.\lincombo{b}{w}{r}\right)&amp;&amp;
+                        <xref ref="definition-LI" acro="LI" autoname="yes"/></mrow>
+                    <mrow>&amp;=a_1\lteval{T}{\vect{u}_1}+a_2\lteval{T}{\vect{u}_2}+a_3\lteval{T}{\vect{u}_3}+\cdots+a_s\lteval{T}{\vect{u}_s}+</mrow>
+                    <mrow>&amp;\quad\quad b_1\lteval{T}{\vect{w}_1}+b_2\lteval{T}{\vect{w}_2}+b_3\lteval{T}{\vect{w}_3}+\cdots+b_r\lteval{T}{\vect{w}_r}&amp;&amp;
+                        <xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow>
+                    <mrow>&amp;=a_1\zerovector+a_2\zerovector+a_3\zerovector+\cdots+a_s\zerovector+</mrow>
+                    <mrow>&amp;\quad\quad b_1\lteval{T}{\vect{w}_1}+b_2\lteval{T}{\vect{w}_2}+b_3\lteval{T}{\vect{w}_3}+\cdots+b_r\lteval{T}{\vect{w}_r}&amp;&amp;
+                        <xref ref="definition-KLT" acro="KLT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\zerovector+\zerovector+\zerovector+\cdots+\zerovector+</mrow>
+                    <mrow>&amp;\quad\quad b_1\lteval{T}{\vect{w}_1}+b_2\lteval{T}{\vect{w}_2}+b_3\lteval{T}{\vect{w}_3}+\cdots+b_r\lteval{T}{\vect{w}_r}&amp;&amp;
+                        <xref ref="theorem-ZVSM" acro="ZVSM" autoname="yes"/></mrow>
+                    <mrow>&amp;=b_1\lteval{T}{\vect{w}_1}+b_2\lteval{T}{\vect{w}_2}+b_3\lteval{T}{\vect{w}_3}+\cdots+b_r\lteval{T}{\vect{w}_r}&amp;&amp;
+                        <xref ref="property-Z" acro="Z" autoname="yes"/></mrow>
+                    <mrow>&amp;=b_1\vect{v}_1+b_2\vect{v}_2+b_3\vect{v}_3+\cdots+b_r\vect{v}_r&amp;&amp;
+                        <xref ref="definition-PI" acro="PI" autoname="yes"/></mrow>
+                </md></p>
+                <p>This is a relation of linear dependence on <m>R</m> (<xref ref="definition-RLD" acro="RLD" autoname="yes"/>), and since <m>R</m> is a linearly independent set (<xref ref="definition-LI" acro="LI" autoname="yes"/>), we see that <m>b_1=b_2=b_3=\ldots=b_r=0</m>.  Then the original relation of linear dependence on <m>B</m> becomes<md>
+                    <mrow>\zerovector&amp;=\lincombo{a}{u}{s}+0\vect{w}_1+0\vect{w}_2+\ldots+0\vect{w}_r</mrow>
+                    <mrow>&amp;=\lincombo{a}{u}{s}+\zerovector+\zerovector+\ldots+\zerovector&amp;&amp;
+                        <xref ref="theorem-ZSSM" acro="ZSSM" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lincombo{a}{u}{s}&amp;&amp;
+                        <xref ref="property-Z" acro="Z" autoname="yes"/></mrow>
+                </md></p>
                 <p>But this is again a relation of linear independence (<xref ref="definition-RLD" acro="RLD" autoname="yes"/>), now on the set <m>S</m>.  Since <m>S</m> is linearly independent (<xref ref="definition-LI" acro="LI" autoname="yes"/>), we have <m>a_1=a_2=a_3=\ldots=a_r=0</m>.  Since we now know that all the scalars in the relation of linear dependence on <m>B</m> must be zero, we have established the linear independence of <m>S</m> through <xref ref="definition-LI" acro="LI" autoname="yes"/>.</p>
-                <p>To now establish that <m>B</m> spans <m>U</m>, choose an arbitrary vector <m>\vect{u}\in U</m>.  Then <m>\lteval{T}{\vect{u}}\in R(T)</m>, so there are scalars <m>\scalarlist{c}{r}</m> such that
-<me>\lteval{T}{\vect{u}}=\lincombo{c}{v}{r}</me>
-</p>
-                <p>Use the scalars <m>\scalarlist{c}{r}</m> to define a vector <m>\vect{y}\in U</m>,
-<me>\vect{y}=\lincombo{c}{w}{r}</me>
-</p>
-                <p>Then
-<md><mrow>\lteval{T}{\vect{u}-\vect{y}}&amp;=\lteval{T}{\vect{u}}-\lteval{T}{\vect{y}}&amp;&amp;<xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow><mrow>&amp;=\lteval{T}{\vect{u}}-\lteval{T}{\lincombo{c}{w}{r}}&amp;&amp;\text{Substitution}</mrow><mrow>&amp;=\lteval{T}{\vect{u}}-\left(c_1\lteval{T}{\vect{w}_1}+c_2\lteval{T}{\vect{w}_2}+\cdots+c_r\lteval{T}{\vect{w}_r}\right)&amp;&amp;<xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow><mrow>&amp;=\lteval{T}{\vect{u}}-\left(\lincombo{c}{v}{r}\right)&amp;&amp;\vect{w}_i\in\preimage{T}{\vect{v}_i}</mrow><mrow>&amp;=\lteval{T}{\vect{u}}-\lteval{T}{\vect{u}}&amp;&amp;\text{Substitution}</mrow><mrow>&amp;=\zerovector&amp;&amp;<xref ref="property-AI" acro="AI" autoname="yes"/></mrow></md>
-</p>
-                <p>So the vector <m>\vect{u}-\vect{y}</m> is sent to the zero vector by <m>T</m> and hence is an element of the kernel of <m>T</m>.  As such it can be written as a linear combination of the basis vectors for <m>\krn{T}</m>, the elements of the set <m>S</m>.  So there are scalars <m>\scalarlist{d}{s}</m> such that
-<me>\vect{u}-\vect{y}=\lincombo{d}{u}{s}</me>
-</p>
-                <p>Then
-<md><mrow>\vect{u}&amp;=\left(\vect{u}-\vect{y}\right)+\vect{y}</mrow><mrow>&amp;=\lincombo{d}{u}{s}+\lincombo{c}{w}{r}</mrow></md>
-</p>
+                <p>To now establish that <m>B</m> spans <m>U</m>, choose an arbitrary vector <m>\vect{u}\in U</m>.  Then <m>\lteval{T}{\vect{u}}\in R(T)</m>, so there are scalars <m>\scalarlist{c}{r}</m> such that<me>\lteval{T}{\vect{u}}=\lincombo{c}{v}{r}</me></p>
+                <p>Use the scalars <m>\scalarlist{c}{r}</m> to define a vector <m>\vect{y}\in U</m>,<me>\vect{y}=\lincombo{c}{w}{r}</me></p>
+                <p>Then<md>
+                    <mrow>\lteval{T}{\vect{u}-\vect{y}}&amp;=\lteval{T}{\vect{u}}-\lteval{T}{\vect{y}}&amp;&amp;
+                        <xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lteval{T}{\vect{u}}-\lteval{T}{\lincombo{c}{w}{r}}
+                        &amp;&amp;\text{Substitution}</mrow>
+                    <mrow>&amp;=\lteval{T}{\vect{u}}-\left(c_1\lteval{T}{\vect{w}_1}+c_2\lteval{T}{\vect{w}_2}+\cdots+c_r\lteval{T}{\vect{w}_r}\right)&amp;&amp;
+                        <xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lteval{T}{\vect{u}}-\left(\lincombo{c}{v}{r}\right)&amp;&amp;\vect{w}_i\in\preimage{T}{\vect{v}_i}</mrow>
+                    <mrow>&amp;=\lteval{T}{\vect{u}}-\lteval{T}{\vect{u}}
+                        &amp;&amp;\text{Substitution}</mrow>
+                    <mrow>&amp;=\zerovector&amp;&amp;
+                        <xref ref="property-AI" acro="AI" autoname="yes"/></mrow>
+                </md></p>
+                <p>So the vector <m>\vect{u}-\vect{y}</m> is sent to the zero vector by <m>T</m> and hence is an element of the kernel of <m>T</m>.  As such it can be written as a linear combination of the basis vectors for <m>\krn{T}</m>, the elements of the set <m>S</m>.  So there are scalars <m>\scalarlist{d}{s}</m> such that<me>\vect{u}-\vect{y}=\lincombo{d}{u}{s}</me></p>
+                <p>Then<md>
+                    <mrow>\vect{u}&amp;=\left(\vect{u}-\vect{y}\right)+\vect{y}</mrow>
+                    <mrow>&amp;=\lincombo{d}{u}{s}+\lincombo{c}{w}{r}</mrow>
+                </md></p>
                 <p>This says that for any vector, <m>\vect{u}</m>, from <m>U</m>, there exist scalars (<m>\scalarlist{d}{s}</m>, <m>\scalarlist{c}{r}</m>) that form <m>\vect{u}</m> as a linear combination of the vectors in the set <m>B</m>.  In other words, <m>B</m> spans <m>U</m> (<xref ref="definition-SS" acro="SS" autoname="yes"/>).</p>
-                <p>So <m>B</m> is a basis (<xref ref="definition-B" acro="B" autoname="yes"/>) of <m>U</m> with <m>s+r</m> vectors, and thus
-<me>\dimension{U}=s+r=\nullity{T}+\rank{T}</me>
-as desired.</p>
+                <p>So <m>B</m> is a basis (<xref ref="definition-B" acro="B" autoname="yes"/>) of <m>U</m> with <m>s+r</m> vectors, and thus<me>\dimension{U}=s+r=\nullity{T}+\rank{T}</me>as desired.</p>
             </proof>
         </theorem>
         <p><xref ref="theorem-RPNC" acro="RPNC" autoname="yes"/> said that the rank and nullity of a matrix sum to the number of columns of the matrix.  This result is now an easy consequence of <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/> when we consider the linear transformation <m>\ltdefn{T}{\complex{n}}{\complex{m}}</m> defined with the <m>m\times n</m> matrix <m>A</m> by <m>\lteval{T}{\vect{x}}=A\vect{x}</m>.  The range and kernel of <m>T</m> are identical to the column space and null space of the matrix <m>A</m> (<xref ref="exercise-ILT-T20" acro="ILT.T20" autoname="yes"/>, <xref ref="exercise-SLT-T20" acro="SLT.T20" autoname="yes"/>), so the rank and nullity of the matrix <m>A</m> are identical to the rank and nullity of the linear transformation <m>T</m>.  The dimension of the domain of <m>T</m> is the dimension of <m>\complex{n}</m>, exactly the number of columns for the matrix <m>A</m>.</p>
-        <p>This theorem can be especially useful in determining basic properties of linear transformations.  For example, suppose that <m>\ltdefn{T}{\complex{6}}{\complex{6}}</m> is a linear transformation and you are able to quickly establish that the kernel is trivial.  Then <m>\nullity{T}=0</m>.  First this means that <m>T</m> is injective by <xref ref="theorem-NOILT" acro="NOILT" autoname="yes"/>.  Also, <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/> becomes
-<me>6=\dimension{\complex{6}}=\rank{T}+\nullity{T}=\rank{T}+0=\rank{T}</me>
-So the rank of <m>T</m> is equal to the dimension of the codomain, and by <xref ref="theorem-ROSLT" acro="ROSLT" autoname="yes"/> we know <m>T</m> is surjective.  Finally, we know <m>T</m> is invertible by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>.  So from the determination that the kernel is trivial, and consideration of various dimensions, the theorems of this section allow us to conclude the existence of an inverse linear transformation for <m>T</m>.
-Similarly, <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/> can be used to provide alternative proofs for <xref ref="theorem-ILTD" acro="ILTD" autoname="yes"/>, <xref ref="theorem-SLTD" acro="SLTD" autoname="yes"/> and <xref ref="theorem-IVSED" acro="IVSED" autoname="yes"/>.  It would be an interesting exercise to construct these proofs.</p>
+        <p>This theorem can be especially useful in determining basic properties of linear transformations.  For example, suppose that <m>\ltdefn{T}{\complex{6}}{\complex{6}}</m> is a linear transformation and you are able to quickly establish that the kernel is trivial.  Then <m>\nullity{T}=0</m>.  First this means that <m>T</m> is injective by <xref ref="theorem-NOILT" acro="NOILT" autoname="yes"/>.  Also, <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/> becomes<me>6=\dimension{\complex{6}}=\rank{T}+\nullity{T}=\rank{T}+0=\rank{T}</me>So the rank of <m>T</m> is equal to the dimension of the codomain, and by <xref ref="theorem-ROSLT" acro="ROSLT" autoname="yes"/> we know <m>T</m> is surjective.  Finally, we know <m>T</m> is invertible by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>.  So from the determination that the kernel is trivial, and consideration of various dimensions, the theorems of this section allow us to conclude the existence of an inverse linear transformation for <m>T</m>.</p>
+        <p>Similarly, <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/> can be used to provide alternative proofs for <xref ref="theorem-ILTD" acro="ILTD" autoname="yes"/>, <xref ref="theorem-SLTD" acro="SLTD" autoname="yes"/> and <xref ref="theorem-IVSED" acro="IVSED" autoname="yes"/>.  It would be an interesting exercise to construct these proofs.</p>
         <p>It would be instructive to study the archetypes that are linear transformations and see how many of their properties can be deduced just from considering only the dimensions of the domain and codomain.  Then add in just knowledge of either the nullity or rank, and see how much more you can learn about the linear transformation.  The table preceding all of the archetypes (<miscref type="archetype" text="Archetypes"/>) could be a good place to start this analysis.</p>
         <computation xml:id="sage-LTOE" acro="LTOE">
             <title>Linear Transformation Odds and Ends</title>
@@ -719,89 +803,89 @@ Similarly, <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/> can be used t
             <p>We should mention that the notation <c>T^-1</c> will yield an inverse of a linear transformation in Sage.</p>
             <sage xml:id="sagecell-LTOE-1">
                 <input>
-U = QQ^4
-V = QQ^4
-x1, x2, x3, x4 = var('x1, x2, x3, x4')
-outputs = [   x1 + 2*x2 - 5*x3 - 7*x4,
-                     x2 - 3*x3 - 5*x4,
-              x1 + 2*x2 - 4*x3 - 6*x4,
-           -2*x1 - 2*x2 + 7*x3 + 8*x4]
-T_symbolic(x1, x2, x3, x4) = outputs
-T = linear_transformation(U, V, T_symbolic)
-T^-1
-</input>
+                U = QQ^4
+                V = QQ^4
+                x1, x2, x3, x4 = var('x1, x2, x3, x4')
+                outputs = [   x1 + 2*x2 - 5*x3 - 7*x4,
+                                     x2 - 3*x3 - 5*x4,
+                              x1 + 2*x2 - 4*x3 - 6*x4,
+                           -2*x1 - 2*x2 + 7*x3 + 8*x4]
+                T_symbolic(x1, x2, x3, x4) = outputs
+                T = linear_transformation(U, V, T_symbolic)
+                T^-1
+                </input>
                 <output>
-Vector space morphism represented by the matrix:
-[-8  7 -6  5]
-[ 2 -3  2 -2]
-[ 5 -3  4 -3]
-[-2  2 -1  1]
-Domain: Vector space of dimension 4 over Rational Field
-Codomain: Vector space of dimension 4 over Rational Field
-</output>
+                Vector space morphism represented by the matrix:
+                [-8  7 -6  5]
+                [ 2 -3  2 -2]
+                [ 5 -3  4 -3]
+                [-2  2 -1  1]
+                Domain: Vector space of dimension 4 over Rational Field
+                Codomain: Vector space of dimension 4 over Rational Field
+                </output>
             </sage>
             <p>Also, the rank and nullity are what you might expect.  Recall that for a matrix Sage provides a left nullity and a right nullity.  There is no such distinction for linear transformations.  We verify <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/> as an example.</p>
             <sage xml:id="sagecell-LTOE-2">
                 <input>
-U = QQ^3
-V = QQ^4
-x1, x2, x3 = var('x1, x2, x3')
-outputs = [ -x1        + 2*x3,
-             x1 + 3*x2 + 7*x3,
-             x1 +   x2 +   x3,
-           2*x1 + 3*x2 + 5*x3]
-R_symbolic(x1, x2, x3) = outputs
-R = linear_transformation(QQ^3, QQ^4, R_symbolic)
-R.rank()
-</input>
+                U = QQ^3
+                V = QQ^4
+                x1, x2, x3 = var('x1, x2, x3')
+                outputs = [ -x1        + 2*x3,
+                             x1 + 3*x2 + 7*x3,
+                             x1 +   x2 +   x3,
+                           2*x1 + 3*x2 + 5*x3]
+                R_symbolic(x1, x2, x3) = outputs
+                R = linear_transformation(QQ^3, QQ^4, R_symbolic)
+                R.rank()
+                </input>
                 <output>
-2
-</output>
+                2
+                </output>
             </sage>
             <sage xml:id="sagecell-LTOE-3">
                 <input>
-R.nullity()
-</input>
+                R.nullity()
+                </input>
                 <output>
-1
-</output>
+                1
+                </output>
             </sage>
             <sage xml:id="sagecell-LTOE-4">
                 <input>
-R.rank() + R.nullity() == U.dimension()
-</input>
+                R.rank() + R.nullity() == U.dimension()
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
         </computation>
     </subsection>
     <subsection xml:id="subsection-IVLT-SLELT" acro="SLELT">
         <title>Systems of Linear Equations and Linear Transformations</title>
+        <!-- Archetype D, Part purematrix -->
         <p>This subsection does not really belong in this section, or any other section, for that matter.  It is just the right time to have a discussion about the connections between the central topic of linear algebra, linear transformations, and our motivating topic from <xref ref="chapter-SLE" acro="SLE" autoname="yes"/>, systems of linear equations.  We will discuss several theorems we have seen already, but we will also make some forward-looking statements that will be justified in <xref ref="chapter-R" acro="R" autoname="yes"/>.</p>
-        <p>Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/> and Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/> are ideal examples to illustrate connections with linear transformations.  Both have the same coefficient matrix,
-<me>D=<!-- Archetype D, Part purematrix -->\begin{bmatrix}
-2 &amp; 1 &amp; 7 &amp; -7\\
--3 &amp; 4 &amp;  -5 &amp; -6\\
-1 &amp; 1 &amp; 4 &amp;  -5
-\end{bmatrix}
-</me>
-</p>
-        <p>To apply the <em>theory</em> of linear transformations to these two archetypes, employ the matrix-vector product (<xref ref="definition-MVP" acro="MVP" autoname="yes"/>) and define the linear transformation,
-<me>\ltdefn{T}{\complex{4}}{\complex{3}},\quad \lteval{T}{\vect{x}}=D\vect{x}
-=x_1\colvector{2\\-3\\1}+
-x_2\colvector{1\\4\\1}+
-x_3\colvector{7\\-5\\4}+
-x_4\colvector{-7\\-6\\-5}</me>
-</p>
-        <p><xref ref="theorem-MBLT" acro="MBLT" autoname="yes"/> tells us that <m>T</m> is indeed a linear transformation.  Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/> asks for solutions to <m>\linearsystem{D}{\vect{b}}</m>, where <m>\vect{b}=\colvector{8\\-12\\-4}</m>.  In the language of linear transformations this is equivalent to asking for <m>\preimage{T}{\vect{b}}</m>.  In the language of vectors and matrices it asks for a linear combination of the four columns of <m>D</m> that will equal <m>\vect{b}</m>.   One solution listed is <m>\vect{w}=\colvector{7\\8\\1\\3}</m>.  With a nonempty preimage, <xref ref="theorem-KPI" acro="KPI" autoname="yes"/> tells us that the complete solution set of the linear system is the preimage of <m>\vect{b}</m>,
-<me>\vect{w}+\krn{T}=\setparts{\vect{w}+\vect{z}}{\vect{z}\in\krn{T}}</me>
-</p>
+        <p>Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/> and Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/> are ideal examples to illustrate connections with linear transformations.  Both have the same coefficient matrix,<me>D=\begin{bmatrix}
+        2 &amp; 1 &amp; 7 &amp; -7\\
+        -3 &amp; 4 &amp;  -5 &amp; -6\\
+        1 &amp; 1 &amp; 4 &amp;  -5
+        \end{bmatrix}</me></p>
+        <p>To apply the <em>theory</em> of linear transformations to these two archetypes, employ the matrix-vector product (<xref ref="definition-MVP" acro="MVP" autoname="yes"/>) and define the linear transformation,<me>\ltdefn{T}{\complex{4}}{\complex{3}},\quad \lteval{T}{\vect{x}}=D\vect{x}
+        =x_1\colvector{2\\-3\\1}+
+        x_2\colvector{1\\4\\1}+
+        x_3\colvector{7\\-5\\4}+
+        x_4\colvector{-7\\-6\\-5}</me></p>
+        <p><xref ref="theorem-MBLT" acro="MBLT" autoname="yes"/> tells us that <m>T</m> is indeed a linear transformation.  Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/> asks for solutions to <m>\linearsystem{D}{\vect{b}}</m>, where <m>\vect{b}=\colvector{8\\-12\\-4}</m>.  In the language of linear transformations this is equivalent to asking for <m>\preimage{T}{\vect{b}}</m>.  In the language of vectors and matrices it asks for a linear combination of the four columns of <m>D</m> that will equal <m>\vect{b}</m>.   One solution listed is <m>\vect{w}=\colvector{7\\8\\1\\3}</m>.  With a nonempty preimage, <xref ref="theorem-KPI" acro="KPI" autoname="yes"/> tells us that the complete solution set of the linear system is the preimage of <m>\vect{b}</m>,<me>\vect{w}+\krn{T}=\setparts{\vect{w}+\vect{z}}{\vect{z}\in\krn{T}}</me></p>
         <p>The kernel of the linear transformation <m>T</m> is exactly the null space of the matrix <m>D</m> (see <xref ref="exercise-ILT-T20" acro="ILT.T20" autoname="yes"/>),  so this approach to the solution set should be reminiscent of <xref ref="theorem-PSPHS" acro="PSPHS" autoname="yes"/>.  The kernel of the linear transformation is the preimage of the zero vector, exactly equal to the solution set of the homogeneous system <m>\homosystem{D}</m>.  Since <m>D</m> has a null space of dimension two, every preimage (and in particular the preimage of <m>\vect{b}</m>) is as <q>big</q> as a subspace of dimension two (but is not a subspace).</p>
         <p>Archetype<nbsp/><xref ref="archetype-E" acro="E" autoname="no"/> is identical to Archetype<nbsp/><xref ref="archetype-D" acro="D" autoname="no"/> but with a different vector of constants, <m>\vect{d}=\colvector{2\\3\\2}</m>.  We can use the same linear transformation <m>T</m> to discuss this system of equations since the coefficient matrix is identical.  Now the set of solutions to <m>\linearsystem{D}{\vect{d}}</m>  is the pre-image of <m>\vect{d}</m>, <m>\preimage{T}{\vect{d}}</m>.  However, the vector <m>\vect{d}</m> is not in the range of the linear transformation (nor is it in the column space of the matrix, since these two sets are equal by <xref ref="exercise-SLT-T20" acro="SLT.T20" autoname="yes"/>).  So the empty pre-image is equivalent to the inconsistency of the linear system.</p>
-        <p>These two archetypes each have three equations in four variables, so either the resulting linear systems are inconsistent, or they are consistent and application of <xref ref="theorem-CMVEI" acro="CMVEI" autoname="yes"/> tells us that the system has infinitely many solutions.  Considering these same parameters for the linear transformation, the dimension of the domain, <m>\complex{4}</m>, is four, while the codomain, <m>\complex{3}</m>, has dimension three.  Then
-<md><mrow>\nullity{T}&amp;=\dimension{\complex{4}}-\rank{T}&amp;&amp;<xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/></mrow><mrow>&amp;=4-\dimension{\rng{T}}&amp;&amp;<xref ref="definition-ROLT" acro="ROLT" autoname="yes"/></mrow><mrow>&amp;\geq 4-3&amp;&amp;\text{<m>\rng{T}</m> subspace of<m>\complex{3}</m>}</mrow><mrow>&amp;=1</mrow></md>
-</p>
+        <p>These two archetypes each have three equations in four variables, so either the resulting linear systems are inconsistent, or they are consistent and application of <xref ref="theorem-CMVEI" acro="CMVEI" autoname="yes"/> tells us that the system has infinitely many solutions.  Considering these same parameters for the linear transformation, the dimension of the domain, <m>\complex{4}</m>, is four, while the codomain, <m>\complex{3}</m>, has dimension three.  Then<md>
+            <mrow>\nullity{T}&amp;=\dimension{\complex{4}}-\rank{T}&amp;&amp;
+                <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/></mrow>
+            <mrow>&amp;=4-\dimension{\rng{T}}&amp;&amp;
+                <xref ref="definition-ROLT" acro="ROLT" autoname="yes"/></mrow>
+            <mrow>&amp;\geq 4-3&amp;&amp;
+                \rng{T}\text{ subspace of }\complex{3}</mrow>
+            <mrow>&amp;=1</mrow>
+        </md></p>
         <p>So the kernel of <m>T</m> is nontrivial simply by considering the dimensions of the domain (number of variables) and the codomain (number of equations).  Pre-images of elements of the codomain that are not in the range of <m>T</m> are empty (inconsistent systems).  For elements of the codomain that are in the range of <m>T</m> (consistent systems), <xref ref="theorem-KPI" acro="KPI" autoname="yes"/> tells us that the pre-images are built from the kernel, and with a nontrivial kernel, these pre-images are infinite (infinitely many solutions).</p>
         <p>When do systems of equations have unique solutions?  Consider the system of linear equations <m>\linearsystem{C}{\vect{f}}</m> and the linear transformation <m>\lteval{S}{\vect{x}}=C\vect{x}</m>.  If <m>S</m> has a trivial kernel, then pre-images will either be empty or be finite sets with single elements.  Correspondingly, the coefficient matrix <m>C</m> will have a trivial null space and solution sets will either be empty (inconsistent) or contain a single solution (unique solution).  Should the matrix be square and have a trivial null space then we recognize the matrix as being nonsingular.  A square matrix means that the corresponding linear transformation, <m>T</m>, has equal-sized domain and codomain.  With a nullity of zero, <m>T</m> is injective, and also <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/> tells us that rank of <m>T</m> is equal to the dimension of the domain, which in turn is equal to the dimension of the codomain.  In other words, <m>T</m> is surjective.  Injective and surjective, and <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> tells us that <m>T</m> is invertible.  Just as we can use the inverse of the coefficient matrix to find the unique solution of any linear system with a nonsingular coefficient matrix (<xref ref="theorem-SNCM" acro="SNCM" autoname="yes"/>), we can use the inverse of the linear transformation to construct the unique element of any pre-image (proof of <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>).</p>
         <p>The executive summary of this discussion is that to every coefficient matrix of a system of linear equations we can associate a natural linear transformation.  Solution sets for systems with this coefficient matrix are preimages of elements of the codomain of the linear transformation.  For every theorem about systems of linear equations there is an analogue about linear transformations.  The theory of linear transformations provides all the tools to recreate the theory of solutions to linear systems of equations.</p>
@@ -815,120 +899,116 @@ x_4\colvector{-7\\-6\\-5}</me>
             <p>We can parallel the above discussion about systems of linear equations and linear transformations using Sage.  We begin with a matrix that we will use as a coefficient matrix for systems of equations, and then use the same matrix to define the associated linear transformation (acting on vectors placed to the right of the matrix).</p>
             <sage xml:id="sagecell-SUTH1-1">
                 <input>
-A = matrix(QQ, [[-1, 0, 2],
-                [ 1, 3, 7],
-                [ 1, 1, 1],
-                [ 2, 3, 5]])
-T = linear_transformation(QQ^3, QQ^4, A, side='right')
-</input>
+                A = matrix(QQ, [[-1, 0, 2],
+                                [ 1, 3, 7],
+                                [ 1, 1, 1],
+                                [ 2, 3, 5]])
+                T = linear_transformation(QQ^3, QQ^4, A, side='right')
+                </input>
             </sage>
             <p>We solve a linear system using the coefficient matrix, and compute an element of the pre-image of the linear transformation.</p>
             <sage xml:id="sagecell-SUTH1-2">
                 <input>
-v = vector(QQ, [1, 2, 0, 1])
-A.solve_right(v)
-</input>
+                v = vector(QQ, [1, 2, 0, 1])
+                A.solve_right(v)
+                </input>
                 <output>
-(-1, 1, 0)
-</output>
+                (-1, 1, 0)
+                </output>
             </sage>
             <sage xml:id="sagecell-SUTH1-3">
                 <input>
-T.preimage_representative(v)
-</input>
+                T.preimage_representative(v)
+                </input>
                 <output>
-(-1, 1, 0)
-</output>
+                (-1, 1, 0)
+                </output>
             </sage>
             <p>We compute a null space of the coefficient matrix and a kernel of the linear transformation, so as to understand the full solution set or the full preimage set.</p>
             <sage xml:id="sagecell-SUTH1-4">
                 <input>
-A.right_kernel()
-</input>
+                A.right_kernel()
+                </input>
                 <output>
-Vector space of degree 3 and dimension 1 over Rational Field
-Basis matrix:
-[   1 -3/2  1/2]
-</output>
+                Vector space of degree 3 and dimension 1 over Rational Field
+                Basis matrix:
+                [   1 -3/2  1/2]
+                </output>
             </sage>
             <sage xml:id="sagecell-SUTH1-5">
                 <input>
-T.kernel()
-</input>
+                T.kernel()
+                </input>
                 <output>
-Vector space of degree 3 and dimension 1 over Rational Field
-Basis matrix:
-[   1 -3/2  1/2]
-</output>
+                Vector space of degree 3 and dimension 1 over Rational Field
+                Basis matrix:
+                [   1 -3/2  1/2]
+                </output>
             </sage>
             <p>We compute a column space of the coefficient matrix and an image (range) of the linear transformation to help us build an inconsistent system.</p>
             <sage xml:id="sagecell-SUTH1-6">
                 <input>
-A.column_space()
-</input>
+                A.column_space()
+                </input>
                 <output>
-Vector space of degree 4 and dimension 2 over Rational Field
-Basis matrix:
-[   1    0 -2/3   -1]
-[   0    1  1/3    1]
-</output>
+                Vector space of degree 4 and dimension 2 over Rational Field
+                Basis matrix:
+                [   1    0 -2/3   -1]
+                [   0    1  1/3    1]
+                </output>
             </sage>
             <sage xml:id="sagecell-SUTH1-7">
                 <input>
-T.image()
-</input>
+                T.image()
+                </input>
                 <output>
-Vector space of degree 4 and dimension 2 over Rational Field
-Basis matrix:
-[   1    0 -2/3   -1]
-[   0    1  1/3    1]
-</output>
+                Vector space of degree 4 and dimension 2 over Rational Field
+                Basis matrix:
+                [   1    0 -2/3   -1]
+                [   0    1  1/3    1]
+                </output>
             </sage>
             <p>A vector that creates a system with no solution is a vector that has an empty pre-image.</p>
             <sage xml:id="sagecell-SUTH1-8">
                 <input>
-v = vector(QQ, [1, 2, 1, 1])
-A.solve_right(v)
-</input>
+                v = vector(QQ, [1, 2, 1, 1])
+                A.solve_right(v)
+                </input>
                 <output>
-Traceback (most recent call last):
-...
-ValueError: matrix equation has no solutions
-</output>
+                Traceback (most recent call last):
+                ...
+                ValueError: matrix equation has no solutions
+                </output>
             </sage>
             <sage xml:id="sagecell-SUTH1-9">
                 <input>
-T.preimage_representative(v)
-</input>
+                T.preimage_representative(v)
+                </input>
                 <output>
-Traceback (most recent call last):
-...
-ValueError: element is not in the image
-</output>
+                Traceback (most recent call last):
+                ...
+                ValueError: element is not in the image
+                </output>
             </sage>
             <p>Note that we could redo the above, replacing uses of <q>right</q> by <q>left</q> and uses of <q>column</q> by <q>row.</q>  The output would not change.</p>
             <p>We suggest in the text that one could develop the theory of linear transformations from scratch, and then obtain many of our initial results about systems of equations and matrices as a consequence.  In Sage it is the reverse.  Sage implements many advanced concepts from various areas of mathematics by translating fundamental computations into the language of linear algebra.  In turn, many of Sage's linear algebra routines ultimately depend on very fast algorithms for basic operations on matrices, such as computing an echelon form, a null space, or a span.</p>
         </computation>
     </subsection>
-    <!--   End of  ivlt.tex -->
     <exercises>
         <title>Reading Questions</title>
         <exercise>
             <statement>
-                <p>What conditions allow us to <b>easily</b> determine if a linear transformation is invertible?
-</p>
+                <p>What conditions allow us to <b>easily</b> determine if a linear transformation is invertible?</p>
             </statement>
         </exercise>
         <exercise>
             <statement>
-                <p>What does it mean to say two vector spaces are isomorphic?  Both technically, and informally?
-</p>
+                <p>What does it mean to say two vector spaces are isomorphic?  Both technically, and informally?</p>
             </statement>
         </exercise>
         <exercise>
             <statement>
-                <p>How do linear transformations relate to systems of linear equations?
-</p>
+                <p>How do linear transformations relate to systems of linear equations?</p>
             </statement>
         </exercise>
     </exercises>
@@ -936,289 +1016,264 @@ ValueError: element is not in the image
         <title>Exercises</title>
         <exercise number="C10" xml:id="exercise-IVLT-C10">
             <statement>
-                <p>The archetypes below are linear transformations of the form <m>\ltdefn{T}{U}{V}</m> that are invertible.  For each, the inverse linear transformation is given explicitly as part of the archetype's description.  Verify for each linear transformation that
-<md><mrow>\compose{\ltinverse{T}}{T}&amp;=I_U &amp; \compose{T}{\ltinverse{T}}&amp;=I_V</mrow></md>
-Archetype<nbsp/><xref ref="archetype-R" acro="R" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-V" acro="V" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-W" acro="W" autoname="no"/>
-</p>
+                <p>The archetypes below are linear transformations of the form <m>\ltdefn{T}{U}{V}</m> that are invertible.  For each, the inverse linear transformation is given explicitly as part of the archetype's description.  Verify for each linear transformation that<md>
+                <mrow>\compose{\ltinverse{T}}{T}&amp;=I_U &amp; \compose{T}{\ltinverse{T}}&amp;=I_V</mrow>
+            </md>Archetype<nbsp/><xref ref="archetype-R" acro="R" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-V" acro="V" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-W" acro="W" autoname="no"/></p>
             </statement>
         </exercise>
         <exercise number="C20" xml:id="exercise-IVLT-C20">
             <statement>
-                <p>Determine if the linear transformation <m>\ltdefn{T}{P_2}{M_{22}}</m> is (a) injective, (b) surjective, (c) invertible.
-<me>\lteval{T}{a+bx+cx^2}=
-\begin{bmatrix}
-a+2b-2c &amp; 2a+2b \\
--a+b-4c &amp; 3a+2b+2c
-\end{bmatrix}</me>
-</p>
+                <p>Determine if the linear transformation <m>\ltdefn{T}{P_2}{M_{22}}</m> is (a) injective, (b) surjective, (c) invertible.<me>\lteval{T}{a+bx+cx^2}=
+                \begin{bmatrix}
+                a+2b-2c &amp; 2a+2b \\
+                -a+b-4c &amp; 3a+2b+2c
+                \end{bmatrix}</me></p>
             </statement>
             <solution xml:id="solution-IVLT-C20">
-                <p>(a)  We will compute the kernel of <m>T</m>.  Suppose that <m>a+bx+cx^2\in\krn{T}</m>.  Then
-<me>\begin{bmatrix}0 &amp; 0 \\ 0 &amp; 0\end{bmatrix}
-=\lteval{T}{a+bx+cx^2}
-=
-\begin{bmatrix}
-a+2b-2c &amp; 2a+2b \\
--a+b-4c &amp; 3a+2b+2c
-\end{bmatrix}</me>
-and matrix equality (<xref ref="theorem-ME" acro="ME" autoname="yes"/>) yields the homogeneous system of four equations in three variables,
-<md><mrow>a+2b-2c&amp;=0</mrow><mrow>2a+2b&amp;=0</mrow><mrow>-a+b-4c&amp;=0</mrow><mrow>3a+2b+2c&amp;=0\\</mrow></md>
-The coefficient matrix of this system row-reduces as
-<me>\begin{bmatrix}
- 1 &amp; 2 &amp; -2 \\
- 2 &amp; 2 &amp; 0 \\
- -1 &amp; 1 &amp; -4 \\
- 3 &amp; 2 &amp; 2
-\end{bmatrix}
-\rref
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 2 \\
- 0 &amp; \leading{1} &amp; -2 \\
- 0 &amp; 0 &amp; 0 \\
- 0 &amp; 0 &amp; 0
-\end{bmatrix}</me>
-From the existence of nontrivial solutions to this system, we can infer nonzero polynomials in <m>\krn{T}</m>.  By <xref ref="theorem-KILT" acro="KILT" autoname="yes"/> we then know that <m>T</m> is not injective.</p>
-                <p>
-(b)  Since <m>3=\dimension{P_2}\lt\dimension{M_{22}}=4</m>, by <xref ref="theorem-SLTD" acro="SLTD" autoname="yes"/> <m>T</m> is not surjective.</p>
-                <p>
-(c)  Since <m>T</m> is not surjective, it is not invertible by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>.
-</p>
+                <p>(a)  We will compute the kernel of <m>T</m>.  Suppose that <m>a+bx+cx^2\in\krn{T}</m>.  Then<me>\begin{bmatrix}0 &amp; 0 \\ 0 &amp; 0\end{bmatrix}
+                =\lteval{T}{a+bx+cx^2}
+                =
+                \begin{bmatrix}
+                a+2b-2c &amp; 2a+2b \\
+                -a+b-4c &amp; 3a+2b+2c
+                \end{bmatrix}</me>and matrix equality (<xref ref="theorem-ME" acro="ME" autoname="yes"/>) yields the homogeneous system of four equations in three variables,<md>
+                    <mrow>a+2b-2c&amp;=0</mrow>
+                    <mrow>2a+2b&amp;=0</mrow>
+                    <mrow>-a+b-4c&amp;=0</mrow>
+                    <mrow>3a+2b+2c&amp;=0</mrow>
+                </md>The coefficient matrix of this system row-reduces as<me>\begin{bmatrix}
+                 1 &amp; 2 &amp; -2 \\
+                 2 &amp; 2 &amp; 0 \\
+                 -1 &amp; 1 &amp; -4 \\
+                 3 &amp; 2 &amp; 2
+                \end{bmatrix}
+                \rref
+                \begin{bmatrix}
+                 \leading{1} &amp; 0 &amp; 2 \\
+                 0 &amp; \leading{1} &amp; -2 \\
+                 0 &amp; 0 &amp; 0 \\
+                 0 &amp; 0 &amp; 0
+                \end{bmatrix}</me>From the existence of nontrivial solutions to this system, we can infer nonzero polynomials in <m>\krn{T}</m>.  By <xref ref="theorem-KILT" acro="KILT" autoname="yes"/> we then know that <m>T</m> is not injective.</p>
+                <p>(b)  Since <m>3=\dimension{P_2}\lt\dimension{M_{22}}=4</m>, by <xref ref="theorem-SLTD" acro="SLTD" autoname="yes"/> <m>T</m> is not surjective.</p>
+                <p>(c)  Since <m>T</m> is not surjective, it is not invertible by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>.</p>
             </solution>
         </exercise>
         <exercise number="C21" xml:id="exercise-IVLT-C21">
             <statement>
-                <p>Determine if the linear transformation <m>\ltdefn{S}{P_3}{M_{22}}</m> is (a) injective, (b) surjective, (c) invertible.
-<me>\lteval{S}{a+bx+cx^2+dx^3}=
-\begin{bmatrix}
--a+4b+c+2d &amp; 4a-b+6c-d\\
-a+5b-2c+2d &amp; a+2c+5d
-\end{bmatrix}</me>
-</p>
+                <p>Determine if the linear transformation <m>\ltdefn{S}{P_3}{M_{22}}</m> is (a) injective, (b) surjective, (c) invertible.<me>\lteval{S}{a+bx+cx^2+dx^3}=
+                \begin{bmatrix}
+                -a+4b+c+2d &amp; 4a-b+6c-d\\
+                a+5b-2c+2d &amp; a+2c+5d
+                \end{bmatrix}</me></p>
             </statement>
             <solution xml:id="solution-IVLT-C21">
-                <p>(a) To check injectivity, we compute the kernel of <m>S</m>.  To this end, suppose that <m>a+bx+cx^2+dx^3\in\krn{S}</m>, so
-<me>\begin{bmatrix}
-0 &amp; 0\\
-0 &amp; 0
-\end{bmatrix}
-=\lteval{S}{a+bx+cx^2+dx^3}
-=
-\begin{bmatrix}
--a+4b+c+2d &amp; 4a-b+6c-d\\
-a+5b-2c+2d &amp; a+2c+5d
-\end{bmatrix}</me>
-this creates the homogeneous system of four equations in four variables,
-<md><mrow>-a+4b+c+2d&amp;=0</mrow><mrow>4a-b+6c-d&amp;=0</mrow><mrow>a+5b-2c+2d&amp;=0</mrow><mrow>a+2c+5d&amp;=0</mrow></md>
-The coefficient matrix of this system row-reduces as,
-<md><mrow>\begin{bmatrix}
- -1 &amp; 4 &amp; 1 &amp; 2 \\
- 4 &amp; -1 &amp; 6 &amp; -1 \\
- 1 &amp; 5 &amp; -2 &amp; 2 \\
- 1 &amp; 0 &amp; 2 &amp; 5
-\end{bmatrix}
-\rref
-\begin{bmatrix}
- \leading{1} &amp; 0 &amp; 0 &amp; 0 \\
- 0 &amp; \leading{1} &amp; 0 &amp; 0 \\
- 0 &amp; 0 &amp; \leading{1} &amp; 0 \\
- 0 &amp; 0 &amp; 0 &amp; \leading{1}
-\end{bmatrix}</mrow></md>
-We recognize the coefficient matrix as being nonsingular, so the only solution to the system is <m>a=b=c=d=0</m>, and the kernel of <m>S</m> is trivial, <m>\krn{S}=\set{0+0x+0x^2+0x^3}</m>.  By <xref ref="theorem-KILT" acro="KILT" autoname="yes"/>, we see that <m>S</m> is injective.</p>
-                <p>
-(b)  We can establish that <m>S</m> is surjective by considering the rank and nullity of <m>S</m>.
-<md><mrow>\rank{S}
-&amp;=\dimension{P_3}-\nullity{S}&amp;&amp;<xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/></mrow><mrow>&amp;=4-0</mrow><mrow>&amp;=\dimension{M_{22}}</mrow></md>
-So, <m>\rng{S}</m> is a subspace of <m>M_{22}</m> (<xref ref="theorem-RLTS" acro="RLTS" autoname="yes"/>) whose dimension equals that of <m>M_{22}</m>.  By <xref ref="theorem-EDYES" acro="EDYES" autoname="yes"/>, we gain the set equality <m>\rng{S}=M_{22}</m>.  <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/> then implies that <m>S</m> is surjective.</p>
-                <p>
-(c)  Since <m>S</m> is both injective and surjective, <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> says <m>S</m> is invertible.
-</p>
+                <p>(a) To check injectivity, we compute the kernel of <m>S</m>.  To this end, suppose that <m>a+bx+cx^2+dx^3\in\krn{S}</m>, so<me>\begin{bmatrix}
+                0 &amp; 0\\
+                0 &amp; 0
+                \end{bmatrix}
+                =\lteval{S}{a+bx+cx^2+dx^3}
+                =
+                \begin{bmatrix}
+                -a+4b+c+2d &amp; 4a-b+6c-d\\
+                a+5b-2c+2d &amp; a+2c+5d
+                \end{bmatrix}</me>this creates the homogeneous system of four equations in four variables,<md>
+                    <mrow>-a+4b+c+2d&amp;=0</mrow>
+                    <mrow>4a-b+6c-d&amp;=0</mrow>
+                    <mrow>a+5b-2c+2d&amp;=0</mrow>
+                    <mrow>a+2c+5d&amp;=0</mrow>
+                </md>The coefficient matrix of this system row-reduces as,<md>
+                    <mrow>\begin{bmatrix}
+                     -1 &amp; 4 &amp; 1 &amp; 2 \\
+                     4 &amp; -1 &amp; 6 &amp; -1 \\
+                     1 &amp; 5 &amp; -2 &amp; 2 \\
+                     1 &amp; 0 &amp; 2 &amp; 5
+                    \end{bmatrix}
+                    \rref
+                    \begin{bmatrix}
+                     \leading{1} &amp; 0 &amp; 0 &amp; 0 \\
+                     0 &amp; \leading{1} &amp; 0 &amp; 0 \\
+                     0 &amp; 0 &amp; \leading{1} &amp; 0 \\
+                     0 &amp; 0 &amp; 0 &amp; \leading{1}
+                    \end{bmatrix}</mrow>
+                </md>We recognize the coefficient matrix as being nonsingular, so the only solution to the system is <m>a=b=c=d=0</m>, and the kernel of <m>S</m> is trivial, <m>\krn{S}=\set{0+0x+0x^2+0x^3}</m>.  By <xref ref="theorem-KILT" acro="KILT" autoname="yes"/>, we see that <m>S</m> is injective.</p>
+                <p>(b)  We can establish that <m>S</m> is surjective by considering the rank and nullity of <m>S</m>.<md>
+                    <mrow>\rank{S}
+                    &amp;=\dimension{P_3}-\nullity{S}&amp;&amp;
+                        <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/></mrow>
+                    <mrow>&amp;=4-0</mrow>
+                    <mrow>&amp;=\dimension{M_{22}}</mrow>
+                </md>So, <m>\rng{S}</m> is a subspace of <m>M_{22}</m> (<xref ref="theorem-RLTS" acro="RLTS" autoname="yes"/>) whose dimension equals that of <m>M_{22}</m>.  By <xref ref="theorem-EDYES" acro="EDYES" autoname="yes"/>, we gain the set equality <m>\rng{S}=M_{22}</m>.  <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/> then implies that <m>S</m> is surjective.</p>
+                <p>(c)  Since <m>S</m> is both injective and surjective, <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> says <m>S</m> is invertible.</p>
             </solution>
         </exercise>
         <exercise number="C25" xml:id="exercise-IVLT-C25">
             <statement contributor="chrisblack">
                 <p>For each linear transformation below:
-(a) Find the matrix representation of <m>T</m>,
-(b) Calculate <m>n(T)</m>,
-(c) Calculate <m>r(T)</m>,
-(d) Graph the image in either <m>\real{2}</m> or <m>\real{3}</m> as appropriate,
-(e) How many dimensions are lost?, and
-(f) How many dimensions are preserved?
-<ol><li><m>\ltdefn{T}{\complex{3}}{\complex{3}}</m> given by
-<m>\lteval{T}{\colvector{x\\y\\z}} = \colvector{x\\x\\x}</m>
-</li><li><m>\ltdefn{T}{\complex{3}}{\complex{3}}</m> given by
-<m>\lteval{T}{\colvector{x\\y\\z}} = \colvector{x\\y\\0}</m>
-</li><li><m>\ltdefn{T}{\complex{3}}{\complex{2}}</m> given by
-<m>\lteval{T}{\colvector{x\\y\\z}} = \colvector{x\\x}</m>
-</li><li><m>\ltdefn{T}{\complex{3}}{\complex{2}}</m> given by
-<m>\lteval{T}{\colvector{x\\y\\z}} = \colvector{x\\y}</m>
-</li><li><m>\ltdefn{T}{\complex{2}}{\complex{3}}</m> given by
-<m>\lteval{T}{\colvector{x\\y}} = \colvector{x\\y\\0}</m>
-</li><li><m>\ltdefn{T}{\complex{2}}{\complex{3}}</m> given by
-<m>\lteval{T}{\colvector{x\\y}} = \colvector{x\\y\\x+y}</m>
-</li></ol>
-</p>
+                (a) Find the matrix representation of <m>T</m>,
+                (b) Calculate <m>n(T)</m>,
+                (c) Calculate <m>r(T)</m>,
+                (d) Graph the image in either <m>\real{2}</m> or <m>\real{3}</m> as appropriate,
+                (e) How many dimensions are lost?, and
+                (f) How many dimensions are preserved?
+                <ol>
+                    <li><m>\ltdefn{T}{\complex{3}}{\complex{3}}</m> given by <m>\lteval{T}{\colvector{x\\y\\z}} = \colvector{x\\x\\x}</m></li>
+                    <li><m>\ltdefn{T}{\complex{3}}{\complex{3}}</m> given by <m>\lteval{T}{\colvector{x\\y\\z}} = \colvector{x\\y\\0}</m></li>
+                    <li><m>\ltdefn{T}{\complex{3}}{\complex{2}}</m> given by <m>\lteval{T}{\colvector{x\\y\\z}} = \colvector{x\\x}</m></li>
+                    <li><m>\ltdefn{T}{\complex{3}}{\complex{2}}</m> given by <m>\lteval{T}{\colvector{x\\y\\z}} = \colvector{x\\y}</m></li>
+                    <li><m>\ltdefn{T}{\complex{2}}{\complex{3}}</m> given by <m>\lteval{T}{\colvector{x\\y}} = \colvector{x\\y\\0}</m></li>
+                    <li><m>\ltdefn{T}{\complex{2}}{\complex{3}}</m> given by <m>\lteval{T}{\colvector{x\\y}} = \colvector{x\\y\\x+y}</m></li>
+                </ol></p>
             </statement>
         </exercise>
         <exercise number="C50" xml:id="exercise-IVLT-C50">
             <statement>
-                <p>Consider the linear transformation <m>\ltdefn{S}{M_{12}}{P_1}</m> from the set of <m>1\times 2</m> matrices to the set of polynomials of degree at most 1, defined by
-<me>\lteval{S}{\begin{bmatrix}a &amp; b\end{bmatrix}}=(3a+b)+(5a+2b)x</me>
-Prove that <m>S</m> is invertible.  Then show that the linear transformation
-<me>\ltdefn{R}{P_1}{M_{12}},\quad \lteval{R}{r+sx}=\begin{bmatrix}(2r-s) &amp; (-5r+3s)\end{bmatrix}</me>
-is the inverse of <m>S</m>, that is <m>\ltinverse{S}=R</m>.
-</p>
+                <p>Consider the linear transformation <m>\ltdefn{S}{M_{12}}{P_1}</m> from the set of <m>1\times 2</m> matrices to the set of polynomials of degree at most 1, defined by<me>\lteval{S}{\begin{bmatrix}a &amp; b\end{bmatrix}}=(3a+b)+(5a+2b)x</me>Prove that <m>S</m> is invertible.  Then show that the linear transformation<me>\ltdefn{R}{P_1}{M_{12}},\quad \lteval{R}{r+sx}=\begin{bmatrix}(2r-s) &amp; (-5r+3s)\end{bmatrix}</me>is the inverse of <m>S</m>, that is <m>\ltinverse{S}=R</m>.</p>
             </statement>
             <solution xml:id="solution-IVLT-C50">
-                <p>Determine the kernel of <m>S</m> first.  The condition that <m>\lteval{S}{\begin{bmatrix}a &amp; b\end{bmatrix}}=\zerovector</m> becomes <m>(3a+b)+(5a+2b)x=0+0x</m>.  Equating coefficients of these polynomials yields the system
-<md><mrow>3a+b&amp;=0</mrow><mrow>5a+2b&amp;=0</mrow></md>
-This homogeneous system has a nonsingular coefficient matrix, so the only solution is <m>a=0</m>, <m>b=0</m> and thus
-<me>\krn{S}=\set{\begin{bmatrix}0 &amp; 0\end{bmatrix}}</me>
-By <xref ref="theorem-KILT" acro="KILT" autoname="yes"/>, we know <m>S</m> is injective.  With <m>\nullity{S}=0</m> we employ <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/> to find
-<me>\rank{S}=\rank{S}+0=\rank{S}+\nullity{S}=\dimension{M_{12}}=2=\dimension{P_1}</me>
-Since <m>\rng{S}\subseteq P_1</m> and <m>\dimension{\rng{S}}=\dimension{P_1}</m>, we can apply <xref ref="theorem-EDYES" acro="EDYES" autoname="yes"/> to obtain the set equality <m>\rng{S}=P_1</m> and therefore <m>S</m> is surjective. </p>
-                <p>
-One of the two defining conditions of an invertible linear transformation is (<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/>)
-<md><mrow>\lteval{\left(\compose{S}{R}\right)}{a+bx}&amp;=\lteval{S}{\lt{R}{a+bx}}\\
-&amp;=\lteval{S}{\begin{bmatrix}(2a-b) &amp; (-5a+3b)\end{bmatrix}}\\
-&amp;=\left(3(2a-b)+(-5a+3b)\right)+\left(5(2a-b)+2(-5a+3b)\right)x\\
-&amp;=\left((6a-3b)+(-5a+3b)\right)+\left((10a-5b)+(-10a+6b)\right)x\\
-&amp;=a+bx\\
-&amp;=\lt{I_{P_1}}{a+bx}</mrow></md>
-That <m>\lteval{\left(\compose{R}{S}\right)}{\begin{bmatrix}a &amp; b\end{bmatrix}}= \lt{I_{M_{12}}}{\begin{bmatrix}a &amp; b\end{bmatrix}}</m> is similar.
-</p>
+                <p>Determine the kernel of <m>S</m> first.  The condition that <m>\lteval{S}{\begin{bmatrix}a &amp; b\end{bmatrix}}=\zerovector</m> becomes <m>(3a+b)+(5a+2b)x=0+0x</m>.  Equating coefficients of these polynomials yields the system<md>
+                    <mrow>3a+b&amp;=0</mrow>
+                    <mrow>5a+2b&amp;=0</mrow>
+                </md>This homogeneous system has a nonsingular coefficient matrix, so the only solution is <m>a=0</m>, <m>b=0</m> and thus<me>\krn{S}=\set{\begin{bmatrix}0 &amp; 0\end{bmatrix}}</me>By <xref ref="theorem-KILT" acro="KILT" autoname="yes"/>, we know <m>S</m> is injective.  With <m>\nullity{S}=0</m> we employ <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/> to find<me>\rank{S}=\rank{S}+0=\rank{S}+\nullity{S}=\dimension{M_{12}}=2=\dimension{P_1}</me>Since <m>\rng{S}\subseteq P_1</m> and <m>\dimension{\rng{S}}=\dimension{P_1}</m>, we can apply <xref ref="theorem-EDYES" acro="EDYES" autoname="yes"/> to obtain the set equality <m>\rng{S}=P_1</m> and therefore <m>S</m> is surjective. </p>
+                <p>One of the two defining conditions of an invertible linear transformation is (<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/>)<md>
+                    <mrow>\lteval{\left(\compose{S}{R}\right)}{a+bx}&amp;=\lteval{S}{\lt{R}{a+bx}}\\
+                    &amp;=\lteval{S}{\begin{bmatrix}(2a-b) &amp; (-5a+3b)\end{bmatrix}}\\
+                    &amp;=\left(3(2a-b)+(-5a+3b)\right)+\left(5(2a-b)+2(-5a+3b)\right)x\\
+                    &amp;=\left((6a-3b)+(-5a+3b)\right)+\left((10a-5b)+(-10a+6b)\right)x\\
+                    &amp;=a+bx\\
+                    &amp;=\lt{I_{P_1}}{a+bx}</mrow>
+                </md>That <m>\lteval{\left(\compose{R}{S}\right)}{\begin{bmatrix}a &amp; b\end{bmatrix}}= \lt{I_{M_{12}}}{\begin{bmatrix}a &amp; b\end{bmatrix}}</m> is similar.</p>
             </solution>
         </exercise>
         <exercise number="M30" xml:id="exercise-IVLT-M30">
             <statement>
-                <p>The linear transformation <m>S</m> below is invertible.  Find a formula for the inverse linear transformation, <m>\ltinverse{S}</m>.
-<me>\ltdefn{S}{P_1}{M_{12}},\quad \lteval{S}{a+bx}=\begin{bmatrix} 3a+b &amp; 2a+b \end{bmatrix}</me>
-</p>
+                <p>The linear transformation <m>S</m> below is invertible.  Find a formula for the inverse linear transformation, <m>\ltinverse{S}</m>.<me>\ltdefn{S}{P_1}{M_{12}},\quad \lteval{S}{a+bx}=\begin{bmatrix} 3a+b &amp; 2a+b \end{bmatrix}</me></p>
             </statement>
             <solution xml:id="solution-IVLT-M30">
                 <p>(Another approach to this solution would follow <xref ref="example-CIVLT" acro="CIVLT" autoname="yes"/>.)</p>
-                <p>
-Suppose that <m>\ltdefn{\ltinverse{S}}{M_{12}}{P_1}</m> has a form given by
-<me>\lteval{\ltinverse{S}}{\begin{bmatrix}z &amp; w\end{bmatrix}}=\left(rz+sw\right)+\left(pz+qw\right)x</me>
-where <m>r,\,s,\,p,\,q</m> are unknown scalars.  Then
-<md><mrow>a+bx
-&amp;=\lteval{\ltinverse{S}}{\lteval{S}{a+bx}}\\
-&amp;=\lteval{\ltinverse{S}}{\begin{bmatrix} 3a+b &amp; 2a+b \end{bmatrix}}\\
-&amp;=\left(r(3a+b)+s(2a+b)\right)+\left(p(3a+b)+q(2a+b)\right)x\\
-&amp;=\left((3r+2s)a+(r+s)b\right)+\left((3p+2q)a+(p+q)b\right)x</mrow></md>
-Equating coefficients of these two polynomials, and then equating coefficients on <m>a</m> and <m>b</m>, gives rise to 4 equations in 4 variables,
-<md><mrow>3r+2s&amp;=1</mrow><mrow>r+s&amp;=0</mrow><mrow>3p+2q&amp;=0</mrow><mrow>p+q&amp;=1\\</mrow></md>
-This system has a unique solution: <m>r=1</m>, <m>s=-1</m>, <m>p=-2</m>, <m>q=3</m>.  So the desired inverse linear transformation is
-<me>\lteval{\ltinverse{S}}{\begin{bmatrix}z &amp; w\end{bmatrix}}=\left(z-w\right)+\left(-2z+3w\right)x</me>
-Notice that the system of 4 equations in 4 variables could be split into two systems, each with two equations in two variables (and identical coefficient matrices).  After making this split, the solution might feel like computing the inverse of a matrix (<xref ref="theorem-CINM" acro="CINM" autoname="yes"/>).   Hmmmm.
-</p>
+                <p>Suppose that <m>\ltdefn{\ltinverse{S}}{M_{12}}{P_1}</m> has a form given by<me>\lteval{\ltinverse{S}}{\begin{bmatrix}z &amp; w\end{bmatrix}}=\left(rz+sw\right)+\left(pz+qw\right)x</me>where <m>r,\,s,\,p,\,q</m> are unknown scalars.  Then<md>
+                    <mrow>a+bx
+                    &amp;=\lteval{\ltinverse{S}}{\lteval{S}{a+bx}}\\
+                    &amp;=\lteval{\ltinverse{S}}{\begin{bmatrix} 3a+b &amp; 2a+b \end{bmatrix}}\\
+                    &amp;=\left(r(3a+b)+s(2a+b)\right)+\left(p(3a+b)+q(2a+b)\right)x\\
+                    &amp;=\left((3r+2s)a+(r+s)b\right)+\left((3p+2q)a+(p+q)b\right)x</mrow>
+                </md>Equating coefficients of these two polynomials, and then equating coefficients on <m>a</m> and <m>b</m>, gives rise to 4 equations in 4 variables,<md>
+                    <mrow>3r+2s&amp;=1</mrow>
+                    <mrow>r+s&amp;=0</mrow>
+                    <mrow>3p+2q&amp;=0</mrow>
+                    <mrow>p+q&amp;=1</mrow>
+                </md>This system has a unique solution: <m>r=1</m>, <m>s=-1</m>, <m>p=-2</m>, <m>q=3</m>.  So the desired inverse linear transformation is<me>\lteval{\ltinverse{S}}{\begin{bmatrix}z &amp; w\end{bmatrix}}=\left(z-w\right)+\left(-2z+3w\right)x</me>Notice that the system of 4 equations in 4 variables could be split into two systems, each with two equations in two variables (and identical coefficient matrices).  After making this split, the solution might feel like computing the inverse of a matrix (<xref ref="theorem-CINM" acro="CINM" autoname="yes"/>).   Hmmmm.</p>
             </solution>
         </exercise>
         <exercise number="M31" xml:id="exercise-IVLT-M31">
             <statement>
-                <p>The linear transformation <m>\ltdefn{R}{M_{12}}{M_{21}}</m> is invertible.  Determine a formula for the inverse linear transformation <m>\ltdefn{\ltinverse{R}}{M_{21}}{M_{12}}</m>.
-<me>\lteval{R}{\begin{bmatrix}a &amp; b\end{bmatrix}}
-=
-\begin{bmatrix}
-a+3b\\
-4a+11b
-\end{bmatrix}</me>
-</p>
+                <p>The linear transformation <m>\ltdefn{R}{M_{12}}{M_{21}}</m> is invertible.  Determine a formula for the inverse linear transformation <m>\ltdefn{\ltinverse{R}}{M_{21}}{M_{12}}</m>.<me>\lteval{R}{\begin{bmatrix}a &amp; b\end{bmatrix}}
+                =
+                \begin{bmatrix}
+                a+3b\\
+                4a+11b
+                \end{bmatrix}</me></p>
             </statement>
             <solution xml:id="solution-IVLT-M31">
                 <p>(Another approach to this solution would follow <xref ref="example-CIVLT" acro="CIVLT" autoname="yes"/>.)</p>
-                <p>
-We are given that <m>R</m> is invertible.  The inverse linear transformation can be formulated by considering the pre-image of a generic element of the codomain.  With injectivity and surjectivity, we know that the pre-image of any element will be a set of size one <mdash/> it is this lone element that will be the output of the inverse linear transformation.</p>
-                <p>
-Suppose that we set <m>\vect{v}=\begin{bmatrix}x\\y\end{bmatrix}</m> as a generic element of the codomain, <m>M_{21}</m>.  Then if <m>\begin{bmatrix}r &amp; s\end{bmatrix}=\vect{w}\in\preimage{R}{\vect{v}}</m>,
-<md><mrow>\begin{bmatrix}x\\y\end{bmatrix}&amp;=\vect{v}=\lteval{R}{\vect{w}}\\
-&amp;=
-\begin{bmatrix}
-r+3s\\
-4r+11s
-\end{bmatrix}</mrow></md>
-So we obtain the system of two equations in the two variables <m>r</m> and <m>s</m>,
-<md><mrow>r+3s&amp;=x</mrow><mrow>4r+11s&amp;=y</mrow></md>
-With a nonsingular coefficient matrix, we can solve the system using the inverse of the coefficient matrix,
-<md><mrow>r&amp;=-11x+3y</mrow><mrow>s&amp;=4x-y</mrow></md>
-So we define,
-<me>\lteval{\ltinverse{R}}{\vect{v}}
-=\lteval{\ltinverse{R}}{\begin{bmatrix}x\\y\end{bmatrix}}
-=\vect{w}
-=\begin{bmatrix}r &amp; s\end{bmatrix}
-=\begin{bmatrix}-11x+3y &amp; 4x-y\end{bmatrix}</me>
-</p>
+                <p>We are given that <m>R</m> is invertible.  The inverse linear transformation can be formulated by considering the pre-image of a generic element of the codomain.  With injectivity and surjectivity, we know that the pre-image of any element will be a set of size one <mdash/> it is this lone element that will be the output of the inverse linear transformation.</p>
+                <p>Suppose that we set <m>\vect{v}=\begin{bmatrix}x\\y\end{bmatrix}</m> as a generic element of the codomain, <m>M_{21}</m>.  Then if <m>\begin{bmatrix}r &amp; s\end{bmatrix}=\vect{w}\in\preimage{R}{\vect{v}}</m>,<md>
+                    <mrow>\begin{bmatrix}x\\y\end{bmatrix}&amp;=\vect{v}=\lteval{R}{\vect{w}}\\
+                    &amp;=
+                    \begin{bmatrix}
+                    r+3s\\
+                    4r+11s
+                    \end{bmatrix}</mrow>
+                </md>So we obtain the system of two equations in the two variables <m>r</m> and <m>s</m>,<md>
+                    <mrow>r+3s&amp;=x</mrow>
+                    <mrow>4r+11s&amp;=y</mrow>
+                </md>With a nonsingular coefficient matrix, we can solve the system using the inverse of the coefficient matrix,<md>
+                    <mrow>r&amp;=-11x+3y</mrow>
+                    <mrow>s&amp;=4x-y</mrow>
+                </md>So we define,<me>\lteval{\ltinverse{R}}{\vect{v}}
+                =\lteval{\ltinverse{R}}{\begin{bmatrix}x\\y\end{bmatrix}}
+                =\vect{w}
+                =\begin{bmatrix}r &amp; s\end{bmatrix}
+                =\begin{bmatrix}-11x+3y &amp; 4x-y\end{bmatrix}</me></p>
             </solution>
         </exercise>
         <exercise number="M50" xml:id="exercise-IVLT-M50">
             <statement>
-                <p>Rework <xref ref="example-CIVLT" acro="CIVLT" autoname="yes"/>, only in place of the basis <m>B</m> for <m>P_2</m>, choose instead to use the basis <m>C=\set{1,\,1+x,\,1+x+x^2}</m>.  This will complicate writing a generic element of the domain of <m>\ltinverse{T}</m> as a linear combination of the basis elements, and the algebra will be a bit messier, but in the end you should obtain the same formula for <m>\ltinverse{T}</m>.  The inverse linear transformation is what it is, and the choice of a particular basis should not influence the outcome.
-</p>
+                <p>Rework <xref ref="example-CIVLT" acro="CIVLT" autoname="yes"/>, only in place of the basis <m>B</m> for <m>P_2</m>, choose instead to use the basis <m>C=\set{1,\,1+x,\,1+x+x^2}</m>.  This will complicate writing a generic element of the domain of <m>\ltinverse{T}</m> as a linear combination of the basis elements, and the algebra will be a bit messier, but in the end you should obtain the same formula for <m>\ltinverse{T}</m>.  The inverse linear transformation is what it is, and the choice of a particular basis should not influence the outcome.</p>
             </statement>
         </exercise>
         <exercise number="M60" xml:id="exercise-IVLT-M60">
             <statement>
-                <p>Suppose <m>U</m> and <m>V</m> are vector spaces.  Define the function <m>\ltdefn{Z}{U}{V}</m> by <m>\lteval{Z}{\vect{u}}=\zerovector_{V}</m> for every <m>\vect{u}\in U</m>.  Then by <xref ref="exercise-LT-M60" acro="LT.M60" autoname="yes"/>, <m>Z</m> is a linear transformation.  Formulate a condition on <m>U</m> and <m>V</m> that is equivalent to <m>Z</m> being an invertible linear transformation.   In other words, fill in the blank to complete the following statement (and then give a proof):  <m>Z</m> is invertible if and only if <m>U</m> and <m>V</m> are  <rule width="1in" height="1pt"/>. (See <xref ref="exercise-ILT-M60" acro="ILT.M60" autoname="yes"/>, <xref ref="exercise-SLT-M60" acro="SLT.M60" autoname="yes"/>, <xref ref="exercise-MR-M60" acro="MR.M60" autoname="yes"/>.)
-</p>
+                <p>Suppose <m>U</m> and <m>V</m> are vector spaces.  Define the function <m>\ltdefn{Z}{U}{V}</m> by <m>\lteval{Z}{\vect{u}}=\zerovector_{V}</m> for every <m>\vect{u}\in U</m>.  Then by <xref ref="exercise-LT-M60" acro="LT.M60" autoname="yes"/>, <m>Z</m> is a linear transformation.  Formulate a condition on <m>U</m> and <m>V</m> that is equivalent to <m>Z</m> being an invertible linear transformation.   In other words, fill in the blank to complete the following statement (and then give a proof):  <m>Z</m> is invertible if and only if <m>U</m> and <m>V</m> are  <rule width="1in" height="1pt"/>. (See <xref ref="exercise-ILT-M60" acro="ILT.M60" autoname="yes"/>, <xref ref="exercise-SLT-M60" acro="SLT.M60" autoname="yes"/>, <xref ref="exercise-MR-M60" acro="MR.M60" autoname="yes"/>.)</p>
             </statement>
         </exercise>
         <exercise number="T05" xml:id="exercise-IVLT-T05">
             <statement>
-                <p>Prove that the identity linear transformation (<xref ref="definition-IDLT" acro="IDLT" autoname="yes"/>) is both injective and surjective, and hence invertible.
-</p>
+                <p>Prove that the identity linear transformation (<xref ref="definition-IDLT" acro="IDLT" autoname="yes"/>) is both injective and surjective, and hence invertible.</p>
             </statement>
         </exercise>
         <exercise number="T15" xml:id="exercise-IVLT-T15">
             <statement>
-                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a surjective linear transformation and <m>\dimension{U}=\dimension{V}</m>.  Prove that <m>T</m> is injective.
-</p>
+                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a surjective linear transformation and <m>\dimension{U}=\dimension{V}</m>.  Prove that <m>T</m> is injective.</p>
             </statement>
             <solution xml:id="solution-IVLT-T15">
-                <p>Consider that
-<md><mrow>\nullity{T}
-&amp;=\left(\rank{T}+\nullity{T}\right)-\rank{T}</mrow><mrow>&amp;=\dimension{U}-\rank{T}&amp;&amp;<xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/></mrow><mrow>&amp;=\dimension{U}-\dimension{\rng{T}}&amp;&amp;<xref ref="definition-ROLT" acro="ROLT" autoname="yes"/></mrow><mrow>&amp;=\dimension{U}-\dimension{V}&amp;&amp;<xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/></mrow><mrow>&amp;=\dimension{U}-\dimension{U}&amp;&amp;\text{Hypothesis}</mrow><mrow>&amp;=0</mrow></md>
-With a null space of zero dimension, <m>\krn{T}=\set{\zerovector}</m>, and by <xref ref="theorem-KILT" acro="KILT" autoname="yes"/> we see that <m>T</m> is injective.  Thus <m>T</m> is both injective and surjective, so by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>, <m>T</m> is invertible.
-</p>
+                <p>Consider that<md>
+                    <mrow>\nullity{T}
+                    &amp;=\left(\rank{T}+\nullity{T}\right)-\rank{T}</mrow>
+                    <mrow>&amp;=\dimension{U}-\rank{T}&amp;&amp;
+                        <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/></mrow>
+                    <mrow>&amp;=\dimension{U}-\dimension{\rng{T}}&amp;&amp;
+                        <xref ref="definition-ROLT" acro="ROLT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\dimension{U}-\dimension{V}&amp;&amp;
+                        <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\dimension{U}-\dimension{U}
+                        &amp;&amp;\text{Hypothesis}</mrow>
+                    <mrow>&amp;=0</mrow>
+                </md>With a null space of zero dimension, <m>\krn{T}=\set{\zerovector}</m>, and by <xref ref="theorem-KILT" acro="KILT" autoname="yes"/> we see that <m>T</m> is injective.  Thus <m>T</m> is both injective and surjective, so by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>, <m>T</m> is invertible.</p>
             </solution>
         </exercise>
         <exercise number="T16" xml:id="exercise-IVLT-T16">
             <statement>
-                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is an injective linear transformation and <m>\dimension{U}=\dimension{V}</m>.  Prove that <m>T</m> is surjective.
-</p>
+                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is an injective linear transformation and <m>\dimension{U}=\dimension{V}</m>.  Prove that <m>T</m> is surjective.</p>
             </statement>
         </exercise>
         <exercise number="T30" xml:id="exercise-IVLT-T30">
             <statement>
-                <p>Suppose that <m>U</m> and <m>V</m> are isomorphic vector spaces, not of dimension zero.  Prove that there are infinitely many isomorphisms between <m>U</m> and <m>V</m>.
-</p>
+                <p>Suppose that <m>U</m> and <m>V</m> are isomorphic vector spaces, not of dimension zero.  Prove that there are infinitely many isomorphisms between <m>U</m> and <m>V</m>.</p>
             </statement>
             <solution xml:id="solution-IVLT-T30">
                 <p>Since <m>U</m> and <m>V</m> are isomorphic, there is at least one isomorphism between them (<xref ref="definition-IVS" acro="IVS" autoname="yes"/>), say <m>\ltdefn{T}{U}{V}</m>.  As such, <m>T</m> is an invertible linear transformation.</p>
-                <p>
-For <m>\alpha\in\complexes</m> define the linear transformation <m>\ltdefn{S}{V}{V}</m> by <m>\lteval{S}{\vect{v}}=\alpha\vect{v}</m>.  Convince yourself that when <m>\alpha\neq 0</m>, <m>S</m> is an invertible linear transformation (<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/>).  Then the composition, <m>\ltdefn{\compose{S}{T}}{U}{V}</m>, is an invertible linear transformation by <xref ref="theorem-CIVLT" acro="CIVLT" autoname="yes"/>.  Convince yourself that each nonzero value of <m>\alpha</m> gives rise to a different function for <m>\compose{S}{T}</m>, which will require the selection of a nonzero vector from <m>U</m>.  Then we have constructed infinitely many isomorphisms from <m>U</m> to <m>V</m>.
-</p>
+                <p>For <m>\alpha\in\complexes</m> define the linear transformation <m>\ltdefn{S}{V}{V}</m> by <m>\lteval{S}{\vect{v}}=\alpha\vect{v}</m>.  Convince yourself that when <m>\alpha\neq 0</m>, <m>S</m> is an invertible linear transformation (<xref ref="definition-IVLT" acro="IVLT" autoname="yes"/>).  Then the composition, <m>\ltdefn{\compose{S}{T}}{U}{V}</m>, is an invertible linear transformation by <xref ref="theorem-CIVLT" acro="CIVLT" autoname="yes"/>.  Convince yourself that each nonzero value of <m>\alpha</m> gives rise to a different function for <m>\compose{S}{T}</m>, which will require the selection of a nonzero vector from <m>U</m>.  Then we have constructed infinitely many isomorphisms from <m>U</m> to <m>V</m>.</p>
             </solution>
         </exercise>
         <exercise number="T40" xml:id="exercise-IVLT-T40">
             <statement>
-                <p>Suppose <m>\ltdefn{T}{U}{V}</m> and <m>\ltdefn{S}{V}{W}</m> are linear transformations and <m>\dimension{U}=\dimension{V}=\dimension{W}</m>.  Suppose that <m>\compose{S}{T}</m> is invertible.  Prove that <m>S</m> and <m>T</m> are individually invertible (this could be construed as a converse of <xref ref="theorem-CIVLT" acro="CIVLT" autoname="yes"/>).
-</p>
+                <p>Suppose <m>\ltdefn{T}{U}{V}</m> and <m>\ltdefn{S}{V}{W}</m> are linear transformations and <m>\dimension{U}=\dimension{V}=\dimension{W}</m>.  Suppose that <m>\compose{S}{T}</m> is invertible.  Prove that <m>S</m> and <m>T</m> are individually invertible (this could be construed as a converse of <xref ref="theorem-CIVLT" acro="CIVLT" autoname="yes"/>).</p>
             </statement>
             <solution xml:id="solution-IVLT-T40">
-                <p>Since <m>\compose{S}{T}</m> is invertible, by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> <m>\compose{S}{T}</m> is injective and therefore has a trivial kernel by <xref ref="theorem-KILT" acro="KILT" autoname="yes"/>.  Then
-<md><mrow>\krn{T}
-&amp;\subseteq\krn{\compose{S}{T}}&amp;&amp;<xref ref="exercise-ILT-T15" acro="ILT.T15" autoname="yes"/></mrow><mrow>&amp;=\set{\zerovector}&amp;&amp;<xref ref="theorem-KILT" acro="KILT" autoname="yes"/></mrow></md>
-Since <m>T</m> has a trivial kernel, by <xref ref="theorem-KILT" acro="KILT" autoname="yes"/>, <m>T</m> is injective.  Also,
-<md><mrow>\rank{T}
-&amp;=\dimension{U}-\nullity{T}&amp;&amp;<xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/></mrow><mrow>&amp;=\dimension{U}-0&amp;&amp;<xref ref="theorem-NOILT" acro="NOILT" autoname="yes"/></mrow><mrow>&amp;=\dimension{V}&amp;&amp;\text{Hypothesis}</mrow></md>
-Since <m>\rng{T}\subseteq V</m>, <xref ref="theorem-EDYES" acro="EDYES" autoname="yes"/> gives <m>\rng{T}=V</m>, so by <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>, <m>T</m> is surjective.  Finally, by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>, <m>T</m> is invertible.</p>
-                <p>
-Since <m>\compose{S}{T}</m> is invertible, by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> <m>\compose{S}{T}</m> is surjective and therefore has a full range by <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>.  Then
-<md><mrow>W
-&amp;=\rng{\compose{S}{T}}&amp;&amp;<xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/></mrow><mrow>&amp;\subseteq\rng{S}&amp;&amp;<xref ref="exercise-SLT-T15" acro="SLT.T15" autoname="yes"/></mrow></md>
-Since <m>\rng{S}\subseteq W</m> we have <m>\rng{S}=W</m> and by <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>, <m>S</m> is surjective.  By an application of <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/> similar to the first part of this solution, we see that <m>S</m> has a trivial kernel, is therefore injective (<xref ref="theorem-KILT" acro="KILT" autoname="yes"/>), and thus invertible (<xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>).
-</p>
+                <p>Since <m>\compose{S}{T}</m> is invertible, by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> <m>\compose{S}{T}</m> is injective and therefore has a trivial kernel by <xref ref="theorem-KILT" acro="KILT" autoname="yes"/>.  Then<md>
+                    <mrow>\krn{T}
+                    &amp;\subseteq\krn{\compose{S}{T}}&amp;&amp;
+                        <xref ref="exercise-ILT-T15" acro="ILT.T15" autoname="yes"/></mrow>
+                    <mrow>&amp;=\set{\zerovector}&amp;&amp;
+                        <xref ref="theorem-KILT" acro="KILT" autoname="yes"/></mrow>
+                </md>Since <m>T</m> has a trivial kernel, by <xref ref="theorem-KILT" acro="KILT" autoname="yes"/>, <m>T</m> is injective.  Also,<md>
+                    <mrow>\rank{T}
+                    &amp;=\dimension{U}-\nullity{T}&amp;&amp;
+                        <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/></mrow>
+                    <mrow>&amp;=\dimension{U}-0&amp;&amp;
+                        <xref ref="theorem-NOILT" acro="NOILT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\dimension{V}
+                        &amp;&amp;\text{Hypothesis}</mrow>
+                </md>Since <m>\rng{T}\subseteq V</m>, <xref ref="theorem-EDYES" acro="EDYES" autoname="yes"/> gives <m>\rng{T}=V</m>, so by <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>, <m>T</m> is surjective.  Finally, by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>, <m>T</m> is invertible.</p>
+                <p>Since <m>\compose{S}{T}</m> is invertible, by <xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/> <m>\compose{S}{T}</m> is surjective and therefore has a full range by <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>.  Then<md>
+                    <mrow>W
+                    &amp;=\rng{\compose{S}{T}}&amp;&amp;
+                        <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/></mrow>
+                    <mrow>&amp;\subseteq\rng{S}&amp;&amp;
+                        <xref ref="exercise-SLT-T15" acro="SLT.T15" autoname="yes"/></mrow>
+                </md>Since <m>\rng{S}\subseteq W</m> we have <m>\rng{S}=W</m> and by <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>, <m>S</m> is surjective.  By an application of <xref ref="theorem-RPNDD" acro="RPNDD" autoname="yes"/> similar to the first part of this solution, we see that <m>S</m> has a trivial kernel, is therefore injective (<xref ref="theorem-KILT" acro="KILT" autoname="yes"/>), and thus invertible (<xref ref="theorem-ILTIS" acro="ILTIS" autoname="yes"/>).</p>
             </solution>
         </exercise>
     </exercises>
