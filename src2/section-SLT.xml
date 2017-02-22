@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      A First Course in Linear Algebra        -->
+<!--                                              -->
+<!-- Copyright (C) 2004-2017  Robert A. Beezer    -->
+<!-- See the file COPYING for copying conditions. -->
+
 <section xml:id="section-SLT" acro="SLT">
     <title>Surjective Linear Transformations</title>
-    <!-- %%%%%%%%%% -->
-    <!-- % -->
-    <!-- %  Section SLT -->
-    <!-- %  Surjective Linear Transformations -->
-    <!-- % -->
-    <!-- %%%%%%%%%% -->
     <introduction>
         <p>The companion to an injection is a surjection.  Surjective linear transformations are closely related to spanning sets and ranges.  So as you read this section reflect back on <xref ref="section-ILT" acro="ILT" autoname="yes"/> and note the parallels and the contrasts.  In the next section, <xref ref="section-IVLT" acro="IVLT" autoname="yes"/>, we will combine the two properties.</p>
     </introduction>
@@ -29,230 +31,267 @@
         <title>Examples of Surjective Linear Transformations</title>
         <p>It is perhaps most instructive to examine a linear transformation that is not surjective first.</p>
         <example xml:id="example-NSAQ" acro="NSAQ">
+            <title>Not surjective, Archetype Q</title>
             <index>
                 <main>surjective</main>
                 <sub>not</sub>
             </index>
-            <title>Not surjective, Archetype Q</title>
-            <p>Archetype<nbsp/><xref ref="archetype-Q" acro="Q" autoname="no"/> is the linear transformation
-<me><!-- Archetype Q, Part ltdefn -->\ltdefn{T}{\complex{5}}{\complex{5}},\quad
-\lteval{T}{\colvector{x_1\\x_2\\x_3\\x_4\\x_5}}=
-\colvector{-2 x_1 + 3 x_2 + 3 x_3 - 6 x_4 + 3 x_5\\
--16 x_1 + 9 x_2 + 12 x_3 - 28 x_4 + 28 x_5\\
--19 x_1 + 7 x_2 + 14 x_3 - 32 x_4 + 37 x_5\\
--21 x_1 + 9 x_2 + 15 x_3 - 35 x_4 + 39 x_5\\
--9 x_1 + 5 x_2 + 7 x_3 - 16 x_4 + 16 x_5}
-</me></p>
-            <p>We will demonstrate that
-<me>\vect{v}=\colvector{-1\\2\\3\\-1\\4}</me>
-is an unobtainable element of the codomain.  Suppose to the contrary that <m>\vect{u}</m> is an element of the domain such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.</p>
-            <p>Then
-<md><mrow>\colvector{-1\\2\\3\\-1\\4}&amp;=\vect{v}=\lteval{T}{\vect{u}}
-=\lteval{T}{\colvector{u_1\\u_2\\u_3\\u_4\\u_5}}\\
-&amp;=\colvector{
--2 u_1 + 3 u_2 + 3 u_3 - 6 u_4 + 3 u_5\\
--16 u_1 + 9 u_2 + 12 u_3 - 28 u_4 + 28 u_5\\
--19 u_1 + 7 u_2 + 14 u_3 - 32 u_4 + 37 u_5\\
--21 u_1 + 9 u_2 + 15 u_3 - 35 u_4 + 39 u_5\\
--9 u_1 + 5 u_2 + 7 u_3 - 16 u_4 + 16 u_5}\\
-&amp;=
-\begin{bmatrix}
--2&amp;3&amp;3&amp;-6&amp;3\\
--16&amp;9&amp;12&amp;-28&amp;28\\
--19&amp;7&amp;14&amp;-32&amp;37\\
--21&amp;9&amp;15&amp;-35&amp;39\\
--9&amp;5&amp;7&amp;-16&amp;16
-\end{bmatrix}
-\colvector{u_1\\u_2\\u_3\\u_4\\u_5}</mrow></md>
-</p>
-            <p>Now we recognize the appropriate input vector <m>\vect{u}</m> as a solution to a linear system of equations.  Form the augmented matrix of the system, and row-reduce to
-<me>\begin{bmatrix}
-\leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 0\\
-0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; -\frac{4}{3} &amp; 0\\
-0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; -\frac{1}{3} &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -1 &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}\\
-\end{bmatrix}</me>
-</p>
+            <!-- Archetype Q, Part ltdefn -->
+            <p>Archetype<nbsp/><xref ref="archetype-Q" acro="Q" autoname="no"/> is the linear transformation<me>\ltdefn{T}{\complex{5}}{\complex{5}},\quad
+            \lteval{T}{\colvector{x_1\\x_2\\x_3\\x_4\\x_5}}=
+            \colvector{-2 x_1 + 3 x_2 + 3 x_3 - 6 x_4 + 3 x_5\\
+            -16 x_1 + 9 x_2 + 12 x_3 - 28 x_4 + 28 x_5\\
+            -19 x_1 + 7 x_2 + 14 x_3 - 32 x_4 + 37 x_5\\
+            -21 x_1 + 9 x_2 + 15 x_3 - 35 x_4 + 39 x_5\\
+            -9 x_1 + 5 x_2 + 7 x_3 - 16 x_4 + 16 x_5}</me></p>
+            <p>We will demonstrate that<me>\vect{v}=\colvector{-1\\2\\3\\-1\\4}</me>is an unobtainable element of the codomain.  Suppose to the contrary that <m>\vect{u}</m> is an element of the domain such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.</p>
+            <p>Then<md>
+                <mrow>\colvector{-1\\2\\3\\-1\\4}&amp;=\vect{v}=\lteval{T}{\vect{u}}
+                =\lteval{T}{\colvector{u_1\\u_2\\u_3\\u_4\\u_5}}\\
+                &amp;=\colvector{
+                -2 u_1 + 3 u_2 + 3 u_3 - 6 u_4 + 3 u_5\\
+                -16 u_1 + 9 u_2 + 12 u_3 - 28 u_4 + 28 u_5\\
+                -19 u_1 + 7 u_2 + 14 u_3 - 32 u_4 + 37 u_5\\
+                -21 u_1 + 9 u_2 + 15 u_3 - 35 u_4 + 39 u_5\\
+                -9 u_1 + 5 u_2 + 7 u_3 - 16 u_4 + 16 u_5}\\
+                &amp;=
+                \begin{bmatrix}
+                -2&amp;3&amp;3&amp;-6&amp;3\\
+                -16&amp;9&amp;12&amp;-28&amp;28\\
+                -19&amp;7&amp;14&amp;-32&amp;37\\
+                -21&amp;9&amp;15&amp;-35&amp;39\\
+                -9&amp;5&amp;7&amp;-16&amp;16
+                \end{bmatrix}
+                \colvector{u_1\\u_2\\u_3\\u_4\\u_5}</mrow>
+            </md></p>
+            <p>Now we recognize the appropriate input vector <m>\vect{u}</m> as a solution to a linear system of equations.  Form the augmented matrix of the system, and row-reduce to<me>\begin{bmatrix}
+            \leading{1} &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 0\\
+            0 &amp; \leading{1} &amp; 0 &amp; 0 &amp; -\frac{4}{3} &amp; 0\\
+            0 &amp; 0 &amp; \leading{1} &amp; 0 &amp; -\frac{1}{3} &amp; 0\\
+            0 &amp; 0 &amp; 0 &amp; \leading{1} &amp; -1 &amp; 0\\
+            0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \leading{1}\\
+            \end{bmatrix}</me></p>
             <p>With a leading 1 in the last column, <xref ref="theorem-RCLS" acro="RCLS" autoname="yes"/> tells us the system is inconsistent.  From the absence of any solutions we conclude that no such vector <m>\vect{u}</m> exists, and by <xref ref="definition-SLT" acro="SLT" autoname="yes"/>, <m>T</m> is not surjective.</p>
             <p>Again, do not concern yourself with how <m>\vect{v}</m> was selected, as this will be explained shortly.  However, do understand <em>why</em> this vector provides enough evidence to conclude that <m>T</m> is not surjective.</p>
         </example>
-        <p>Here is a cartoon of a non-surjective linear transformation.  Notice that the central feature of this cartoon is that the vector <m>\vect{v}\in V</m> does not have an arrow pointing to it, implying there is no <m>\vect{u}\in U</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  Even though this happens again with a second unnamed vector in <m>V</m>, it only takes one occurrence to destroy the possibility of surjectivity.
-<figure xml:id="figure-NSLT" acro="NSLT"><caption>Non-Surjective Linear Transformation</caption><image xml:id="image-NSLT"><latex-image-code>\begin{tikzpicture}
-\draw
-node at (0,0)[right=-3mm]{\Large GET TIKZ CODE}
-;
-\end{tikzpicture}
-</latex-image-code></image></figure>
-</p>
+        <p>Here is a cartoon of a non-surjective linear transformation.  Notice that the central feature of this cartoon is that the vector <m>\vect{v}\in V</m> does not have an arrow pointing to it, implying there is no <m>\vect{u}\in U</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  Even though this happens again with a second unnamed vector in <m>V</m>, it only takes one occurrence to destroy the possibility of surjectivity.</p>
+        <figure xml:id="figure-NSLT" acro="NSLT">
+            <caption>Non-Surjective Linear Transformation</caption>
+            <image xml:id="image-NSLT">
+                <latex-image-code>
+                \begin{tikzpicture}
+                \tikzset{ltvect/.style={shape=circle, minimum size=0.30em, inner sep=0pt, draw, fill=black}}
+                \tikzset{ltedge/.style={->, bend left=20, thick, shorten \lt=0.1em, shorten >=0.1em}}
+                % base generic picture
+                \draw ( 5em, 8em) circle [x radius=5em, y radius=8em, thick];
+                \draw (20em, 8em) circle [x radius=5em, y radius=8em, thick];
+                \node (U) at ( 5em, -1em) {$U$};
+                \node (V) at (20em, -1em) {$V$};
+                \draw[->, thick, draw] (U) to node[auto] {$T$} (V);
+                % inputs
+                \node (u1) [ltvect]                         at (5em, 13em) {};
+                \node (u2) [ltvect]                         at (5em, 11em) {};
+                \node (u3) [ltvect]                         at (5em,  8em) {};
+                \node (u4) [ltvect]                         at (5em,  6em) {};
+                % outputs
+                \node (v1) [ltvect]                         at (20em, 12em) {};
+                \node (v2) [ltvect]                         at (20em,  7em) {};
+                \node (v3) [ltvect]                         at (19em,  3em) {};
+                \node (v)  [ltvect, label=right:$\vect{v}$] at (21em,  3em) {};
+                % associations
+                \draw[ltedge] (u1) to (v1);
+                \draw[ltedge] (u2) to (v1);
+                \draw[ltedge] (u3) to (v2);
+                \draw[ltedge] (u4) to (v2);
+                \end{tikzpicture}
+                </latex-image-code>
+            </image>
+        </figure>
         <p>To show that a linear transformation is not surjective, it is enough to find a single element of the codomain that is never created by any input, as in <xref ref="example-NSAQ" acro="NSAQ" autoname="yes"/>.  However, to show that a linear transformation is surjective we must establish that <em>every</em> element of the codomain occurs as an output of the linear transformation for some appropriate input.</p>
         <example xml:id="example-SAR" acro="SAR">
-            <index>surjective</index>
             <title>Surjective, Archetype R</title>
-            <p>Archetype<nbsp/><xref ref="archetype-R" acro="R" autoname="no"/> is the linear transformation
-<me><!-- Archetype R, Part ltdefn -->\ltdefn{T}{\complex{5}}{\complex{5}},\quad
-\lteval{T}{\colvector{x_1\\x_2\\x_3\\x_4\\x_5}}=
-\colvector{-65 x_1 + 128 x_2 + 10 x_3 - 262 x_4 + 40 x_5\\
-36 x_1 - 73 x_2 - x_3 + 151 x_4 - 16 x_5\\
--44 x_1 + 88 x_2 + 5 x_3 - 180 x_4 + 24 x_5\\
-34 x_1 - 68 x_2 - 3 x_3 + 140 x_4 - 18 x_5\\
-12 x_1 - 24 x_2 - x_3 + 49 x_4 - 5 x_5}
-</me>
-</p>
-            <p>To establish that <m>R</m> is surjective we must begin with a totally arbitrary element of the codomain, <m>\vect{v}</m> and somehow find an input vector <m>\vect{u}</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  We desire,
-<md><mrow>\lteval{T}{\vect{u}}&amp;=\vect{v}\\
-\colvector{-65 u_1 + 128 u_2 + 10 u_3 - 262 u_4 + 40 u_5\\
-36 u_1 - 73 u_2 - u_3 + 151 u_4 - 16 u_5\\
--44 u_1 + 88 u_2 + 5 u_3 - 180 u_4 + 24 u_5\\
-34 u_1 - 68 u_2 - 3 u_3 + 140 u_4 - 18 u_5\\
-12 u_1 - 24 u_2 - u_3 + 49 u_4 - 5 u_5}
-&amp;=
-\colvector{v_1\\v_2\\v_3\\v_4\\v_5}\\
-\begin{bmatrix}
--65&amp;128&amp;10&amp;-262&amp;40\\
-36&amp;-73&amp;-1&amp;151&amp;-16\\
--44&amp;88&amp;5&amp;-180&amp;24\\
-34&amp;-68&amp;-3&amp;140&amp;-18\\
-12&amp;-24&amp;-1&amp;49&amp;-5
-\end{bmatrix}
-\colvector{u_1\\u_2\\u_3\\u_4\\u_5}
-&amp;=
-\colvector{v_1\\v_2\\v_3\\v_4\\v_5}</mrow></md>
-</p>
-            <p>We recognize this equation as a system of equations in the variables <m>u_i</m>, but our vector of constants contains symbols.  In general, we would have to row-reduce the augmented matrix by hand, due to the symbolic final column.  However, in this particular example, the <m>5\times 5</m> coefficient matrix is nonsingular and so has an inverse (<xref ref="theorem-NI" acro="NI" autoname="yes"/>, <xref ref="definition-MI" acro="MI" autoname="yes"/>).
-<me>\inverse{
-\begin{bmatrix}
--65&amp;128&amp;10&amp;-262&amp;40\\
-36&amp;-73&amp;-1&amp;151&amp;-16\\
--44&amp;88&amp;5&amp;-180&amp;24\\
-34&amp;-68&amp;-3&amp;140&amp;-18\\
-12&amp;-24&amp;-1&amp;49&amp;-5
-\end{bmatrix}
-}
-=
-\begin{bmatrix}
--47 &amp; 92 &amp;  1 &amp; -181 &amp; -14 \\
- 27 &amp; -55 &amp; \frac{7}{2} &amp; \frac{221}{2} &amp; 11\\
--32 &amp; 64  &amp; -1 &amp;  -126 &amp;  -12\\
- 25 &amp;  -50 &amp;  \frac{3}{2} &amp; \frac{199}{2} &amp; 9 \\
- 9 &amp; -18 &amp; \frac{1}{2} &amp; \frac{71}{2} &amp; 4
-\end{bmatrix}</me>
-so we find that
-<md><mrow>\colvector{u_1\\u_2\\u_3\\u_4\\u_5}
-&amp;=
-\begin{bmatrix}
--47 &amp; 92 &amp;  1 &amp; -181 &amp; -14 \\
- 27 &amp; -55 &amp; \frac{7}{2} &amp; \frac{221}{2} &amp; 11\\
--32 &amp; 64  &amp; -1 &amp;  -126 &amp;  -12\\
- 25 &amp;  -50 &amp;  \frac{3}{2} &amp; \frac{199}{2} &amp; 9 \\
- 9 &amp; -18 &amp; \frac{1}{2} &amp; \frac{71}{2} &amp; 4
-\end{bmatrix}
-\colvector{v_1\\v_2\\v_3\\v_4\\v_5}\\
-&amp;=
-\colvector{-47 v_1 + 92 v_2 + v_3 - 181 v_4 - 14 v_5\\
- 27 v_1 - 55 v_2 + \frac{7}{2} v_3 + \frac{221}{2} v_4  + 11 v_5\\
--32 v_1 + 64  v_2 - v_3 - 126 v_4 - 12 v_5\\
- 25 v_1 - 50 v_2 + \frac{3}{2} v_3 + \frac{199}{2} v_4 + 9 v_5\\
- 9 v_1 - 18 v_2 + \frac{1}{2} v_3 + \frac{71}{2} v_4 + 4 v_5}</mrow></md>
-</p>
+            <index>surjective</index>
+            <!-- Archetype R, Part ltdefn -->
+            <p>Archetype<nbsp/><xref ref="archetype-R" acro="R" autoname="no"/> is the linear transformation<me>\ltdefn{T}{\complex{5}}{\complex{5}},\quad
+            \lteval{T}{\colvector{x_1\\x_2\\x_3\\x_4\\x_5}}=
+            \colvector{-65 x_1 + 128 x_2 + 10 x_3 - 262 x_4 + 40 x_5\\
+            36 x_1 - 73 x_2 - x_3 + 151 x_4 - 16 x_5\\
+            -44 x_1 + 88 x_2 + 5 x_3 - 180 x_4 + 24 x_5\\
+            34 x_1 - 68 x_2 - 3 x_3 + 140 x_4 - 18 x_5\\
+            12 x_1 - 24 x_2 - x_3 + 49 x_4 - 5 x_5}</me></p>
+            <p>To establish that <m>R</m> is surjective we must begin with a totally arbitrary element of the codomain, <m>\vect{v}</m> and somehow find an input vector <m>\vect{u}</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  We desire,<md>
+                <mrow>\lteval{T}{\vect{u}}&amp;=\vect{v}\\
+                \colvector{-65 u_1 + 128 u_2 + 10 u_3 - 262 u_4 + 40 u_5\\
+                36 u_1 - 73 u_2 - u_3 + 151 u_4 - 16 u_5\\
+                -44 u_1 + 88 u_2 + 5 u_3 - 180 u_4 + 24 u_5\\
+                34 u_1 - 68 u_2 - 3 u_3 + 140 u_4 - 18 u_5\\
+                12 u_1 - 24 u_2 - u_3 + 49 u_4 - 5 u_5}
+                &amp;=
+                \colvector{v_1\\v_2\\v_3\\v_4\\v_5}\\
+                \begin{bmatrix}
+                -65&amp;128&amp;10&amp;-262&amp;40\\
+                36&amp;-73&amp;-1&amp;151&amp;-16\\
+                -44&amp;88&amp;5&amp;-180&amp;24\\
+                34&amp;-68&amp;-3&amp;140&amp;-18\\
+                12&amp;-24&amp;-1&amp;49&amp;-5
+                \end{bmatrix}
+                \colvector{u_1\\u_2\\u_3\\u_4\\u_5}
+                &amp;=
+                \colvector{v_1\\v_2\\v_3\\v_4\\v_5}</mrow>
+            </md></p>
+            <p>We recognize this equation as a system of equations in the variables <m>u_i</m>, but our vector of constants contains symbols.  In general, we would have to row-reduce the augmented matrix by hand, due to the symbolic final column.  However, in this particular example, the <m>5\times 5</m> coefficient matrix is nonsingular and so has an inverse (<xref ref="theorem-NI" acro="NI" autoname="yes"/>, <xref ref="definition-MI" acro="MI" autoname="yes"/>).<me>\inverse{
+            \begin{bmatrix}
+            -65&amp;128&amp;10&amp;-262&amp;40\\
+            36&amp;-73&amp;-1&amp;151&amp;-16\\
+            -44&amp;88&amp;5&amp;-180&amp;24\\
+            34&amp;-68&amp;-3&amp;140&amp;-18\\
+            12&amp;-24&amp;-1&amp;49&amp;-5
+            \end{bmatrix}
+            }
+            =
+            \begin{bmatrix}
+            -47 &amp; 92 &amp;  1 &amp; -181 &amp; -14 \\
+             27 &amp; -55 &amp; \frac{7}{2} &amp; \frac{221}{2} &amp; 11\\
+            -32 &amp; 64  &amp; -1 &amp;  -126 &amp;  -12\\
+             25 &amp;  -50 &amp;  \frac{3}{2} &amp; \frac{199}{2} &amp; 9 \\
+             9 &amp; -18 &amp; \frac{1}{2} &amp; \frac{71}{2} &amp; 4
+            \end{bmatrix}</me>so we find that<md>
+                <mrow>\colvector{u_1\\u_2\\u_3\\u_4\\u_5}
+                &amp;=
+                \begin{bmatrix}
+                -47 &amp; 92 &amp;  1 &amp; -181 &amp; -14 \\
+                 27 &amp; -55 &amp; \frac{7}{2} &amp; \frac{221}{2} &amp; 11\\
+                -32 &amp; 64  &amp; -1 &amp;  -126 &amp;  -12\\
+                 25 &amp;  -50 &amp;  \frac{3}{2} &amp; \frac{199}{2} &amp; 9 \\
+                 9 &amp; -18 &amp; \frac{1}{2} &amp; \frac{71}{2} &amp; 4
+                \end{bmatrix}
+                \colvector{v_1\\v_2\\v_3\\v_4\\v_5}\\
+                &amp;=
+                \colvector{-47 v_1 + 92 v_2 + v_3 - 181 v_4 - 14 v_5\\
+                 27 v_1 - 55 v_2 + \frac{7}{2} v_3 + \frac{221}{2} v_4  + 11 v_5\\
+                -32 v_1 + 64  v_2 - v_3 - 126 v_4 - 12 v_5\\
+                 25 v_1 - 50 v_2 + \frac{3}{2} v_3 + \frac{199}{2} v_4 + 9 v_5\\
+                 9 v_1 - 18 v_2 + \frac{1}{2} v_3 + \frac{71}{2} v_4 + 4 v_5}</mrow>
+            </md></p>
             <p>This establishes that if we are given <em>any</em> output vector <m>\vect{v}</m>, we can use its components in this final expression to formulate a vector <m>\vect{u}</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  So by <xref ref="definition-SLT" acro="SLT" autoname="yes"/> we now know that <m>T</m> is surjective.  You might try to verify this condition in its full generality (<ie/> evaluate <m>T</m> with this final expression and see if you get <m>\vect{v}</m> as the result), or test it more specifically for some numerical vector <m>\vect{v}</m> (see <xref ref="exercise-SLT-C20" acro="SLT.C20" autoname="yes"/>).</p>
         </example>
-        <p>Here is the cartoon for a surjective linear transformation.  It is meant to suggest that for every output in <m>V</m> there is <em>at least one</em> input in <m>U</m> that is sent to the output.  (Even though we have depicted several inputs sent to each output.)  The key feature of this cartoon is that there are no vectors in <m>V</m> without an arrow pointing to them.
-<figure xml:id="figure-SLT" acro="SLT"><caption>Surjective Linear Transformation</caption><image xml:id="image-SLT"><latex-image-code>\begin{tikzpicture}
-\draw
-node at (0,0)[right=-3mm]{\Large GET TIKZ CODE}
-;
-\end{tikzpicture}
-</latex-image-code></image></figure>
-</p>
+        <p>Here is the cartoon for a surjective linear transformation.  It is meant to suggest that for every output in <m>V</m> there is <em>at least one</em> input in <m>U</m> that is sent to the output.  (Even though we have depicted several inputs sent to each output.)  The key feature of this cartoon is that there are no vectors in <m>V</m> without an arrow pointing to them.</p>
+        <figure xml:id="figure-SLT" acro="SLT">
+            <caption>Surjective Linear Transformation</caption>
+            <image xml:id="image-SLT">
+                <latex-image-code>
+                \begin{tikzpicture}
+                \tikzset{ltvect/.style={shape=circle, minimum size=0.30em, inner sep=0pt, draw, fill=black}}
+                \tikzset{ltedge/.style={->, bend left=20, thick, shorten \lt=0.1em, shorten >=0.1em}}
+                % base generic picture
+                \draw ( 5em, 8em) circle [x radius=5em, y radius=8em, thick];
+                \draw (20em, 8em) circle [x radius=4em, y radius=7em, thick];
+                \node (U) at ( 5em, -1em) {$U$};
+                \node (V) at (20em, -1em) {$V$};
+                \draw[->, thick, draw] (U) to node[auto] {$T$} (V);
+                % inputs
+                \node (u1) [ltvect]                         at (5em, 14em) {};
+                \node (u2) [ltvect]                         at (5em, 12em) {};
+                \node (u3) [ltvect]                         at (5em,  9em) {};
+                \node (u4) [ltvect]                         at (5em,  7em) {};
+                \node (u5) [ltvect]                         at (5em,  4em) {};
+                \node (u6) [ltvect]                         at (5em,  2em) {};
+                % outputs
+                \node (v1) [ltvect]                         at (20em, 12em) {};
+                \node (v2) [ltvect]                         at (20em,  8em) {};
+                \node (v3) [ltvect]                         at (20em,  4em) {};
+                % associations
+                \draw[ltedge] (u1) to (v1);
+                \draw[ltedge] (u2) to (v1);
+                \draw[ltedge] (u3) to (v2);
+                \draw[ltedge] (u4) to (v2);
+                \draw[ltedge] (u5) to (v3);
+                \draw[ltedge] (u6) to (v3);
+                \end{tikzpicture}
+                </latex-image-code>
+            </image>
+        </figure>
         <p>Let us now examine a surjective linear transformation between abstract vector spaces.</p>
         <example xml:id="example-SAV" acro="SAV">
+            <title>Surjective, Archetype V</title>
             <index>
                 <main>surjective</main>
                 <sub>polynomials to matrices</sub>
             </index>
-            <title>Surjective, Archetype V</title>
-            <p>Archetype<nbsp/><xref ref="archetype-V" acro="V" autoname="no"/> is defined by
-<me><!-- Archetype V, Part ltdefn -->\ltdefn{T}{P_3}{M_{22}},\quad\lteval{T}{a+bx+cx^2+dx^3}=
-\begin{bmatrix}
-a+b &amp; a-2c\\
-d &amp; b-d
-\end{bmatrix}
-</me>
-</p>
-            <p>To establish that the linear transformation is surjective, begin by choosing an arbitrary output.  In this example, we need to choose an arbitrary <m>2\times 2</m> matrix, say
-<me>\vect{v}=\begin{bmatrix}x&amp;y\\z&amp;w\end{bmatrix}</me>
-and we would like to find an input polynomial
-<me>\vect{u}=a+bx+cx^2+dx^3</me>
-so that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  So we have,
-<md><mrow>\begin{bmatrix}x&amp;y\\z&amp;w\end{bmatrix}&amp;=\vect{v}\\
-&amp;=\lteval{T}{\vect{u}}\\
-&amp;=\lteval{T}{a+bx+cx^2+dx^3}\\
-&amp;=\begin{bmatrix}
-a+b &amp; a-2c\\
-d &amp; b-d
-\end{bmatrix}</mrow></md>
-</p>
-            <p>Matrix equality leads us to the system of four equations in the four unknowns, <m>x,y,z,w</m>,
-<md><mrow>a+b&amp;=x</mrow><mrow>a-2c&amp;=y</mrow><mrow>d&amp;=z</mrow><mrow>b-d&amp;=w</mrow></md>
-which can be rewritten as a matrix equation,
-<me>\begin{bmatrix}
-1 &amp; 1 &amp; 0 &amp; 0\\
-1 &amp; 0 &amp; -2 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 1\\
-0 &amp; 1 &amp; 0 &amp; -1
-\end{bmatrix}
-\colvector{a\\b\\c\\d}
-=
-\colvector{x\\y\\z\\w}</me>
-</p>
-            <p>The coefficient matrix is nonsingular, hence it has an inverse,
-<me>\inverse{
-\begin{bmatrix}
-1 &amp; 1 &amp; 0 &amp; 0\\
-1 &amp; 0 &amp; -2 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 1\\
-0 &amp; 1 &amp; 0 &amp; -1
-\end{bmatrix}
-}
-=
-\begin{bmatrix}
-1 &amp; 0 &amp; -1 &amp; -1\\
-0 &amp; 0 &amp; 1 &amp; 1\\
-\frac{1}{2} &amp; -\frac{1}{2} &amp; -\frac{1}{2} &amp; -\frac{1}{2}\\
-0 &amp; 0 &amp; 1 &amp; 0
-\end{bmatrix}</me>
-so we have
-<md><mrow>\colvector{a\\b\\c\\d}&amp;=
-\begin{bmatrix}
-1 &amp; 0 &amp; -1 &amp; -1\\
-0 &amp; 0 &amp; 1 &amp; 1\\
-\frac{1}{2} &amp; -\frac{1}{2} &amp; -\frac{1}{2} &amp; -\frac{1}{2}\\
-0 &amp; 0 &amp; 1 &amp; 0
-\end{bmatrix}
-\colvector{x\\y\\z\\w}\\%
-&amp;=
-\colvector{
-x-z-w\\
-z+w\\
-\frac{1}{2}(x-y-z-w)\\
-z
-}</mrow></md>
-</p>
-            <p>So the input polynomial <m>\vect{u}=(x-z-w)+(z+w)x+\frac{1}{2}(x-y-z-w)x^2+zx^3</m> will yield the output matrix <m>\vect{v}</m>, no matter what form <m>\vect{v}</m> takes.  This means by <xref ref="definition-SLT" acro="SLT" autoname="yes"/> that <m>T</m> is surjective.  All the same, let us do a concrete demonstration and evaluate <m>T</m> with <m>\vect{u}</m>,
-<md><mrow>\lteval{T}{\vect{u}}&amp;=\lteval{T}{(x-z-w)+(z+w)x+\frac{1}{2}(x-y-z-w)x^2+zx^3}\\
-&amp;=
-\begin{bmatrix}
-(x-z-w)+(z+w) &amp; (x-z-w) - 2(\frac{1}{2}(x-y-z-w))\\
-z &amp; (z+w)-z
-\end{bmatrix}\\
-&amp;=
-\begin{bmatrix}
-x &amp; y\\
-z &amp; w
-\end{bmatrix}\\
-&amp;=\vect{v}</mrow></md>
-</p>
+            <!-- Archetype V, Part ltdefn -->
+            <p>Archetype<nbsp/><xref ref="archetype-V" acro="V" autoname="no"/> is defined by<me>\ltdefn{T}{P_3}{M_{22}},\quad\lteval{T}{a+bx+cx^2+dx^3}=
+            \begin{bmatrix}
+            a+b &amp; a-2c\\
+            d &amp; b-d
+            \end{bmatrix}</me></p>
+            <p>To establish that the linear transformation is surjective, begin by choosing an arbitrary output.  In this example, we need to choose an arbitrary <m>2\times 2</m> matrix, say<me>\vect{v}=\begin{bmatrix}x&amp;y\\z&amp;w\end{bmatrix}</me>and we would like to find an input polynomial<me>\vect{u}=a+bx+cx^2+dx^3</me>so that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  So we have,<md>
+                <mrow>\begin{bmatrix}x&amp;y\\z&amp;w\end{bmatrix}&amp;=\vect{v}\\
+                &amp;=\lteval{T}{\vect{u}}\\
+                &amp;=\lteval{T}{a+bx+cx^2+dx^3}\\
+                &amp;=\begin{bmatrix}
+                a+b &amp; a-2c\\
+                d &amp; b-d
+                \end{bmatrix}</mrow>
+            </md></p>
+            <p>Matrix equality leads us to the system of four equations in the four unknowns, <m>x,y,z,w</m>,<md>
+                <mrow>a+b&amp;=x</mrow>
+                <mrow>a-2c&amp;=y</mrow>
+                <mrow>d&amp;=z</mrow>
+                <mrow>b-d&amp;=w</mrow>
+            </md>which can be rewritten as a matrix equation,<me>\begin{bmatrix}
+            1 &amp; 1 &amp; 0 &amp; 0\\
+            1 &amp; 0 &amp; -2 &amp; 0 \\
+            0 &amp; 0 &amp; 0 &amp; 1\\
+            0 &amp; 1 &amp; 0 &amp; -1
+            \end{bmatrix}
+            \colvector{a\\b\\c\\d}
+            =
+            \colvector{x\\y\\z\\w}</me></p>
+            <p>The coefficient matrix is nonsingular, hence it has an inverse,<me>\inverse{
+            \begin{bmatrix}
+            1 &amp; 1 &amp; 0 &amp; 0\\
+            1 &amp; 0 &amp; -2 &amp; 0 \\
+            0 &amp; 0 &amp; 0 &amp; 1\\
+            0 &amp; 1 &amp; 0 &amp; -1
+            \end{bmatrix}
+            }
+            =
+            \begin{bmatrix}
+            1 &amp; 0 &amp; -1 &amp; -1\\
+            0 &amp; 0 &amp; 1 &amp; 1\\
+            \frac{1}{2} &amp; -\frac{1}{2} &amp; -\frac{1}{2} &amp; -\frac{1}{2}\\
+            0 &amp; 0 &amp; 1 &amp; 0
+            \end{bmatrix}</me>so we have<md>
+                <mrow>\colvector{a\\b\\c\\d}&amp;=
+                \begin{bmatrix}
+                1 &amp; 0 &amp; -1 &amp; -1\\
+                0 &amp; 0 &amp; 1 &amp; 1\\
+                \frac{1}{2} &amp; -\frac{1}{2} &amp; -\frac{1}{2} &amp; -\frac{1}{2}\\
+                0 &amp; 0 &amp; 1 &amp; 0
+                \end{bmatrix}
+                \colvector{x\\y\\z\\w}\\%
+                &amp;=
+                \colvector{
+                x-z-w\\
+                z+w\\
+                \frac{1}{2}(x-y-z-w)\\
+                z
+                }</mrow>
+            </md></p>
+            <p>So the input polynomial <m>\vect{u}=(x-z-w)+(z+w)x+\frac{1}{2}(x-y-z-w)x^2+zx^3</m> will yield the output matrix <m>\vect{v}</m>, no matter what form <m>\vect{v}</m> takes.  This means by <xref ref="definition-SLT" acro="SLT" autoname="yes"/> that <m>T</m> is surjective.  All the same, let us do a concrete demonstration and evaluate <m>T</m> with <m>\vect{u}</m>,<md>
+                <mrow>\lteval{T}{\vect{u}}&amp;=\lteval{T}{(x-z-w)+(z+w)x+\frac{1}{2}(x-y-z-w)x^2+zx^3}\\
+                &amp;=
+                \begin{bmatrix}
+                (x-z-w)+(z+w) &amp; (x-z-w) - 2(\frac{1}{2}(x-y-z-w))\\
+                z &amp; (z+w)-z
+                \end{bmatrix}</mrow>
+                <mrow>&amp;=
+                \begin{bmatrix}
+                x &amp; y\\
+                z &amp; w
+                \end{bmatrix}</mrow>
+                <mrow>&amp;=\vect{v}</mrow>
+            </md></p>
         </example>
     </subsection>
     <subsection xml:id="subsection-SLT-RLT" acro="RLT">
@@ -265,9 +304,7 @@ z &amp; w
                 <sub>of a linear transformation</sub>
             </index>
             <statement>
-                <p>Suppose <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then the <term>range</term> of <m>T</m> is the set
-<me>\rng{T}=\setparts{\lteval{T}{\vect{u}}}{\vect{u}\in U}</me>
-</p>
+                <p>Suppose <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then the <term>range</term> of <m>T</m> is the set<me>\rng{T}=\setparts{\lteval{T}{\vect{u}}}{\vect{u}\in U}</me></p>
             </statement>
             <notation xml:id="notation-RLT" acro="RLT">
                 <index>
@@ -281,202 +318,198 @@ z &amp; w
             </notation>
         </definition>
         <example xml:id="example-RAO" acro="RAO">
+            <title>Range, Archetype O</title>
             <index>
                 <main>range</main>
                 <sub>linear transformation</sub>
             </index>
-            <title>Range, Archetype O</title>
-            <p>Archetype<nbsp/><xref ref="archetype-O" acro="O" autoname="no"/> is the linear transformation
-<me><!-- Archetype O, Part ltdefn -->\ltdefn{T}{\complex{3}}{\complex{5}},\quad
-\lteval{T}{\colvector{x_1\\x_2\\x_3}}=
-\colvector{-x_1 + x_2 - 3 x_3\\
--x_1 + 2 x_2 - 4 x_3\\
-x_1 + x_2 + x_3\\
-2 x_1 + 3 x_2 + x_3\\
-x_1 + 2 x_3
-}
-</me>
-</p>
-            <p>To determine the elements of <m>\complex{5}</m> in <m>\rng{T}</m>, find those vectors <m>\vect{v}</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m> for some <m>\vect{u}\in\complex{3}</m>,
-<md><mrow>\vect{v}&amp;=\lteval{T}{\vect{u}}</mrow><mrow>&amp;=\colvector{-u_1 + u_2 - 3 u_3</mrow><mrow>-u_1 + 2 u_2 - 4 u_3</mrow><mrow>u_1 + u_2 + u_3</mrow><mrow>2 u_1 + 3 u_2 + u_3</mrow><mrow>u_1 + 2 u_3
-}</mrow><mrow>&amp;=
-\colvector{-u_1\\-u_1\\u_1\\2 u_1\\ u_1}
-+
-\colvector{u_2\\2u_2\\u_2\\3u_2\\ 0}
-+
-\colvector{-3u_3\\-4u_3\\u_3\\u_3\\ 2 u_3}</mrow><mrow>&amp;=
-u_1\colvector{-1\\-1\\1\\2\\1}
-+
-u_2\colvector{1\\2\\1\\3\\ 0}
-+
-u_3\colvector{-3\\-4\\1\\1\\2}</mrow></md>
-</p>
-            <p>This says that every output of <m>T</m> (in other words, the vector <m>\vect{v}</m>) can be written as a linear combination of the three vectors
-<md><mrow>\colvector{-1\\-1\\1\\2\\1}
-&amp;&amp;
-\colvector{1\\2\\1\\3\\ 0}
-&amp;&amp;
-\colvector{-3\\-4\\1\\1\\2}</mrow></md>
-using the scalars <m>u_1,\,u_2,\,u_3</m>.  Furthermore, since <m>\vect{u}</m> can be any element of <m>\complex{3}</m>, every such linear combination is an output.  This means that
-<me>\rng{T}=\spn{\set{
-\colvector{-1\\-1\\1\\2\\1},\,
-\colvector{1\\2\\1\\3\\ 0},\,
-\colvector{-3\\-4\\1\\1\\2}
-}}</me>
-</p>
-            <p>The three vectors in this spanning set for <m>\rng{T}</m> form a linearly dependent set (check this!).  So we can find a more economical presentation by any of the various methods from <xref ref="section-CRS" acro="CRS" autoname="yes"/> and <xref ref="section-FS" acro="FS" autoname="yes"/>.  We will place the vectors into a matrix as rows, row-reduce, toss out zero rows and appeal to <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>, so we can describe the range of <m>T</m> with a basis,
-<me>\rng{T}=\spn{<!-- Archetype O, Part ltrangebasis -->\set{
-\colvector{1\\0\\-3\\-7\\-2},\,\colvector{0\\1\\2\\5\\1}
-}
-}</me>
-</p>
+            <!-- Archetype O, Part ltdefn -->
+            <!-- Archetype O, Part ltrangebasis -->
+            <p>Archetype<nbsp/><xref ref="archetype-O" acro="O" autoname="no"/> is the linear transformation<me>\ltdefn{T}{\complex{3}}{\complex{5}},\quad
+            \lteval{T}{\colvector{x_1\\x_2\\x_3}}=
+            \colvector{-x_1 + x_2 - 3 x_3\\
+            -x_1 + 2 x_2 - 4 x_3\\
+            x_1 + x_2 + x_3\\
+            2 x_1 + 3 x_2 + x_3\\
+            x_1 + 2 x_3
+            }</me></p>
+            <p>To determine the elements of <m>\complex{5}</m> in <m>\rng{T}</m>, find those vectors <m>\vect{v}</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m> for some <m>\vect{u}\in\complex{3}</m>,<md>
+                <mrow>\vect{v}&amp;=\lteval{T}{\vect{u}}</mrow>
+                <mrow>&amp;=\colvector{-u_1 + u_2 - 3 u_3</mrow>
+                <mrow>-u_1 + 2 u_2 - 4 u_3</mrow>
+                <mrow>u_1 + u_2 + u_3</mrow>
+                <mrow>2 u_1 + 3 u_2 + u_3</mrow>
+                <mrow>u_1 + 2 u_3
+                }</mrow>
+                <mrow>&amp;=
+                \colvector{-u_1\\-u_1\\u_1\\2 u_1\\ u_1}
+                +
+                \colvector{u_2\\2u_2\\u_2\\3u_2\\ 0}
+                +
+                \colvector{-3u_3\\-4u_3\\u_3\\u_3\\ 2 u_3}</mrow>
+                <mrow>&amp;=
+                u_1\colvector{-1\\-1\\1\\2\\1}
+                +
+                u_2\colvector{1\\2\\1\\3\\ 0}
+                +
+                u_3\colvector{-3\\-4\\1\\1\\2}</mrow>
+            </md></p>
+            <p>This says that every output of <m>T</m> (in other words, the vector <m>\vect{v}</m>) can be written as a linear combination of the three vectors<md>
+                <mrow>\colvector{-1\\-1\\1\\2\\1}&amp;&amp;
+                \colvector{1\\2\\1\\3\\ 0}&amp;&amp;
+                \colvector{-3\\-4\\1\\1\\2}</mrow>
+            </md>using the scalars <m>u_1,\,u_2,\,u_3</m>.  Furthermore, since <m>\vect{u}</m> can be any element of <m>\complex{3}</m>, every such linear combination is an output.  This means that<me>\rng{T}=\spn{\set{
+            \colvector{-1\\-1\\1\\2\\1},\,
+            \colvector{1\\2\\1\\3\\ 0},\,
+            \colvector{-3\\-4\\1\\1\\2}
+            }}</me></p>
+            <p>The three vectors in this spanning set for <m>\rng{T}</m> form a linearly dependent set (check this!).  So we can find a more economical presentation by any of the various methods from <xref ref="section-CRS" acro="CRS" autoname="yes"/> and <xref ref="section-FS" acro="FS" autoname="yes"/>.  We will place the vectors into a matrix as rows, row-reduce, toss out zero rows and appeal to <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>, so we can describe the range of <m>T</m> with a basis,<me>\rng{T}=\spn{\set{
+            \colvector{1\\0\\-3\\-7\\-2},\,\colvector{0\\1\\2\\5\\1}
+            }
+            }</me></p>
         </example>
         <p>We know that the span of a set of vectors is always a subspace (<xref ref="theorem-SSS" acro="SSS" autoname="yes"/>), so the range computed in <xref ref="example-RAO" acro="RAO" autoname="yes"/> is also a subspace.  This is no accident, the range of a linear transformation is <em>always</em> a subspace.</p>
         <theorem xml:id="theorem-RLTS" acro="RLTS">
+            <title>Range of a Linear Transformation is a Subspace</title>
             <index>
                 <main>range</main>
                 <sub>subspace</sub>
             </index>
-            <title>Range of a Linear Transformation is a Subspace</title>
             <statement>
                 <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then the range of <m>T</m>, <m>\rng{T}</m>, is a subspace of <m>V</m>.</p>
             </statement>
             <proof>
                 <p>We can apply the three-part test of <xref ref="theorem-TSS" acro="TSS" autoname="yes"/>.  First, <m>\zerovector_U\in U</m> and <m>\lteval{T}{\zerovector_U}=\zerovector_V</m> by <xref ref="theorem-LTTZZ" acro="LTTZZ" autoname="yes"/>, so <m>\zerovector_V\in\rng{T}</m> and we know that the range is nonempty.</p>
                 <p>Suppose we assume that <m>\vect{x},\,\vect{y}\in\rng{T}</m>.  Is <m>\vect{x}+\vect{y}\in\rng{T}</m>?  If <m>\vect{x},\,\vect{y}\in\rng{T}</m> then we know there are vectors <m>\vect{w},\,\vect{z}\in U</m> such that <m>\lteval{T}{\vect{w}}=\vect{x}</m> and <m>\lteval{T}{\vect{z}}=\vect{y}</m>.  Because <m>U</m> is a vector space, additive closure (<xref ref="property-AC" acro="AC" autoname="yes"/>) implies that <m>\vect{w}+\vect{z}\in U</m>.</p>
-                <p>Then
-<md><mrow>\lteval{T}{\vect{w}+\vect{z}}&amp;=\lteval{T}{\vect{w}}+\lteval{T}{\vect{z}}&amp;&amp;<xref ref="definition-LT" acro="LT" autoname="yes"/></mrow><mrow>&amp;=\vect{x}+\vect{y}&amp;&amp;\text{Definition of<m>\vect{w}</m> and<m>\vect{z}</m>}</mrow></md>
-</p>
+                <p>Then<md>
+                    <mrow>\lteval{T}{\vect{w}+\vect{z}}&amp;=\lteval{T}{\vect{w}}+\lteval{T}{\vect{z}}&amp;&amp;
+                        <xref ref="definition-LT" acro="LT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\vect{x}+\vect{y}&amp;&amp;
+                        \text{Definition of }\vect{w}, \vect{z}</mrow>
+                </md></p>
                 <p>So we have found an input, <m>\vect{w}+\vect{z}</m>, which when fed into <m>T</m> creates <m>\vect{x}+\vect{y}</m> as an output.  This qualifies <m>\vect{x}+\vect{y}</m> for membership in <m>\rng{T}</m>.  So we have additive closure.</p>
-                <p>Suppose we assume that <m>\alpha\in\complexes</m> and <m>\vect{x}\in\rng{T}</m>.  Is <m>\alpha\vect{x}\in\rng{T}</m>?  If <m>\vect{x}\in\rng{T}</m>, then there is a vector <m>\vect{w}\in U</m> such that <m>\lteval{T}{\vect{w}}=\vect{x}</m>.  Because <m>U</m> is a vector space, scalar closure implies that <m>\alpha\vect{w}\in U</m>.  Then
-<md><mrow>\lteval{T}{\alpha\vect{w}}&amp;=\alpha\lteval{T}{\vect{w}}&amp;&amp;<xref ref="definition-LT" acro="LT" autoname="yes"/></mrow><mrow>&amp;=\alpha\vect{x}&amp;&amp;\text{Definition of<m>\vect{w}</m>}</mrow></md>
-</p>
+                <p>Suppose we assume that <m>\alpha\in\complexes</m> and <m>\vect{x}\in\rng{T}</m>.  Is <m>\alpha\vect{x}\in\rng{T}</m>?  If <m>\vect{x}\in\rng{T}</m>, then there is a vector <m>\vect{w}\in U</m> such that <m>\lteval{T}{\vect{w}}=\vect{x}</m>.  Because <m>U</m> is a vector space, scalar closure implies that <m>\alpha\vect{w}\in U</m>.  Then<md>
+                    <mrow>\lteval{T}{\alpha\vect{w}}&amp;=\alpha\lteval{T}{\vect{w}}&amp;&amp;
+                        <xref ref="definition-LT" acro="LT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\alpha\vect{x}&amp;&amp;
+                        \text{Definition of }\vect{w}</mrow>
+                </md></p>
                 <p>So we have found an input (<m>\alpha\vect{w}</m>) which when fed into <m>T</m> creates <m>\alpha\vect{x}</m> as an output.  This qualifies <m>\alpha\vect{x}</m> for membership in <m>\rng{T}</m>.  So we have scalar closure and <xref ref="theorem-TSS" acro="TSS" autoname="yes"/> tells us that <m>\rng{T}</m> is a subspace of <m>V</m>.</p>
             </proof>
         </theorem>
         <p>Let us compute another range, now that we know in advance that it will be a subspace.</p>
         <example xml:id="example-FRAN" acro="FRAN">
+            <title>Full range, Archetype N</title>
             <index>
                 <main>range</main>
                 <sub>full</sub>
             </index>
-            <title>Full range, Archetype N</title>
-            <p>Archetype<nbsp/><xref ref="archetype-N" acro="N" autoname="no"/> is the linear transformation
-<me><!-- Archetype N, Part ltdefn -->\ltdefn{T}{\complex{5}}{\complex{3}},\quad
-\lteval{T}{\colvector{x_1\\x_2\\x_3\\x_4\\x_5}}=
-\colvector{2 x_1 + x_2 + 3 x_3 - 4 x_4 + 5 x_5\\
-x_1 - 2 x_2 + 3 x_3 - 9 x_4 + 3 x_5\\
-3 x_1 + 4 x_3 - 6 x_4 + 5 x_5}
-</me>
-</p>
-            <p>To determine the elements of <m>\complex{3}</m> in <m>\rng{T}</m>, find those vectors <m>\vect{v}</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m> for some <m>\vect{u}\in\complex{5}</m>,
-<md><mrow>\vect{v}&amp;=\lteval{T}{\vect{u}}</mrow><mrow>&amp;=
-\colvector{
-2 u_1 + u_2 + 3 u_3 - 4 u_4 + 5 u_5</mrow><mrow>u_1 - 2 u_2 + 3 u_3 - 9 u_4 + 3 u_5</mrow><mrow>3 u_1 + 4 u_3 - 6 u_4 + 5 u_5}</mrow><mrow>&amp;=
-\colvector{2u_1\\u_1\\3u_1}+
-\colvector{u_2\\-2u_2\\0}+
-\colvector{3u_3\\3u_3\\4u_3}+
-\colvector{-4u_4\\-9u_4\\-6u_4}+
-\colvector{5u_5\\3u_5\\5u_5}</mrow><mrow>&amp;=
-u_1\colvector{2\\1\\3}+
-u_2\colvector{1\\-2\\0}+
-u_3\colvector{3\\3\\4}+
-u_4\colvector{-4\\-9\\-6}+
-u_5\colvector{5\\3\\5}\\</mrow></md>
-</p>
-            <p>This says that every output of <m>T</m> (in other words, the vector <m>\vect{v}</m>) can be written as a linear combination of the five vectors
-<md><mrow>\colvector{2\\1\\3}&amp;&amp;
-\colvector{1\\-2\\0}&amp;&amp;
-\colvector{3\\3\\4}&amp;&amp;
-\colvector{-4\\-9\\-6}&amp;&amp;
-\colvector{5\\3\\5}</mrow></md>
-using the scalars <m>u_1,\,u_2,\,u_3,\,u_4,\,u_5</m>.  Furthermore, since <m>\vect{u}</m> can be any element of <m>\complex{5}</m>, every such linear combination is an output.  This means that
-<me>\rng{T}=\spn{\set{
-\colvector{2\\1\\3},\,
-\colvector{1\\-2\\0},\,
-\colvector{3\\3\\4},\,
-\colvector{-4\\-9\\-6},\,
-\colvector{5\\3\\5}
-}}</me>
-</p>
-            <p>The five vectors in this spanning set for <m>\rng{T}</m> form a linearly dependent set (<xref ref="theorem-MVSLD" acro="MVSLD" autoname="yes"/>).  So we can find a more economical presentation by any of the various methods from <xref ref="section-CRS" acro="CRS" autoname="yes"/> and <xref ref="section-FS" acro="FS" autoname="yes"/>.  We will place the vectors into a matrix as rows, row-reduce, toss out zero rows and appeal to <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>, so we can describe the range of <m>T</m> with a (nice) basis,
-<me>\rng{T}=\spn{<!-- Archetype N, Part ltrangebasis -->\set{
-\colvector{1\\0\\0},\,\colvector{0\\1\\0},\,\colvector{0\\0\\1}
-}
-}=\complex{3}</me>
-</p>
+            <!-- Archetype N, Part ltdefn -->
+            <!-- Archetype N, Part ltrangebasis -->
+            <p>Archetype<nbsp/><xref ref="archetype-N" acro="N" autoname="no"/> is the linear transformation<me>\ltdefn{T}{\complex{5}}{\complex{3}},\quad
+            \lteval{T}{\colvector{x_1\\x_2\\x_3\\x_4\\x_5}}=
+            \colvector{2 x_1 + x_2 + 3 x_3 - 4 x_4 + 5 x_5\\
+            x_1 - 2 x_2 + 3 x_3 - 9 x_4 + 3 x_5\\
+            3 x_1 + 4 x_3 - 6 x_4 + 5 x_5}</me></p>
+            <p>To determine the elements of <m>\complex{3}</m> in <m>\rng{T}</m>, find those vectors <m>\vect{v}</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m> for some <m>\vect{u}\in\complex{5}</m>,<md>
+                <mrow>\vect{v}&amp;=\lteval{T}{\vect{u}}</mrow>
+                <mrow>&amp;=
+                \colvector{
+                2 u_1 + u_2 + 3 u_3 - 4 u_4 + 5 u_5</mrow>
+                <mrow>u_1 - 2 u_2 + 3 u_3 - 9 u_4 + 3 u_5</mrow>
+                <mrow>3 u_1 + 4 u_3 - 6 u_4 + 5 u_5}</mrow>
+                <mrow>&amp;=
+                \colvector{2u_1\\u_1\\3u_1}+
+                \colvector{u_2\\-2u_2\\0}+
+                \colvector{3u_3\\3u_3\\4u_3}+
+                \colvector{-4u_4\\-9u_4\\-6u_4}+
+                \colvector{5u_5\\3u_5\\5u_5}</mrow>
+                <mrow>&amp;=
+                u_1\colvector{2\\1\\3}+
+                u_2\colvector{1\\-2\\0}+
+                u_3\colvector{3\\3\\4}+
+                u_4\colvector{-4\\-9\\-6}+
+                u_5\colvector{5\\3\\5}</mrow>
+            </md></p>
+            <p>This says that every output of <m>T</m> (in other words, the vector <m>\vect{v}</m>) can be written as a linear combination of the five vectors<md>
+                <mrow>\colvector{2\\1\\3}&amp;&amp;
+                \colvector{1\\-2\\0}&amp;&amp;
+                \colvector{3\\3\\4}&amp;&amp;
+                \colvector{-4\\-9\\-6}&amp;&amp;
+                \colvector{5\\3\\5}</mrow>
+            </md>using the scalars <m>u_1,\,u_2,\,u_3,\,u_4,\,u_5</m>.  Furthermore, since <m>\vect{u}</m> can be any element of <m>\complex{5}</m>, every such linear combination is an output.  This means that<me>\rng{T}=\spn{\set{
+            \colvector{2\\1\\3},\,
+            \colvector{1\\-2\\0},\,
+            \colvector{3\\3\\4},\,
+            \colvector{-4\\-9\\-6},\,
+            \colvector{5\\3\\5}
+            }}</me></p>
+            <p>The five vectors in this spanning set for <m>\rng{T}</m> form a linearly dependent set (<xref ref="theorem-MVSLD" acro="MVSLD" autoname="yes"/>).  So we can find a more economical presentation by any of the various methods from <xref ref="section-CRS" acro="CRS" autoname="yes"/> and <xref ref="section-FS" acro="FS" autoname="yes"/>.  We will place the vectors into a matrix as rows, row-reduce, toss out zero rows and appeal to <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>, so we can describe the range of <m>T</m> with a (nice) basis,<me>\rng{T}=\spn{\set{
+            \colvector{1\\0\\0},\,\colvector{0\\1\\0},\,\colvector{0\\0\\1}
+            }
+            }=\complex{3}</me></p>
         </example>
         <p>In contrast to injective linear transformations having small (trivial) kernels (<xref ref="theorem-KILT" acro="KILT" autoname="yes"/>), surjective linear transformations have large ranges, as indicated in the next theorem.</p>
         <theorem xml:id="theorem-RSLT" acro="RSLT">
+            <title>Range of a Surjective Linear Transformation</title>
             <index>
                 <main>range</main>
                 <sub>surjective linear transformation</sub>
             </index>
-            <title>Range of a Surjective Linear Transformation</title>
             <statement>
                 <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then <m>T</m> is surjective if and only if the range of <m>T</m> equals the codomain, <m>\rng{T}=V</m>.</p>
             </statement>
             <proof>
                 <case direction="forward">
-                    <!-- MBX: move end of case -->
+                    <p>By <xref ref="definition-RLT" acro="RLT" autoname="yes"/>, we know that <m>\rng{T}\subseteq V</m>.  To establish the reverse inclusion, assume <m>\vect{v}\in V</m>.  Then since <m>T</m> is surjective (<xref ref="definition-SLT" acro="SLT" autoname="yes"/>), there exists a vector <m>\vect{u}\in U</m> so that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  However, the existence of <m>\vect{u}</m> gains <m>\vect{v}</m> membership in <m>\rng{T}</m>, so <m>V\subseteq\rng{T}</m>.  Thus, <m>\rng{T}=V</m>.</p>
                 </case>
-                <p> By <xref ref="definition-RLT" acro="RLT" autoname="yes"/>, we know that <m>\rng{T}\subseteq V</m>.  To establish the reverse inclusion, assume <m>\vect{v}\in V</m>.  Then since <m>T</m> is surjective (<xref ref="definition-SLT" acro="SLT" autoname="yes"/>), there exists a vector <m>\vect{u}\in U</m> so that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  However, the existence of <m>\vect{u}</m> gains <m>\vect{v}</m> membership in <m>\rng{T}</m>, so <m>V\subseteq\rng{T}</m>.  Thus, <m>\rng{T}=V</m>.</p>
                 <case direction="backward">
-                    <!-- MBX: move end of case -->
+                    <p>To establish that <m>T</m> is surjective, choose <m>\vect{v}\in V</m>.  Since we are assuming that <m>\rng{T}=V</m>, <m>\vect{v}\in\rng{T}</m>.  This says there is a vector <m>\vect{u}\in U</m> so that <m>\lteval{T}{\vect{u}}=\vect{v}</m>, <ie/> <m>T</m> is surjective.</p>
                 </case>
-                <p>  To establish that <m>T</m> is surjective, choose <m>\vect{v}\in V</m>.  Since we are assuming that <m>\rng{T}=V</m>, <m>\vect{v}\in\rng{T}</m>.  This says there is a vector <m>\vect{u}\in U</m> so that <m>\lteval{T}{\vect{u}}=\vect{v}</m>, <ie/> <m>T</m> is surjective.</p>
             </proof>
         </theorem>
         <example xml:id="example-NSAQR" acro="NSAQR">
+            <title>Not surjective, Archetype Q, revisited</title>
             <index>
                 <main>surjective</main>
                 <sub>not</sub>
             </index>
-            <title>Not surjective, Archetype Q, revisited</title>
+            <!-- Archetype Q, Part ltrangebasis -->
             <p>We are now in a position to revisit our first example in this section, <xref ref="example-NSAQ" acro="NSAQ" autoname="yes"/>.  In that example, we showed that Archetype<nbsp/><xref ref="archetype-Q" acro="Q" autoname="no"/> is not surjective by constructing a vector in the codomain where no element of the domain could be used to evaluate the linear transformation to create the output, thus violating <xref ref="definition-SLT" acro="SLT" autoname="yes"/>.  Just where did this vector come from?</p>
-            <p>The short answer is that the vector
-<me>\vect{v}=\colvector{-1\\2\\3\\-1\\4}</me>
-was constructed to lie outside of the range of <m>T</m>.  How was this accomplished?  First, the range of <m>T</m> is given by
-<me>\rng{T}=\spn{<!-- Archetype Q, Part ltrangebasis -->\set{
-\colvector{1\\0\\0\\0\\1},\,\colvector{0\\1\\0\\0\\-1},\,
-\colvector{0\\0\\1\\0\\-1},\,\colvector{0\\0\\0\\1\\2}
-}
-}</me>
-</p>
-            <p>Suppose an element of the range <m>\vect{v^*}</m> has its first 4 components equal to <m>-1</m>, <m>2</m>, <m>3</m>, <m>-1</m>, in that order.  Then to be an element of <m>\rng{T}</m>, we would have
-<me>\vect{v^*}=(-1)\colvector{1\\0\\0\\0\\1}+(2)\colvector{0\\1\\0\\0\\-1}+(3)
-\colvector{0\\0\\1\\0\\-1}+(-1)\colvector{0\\0\\0\\1\\2}
-=\colvector{-1\\2\\3\\-1\\-8}</me>
-</p>
+            <p>The short answer is that the vector<me>\vect{v}=\colvector{-1\\2\\3\\-1\\4}</me>was constructed to lie outside of the range of <m>T</m>.  How was this accomplished?  First, the range of <m>T</m> is given by<me>\rng{T}=\spn{\set{
+            \colvector{1\\0\\0\\0\\1},\,\colvector{0\\1\\0\\0\\-1},\,
+            \colvector{0\\0\\1\\0\\-1},\,\colvector{0\\0\\0\\1\\2}
+            }
+            }</me></p>
+            <p>Suppose an element of the range <m>\vect{v^*}</m> has its first 4 components equal to <m>-1</m>, <m>2</m>, <m>3</m>, <m>-1</m>, in that order.  Then to be an element of <m>\rng{T}</m>, we would have<me>\vect{v^*}=(-1)\colvector{1\\0\\0\\0\\1}+(2)\colvector{0\\1\\0\\0\\-1}+(3)
+            \colvector{0\\0\\1\\0\\-1}+(-1)\colvector{0\\0\\0\\1\\2}
+            =\colvector{-1\\2\\3\\-1\\-8}</me></p>
             <p>So the only vector in the range with these first four components specified, must have <m>-8</m> in the fifth component.  To set the fifth component to any other value (say, 4) will result in a vector (<m>\vect{v}</m> in <xref ref="example-NSAQ" acro="NSAQ" autoname="yes"/>)  outside of the range.  Any attempt to find an input for <m>T</m> that will produce <m>\vect{v}</m> as an output will be doomed to failure.</p>
-            <p>Whenever the range of a linear transformation is not the whole codomain, we can employ this device and conclude that the linear transformation is not surjective.
-This is another way of viewing <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>.  For a surjective linear transformation, the range is all of the codomain and there is no choice for a vector <m>\vect{v}</m> that lies in <m>V</m>, yet not in the range.  For every one of the archetypes that is not surjective, there is an example presented of exactly this form.</p>
+            <p>Whenever the range of a linear transformation is not the whole codomain, we can employ this device and conclude that the linear transformation is not surjective.  This is another way of viewing <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>.  For a surjective linear transformation, the range is all of the codomain and there is no choice for a vector <m>\vect{v}</m> that lies in <m>V</m>, yet not in the range.  For every one of the archetypes that is not surjective, there is an example presented of exactly this form.</p>
         </example>
         <example xml:id="example-NSAO" acro="NSAO">
+            <title>Not surjective, Archetype O</title>
             <index>
                 <main>surjective</main>
                 <sub>not, Archetype O</sub>
             </index>
-            <title>Not surjective, Archetype O</title>
-            <p>In <xref ref="example-RAO" acro="RAO" autoname="yes"/> the range of Archetype<nbsp/><xref ref="archetype-O" acro="O" autoname="no"/> was determined to be
-<me>\rng{T}=\spn{<!-- Archetype O, Part ltrangebasis -->\set{
-\colvector{1\\0\\-3\\-7\\-2},\,\colvector{0\\1\\2\\5\\1}
-}
-}</me>
-a subspace of dimension 2 in <m>\complex{5}</m>.  Since <m>\rng{T}\neq\complex{5}</m>, <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/> says <m>T</m> is not surjective.</p>
+            <!-- Archetype O, Part ltrangebasis -->
+            <p>In <xref ref="example-RAO" acro="RAO" autoname="yes"/> the range of Archetype<nbsp/><xref ref="archetype-O" acro="O" autoname="no"/> was determined to be<me>\rng{T}=\spn{\set{
+            \colvector{1\\0\\-3\\-7\\-2},\,\colvector{0\\1\\2\\5\\1}
+            }
+            }</me>a subspace of dimension 2 in <m>\complex{5}</m>.  Since <m>\rng{T}\neq\complex{5}</m>, <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/> says <m>T</m> is not surjective.</p>
         </example>
         <example xml:id="example-SAN" acro="SAN">
+            <title>Surjective, Archetype N</title>
             <index>
                 <main>surjective</main>
                 <sub>Archetype N</sub>
             </index>
-            <title>Surjective, Archetype N</title>
-            <p>The range of Archetype<nbsp/><xref ref="archetype-N" acro="N" autoname="no"/> was computed in <xref ref="example-FRAN" acro="FRAN" autoname="yes"/> to be
-<me>\rng{T}=\spn{<!-- Archetype N, Part ltrangebasis -->\set{
-\colvector{1\\0\\0},\,\colvector{0\\1\\0},\,\colvector{0\\0\\1}
-}
-}</me>
-</p>
+            <!-- Archetype N, Part ltrangebasis -->
+            <p>The range of Archetype<nbsp/><xref ref="archetype-N" acro="N" autoname="no"/> was computed in <xref ref="example-FRAN" acro="FRAN" autoname="yes"/> to be<me>\rng{T}=\spn{\set{
+            \colvector{1\\0\\0},\,\colvector{0\\1\\0},\,\colvector{0\\0\\1}
+            }
+            }</me></p>
             <p>Since the basis for this subspace is the set of standard unit vectors for <m>\complex{3}</m> (<xref ref="theorem-SUVB" acro="SUVB" autoname="yes"/>), we have <m>\rng{T}=\complex{3}</m> and by <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>, <m>T</m> is  surjective.</p>
         </example>
         <computation xml:id="sage-SLT" acro="SLT">
@@ -488,126 +521,126 @@ a subspace of dimension 2 in <m>\complex{5}</m>.  Since <m>\rng{T}\neq\complex{5
             <p>The situation in Sage for surjective linear transformations is similar to that for injective linear transformations.  One distinction <mdash/> what your text calls the range of a linear transformation is called the image of a transformation, obtained with the <c>.image()</c> method.  Sage's term is more commonly used, so you are likely to see it again.  As before, two examples, first up is <xref ref="example-RAO" acro="RAO" autoname="yes"/>.</p>
             <sage xml:id="sagecell-SLT-1">
                 <input>
-U = QQ^3
-V = QQ^5
-x1, x2, x3 = var('x1, x2, x3')
-outputs = [ -x1 +   x2 - 3*x3,
-            -x1 + 2*x2 - 4*x3,
-             x1 +   x2 +   x3,
-           2*x1 + 3*x2 +   x3,
-             x1        + 2*x3]
-T_symbolic(x1, x2, x3) = outputs
-T = linear_transformation(U, V, T_symbolic)
-T.is_surjective()
-</input>
+                U = QQ^3
+                V = QQ^5
+                x1, x2, x3 = var('x1, x2, x3')
+                outputs = [ -x1 +   x2 - 3*x3,
+                            -x1 + 2*x2 - 4*x3,
+                             x1 +   x2 +   x3,
+                           2*x1 + 3*x2 +   x3,
+                             x1        + 2*x3]
+                T_symbolic(x1, x2, x3) = outputs
+                T = linear_transformation(U, V, T_symbolic)
+                T.is_surjective()
+                </input>
                 <output>
-False
-</output>
+                False
+                </output>
             </sage>
             <sage xml:id="sagecell-SLT-2">
                 <input>
-T.image()
-</input>
+                T.image()
+                </input>
                 <output>
-Vector space of degree 5 and dimension 2 over Rational Field
-Basis matrix:
-[ 1  0 -3 -7 -2]
-[ 0  1  2  5  1]
-</output>
+                Vector space of degree 5 and dimension 2 over Rational Field
+                Basis matrix:
+                [ 1  0 -3 -7 -2]
+                [ 0  1  2  5  1]
+                </output>
             </sage>
             <p>Besides showing the relevant commands in action, this demonstrates one half of <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>.  Now a reprise of <xref ref="example-FRAN" acro="FRAN" autoname="yes"/>.</p>
             <sage xml:id="sagecell-SLT-3">
                 <input>
-U = QQ^5
-V = QQ^3
-x1, x2, x3, x4, x5 = var('x1, x2, x3, x4, x5')
-outputs = [2*x1 +   x2 + 3*x3 - 4*x4 + 5*x5,
-             x1 - 2*x2 + 3*x3 - 9*x4 + 3*x5,
-           3*x1        + 4*x3 - 6*x4 + 5*x5]
-S_symbolic(x1, x2, x3, x4, x5) = outputs
-S = linear_transformation(U, V, S_symbolic)
-S.is_surjective()
-</input>
+                U = QQ^5
+                V = QQ^3
+                x1, x2, x3, x4, x5 = var('x1, x2, x3, x4, x5')
+                outputs = [2*x1 +   x2 + 3*x3 - 4*x4 + 5*x5,
+                             x1 - 2*x2 + 3*x3 - 9*x4 + 3*x5,
+                           3*x1        + 4*x3 - 6*x4 + 5*x5]
+                S_symbolic(x1, x2, x3, x4, x5) = outputs
+                S = linear_transformation(U, V, S_symbolic)
+                S.is_surjective()
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <sage xml:id="sagecell-SLT-4">
                 <input>
-S.image()
-</input>
+                S.image()
+                </input>
                 <output>
-Vector space of degree 3 and dimension 3 over Rational Field
-Basis matrix:
-[1 0 0]
-[0 1 0]
-[0 0 1]
-</output>
+                Vector space of degree 3 and dimension 3 over Rational Field
+                Basis matrix:
+                [1 0 0]
+                [0 1 0]
+                [0 0 1]
+                </output>
             </sage>
             <sage xml:id="sagecell-SLT-5">
                 <input>
-S.image() == V
-</input>
+                S.image() == V
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <p>Previously, we have chosen elements of the codomain which have nonempty or empty preimages.  We can now explain how to do this predictably.  <xref ref="theorem-RPI" acro="RPI" autoname="yes"/> explains that elements of the codomain with nonempty pre-images are precisely elements of the image.  Consider the non-surjective linear transformation <c>T</c> from above.</p>
             <sage xml:id="sagecell-SLT-6">
                 <input>
-TI = T.image()
-B = TI.basis()
-B
-</input>
+                TI = T.image()
+                B = TI.basis()
+                B
+                </input>
                 <output>
-[
-(1, 0, -3, -7, -2),
-(0, 1, 2, 5, 1)
-]
-</output>
+                [
+                (1, 0, -3, -7, -2),
+                (0, 1, 2, 5, 1)
+                ]
+                </output>
             </sage>
             <sage xml:id="sagecell-SLT-7">
                 <input>
-b0 = B[0]
-b1 = B[1]
-</input>
+                b0 = B[0]
+                b1 = B[1]
+                </input>
             </sage>
             <p>Now any linear combination of the basis vectors <c>b0</c> and <c>b1</c> must be an element of the image.  Moreover, the first two slots of the resulting vector will equal the two scalars we choose to create the linear combination.  But most importantly, see that the three remaining slots will be uniquely determined by these two choices.  This means there is exactly one vector in the image with these values in the first two slots.  So if we construct a new vector with these two values in the first two slots, and make any part of the last three slots even slightly different, we will form a vector that cannot be in the image, and will thus have a preimage that is an empty set.  Whew, that is probably worth reading carefully several times, perhaps in conjunction with the example following.</p>
             <sage xml:id="sagecell-SLT-8">
                 <input>
-in_image = 4*b0 + (-5)*b1
-in_image
-</input>
+                in_image = 4*b0 + (-5)*b1
+                in_image
+                </input>
                 <output>
-(4, -5, -22, -53, -13)
-</output>
+                (4, -5, -22, -53, -13)
+                </output>
             </sage>
             <sage xml:id="sagecell-SLT-9">
                 <input>
-T.preimage_representative(in_image)
-</input>
+                T.preimage_representative(in_image)
+                </input>
                 <output>
-(-13, -9, 0)
-</output>
+                (-13, -9, 0)
+                </output>
             </sage>
             <sage xml:id="sagecell-SLT-10">
                 <input>
-outside_image = 4*b0 + (-5)*b1 + vector(QQ, [0, 0, 0, 0, 1])
-outside_image
-</input>
+                outside_image = 4*b0 + (-5)*b1 + vector(QQ, [0, 0, 0, 0, 1])
+                outside_image
+                </input>
                 <output>
-(4, -5, -22, -53, -12)
-</output>
+                (4, -5, -22, -53, -12)
+                </output>
             </sage>
             <sage xml:id="sagecell-SLT-11">
                 <input>
-T.preimage_representative(outside_image)
-</input>
+                T.preimage_representative(outside_image)
+                </input>
                 <output>
-Traceback (most recent call last):
-...
-ValueError: element is not in the image
-</output>
+                Traceback (most recent call last):
+                ...
+                ValueError: element is not in the image
+                </output>
             </sage>
         </computation>
     </subsection>
@@ -615,136 +648,129 @@ ValueError: element is not in the image
         <title>Spanning Sets and Surjective Linear Transformations</title>
         <p>Just as injective linear transformations are allied with linear independence (<xref ref="theorem-ILTLI" acro="ILTLI" autoname="yes"/>, <xref ref="theorem-ILTB" acro="ILTB" autoname="yes"/>), surjective linear transformations are allied with spanning sets.</p>
         <theorem xml:id="theorem-SSRLT" acro="SSRLT">
+            <title>Spanning Set for Range of a Linear Transformation</title>
             <index>
                 <main>linear transformation</main>
                 <sub>spanning range</sub>
             </index>
-            <title>Spanning Set for Range of a Linear Transformation</title>
             <statement>
-                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation and
-<md><mrow>S&amp;=\set{\vectorlist{u}{t}}</mrow></md>
-spans <m>U</m>.  Then
-<md><mrow>R&amp;=\set{\lteval{T}{\vect{u}_1},\,\lteval{T}{\vect{u}_2},\,\lteval{T}{\vect{u}_3},\,\ldots,\,\lteval{T}{\vect{u}_t}}</mrow></md>
-spans <m>\rng{T}</m>.</p>
+                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation and<md>
+                    <mrow>S&amp;=\set{\vectorlist{u}{t}}</mrow>
+                </md>spans <m>U</m>.  Then<md>
+                    <mrow>R&amp;=\set{\lteval{T}{\vect{u}_1},\,\lteval{T}{\vect{u}_2},\,\lteval{T}{\vect{u}_3},\,\ldots,\,\lteval{T}{\vect{u}_t}}</mrow>
+                </md>spans <m>\rng{T}</m>.</p>
             </statement>
             <proof>
-                <p>We need to establish that <m>\rng{T}=\spn{R}</m>, a set equality.  First we establish that <m>\rng{T}\subseteq\spn{R}</m>.  To this end, choose <m>\vect{v}\in\rng{T}</m>.  Then there exists a vector <m>\vect{u}\in U</m>, such that <m>\lteval{T}{\vect{u}}=\vect{v}</m> (<xref ref="definition-RLT" acro="RLT" autoname="yes"/>).  Because <m>S</m> spans <m>U</m> there are scalars, <m>\scalarlist{a}{t}</m>, such that
-<me>\vect{u}=\lincombo{a}{u}{t}</me>
-</p>
-                <p>Then
-<md><mrow>\vect{v}
-&amp;=\lteval{T}{\vect{u}}&amp;&amp;<xref ref="definition-RLT" acro="RLT" autoname="yes"/></mrow><mrow>&amp;=\lteval{T}{\lincombo{a}{u}{t}}&amp;&amp;<xref ref="definition-SSVS" acro="SSVS" autoname="yes"/></mrow><mrow>&amp;=a_1\lteval{T}{\vect{u}_1}+a_2\lteval{T}{\vect{u}_2}+a_3\lteval{T}{\vect{u}_3}+\ldots+a_t\lteval{T}{\vect{u}_t}&amp;&amp;<xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/>\\</mrow></md>
-which establishes that <m>\vect{v}\in\spn{R}</m> (<xref ref="definition-SS" acro="SS" autoname="yes"/>).  So <m>\rng{T}\subseteq\spn{R}</m>.</p>
-                <p>To establish the opposite inclusion, choose an element of the span of <m>R</m>, say <m>\vect{v}\in\spn{R}</m>.  Then there are scalars <m>\scalarlist{b}{t}</m> so that
-<md><mrow>\vect{v}
-&amp;=b_1\lteval{T}{\vect{u}_1}+b_2\lteval{T}{\vect{u}_2}+b_3\lteval{T}{\vect{u}_3}+\cdots+b_t\lteval{T}{\vect{u}_t}
-&amp;&amp;<xref ref="definition-SS" acro="SS" autoname="yes"/></mrow><mrow>&amp;=\lteval{T}{\lincombo{b}{\vect{u}}{t}}&amp;&amp;<xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow></md>
-</p>
+                <p>We need to establish that <m>\rng{T}=\spn{R}</m>, a set equality.  First we establish that <m>\rng{T}\subseteq\spn{R}</m>.  To this end, choose <m>\vect{v}\in\rng{T}</m>.  Then there exists a vector <m>\vect{u}\in U</m>, such that <m>\lteval{T}{\vect{u}}=\vect{v}</m> (<xref ref="definition-RLT" acro="RLT" autoname="yes"/>).  Because <m>S</m> spans <m>U</m> there are scalars, <m>\scalarlist{a}{t}</m>, such that<me>\vect{u}=\lincombo{a}{u}{t}</me></p>
+                <p>Then<md>
+                    <mrow>\vect{v}
+                    &amp;=\lteval{T}{\vect{u}}&amp;&amp;
+                        <xref ref="definition-RLT" acro="RLT" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lteval{T}{\lincombo{a}{u}{t}}&amp;&amp;
+                        <xref ref="definition-SSVS" acro="SSVS" autoname="yes"/></mrow>
+                    <mrow>&amp;=a_1\lteval{T}{\vect{u}_1}+a_2\lteval{T}{\vect{u}_2}+a_3\lteval{T}{\vect{u}_3}+\ldots+a_t\lteval{T}{\vect{u}_t}&amp;&amp;
+                        <xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow>
+                </md>which establishes that <m>\vect{v}\in\spn{R}</m> (<xref ref="definition-SS" acro="SS" autoname="yes"/>).  So <m>\rng{T}\subseteq\spn{R}</m>.</p>
+                <p>To establish the opposite inclusion, choose an element of the span of <m>R</m>, say <m>\vect{v}\in\spn{R}</m>.  Then there are scalars <m>\scalarlist{b}{t}</m> so that<md>
+                    <mrow>\vect{v}
+                    &amp;=b_1\lteval{T}{\vect{u}_1}+b_2\lteval{T}{\vect{u}_2}+b_3\lteval{T}{\vect{u}_3}+\cdots+b_t\lteval{T}{\vect{u}_t}&amp;&amp;
+                        <xref ref="definition-SS" acro="SS" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lteval{T}{\lincombo{b}{\vect{u}}{t}}&amp;&amp;
+                        <xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow>
+                </md></p>
                 <p>This demonstrates that <m>\vect{v}</m> is an output of the linear transformation <m>T</m>, so <m>\vect{v}\in\rng{T}</m>.  Therefore <m>\spn{R}\subseteq\rng{T}</m>, so we have the set equality <m>\rng{T}=\spn{R}</m> (<xref ref="definition-SE" acro="SE" autoname="yes"/>).  In other words, <m>R</m> spans <m>\rng{T}</m> (<xref ref="definition-SSVS" acro="SSVS" autoname="yes"/>).</p>
             </proof>
         </theorem>
         <p><xref ref="theorem-SSRLT" acro="SSRLT" autoname="yes"/> provides an easy way to begin the construction of a basis for the range of a linear transformation, since the construction of a spanning set requires simply evaluating the linear transformation on a spanning set of the domain.  In practice the best choice for a spanning set of the domain would be as small as possible, in other words, a basis.  The resulting spanning set for the codomain may not be linearly independent, so to find a basis for the range might require tossing out redundant vectors from the spanning set.  Here is an example.</p>
         <example xml:id="example-BRLT" acro="BRLT">
+            <title>A basis for the range of a linear transformation</title>
             <index>
                 <main>linear transformation</main>
                 <sub>basis of range</sub>
             </index>
-            <title>A basis for the range of a linear transformation</title>
-            <p>Define the linear transformation <m>\ltdefn{T}{M_{22}}{P_2}</m> by
-<me>\lteval{T}{ \begin{bmatrix} a&amp;b\\c&amp;d \end{bmatrix}}
-=\left(a+2b+8c+d\right)+\left(-3a+2b+5d\right)x+\left(a+b+5c\right)x^2</me>
-</p>
-            <p>A convenient spanning set for <m>M_{22}</m> is the basis
-<me>S=\set{
-\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 0 \end{bmatrix},\,
-\begin{bmatrix} 0 &amp; 1 \\ 0 &amp; 0 \end{bmatrix},\,
-\begin{bmatrix} 0 &amp; 0 \\ 1 &amp; 0 \end{bmatrix},\,
-\begin{bmatrix} 0 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}
-}</me>
-</p>
-            <p>So by <xref ref="theorem-SSRLT" acro="SSRLT" autoname="yes"/>, a spanning set for <m>\rng{T}</m> is
-<md><mrow>R
-&amp;=\set{
-\lteval{T}{\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 0 \end{bmatrix}},\,
-\lteval{T}{\begin{bmatrix} 0 &amp; 1 \\ 0 &amp; 0 \end{bmatrix}},\,
-\lteval{T}{\begin{bmatrix} 0 &amp; 0 \\ 1 &amp; 0 \end{bmatrix}},\,
-\lteval{T}{\begin{bmatrix} 0 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}}
-}\\
-&amp;=\set{1-3x+x^2,\,2+2x+x^2,\,8+5x^2,\,1+5x}</mrow></md>
-</p>
-            <p>The set <m>R</m> is not linearly independent, so if we desire a basis for <m>\rng{T}</m>, we need to eliminate some redundant vectors.  Two particular relations of linear dependence on <m>R</m> are
-<md><mrow>(-2)(1-3x+x^2)+(-3)(2+2x+x^2)+(8+5x^2)&amp;=0+0x+0x^2=\zerovector</mrow><mrow>(1-3x+x^2)+(-1)(2+2x+x^2)+(1+5x)&amp;=0+0x+0x^2=\zerovector</mrow></md>
-</p>
-            <p>These, individually, allow us to remove <m>8+5x^2</m> and <m>1+5x</m> from <m>R</m> without destroying the property that <m>R</m> spans <m>\rng{T}</m>.  The two remaining vectors are linearly independent (check this!), so we can write
-<me>\rng{T}=\spn{\set{1-3x+x^2,\,2+2x+x^2}}</me>
-and see that <m>\dimension{\rng{T}}=2</m>.</p>
+            <p>Define the linear transformation <m>\ltdefn{T}{M_{22}}{P_2}</m> by<me>\lteval{T}{ \begin{bmatrix} a&amp;b\\c&amp;d \end{bmatrix}}
+            =\left(a+2b+8c+d\right)+\left(-3a+2b+5d\right)x+\left(a+b+5c\right)x^2</me></p>
+            <p>A convenient spanning set for <m>M_{22}</m> is the basis<me>S=\set{
+            \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 0 \end{bmatrix},\,
+            \begin{bmatrix} 0 &amp; 1 \\ 0 &amp; 0 \end{bmatrix},\,
+            \begin{bmatrix} 0 &amp; 0 \\ 1 &amp; 0 \end{bmatrix},\,
+            \begin{bmatrix} 0 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}
+            }</me></p>
+            <p>So by <xref ref="theorem-SSRLT" acro="SSRLT" autoname="yes"/>, a spanning set for <m>\rng{T}</m> is<md>
+            <mrow>R
+            &amp;=\set{
+            \lteval{T}{\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 0 \end{bmatrix}},\,
+            \lteval{T}{\begin{bmatrix} 0 &amp; 1 \\ 0 &amp; 0 \end{bmatrix}},\,
+            \lteval{T}{\begin{bmatrix} 0 &amp; 0 \\ 1 &amp; 0 \end{bmatrix}},\,
+            \lteval{T}{\begin{bmatrix} 0 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}}
+            }\\
+            &amp;=\set{1-3x+x^2,\,2+2x+x^2,\,8+5x^2,\,1+5x}</mrow>
+        </md></p>
+            <p>The set <m>R</m> is not linearly independent, so if we desire a basis for <m>\rng{T}</m>, we need to eliminate some redundant vectors.  Two particular relations of linear dependence on <m>R</m> are<md>
+            <mrow>(-2)(1-3x+x^2)+(-3)(2+2x+x^2)+(8+5x^2)&amp;=0+0x+0x^2=\zerovector</mrow>
+            <mrow>(1-3x+x^2)+(-1)(2+2x+x^2)+(1+5x)&amp;=0+0x+0x^2=\zerovector</mrow>
+        </md></p>
+            <p>These, individually, allow us to remove <m>8+5x^2</m> and <m>1+5x</m> from <m>R</m> without destroying the property that <m>R</m> spans <m>\rng{T}</m>.  The two remaining vectors are linearly independent (check this!), so we can write<me>\rng{T}=\spn{\set{1-3x+x^2,\,2+2x+x^2}}</me>and see that <m>\dimension{\rng{T}}=2</m>.</p>
         </example>
         <p>Elements of the range are precisely those elements of the codomain with nonempty preimages.</p>
         <theorem xml:id="theorem-RPI" acro="RPI">
+            <title>Range and Pre-Image</title>
             <index>
                 <main>range</main>
                 <sub>pre-image</sub>
             </index>
-            <title>Range and Pre-Image</title>
             <statement>
-                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then
-<me>\vect{v}\in\rng{T}\text{ if and only if }\preimage{T}{\vect{v}}\neq\emptyset</me>
-</p>
+                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation.  Then<me>\vect{v}\in\rng{T}\text{ if and only if }\preimage{T}{\vect{v}}\neq\emptyset</me></p>
             </statement>
             <proof>
                 <case direction="forward">
-                    <!-- MBX: move end of case -->
+                    <p>If <m>\vect{v}\in\rng{T}</m>, then there is a vector <m>\vect{u}\in U</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  This qualifies <m>\vect{u}</m> for membership in <m>\preimage{T}{\vect{v}}</m>, and thus the preimage of <m>\vect{v}</m> is not empty.</p>
                 </case>
-                <p>  If <m>\vect{v}\in\rng{T}</m>, then there is a vector <m>\vect{u}\in U</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  This qualifies <m>\vect{u}</m> for membership in <m>\preimage{T}{\vect{v}}</m>, and thus the preimage of <m>\vect{v}</m> is not empty.</p>
                 <case direction="backward">
-                    <!-- MBX: move end of case -->
+                    <p>Suppose the preimage of <m>\vect{v}</m> is not empty, so we can choose a vector <m>\vect{u}\in U</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  Then <m>\vect{v}\in\rng{T}</m>.</p>
                 </case>
-                <p>  Suppose the preimage of <m>\vect{v}</m> is not empty, so we can choose a vector <m>\vect{u}\in U</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  Then <m>\vect{v}\in\rng{T}</m>.</p>
             </proof>
         </theorem>
         <p>Now would be a good time to return to <xref ref="figure-KPI" acro="KPI" autoname="yes"/> which depicted the pre-images of a non-surjective linear transformation.  The vectors <m>\vect{x},\,\vect{y}\in V</m> were elements of the codomain whose pre-images were empty, as we expect for a non-surjective linear transformation from the characterization in <xref ref="theorem-RPI" acro="RPI" autoname="yes"/>.</p>
         <theorem xml:id="theorem-SLTB" acro="SLTB">
+            <title>Surjective Linear Transformations and Bases</title>
             <index>
                 <main>surjective linear transformation</main>
                 <sub>bases</sub>
             </index>
-            <title>Surjective Linear Transformations and Bases</title>
             <statement>
-                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation and
-<md><mrow>B&amp;=\set{\vectorlist{u}{m}}</mrow></md>
-is a basis of <m>U</m>.  Then <m>T</m> is surjective if and only if
-<md><mrow>C&amp;=\set{\lteval{T}{\vect{u}_1},\,\lteval{T}{\vect{u}_2},\,\lteval{T}{\vect{u}_3},\,\ldots,\,\lteval{T}{\vect{u}_m}}</mrow></md>
-is a spanning set for <m>V</m>.</p>
+                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a linear transformation and<md>
+                    <mrow>B&amp;=\set{\vectorlist{u}{m}}</mrow>
+                </md>is a basis of <m>U</m>.  Then <m>T</m> is surjective if and only if<md>
+                    <mrow>C&amp;=\set{\lteval{T}{\vect{u}_1},\,\lteval{T}{\vect{u}_2},\,\lteval{T}{\vect{u}_3},\,\ldots,\,\lteval{T}{\vect{u}_m}}</mrow>
+                </md>is a spanning set for <m>V</m>.</p>
             </statement>
             <proof>
                 <case direction="forward">
-                    <!-- MBX: move end of case -->
+                    <p>Assume <m>T</m> is surjective.  Since <m>B</m> is a basis, we know <m>B</m> is a spanning set of <m>U</m> (<xref ref="definition-B" acro="B" autoname="yes"/>).  Then <xref ref="theorem-SSRLT" acro="SSRLT" autoname="yes"/> says that <m>C</m> spans <m>\rng{T}</m>.  But the hypothesis that <m>T</m> is surjective means <m>V=\rng{T}</m> (<xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>), so <m>C</m> spans <m>V</m>.</p>
                 </case>
-                <p>  Assume <m>T</m> is surjective.  Since <m>B</m> is a basis, we know <m>B</m> is a spanning set of <m>U</m> (<xref ref="definition-B" acro="B" autoname="yes"/>).  Then <xref ref="theorem-SSRLT" acro="SSRLT" autoname="yes"/> says that <m>C</m> spans <m>\rng{T}</m>.  But the hypothesis that <m>T</m> is surjective means <m>V=\rng{T}</m> (<xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/>), so <m>C</m> spans <m>V</m>.</p>
                 <case direction="backward">
-                    <!-- MBX: move end of case -->
+                    <p>  Assume that <m>C</m> spans <m>V</m>.  To establish that <m>T</m> is surjective, we will show that every element of <m>V</m> is an output of <m>T</m> for some input (<xref ref="definition-SLT" acro="SLT" autoname="yes"/>).  Suppose that <m>\vect{v}\in V</m>.  As an element of <m>V</m>, we can write <m>\vect{v}</m> as a linear combination of the spanning set <m>C</m>.  So there are scalars, <m>\scalarlist{b}{m}</m>, such that<me>\vect{v}=b_1\lteval{T}{\vect{u}_1}+b_2\lteval{T}{\vect{u}_2}+b_3\lteval{T}{\vect{u}_3}+\cdots+b_m\lteval{T}{\vect{u}_m}</me></p>
+                    <p>Now define the vector <m>\vect{u}\in U</m> by<me>\vect{u}=\lincombo{b}{u}{m}</me></p>
+                    <p>Then<md>
+                        <mrow>\lteval{T}{\vect{u}}&amp;=\lteval{T}{\lincombo{b}{u}{m}}</mrow>
+                        <mrow>&amp;=b_1\lteval{T}{\vect{u}_1}+b_2\lteval{T}{\vect{u}_2}+b_3\lteval{T}{\vect{u}_3}+\cdots+b_m\lteval{T}{\vect{u}_m}&amp;&amp;
+                            <xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow>
+                        <mrow>&amp;=\vect{v}</mrow>
+                    </md></p>
+                    <p>So, given any choice of a vector <m>\vect{v}\in V</m>, we can design an input <m>\vect{u}\in U</m> to produce <m>\vect{v}</m> as an output of <m>T</m>.  Thus, by <xref ref="definition-SLT" acro="SLT" autoname="yes"/>, <m>T</m> is surjective.</p>
                 </case>
-                <p>  Assume that <m>C</m> spans <m>V</m>.  To establish that <m>T</m> is surjective, we will show that every element of <m>V</m> is an output of <m>T</m> for some input (<xref ref="definition-SLT" acro="SLT" autoname="yes"/>).  Suppose that <m>\vect{v}\in V</m>.  As an element of <m>V</m>, we can write <m>\vect{v}</m> as a linear combination of the spanning set <m>C</m>.  So there are scalars, <m>\scalarlist{b}{m}</m>, such that
-<me>\vect{v}=b_1\lteval{T}{\vect{u}_1}+b_2\lteval{T}{\vect{u}_2}+b_3\lteval{T}{\vect{u}_3}+\cdots+b_m\lteval{T}{\vect{u}_m}</me>
-</p>
-                <p>Now define the vector <m>\vect{u}\in U</m> by
-<me>\vect{u}=\lincombo{b}{u}{m}</me>
-</p>
-                <p>Then
-<md><mrow>\lteval{T}{\vect{u}}&amp;=\lteval{T}{\lincombo{b}{u}{m}}</mrow><mrow>&amp;=b_1\lteval{T}{\vect{u}_1}+b_2\lteval{T}{\vect{u}_2}+b_3\lteval{T}{\vect{u}_3}+\cdots+b_m\lteval{T}{\vect{u}_m}&amp;&amp;<xref ref="theorem-LTLC" acro="LTLC" autoname="yes"/></mrow><mrow>&amp;=\vect{v}</mrow></md>
-</p>
-                <p>So, given any choice of a vector <m>\vect{v}\in V</m>, we can design an input <m>\vect{u}\in U</m> to produce <m>\vect{v}</m> as an output of <m>T</m>.  Thus, by <xref ref="definition-SLT" acro="SLT" autoname="yes"/>, <m>T</m> is surjective.</p>
             </proof>
         </theorem>
     </subsection>
     <subsection xml:id="subsection-SLT-SLTD" acro="SLTD">
         <title>Surjective Linear Transformations and Dimension</title>
         <theorem xml:id="theorem-SLTD" acro="SLTD">
+            <title>Surjective Linear Transformations and Dimension</title>
             <index>
                 <main>surjective linear transformations</main>
                 <sub>dimension</sub>
             </index>
-            <title>Surjective Linear Transformations and Dimension</title>
             <statement>
                 <p>Suppose that <m>\ltdefn{T}{U}{V}</m> is a surjective linear transformation.  Then <m>\dimension{U}\geq\dimension{V}</m>.</p>
             </statement>
@@ -753,15 +779,14 @@ is a spanning set for <m>V</m>.</p>
             </proof>
         </theorem>
         <example xml:id="example-NSDAT" acro="NSDAT">
+            <title>Not surjective by dimension, Archetype T</title>
             <index>
                 <main>surjective</main>
                 <sub>not, by dimension</sub>
             </index>
-            <title>Not surjective by dimension, Archetype T</title>
-            <p>The linear transformation in Archetype<nbsp/><xref ref="archetype-T" acro="T" autoname="no"/> is
-<me><!-- Archetype T, Part ltdefn -->\ltdefn{T}{P_4}{P_5},\quad
-\lteval{T}{p(x)}=(x-2)p(x)
-</me></p>
+            <!-- Archetype T, Part ltdefn -->
+            <p>The linear transformation in Archetype<nbsp/><xref ref="archetype-T" acro="T" autoname="no"/> is<me>\ltdefn{T}{P_4}{P_5},\quad
+            \lteval{T}{p(x)}=(x-2)p(x)</me></p>
             <p>Since <m>\dimension{P_4}=5\lt 6=\dimension{P_5}</m>, <m>T</m> cannot be surjective for then it would violate <xref ref="theorem-SLTD" acro="SLTD" autoname="yes"/>.</p>
         </example>
         <p>Notice that the previous example made no use of the actual formula defining the function.  Merely a comparison of the dimensions of the domain and codomain are enough to conclude that the linear transformation is not surjective.  Archetype<nbsp/><xref ref="archetype-O" acro="O" autoname="no"/> and Archetype<nbsp/><xref ref="archetype-P" acro="P" autoname="no"/> are two more examples of linear transformations that have <q>small</q> domains and <q>big</q> codomains, resulting in an inability to create all possible outputs and thus they are non-surjective linear transformations.</p>
@@ -770,19 +795,24 @@ is a spanning set for <m>V</m>.</p>
         <title>Composition of Surjective Linear Transformations</title>
         <p>In <xref ref="subsection-LT-NLTFO" acro="LT.NLTFO" autoname="yes"/> we saw how to combine linear transformations to build new linear transformations, specifically, how to build the composition of two linear transformations (<xref ref="definition-LTC" acro="LTC" autoname="yes"/>).  It will be useful later to know that the composition of surjective linear transformations is again surjective, so we prove that here.</p>
         <theorem xml:id="theorem-CSLTS" acro="CSLTS">
+            <title>Composition of Surjective Linear Transformations is Surjective</title>
             <index>
                 <main>composition</main>
                 <sub>surjective linear transformations</sub>
             </index>
-            <title>Composition of Surjective Linear Transformations is Surjective</title>
             <statement>
                 <p>Suppose that <m>\ltdefn{T}{U}{V}</m> and <m>\ltdefn{S}{V}{W}</m> are surjective linear transformations.  Then <m>\ltdefn{(\compose{S}{T})}{U}{W}</m> is a surjective linear transformation.</p>
             </statement>
             <proof>
                 <p>That the composition is a linear transformation was established in <xref ref="theorem-CLTLT" acro="CLTLT" autoname="yes"/>, so we need only establish that the composition is surjective.  Applying <xref ref="definition-SLT" acro="SLT" autoname="yes"/>, choose <m>\vect{w}\in W</m>.</p>
-                <p>Because <m>S</m> is surjective, there must be a vector <m>\vect{v}\in V</m>, such that <m>\lteval{S}{\vect{v}}=\vect{w}</m>.  With the existence of <m>\vect{v}</m> established, that <m>T</m> is surjective guarantees a vector <m>\vect{u}\in U</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  Now,
-<md><mrow>\lteval{\left(\compose{S}{T}\right)}{\vect{u}}&amp;=\lteval{S}{\lt{T}{\vect{u}}}&amp;&amp;<xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow><mrow>&amp;=\lteval{S}{\vect{v}}&amp;&amp;\text{Definition of<m>\vect{u}</m>}</mrow><mrow>&amp;=\vect{w}&amp;&amp;\text{Definition of<m>\vect{v}</m>}</mrow></md>
-</p>
+                <p>Because <m>S</m> is surjective, there must be a vector <m>\vect{v}\in V</m>, such that <m>\lteval{S}{\vect{v}}=\vect{w}</m>.  With the existence of <m>\vect{v}</m> established, that <m>T</m> is surjective guarantees a vector <m>\vect{u}\in U</m> such that <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  Now,<md>
+                    <mrow>\lteval{\left(\compose{S}{T}\right)}{\vect{u}}&amp;=\lteval{S}{\lt{T}{\vect{u}}}&amp;&amp;
+                        <xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow>
+                    <mrow>&amp;=\lteval{S}{\vect{v}}&amp;&amp;
+                        \text{Definition of }\vect{u}</mrow>
+                    <mrow>&amp;=\vect{w}&amp;&amp;
+                        \text{Definition of }\vect{v}</mrow>
+                </md></p>
                 <p>This establishes that any element of the codomain (<m>\vect{w}</m>) can be created by evaluating <m>\compose{S}{T}</m> with the right input (<m>\vect{u}</m>).  Thus, by <xref ref="definition-SLT" acro="SLT" autoname="yes"/>, <m>\compose{S}{T}</m> is surjective.</p>
             </proof>
         </theorem>
@@ -795,60 +825,56 @@ is a spanning set for <m>V</m>.</p>
             <p>As we mentioned in the last section, experimenting with Sage is a worthwhile complement to other methods of learning mathematics.  We have purposely avoided providing illustrations of deeper results, such as <xref ref="theorem-ILTB" acro="ILTB" autoname="yes"/> and  <xref ref="theorem-SLTB" acro="SLTB" autoname="yes"/>, which you should now be equipped to investigate yourself.  For completeness, and since composition will be very important in the next few sections, we will provide an illustration of <xref ref="theorem-CSLTS" acro="CSLTS" autoname="yes"/>.  Similar to what we did in the previous section, we choose dimensions suggested by <xref ref="theorem-SLTD" acro="SLTD" autoname="yes"/>, and then use randomly constructed matrices to form a pair of surjective linear transformations.</p>
             <sage xml:id="sagecell-CSLT-1">
                 <input>
-U = QQ^4
-V = QQ^3
-W = QQ^2
-A = matrix(QQ, 3, 4, [[ 3, -2,  8, -9],
-                      [-1,  3, -4, -1],
-                      [ 3,  2,  8,  3]])
-T = linear_transformation(U, V, A, side='right')
-T.is_surjective()
-</input>
+                U = QQ^4
+                V = QQ^3
+                W = QQ^2
+                A = matrix(QQ, 3, 4, [[ 3, -2,  8, -9],
+                                      [-1,  3, -4, -1],
+                                      [ 3,  2,  8,  3]])
+                T = linear_transformation(U, V, A, side='right')
+                T.is_surjective()
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <sage xml:id="sagecell-CSLT-2">
                 <input>
-B = matrix(QQ, 2, 3, [[ 8, -5, 3],
-                      [-2,  1, 1]])
-S = linear_transformation(V, W, B, side='right')
-S.is_surjective()
-</input>
+                B = matrix(QQ, 2, 3, [[ 8, -5, 3],
+                                      [-2,  1, 1]])
+                S = linear_transformation(V, W, B, side='right')
+                S.is_surjective()
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
             <sage xml:id="sagecell-CSLT-3">
                 <input>
-C = S*T
-C.is_surjective()
-</input>
+                C = S*T
+                C.is_surjective()
+                </input>
                 <output>
-True
-</output>
+                True
+                </output>
             </sage>
         </computation>
     </subsection>
-    <!--   End of  slt.tex -->
     <exercises>
         <title>Reading Questions</title>
         <exercise>
             <statement>
-                <p>Suppose <m>\ltdefn{T}{\complex{5}}{\complex{8}}</m> is a linear transformation.  Why is <m>T</m> not surjective?
-</p>
+                <p>Suppose <m>\ltdefn{T}{\complex{5}}{\complex{8}}</m> is a linear transformation.  Why is <m>T</m> not surjective?</p>
             </statement>
         </exercise>
         <exercise>
             <statement>
-                <p>What is the relationship between a surjective linear transformation and its range?
-</p>
+                <p>What is the relationship between a surjective linear transformation and its range?</p>
             </statement>
         </exercise>
         <exercise>
             <statement>
-                <p>There are many similarities and differences between injective and surjective linear transformations.  Compare and contrast these two different types of linear transformations.  (This means going well beyond just stating their definitions.)
-</p>
+                <p>There are many similarities and differences between injective and surjective linear transformations.  Compare and contrast these two different types of linear transformations.  (This means going well beyond just stating their definitions.)</p>
             </statement>
         </exercise>
     </exercises>
@@ -857,290 +883,225 @@ True
         <exercise number="C10" xml:id="exercise-SLT-C10">
             <statement>
                 <p>Each archetype below is a linear transformation.  Compute the range for each.</p>
-                <p>
-Archetype<nbsp/><xref ref="archetype-M" acro="M" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-N" acro="N" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-O" acro="O" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-P" acro="P" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-Q" acro="Q" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-R" acro="R" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-S" acro="S" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-T" acro="T" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-U" acro="U" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-V" acro="V" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-W" acro="W" autoname="no"/>,
-Archetype<nbsp/><xref ref="archetype-X" acro="X" autoname="no"/>
-<!-- % TODO:  Check competeness when Y,Z appear. -->
-</p>
+                <p>Archetype<nbsp/><xref ref="archetype-M" acro="M" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-N" acro="N" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-O" acro="O" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-P" acro="P" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-Q" acro="Q" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-R" acro="R" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-S" acro="S" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-T" acro="T" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-U" acro="U" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-V" acro="V" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-W" acro="W" autoname="no"/>,
+                Archetype<nbsp/><xref ref="archetype-X" acro="X" autoname="no"/>
+                <!-- % TODO:  Check competeness when Y,Z appear. --></p>
             </statement>
         </exercise>
         <exercise number="C20" xml:id="exercise-SLT-C20">
             <statement>
-                <p><xref ref="example-SAR" acro="SAR" autoname="yes"/> concludes with an expression for a vector <m>\vect{u}\in\complex{5}</m> that we believe will create the vector <m>\vect{v}\in\complex{5}</m> when used to evaluate <m>T</m>.  That is, <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  Verify this assertion by actually evaluating <m>T</m> with <m>\vect{u}</m>.  If you do not have the patience to push around all these symbols, try choosing a numerical instance of <m>\vect{v}</m>, compute <m>\vect{u}</m>, and then compute <m>\lteval{T}{\vect{u}}</m>, which should result in <m>\vect{v}</m>.
-</p>
+                <p><xref ref="example-SAR" acro="SAR" autoname="yes"/> concludes with an expression for a vector <m>\vect{u}\in\complex{5}</m> that we believe will create the vector <m>\vect{v}\in\complex{5}</m> when used to evaluate <m>T</m>.  That is, <m>\lteval{T}{\vect{u}}=\vect{v}</m>.  Verify this assertion by actually evaluating <m>T</m> with <m>\vect{u}</m>.  If you do not have the patience to push around all these symbols, try choosing a numerical instance of <m>\vect{v}</m>, compute <m>\vect{u}</m>, and then compute <m>\lteval{T}{\vect{u}}</m>, which should result in <m>\vect{v}</m>.</p>
             </statement>
         </exercise>
         <exercise number="C22" xml:id="exercise-SLT-C22">
             <statement>
-                <p>The linear transformation <m>\ltdefn{S}{\complex{4}}{\complex{3}}</m> is not surjective.  Find an output <m>\vect{w}\in\complex{3}</m> that has an empty pre-image (that is <m>\preimage{S}{\vect{w}}=\emptyset</m>.)
-<me>\lteval{S}{\colvector{x_1\\x_2\\x_3\\x_4}}=
-\colvector{
-2x_1+x_2+3x_3-4x_4\\
-x_1+3x_2+4x_3+3x_4\\
--x_1+2x_2+x_3+7x_4
-}</me>
-</p>
+                <p>The linear transformation <m>\ltdefn{S}{\complex{4}}{\complex{3}}</m> is not surjective.  Find an output <m>\vect{w}\in\complex{3}</m> that has an empty pre-image (that is <m>\preimage{S}{\vect{w}}=\emptyset</m>.)<me>\lteval{S}{\colvector{x_1\\x_2\\x_3\\x_4}}=
+                \colvector{
+                2x_1+x_2+3x_3-4x_4\\
+                x_1+3x_2+4x_3+3x_4\\
+                -x_1+2x_2+x_3+7x_4
+                }</me></p>
             </statement>
             <solution xml:id="solution-SLT-C22">
                 <p>To find an element of <m>\complex{3}</m> with an empty pre-image, we will compute the range of the linear transformation <m>\rng{S}</m> and then find an element outside of this set.</p>
-                <p>
-By <xref ref="theorem-SSRLT" acro="SSRLT" autoname="yes"/> we can evaluate <m>S</m> with the elements of a spanning set of the domain and create a spanning set for the range.
-<md><mrow>\lteval{S}{\colvector{1\\0\\0\\0}}&amp;=\colvector{2\\1\\-1}
-&amp;
-\lteval{S}{\colvector{0\\1\\0\\0}}&amp;=\colvector{1\\3\\2}
-&amp;
-\lteval{S}{\colvector{0\\0\\1\\0}}&amp;=\colvector{3\\4\\1}
-&amp;
-\lteval{S}{\colvector{0\\0\\0\\1}}&amp;=\colvector{-4\\3\\7}</mrow></md>
-So
-<me>\rng{S}=\spn{\set{
-\colvector{2\\1\\-1},\,
-\colvector{1\\3\\2},\,
-\colvector{3\\4\\1},\,
-\colvector{-4\\3\\7}
-}}</me>
-This spanning set is obviously linearly dependent, so we can reduce it to a basis for <m>\rng{S}</m> using <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>, where the elements of the spanning set are placed as the rows of a matrix.  The result is that
-<me>\rng{S}=\spn{\set{
-\colvector{1\\0\\-1},\,
-\colvector{0\\1\\1}
-}}</me>
-Therefore, the unique vector in <m>\rng{S}</m> with a first slot equal to 6 and a second slot equal to 15 will be the linear combination
-<me>6\colvector{1\\0\\-1}+15\colvector{0\\1\\1}=\colvector{6\\15\\9}</me>
-So, any vector with first two components equal to 6 and 15, but with a third component different from 9, such as
-<me>\vect{w}=\colvector{6\\15\\-63}</me>
-will not be an element of the range of <m>S</m> and will therefore have an empty pre-image.
-Another strategy on this problem is to <em>guess</em>.  Almost any vector will lie outside the range of <m>T</m>, you have to be unlucky to randomly choose an element of the range.  This is because the codomain has dimension 3, while the range is <q>much smaller</q> at a dimension of 2.  You still need to check that your guess lies outside of the range, which generally will involve solving a system of equations that turns out to be inconsistent.
-</p>
+                <p>By <xref ref="theorem-SSRLT" acro="SSRLT" autoname="yes"/> we can evaluate <m>S</m> with the elements of a spanning set of the domain and create a spanning set for the range.<md>
+                    <mrow>\lteval{S}{\colvector{1\\0\\0\\0}}&amp;=\colvector{2\\1\\-1}
+                    &amp;
+                    \lteval{S}{\colvector{0\\1\\0\\0}}&amp;=\colvector{1\\3\\2}
+                    &amp;
+                    \lteval{S}{\colvector{0\\0\\1\\0}}&amp;=\colvector{3\\4\\1}
+                    &amp;
+                    \lteval{S}{\colvector{0\\0\\0\\1}}&amp;=\colvector{-4\\3\\7}</mrow>
+                </md>So<me>\rng{S}=\spn{\set{
+                \colvector{2\\1\\-1},\,
+                \colvector{1\\3\\2},\,
+                \colvector{3\\4\\1},\,
+                \colvector{-4\\3\\7}
+                }}</me>This spanning set is obviously linearly dependent, so we can reduce it to a basis for <m>\rng{S}</m> using <xref ref="theorem-BRS" acro="BRS" autoname="yes"/>, where the elements of the spanning set are placed as the rows of a matrix.  The result is that<me>\rng{S}=\spn{\set{
+                \colvector{1\\0\\-1},\,
+                \colvector{0\\1\\1}
+                }}</me>Therefore, the unique vector in <m>\rng{S}</m> with a first slot equal to 6 and a second slot equal to 15 will be the linear combination<me>6\colvector{1\\0\\-1}+15\colvector{0\\1\\1}=\colvector{6\\15\\9}</me>So, any vector with first two components equal to 6 and 15, but with a third component different from 9, such as<me>\vect{w}=\colvector{6\\15\\-63}</me>will not be an element of the range of <m>S</m> and will therefore have an empty pre-image.</p>
+                <p>Another strategy on this problem is to <em>guess</em>.  Almost any vector will lie outside the range of <m>T</m>, you have to be unlucky to randomly choose an element of the range.  This is because the codomain has dimension 3, while the range is <q>much smaller</q> at a dimension of 2.  You still need to check that your guess lies outside of the range, which generally will involve solving a system of equations that turns out to be inconsistent.</p>
             </solution>
         </exercise>
         <exercise number="C23" xml:id="exercise-SLT-C23">
             <statement contributor="chrisblack">
-                <p>Determine whether or not the following linear transformation <m>\ltdefn{T}{\complex{5}}{P_3}</m> is surjective:
-<md><mrow>\lteval{T}{\colvector{a\\b\\c\\d\\e}} &amp;= a + (b + c)x + (c + d)x^2 + (d + e)x^3</mrow></md>
-</p>
+                <p>Determine whether or not the following linear transformation <m>\ltdefn{T}{\complex{5}}{P_3}</m> is surjective:<md>
+                <mrow>\lteval{T}{\colvector{a\\b\\c\\d\\e}} &amp;= a + (b + c)x + (c + d)x^2 + (d + e)x^3</mrow>
+            </md></p>
             </statement>
             <solution xml:id="solution-SLT-C23" contributor="chrisblack">
-                <p>The linear transformation <m>T</m> is surjective if for any <m>p(x) = \alpha + \beta x + \gamma x^2 + \delta x^3</m>, there is a vector <m>\vect{u} = \colvector{a\\b\\c\\d\\e}</m> in <m>\complex{5}</m> so that <m>\lteval{T}{\vect{u}} = p(x)</m>.  We need to be able to solve the system
-<md><mrow>a &amp;=\alpha</mrow><mrow>b+c &amp;= \beta</mrow><mrow>c + d &amp;= \gamma</mrow><mrow>d + e &amp;= \delta</mrow></md>
-This system has an infinite number of solutions, one of which is <m>a = \alpha</m>, <m>b = \beta</m>, <m>c = 0</m>, <m>d = \gamma</m> and <m>e = \delta - \gamma</m>, so that
-<md><mrow>\lteval{T}{\colvector{\alpha\\ \beta\\0\\ \gamma \\ \delta - \gamma}}
-&amp;= \alpha + (\beta + 0)x + (0 + \gamma) x^2 + (\gamma + (\delta - \gamma)) x^3</mrow><mrow>&amp;= \alpha + \beta x + \gamma x^2 + \delta x^3</mrow><mrow>&amp;= p(x).</mrow></md>
-Thus, <m>T</m> is surjective, since for every vector <m>\vect{v} \in P_3</m>, there exists a vector <m>\vect{u} \in \complex{5}</m> so that <m>\lteval{T}{\vect{u}} = \vect{v}</m>.
-</p>
+                <p>The linear transformation <m>T</m> is surjective if for any <m>p(x) = \alpha + \beta x + \gamma x^2 + \delta x^3</m>, there is a vector <m>\vect{u} = \colvector{a\\b\\c\\d\\e}</m> in <m>\complex{5}</m> so that <m>\lteval{T}{\vect{u}} = p(x)</m>.  We need to be able to solve the system<md>
+                    <mrow>a &amp;=\alpha</mrow>
+                    <mrow>b+c &amp;= \beta</mrow>
+                    <mrow>c + d &amp;= \gamma</mrow>
+                    <mrow>d + e &amp;= \delta</mrow>
+                </md>This system has an infinite number of solutions, one of which is <m>a = \alpha</m>, <m>b = \beta</m>, <m>c = 0</m>, <m>d = \gamma</m> and <m>e = \delta - \gamma</m>, so that<md>
+                    <mrow>\lteval{T}{\colvector{\alpha\\ \beta\\0\\ \gamma \\ \delta - \gamma}}
+                    &amp;= \alpha + (\beta + 0)x + (0 + \gamma) x^2 + (\gamma + (\delta - \gamma)) x^3</mrow>
+                    <mrow>&amp;= \alpha + \beta x + \gamma x^2 + \delta x^3</mrow>
+                    <mrow>&amp;= p(x).</mrow>
+                </md>Thus, <m>T</m> is surjective, since for every vector <m>\vect{v} \in P_3</m>, there exists a vector <m>\vect{u} \in \complex{5}</m> so that <m>\lteval{T}{\vect{u}} = \vect{v}</m>.</p>
             </solution>
         </exercise>
         <exercise number="C24" xml:id="exercise-SLT-C24">
             <statement contributor="chrisblack">
-                <p>Determine whether or not the linear transformation <m>\ltdefn{T}{P_3}{\complex{5}}</m> below is surjective:
-<md><mrow>\lteval{T}{a + bx + cx^2 + dx^3} &amp;= \colvector{a + b \\ b + c \\ c + d \\ a + c\\ b + d}.</mrow></md>
-<!-- \[ T(\] -->
-</p>
+                <p>Determine whether or not the linear transformation <m>\ltdefn{T}{P_3}{\complex{5}}</m> below is surjective:<md>
+                    <mrow>\lteval{T}{a + bx + cx^2 + dx^3} &amp;= \colvector{a + b \\ b + c \\ c + d \\ a + c\\ b + d}.</mrow>
+                </md></p>
             </statement>
             <solution xml:id="solution-SLT-C24" contributor="chrisblack">
-                <p>According to <xref ref="theorem-SLTD" acro="SLTD" autoname="yes"/>, if a linear transformation <m>\ltdefn{T}{U}{V}</m> is surjective, then <m>\dimension{U}\ge\dimension{V}</m>.  In this example, <m>U = P_3</m> has dimension 4, and <m>V = \complex{5}</m> has dimension 5, so <m>T</m> cannot be surjective.  (There is no way <m>T</m> can <q>expand</q> the domain <m>P_3</m> to fill the codomain <m>\complex{5}</m>.)
-</p>
+                <p>According to <xref ref="theorem-SLTD" acro="SLTD" autoname="yes"/>, if a linear transformation <m>\ltdefn{T}{U}{V}</m> is surjective, then <m>\dimension{U}\ge\dimension{V}</m>.  In this example, <m>U = P_3</m> has dimension 4, and <m>V = \complex{5}</m> has dimension 5, so <m>T</m> cannot be surjective.  (There is no way <m>T</m> can <q>expand</q> the domain <m>P_3</m> to fill the codomain <m>\complex{5}</m>.)</p>
             </solution>
         </exercise>
         <exercise number="C25" xml:id="exercise-SLT-C25">
             <statement>
-                <p>Define the linear transformation
-<me>\ltdefn{T}{\complex{3}}{\complex{2}},\quad
-\lteval{T}{\colvector{x_1\\x_2\\x_3}}=\colvector{2x_1-x_2+5x_3\\-4x_1+2x_2-10x_3}</me>
-Find a basis for the range of <m>T</m>, <m>\rng{T}</m>.  Is <m>T</m> surjective?
-</p>
+                <p>Define the linear transformation<me>\ltdefn{T}{\complex{3}}{\complex{2}},\quad
+                \lteval{T}{\colvector{x_1\\x_2\\x_3}}=\colvector{2x_1-x_2+5x_3\\-4x_1+2x_2-10x_3}</me>Find a basis for the range of <m>T</m>, <m>\rng{T}</m>.  Is <m>T</m> surjective?</p>
             </statement>
             <solution xml:id="solution-SLT-C25">
-                <p>To find the range of <m>T</m>, apply <m>T</m> to the elements of a spanning set for <m>\complex{3}</m> as suggested in <xref ref="theorem-SSRLT" acro="SSRLT" autoname="yes"/>.  We will use the standard basis vectors (<xref ref="theorem-SUVB" acro="SUVB" autoname="yes"/>).
-<me>\rng{T}=
-\spn{\set{\lteval{T}{\vect{e}_1},\,\lteval{T}{\vect{e}_2},\,\lteval{T}{\vect{e}_3}}}=
-\spn{\set{\colvector{2\\-4},\,\colvector{-1\\2},\,\colvector{5\\-10}}}</me>
-Each of these vectors is a scalar multiple of the others, so we can toss two of them in reducing the spanning set to a linearly independent set (or be more careful and apply <xref ref="theorem-BCS" acro="BCS" autoname="yes"/> on a matrix with these three vectors as columns).  The result is the basis of the range,
-<me>\set{\colvector{1\\-2}}</me>
-</p>
-                <p>
-Since <m>\rng{T}</m> has dimension <m>1</m>, and the codomain has dimension <m>2</m>, they cannot be equal.  So <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/> says <m>T</m> is not surjective.
-</p>
+                <p>To find the range of <m>T</m>, apply <m>T</m> to the elements of a spanning set for <m>\complex{3}</m> as suggested in <xref ref="theorem-SSRLT" acro="SSRLT" autoname="yes"/>.  We will use the standard basis vectors (<xref ref="theorem-SUVB" acro="SUVB" autoname="yes"/>).<me>\rng{T}=
+                \spn{\set{\lteval{T}{\vect{e}_1},\,\lteval{T}{\vect{e}_2},\,\lteval{T}{\vect{e}_3}}}=
+                \spn{\set{\colvector{2\\-4},\,\colvector{-1\\2},\,\colvector{5\\-10}}}</me>Each of these vectors is a scalar multiple of the others, so we can toss two of them in reducing the spanning set to a linearly independent set (or be more careful and apply <xref ref="theorem-BCS" acro="BCS" autoname="yes"/> on a matrix with these three vectors as columns).  The result is the basis of the range,<me>\set{\colvector{1\\-2}}</me></p>
+                <p>Since <m>\rng{T}</m> has dimension <m>1</m>, and the codomain has dimension <m>2</m>, they cannot be equal.  So <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/> says <m>T</m> is not surjective.</p>
             </solution>
         </exercise>
         <exercise number="C26" xml:id="exercise-SLT-C26">
             <statement contributor="chrisblack">
-                <p>Let <m>\ltdefn{T}{\complex{3}}{\complex{3}} </m> be given by
-<m>\lteval{T}{\colvector{a\\b\\c}} = \colvector{a + b + 2c\\ 2c\\ a + b + c}</m>.  Find a basis of <m>\rng{T}</m>.  Is <m>T</m> surjective?
-</p>
+                <p>Let <m>\ltdefn{T}{\complex{3}}{\complex{3}} </m> be given by <m>\lteval{T}{\colvector{a\\b\\c}} = \colvector{a + b + 2c\\ 2c\\ a + b + c}</m>.  Find a basis of <m>\rng{T}</m>.  Is <m>T</m> surjective?</p>
             </statement>
             <solution xml:id="solution-SLT-C26" contributor="chrisblack">
-                <p>The range of <m>T</m> is
-<md><mrow>\rng{T}
-&amp;= \setparts{\colvector{a + b + 2c\\ 2c\\a + b + c}}{a,b,c\in\complexes}</mrow><mrow>&amp;= \setparts{a\colvector{1\\0\\1} + b \colvector{1\\0\\1}+ c\colvector{2\\2\\1}}{a,b,c\in\complexes}</mrow><mrow>&amp;= \spn{\set{\colvector{1\\0\\1},\colvector{2\\2\\1}}}</mrow></md>
-Since the vectors <m>\colvector{1\\0\\1}</m> and <m>\colvector{2\\2\\1}</m> are linearly independent (why?), a basis of <m>\rng{T}</m> is <m>\set{\colvector{1\\0\\1},\colvector{2\\2\\1}}</m>.  Since the dimension of the range is 2 and the dimension of the codomain is 3, <m>T</m> is not surjective.
-</p>
+                <p>The range of <m>T</m> is<md>
+                <mrow>\rng{T}
+                &amp;= \setparts{\colvector{a + b + 2c\\ 2c\\a + b + c}}{a,b,c\in\complexes}</mrow>
+                <mrow>&amp;= \setparts{a\colvector{1\\0\\1} + b \colvector{1\\0\\1}+ c\colvector{2\\2\\1}}{a,b,c\in\complexes}</mrow>
+                <mrow>&amp;= \spn{\set{\colvector{1\\0\\1},\colvector{2\\2\\1}}}</mrow>
+            </md>Since the vectors <m>\colvector{1\\0\\1}</m> and <m>\colvector{2\\2\\1}</m> are linearly independent (why?), a basis of <m>\rng{T}</m> is <m>\set{\colvector{1\\0\\1},\colvector{2\\2\\1}}</m>.  Since the dimension of the range is 2 and the dimension of the codomain is 3, <m>T</m> is not surjective.</p>
             </solution>
         </exercise>
         <exercise number="C27" xml:id="exercise-SLT-C27">
             <statement contributor="chrisblack">
-                <p>Let <m>\ltdefn{T}{\complex{3}}{\complex{4}}</m> be given by
-<m>\lteval{T}{\colvector{a\\b\\c}} = \colvector{a + b -c\\ a - b + c\\ -a + b + c\\a + b + c}</m>.
-Find a basis of <m>\rng{T}</m>.  Is <m>T</m> surjective?
-</p>
+                <p>Let <m>\ltdefn{T}{\complex{3}}{\complex{4}}</m> be given by <m>\lteval{T}{\colvector{a\\b\\c}} = \colvector{a + b -c\\ a - b + c\\ -a + b + c\\a + b + c}</m>. Find a basis of <m>\rng{T}</m>.  Is <m>T</m> surjective?</p>
             </statement>
             <solution xml:id="solution-SLT-C27" contributor="chrisblack">
-                <p>The range of <m>T</m> is
-<md><mrow>\rng{T}
-&amp;= \setparts{\colvector{a + b -c \\ a - b + c\\ -a + b + c\\a + b + c}}{a,b,c\in\complexes}</mrow><mrow>&amp;= \setparts{a\colvector{1\\1\\-1\\1} + b \colvector{1\\-1\\1\\1} + c\colvector{-1\\1\\1\\1}}{a,b,c\in\complexes}</mrow><mrow>&amp;= \spn{\set{\colvector{1\\1\\-1\\1},\colvector{1\\-1\\1\\1}, \colvector{-1\\1\\1\\1}}}</mrow></md>
-By row reduction (not shown), we can see that the set
-<md><mrow>\set{
-\colvector{1\\1\\-1\\1},\,
-\colvector{1\\-1\\1\\1},\,
-\colvector{-1\\1\\1\\1}
-}</mrow></md>
-are linearly independent, so is a basis of <m>\rng{T}</m>.  Since the dimension of the range is 3 and the dimension of the codomain is 4, <m>T</m> is not surjective.  (We should have anticipated that <m>T</m> was not surjective since the dimension of the domain is smaller than the dimension of the codomain.)
-</p>
+                <p>The range of <m>T</m> is<md>
+                    <mrow>\rng{T}
+                    &amp;= \setparts{\colvector{a + b -c \\ a - b + c\\ -a + b + c\\a + b + c}}{a,b,c\in\complexes}</mrow>
+                    <mrow>&amp;= \setparts{a\colvector{1\\1\\-1\\1} + b \colvector{1\\-1\\1\\1} + c\colvector{-1\\1\\1\\1}}{a,b,c\in\complexes}</mrow>
+                    <mrow>&amp;= \spn{\set{\colvector{1\\1\\-1\\1},\colvector{1\\-1\\1\\1}, \colvector{-1\\1\\1\\1}}}</mrow>
+                </md>By row reduction (not shown), we can see that the set<md>
+                    <mrow>\set{
+                    \colvector{1\\1\\-1\\1},\,
+                    \colvector{1\\-1\\1\\1},\,
+                    \colvector{-1\\1\\1\\1}
+                    }</mrow>
+                </md>are linearly independent, so is a basis of <m>\rng{T}</m>.  Since the dimension of the range is 3 and the dimension of the codomain is 4, <m>T</m> is not surjective.  (We should have anticipated that <m>T</m> was not surjective since the dimension of the domain is smaller than the dimension of the codomain.)</p>
             </solution>
         </exercise>
         <exercise number="C28" xml:id="exercise-SLT-C28">
             <statement contributor="chrisblack">
-                <p>Let <m>\ltdefn{T}{\complex{4}}{ M_{22}}</m> be given by
-<m>\lteval{T}{\colvector{a\\b\\c\\d}} = \begin{bmatrix} a + b &amp; a + b + c\\ a + b + c &amp; a + d\end{bmatrix}</m>.
- Find a basis of <m>\rng{T}</m>.
-Is <m>T</m> surjective?
-</p>
+                <p>Let <m>\ltdefn{T}{\complex{4}}{ M_{22}}</m> be given by <m>\lteval{T}{\colvector{a\\b\\c\\d}} = \begin{bmatrix} a + b &amp; a + b + c\\ a + b + c &amp; a + d\end{bmatrix}</m>. Find a basis of <m>\rng{T}</m>. Is <m>T</m> surjective?</p>
             </statement>
             <solution xml:id="solution-SLT-C28" contributor="chrisblack">
-                <p>The range of <m>T</m> is
-<md><mrow>\rng{T}
-&amp;= \setparts{
-\begin{bmatrix}
-a + b &amp; a + b + c\\
-a + b + c&amp; a + d
-\end{bmatrix}}{a,b,c,d\in\complexes}\\
-&amp;= \setparts{
-a\begin{bmatrix} 1 &amp; 1 \\1 &amp; 1 \end{bmatrix} +
-b\begin{bmatrix} 1 &amp; 1 \\1 &amp; 0 \end{bmatrix} +
-c\begin{bmatrix} 0 &amp; 1 \\1 &amp; 0 \end{bmatrix} +
-d\begin{bmatrix} 0 &amp; 0 \\0 &amp; 1 \end{bmatrix}
-}{a,b,c,d\in\complexes}\\
-&amp;=\spn{\set{
-\begin{bmatrix} 1 &amp; 1 \\1 &amp; 1 \end{bmatrix},
-\begin{bmatrix} 1 &amp; 1 \\1 &amp; 0 \end{bmatrix},
-\begin{bmatrix} 0 &amp; 1 \\1 &amp; 0 \end{bmatrix},
-\begin{bmatrix} 0 &amp; 0 \\0 &amp; 1 \end{bmatrix}}}\\
-&amp;=\spn{\set{
-\begin{bmatrix} 1 &amp; 1 \\1 &amp; 0 \end{bmatrix},
-\begin{bmatrix} 0 &amp; 1 \\1 &amp; 0 \end{bmatrix},
-\begin{bmatrix} 0 &amp; 0 \\0 &amp; 1 \end{bmatrix}
-}}.</mrow></md>
-Can you explain the last equality above?</p>
-                <p>
-These three matrices are linearly independent, so a basis of <m>\rng{T}</m> is
-<me>\set{
-\begin{bmatrix} 1 &amp; 1 \\1 &amp; 0 \end{bmatrix},
-\begin{bmatrix} 0 &amp; 1 \\1 &amp; 0 \end{bmatrix},
-\begin{bmatrix} 0 &amp; 0 \\0 &amp; 1 \end{bmatrix}}.</me>
-Thus, <m>T</m> is not surjective, since the range has dimension 3 which is shy of <m>\dimension{M_{22}}=4</m>.
-(Notice that the range is actually the subspace of symmetric <m>2 \times 2</m> matrices in <m>M_{22}</m>.)
-</p>
+                <p>The range of <m>T</m> is<md>
+                    <mrow>\rng{T}
+                    &amp;= \setparts{
+                    \begin{bmatrix}
+                    a + b &amp; a + b + c\\
+                    a + b + c&amp; a + d
+                    \end{bmatrix}}{a,b,c,d\in\complexes}\\
+                    &amp;= \setparts{
+                    a\begin{bmatrix} 1 &amp; 1 \\1 &amp; 1 \end{bmatrix} +
+                    b\begin{bmatrix} 1 &amp; 1 \\1 &amp; 0 \end{bmatrix} +
+                    c\begin{bmatrix} 0 &amp; 1 \\1 &amp; 0 \end{bmatrix} +
+                    d\begin{bmatrix} 0 &amp; 0 \\0 &amp; 1 \end{bmatrix}
+                    }{a,b,c,d\in\complexes}\\
+                    &amp;=\spn{\set{
+                    \begin{bmatrix} 1 &amp; 1 \\1 &amp; 1 \end{bmatrix},
+                    \begin{bmatrix} 1 &amp; 1 \\1 &amp; 0 \end{bmatrix},
+                    \begin{bmatrix} 0 &amp; 1 \\1 &amp; 0 \end{bmatrix},
+                    \begin{bmatrix} 0 &amp; 0 \\0 &amp; 1 \end{bmatrix}}}\\
+                    &amp;=\spn{\set{
+                    \begin{bmatrix} 1 &amp; 1 \\1 &amp; 0 \end{bmatrix},
+                    \begin{bmatrix} 0 &amp; 1 \\1 &amp; 0 \end{bmatrix},
+                    \begin{bmatrix} 0 &amp; 0 \\0 &amp; 1 \end{bmatrix}
+                    }}.</mrow>
+                </md>Can you explain the last equality above?</p>
+                <p>These three matrices are linearly independent, so a basis of <m>\rng{T}</m> is<me>\set{
+                \begin{bmatrix} 1 &amp; 1 \\1 &amp; 0 \end{bmatrix},
+                \begin{bmatrix} 0 &amp; 1 \\1 &amp; 0 \end{bmatrix},
+                \begin{bmatrix} 0 &amp; 0 \\0 &amp; 1 \end{bmatrix}}.</me>Thus, <m>T</m> is not surjective, since the range has dimension 3 which is shy of <m>\dimension{M_{22}}=4</m>.  (Notice that the range is actually the subspace of symmetric <m>2 \times 2</m> matrices in <m>M_{22}</m>.)</p>
             </solution>
         </exercise>
         <exercise number="C29" xml:id="exercise-SLT-C29">
             <statement contributor="chrisblack">
-                <p>Let <m>\ltdefn{T}{P_2}{P_4}</m> be given by
-<m>\lteval{T}{p(x)} = x^2 p(x)</m>.
-Find a basis of <m>\rng{T}</m>.
-Is <m>T</m> surjective?
-</p>
+                <p>Let <m>\ltdefn{T}{P_2}{P_4}</m> be given by <m>\lteval{T}{p(x)} = x^2 p(x)</m>. Find a basis of <m>\rng{T}</m>. Is <m>T</m> surjective?</p>
             </statement>
             <solution xml:id="solution-SLT-C29" contributor="chrisblack">
                 <p>If we transform the basis of <m>P_2</m>, then <xref ref="theorem-SSRLT" acro="SSRLT" autoname="yes"/> guarantees we will have a spanning set of <m>\rng{T}</m>.  A basis of <m>P_2</m> is <m>\set{1, x, x^2}</m>.  If we transform the elements of this set, we get the set <m>\set{x^2, x^3, x^4}</m> which is a spanning set for <m>\rng{T}</m>.  These three vectors are linearly independent, so <m>\set{x^2, x^3, x^4}</m> is a basis of <m>\rng{T}</m>.</p>
-                <p>
-
-Since <m>\rng{T}</m> has dimension <m>3</m>, and the codomain has dimension <m>5</m>, they cannot be equal.  So <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/> says <m>T</m> is not surjective.</p>
+                <p>Since <m>\rng{T}</m> has dimension <m>3</m>, and the codomain has dimension <m>5</m>, they cannot be equal.  So <xref ref="theorem-RSLT" acro="RSLT" autoname="yes"/> says <m>T</m> is not surjective.</p>
             </solution>
         </exercise>
         <exercise number="C30" xml:id="exercise-SLT-C30">
             <statement contributor="chrisblack">
-                <p>Let <m>\ltdefn{T}{P_4}{P_3}</m> be given by
-<m>\lteval{T}{p(x)} = p^\prime(x)</m>, where <m>p^\prime(x)</m> is the derivative.
-Find a basis of <m>\rng{T}</m>.
-Is <m>T</m> surjective?
-</p>
+                <p>Let <m>\ltdefn{T}{P_4}{P_3}</m> be given by <m>\lteval{T}{p(x)} = p^\prime(x)</m>, where <m>p^\prime(x)</m> is the derivative. Find a basis of <m>\rng{T}</m>. Is <m>T</m> surjective?</p>
             </statement>
             <solution xml:id="solution-SLT-C30" contributor="chrisblack">
-                <p>If we transform the basis of <m>P_4</m>, then <xref ref="theorem-SSRLT" acro="SSRLT" autoname="yes"/> guarantees we will have a spanning set of <m>\rng{T}</m>.  A basis of <m>P_4</m> is <m>\set{1, x, x^2, x^3, x^4}</m>.  If we transform the elements of this set, we get the set <m>\set{0, 1, 2x, 3x^2, 4x^3}</m> which is a spanning set for <m>\rng{T}</m>.  Reducing this to a linearly independent set, we find that <m>\{1, 2x, 3x^2, 4x^3\}</m> is a basis of <m>\rng{T}</m>.  Since <m>\rng{T}</m> and <m>P_3</m> both have dimension 4, <m>T</m> is surjective.
-</p>
+                <p>If we transform the basis of <m>P_4</m>, then <xref ref="theorem-SSRLT" acro="SSRLT" autoname="yes"/> guarantees we will have a spanning set of <m>\rng{T}</m>.  A basis of <m>P_4</m> is <m>\set{1, x, x^2, x^3, x^4}</m>.  If we transform the elements of this set, we get the set <m>\set{0, 1, 2x, 3x^2, 4x^3}</m> which is a spanning set for <m>\rng{T}</m>.  Reducing this to a linearly independent set, we find that <m>\{1, 2x, 3x^2, 4x^3\}</m> is a basis of <m>\rng{T}</m>.  Since <m>\rng{T}</m> and <m>P_3</m> both have dimension 4, <m>T</m> is surjective.</p>
             </solution>
         </exercise>
         <exercise number="C40" xml:id="exercise-SLT-C40">
             <statement>
-                <p>Show that the linear transformation <m>T</m> is not surjective by finding an element of the codomain, <m>\vect{v}</m>,  such that there is  no vector <m>\vect{u}</m> with <m>\lteval{T}{\vect{u}}=\vect{v}</m>.
-<me>\ltdefn{T}{\complex{3}}{\complex{3}},\quad
-\lteval{T}{\colvector{a\\b\\c}}=
-\colvector{2a+3b-c\\2b-2c\\a-b+2c}</me>
-</p>
+                <p>Show that the linear transformation <m>T</m> is not surjective by finding an element of the codomain, <m>\vect{v}</m>,  such that there is  no vector <m>\vect{u}</m> with <m>\lteval{T}{\vect{u}}=\vect{v}</m>.<me>\ltdefn{T}{\complex{3}}{\complex{3}},\quad
+                \lteval{T}{\colvector{a\\b\\c}}=
+                \colvector{2a+3b-c\\2b-2c\\a-b+2c}</me></p>
             </statement>
             <solution xml:id="solution-SLT-C40">
-                <p>We wish to find an output vector <m>\vect{v}</m> that has no associated input.  This is the same as requiring that there is no solution to the equality
-<me>\vect{v}=\lteval{T}{\colvector{a\\b\\c}}=\colvector{2a+3b-c\\2b-2c\\a-b+2c}
-=a\colvector{2\\0\\1}+b\colvector{3\\2\\-1}+c\colvector{-1\\-2\\2}</me>
-In other words, we would like to find an element of <m>\complex{3}</m> not in the set
-<me>Y=\spn{\set{\colvector{2\\0\\1},\,\colvector{3\\2\\-1},\,\colvector{-1\\-2\\2}}}</me>
-If we make these vectors the rows of a matrix, and row-reduce, <xref ref="theorem-BRS" acro="BRS" autoname="yes"/> provides an alternate description of <m>Y</m>,
-<me>Y=\spn{\set{\colvector{2\\0\\1},\,\colvector{0\\4\\-5}}}</me>
-If we add these vectors together, and then change the third component of the result, we will create a vector that lies outside of <m>Y</m>, say <m>\vect{v}=\colvector{2\\4\\9}</m>.
-</p>
+                <p>We wish to find an output vector <m>\vect{v}</m> that has no associated input.  This is the same as requiring that there is no solution to the equality<me>\vect{v}=\lteval{T}{\colvector{a\\b\\c}}=\colvector{2a+3b-c\\2b-2c\\a-b+2c}
+                =a\colvector{2\\0\\1}+b\colvector{3\\2\\-1}+c\colvector{-1\\-2\\2}</me>In other words, we would like to find an element of <m>\complex{3}</m> not in the set<me>Y=\spn{\set{\colvector{2\\0\\1},\,\colvector{3\\2\\-1},\,\colvector{-1\\-2\\2}}}</me>If we make these vectors the rows of a matrix, and row-reduce, <xref ref="theorem-BRS" acro="BRS" autoname="yes"/> provides an alternate description of <m>Y</m>,<me>Y=\spn{\set{\colvector{2\\0\\1},\,\colvector{0\\4\\-5}}}</me>If we add these vectors together, and then change the third component of the result, we will create a vector that lies outside of <m>Y</m>, say <m>\vect{v}=\colvector{2\\4\\9}</m>.</p>
             </solution>
         </exercise>
         <exercise number="M60" xml:id="exercise-SLT-M60">
             <statement>
-                <p>Suppose <m>U</m> and <m>V</m> are vector spaces.  Define the function <m>\ltdefn{Z}{U}{V}</m> by <m>\lteval{Z}{\vect{u}}=\zerovector_{V}</m> for every <m>\vect{u}\in U</m>.  Then by <xref ref="exercise-LT-M60" acro="LT.M60" autoname="yes"/>, <m>Z</m> is a linear transformation.  Formulate a condition on <m>V</m> that is equivalent to <m>Z</m> being an surjective linear transformation.   In other words, fill in the blank to complete the following statement (and then give a proof):  <m>Z</m> is surjective if and only if <m>V</m> is <rule width="1in" height="1pt"/>. (See <xref ref="exercise-ILT-M60" acro="ILT.M60" autoname="yes"/>, <xref ref="exercise-IVLT-M60" acro="IVLT.M60" autoname="yes"/>.)
-</p>
+                <p>Suppose <m>U</m> and <m>V</m> are vector spaces.  Define the function <m>\ltdefn{Z}{U}{V}</m> by <m>\lteval{Z}{\vect{u}}=\zerovector_{V}</m> for every <m>\vect{u}\in U</m>.  Then by <xref ref="exercise-LT-M60" acro="LT.M60" autoname="yes"/>, <m>Z</m> is a linear transformation.  Formulate a condition on <m>V</m> that is equivalent to <m>Z</m> being an surjective linear transformation.   In other words, fill in the blank to complete the following statement (and then give a proof):  <m>Z</m> is surjective if and only if <m>V</m> is <rule width="1in" height="1pt"/>. (See <xref ref="exercise-ILT-M60" acro="ILT.M60" autoname="yes"/>, <xref ref="exercise-IVLT-M60" acro="IVLT.M60" autoname="yes"/>.)</p>
             </statement>
         </exercise>
         <exercise number="T15" xml:id="exercise-SLT-T15">
             <statement>
-                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> and <m>\ltdefn{S}{V}{W}</m> are linear transformations.  Prove the following relationship between ranges.
-<me>\rng{\compose{S}{T}}\subseteq\rng{S}</me>
-</p>
+                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> and <m>\ltdefn{S}{V}{W}</m> are linear transformations.  Prove the following relationship between ranges.<me>\rng{\compose{S}{T}}\subseteq\rng{S}</me></p>
             </statement>
             <solution xml:id="solution-SLT-T15">
-                <p>This question asks us to establish that one set (<m>\rng{\compose{S}{T}}</m>) is a subset of another (<m>\rng{S}</m>).  Choose an element in the <q>smaller</q> set, say <m>\vect{w}\in\rng{\compose{S}{T}}</m>.  Then we know that there is a vector <m>\vect{u}\in U</m> such that
-<me>\vect{w}=\lteval{\left(\compose{S}{T}\right)}{\vect{u}}=\lteval{S}{\lt{T}{\vect{u}}}</me>
-Now define <m>\vect{v}=\lteval{T}{\vect{u}}</m>, so that then
-<me>\lteval{S}{\vect{v}}=\lteval{S}{\lt{T}{\vect{u}}}=\vect{w}</me>
-This statement is sufficient to show that <m>\vect{w}\in\rng{S}</m>, so <m>\vect{w}</m> is an element of the <q>larger</q> set, and <m>\rng{\compose{S}{T}}\subseteq\rng{S}</m>.
-</p>
+                <p>This question asks us to establish that one set (<m>\rng{\compose{S}{T}}</m>) is a subset of another (<m>\rng{S}</m>).  Choose an element in the <q>smaller</q> set, say <m>\vect{w}\in\rng{\compose{S}{T}}</m>.  Then we know that there is a vector <m>\vect{u}\in U</m> such that<me>\vect{w}=\lteval{\left(\compose{S}{T}\right)}{\vect{u}}=\lteval{S}{\lt{T}{\vect{u}}}</me>Now define <m>\vect{v}=\lteval{T}{\vect{u}}</m>, so that then<me>\lteval{S}{\vect{v}}=\lteval{S}{\lt{T}{\vect{u}}}=\vect{w}</me>This statement is sufficient to show that <m>\vect{w}\in\rng{S}</m>, so <m>\vect{w}</m> is an element of the <q>larger</q> set, and <m>\rng{\compose{S}{T}}\subseteq\rng{S}</m>.</p>
             </solution>
         </exercise>
         <exercise number="T20" xml:id="exercise-SLT-T20">
             <statement contributor="andyzimmer">
-                <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix.  Define the linear transformation <m>T</m> by
-<me>\ltdefn{T}{\complex{n}}{\complex{m}},\quad \lteval{T}{\vect{x}}=A\vect{x}</me>
-Prove that the range of <m>T</m> equals the column space of <m>A</m>, <m>\rng{T}=\csp{A}</m>.
-</p>
+                <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix.  Define the linear transformation <m>T</m> by<me>\ltdefn{T}{\complex{n}}{\complex{m}},\quad \lteval{T}{\vect{x}}=A\vect{x}</me>Prove that the range of <m>T</m> equals the column space of <m>A</m>, <m>\rng{T}=\csp{A}</m>.</p>
             </statement>
             <solution xml:id="solution-SLT-T20" contributor="andyzimmer">
                 <p>This is an equality of sets, so we want to establish two subset conditions (<xref ref="definition-SE" acro="SE" autoname="yes"/>).</p>
-                <p>
-First, show <m>\csp{A}\subseteq\rng{T}</m>.  Choose <m>\vect{y}\in\csp{A}</m>.  Then by <xref ref="definition-CSM" acro="CSM" autoname="yes"/> and <xref ref="definition-MVP" acro="MVP" autoname="yes"/> there is a vector <m>\vect{x}\in\complex{n}</m> such that <m>A\vect{x}=\vect{y}</m>.  Then
-<md><mrow>\lteval{T}{\vect{x}}
-&amp;=A\vect{x}&amp;&amp;\text{Definition of<m>T</m>}</mrow><mrow>&amp;=\vect{y}</mrow></md>
-This statement qualifies <m>\vect{y}</m> as a member of <m>\rng{T}</m> (<xref ref="definition-RLT" acro="RLT" autoname="yes"/>), so <m>\csp{A}\subseteq\rng{T}</m>.</p>
-                <p>
-Now, show <m>\rng{T}\subseteq\csp{A}</m>.  Choose <m>\vect{y}\in\rng{T}</m>.  Then by <xref ref="definition-RLT" acro="RLT" autoname="yes"/>, there is a vector <m>\vect{x}</m> in <m>\complex{n}</m> such that <m>\lteval{T}{\vect{x}}=\vect{y}</m>.  Then
-<md><mrow>A\vect{x}
-&amp;=\lteval{T}{\vect{x}}&amp;&amp;\text{Definition of<m>T</m>}</mrow><mrow>&amp;=\vect{y}</mrow></md>
-So by <xref ref="definition-CSM" acro="CSM" autoname="yes"/> and <xref ref="definition-MVP" acro="MVP" autoname="yes"/>, <m>\vect{y}</m> qualifies for membership in <m>\csp{A}</m> and so <m>\rng{T}\subseteq\csp{A}</m>.</p>
-                <p>
-</p>
+                <p>First, show <m>\csp{A}\subseteq\rng{T}</m>.  Choose <m>\vect{y}\in\csp{A}</m>.  Then by <xref ref="definition-CSM" acro="CSM" autoname="yes"/> and <xref ref="definition-MVP" acro="MVP" autoname="yes"/> there is a vector <m>\vect{x}\in\complex{n}</m> such that <m>A\vect{x}=\vect{y}</m>.  Then<md>
+                    <mrow>\lteval{T}{\vect{x}}&amp;=A\vect{x}&amp;&amp;
+                        \text{Definition of }T</mrow>
+                    <mrow>&amp;=\vect{y}</mrow>
+                </md>This statement qualifies <m>\vect{y}</m> as a member of <m>\rng{T}</m> (<xref ref="definition-RLT" acro="RLT" autoname="yes"/>), so <m>\csp{A}\subseteq\rng{T}</m>.</p>
+                <p>Now, show <m>\rng{T}\subseteq\csp{A}</m>.  Choose <m>\vect{y}\in\rng{T}</m>.  Then by <xref ref="definition-RLT" acro="RLT" autoname="yes"/>, there is a vector <m>\vect{x}</m> in <m>\complex{n}</m> such that <m>\lteval{T}{\vect{x}}=\vect{y}</m>.  Then<md>
+                    <mrow>A\vect{x}
+                    &amp;=\lteval{T}{\vect{x}}&amp;&amp;
+                        \text{Definition of }T</mrow>
+                    <mrow>&amp;=\vect{y}</mrow>
+                </md>So by <xref ref="definition-CSM" acro="CSM" autoname="yes"/> and <xref ref="definition-MVP" acro="MVP" autoname="yes"/>, <m>\vect{y}</m> qualifies for membership in <m>\csp{A}</m> and so <m>\rng{T}\subseteq\csp{A}</m>.</p>
+                <p></p>
             </solution>
         </exercise>
     </exercises>
