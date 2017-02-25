@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      A First Course in Linear Algebra        -->
+<!--                                              -->
+<!-- Copyright (C) 2004-2017  Robert A. Beezer    -->
+<!-- See the file COPYING for copying conditions. -->
+
 <section xml:id="section-SET" acro="SET">
     <title>Sets</title>
-    <!-- %%%%%%%%%% -->
-    <!-- % -->
-    <!-- %  Section SET -->
-    <!-- %  Sets -->
-    <!-- % -->
-    <!-- %%%%%%%%%% -->
     <introduction>
         <p>We will frequently work carefully with sets, so the material in this review section is <em>very</em> important.  If these topics are new to you, study this section carefully and consider consulting another text for a more comprehensive introduction.</p>
     </introduction>
@@ -32,14 +34,14 @@
         </definition>
         <p>Hard to get much more basic than that.   Notice that the objects in a set can be <em>anything</em>, and there is no notion of order among the elements of the set.  A set can be finite as well as infinite.  A set can contain other sets as its objects.  At a primitive level, a set is just a way to break up some class of objects into two groupings:  those objects in the set, and those objects not in the set.</p>
         <example xml:id="example-SETM" acro="SETM">
+            <title>Set membership</title>
             <index>
                 <main>set</main>
                 <sub>membership</sub>
             </index>
-            <title>Set membership</title>
-            <p>From the set of all possible symbols, construct the following set of three symbols,
-<md><mrow>S&amp;=\set{\blacksquare,\,\blacklozenge,\,\bigstar}</mrow></md>
-Then the statement <m>\blacksquare\in S</m> is true, while the statement <m>\blacktriangle\in S</m> is false.  However, then the statement <m>\blacktriangle\not\in S</m> is true.</p>
+            <p>From the set of all possible symbols, construct the following set of three symbols,<md>
+            <mrow>S&amp;=\set{\blacksquare,\,\blacklozenge,\,\bigstar}</mrow>
+        </md>Then the statement <m>\blacksquare\in S</m> is true, while the statement <m>\blacktriangle\in S</m> is false.  However, then the statement <m>\blacktriangle\not\in S</m> is true.</p>
         </example>
         <p>A portion of a set is known as a subset.  Notice how the following definition uses an implication (if whenever<ellipsis/> then<ellipsis/>).  Note too how the definition of a subset relies on the definition of a set through the idea of set membership.</p>
         <definition xml:id="definition-SSET" acro="SSET">
@@ -81,20 +83,21 @@ Then the statement <m>\blacksquare\in S</m> is true, while the statement <m>\bla
             </notation>
         </definition>
         <example xml:id="example-SSET" acro="SSET">
-            <index>indesxstring</index>
             <title>Subset</title>
-            <p>If <m>S=\set{\blacksquare,\,\blacklozenge,\,\bigstar}</m>, <m>T=\set{\bigstar,\,\blacklozenge}</m>, <m>R=\set{\blacktriangle,\,\bigstar}</m>, then
-<md><mrow>T&amp;\subseteq S
-&amp;
-R&amp;\not\subseteq T
-&amp;
-\emptyset&amp;\subseteq S
-</mrow><mrow>T&amp;\subset S
-&amp;
-S&amp;\subseteq S
-&amp;
-S&amp;\not\subset S</mrow></md>
-</p>
+            <index>indesxstring</index>
+            <p>If <m>S=\set{\blacksquare,\,\blacklozenge,\,\bigstar}</m>, <m>T=\set{\bigstar,\,\blacklozenge}</m>, <m>R=\set{\blacktriangle,\,\bigstar}</m>, then<md>
+                <mrow>T&amp;\subseteq S
+                &amp;
+                R&amp;\not\subseteq T
+                &amp;
+                \emptyset&amp;\subseteq S
+                </mrow>
+                <mrow>T&amp;\subset S
+                &amp;
+                S&amp;\subseteq S
+                &amp;
+                S&amp;\not\subset S</mrow>
+            </md></p>
         </example>
         <p>What does it mean for two sets to be equal?  They must be the same.  Well, that explanation is not really too helpful, is it?  How about:  If <m>A\subseteq B</m> and <m>B\subseteq A</m>, then <m>A</m> equals <m>B</m>.  This gives us something to work with, if <m>A</m> is a subset of <m>B</m>, and <em>vice versa</em>, then they must really be the same set.  We will now make the symbol <q><m>=</m></q> do double-duty and extend its use to statements like <m>A=B</m>, where <m>A</m> and <m>B</m> are sets.  Here is the definition, which we will reference often.</p>
         <definition xml:id="definition-SE" acro="SE">
@@ -120,16 +123,18 @@ S&amp;\not\subset S</mrow></md>
         </definition>
         <p>Sets are typically written inside of braces, as <m>\set{\ }</m>, as we have seen above.  However, when sets have more than a few elements, a description will typically have two components.  The first is a description of the general type of objects contained in a set, while the second is some sort of restriction on the properties the objects have.  Every object in the set must be of the type described in the first part and it must satisfy the restrictions in the second part.  Conversely, any object of the proper type for the first part, that also meets the conditions of the second part, will be in the set.  These two parts are set off from each other somehow, often with a vertical bar (<m>\vert</m>) or a colon (:).</p>
         <p>I like to think of sets as clubs.  The first part is some description of the type of people who <em>might</em> belong to the club, the basic objects.  For example, a bicycle club would describe its members as being people who like to ride bicycles.  The second part is like a membership committee, it restricts the people who are allowed in the club.  Continuing with our bicycle club analogy, we might decide to limit ourselves to <q>serious</q> riders and only have members who can document having ridden 100 kilometers or more in a single day at least one time.</p>
-        <p>The restrictions on membership can migrate around some between the first and second part, and there may be several ways to describe the same set of objects.  Here is a more mathematical example, employing the set of all integers, <m>{\mathbb Z}</m>, to describe the set of even integers.
-<md><mrow>E
-&amp;=\setparts{x\in{\mathbb Z}}{x\text{ is an even number}}</mrow><mrow>&amp;=\setparts{x\in{\mathbb Z}}{2\text{ divides }x\text{ evenly}}</mrow><mrow>&amp;=\setparts{2k}{k\in{\mathbb Z}}</mrow></md>
-Notice how this set tells us that its objects are integer numbers (not, say, matrices or functions, for example) and just those that are even.  So we can write that <m>10\in E</m>, while <m>17\not\in E</m> once we check the membership criteria.  We also recognize the question
-<md><mrow>\begin{bmatrix}
-1&amp;-3&amp;5\\
-2&amp;0&amp;3
-\end{bmatrix}
-\in E\text{?}</mrow></md>
-as being simply ridiculous.</p>
+        <p>The restrictions on membership can migrate around some between the first and second part, and there may be several ways to describe the same set of objects.  Here is a more mathematical example, employing the set of all integers, <m>{\mathbb Z}</m>, to describe the set of even integers.<md>
+            <mrow>E
+            &amp;=\setparts{x\in{\mathbb Z}}{x\text{ is an even number}}</mrow>
+            <mrow>&amp;=\setparts{x\in{\mathbb Z}}{2\text{ divides }x\text{ evenly}}</mrow>
+            <mrow>&amp;=\setparts{2k}{k\in{\mathbb Z}}</mrow>
+        </md>Notice how this set tells us that its objects are integer numbers (not, say, matrices or functions, for example) and just those that are even.  So we can write that <m>10\in E</m>, while <m>17\not\in E</m> once we check the membership criteria.  We also recognize the question<md>
+            <mrow>\begin{bmatrix}
+            1&amp;-3&amp;5\\
+            2&amp;0&amp;3
+            \end{bmatrix}
+            \in E\text{?}</mrow>
+        </md>as being simply ridiculous.</p>
     </subsection>
     <subsection xml:id="subsection-SET-SC" acro="SC">
         <title>Set Cardinality</title>
@@ -156,11 +161,11 @@ as being simply ridiculous.</p>
             </notation>
         </definition>
         <example xml:id="example-CS" acro="CS">
+            <title>Cardinality and Size</title>
             <index>
                 <main>set</main>
                 <sub>cardinality</sub>
             </index>
-            <title>Cardinality and Size</title>
             <p>If <m>S=\set{\blacklozenge,\,\bigstar,\,\blacksquare}</m>, then <m>\card{S}=3</m>.</p>
         </example>
     </subsection>
@@ -174,9 +179,9 @@ as being simply ridiculous.</p>
                 <sub>union</sub>
             </index>
             <statement>
-                <p>Suppose <m>S</m> and <m>T</m> are sets.  Then the <term>union</term> of <m>S</m> and <m>T</m>, denoted <m>S\cup T</m>, is the set whose elements are those that are elements of <m>S</m> or of <m>T</m>, or both.  More formally,
-<md><mrow>x\in S\cup T\text{ if and only if }x\in S\text{ or }x\in T</mrow></md>
-</p>
+                <p>Suppose <m>S</m> and <m>T</m> are sets.  Then the <term>union</term> of <m>S</m> and <m>T</m>, denoted <m>S\cup T</m>, is the set whose elements are those that are elements of <m>S</m> or of <m>T</m>, or both.  More formally,<md>
+                    <mrow>x\in S\cup T\text{ if and only if }x\in S\text{ or }x\in T</mrow>
+                </md></p>
             </statement>
             <notation xml:id="notation-SU" acro="SU">
                 <index>
@@ -192,11 +197,11 @@ as being simply ridiculous.</p>
         </definition>
         <p>Notice that the use of the word <q>or</q> in this definition is meant to be non-exclusive.  That is, it allows for <m>x</m> to be an element of both <m>S</m> and <m>T</m> and still qualify for membership in <m>S\cup T</m>.</p>
         <example xml:id="example-SU" acro="SU">
+            <title>Set union</title>
             <index>
                 <main>set</main>
                 <sub>union</sub>
             </index>
-            <title>Set union</title>
             <p>If <m>S=\set{\blacklozenge,\,\bigstar,\,\blacksquare}</m> and <m>T=\set{\blacklozenge,\,\bigstar,\,\blacktriangle}</m> then <m>S\cup T=\set{\blacklozenge,\,\bigstar,\,\blacksquare,\,\blacktriangle}</m>.</p>
         </example>
         <definition xml:id="definition-SI" acro="SI">
@@ -206,9 +211,9 @@ as being simply ridiculous.</p>
                 <sub>intersection</sub>
             </index>
             <statement>
-                <p>Suppose <m>S</m> and <m>T</m> are sets.  Then the <term>intersection</term> of <m>S</m> and <m>T</m>, denoted <m>S\cap T</m>, is the set whose elements are only those that are elements of <m>S</m> and of <m>T</m>.  More formally,
-<md><mrow>x\in S\cap T\text{ if and only if }x\in S\text{ and }x\in T</mrow></md>
-</p>
+                <p>Suppose <m>S</m> and <m>T</m> are sets.  Then the <term>intersection</term> of <m>S</m> and <m>T</m>, denoted <m>S\cap T</m>, is the set whose elements are only those that are elements of <m>S</m> and of <m>T</m>.  More formally,<md>
+                    <mrow>x\in S\cap T\text{ if and only if }x\in S\text{ and }x\in T</mrow>
+                </md></p>
             </statement>
             <notation xml:id="notation-SI" acro="SI">
                 <index>
@@ -223,11 +228,11 @@ as being simply ridiculous.</p>
             </notation>
         </definition>
         <example xml:id="example-SI" acro="SI">
+            <title>Set intersection</title>
             <index>
                 <main>set</main>
                 <sub>intersection</sub>
             </index>
-            <title>Set intersection</title>
             <p>If <m>S=\set{\blacklozenge,\,\bigstar,\,\blacksquare}</m> and <m>T=\set{\blacklozenge,\,\bigstar,\,\blacktriangle}</m> then <m>S\cap T=\set{\blacklozenge,\,\bigstar}</m>.</p>
         </example>
         <p>The union and intersection of sets are operations that begin with two sets and produce a third, new, set.  Our final operation is the set complement, which we usually think of as an operation that takes a single set and creates a second, new, set.  However, if you study the definition carefully, you will see that it needs to be computed <em>relative</em> to some <q>universal</q> set.</p>
@@ -238,9 +243,9 @@ as being simply ridiculous.</p>
                 <sub>complement</sub>
             </index>
             <statement>
-                <p>Suppose <m>S</m> is a set that is a subset of a universal set <m>U</m>.  Then the <term>complement</term> of <m>S</m>, denoted <m>\setcomplement{S}</m>, is the set whose elements are those that are elements of <m>U</m> and not elements of <m>S</m>.  More formally,
-<md><mrow>x\in\setcomplement{S}\text{ if and only if }x\in U\text{ and }x\not\in S</mrow></md>
-</p>
+                <p>Suppose <m>S</m> is a set that is a subset of a universal set <m>U</m>.  Then the <term>complement</term> of <m>S</m>, denoted <m>\setcomplement{S}</m>, is the set whose elements are those that are elements of <m>U</m> and not elements of <m>S</m>.  More formally,<md>
+                    <mrow>x\in\setcomplement{S}\text{ if and only if }x\in U\text{ and }x\not\in S</mrow>
+                </md></p>
             </statement>
             <notation xml:id="notation-SC" acro="SC">
                 <index>
@@ -256,18 +261,21 @@ as being simply ridiculous.</p>
         </definition>
         <p>Notice that there is nothing at all special about the universal set.  This is simply a term that suggests that <m>U</m> contains all of the possible objects we are considering.  Often this set will be clear from the context, and we will not think much about it, nor reference it in our notation.  In other cases (rarely in our work in this course) the exact nature of the universal set must be made explicit, and reference to it will possibly be carried through in our choice of notation.</p>
         <example xml:id="example-SC" acro="SC">
+            <title>Set complement</title>
             <index>
                 <main>set</main>
                 <sub>complement</sub>
             </index>
-            <title>Set complement</title>
             <p>If <m>U=\set{\blacklozenge,\,\bigstar,\,\blacksquare,\,\blacktriangle}</m> and <m>S=\set{\blacklozenge,\,\bigstar,\,\blacksquare}</m> then <m>\setcomplement{S}=\set{\blacktriangle}</m>.</p>
         </example>
         <p>There are many more natural operations that can be performed on sets, such as an exclusive-or and the symmetric difference.  Many of these can be defined in terms of the union, intersection and complement.  We will not have much need of them in this course, and so we will not give precise descriptions here in this preliminary section.</p>
-        <p>There is also an interesting variety of basic results that describe the interplay of these operations with each other.  We mention just two as an example, these are known as DeMorgan's Laws.
-<md><mrow>\setcomplement{\left(S\cup T\right)}&amp;=\setcomplement{S}\cap\setcomplement{T}</mrow><mrow>\setcomplement{\left(S\cap T\right)}&amp;=\setcomplement{S}\cup\setcomplement{T}\\</mrow></md>
-</p>
+        <p>There is also an interesting variety of basic results that describe the interplay of these operations with each other.  We mention just two as an example, these are known as DeMorgan's Laws.<md>
+            <mrow>\setcomplement{\left(S\cup T\right)}&amp;
+            =\setcomplement{S}\cap\setcomplement{T}
+            &amp;
+            \setcomplement{\left(S\cap T\right)}&amp;=
+            \setcomplement{S}\cup\setcomplement{T}</mrow>
+        </md></p>
         <p>Besides having an appealing symmetry, we mention these two facts, since constructing the proofs of each is a useful exercise that will require a solid understanding of all but one of the definitions presented in this section.  Give it a try.</p>
     </subsection>
-    <!--   End of  set.tex -->
 </section>
