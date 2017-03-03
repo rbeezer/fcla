@@ -451,7 +451,7 @@
                     <xref ref="theorem-MMIM" acro="MMIM" autoname="yes"/></mrow>
                 <mrow>&amp;=\lteval{T}{\matrixcolumns{e}{n}\vect{x}}&amp;&amp;
                     <xref ref="definition-SUV" acro="SUV" autoname="yes"/></mrow>
-                <mrow>&amp;=\lt{T}{
+                <mrow>&amp;=\lteval{T}{
                 \vectorentry{\vect{x}}{1}\vect{e}_1+
                 \vectorentry{\vect{x}}{2}\vect{e}_2+
                 \vectorentry{\vect{x}}{3}\vect{e}_3+
@@ -648,7 +648,7 @@
                 <p>It should be clear that <m>T</m> behaves as required for <m>n</m> inputs from <m>B</m>.  Since the scalars provided by <xref ref="theorem-VRRB" acro="VRRB" autoname="yes"/> are unique, there is no ambiguity in this definition, and <m>T</m> qualifies as a function with domain <m>U</m> and codomain <m>V</m> (<ie/> <m>T</m> is well-defined).  But is <m>T</m> a linear transformation as well?</p>
                 <p>Let <m>\vect{x}\in U</m> be a second element of the domain, and suppose the scalars provided by <xref ref="theorem-VRRB" acro="VRRB" autoname="yes"/> (relative to <m>B</m>) are <m>\scalarlist{b}{n}</m>.  Then<md>
                     <mrow>\lteval{T}{\vect{w}+\vect{x}}&amp;=
-                    \lt{T}{
+                    \lteval{T}{
                     a_1\vect{u}_1+
                     \cdots+
                     a_n\vect{u}_n+
@@ -657,7 +657,7 @@
                     b_n\vect{u}_n
                     }</mrow>
                     <mrow>&amp;=
-                    \lt{T}{
+                    \lteval{T}{
                     \left(a_1+b_1\right)\vect{u}_1+
                     \cdots+
                     \left(a_n+b_n\right)\vect{u}_n
@@ -1171,7 +1171,7 @@
                 <sub>composition</sub>
             </index>
             <statement>
-                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> and <m>\ltdefn{S}{V}{W}</m> are linear transformations.  Then the <term>composition</term> of <m>S</m> and <m>T</m> is the function <m>\ltdefn{(\compose{S}{T})}{U}{W}</m> whose outputs are defined by<me>\lteval{(\compose{S}{T})}{\vect{u}}=\lteval{S}{\lt{T}{\vect{u}}}</me></p>
+                <p>Suppose that <m>\ltdefn{T}{U}{V}</m> and <m>\ltdefn{S}{V}{W}</m> are linear transformations.  Then the <term>composition</term> of <m>S</m> and <m>T</m> is the function <m>\ltdefn{(\compose{S}{T})}{U}{W}</m> whose outputs are defined by<me>\lteval{(\compose{S}{T})}{\vect{u}}=\lteval{S}{\lteval{T}{\vect{u}}}</me></p>
             </statement>
         </definition>
         <p>Given that <m>T</m> and <m>S</m> are linear transformations, it would be nice to know that <m>\compose{S}{T}</m> is also a linear transformation.</p>
@@ -1187,21 +1187,21 @@
             <proof>
                 <p>We simply check the defining properties of a linear transformation (<xref ref="definition-LT" acro="LT" autoname="yes"/>).<md>
                     <mrow>\lteval{(\compose{S}{T})}{\vect{x}+\vect{y}}
-                    &amp;=\lteval{S}{\lt{T}{\vect{x}+\vect{y}}}&amp;&amp;
+                    &amp;=\lteval{S}{\lteval{T}{\vect{x}+\vect{y}}}&amp;&amp;
                         <xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow>
-                    <mrow>&amp;=\lteval{S}{\lt{T}{\vect{x}}+\lteval{T}{\vect{y}}}&amp;&amp;
+                    <mrow>&amp;=\lteval{S}{\lteval{T}{\vect{x}}+\lteval{T}{\vect{y}}}&amp;&amp;
                         <xref ref="definition-LT" acro="LT" autoname="yes"/>\text{ for }T</mrow>
-                    <mrow>&amp;=\lteval{S}{\lt{T}{\vect{x}}}+\lteval{S}{\lt{T}{\vect{y}}}&amp;&amp;
+                    <mrow>&amp;=\lteval{S}{\lteval{T}{\vect{x}}}+\lteval{S}{\lteval{T}{\vect{y}}}&amp;&amp;
                         <xref ref="definition-LT" acro="LT" autoname="yes"/>\text{ for }S</mrow>
                     <mrow>&amp;=\lteval{(\compose{S}{T})}{\vect{x}}+\lteval{(\compose{S}{T})}{\vect{y}}&amp;&amp;
                         <xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow>
                     <intertext>and</intertext>
                     <mrow>\lteval{(\compose{S}{T})}{\alpha\vect{x}}
-                    &amp;=\lteval{S}{\lt{T}{\alpha\vect{x}}}&amp;&amp;
+                    &amp;=\lteval{S}{\lteval{T}{\alpha\vect{x}}}&amp;&amp;
                         <xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow>
-                    <mrow>&amp;=\lteval{S}{\alpha\lt{T}{\vect{x}}}&amp;&amp;
+                    <mrow>&amp;=\lteval{S}{\alpha\lteval{T}{\vect{x}}}&amp;&amp;
                         <xref ref="definition-LT" acro="LT" autoname="yes"/>\text{ for }T</mrow>
-                    <mrow>&amp;=\alpha\lteval{S}{\lt{T}{\vect{x}}}&amp;&amp;
+                    <mrow>&amp;=\alpha\lteval{S}{\lteval{T}{\vect{x}}}&amp;&amp;
                         <xref ref="definition-LT" acro="LT" autoname="yes"/>\text{ for }S</mrow>
                     <mrow>&amp;=\alpha\lteval{(\compose{S}{T})}{\vect{x}}&amp;&amp;
                         <xref ref="definition-LTC" acro="LTC" autoname="yes"/></mrow>
@@ -1221,7 +1221,7 @@
             </md></p>
             <p>Then by <xref ref="definition-LTC" acro="LTC" autoname="yes"/><md>
                 <mrow>\lteval{(\compose{S}{T})}{\colvector{x_1\\x_2}}&amp;=
-                \lteval{S}{\lt{T}{\colvector{x_1\\x_2}}}
+                \lteval{S}{\lteval{T}{\colvector{x_1\\x_2}}}
                 =\lteval{S}{\colvector{x_1+2x_2\\3x_1-4x_2\\5x_1+2x_2\\6x_1-3x_2}}</mrow>
                 <mrow>&amp;=\colvector{
                 2(x_1+2x_2)-(3x_1-4x_2)+(5x_1+2x_2)-(6x_1-3x_2)</mrow>
