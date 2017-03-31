@@ -180,17 +180,25 @@
             <li>If <m>P(k)</m> is true, then <m>P(k+1)</m> is true.</li>
         </ol>then it follows that <m>P(n)</m> is true for all <m>n\geq 1</m>.  To understand this, I liken the process to climbing an infinitely long ladder with equally spaced rungs.  Confronted with such a ladder, suppose I tell you that you are able to step up onto the first rung, and if you are on any particular rung, then you are capable of stepping up to the next rung.  It follows that you can climb the ladder as far up as you wish.  The first formal assertion above is akin to stepping onto the first rung, and the second formal assertion is akin to assuming that if you are on any one rung then you can always reach the next rung.</p>
         <p>In practice, establishing that <m>P(1)</m> is true is called the <q>base case</q> and in most cases is straightforward.  Establishing that <m>P(k)\Rightarrow P(k+1)</m> is referred to as the <q>induction step,</q> or in this book (and elsewhere) we will typically refer to the assumption of <m>P(k)</m> as the <q>induction hypothesis.</q>  This is perhaps the most mysterious part of a proof by induction, since we are eventually trying to prove that <m>P(n)</m> is true and it appears we do this by assuming what we are trying to prove (when we assume <m>P(k)</m>).  We are trying to prove the truth of <m>P(n)</m> (for all <m>n</m>), but in the induction step we establish the truth of an <em>implication</em>, <m>P(k)\Rightarrow P(k+1)</m>, an <q>if-then</q> statement.  Sometimes it is even worse, since as you get more comfortable with induction, we often do not bother to use a different letter (<m>k</m>) for the index (<m>n</m>) in the induction step.  Notice that the second formal assertion never says that <m>P(k)</m> is true, it simply says that <em>if</em> <m>P(k)</m> were true, what might logically follow.  We can establish statements like <q>If I lived on the moon, then I could pole-vault over a bar 12 meters high.</q>  This may be a true statement, but it does not say we live on the moon, and indeed we may never live there.</p>
-        <p>Enough generalities.  Let us work an example and prove the theorem above about sums of integers.  Formally, our statement is <m>P(n):\ 1+2+3+\dots+n=\displaystyle\frac{n(n+1)}{2}</m>.</p>
-        <p>Proof:  Base Case.  <m>P(1)</m> is the statement <m>1=\frac{1(1+1)}{2}</m>, which we see simplifies to the true statement <m>1=1</m>.</p>
-        <p>Induction Step:  We will assume <m>P(k)</m> is true, and will try to prove <m>P(k+1)</m>.  Given what we want to accomplish, it is natural to begin by examining the sum of the first <m>k+1</m> integers.<md>
-            <mrow>1+2+3+\dots+(k+1) &amp;=\left(1+2+3+\dots+k\right) + (k+1)</mrow>
-            <mrow>&amp;=\frac{k(k+1)}{2} + (k+1)&amp;&amp;\text{Induction Hypothesis}</mrow>
-            <mrow>&amp;=\frac{k^2+k}{2} + \frac{2k+2}{2}</mrow>
-            <mrow>&amp;=\frac{k^2+3k+2}{2}</mrow>
-            <mrow>&amp;=\frac{(k+1)(k+2)}{2}</mrow>
-            <mrow>&amp;=\frac{(k+1)((k+1)+1)}{2}</mrow>
-        </md>We then recognize the two ends of this chain of equalities as <m>P(k+1)</m>.  So, by mathematical induction, the theorem is true for all <m>n</m>.</p> <p>How do you recognize when to use induction?  The first clue is a statement that is really many statements, one for each integer.  The second clue would be that you begin a more standard proof and you find yourself using words like <q>and so on</q> (as above!) or lots of ellipses (dots) to establish patterns that you are convinced continue on and on forever.  However, there are many minor instances where induction might be warranted but we do not bother.</p>
-        <p>Induction is important enough, and used often enough, that it appears in various variations.  The base case sometimes begins with <m>n=0</m>, or perhaps an integer greater than <m>n</m>.  Some formulate the induction step as <m>P(k-1)\Rightarrow P(k)</m>.  There is also a <q>strong form</q> of induction where we assume all of <m>P(1)</m>, <m>P(2)</m>, <m>P(3)</m>,<ellipsis/> <m>P(k)</m> as a hypothesis for showing the conclusion <m>P(k+1)</m>.</p>
+        <p>Enough generalities.  Let us work an example and prove the theorem above about sums of integers.  Formally, our statement is <me>P(n):\ 1+2+3+\dots+n=\frac{n(n+1)}{2}</me>.  A proof has two parts, a base case, which is usually easy, and an induction step that seems mysterious your first few times through.</p>
+        <paragraphs>
+            <title>Base Case</title>
+            <p><m>P(1)</m> is the statement <m>1=\frac{1(1+1)}{2}</m>, which we see simplifies to the true statement <m>1=1</m>. Done.</p>
+        </paragraphs>
+        <paragraphs>
+            <title>Induction Step</title>
+            <p>We will assume <m>P(k)</m> is true, and will try to prove <m>P(k+1)</m>.  Given what we want to accomplish, it is natural to begin by examining the sum of the first <m>k+1</m> integers.<md>
+                <mrow>1+2+3+\dots+(k+1) &amp;=\left(1+2+3+\dots+k\right) + (k+1)</mrow>
+                <mrow>&amp;=\frac{k(k+1)}{2} + (k+1)&amp;&amp;\text{Induction Hypothesis}</mrow>
+                <mrow>&amp;=\frac{k^2+k}{2} + \frac{2k+2}{2}</mrow>
+                <mrow>&amp;=\frac{k^2+3k+2}{2}</mrow>
+                <mrow>&amp;=\frac{(k+1)(k+2)}{2}</mrow>
+                <mrow>&amp;=\frac{(k+1)((k+1)+1)}{2}</mrow>
+            </md>We then recognize the two ends of this chain of equalities as <m>P(k+1)</m> and we have established the conclusion of the induction step (<m>P(k+1)</m>), by employing the hypothesis of the induction step (<m>P(k)</m>).</p>
+        </paragraphs>
+        <p>So, by mathematical induction, the theorem is true for all <m>n</m>.</p>
+        <p>How do you recognize when to use induction?  The first clue is a statement that is really many statements, one for each integer.  The second clue would be that you begin a more standard proof and you find yourself using words like <q>and so on</q> (like we did above!) or lots of ellipses (dots) to establish patterns that you are convinced continue on and on forever.  However, there are many minor instances where induction might be warranted but we do not bother.</p>
+        <p>Induction is important enough, and used often enough, that it appears in various variations.  The base case sometimes begins with <m>n=0</m>, or perhaps an integer greater than <m>n=1</m>.  Some formulate the induction step as <m>P(k-1)\Rightarrow P(k)</m>.  There is also a <q>strong form</q> of induction where we assume all of <m>P(1)</m>, <m>P(2)</m>, <m>P(3)</m>,<ellipsis/> <m>P(k)</m> as a hypothesis for showing the conclusion <m>P(k+1)</m>.</p>
         <!--  Gram-Schmidt                                -->
         <!--  Determinant expansions                      -->
         <!--  Determinant of transpose                    -->
