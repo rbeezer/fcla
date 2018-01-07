@@ -56,6 +56,7 @@ function setup {
 
     cp ${SRC}/xsl/fcla-common.xsl  ${MBUSER}
     cp ${SRC}/xsl/fcla-html.xsl    ${MBUSER}
+    cp ${SRC}/xsl/fcla-aim.xsl    ${MBUSER}
     cp ${SRC}/xsl/fcla-latex.xsl   ${MBUSER}
     cp ${SRC}/xsl/fcla-pod.xsl   ${MBUSER}
 }
@@ -108,12 +109,13 @@ function html_build {
     # rm *.html
     # rm -rf knowl/* images/*
     # svg and pdf for archive links
-    cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf ./images/
+    # png is cover
+    cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf ${IMAGES}/*.png ./images/
     xsltproc --stringparam whitespace strict --stringparam html.css.file mathbook-4.css --stringparam html.knowl.remark no --xinclude ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
 }
 
 # Subroutine to build the AIM HTML Version
-# Right Google ID, two-level ToC, unknowled examples
+# Right Google ID via sed, two-level ToC via toc.level stringparam
 # EG: http://mathbook.pugetsound.edu/beta/fcla-html-2017-02-19.zip
 function aim_html_build {
     echo
@@ -126,10 +128,11 @@ function aim_html_build {
     # rm -rf knowl/* images/*
     cp -a ${SOURCE}/*.xml .
     # svg and pdf for archive links
-    cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf ./images/
+    # png is cover
+    cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf  ${IMAGES}/*.png ./images/
     # change Google id
     sed -i -e 's/zxs4n7uh_pi/rswmw2oth0k/' bookinfo.xml
-    xsltproc --stringparam whitespace strict --stringparam html.css.file mathbook-4.css --stringparam html.knowl.remark no --xinclude ${MBUSER}/fcla-html.xsl fcla.xml
+    xsltproc --stringparam toc.level 2 --stringparam whitespace strict --stringparam html.css.file mathbook-4.css --stringparam html.knowl.remark no --xinclude ${MBUSER}/fcla-html.xsl fcla.xml
     # clean-up, pop up a level, make zip
     rm *.xml
     cd ${SCRATCH}
