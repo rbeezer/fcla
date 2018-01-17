@@ -132,7 +132,7 @@ function aim_html_build {
     cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf  ${IMAGES}/*.png ./images/
     # change Google id
     sed -i -e 's/zxs4n7uh_pi/rswmw2oth0k/' bookinfo.xml
-    xsltproc --stringparam toc.level 2 --stringparam whitespace strict --stringparam html.css.file mathbook-4.css --stringparam html.knowl.remark no --xinclude ${MBUSER}/fcla-html.xsl fcla.xml
+    xsltproc --stringparam html.annotation hypothesis --stringparam toc.level 2 --stringparam whitespace strict --stringparam html.css.file mathbook-4.css --stringparam html.knowl.remark no --xinclude ${MBUSER}/fcla-html.xsl fcla.xml
     # clean-up, pop up a level, make zip
     rm *.xml
     cd ${SCRATCH}
