@@ -18,10 +18,10 @@
         <p>If we use a linearly dependent set to construct a span, then we can <em>always</em> create the same infinite set with a starting set that is one vector smaller in size.  We will illustrate this behavior in <xref ref="example-RSC5" acro="RSC5"/>.  However, this will not be possible if we build a span from a linearly independent set.  So in a certain sense, using a linearly independent set to formulate a span is the best possible way <mdash/> there are not any extra vectors being used to build up all the necessary linear combinations.  OK, here is the theorem, and then the example.</p>
         <theorem xml:id="theorem-DLDS" acro="DLDS">
             <title>Dependency in Linearly Dependent Sets</title>
-            <index>
-                <main>linearly dependent set</main>
-                <sub>linear combinations within</sub>
-            </index>
+            <idx>
+                <h>linearly dependent set</h>
+                <h>linear combinations within</h>
+            </idx>
             <statement>
                 <p>Suppose that <m>S=\set{\vectorlist{u}{n}}</m> is a set of vectors.  Then <m>S</m> is a linearly dependent set if and only if there is an index <m>t</m>, <m>1\leq t\leq n</m> such that <m>\vect{u_t}</m> is a linear combination of the vectors <m>\vect{u}_1,\,\vect{u}_2,\,\vect{u}_3,\,\ldots,\,\vect{u}_{t-1},\,\vect{u}_{t+1},\,\ldots,\,\vect{u}_n</m>.</p>
             </statement>
@@ -88,7 +88,7 @@
         <p>This theorem can be used, sometimes repeatedly, to whittle down the size of a set of vectors used in a span construction.  We have seen some of this already in <xref ref="example-SCAD" acro="SCAD"/>, but in the next example we will detail some of the subtleties.</p>
         <example xml:id="example-RSC5" acro="RSC5">
             <title>Reducing a span in <m>\complex{5}</m></title>
-            <index>reducing a span</index>
+            <idx>reducing a span</idx>
             <p>Consider the set of <m>n=4</m> vectors from <m>\complex{5}</m>, <me>R=\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}
             =
             \set{
@@ -142,7 +142,7 @@
         </example>
         <computation xml:id="sage-RLD" acro="RLD">
             <title>Relations of Linear Dependence</title>
-            <index>relations of linear dependence</index>
+            <idx>relations of linear dependence</idx>
             <p><xref ref="example-RSC5" acro="RSC5"/> turned on a nontrivial relation of linear dependence (<xref ref="definition-RLDCV" acro="RLDCV"/>) on the set <m>\set{\vect{v}_1,\,\vect{v}_2,\,\vect{v}_3,\,\vect{v}_4}</m>.  Besides indicating linear independence, the Sage vector space method <c>.linear_dependence()</c> produces relations of linear dependence for linearly dependent sets.  Here is how we would employ this method in <xref ref="example-RSC5" acro="RSC5"/>.  The optional argument <c>zeros='right'</c> will produce results consistent with our work here, you can also experiment with <c>zeros='left'</c> (which is the default).</p>
             <sage xml:id="sagecell-RLD-1">
                 <input>
@@ -184,11 +184,11 @@
         <p>In <xref ref="example-RSC5" acro="RSC5"/> we used four vectors to create a span.  With a relation of linear dependence in hand, we were able to <q>toss out</q> one of these four vectors and create the same span from a subset of just three vectors from the original set of four.  We did have to take some care as to just which vector we tossed out.  In the next example, we will be more methodical about just how we choose to eliminate vectors from a linearly dependent set while preserving a span.</p>
         <example xml:id="example-COV" acro="COV">
             <title>Casting out vectors</title>
-            <index>
-                <main>span</main>
-                <sub>removing vectors</sub>
-            </index>
-            <index><main>Archetype I</main><sub>casting out vectors</sub></index>
+            <idx>
+                <h>span</h>
+                <h>removing vectors</h>
+            </idx>
+            <idx><h>Archetype I</h><h>casting out vectors</h></idx>
             <!-- Archetype I, Part purematrix -->
             <!-- Archetype I, Part matrixreduced -->
             <p>We begin with a set <m>S</m> containing seven vectors from <m>\complex{4}</m><me>S=\set{
@@ -284,10 +284,10 @@
         </example>
         <computation xml:id="sage-COV" acro="COV">
             <title>Casting Out Vectors</title>
-            <index>
-                <main>span</main>
-                <sub>casting out vectors</sub>
-            </index>
+            <idx>
+                <h>span</h>
+                <h>casting out vectors</h>
+            </idx>
             <p>We will redo <xref ref="example-COV" acro="COV"/>, though somewhat tersely, just producing the justification for each time we toss a vector (a specific relation of linear dependence), and then verifying that the resulting spans, each with one fewer vector, still produce the original span.  We also introduce the <c>.remove()</c> method for lists.  Ready?  Here we go.</p>
             <sage xml:id="sagecell-COV-1">
                 <input>
@@ -413,10 +413,10 @@
         <p><xref ref="example-COV" acro="COV"/> deserves your careful attention, since this important example motivates the following very fundamental theorem.</p>
         <theorem xml:id="theorem-BS" acro="BS">
             <title>Basis of a Span</title>
-            <index>
-                <main>span</main>
-                <sub>basis</sub>
-            </index>
+            <idx>
+                <h>span</h>
+                <h>basis</h>
+            </idx>
             <statement>
                 <p>Suppose that <m>S=\set{\vectorlist{v}{n}}</m> is a set of column vectors.  Define <m>W=\spn{S}</m> and let <m>A</m> be the matrix whose columns are the vectors from <m>S</m>.  Let <m>B</m> be the reduced row-echelon form of <m>A</m>, with <m>D=\set{\scalarlist{d}{r}}</m> the set of indices for the pivot columns of <m>B</m>.  Then<ol>
                     <li><m>T=\set{\vect{v}_{d_1},\,\vect{v}_{d_2},\,\vect{v}_{d_3},\,\ldots\,\vect{v}_{d_r}}</m> is a linearly independent set. </li>
@@ -439,10 +439,10 @@
         <p>Here is a straightforward application of <xref ref="theorem-BS" acro="BS"/>.</p>
         <example xml:id="example-RSC4" acro="RSC4">
             <title>Reducing a span in <m>\complex{4}</m></title>
-            <index>
-                <main>span</main>
-                <sub>reducing</sub>
-            </index>
+            <idx>
+                <h>span</h>
+                <h>reducing</h>
+            </idx>
             <p>Begin with a set of five vectors from <m>\complex{4}</m>, <me>S=\set{
             \colvector{ 1 \\ 1 \\ 2 \\ 1},\,
             \colvector{ 2 \\ 2 \\ 4 \\ 2},\,
@@ -481,10 +481,10 @@
         </example>
         <computation xml:id="sage-RS" acro="RS">
             <title>Reducing a Span</title>
-            <index>
-                <main>span</main>
-                <sub>reduced</sub>
-            </index>
+            <idx>
+                <h>span</h>
+                <h>reduced</h>
+            </idx>
             <p><xref ref="theorem-BS" acro="BS"/> allows us to construct a reduced spanning set for a span.  As with the theorem, employing Sage we begin by constructing a matrix with the vectors of the spanning set as columns.  Here is a do-over of <xref ref="example-RSC4" acro="RSC4"/>, illustrating the use of <xref ref="theorem-BS" acro="BS"/> in Sage.</p>
             <sage xml:id="sagecell-RS-1">
                 <input>
@@ -523,10 +523,10 @@
         </computation>
         <example xml:id="example-RES" acro="RES">
             <title>Reworking elements of a span</title>
-            <index>
-                <main>span</main>
-                <sub>reworking elements</sub>
-            </index>
+            <idx>
+                <h>span</h>
+                <h>reworking elements</h>
+            </idx>
             <p>Begin with a set of five vectors from <m>\complex{4}</m>,<me>R=\set{
             \colvector{ 2 \\ 1 \\ 3 \\ 2 },\,
             \colvector{ -1 \\ 1 \\ 0 \\ 1 },\,
@@ -582,10 +582,10 @@
         </example>
         <computation xml:id="sage-RES" acro="RES">
             <title>Reworking a Span</title>
-            <index>
-                <main>span</main>
-                <sub>reworked</sub>
-            </index>
+            <idx>
+                <h>span</h>
+                <h>reworked</h>
+            </idx>
             <p>As another demonstration of using Sage to help us understand spans, linear combinations, linear independence and reduced row-echelon form, we will recreate parts of <xref ref="example-RES" acro="RES"/>.  Most of this should be familiar, but see the commments following.</p>
             <sage xml:id="sagecell-RES-1">
                 <input>

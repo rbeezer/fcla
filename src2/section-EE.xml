@@ -9,14 +9,14 @@
         <p>We start with the principal definition for this chapter.</p>
         <definition xml:id="definition-EEM" acro="EEM">
             <title>Eigenvalues and Eigenvectors of a Matrix</title>
-            <index>eigenvalue</index>
+            <idx>eigenvalue</idx>
             <statement>
                 <p>Suppose that <m>A</m> is a square matrix of size <m>n</m>, <m>\vect{x}\neq\zerovector</m> is a vector in <m>\complex{n}</m>, and <m>\lambda</m> is a scalar in <m>\complexes</m>.   Then we say <m>\vect{x}</m> is an <term>eigenvector</term> of <m>A</m> with <term>eigenvalue</term> <m>\lambda</m> if<me>A\vect{x}=\lambda\vect{x}</me>.</p>
             </statement>
         </definition>
         <p>Before going any further, perhaps we should convince you that such things ever happen at all.  Understand the next example, but do not concern yourself with where the pieces come from.  We will have methods soon enough to be able to discover these eigenvectors ourselves.</p>
         <example xml:id="example-SEE" acro="SEE">
-            <index>eigenvalues}\index{eigenvectors</index>
+            <idx>eigenvalues}\index{eigenvectors</idx>
             <title>Some eigenvalues and eigenvectors</title>
             <p>Consider the matrix<me>A=
             \begin{bmatrix}
@@ -96,7 +96,7 @@
         </example>
         <computation xml:id="sage-EE" acro="EE">
             <title>Eigenvalues and Eigenvectors</title>
-            <index>eigenvalues and eigenvectors</index>
+            <idx>eigenvalues and eigenvectors</idx>
             <p>Sage can compute eigenvalues and eigenvectors of matrices.  We will see shortly that there are subtleties involved with using these routines, but here is a quick example to start.  These two commands should be enough to get you started with most of the early examples in this section.  See the end of the section for more comprehensive advice.</p><p>For a square matrix, the methods <c>.eigenvalues()</c> and <c>.eigenvectors_right()</c> will produce what you expect, though the format of the eigenvector output requires some explanation.  Here is <xref ref="example-SEE" acro="SEE"/> from the start of this chapter.</p>
             <sage xml:id="sagecell-EE-1">
                 <input>
@@ -134,10 +134,10 @@
         <title>Polynomials and Matrices</title>
         <p>A polynomial is a combination of powers, multiplication by scalar coefficients, and addition (with subtraction just being the inverse of addition).  We never have occasion to divide when computing the value of a polynomial.  So it is with matrices.  We can add and subtract matrices, we can multiply matrices by scalars, and we can form powers of square matrices by repeated applications of matrix multiplication.  We do not normally divide matrices (though sometimes we can multiply by an inverse).  If a matrix is square, all the operations constituting a polynomial will preserve the size of the matrix.  So it is natural to consider evaluating a polynomial with a matrix, effectively replacing the variable of the polynomial by a matrix.  We will demonstrate with an example.</p>
         <example xml:id="example-PM" acro="PM">
-            <index>
-                <main>polynomial</main>
-                <sub>of a matrix</sub>
-            </index>
+            <idx>
+                <h>polynomial</h>
+                <h>of a matrix</h>
+            </idx>
             <title>Polynomial of a matrix</title>
             <p>Let<md>
                 <mrow>p(x)=14+19x-3x^2-7x^3+x^4&amp;&amp;
@@ -206,10 +206,10 @@
         <p>Before we embark on computing eigenvalues and eigenvectors, we will prove that every matrix has at least one eigenvalue (and an eigenvector to go with it).  Later, in <xref ref="theorem-MNEM" acro="MNEM"/>, we will determine the maximum number of eigenvalues a matrix may have.</p>
         <p>The determinant (<xref ref="definition-DM" acro="DM"/>) will be a powerful tool in <xref ref="subsection-EE-CEE" acro="EE.CEE"/> when it comes time to compute eigenvalues.  However, it is possible, with some more advanced machinery, to compute eigenvalues without ever making use of the determinant.  Sheldon Axler does just that in his book, <booktitle>Linear Algebra Done Right</booktitle>.  Here and now, we give Axler's <q>determinant-free</q> proof that every matrix has an eigenvalue.  The result is not too startling, but the proof is most enjoyable.</p>
         <theorem xml:id="theorem-EMHE" acro="EMHE">
-            <index>
-                <main>eigenvalue</main>
-                <sub>existence</sub>
-            </index>
+            <idx>
+                <h>eigenvalue</h>
+                <h>existence</h>
+            </idx>
             <title>Every Matrix Has an Eigenvalue</title>
             <statement>
                 <p>Suppose <m>A</m> is a square matrix.  Then <m>A</m> has at least one eigenvalue.</p>
@@ -252,10 +252,10 @@
         </theorem>
         <p>The proof of <xref ref="theorem-EMHE" acro="EMHE"/> is constructive (it contains an unambiguous procedure that leads to an eigenvalue), but it is not meant to be practical.  We will illustrate the theorem with an example, the purpose being to provide a companion for studying the proof and not to suggest this is the best procedure for computing an eigenvalue.</p>
         <example xml:id="example-CAEHW" acro="CAEHW">
-            <index>
-                <main>eigenvalue</main>
-                <sub>existence</sub>
-            </index>
+            <idx>
+                <h>eigenvalue</h>
+                <h>existence</h>
+            </idx>
             <title>Computing an eigenvalue the hard way</title>
             <p>This example illustrates the proof of <xref ref="theorem-EMHE" acro="EMHE"/>, and so will employ the same notation as the proof <mdash/> look there for full explanations.  It is <em>not</em> meant to be an example of a reasonable computational approach to finding eigenvalues and eigenvectors.  OK, warnings in place, here we go.</p>
             <p>Consider the matrix <m>A</m>, and choose the vector <m>\vect{x}</m>,<md>
@@ -351,16 +351,16 @@
         <p>So, for an eigenvalue <m>\lambda</m> and associated eigenvector <m>\vect{x}\neq\zerovector</m>, the vector <m>\vect{x}</m> will be a nonzero element of the null space of <m>A-\lambda I_n</m>, while the matrix <m>A-\lambda I_n</m> will be singular and therefore have zero determinant.  These ideas are made precise in <xref ref="theorem-EMRCP" acro="EMRCP"/> and <xref ref="theorem-EMNS" acro="EMNS"/>, but for now this brief discussion should suffice as motivation for the following definition and example.</p>
         <definition xml:id="definition-CP" acro="CP">
             <title>Characteristic Polynomial</title>
-            <index>characteristic polynomial</index>
+            <idx>characteristic polynomial</idx>
             <statement>
                 <p>Suppose that <m>A</m> is a square matrix of size <m>n</m>.  Then the <term>characteristic polynomial</term> of <m>A</m> is the polynomial <m>\charpoly{A}{x}</m> defined by<me>\charpoly{A}{x}=\detname{A-xI_n}</me>.</p>
             </statement>
         </definition>
         <example xml:id="example-CPMS3" acro="CPMS3">
-            <index>
-                <main>characteristic polynomial</main>
-                <sub>size 3 matrix</sub>
-            </index>
+            <idx>
+                <h>characteristic polynomial</h>
+                <h>size 3 matrix</h>
+            </idx>
             <title>Characteristic polynomial of a matrix, size 3</title>
             <p>Consider<me>F=
             \begin{bmatrix}
@@ -405,10 +405,10 @@
         </example>
         <p>The characteristic polynomial is our main computational tool for finding eigenvalues, and will sometimes be used to aid us in determining the properties of eigenvalues.</p>
         <theorem xml:id="theorem-EMRCP" acro="EMRCP">
-            <index>
-                <main>eigenvalue</main>
-                <sub>root of characteristic polynomial</sub>
-            </index>
+            <idx>
+                <h>eigenvalue</h>
+                <h>root of characteristic polynomial</h>
+            </idx>
             <title>Eigenvalues of a Matrix are Roots of Characteristic Polynomials</title>
             <statement>
                 <p>Suppose <m>A</m> is a square matrix.  Then <m>\lambda</m> is an eigenvalue of <m>A</m> if and only if <m>\charpoly{A}{\lambda}=0</m>.</p>
@@ -434,10 +434,10 @@
             </proof>
         </theorem>
         <example xml:id="example-EMS3" acro="EMS3">
-            <index>
-                <main>eigenvalues</main>
-                <sub>size 3 matrix</sub>
-            </index>
+            <idx>
+                <h>eigenvalues</h>
+                <h>size 3 matrix</h>
+            </idx>
             <title>Eigenvalues of a matrix, size 3</title>
             <p>In <xref ref="example-CPMS3" acro="CPMS3"/> we found the characteristic polynomial of<me>F=
             \begin{bmatrix}
@@ -449,17 +449,17 @@
         <p>Let us now turn our attention to the computation of eigenvectors.</p>
         <definition xml:id="definition-EM" acro="EM">
             <title>Eigenspace of a Matrix</title>
-            <index>eigenspace</index>
+            <idx>eigenspace</idx>
             <statement>
                 <p>Suppose that <m>A</m> is a square matrix and <m>\lambda</m> is an eigenvalue of <m>A</m>.  Then the <term>eigenspace</term> of <m>A</m> for <m>\lambda</m>, <m>\eigenspace{A}{\lambda}</m>, is the set of all the eigenvectors of <m>A</m> for <m>\lambda</m>, together with the inclusion of the zero vector.</p>
             </statement>
         </definition>
         <p><xref ref="example-SEE" acro="SEE"/> hinted that the set of eigenvectors for a single eigenvalue might have some closure properties, and with the addition of the one eigenvector that is never an eigenvector, <m>\zerovector</m>, we indeed get a whole subspace.</p>
         <theorem xml:id="theorem-EMS" acro="EMS">
-            <index>
-                <main>eigenspace</main>
-                <sub>subspace</sub>
-            </index>
+            <idx>
+                <h>eigenspace</h>
+                <h>subspace</h>
+            </idx>
             <title>Eigenspace for a Matrix is a Subspace</title>
             <statement>
                 <p>Suppose  <m>A</m> is a square matrix of size <m>n</m> and <m>\lambda</m> is an eigenvalue of <m>A</m>.  Then the eigenspace <m>\eigenspace{A}{\lambda}</m> is a subspace of the vector space <m>\complex{n}</m>.</p>
@@ -489,10 +489,10 @@
         </theorem>
         <p><xref ref="theorem-EMS" acro="EMS"/> tells us that an eigenspace is a subspace (and hence a vector space in its own right).  Our next theorem tells us how to quickly construct this subspace.</p>
         <theorem xml:id="theorem-EMNS" acro="EMNS">
-            <index>
-                <main>eigenspace</main>
-                <sub> as null space</sub>
-            </index>
+            <idx>
+                <h>eigenspace</h>
+                <h> as null space</h>
+            </idx>
             <title>Eigenspace of a Matrix is a Null Space</title>
             <statement>
                 <p>Suppose  <m>A</m> is a square matrix of size <m>n</m> and <m>\lambda</m> is an eigenvalue of <m>A</m>.  Then<me>\eigenspace{A}{\lambda}=\nsp{A-\lambda I_n}</me>.</p>
@@ -514,10 +514,10 @@
         </theorem>
         <p>You might notice the close parallels (and differences) between the proofs of <xref ref="theorem-EMRCP" acro="EMRCP"/> and <xref ref="theorem-EMNS" acro="EMNS"/>.  Since <xref ref="theorem-EMNS" acro="EMNS"/> describes the set of all the eigenvectors of <m>A</m> as a null space we can use techniques such as <xref ref="theorem-BNS" acro="BNS"/> to provide concise descriptions of eigenspaces.  <xref ref="theorem-EMNS" acro="EMNS"/> also provides a trivial proof for <xref ref="theorem-EMS" acro="EMS"/>.</p>
         <example xml:id="example-ESMS3" acro="ESMS3">
-            <index>
-                <main>eigenvalues</main>
-                <sub>size 3 matrix</sub>
-            </index>
+            <idx>
+                <h>eigenvalues</h>
+                <h>size 3 matrix</h>
+            </idx>
             <title>Eigenspaces of a matrix, size 3</title>
             <p><xref ref="example-CPMS3" acro="CPMS3"/> and <xref ref="example-EMS3" acro="EMS3"/> describe the characteristic polynomial and eigenvalues of the <m>3\times 3</m> matrix<me>F=
             \begin{bmatrix}
@@ -565,19 +565,19 @@
         <p>There are no theorems in this section, just a selection of examples meant to illustrate the range of possibilities for the eigenvalues and eigenvectors of a matrix.  These examples can all be done by hand, though the computation of the characteristic polynomial would be very time-consuming and error-prone.  It can also be difficult to factor an arbitrary polynomial, though if we were to suggest that most of our eigenvalues are going to be integers, then it can be easier to hunt for roots.  These examples are meant to look similar to a concatenation of <xref ref="example-CPMS3" acro="CPMS3"/>, <xref ref="example-EMS3" acro="EMS3"/> and <xref ref="example-ESMS3" acro="ESMS3"/>.  First, we will sneak in a pair of definitions so we can illustrate them throughout this sequence of examples.</p>
         <definition xml:id="definition-AME" acro="AME">
             <title>Algebraic Multiplicity of an Eigenvalue</title>
-            <index>
-                <main>eigenvalue</main>
-                <sub>algebraic multiplicity</sub>
-            </index>
+            <idx>
+                <h>eigenvalue</h>
+                <h>algebraic multiplicity</h>
+            </idx>
             <statement>
                 <p>Suppose that <m>A</m> is a square matrix and <m>\lambda</m> is an eigenvalue of <m>A</m>.  Then the <term>algebraic multiplicity</term> of <m>\lambda</m>, <m>\algmult{A}{\lambda}</m>, is the highest power of <m>(x-\lambda)</m> that divides the characteristic polynomial, <m>\charpoly{A}{x}</m>.</p>
             </statement>
             <notation xml:id="notation-AME" acro="AME">
-                <index>
-                    <main>eigenvalue</main>
-                    <sub>algebraic multiplicity</sub>
-                    <sub>notation</sub>
-                </index>
+                <idx>
+                    <h>eigenvalue</h>
+                    <h>algebraic multiplicity</h>
+                    <h>notation</h>
+                </idx>
                 <description>Algebraic Multiplicity of an Eigenvalue</description>
                 <usage>\algmult{A}{\lambda}</usage>
             </notation>
@@ -585,29 +585,29 @@
         <p>Since an eigenvalue <m>\lambda</m> is a root of the characteristic polynomial, there is always a factor of <m>(x-\lambda)</m>, and the algebraic multiplicity is just the power of this factor in a factorization of <m>\charpoly{A}{x}</m>.  So in particular, <m>\algmult{A}{\lambda}\geq 1</m>.  Compare the definition of algebraic multiplicity with the next definition.</p>
         <definition xml:id="definition-GME" acro="GME">
             <title>Geometric Multiplicity of an Eigenvalue</title>
-            <index>
-                <main>eigenvalue</main>
-                <sub>geometric multiplicity</sub>
-            </index>
+            <idx>
+                <h>eigenvalue</h>
+                <h>geometric multiplicity</h>
+            </idx>
             <statement>
                 <p>Suppose that <m>A</m> is a square matrix and <m>\lambda</m> is an eigenvalue of <m>A</m>.  Then the <term>geometric multiplicity</term> of <m>\lambda</m>, <m>\geomult{A}{\lambda}</m>, is the dimension of the eigenspace <m>\eigenspace{A}{\lambda}</m>.</p>
             </statement>
             <notation xml:id="notation-GME" acro="GME">
-                <index>
-                    <main>eigenvalue</main>
-                    <sub>geometric multiplicity</sub>
-                    <sub>notation</sub>
-                </index>
+                <idx>
+                    <h>eigenvalue</h>
+                    <h>geometric multiplicity</h>
+                    <h>notation</h>
+                </idx>
                 <description>Geometric Multiplicity of an Eigenvalue</description>
                 <usage>\geomult{A}{\lambda}</usage>
             </notation>
         </definition>
         <p>Every eigenvalue must have at least one eigenvector, so the associated eigenspace cannot be trivial, and so <m>\geomult{A}{\lambda}\geq 1</m>.</p>
         <example xml:id="example-EMMS4" acro="EMMS4">
-            <index>
-                <main>eigenvalue</main>
-                <sub>multiplicities</sub>
-            </index>
+            <idx>
+                <h>eigenvalue</h>
+                <h>multiplicities</h>
+            </idx>
             <title>Eigenvalue multiplicities, matrix of size 4</title>
             <p>Consider the matrix<me>B=
             \begin{bmatrix}
@@ -655,10 +655,10 @@
             <p>So each eigenspace has dimension 1 and so <m>\geomult{B}{1}=1</m> and <m>\geomult{B}{2}=1</m>.  This example is of interest because of the discrepancy between the two multiplicities for <m>\lambda=2</m>.  In many of our examples the algebraic and geometric multiplicities will be equal for all of the eigenvalues (as it was for <m>\lambda=1</m> in this example), so keep this example in mind.  We will have some explanations for this phenomenon later  (see <xref ref="example-NDMS4" acro="NDMS4"/>).</p>
         </example>
         <example xml:id="example-ESMS4" acro="ESMS4">
-            <index>
-                <main>eigenvalue</main>
-                <sub>symmetric matrix</sub>
-            </index>
+            <idx>
+                <h>eigenvalue</h>
+                <h>symmetric matrix</h>
+            </idx>
             <title>Eigenvalues, symmetric matrix of size 4</title>
             <p>Consider the matrix<me>C=
             \begin{bmatrix}
@@ -720,10 +720,10 @@
             <p>So the eigenspace dimensions yield geometric multiplicities <m>\geomult{C}{3}=1</m>, <m>\geomult{C}{1}=2</m> and <m>\geomult{C}{-1}=1</m>, the same as for the algebraic multiplicities.  This example is of interest because <m>A</m> is a symmetric matrix, and will be the subject of <xref ref="theorem-HMRE" acro="HMRE"/>.</p>
         </example>
         <example xml:id="example-HMEM5" acro="HMEM5">
-            <index>
-                <main>eigenvalues</main>
-                <sub>multiplicities</sub>
-            </index>
+            <idx>
+                <h>eigenvalues</h>
+                <h>multiplicities</h>
+            </idx>
             <title>High multiplicity eigenvalues, matrix of size 5</title>
             <p>Consider the matrix<me>E=
             \begin{bmatrix}
@@ -776,10 +776,10 @@
             <p>So the eigenspace dimensions yield geometric multiplicities <m>\geomult{E}{2}=2</m> and <m>\geomult{E}{-1}=1</m>.  This example is of interest because <m>\lambda=2</m> has such a large algebraic multiplicity, which is also not equal to its geometric multiplicity.</p>
         </example>
         <example xml:id="example-CEMS6" acro="CEMS6">
-            <index>
-                <main>eigenvalue</main>
-                <sub>complex</sub>
-            </index>
+            <idx>
+                <h>eigenvalue</h>
+                <h>complex</h>
+            </idx>
             <title>Complex eigenvalues, matrix of size 6</title>
             <p>Consider the matrix<me>F=
             \begin{bmatrix}
@@ -890,10 +890,10 @@
             <p>Eigenspace dimensions yield geometric multiplicities of <m>\geomult{F}{2}=1</m>, <m>\geomult{F}{-1}=1</m>, <m>\geomult{F}{2+i}=1</m> and <m>\geomult{F}{2-i}=1</m>.  This example demonstrates some of the possibilities for the appearance of complex eigenvalues, even when all the entries of the matrix are real.  Notice how all the numbers in the analysis of <m>\lambda=2-i</m> are conjugates of the corresponding number in the analysis of <m>\lambda=2+i</m>.  This is the content of the upcoming <xref ref="theorem-ERMCP" acro="ERMCP"/>.</p>
         </example>
         <example xml:id="example-DEMS5" acro="DEMS5">
-            <index>
-                <main>eigenvalues</main>
-                <sub>distinct</sub>
-            </index>
+            <idx>
+                <h>eigenvalues</h>
+                <h>distinct</h>
+            </idx>
             <title>Distinct eigenvalues, matrix of size 5</title>
             <p>Consider the matrix<me>H=
             \begin{bmatrix}
@@ -1006,10 +1006,10 @@
         </example>
         <computation xml:id="sage-CEVAL" acro="CEVAL">
             <title>Computing Eigenvalues</title>
-            <index>
-                <main>eigenvalues</main>
-                <sub>computing</sub>
-            </index>
+            <idx>
+                <h>eigenvalues</h>
+                <h>computing</h>
+            </idx>
             <p>We can now give a more careful explanation about eigenvalues in Sage.  Sage will compute the characteristic polynomial of a matrix, with amazing ease (in other words, quite quickly, even for large matrices).  The two matrix methods <c>.charpoly()</c> and <c>.characteristic_polynomial()</c> do exactly the same thing.  We will use the longer name just to be more readable, you may prefer the shorter.</p>
             <p>We now can appreciate a very fundamental obstacle to determining the eigenvalues of a matrix, which is a theme that will run through any advanced study of linear algebra.  Study this example carefully before reading the discussion that follows.</p>
             <sage xml:id="sagecell-CEVAL-1">
@@ -1117,10 +1117,10 @@
         </computation>
         <computation xml:id="sage-CEVEC" acro="CEVEC">
             <title>Computing Eigenvectors</title>
-            <index>
-                <main>eigenvectors</main>
-                <sub>computing</sub>
-            </index>
+            <idx>
+                <h>eigenvectors</h>
+                <h>computing</h>
+            </idx>
             <p>There are three ways to get eigenvectors in Sage.  For each eigenvalue, the method <c>.eigenvectors_right()</c> will return a list of eigenvectors that is a basis for the associated eigenspace.  The method <c>.eigenspaces_right()</c> will return an eigenspace (in other words, a vector space, rather than a list of vectors) for each eigenvalue.  There are also <c>eigenmatrix</c> methods which we will describe at the end of the chapter in Sage<nbsp/><xref ref="sage-MD" acro="MD" text="global"/>.</p>
             <p>The matrix method <c>.eigenvectors_right()</c> (or equivalently the matrix method <c>.right_eigenvectors()</c>) produces a list of triples, one triple per eigenvalue.  Each triple has an eigenvalue, a list, and then the algebraic multiplicity of the eigenvalue.  The list contains vectors forming a basis for the eigenspace.  Notice that the length of the list of eigenvectors will be the geometric multiplicity (and there is no easier way to get this information).</p>
             <sage xml:id="sagecell-CEVEC-1">

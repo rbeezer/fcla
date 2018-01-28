@@ -16,15 +16,15 @@
         <title>Left Null Space</title>
         <definition xml:id="definition-LNS" acro="LNS">
             <title>Left Null Space</title>
-            <index>left null space</index>
+            <idx>left null space</idx>
             <statement>
                 <p>Suppose <m>A</m> is an <m>m\times n</m> matrix.  Then the <term>left null space</term> is defined as <m>\lns{A}=\nsp{\transpose{A}}\subseteq\complex{m}</m>.</p>
             </statement>
             <notation xml:id="notation-LNS" acro="LNS">
-                <index>
-                    <main>left null space</main>
-                    <sub>notation</sub>
-                </index>
+                <idx>
+                    <h>left null space</h>
+                    <h>notation</h>
+                </idx>
                 <description>Left Null Space</description>
                 <usage>\lns{A}</usage>
             </notation>
@@ -41,7 +41,7 @@
         <p>The product <m>\transpose{\vect{y}}A</m> can be viewed as the components of <m>\vect{y}</m> acting as the scalars in a linear combination of the <em>rows</em> of <m>A</m>.  And the result is a <term>row vector</term>, <m>\transpose{\zerovector}</m> that is totally zeros.  When we apply a sequence of row operations to a matrix, each row of the resulting matrix is some linear combination of the rows.  These observations tell us that the vectors in the left null space are scalars that record a sequence of row operations that result in a row of zeros in the row-reduced version of the matrix.  We will see this idea more explicitly in the course of proving <xref ref="theorem-FS" acro="FS"/>.</p>
         <example xml:id="example-LNS" acro="LNS">
             <title>Left null space</title>
-            <index>left null space</index>
+            <idx>left null space</idx>
             <p>We will find the left null space of<me>A=
             \begin{bmatrix}
              1 &amp; -3 &amp; 1 \\
@@ -69,7 +69,7 @@
         </example>
         <computation xml:id="sage-LNS" acro="LNS">
             <title>Left Null Spaces</title>
-            <index>left null space</index>
+            <idx>left null space</idx>
             <p>Similar to (right) null spaces, a left null space can be computed in Sage with the matrix method <c>.left_kernel()</c>.  For a matrix <m>A</m>, elements of the (right) null space are vectors <m>\vect{x}</m> such that <m>A\vect{x}=\zerovector</m>.  If we interpret a vector placed to the left of a matrix as a 1-row matrix, then the product <m>\vect{x}A</m> can be interpreted, according to our definition of matrix multiplication (<xref ref="definition-MM" acro="MM"/>, as the entries of the vector <m>\vect{x}</m> providing the scalars for a linear combination of the <em>rows</em> of the matrix <m>A</m>.  So you can view each vector in the left null space naturally as the entries of a matrix with a single row, <m>Y</m>, with the property that <m>YA=\zeromatrix</m>.</p>
             <p>Given Sage's preference for row vectors, the simpler name <c>.kernel()</c> is a synonym for <c>.left_kernel()</c>.  Given your text's preference for column vectors, we will continue to rely on the <c>.right_kernel()</c>.  Left kernels in Sage have the same options as right kernels and produce vector spaces as output in the same manner.  Once created, a vector space all by itself (with no history) is neither left or right.  Here is a quick repeat of <xref ref="example-LNS" acro="LNS"/>.</p>
             <sage xml:id="sagecell-LNS-1">
@@ -94,10 +94,10 @@
         <p>We will now demonstrate a fourth method by way of a rather complicated example.  Study this example carefully, but realize that its main purpose is to motivate a theorem that simplifies much of the apparent complexity.  So other than an instructive exercise or two, the procedure we are about to describe will not be a usual approach to computing a column space.</p>
         <example xml:id="example-CSANS" acro="CSANS">
             <title>Column space as null space</title>
-            <index>
-                <main>column space</main>
-                <sub>as null space</sub>
-            </index>
+            <idx>
+                <h>column space</h>
+                <h>as null space</h>
+            </idx>
             <p>Let us find the column space of the matrix <m>A</m> below with a new approach.<me>A=
             \begin{bmatrix}
              10 &amp; 0 &amp; 3 &amp; 8 &amp; 7 \\
@@ -197,10 +197,10 @@
         <p>This example motivates the remainder of this section, so it is worth careful study.  You might attempt to mimic the second approach with the coefficient matrices of Archetype<nbsp/><xref ref="archetype-I" acro="I" text="global"/> and Archetype<nbsp/><xref ref="archetype-J" acro="J" text="global"/>.  We will see shortly that the matrix <m>L</m> contains more information about <m>A</m> than just the column space.</p>
         <computation xml:id="sage-RRSM" acro="RRSM">
             <title>Row-Reducing a Symbolic Matrix</title>
-            <index>
-                <main>row-reduce</main>
-                <sub>symbolic matrix</sub>
-            </index>
+            <idx>
+                <h>row-reduce</h>
+                <h>symbolic matrix</h>
+            </idx>
             <p>Sage can very nearly reproduce the reduced row-echelon form we obtained from the augmented matrix with variables present in the final column.  The first line below is a bit of advanced Sage.  It creates a number system <c>R</c> mixing the rational numbers with the variables <c>b1</c> through <c>b6</c>.  It is not important to know the details of this construction right now.  <c>B</c> is the reduced row-echelon form of <c>A</c>, as computed by Sage, where we have displayed the last column separately so it will all fit.  You will notice that <c>B</c> is different than what we used in <xref ref="example-CSANS" acro="CSANS"/>, where all the differences are in the final column.</p>
             <p>However, we can perform row operations on the final two rows of <c>B</c> to bring Sage's result in line with what we used above for the final two entries of the last column, which are the most critical.  Notice that since the final two rows are almost all zeros, any sequence of row operations on just these two rows will preserve the zeros (and we need only display the final column to keep track of our progress).</p>
             <sage xml:id="sagecell-RRSM-1">
@@ -310,10 +310,10 @@
         <p>The final matrix that we row-reduced in <xref ref="example-CSANS" acro="CSANS"/> should look familiar in most respects to the procedure we used to compute the inverse of a nonsingular matrix, <xref ref="theorem-CINM" acro="CINM"/>.  We will now generalize that procedure to matrices that are not necessarily nonsingular, or even square.  First a definition.</p>
         <definition xml:id="definition-EEF" acro="EEF">
             <title>Extended Echelon Form</title>
-            <index>
-                <main>reduced row-echelon form</main>
-                <sub>extended</sub>
-            </index>
+            <idx>
+                <h>reduced row-echelon form</h>
+                <h>extended</h>
+            </idx>
             <statement>
                 <p>Suppose <m>A</m> is an <m>m\times n</m> matrix.  Extend <m>A</m> on its right side with the addition of an <m>m\times m</m> identity matrix to form an <m>m\times (n + m)</m> matrix <m>M</m>.  Use row operations to bring <m>M</m> to reduced row-echelon form and call the result <m>N</m>.  <m>N</m> is the <term>extended reduced row-echelon form</term> of <m>A</m>, and we will standardize on names for five submatrices (<m>B</m>, <m>C</m>, <m>J</m>, <m>K</m>, <m>L</m>) of <m>N</m>.</p>
                 <p>Let <m>B</m> denote the <m>m\times n</m> matrix formed from the first <m>n</m> columns of <m>N</m> and let <m>J</m> denote the <m>m\times m</m> matrix formed from the last <m>m</m> columns of <m>N</m>.  Suppose that <m>B</m> has <m>r</m> nonzero rows.  Further partition <m>N</m> by letting <m>C</m> denote the <m>r\times n</m> matrix formed from all of the nonzero rows of <m>B</m>.  Let <m>K</m> be the <m>r\times m</m> matrix formed from the first <m>r</m> rows of <m>J</m>, while <m>L</m> will be the <m>(m-r)\times m</m> matrix formed from the bottom <m>m-r</m> rows of <m>J</m>.  Pictorially,<me>M=[A\vert I_m]
@@ -325,10 +325,10 @@
         </definition>
         <example xml:id="example-SEEF" acro="SEEF">
             <title>Submatrices of extended echelon form</title>
-            <index>
-                <main>extended echelon form</main>
-                <sub>submatrices</sub>
-            </index>
+            <idx>
+                <h>extended echelon form</h>
+                <h>submatrices</h>
+            </idx>
             <p>We illustrate <xref ref="definition-EEF" acro="EEF"/> with the matrix <m>A</m>.<me>A=
             \begin{bmatrix}
              1 &amp; -1 &amp; -2 &amp; 7 &amp; 1 &amp; 6 \\
@@ -385,10 +385,10 @@
         </example>
         <theorem xml:id="theorem-PEEF" acro="PEEF">
             <title>Properties of Extended Echelon Form</title>
-            <index>
-                <main>extended reduced row-echelon form</main>
-                <sub>properties</sub>
-            </index>
+            <idx>
+                <h>extended reduced row-echelon form</h>
+                <h>properties</h>
+            </idx>
             <statement>
                 <p>Suppose that <m>A</m> is an <m>m\times n</m> matrix and that <m>N</m> is its extended echelon form.  Then<ol>
                     <li><m>J</m> is nonsingular.</li>
@@ -422,15 +422,15 @@
         <p>With all the preliminaries in place we can state our main result for this section.  In essence this result will allow us to say that we can find linearly independent sets to use in span constructions for all four subsets (null space, column space, row space, left null space) by analyzing only the extended echelon form of the matrix, and specifically, just the two submatrices <m>C</m> and <m>L</m>, which will be ripe for analysis since they are already in reduced row-echelon form (<xref ref="theorem-PEEF" acro="PEEF"/>).</p>
         <theorem xml:id="theorem-FS" acro="FS">
             <title>Four Subsets</title>
-            <index>
-                <main>column space</main>
-                <sub> as null space</sub>
-            </index>
+            <idx>
+                <h>column space</h>
+                <h> as null space</h>
+            </idx>
             <statement>
-                <index>
-                    <main>left null space</main>
-                    <sub>as row space</sub>
-                </index>
+                <idx>
+                    <h>left null space</h>
+                    <h>as row space</h>
+                </idx>
                 <p>Suppose <m>A</m> is an <m>m\times n</m> matrix with extended echelon form <m>N</m>.  Suppose the reduced row-echelon form of <m>A</m> has <m>r</m> nonzero rows.  Then <m>C</m> is the submatrix of <m>N</m> formed from the first <m>r</m> rows and the first <m>n</m> columns and <m>L</m> is the submatrix of <m>N</m> formed from the last <m>m</m> columns and the last <m>m-r</m> rows.  Then<ol>
                     <li>The null space of <m>A</m> is the null space of <m>C</m>, <m>\nsp{A}=\nsp{C}</m>.</li>
                     <li>The row space of <m>A</m> is the row space of <m>C</m>, <m>\rsp{A}=\rsp{C}</m>.</li>
@@ -581,7 +581,7 @@
         <p>We will now illustrate <xref ref="theorem-FS" acro="FS"/> with a few examples.</p>
         <example xml:id="example-FS1" acro="FS1">
             <title>Four subsets, no. 1</title>
-            <index>four subsets</index>
+            <idx>four subsets</idx>
             <p>In <xref ref="example-SEEF" acro="SEEF"/> we found the five relevant submatrices of the extended echelon form for the matrix<me>A=
             \begin{bmatrix}
              1 &amp; -1 &amp; -2 &amp; 7 &amp; 1 &amp; 6 \\
@@ -634,7 +634,7 @@
         </example>
         <example xml:id="example-FS2" acro="FS2">
             <title>Four subsets, no. 2</title>
-            <index>four subsets</index>
+            <idx>four subsets</idx>
             <p>Now let us return to the matrix <m>A</m> that we used to motivate this section in <xref ref="example-CSANS" acro="CSANS"/><me>A=
             \begin{bmatrix}
              10 &amp; 0 &amp; 3 &amp; 8 &amp; 7 \\
@@ -709,10 +709,10 @@
         <p>The next example is just a bit different since the matrix has more rows than columns, and a trivial null space.</p>
         <example xml:id="example-FSAG" acro="FSAG">
             <title>Four subsets, Archetype G</title>
-            <index>
-                <main>column space</main>
-                <sub>as null space, Archetype G</sub>
-            </index>
+            <idx>
+                <h>column space</h>
+                <h>as null space, Archetype G</h>
+            </idx>
             <!-- Archetype G, Part purematrix -->
             <p>Archetype<nbsp/><xref ref="archetype-G" acro="G" text="global"/> and Archetype<nbsp/><xref ref="archetype-H" acro="H" text="global"/> are both systems of <m>m=5</m> equations in <m>n=2</m> variables.  They have identical coefficient matrices, which we will denote here as the matrix <m>G</m>.<me>G=\begin{bmatrix}
             2 &amp; 3\\
@@ -790,7 +790,7 @@
         </example>
         <computation xml:id="sage-EEF" acro="EEF">
             <title>Extended Echelon Form</title>
-            <index>extended echelon form</index>
+            <idx>extended echelon form</idx>
             <p>Sage will compute the extended echelon form, an improvement over what we did <q>by hand</q> in Sage<nbsp/><xref ref="sage-MISLE" acro="MISLE" text="global"/>.  And the output can be requested as a <q>subdivided</q> matrix so that we can easily work with the pieces <m>C</m> and <m>L</m>.  Pieces of subdivided matrices can be extracted with indices entirely similar to how we index the actual entries of a matrix.  We will redo <xref ref="example-FS2" acro="FS2"/> as an illustration of <xref ref="theorem-FS" acro="FS"/> and <xref ref="theorem-PEEF" acro="PEEF"/>.</p>
             <sage xml:id="sagecell-EEF-1">
                 <input>

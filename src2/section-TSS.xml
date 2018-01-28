@@ -17,7 +17,7 @@
         <p>The computer scientist Donald Knuth said, <q>Science is what we understand well enough to explain to a computer. Art is everything else.</q>  In this section we will remove solving systems of equations from the realm of art, and into the realm of science.  We begin with a definition.</p>
         <definition xml:id="definition-CS" acro="CS">
             <title>Consistent System</title>
-            <index>consistent system</index>
+            <idx>consistent system</idx>
             <statement>
                 <p>A system of linear equations is <term>consistent</term> if it has at least one solution.  Otherwise, the system is called <term>inconsistent</term>.</p>
             </statement>
@@ -26,7 +26,7 @@
         <p>Use of the notation for the elements of <m>D</m> and <m>F</m> can be a bit confusing, since we have subscripted variables that are in turn equal to integers used to index the matrix.  However, many questions about matrices and systems of equations can be answered once we know <m>r</m>, <m>D</m> and <m>F</m>.  The choice of the letters <m>D</m> and <m>F</m> refer to our upcoming definition of dependent and free variables (<xref ref="definition-IDV" acro="IDV"/>).  An example will help us begin to get comfortable with this aspect of reduced row-echelon form.</p>
         <example xml:id="example-RREFN" acro="RREFN">
             <title>Reduced row-echelon form notation</title>
-            <index><main>reduced row-echelon form</main><sub>notation</sub></index>
+            <idx><h>reduced row-echelon form</h><h>notation</h></idx>
             <p>For the <m>5\times 9</m> matrix<md>
                 <mrow>B&amp;=
                 \begin{bmatrix}
@@ -64,7 +64,7 @@
         <p>Archetypes I and J are both fairly large for doing computations by hand (though not impossibly large).  Their properties are very similar, so we will frequently analyze the situation in Archetype I, and leave you the joy of analyzing Archetype J yourself.  So work through Archetype I with the text,  by hand and/or with a computer, and then tackle Archetype J yourself (and check your results with those listed).  Notice too that the archetypes describing systems of equations each lists the values of <m>r</m>, <m>D</m> and <m>F</m>.  Here we go<ellipsis/></p>
         <example xml:id="example-ISSI" acro="ISSI">
             <title>Describing infinite solution sets, Archetype I</title>
-            <index>infinite solution set</index>
+            <idx>infinite solution set</idx>
             <!-- Archetype I, Part systemdefn -->
             <!-- Archetype I, Part augmentedreduced -->
             <p>Archetype<nbsp/><xref ref="archetype-I" acro="I" text="global"/> is the system of <m>m=4</m> equations in <m>n=7</m> variables.<md>
@@ -110,7 +110,7 @@
         <p>Using the reduced row-echelon form of the augmented matrix of a system of equations to determine the nature of the solution set of the system is a very key idea.  So let us look at one more example like the last one.  But first a definition, and then the example.   We mix our metaphors a bit when we call variables free versus dependent.  Maybe we should call dependent variables <q>enslaved</q>?</p>
         <definition xml:id="definition-IDV" acro="IDV">
             <title>Independent and Dependent Variables</title>
-            <index>independent, dependent variables</index>
+            <idx>independent, dependent variables</idx>
             <statement>
                 <p>Suppose <m>A</m> is the augmented matrix of a consistent system of linear equations and <m>B</m> is a row-equivalent matrix in reduced row-echelon form.  Suppose <m>j</m> is the index of a pivot column of <m>B</m>.  Then the variable <m>x_j</m> is <term>dependent</term>.  A variable that is not dependent is called <term>independent</term> or <term>free</term>.</p>
             </statement>
@@ -118,7 +118,7 @@
         <p>If you studied this definition carefully, you might wonder what to do if the system has <m>n</m> variables and column <m>n+1</m> is a pivot column?  We will see shortly, by <xref ref="theorem-RCLS" acro="RCLS"/>, that this never happens for a consistent system.</p>
         <example xml:id="example-FDV" acro="FDV">
             <title>Free and dependent variables</title>
-            <index>free, independent variables</index>
+            <idx>free, independent variables</idx>
             <p>Consider the system of five equations in five variables,<md>
                 <mrow>x_1  - x_2  -2 x_3 +  x_4 + 11 x_5 &amp;= 13</mrow>
                 <mrow>x_1 - x_2 +  x_3+  x_4 + 5 x_5 &amp;= 16</mrow>
@@ -144,7 +144,7 @@
         </example>
         <computation xml:id="sage-FDV" acro="FDV">
             <title>Free and Dependent Variables</title>
-            <index>free, dependent variables</index>
+            <idx>free, dependent variables</idx>
             <p>Sage has the matrix method <c>.pivot()</c> to quickly and easily identify the pivot columns of the reduced row-echelon form of a matrix.  Notice that we do not have to row-reduce the matrix first, we just ask which columns of a matrix <m>A</m> <em>would be</em> the pivot columns of the matrix <m>B</m> that is row-equivalent to <m>A</m> and in reduced row-echelon form.  By <xref ref="definition-IDV" acro="IDV"/>, the indices of the pivot columns for an augmented matrix of a system of equations are the indices of the dependent variables.  And the remainder are free variables.  But be careful, Sage numbers columns starting from zero and mathematicians typically number variables starting from one.</p>
             <p>Let us reprise <xref ref="example-ISSI" acro="ISSI"/>.</p>
             <sage xml:id="sagecell-FDV-1">
@@ -194,8 +194,8 @@
         <p>First we have an important theorem that explores the distinction between consistent and inconsistent linear systems.</p>
         <theorem xml:id="theorem-RCLS" acro="RCLS">
             <title>Recognizing Consistency of a Linear System</title>
-            <index>consistent linear system</index>
-            <index><main>linear system</main><sub>consistent</sub></index>
+            <idx>consistent linear system</idx>
+            <idx><h>linear system</h><h>consistent</h></idx>
             <statement>
                 <p>Suppose <m>A</m> is the augmented matrix of a system of linear equations with <m>n</m> variables.  Suppose also that <m>B</m> is a row-equivalent matrix in reduced row-echelon form with <m>r</m> nonzero rows.  Then the system of equations is inconsistent if and only if column <m>n+1</m> of <m>B</m> is a pivot column.</p>
             </statement>
@@ -217,7 +217,7 @@
         <p>The beauty of this theorem being an equivalence is that we can unequivocally test to see if a system is consistent or inconsistent by looking at just a single entry of the reduced row-echelon form matrix.  We could program a computer to do it!</p>
         <computation xml:id="sage-RCLS" acro="RCLS">
             <title>Recognizing Consistency of a Linear System</title>
-            <index>consistent linear systems</index>
+            <idx>consistent linear systems</idx>
             <p>Another way of expressing <xref ref="theorem-RCLS" acro="RCLS"/> is to say a system is consistent if and only if column <m>n+1</m> is not a pivot column of <m>B</m>.  Sage has the matrix method <c>.pivot()</c> to easily identify the pivot columns of a matrix.  Let us use Archetype<nbsp/><xref ref="archetype-E" acro="E" text="global"/> as an example.</p>
             <sage xml:id="sagecell-RCLS-1">
                 <input>
@@ -291,7 +291,7 @@
         <p>With the characterization of <xref ref="theorem-RCLS" acro="RCLS"/>, we can explore the relationships between <m>r</m> and <m>n</m> for a consistent system.  We can distinguish between the case of a unique solution and infinitely many solutions, and furthermore, we recognize that these are the only two possibilities.</p>
         <theorem xml:id="theorem-CSRN" acro="CSRN">
             <title>Consistent Systems, <m>r</m> and <m>n</m></title>
-            <index>consistent linear systems</index>
+            <idx>consistent linear systems</idx>
             <statement>
                 <p>Suppose <m>A</m> is the augmented matrix of a <em>consistent</em> system of linear equations with <m>n</m> variables.  Suppose also that <m>B</m> is a row-equivalent matrix in reduced row-echelon form with <m>r</m> pivot columns.  Then <m>r\leq n</m>.  If <m>r=n</m>, then the system has a unique solution, and if <m>r\lt n</m>, then the system has infinitely many solutions.</p>
             </statement>
@@ -307,7 +307,7 @@
         <p>The next theorem simply states a conclusion from the final paragraph of the previous proof, allowing us to state explicitly the number of free variables for a consistent system.</p>
         <theorem xml:id="theorem-FVCS" acro="FVCS">
             <title>Free Variables for Consistent Systems</title>
-            <index>free variables, number</index>
+            <idx>free variables, number</idx>
             <statement>
                 <p>Suppose <m>A</m> is the augmented matrix of a <em>consistent</em> system of linear equations with <m>n</m> variables.  Suppose also that <m>B</m> is a row-equivalent matrix in reduced row-echelon form with <m>r</m> rows that are not completely zeros.  Then the solution set can be described with <m>n-r</m> free variables.</p>
             </statement>
@@ -317,7 +317,7 @@
         </theorem>
         <example xml:id="example-CFV" acro="CFV">
             <title>Counting free variables</title>
-            <index>free variables</index>
+            <idx>free variables</idx>
             <p>For each archetype that is a system of equations, the values of <m>n</m> and <m>r</m> are listed.  Many also contain a few sample solutions.  We can use this information profitably, as illustrated by four examples. <ol>
                 <li>Archetype<nbsp/><xref ref="archetype-A" acro="A" text="global"/> has <m>n=3</m> and <m>r=2</m>.  It can be seen to be consistent by the sample solutions given.  Its solution set then has <m>n-r=1</m> free variables, and therefore will be infinite.</li>
                 <li>Archetype<nbsp/><xref ref="archetype-B" acro="B" text="global"/> has <m>n=3</m> and <m>r=3</m>.  It can be seen to be consistent by the single sample solution given.  Its solution set can then be described with <m>n-r=0</m> free variables, and therefore will have just the single solution.</li>
@@ -328,7 +328,7 @@
         <p>We have accomplished a lot so far, but our main goal has been the following theorem, which is now very simple to prove.  The proof is so simple that we ought to call it a corollary, but the result is important enough that it deserves to be called a theorem.  (See Proof Technique<nbsp/><xref ref="technique-LC" acro="LC" text="global"/>.)  Notice that this theorem was presaged first by <xref ref="example-TTS" acro="TTS"/> and further foreshadowed by other examples.</p>
         <theorem xml:id="theorem-PSSLS" acro="PSSLS">
             <title>Possible Solution Sets for Linear Systems</title>
-            <index><main>solution sets</main><sub>possibilities</sub></index>
+            <idx><h>solution sets</h><h>possibilities</h></idx>
             <statement>
                 <p><subject key="math.la.t.linsys.zoi"/></p>
                 <p>A system of linear equations has no solutions, a unique solution or infinitely many solutions.</p>
@@ -368,7 +368,7 @@
         <p>We have one more theorem to round out our set of tools for determining solution sets to systems of linear equations.</p>
         <theorem xml:id="theorem-CMVEI" acro="CMVEI">
             <title>Consistent, More Variables than Equations, Infinite solutions</title>
-            <index>more variables than equations</index>
+            <idx>more variables than equations</idx>
             <statement>
                 <p>Suppose a consistent system of linear equations has <m>m</m> equations in <m>n</m> variables.  If <m>n\gt m</m>, then the system has infinitely many solutions.</p>
             </statement>
@@ -380,7 +380,7 @@
         <p>Notice that to use this theorem we need only know that the system is consistent, together with the values of <m>m</m> and <m>n</m>.  We do not necessarily have to compute a row-equivalent reduced row-echelon form matrix, even though we discussed such a matrix in the proof.  This is the substance of the following example.</p>
         <example xml:id="example-OSGMD" acro="OSGMD">
             <title>One solution gives many, Archetype D</title>
-            <index>more variables than equations</index>
+            <idx>more variables than equations</idx>
             <!-- Archetype D, Part systemdefn -->
             <p>Archetype D is the system of <m>m=3</m> equations in <m>n=4</m> variables,<md>
                 <mrow>2x_1  + x_2 + 7x_3 - 7x_4 &amp;= 8 </mrow>
@@ -403,7 +403,7 @@
         <p>In this section we have gained a foolproof procedure for solving any system of linear equations, no matter how many equations or variables.  We also have a handful of theorems that allow us to determine partial information about a solution set without actually constructing the whole set itself.  Donald Knuth would be proud.</p>
         <computation xml:id="sage-SS1" acro="SS1">
             <title>Solving Systems, Part 1</title>
-            <index>solving linear systems</index>
+            <idx>solving linear systems</idx>
             <p>Sage has a built-in command that will solve a linear system of equations, given a coefficient matrix and a vector of constants.  We need to learn some more theory before we can entirely understand this command, but we can begin to explore its use.  For now, consider these methods experimental and do not let it replace row-reducing augmented matrices.</p>
             <p>The matrix method <c>A.solve_right(b)</c> will provide information about solutions to the linear system of equations with coefficient matrix <c>A</c> and vector of constants <c>b</c>.  The reason for the <q>right</q> (and the corresponding command named with <q>left</q>) will have to wait for Sage<nbsp/><xref ref="sage-MVP" acro="MVP" text="global"/>.  For now, it is generally correct in this course to use the <q>right</q> variant of any Sage linear algebra command that has both <q>left</q> and <q>right</q> variants.</p>
             <p>Let us apply the <c>.solve_right()</c> command to a system with no solutions, in particular Archetype<nbsp/><xref ref="archetype-E" acro="E" text="global"/>.  We have already seen in Sage<nbsp/><xref ref="sage-RCLS" acro="RCLS" text="global"/> that this system is inconsistent.</p>
