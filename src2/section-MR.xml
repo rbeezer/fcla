@@ -2142,8 +2142,9 @@
                 <p>Suppose that <m>\ltdefn{T}{U}{V}</m> and <m>\ltdefn{S}{V}{W}</m> are linear transformations, and that <m>B</m>, <m>C</m> and <m>D</m> are bases for <m>U</m>, <m>V</m>, and <m>W</m>.  Using only <xref ref="definition-MR" acro="MR"/> define matrix representations for <m>T</m> and <m>S</m>.  Using these two definitions, and <xref ref="definition-MR" acro="MR"/>, derive a matrix representation for the composition <m>\compose{S}{T}</m> in terms of the entries of the matrices <m>\matrixrep{T}{B}{C}</m> and <m>\matrixrep{S}{C}{D}</m>.  Explain how you would use this result to <em>motivate a definition</em> for matrix multiplication that is strikingly similar to <xref ref="theorem-EMP" acro="EMP"/>.</p>
             </statement>
             <solution xml:id="solution-MR-T80">
-                <p>Suppose that <m>B=\set{\vectorlist{u}{m}}</m>, <m>C=\set{\vectorlist{v}{n}}</m> and <m>D=\set{\vectorlist{w}{p}}</m>.  For convenience, set <m>M=\matrixrep{T}{B}{C}</m>, <m>m_{ij}=\matrixentry{M}{ij}</m>, <m>1\leq i\leq n</m>, <m>1\leq j\leq m</m>, and similarly, set <m>N=\matrixrep{S}{C}{D}</m>, <m>n_{ij}=\matrixentry{N}{ij}</m>, <m>1\leq i\leq p</m>, <m>1\leq j\leq n</m>.   We want to learn about the matrix representation of <m>\ltdefn{\compose{S}{T}}{V}{W}</m> relative to <m>B</m> and <m>D</m>.  We will examine a single (generic) entry of this representation.</p>
-                <p><md>
+                <p>Suppose that <m>B=\set{\vectorlist{u}{m}}</m>, <m>C=\set{\vectorlist{v}{n}}</m> and <m>D=\set{\vectorlist{w}{p}}</m>.  For convenience, set <m>M=\matrixrep{T}{B}{C}</m>, <m>m_{ij}=\matrixentry{M}{ij}</m>, <m>1\leq i\leq n</m>, <m>1\leq j\leq m</m>, and similarly, set <m>N=\matrixrep{S}{C}{D}</m>, <m>n_{ij}=\matrixentry{N}{ij}</m>, <m>1\leq i\leq p</m>, <m>1\leq j\leq n</m>.   We want to learn about the matrix representation of <m>\ltdefn{\compose{S}{T}}{V}{W}</m> relative to <m>B</m> and <m>D</m>.  (<xref ref="zachjarvis"/> helped with this proof.)</p>
+
+                <p>We will examine a single (generic) entry of this representation.<md>
                     <mrow>\matrixentry{\matrixrep{\compose{S}{T}}{B}{D}}{ij}
                     &amp;=\vectorentry{\vectrep{D}{\lteval{\left(\compose{S}{T}\right)}{\vect{u}_j}}}{i}&amp;&amp;
                         <xref ref="definition-MR" acro="MR"/></mrow>
@@ -2161,8 +2162,17 @@
                         <xref ref="property-C" acro="C"/></mrow>
                     <mrow>&amp;=\vectorentry{\vectrep{D}{\sum_{\ell=1}^{p}\left(\sum_{k=1}^{n}m_{kj}n_{\ell k}\right)\vect{w}_\ell}}{i}&amp;&amp;
                         <xref ref="property-DSA" acro="DSA"/></mrow>
+                    <mrow>&amp;=\vectorentry{
+                        \colvector{
+                        \sum_{k=1}^{n}m_{kj}n_{1k}\\
+                        \sum_{k=1}^{n}m_{kj}n_{2k}\\
+                        \sum_{k=1}^{n}m_{kj}n_{3k}\\
+                        \vdots\\
+                        \sum_{k=1}^{n}m_{kj}n_{pk}}
+                        }{i}&amp;&amp;
+                        <xref ref="definition-VR" acro="DSA"/></mrow>
                     <mrow>&amp;=\sum_{k=1}^{n}m_{kj}n_{ik}&amp;&amp;
-                        <xref ref="definition-VR" acro="VR"/></mrow>
+                        <xref ref="definition-CV" acro="VR"/></mrow>
                     <mrow>&amp;=\sum_{k=1}^{n}n_{ik}m_{kj}&amp;&amp;
                         <xref ref="property-CMCN" acro="CMCN"/></mrow>
                     <mrow>&amp;=\sum_{k=1}^{n}\matrixentry{\matrixrep{S}{C}{D}}{ik}\matrixentry{\matrixrep{T}{B}{C}}{kj}&amp;&amp;
