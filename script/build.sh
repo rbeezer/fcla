@@ -111,7 +111,7 @@ function html_build {
     # svg and pdf for archive links
     # png is cover
     cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf ${IMAGES}/*.png ./images/
-    xsltproc --stringparam html.css.file mathbook-4.css --stringparam html.knowl.remark no --xinclude ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
+    xsltproc --stringparam html.css.colorfile blue_grey --stringparam html.knowl.remark no --xinclude ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
 }
 
 # Subroutine to build the AIM HTML Version
@@ -133,7 +133,7 @@ function aim_html_build {
     # change Google id
     sed -i -e 's/zxs4n7uh_pi/rswmw2oth0k/' bookinfo.xml
     # Sage/computation temporarily unknowled
-    xsltproc --stringparam toc.level 2 --stringparam html.css.file mathbook-4.css --stringparam html.knowl.remark no --xinclude ${MBUSER}/fcla-html.xsl fcla.xml
+    xsltproc --stringparam toc.level 2 --stringparam html.css.colorfile blue_grey --stringparam html.knowl.remark no --xinclude ${MBUSER}/fcla-html.xsl fcla.xml
     # clean-up, pop up a level, make zip
     rm *.xml
     cd ${SCRATCH}
