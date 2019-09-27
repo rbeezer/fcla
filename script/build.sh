@@ -76,12 +76,12 @@ function pdf_build {
     echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     install -d ${SCRATCH}/pdf ${SCRATCH}/pdf/images
     cd ${SCRATCH}/pdf
-    # rm index.tex
+    rm fcla.tex
     cp -a ${IMAGES}/* ./images/
-    xsltproc --stringparam whitespace strict --xinclude ${MBUSER}/fcla-latex.xsl ${SOURCE}/fcla.xml
+    xsltproc -o fcla.tex --xinclude ${MBUSER}/fcla-latex.xsl ${SOURCE}/fcla.xml
     # twice?  Try xelatex, change filename here, and in view
-    pdflatex index.tex
-    pdflatex index.tex
+    pdflatex fcla.tex
+    pdflatex fcla.tex
 }
 
 # Subroutine to build the print-on-demand Version
@@ -91,12 +91,12 @@ function pod_build {
     echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     install -d ${SCRATCH}/pod ${SCRATCH}/pod/images
     cd ${SCRATCH}/pod
-    # rm index.tex
+    rm fcla-pod.tex
     cp -a ${IMAGES}/* ./images/
-    xsltproc --stringparam whitespace strict --xinclude ${MBUSER}/fcla-pod.xsl ${SOURCE}/fcla.xml
+    xsltproc -o fcla-pod.tex --xinclude ${MBUSER}/fcla-pod.xsl ${SOURCE}/fcla.xml
     # twice?  Try xelatex, change filename here, and in view
-    xelatex index.tex
-    xelatex index.tex
+    xelatex fcla-pod.tex
+    xelatex fcla-pod.tex
 }
 
 # Subroutine to build the HTML Version
