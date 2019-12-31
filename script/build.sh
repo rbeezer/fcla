@@ -111,7 +111,7 @@ function html_build {
     # svg and pdf for archive links
     # png is cover
     cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf ${IMAGES}/*.png ./images/
-    xsltproc --stringparam html.css.colorfile blue_grey --stringparam html.knowl.remark no --xinclude ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
+    xsltproc -xinclude -stringparam publisher ../publisher/public.xml -stringparam html.knowl.remark no ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
 }
 
 # Subroutine to build the AIM HTML Version
