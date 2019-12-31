@@ -127,19 +127,19 @@ function aim_html_build {
     # rm *.html
     # rm -rf knowl/* images/*
     cp -a ${SOURCE}/*.xml .
+    # move over the publisher file, too, with all source XML
+    cp -a ${SOURCE}/../publisher/AIM-test-sites.xml .
     # svg and pdf for archive links
     # png is cover
     cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf  ${IMAGES}/*.png ./images/
-    # change Google id
-    sed -i -e 's/zxs4n7uh_pi/rswmw2oth0k/' bookinfo.xml
     # Sage/computation temporarily unknowled
-    xsltproc --stringparam toc.level 2 --stringparam html.css.colorfile blue_grey --stringparam html.knowl.remark no --xinclude ${MBUSER}/fcla-html.xsl fcla.xml
+    xsltproc -xinclude -stringparam publisher AIM-test-sites.xml --stringparam toc.level 2 -stringparam html.knowl.remark no ${MBUSER}/fcla-html.xsl fcla.xml
     # clean-up, pop up a level, make zip
     rm *.xml
     cd ${SCRATCH}
     zip -r ${ZIPFILE} fcla-html/
-    ${RSYNCDELETE} ${ZIPFILE} beezer@userweb.pugetsound.edu:/home/beezer/mathbook.pugetsound.edu/beta
-    echo "Dropped in http://mathbook.pugetsound.edu/beta/"${ZIPFILE}
+    ${RSYNCDELETE} ${ZIPFILE} utmost@utmost.aimath.org:/home/utmost/www/pretextbook.org/htdocs/beta
+    echo "Dropped in http://pretextbook.org/beta/"${ZIPFILE}
 }
 
 function doctest {
