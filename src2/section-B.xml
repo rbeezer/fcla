@@ -925,93 +925,101 @@
             </statement>
             <solution xml:id="solution-B-T50">
                 <p>Our first proof relies mostly on definitions of linear independence and spanning, which is a good exercise.  The second proof is shorter and turns on a technical result from our work with matrix inverses, <xref ref="theorem-NPNT" acro="NPNT"/>.</p>
-                <p><implyforward/>  Assume that <m>A</m> is nonsingular and prove that <m>C</m> is a basis of <m>\complex{n}</m>.  First show that <m>C</m> is linearly independent.  Work on a relation of linear dependence on <m>C</m>,<md>
-                    <mrow>\zerovector
-                    &amp;=
-                    a_1A\vect{x}_1+
-                    a_2A\vect{x}_2+
-                    a_3A\vect{x}_3+
-                    \cdots+
-                    a_nA\vect{x}_n&amp;&amp;
-                        <xref ref="definition-RLD" acro="RLD"/></mrow>
-                    <mrow>&amp;=
-                    Aa_1\vect{x}_1+
-                    Aa_2\vect{x}_2+
-                    Aa_3\vect{x}_3+
-                    \cdots+
-                    Aa_n\vect{x}_n&amp;&amp;
-                        <xref ref="theorem-MMSMM" acro="MMSMM"/></mrow>
-                    <mrow>&amp;=
-                    A\left(
-                    a_1\vect{x}_1+
-                    a_2\vect{x}_2+
-                    a_3\vect{x}_3+
-                    \cdots+
-                    a_n\vect{x}_n
-                    \right)&amp;&amp;
-                        <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
-                </md>Since <m>A</m> is nonsingular, <xref ref="definition-NM" acro="NM"/> and <xref ref="theorem-SLEMM" acro="SLEMM"/> allows us to conclude that<md>
-                    <mrow>a_1\vect{x}_1+
-                    a_2\vect{x}_2+
-                    \cdots+
-                    a_n\vect{x}_n
-                    &amp;=\zerovector</mrow>
-                </md>But this is a relation of linear dependence of the linearly independent set <m>B</m>, so the scalars are trivial, <m>a_1=a_2=a_3=\cdots=a_n=0</m>.  By <xref ref="definition-LI" acro="LI"/>, the set <m>C</m> is linearly independent.</p>
-                <p>Now prove that <m>C</m> spans <m>\complex{n}</m>.  Given an arbitrary vector <m>\vect{y}\in\complex{n}</m>, can it be expressed as a linear combination of the vectors in <m>C</m>?  Since <m>A</m> is a nonsingular matrix we can define the vector <m>\vect{w}</m> to be the unique solution of the system <m>\linearsystem{A}{\vect{y}}</m> (<xref ref="theorem-NMUS" acro="NMUS"/>).  Since <m>\vect{w}\in\complex{n}</m> we can write <m>\vect{w}</m> as a linear combination of the vectors in the basis <m>B</m>.  So there are scalars, <m>\scalarlist{b}{n}</m> such that<md>
-                    <mrow>\vect{w}&amp;=\lincombo{b}{x}{n}</mrow>
-                </md>.  Then,<md>
-                    <mrow>\vect{y}
-                    &amp;=A\vect{w}&amp;&amp;
-                        <xref ref="theorem-SLEMM" acro="SLEMM"/></mrow>
-                    <mrow>&amp;=A\left(\lincombo{b}{x}{n}\right)&amp;&amp;
-                        <xref ref="definition-SSVS" acro="SSVS"/></mrow>
-                    <mrow>&amp;=
-                    Ab_1\vect{x}_1+
-                    Ab_2\vect{x}_2+
-                    Ab_3\vect{x}_3+
-                    \cdots+
-                    Ab_n\vect{x}_n&amp;&amp;
-                        <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
-                    <mrow>&amp;=
-                    b_1A\vect{x}_1+
-                    b_2A\vect{x}_2+
-                    b_3A\vect{x}_3+
-                    \cdots+
-                    b_nA\vect{x}_n&amp;&amp;
-                        <xref ref="theorem-MMSMM" acro="MMSMM"/></mrow>
-                </md>So we can write an arbitrary vector of <m>\complex{n}</m> as a linear combination of the elements of <m>C</m>.  In other words, <m>C</m> spans <m>\complex{n}</m> (<xref ref="definition-SSVS" acro="SSVS"/>).  By <xref ref="definition-B" acro="B"/>, the set <m>C</m> is a basis for <m>\complex{n}</m>.</p>
-                <p><implyreverse/> Assume that <m>C</m> is a basis and prove that <m>A</m> is nonsingular.  Let <m>\vect{x}</m> be a solution to the homogeneous system <m>\homosystem{A}</m>.  Since <m>B</m> is a basis of <m>\complex{n}</m> there are  scalars, <m>\scalarlist{a}{n}</m>, such that<md>
-                    <mrow>\vect{x}&amp;=\lincombo{a}{x}{n}</mrow>
-                </md>Then<md>
-                    <mrow>\zerovector
-                    &amp;=A\vect{x}&amp;&amp;
-                        <xref ref="theorem-SLEMM" acro="SLEMM"/></mrow>
-                    <mrow>&amp;=A\left(\lincombo{a}{x}{n}\right)&amp;&amp;
-                        <xref ref="definition-SSVS" acro="SSVS"/></mrow>
-                    <mrow>&amp;=
-                    Aa_1\vect{x}_1+
-                    Aa_2\vect{x}_2+
-                    Aa_3\vect{x}_3+
-                    \cdots+
-                    Aa_n\vect{x}_n&amp;&amp;
-                        <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
-                    <mrow>&amp;=
-                    a_1A\vect{x}_1+
-                    a_2A\vect{x}_2+
-                    a_3A\vect{x}_3+
-                    \cdots+
-                    a_nA\vect{x}_n&amp;&amp;
-                        <xref ref="theorem-MMSMM" acro="MMSMM"/></mrow>
-                </md>This is a relation of linear dependence on the linearly independent set <m>C</m>, so the scalars must all be zero, <m>a_1=a_2=a_3=\cdots=a_n=0</m>.  Thus,<md>
-                    <mrow>\vect{x}&amp;=\lincombo{a}{x}{n}=0\vect{x}_1+0\vect{x}_2+0\vect{x}_3+\cdots+0\vect{x}_n=\zerovector</mrow>
-                </md>.  By <xref ref="definition-NM" acro="NM"/> we see that <m>A</m> is nonsingular.</p>
-                <p>Now for a second proof.  Take the vectors for <m>B</m> and use them as the columns of a matrix, <m>G=\matrixcolumns{x}{n}</m>.  By <xref ref="theorem-CNMB" acro="CNMB"/>, because we have the hypothesis that <m>B</m> is a basis of <m>\complex{n}</m>, <m>G</m> is a nonsingular matrix.  Notice that the columns of <m>AG</m> are exactly the vectors in the set <m>C</m>, by <xref ref="definition-MM" acro="MM"/>.<md>
-                    <mrow>A\text{ nonsingular}
-                    &amp;\iff AG\text{ nonsingular}&amp;&amp;
-                        <xref ref="theorem-NPNT" acro="NPNT"/></mrow>
-                    <mrow>&amp;\iff C\text{ basis for }\complex{n}&amp;&amp;
-                        <xref ref="theorem-CNMB" acro="CNMB"/></mrow>
-                </md>That was easy!</p>
+                <proof>
+                    <case direction="forward">
+                        <p>Assume that <m>A</m> is nonsingular and prove that <m>C</m> is a basis of <m>\complex{n}</m>.  First show that <m>C</m> is linearly independent.  Work on a relation of linear dependence on <m>C</m>,<md>
+                            <mrow>\zerovector
+                            &amp;=
+                            a_1A\vect{x}_1+
+                            a_2A\vect{x}_2+
+                            a_3A\vect{x}_3+
+                            \cdots+
+                            a_nA\vect{x}_n&amp;&amp;
+                                <xref ref="definition-RLD" acro="RLD"/></mrow>
+                            <mrow>&amp;=
+                            Aa_1\vect{x}_1+
+                            Aa_2\vect{x}_2+
+                            Aa_3\vect{x}_3+
+                            \cdots+
+                            Aa_n\vect{x}_n&amp;&amp;
+                                <xref ref="theorem-MMSMM" acro="MMSMM"/></mrow>
+                            <mrow>&amp;=
+                            A\left(
+                            a_1\vect{x}_1+
+                            a_2\vect{x}_2+
+                            a_3\vect{x}_3+
+                            \cdots+
+                            a_n\vect{x}_n
+                            \right)&amp;&amp;
+                                <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
+                        </md>Since <m>A</m> is nonsingular, <xref ref="definition-NM" acro="NM"/> and <xref ref="theorem-SLEMM" acro="SLEMM"/> allows us to conclude that<md>
+                            <mrow>a_1\vect{x}_1+
+                            a_2\vect{x}_2+
+                            \cdots+
+                            a_n\vect{x}_n
+                            &amp;=\zerovector</mrow>
+                        </md>But this is a relation of linear dependence of the linearly independent set <m>B</m>, so the scalars are trivial, <m>a_1=a_2=a_3=\cdots=a_n=0</m>.  By <xref ref="definition-LI" acro="LI"/>, the set <m>C</m> is linearly independent.</p>
+                        <p>Now prove that <m>C</m> spans <m>\complex{n}</m>.  Given an arbitrary vector <m>\vect{y}\in\complex{n}</m>, can it be expressed as a linear combination of the vectors in <m>C</m>?  Since <m>A</m> is a nonsingular matrix we can define the vector <m>\vect{w}</m> to be the unique solution of the system <m>\linearsystem{A}{\vect{y}}</m> (<xref ref="theorem-NMUS" acro="NMUS"/>).  Since <m>\vect{w}\in\complex{n}</m> we can write <m>\vect{w}</m> as a linear combination of the vectors in the basis <m>B</m>.  So there are scalars, <m>\scalarlist{b}{n}</m> such that<md>
+                            <mrow>\vect{w}&amp;=\lincombo{b}{x}{n}</mrow>
+                        </md>.  Then,<md>
+                            <mrow>\vect{y}
+                            &amp;=A\vect{w}&amp;&amp;
+                                <xref ref="theorem-SLEMM" acro="SLEMM"/></mrow>
+                            <mrow>&amp;=A\left(\lincombo{b}{x}{n}\right)&amp;&amp;
+                                <xref ref="definition-SSVS" acro="SSVS"/></mrow>
+                            <mrow>&amp;=
+                            Ab_1\vect{x}_1+
+                            Ab_2\vect{x}_2+
+                            Ab_3\vect{x}_3+
+                            \cdots+
+                            Ab_n\vect{x}_n&amp;&amp;
+                                <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
+                            <mrow>&amp;=
+                            b_1A\vect{x}_1+
+                            b_2A\vect{x}_2+
+                            b_3A\vect{x}_3+
+                            \cdots+
+                            b_nA\vect{x}_n&amp;&amp;
+                                <xref ref="theorem-MMSMM" acro="MMSMM"/></mrow>
+                        </md>So we can write an arbitrary vector of <m>\complex{n}</m> as a linear combination of the elements of <m>C</m>.  In other words, <m>C</m> spans <m>\complex{n}</m> (<xref ref="definition-SSVS" acro="SSVS"/>).  By <xref ref="definition-B" acro="B"/>, the set <m>C</m> is a basis for <m>\complex{n}</m>.</p>
+                    </case>
+                    <case direction="backward">
+                        <p>Assume that <m>C</m> is a basis and prove that <m>A</m> is nonsingular.  Let <m>\vect{x}</m> be a solution to the homogeneous system <m>\homosystem{A}</m>.  Since <m>B</m> is a basis of <m>\complex{n}</m> there are  scalars, <m>\scalarlist{a}{n}</m>, such that<md>
+                            <mrow>\vect{x}&amp;=\lincombo{a}{x}{n}</mrow>
+                        </md>Then<md>
+                            <mrow>\zerovector
+                            &amp;=A\vect{x}&amp;&amp;
+                                <xref ref="theorem-SLEMM" acro="SLEMM"/></mrow>
+                            <mrow>&amp;=A\left(\lincombo{a}{x}{n}\right)&amp;&amp;
+                                <xref ref="definition-SSVS" acro="SSVS"/></mrow>
+                            <mrow>&amp;=
+                            Aa_1\vect{x}_1+
+                            Aa_2\vect{x}_2+
+                            Aa_3\vect{x}_3+
+                            \cdots+
+                            Aa_n\vect{x}_n&amp;&amp;
+                                <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
+                            <mrow>&amp;=
+                            a_1A\vect{x}_1+
+                            a_2A\vect{x}_2+
+                            a_3A\vect{x}_3+
+                            \cdots+
+                            a_nA\vect{x}_n&amp;&amp;
+                                <xref ref="theorem-MMSMM" acro="MMSMM"/></mrow>
+                        </md>This is a relation of linear dependence on the linearly independent set <m>C</m>, so the scalars must all be zero, <m>a_1=a_2=a_3=\cdots=a_n=0</m>.  Thus,<md>
+                            <mrow>\vect{x}&amp;=\lincombo{a}{x}{n}=0\vect{x}_1+0\vect{x}_2+0\vect{x}_3+\cdots+0\vect{x}_n=\zerovector</mrow>
+                        </md>.  By <xref ref="definition-NM" acro="NM"/> we see that <m>A</m> is nonsingular.</p>
+                    </case>
+                </proof>
+                <proof>
+                    <p>Now for a second proof.  Take the vectors for <m>B</m> and use them as the columns of a matrix, <m>G=\matrixcolumns{x}{n}</m>.  By <xref ref="theorem-CNMB" acro="CNMB"/>, because we have the hypothesis that <m>B</m> is a basis of <m>\complex{n}</m>, <m>G</m> is a nonsingular matrix.  Notice that the columns of <m>AG</m> are exactly the vectors in the set <m>C</m>, by <xref ref="definition-MM" acro="MM"/>.<md>
+                        <mrow>A\text{ nonsingular}
+                        &amp;\iff AG\text{ nonsingular}&amp;&amp;
+                            <xref ref="theorem-NPNT" acro="NPNT"/></mrow>
+                        <mrow>&amp;\iff C\text{ basis for }\complex{n}&amp;&amp;
+                            <xref ref="theorem-CNMB" acro="CNMB"/></mrow>
+                    </md>That was easy!</p>
+                </proof>
             </solution>
         </exercise>
         <exercise number="T51" xml:id="exercise-B-T51">
