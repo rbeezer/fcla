@@ -149,7 +149,7 @@ function doctest {
     install -d ${SCRATCH}/doctest
     cd ${SCRATCH}/doctest
     rm *.py
-    xsltproc --stringparam chunk.level 2 --xinclude ${MBXSL}/mathbook-sage-doctest.xsl ${SOURCE}/fcla.xml
+    xsltproc --stringparam chunk.level 2 --xinclude ${MBXSL}/pretext-sage-doctest.xsl ${SOURCE}/fcla.xml
     echo
     echo "BUILD: Doctest'ing Sage code :BUILD"
     echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
