@@ -114,6 +114,27 @@ function html_build {
     xsltproc -xinclude -stringparam publisher ../publisher/public.xml ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
 }
 
+# Subroutine to build a Runestone Version as a zip file
+# Identical to HTML: w/ publisher, drops a zip file
+function html_runestone_build {
+    echo
+    echo "BUILD: Building Runestone Version :BUILD"
+    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    declare ZIPFILE=../FCLA-runestone-${DATE}.zip
+    install -d ${SCRATCH}/html ${SCRATCH}/html/images ${SCRATCH}/html/knowl ${SCRATCH}/html/_static
+    cd ${SCRATCH}/html
+    # rm *.html
+    # rm -rf knowl/* images/*
+    # svg and pdf for archive links
+    # png is cover
+    cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf ${IMAGES}/*.png ./images/
+    # SOME TOTALLY HARDCODED PATHS
+    cp /home/rob/mathbook/python-virtual/env/lib/python3.6/site-packages/runestone/dist/runestone.js ${SCRATCH}/html/_static
+    cp /home/rob/mathbook/python-virtual/env/lib/python3.6/site-packages/runestone/common/js/jquery.idle-timer.js ${SCRATCH}/html/_static
+    xsltproc -xinclude -stringparam publisher ../publisher/runestone.xml ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
+    zip -r ${ZIPFILE} .
+}
+
 # Subroutine to build the AIM HTML Version
 # Right Google ID via sed, two-level ToC via toc.level stringparam
 # EG: http://mathbook.pugetsound.edu/beta/fcla-html-2017-02-19.zip
@@ -215,6 +236,10 @@ case "$1" in
     setup
     html_build
     ;;
+    "runestone")
+    setup
+    html_runestone_build
+    ;;
     "aimzip")
     setup
     aim_html_build
@@ -240,6 +265,6 @@ case "$1" in
     view_html
     ;;
     *)
-    echo "Supply an option: xmlcheck|pdf|html|aimzip|doctest|imagegen|website <username>|viewpdf|viewhtml"
+    echo "Supply an option: xmlcheck|pdf|html|runestone|aimzip|doctest|imagegen|website <username>|viewpdf|viewhtml"
     ;;
 esac
