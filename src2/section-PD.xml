@@ -256,6 +256,54 @@
             </proof>
         </theorem>
         <p>There are many different ways to state and prove this result, and indeed, the equality of the dimensions of the column space and row space is just a slight expansion of <xref ref="theorem-RMRT" acro="RMRT"/>.  However, we have restricted our techniques to applying <xref ref="theorem-FS" acro="FS"/> and then determining dimensions with bases provided by <xref ref="theorem-BNS" acro="BNS"/> and <xref ref="theorem-BRS" acro="BRS"/>.  This provides an appealing symmetry to the results and the proof.</p>
+        <p>In <xref ref="section-S"/> we saw two general constructions (<xref ref="theorem-SIIS"/>, <xref ref="theorem-SSIS"/>) that combined two subspaces to create new subspaces.  The four subspaces involved have dimensions related to each other, a result that will can be very useful.</p>
+        <theorem xml:id="theorem-SID" acro="SID">
+            <title>Sum and Intersection Dimensions</title>
+            <idx>
+                <h>subspace</h>
+                <h>sum, intersection dimensions</h>
+            </idx>
+            <statement>
+                <p>Suppose that <m>U</m> and <m>V</m> are subspaces of a vector space.  Then
+                    <me>\dimension{U+V} = \dimension{U} + \dimension{V} - \dimension{U\cap V}</me>.</p>
+            </statement>
+            <proof>
+                <p>Let <m>A=\set{\vectorlist{x}{k}}</m> be a basis of the subspace <m>U\cap V</m>.  Because <m>U</m> and <m>V</m> are each individually subspaces of <m>U+V</m>, we can extend <m>A</m> via repeated applications of <xref ref="theorem-ELIS"/> to form bases for <m>U</m> and <m>V</m>.  To wit, let <m>\set{\vectorlist{u}{r}}\subseteq U</m> be a set of vectors such that <m>C=\set{\vectorlist{x}{k},\,\vectorlist{u}{r}}</m> is a basis for <m>U</m>.  Similarly, let <m>\set{\vectorlist{v}{s}}\subseteq V</m> be a set of vectors such that <m>D=\set{\vectorlist{x}{k},\,\vectorlist{v}{s}}</m> is a basis for <m>V</m>.  Note that we have implicitly determined (by <xref ref="definition-D"/>) that <m>\dimension{U\cap V}=k</m>, <m>\dimension{U}=k+r</m>, and <m>\dimension{V}=k+s</m>.</p>
+                <p>With this setup, we claim that
+                    <me>B=\set{\vectorlist{x}{k},\,\vectorlist{u}{r},\,\vectorlist{v}{s}}</me>
+                is a basis for the subspace <m>U+V</m>.  We establish spanning first.  Suppose that <m>\vect{x}\in U+V</m>, so <m>\vect{x} = \vect{u}+\vect{v}</m> where <m>\vect{u}\in U</m> and <m>\vect{v}\in V</m>.  Since <m>\vect{u}\in U</m> we can express <m>\vect{u}</m> as a linear combination of the vectors in <m>C</m>, and since <m>\vect{v}\in V</m> we can express <m>\vect{v}</m> as a linear combination of the vectors in <m>D</m>.  So<md>
+                    <mrow>\vect{x} &amp;= \vect{u} + \vect{v}</mrow>
+                    <mrow>&amp;=\left(\lincombo{a}{x}{k}+\lincombo{c}{u}{r}\right) + </mrow>
+                    <mrow>&amp;\quad\quad\left(\lincombo{b}{x}{k}+\lincombo{d}{v}{s}\right)</mrow>
+                    <mrow>&amp;=\left(a_1+b_1\right)\vect{x_1} + \left(a_2+b_2\right)\vect{x_2} +\left(a_3+b_3\right)\vect{x_3} + \cdots + \left(a_k+b_k\right)\vect{x}_k +</mrow>
+                    <mrow>&amp;\quad\quad\lincombo{c}{u}{r} + \lincombo{d}{v}{s}</mrow>
+                </md>and we see that <m>\vect{x}</m> is a linear combination of the vectors of <m>B</m>, so <m>B</m> spans <m>U+V</m> by <xref ref="definition-SSVS"/>.</p>
+                <p>To establish linear independence, we begin with a relation of linear independence (<xref ref="definition-RLD"/>) on <m>B</m>,
+                    <me>\lincombo{a}{x}{k}+\lincombo{c}{u}{r} + \lincombo{d}{v}{s}=\zerovector</me>.
+                We rearrange this equation, and give a name to the common vector that is the expression on either side of the equality.<md>
+                    <mrow>\vect{w} &amp;= \lincombo{a}{x}{k}+\lincombo{c}{u}{r}</mrow>
+                    <mrow>&amp;= - \lincombo{d}{v}{s}</mrow>
+                </md>.  From the first expression we see that <m>\vect{w}</m> is a linear combination of the basis <m>C</m> and so <m>\vect{w}\in U</m>.  The second expression shows that <m>\vect{w}</m> is a linear combination of the basis <m>D</m> and so <m>\vect{w}\in V</m>.  Thus, <m>\vect{w}\in U\cap V</m> and we can express <m>\vect{w}</m> as a linear combination of the vectors of <m>A</m>.  We use this observation, and another expression for <m>\vect{w}</m> from just above, to form an equality that we then rearrange,<md>
+                    <mrow>\vect{w} = \lincombo{e}{x}{k} = -\lincombo{d}{v}{s}</mrow>
+                    <mrow>\zerovector = \lincombo{e}{x}{k} + \lincombo{d}{v}{s}</mrow>
+                </md>Aha!  Finally, we have a relation of linear dependence on a linearly independent set (<m>D</m>) and so by <xref ref="definition-LI"/> we conclude that
+                    <me>e_1=e_2=e_3=\cdots=e_k=d_1=d_2=d_3=\cdots=d_s=0</me>
+                and in particular, <m>\vect{w}=\zerovector</m>.</p>
+                <p>Now, if we return to the equation where we first introduced <m>\vect{w}</m>, it becomes
+                    <me>\zerovector = \vect{w} = \lincombo{a}{x}{k}+\lincombo{c}{u}{r}</me>.
+                Now, this is a relation of linear dependence on a linearly independent set (<m>C</m>) and so by <xref ref="definition-LI"/> we conclude that
+                    <me>a_1=a_2=e_3=\cdots=a_k=c_1=c_2=c_3=\cdots=c_r=0</me>
+                and we have determined that all of the scalars in our original relation of linear dependence on <m>B</m> are zero, and so by <xref ref="definition-LI"/>, we see that <m>B</m> is linearly independent.</p>
+                <p>Having established that <m>B</m> is a basis, we can say that <m>\dimension{U+V}=k+r+s</m>.  So we have our result,<md>
+                    <mrow>\dimension{U+V} &amp;= k + r + s</mrow>
+                    <mrow>&amp;= \left(k + r\right) + \left(k + s\right) - k</mrow>
+                    <mrow>&amp;= \dimension{U} + \dimension{V} - \dimension{U\cap V}</mrow>
+                </md>.</p>
+            </proof>
+        </theorem>
+        <p>An alternate version of the conclusion of <xref ref="theorem-SID"/> is
+            <me>\dimension{U+V} + \dimension{U\cap V} = \dimension{U} + \dimension{V}</me>
+        which has an appealing symmetry.</p>
         <computation xml:id="sage-DMS" acro="DMS">
             <title>Dimensions of Matrix Subspaces</title>
             <idx>
