@@ -621,6 +621,51 @@
             </proof>
         </theorem>
         <p>Take note of the <em>generality</em> of <xref ref="theorem-SIIS"/>.  We have made no assumptions about the <em>specific</em> operations used for the vector space <m>W</m>, nor have we assumed any <em>specifics</em> about the subspaces <m>U</m> and <m>V</m>.  So the result <em>applies</em> to a wide variety of <em>general</em> situations.</p>
+        <p>While a set intersection results in a smaller set, a set union (<xref ref="definition-SU"/>) results in a larger set.  Unfortunately, the union of two subspaces is not always a subspace (see <xref ref="exercise-S-M40"/>).  Instead, we define a somewhat similar construction.</p>
+        <definition xml:id="definition-SOS" acro="SOS">
+            <title>Sum of Subspaces</title>
+            <idx>
+                <h>subspace</h>
+                <h>sum</h>
+            </idx>
+            <statement>
+                <p>Suppose that <m>U</m> and <m>V</m> are subspaces of the vector space <m>W</m>.  Then
+                    <me>U+V=\setparts{\vect{u}+\vect{v}}{\vect{u}\in U,\,\vect{v}\in V}</me>
+                is the <term>sum</term> of <m>U</m> and <m>V</m>.</p>
+            </statement>
+            <notation xml:id="notation-SOS" acro="SOS">
+                <idx>
+                    <h>subspace</h>
+                    <h>sum</h>
+                </idx>
+                <description>Sum of Subspaces</description>
+                <usage>U+V</usage>
+            </notation>
+        </definition>
+        <p>Notice that the <q>+</q> operation has been given yet another meaning, which might only be clear from its context.  By choosing <m>\vect{v}</m> in the defintion to be the zero vector, we can see that <m>U\subseteq U+V</m>.  Similarly, <m>V\subseteq U+V</m>.  So <m>U+V</m> contains <m>U\cup V</m>.  Furthermore, the sum of two subspaces is again a subspace.</p>
+        <theorem xml:id="theorem-SSIS" acro="SSIS">
+            <title>Subspace Sum is a Subspace</title>
+            <idx>
+                <h>subspace</h>
+                <h>sum</h>
+            </idx>
+            <statement>
+                <p>Suppose that <m>U</m> and <m>V</m> are subspaces of the vector space <m>W</m>.  Then their sum, <m>U+V</m>, is a subspace of <m>W</m>.</p>
+            </statement>
+            <proof>
+                <p>We appeal to the three-part tests of <xref ref="theorem-TSS"/>.  First, since <m>U</m> and <m>V</m> are subspaces of <m>W</m>, they each contain the zero vector of <m>W</m>, and so
+                    <me>\zerovector = \zerovector + \zerovector \in U+V</me>.</p>
+                <p>Second, choose <m>\vect{x},\,\vect{y}\in U+V</m>.  By <xref ref="definition-SOS"/>, there are vectors <m>\vect{u}_1,\,\vect{u}_2\in U</m> and <m>\vect{v}_1,\,\vect{v}_2\in V</m> so that
+                <m>\vect{x} = \vect{u}_1 + \vect{v}_1</m> and <m>\vect{y} = \vect{u}_2 + \vect{v}_2</m>.  Then, applying <xref ref="property-AA"/> we have
+                <md>
+                    <mrow>\vect{x} + \vect{y} &amp;= \left(\vect{u}_1 + \vect{v}_1\right) + \left(\vect{u}_2 + \vect{v}_2\right)</mrow>
+                    <mrow>&amp;= \left(\vect{u}_1 + \vect{u}_2\right) + \left(\vect{v}_1 + \vect{v}_2\right)</mrow>
+                </md>.  Since <m>U</m> and <m>V</m> are both closed under vector addition (<xref ref="property-AC"/>) this final expression is an element of <m>U+V</m> according to <xref ref="definition-SOS"/>, and so <m>\vect{x}+\vect{y}\in U+V</m>.</p>
+                <p>Third, choose <m>\alpha\in\complexes</m>, <m>\vect{x}\in U+V</m>.  By <xref ref="definition-SOS"/>, there are vectors <m>\vect{u}\in U</m> and <m>\vect{v}\in V</m> so that <m>\vect{x} = \vect{u} + \vect{v}</m>.  Then
+                    <me>\alpha\vect{x} = \alpha\left(\vect{u} + \vect{v}\right) = \alpha\vect{u} + \alpha\vect{v}</me>.
+                Since <m>U</m> and <m>V</m> are both closed under scalar multiplication (<xref ref="property-SC"/>) this final expression is an element of <m>U+V</m> according to <xref ref="definition-SOS"/>, and so <m>\alpha\vect{x}\in U+V</m>.</p>
+            </proof>
+        </theorem>
         <computation xml:id="sage-VS" acro="VS">
             <title>Vector Spaces</title>
             <idx>vector spaces</idx>
