@@ -79,6 +79,21 @@
                 <p>This reduces the original relation of linear dependence on <m>\set{\vectorlist{x}{k}}</m> to the simpler equation <m>a_k\vect{x}_k=\zerovector</m>.  By <xref ref="theorem-SMEZV" acro="SMEZV"/> we conclude that <m>a_k=0</m> or <m>\vect{x}_k=\zerovector</m>.  Eigenvectors are never the zero vector (<xref ref="definition-EEM" acro="EEM"/>), so <m>a_k=0</m>.  So now all of the scalars <m>a_i</m>, <m>1\leq i\leq k</m> are zero, contradicting their introduction as the scalars creating a <em>nontrivial</em> relation of linear dependence on the set <m>\set{\vectorlist{x}{k}}</m>.  With a contradiction in hand, we conclude that <m>S</m> must be linearly independent.</p>
             </proof>
         </theorem>
+        <p>The next theorem gives us a convenient upper limit on the number of eigenvalues, before we determine the characteristic polynomial and factor it.</p>
+        <theorem xml:id="theorem-MNEM" acro="MNEM">
+            <title>Maximum Number of Eigenvalues of a Matrix</title>
+            <idx>
+                <h>eigenvalues</h>
+                <h>maximum number</h>
+            </idx>
+            <statement>
+                <p>Suppose that <m>A</m> is a square matrix of size <m>n</m>.  Then <m>A</m> cannot have more than <m>n</m> distinct eigenvalues.</p>
+            </statement>
+            <proof>
+                <p>We argue by contradiction (<xref ref="technique-CD"/>).  Assume that <m>A</m> has <m>n+1</m> or more distinct eigenvalues.  Then there is a set of <m>n+1</m> or more eigenvectors of <m>A</m>, with distinct eigenvalues.  This is a set of <m>n+1</m> or more vectors from <m>\complex{n}</m> that will be linearly independent by <xref ref="theorem-EDELI"/>.  But this contradicts <xref ref="theorem-MVSLD"/>, so our assumption is false, and there are no more than <m>n</m> distinct eigenvalues.</p>
+            </proof>
+        </theorem>
+        <p>Notice that once we have found <m>n</m> distinct eigenvalues for a matrix of size <m>n</m>, then we know there are no more eigenvalues.  <xref ref="example-DEMS5"/> is an example, and the upcoming <xref ref="theorem-DED"/> also considers this situation.</p>
         <p>There is a simple connection between the eigenvalues of a matrix and whether or not the matrix is nonsingular.</p>
         <theorem xml:id="theorem-SMZE" acro="SMZE">
             <title>Singular Matrices have Zero Eigenvalues</title>
@@ -87,16 +102,13 @@
                 <h>zero</h>
             </idx>
             <statement>
-                <p>Suppose <m>A</m> is a square matrix.  Then <m>A</m> is singular if and only if <m>\lambda=0</m> is an eigenvalue of <m>A</m>.</p>
+                <p>Suppose <m>A</m> is a square matrix.  Then <m>A</m> is singular if and only if <m>0</m> is an eigenvalue of <m>A</m>.</p>
             </statement>
             <proof>
                 <p>We have the following equivalences:<md>
-                    <mrow>A\text{ is singular}&amp;\iff\text{there exists }\vect{x}\neq\zerovector,\,A\vect{x}=\zerovector&amp;&amp;
-                        <xref ref="definition-NM" acro="NM"/></mrow>
-                    <mrow>&amp;\iff\text{there exists }\vect{x}\neq\zerovector,\,A\vect{x}=0\vect{x}&amp;&amp;
-                        <xref ref="theorem-ZSSM" acro="ZSSM"/></mrow>
-                    <mrow>&amp;\iff\lambda=0\text{ is an eigenvalue of A}&amp;&amp;
-                        <xref ref="definition-EEM" acro="EEM"/></mrow>
+                    <mrow>A\text{ is singular}
+                          &amp;\iff A-0I_n\text{ is singular}&amp;&amp;<xref ref="property-ZM" acro="ZM"/></mrow>
+                    <mrow>&amp;\iff 0\text{ is an eigenvalue of A}&amp;&amp;<xref ref="theorem-ESM" acro="ESM"/></mrow>
                 </md>.</p>
             </proof>
         </theorem>
@@ -501,25 +513,6 @@
                 <p>Now imagine computing the characteristic polynomial of <m>A</m> by computing the characteristic polynomial of <m>\inverse{S}AS</m> using the form just obtained.  The first <m>g</m> columns of <m>\inverse{S}AS</m> are all zero, save for a <m>\lambda</m> on the diagonal.  So if we compute the determinant by expanding about the first column, successively, we will get successive factors of <m>(\lambda-x)</m>.  More precisely, let <m>T</m> be the square matrix of size <m>n-g</m> that is formed from the last <m>n-g</m> rows and last <m>n-g</m> columns of <m>\inverse{S}AR</m>.  Then<me>\charpoly{A}{x}=\charpoly{\inverse{S}AS}{x}=(\lambda-x)^g\charpoly{T}{x}</me>.</p>
                 <p>This says that <m>(x-\lambda)</m> is a factor of the characteristic polynomial <em>at least</em> <m>g</m> times, so the algebraic multiplicity of <m>\lambda</m> as an eigenvalue of <m>A</m> is greater than or equal to <m>g</m> (<xref ref="definition-AME" acro="AME"/>).  In other words,<me>\geomult{A}{\lambda}=g\leq\algmult{A}{\lambda}</me>as desired.</p>
                 <p><xref ref="theorem-NEM" acro="NEM"/> says that the sum of the algebraic multiplicities for <em>all</em> the eigenvalues of <m>A</m> is equal to <m>n</m>.  Since the algebraic multiplicity is a positive quantity, no single algebraic multiplicity can exceed <m>n</m> without the sum of all of the algebraic multiplicities doing the same.</p>
-            </proof>
-        </theorem>
-        <theorem xml:id="theorem-MNEM" acro="MNEM">
-            <title>Maximum Number of Eigenvalues of a Matrix</title>
-            <idx>
-                <h>eigenvalues</h>
-                <h>maximum number</h>
-            </idx>
-            <statement>
-                <p>Suppose that <m>A</m> is a square matrix of size <m>n</m>.  Then <m>A</m> cannot have more than <m>n</m> distinct eigenvalues.</p>
-            </statement>
-            <proof>
-                <p>Suppose that <m>A</m> has <m>k</m> distinct eigenvalues, <m>\scalarlist{\lambda}{k}</m>.  Then<md>
-                    <mrow>k&amp;=\sum_{i=1}^{k}1</mrow>
-                    <mrow>&amp;\leq\sum_{i=1}^{k}\algmult{A}{\lambda_i}&amp;&amp;
-                        <xref ref="theorem-ME" acro="ME"/></mrow>
-                    <mrow>&amp;=n&amp;&amp;
-                        <xref ref="theorem-NEM" acro="NEM"/></mrow>
-                </md>.</p>
             </proof>
         </theorem>
     </subsection>
