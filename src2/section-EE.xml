@@ -379,9 +379,31 @@
     </subsection>
     <subsection xml:id="subsection-EE-CEE" acro="CEE">
         <title>Computing Eigenvalues and Eigenvectors</title>
-        <p>Fortunately, we need not rely on the procedure of <xref ref="theorem-EMHE" acro="EMHE"/> each time we need an eigenvalue.  It is the determinant, and specifically <xref ref="theorem-SMZD" acro="SMZD"/>, that provides the main tool for computing eigenvalues.  Here is an informal sequence of equivalences that is the key to determining the eigenvalues and eigenvectors of a matrix,<me>A\vect{x}=\lambda\vect{x}\iff
-        A\vect{x}-\lambda I_n\vect{x}=\zerovector\iff
-        \left(A-\lambda I_n\right)\vect{x}=\zerovector</me>.</p>
+        <p>Fortunately, we need not rely on the procedure of <xref ref="theorem-EMHE" acro="EMHE"/> each time we need an eigenvalue.  It is the determinant, and specifically <xref ref="theorem-SMZD" acro="SMZD"/>, that provides the main tool for computing eigenvalues.  It may already be clear from <xref ref="theorem-EMHE"/> and <xref ref="example-CASE"/> that for an eigenvalue <m>\lambda</m> the matrix <m>A-\lambda I</m> plays an important role.  Here is the formal version as a theorem.</p>
+        <theorem xml:id="theorem-ESM" acro="ESM">
+            <idx>
+                <h>eigenvalue</h>
+                <h>singular matrix</h>
+            </idx>
+            <title>Eigenvalues and Singular Matrices</title>
+            <statement>
+                <p>Suppose <m>A</m> is a square matrix of size <m>n</m>.  Then <m>\lambda</m> is an eigenvalue of <m>A</m> if and only if <m>A-\lambda I_n</m> is a singular matrix.</p>
+            </statement>
+            <proof>
+                <p>Both directions of the proof can be accomplished with the following chain of equivalences,<md>
+                    <mrow>A\vect{x}=\lambda\vect{x} &amp;\iff A\vect{x}=\lambda I_n\vect{x}&amp;&amp;<xref ref="theorem-MMIM"/></mrow>
+                    <mrow>&amp;\iff A\vect{x}-\lambda I_n\vect{x}=\zerovector&amp;&amp;<xref ref="property-AIM"/></mrow>
+                    <mrow>&amp;\iff \left(A-\lambda I_n\right)\vect{x}=\zerovector&amp;&amp;<xref ref="theorem-MMDAA"/></mrow>
+                    <mrow>&amp;\iff \vect{x}\text{ is a solution to }\homosystem{A-\lambda I_n}&amp;&amp;<xref ref="theorem-SLEMM"/></mrow>
+                </md>.</p>
+                <case direction="forward">
+                    <p>Suppose <m>\lambda</m> is an eigenvalue of <m>A</m> with eigenvector <m>\vect{x}\neq\zerovector</m>.  Then the equivalences above and <xref ref="definition-NM"/> show that <m>A-\lambda I_n</m> is singular.</p>
+                </case>
+                <case direction="backward">
+                    <p>Suppose that <m>A-\lambda I_n</m> is singular.  Then <xref ref="definition-NM"/> guarantees the existence of <m>\vect{x}</m>, a nonzero solution to <m>\homosystem{A-\lambda I_n}</m>.  Then the equivalences above show that <m>\vect{x}</m> is an eigenvector of <m>A</m> with eigenvalue <m>\lambda</m>.</p>
+                </case>
+            </proof>
+        </theorem>
         <p>So, for an eigenvalue <m>\lambda</m> and associated eigenvector <m>\vect{x}\neq\zerovector</m>, the vector <m>\vect{x}</m> will be a nonzero element of the null space of <m>A-\lambda I_n</m>, while the matrix <m>A-\lambda I_n</m> will be singular and therefore have zero determinant.  These ideas are made precise in <xref ref="theorem-EMRCP" acro="EMRCP"/> and <xref ref="theorem-EMNS" acro="EMNS"/>, but for now this brief discussion should suffice as motivation for the following definition and example.</p>
         <definition xml:id="definition-CP" acro="CP">
             <title>Characteristic Polynomial</title>
