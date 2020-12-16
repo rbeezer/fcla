@@ -257,7 +257,8 @@
                 <h>existence</h>
             </idx>
             <title>Computing an eigenvalue the hard way</title>
-            <p>This example illustrates the proof of <xref ref="theorem-EMHE" acro="EMHE"/>, and so will employ the same notation as the proof <mdash/> look there for full explanations.  It is <em>not</em> meant to be an example of a reasonable computational approach to finding eigenvalues and eigenvectors.  OK, warnings in place, here we go.</p>
+            <!-- [[-7, -1, 11, 0, -4], [4, 1, 0, 2, 0], [-10, -1, 14, 0, -4], [8, 2, -15, -1, 5], [-10, -1, 16, 0, -6]] -->
+            <p>This example illustrates the proof of <xref ref="theorem-EMHE" acro="EMHE"/>, and so will employ the same notation as the proof <mdash/> look there for full explanations.  It is <em>not</em> meant to be a final example of a reasonable computational approach to finding eigenvalues and eigenvectors.  OK, warnings in place, here we go.</p>
             <p>Consider the matrix <m>A</m>, and choose the vector <m>\vect{x}</m>,<md>
                 <mrow>A&amp;=\begin{bmatrix}
                 -7 &amp; -1 &amp; 11 &amp; 0 &amp; -4\\
@@ -303,7 +304,7 @@
                 <mrow>\zerovector&amp;=\left(16+12A-8A^2-3A^3+A^4\right)\vect{x}</mrow>
             </md>.</p>
             <!-- Did not like display below with  alignment="alignat" alignat-columns="2"  -->
-            <p>So we define <m>p(x)=16+12x-8x^2-3x^3+x^4</m>, and as advertised in the proof of <xref ref="theorem-EMHE" acro="EMHE"/>, we have a polynomial of degree <m>m=4\gt 1</m> such that <m>p(A)\vect{x}=\zerovector</m>.  Now we need to factor <m>p(x)</m> over <m>\complexes</m>.  If you made your own choice of <m>\vect{x}</m> at the start, this is where you might have a fifth degree polynomial, and where you might need to use a computational tool to find roots and factors.  We have<me>p(x)=16+12x-8x^2-3x^3+x^4=(x-4)(x+2)(x-2)(x+1)</me>.</p>
+            <p>So we define <m>p(x)=16+12x-8x^2-3x^3+x^4</m>, and as advertised in the proof of <xref ref="theorem-EMHE" acro="EMHE"/>, we have a polynomial of degree <m>m=4\geq 1</m> such that <m>p(A)\vect{x}=\zerovector</m>.  Now we need to factor <m>p(x)</m> over <m>\complexes</m>.  If you made your own choice of <m>\vect{x}</m> at the start, this is where you might have a fifth degree polynomial, and where you might need to use a computational tool to find roots and factors.  We have<me>p(x)=16+12x-8x^2-3x^3+x^4=(x-4)(x+2)(x-2)(x+1)</me>.</p>
             <p>So we know that<me>\zerovector=p(A)\vect{x}=(A-4I_5)(A+2I_5)(A-2I_5)(A+1I_5)\vect{x}</me>.</p>
             <p>We apply one factor at a time, until we get the zero vector, so as to determine the value of <m>k</m> described in the proof of <xref ref="theorem-EMHE" acro="EMHE"/>,<md>
                 <mrow>(A+1I_5)\vect{x}&amp;=
@@ -340,7 +341,40 @@
                 =
                 \colvector{0\\0\\0\\0\\0}</mrow>
             </md>.</p>
-            <p>So <m>k=3</m> and<me>\vect{z}=(A-2I_5)(A+1I_5)\vect{x}=\colvector{4\\-8\\4\\4\\8}</me>is an eigenvector of <m>A</m> for the eigenvalue <m>\lambda=-2</m>, as you can check by doing the computation <m>A\vect{z}</m>.  If you work through this example with your own choice of the vector <m>\vect{x}</m> (strongly recommended) then the  eigenvalue you will find may be different, but will be in the set <m>\set{3,\,0,\,1,\,-1,\,-2}</m>.  See <xref ref="exercise-EE-M60" acro="EE.M60"/> for a suggested starting vector.</p>
+            <p>So <m>k=3</m> and<me>\vect{z}=(A-2I_5)(A+1I_5)\vect{x}=\colvector{4\\-8\\4\\4\\8}</me>is an eigenvector of <m>A</m> for the eigenvalue <m>\lambda=-2</m>, as you can check by doing the computation <m>A\vect{z}</m>.</p>
+            <p>Using the same choice of <m>\vect{x}</m>, will lead to the same polynomial <m>p(x)</m>, but we can work with the factorization in a different order.<md>
+                <mrow>(A+2I_5)\vect{x}&amp;=
+                \begin{bmatrix}
+                -5 &amp; -1 &amp; 11 &amp; 0 &amp; -4\\
+                4 &amp; 3 &amp; 0 &amp; 2 &amp; 0\\
+                -10 &amp; -1 &amp; 16 &amp; 0 &amp; -4\\
+                8 &amp; 2 &amp; -15 &amp; 1 &amp; 5\\
+                -10 &amp; -1 &amp; 16 &amp; 0 &amp; -4
+                \end{bmatrix}
+                \colvector{3\\0\\3\\-5\\4}
+                =
+                \colvector{2\\2\\2\\-6\\2}</mrow>
+                <mrow>(A+1I_5)(A+2I_5)\vect{x}&amp;=
+                \begin{bmatrix}
+                -6 &amp; -1 &amp; 11 &amp; 0 &amp; -4\\
+                4 &amp; 2 &amp; 0 &amp; 2 &amp; 0\\
+                -10 &amp; -1 &amp; 15 &amp; 0 &amp; -4\\
+                8 &amp; 2 &amp; -15 &amp; 0 &amp; 5\\
+                -10 &amp; -1 &amp; 16 &amp; 0 &amp; -5
+                \end{bmatrix}
+                \colvector{2\\2\\2\\-6\\2}
+                =
+                \colvector{0\\0\\0\\0\\0}</mrow>
+            </md>Now <m>k=2</m> and
+              <me>\vect{z}=(A+2I_5)\vect{x}=\colvector{2\\2\\2\\-6\\2}</me>
+            is an eigenvector of <m>A</m> for the eigenvalue <m>\lambda=-1</m>, as you can check by doing the computation <m>A\vect{z}</m>.</p>
+            <p><xref ref="theorem-EMHE"/> guarantees the <em>existence</em> of an eigenvalue, and the <em>constructive</em> proof (see <xref ref="technique-C"/>) provides a procedure for finding an eigenvalue, provided we can factor a polynomial partway through.  But it does not seem to offer much control.  We choose (guess?) any vector <m>\vect{x}</m>, and the set of linearly dependent vectors created via powers of the matrix could have many different choices (guesses?) for relations of linear dependence leading to many different polynomials.  In the extreme you could be unlucky (or lucky?) and end up with a degree 1 polynomial.  For example, choose
+                <me>\vect{x}=\colvector{2\\1\\3\\-3\\3}</me>
+            and observe that the vectors <m>A^i\vect{x}</m> lead with<md>
+                <mrow>A^0\vect{x} &amp;= \colvector{2\\1\\3\\-3\\3} &amp; A^1\vect{x} &amp;= \colvector{6\\3\\9\\-9\\9}</mrow>
+            </md>which is already a linearly dependent set.  So a possible polynomial is <m>p(x)=x-3</m>, and we recognize that <m>\vect{x}</m> happens to be an eigenvector of <m>A</m>!  If we want to find some of the other eigenvalues of <m>A</m> we need to start over with another choice of <m>\vect{x}</m>.  (Why?  Compute a few more <m>A^i\vect{x}</m> to see what happens.)</p>
+            <p>So the goal of this chapter is to make eigenvalues less mysterious, but knowing that they actually exist is a good start.</p>
+            <p>If you work through this example with your own choice of the vector <m>\vect{x}</m> (strongly recommended) then the  eigenvalue you will find may be different, but will be in the set <m>\set{3,\,0,\,1,\,-1,\,-2}</m>.  See <xref ref="exercise-EE-M60" acro="EE.M60"/> for a suggested starting vector.</p>
         </example>
     </subsection>
     <subsection xml:id="subsection-EE-CEE" acro="CEE">
