@@ -113,43 +113,41 @@
             </idx>
             <p>Every year <pubtitle>Money</pubtitle> magazine selects several cities in the United States as the <q>best</q> cities to live in, based on a wide array of statistics about each city.  This is a small example of how the editors of <pubtitle>Money</pubtitle> might arrive at a single number that consolidates the statistics about a city.  We will analyze Los Angeles, Chicago and New York City, based on four criteria:  average high temperature in July (Farenheit), number of colleges and universities in a 30-mile radius, number of toxic waste sites in the Superfund environmental clean-up program and a personal crime index based on FBI statistics (average = 100, smaller is safer).  It should be apparent how to generalize the example to a greater number of cities and a greater number of statistics.</p>
             <p>We begin by building a table of statistics.  The rows will be labeled with the cities, and the columns with statistical categories.  These values are from <pubtitle>Money</pubtitle>'s website in early 2005.</p>
-            <sidebyside>
-                <tabular halign="center" top="medium">
-                    <col halign="left"/>
-                    <col/>
-                    <col/>
-                    <col/>
-                    <col/>
-                    <row bottom="medium">
-                        <cell>City</cell>
-                        <cell>Temp</cell>
-                        <cell>Colleges</cell>
-                        <cell>Superfund</cell>
-                        <cell>Crime</cell>
-                    </row>
-                    <row>
-                        <cell>Los Angeles</cell>
-                        <cell>77</cell>
-                        <cell>28</cell>
-                        <cell>93</cell>
-                        <cell>254</cell>
-                    </row>
-                    <row>
-                        <cell>Chicago</cell>
-                        <cell>84</cell>
-                        <cell>38</cell>
-                        <cell>85</cell>
-                        <cell>363</cell>
-                    </row>
-                    <row bottom="minor">
-                        <cell>New York</cell>
-                        <cell>84</cell>
-                        <cell>99</cell>
-                        <cell>1</cell>
-                        <cell>193</cell>
-                    </row>
-                </tabular>
-            </sidebyside>
+            <tabular halign="center" top="medium">
+                <col halign="left"/>
+                <col/>
+                <col/>
+                <col/>
+                <col/>
+                <row bottom="medium">
+                    <cell>City</cell>
+                    <cell>Temp</cell>
+                    <cell>Colleges</cell>
+                    <cell>Superfund</cell>
+                    <cell>Crime</cell>
+                </row>
+                <row>
+                    <cell>Los Angeles</cell>
+                    <cell>77</cell>
+                    <cell>28</cell>
+                    <cell>93</cell>
+                    <cell>254</cell>
+                </row>
+                <row>
+                    <cell>Chicago</cell>
+                    <cell>84</cell>
+                    <cell>38</cell>
+                    <cell>85</cell>
+                    <cell>363</cell>
+                </row>
+                <row bottom="minor">
+                    <cell>New York</cell>
+                    <cell>84</cell>
+                    <cell>99</cell>
+                    <cell>1</cell>
+                    <cell>193</cell>
+                </row>
+            </tabular>
             <p>Conceivably these data might reside in a spreadsheet.  Now we must combine the statistics for each city.  We could accomplish this by weighting each category, scaling the values and summing them.  The sizes of the weights would depend upon the numerical size of each statistic generally, but more importantly, they would reflect the editors opinions or beliefs about which statistics were most important to their readers.  Is the crime index more important than the number of colleges and universities?  Of course, there is no right answer to this question.</p>
             <p>Suppose the editors finally decide on the following weights to employ:  temperature, <m>0.23</m>; colleges, <m>0.46</m>; Superfund, <m>-0.05</m>; crime, <m>-0.20</m>.  Notice how negative weights are used for undesirable statistics.  Then, for example, the editors would compute for Los Angeles<me>(0.23)(77) + (0.46)(28) + (-0.05)(93) + (-0.20)(254) = -24.86</me></p>
             <p>This computation might remind you of an inner product, but we will produce the computations for all of the cities as a matrix-vector product.  Write the table of raw statistics as a matrix<me>T=
