@@ -735,6 +735,42 @@
             </proof>
         </theorem>
         <p>Since <xref ref="theorem-MMA" acro="MMA"/> says matrix multiplication is associative, it means we do not have to be careful about the order in which we perform matrix multiplication, nor how we parenthesize an expression with just several matrices multiplied togther.  So this is where we draw the line on explaining every last detail in a proof.  We will frequently add, remove, or rearrange parentheses with no comment.  Indeed, I only see about a dozen places where <xref ref="theorem-MMA" acro="MMA"/> is cited in a proof.  You could try to count how many times we <em>avoid</em> making a reference to this theorem.</p>
+        <p>It could be obvious already that properties of upper triangular matrices will have analogues for lower triangular matrices.  Rather than stating two very similar theorems each time, we will economize and say that matrices are <q>triangular of the same type</q> as a convenient shorthand to cover both possibilities and then typically give a proof for just one type.  Like the proof of <xref ref="theorem-MMA"/>, the proof of the next theorem is another good one to test your facility with <xref ref="theorem-EMP"/> as a tool for constructing proofs about matrix multiplication.  Just by considering sizes we can see that the product of two square matrices of the same size is again a square matrix of that size.  For triangular matrices it is even better.</p>
+        <theorem xml:id="theorem-PTMT" acro="PTMT">
+            <title>Product of Triangular Matrices is Triangular</title>
+            <idx>product of triangular matrices</idx>
+            <statement>
+                <p>Suppose that <m>A</m> and <m>B</m> are matrices that are triangular of the same type.  Then <m>AB</m> is also triangular of that type.</p>
+            </statement>
+            <proof>
+                <p>We prove this for lower triangular matrices and leave the proof for upper triangular matrices to you.  Suppose that <m>A</m> and <m>B</m> are both lower triangular of size <m>n</m>.  We need only establish that certain entries of the product <m>AB</m> are zero.  Suppose that <m>i\lt j</m>, then<md>
+                    <mrow>\matrixentry{AB}{ij}
+                    &amp;=
+                    \sum_{k=1}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}&amp;&amp;
+                        <xref ref="theorem-EMP" acro="EMP"/></mrow>
+                    <mrow>&amp;=
+                    \sum_{k=1}^{j-1}\matrixentry{A}{ik}\matrixentry{B}{kj}
+                    +
+                    \sum_{k=j}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}&amp;&amp;
+                        <xref ref="property-AACN" acro="AACN"/></mrow>
+                    <mrow>&amp;=
+                    \sum_{k=1}^{j-1}\matrixentry{A}{ik}0
+                    +
+                    \sum_{k=j}^{n}\matrixentry{A}{ik}\matrixentry{B}{kj}&amp;&amp;
+                        k\lt j\text{, }<xref ref="definition-LTM" acro="LTM"/></mrow>
+                    <mrow>&amp;=
+                    \sum_{k=1}^{j-1}\matrixentry{A}{ik}0
+                    +
+                    \sum_{k=j}^{n}0\matrixentry{B}{kj}&amp;&amp;
+                        i\lt j\leq k\text{, }<xref ref="definition-LTM" acro="LTM"/></mrow>
+                    <mrow>&amp;=
+                    \sum_{k=1}^{j-1}0+\sum_{k=j}^{n}0</mrow>
+                    <mrow>&amp;=
+                    0</mrow>
+                </md>.</p>
+                <p>Since <m>\matrixentry{AB}{ij}=0</m> whenever <m>i\lt j</m>, by <xref ref="definition-LTM" acro="LTM"/>, <m>AB</m> is lower triangular.</p>
+            </proof>
+        </theorem>
         <p>The statement of our next theorem is technically inaccurate.  If we upgrade the vectors <m>\vect{u},\,\vect{v}</m> to matrices with a single column, then the expression <m>\transpose{\conjugate{\vect{u}}}\vect{v}</m> is a <m>1\times 1</m> matrix, though we will treat this small matrix as if it was simply the scalar quantity in its lone entry.  When we apply <xref ref="theorem-MMIP" acro="MMIP"/> there should not be any confusion.  Notice that if we treat a column vector as a matrix with a single column, then we can also construct the adjoint of a vector, though we will not make this a common practice.</p>
         <theorem xml:id="theorem-MMIP" acro="MMIP">
             <title>Matrix Multiplication and Inner Products</title>
