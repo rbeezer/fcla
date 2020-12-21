@@ -530,6 +530,26 @@
                 </md></p>
             </statement>
         </example>
+        <p>As a square matrix, we can ask when a triangular matrix is nonsingular (<xref ref="definition-NM"/>).  Turns out we can tell just by looking.</p>
+        <theorem xml:id="theorem-NTM" acro="NTM">
+            <title>Nonsingular Triangular Matrices</title>
+            <idx>
+                <h>nonsingular</h>
+                <h>triangular matrix</h>
+            </idx>
+            <statement>
+                <p>Suppose that <m>A</m> is a triangular matrix.  Then <m>A</m> is nonsingular if and only if every diagonal entry is nonzero.</p>
+            </statement>
+            <proof>
+                <p>We give a proof for an upper triangular matrix, since it is marginally simpler, so suppose <m>A</m> is an upper triangular matrix of size <m>n</m>.</p>
+                <case direction="backward">
+                    <p>For each column, its entry on the diagonal is nonzero, so we can form its reciprocal (<xref ref="property-MICN"/>) and use this as the multiple for a row operation of the second type (<xref ref="definition-RO"/>) to form a row-equivalent matrix that replaces the entry by a <m>1</m>.  The entry, along with repeated row operations of the third type, will form a row-equivalent matrix where the column is a pivot column.  So the matrix is row-equivalent to a square matrix where every column is a pivot column; in other words, the identity matrix (<xref ref="definition-IM"/>).  By <xref ref="theorem-NMRRI"/> we see that <m>A</m> is nonsingular.</p>
+                </case>
+                <case direction="forward">
+                    <p>We will establish the contrapositive (<xref ref="technique-CP"/>): if there is a zero diagonal entry then the matrix is singular.  Suppose that the entry in row <m>k</m> and column <m>k</m> is zero.  Then the first <m>k</m> columns of <m>A</m> are each vectors with <m>k-1</m> arbitrary entries, followed by <m>n-k+1</m> zeros.  These <m>k</m> column vectors are a linearly independent set, which can be established with a nontrivial relation of linear dependence obtained by an argument entirely similar to the proof of <xref ref="theorem-MVSLD"/>.  The one change is that the relevant coefficient matrix would be a <m>k-1\times k</m> matrix formed from the first <m>k</m> columns and first <m>k-1</m> rows of <m>A</m>.  With linearly dependent columns, <xref ref="theorem-NMLIC"/> says <m>A</m> is singular.</p>
+                </case>
+            </proof>
+        </theorem>
     </subsection>
     <subsection xml:id="subsection-MO-MCC" acro="MCC">
         <title>Matrices and Complex Conjugation</title>
