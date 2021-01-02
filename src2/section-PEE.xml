@@ -21,62 +21,64 @@
                 <h>linearly independent</h>
             </idx>
             <statement>
-                <p>Suppose that <m>A</m> is an <m>n\times n</m> square matrix and <m>S=\set{\vectorlist{x}{p}}</m> is a set of eigenvectors with eigenvalues <m>\scalarlist{\lambda}{p}</m> such that <m>\lambda_i\neq\lambda_j</m> whenever <m>i\neq j</m>.  Then <m>S</m> is a linearly independent set.</p>
+                <p>Suppose that <m>A</m> is a square matrix and <m>S=\set{\vectorlist{x}{p}}</m> is a set of eigenvectors with eigenvalues <m>\scalarlist{\lambda}{p}</m> such that <m>\lambda_i\neq\lambda_j</m> whenever <m>i\neq j</m>.  Then <m>S</m> is a linearly independent set.</p>
             </statement>
             <proof>
-                <p>If <m>p=1</m>, then the set <m>S=\set{\vect{x}_1}</m> is linearly independent since eigenvectors are nonzero (<xref ref="definition-EEM" acro="EEM"/>), so assume for the remainder that <m>p\geq 2</m>.</p>
-                <p>We will prove this result by contradiction (Proof Technique<nbsp/><xref ref="technique-CD" acro="CD" text="global"/>).  Suppose to the contrary that <m>S</m> is a linearly dependent set.  Define <m>S_i=\set{\vectorlist{x}{i}}</m> and let <m>k</m> be an integer such that <m>S_{k-1}=\set{\vectorlist{x}{k-1}}</m> is linearly independent and <m>S_k=\set{\vectorlist{x}{k}}</m> is linearly dependent.  We have to ask if there is even such an integer <m>k</m>?  First, since eigenvectors are nonzero, the set <m>\set{\vect{x}_1}</m> is linearly independent.  Since we are assuming that <m>S=S_p</m> is linearly dependent, there must be an integer <m>k</m>, <m>2\leq k\leq p</m>, where the sets <m>S_i</m> transition from linear independence to linear dependence (and stay that way). In other words, <m>\vect{x}_k</m> is the vector with the smallest index that is a linear combination of just vectors with smaller indices.</p>
-                <p>Since <m>\set{\vectorlist{x}{k}}</m> is a linearly dependent set there must be scalars, <m>\scalarlist{a}{k}</m>, not all zero (<xref ref="definition-LI" acro="LI"/>), so that
+                <p>We will establish by induction (<xref ref="technique-I"/>) that that any set of <m>k</m> eigenvectors of <m>A</m> with distinct eigenvalues <m>\scalarlist{\lambda}{k}</m> is a linearly independent set.  Suppose <m>A</m> has size <m>n</m>.</p>
+                <case>
+                    <title>Base Case</title>
+                    <p>When <m>k=1</m>, <m>\set{\vect{x}_1}</m> is a set with a single <em>nonzero</em> vector and thus is linearly independent.</p>
+                </case>
+                <case>
+                    <title>Induction Step</title>
+                    <p>Begin with a relation of linear dependence on the set <m>\set{\vectorlist{x}{k}}</m>
+                    <me>\lincombo{a}{x}{k} = \zerovector</me>.  Then
                     <md>
-                    <mrow>\zerovector=\lincombo{a}{x}{k}</mrow>
-                </md>.</p>
-                <p>Then,<md>
-                    <mrow>\zerovector
-                    &amp;=\left(A-\lambda_kI_n\right)\zerovector&amp;&amp;
-                        <xref ref="theorem-ZVSM" acro="ZVSM"/></mrow>
-                    <mrow>&amp;=\left(A-\lambda_kI_n\right)\left(\lincombo{a}{x}{k}\right)&amp;&amp;
-                        <xref ref="definition-RLD" acro="RLD"/></mrow>
-                    <mrow>&amp;=\left(A-\lambda_kI_n\right)a_1\vect{x}_1+
-                    \cdots+
-                    \left(A-\lambda_kI_n\right)a_k\vect{x}_k&amp;&amp;
-                        <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
-                    <mrow>&amp;=a_1\left(A-\lambda_kI_n\right)\vect{x}_1+
-                    \cdots+
-                    a_k\left(A-\lambda_kI_n\right)\vect{x}_k&amp;&amp;
-                        <xref ref="theorem-MMSMM" acro="MMSMM"/></mrow>
-                    <mrow>&amp;=a_1\left(A\vect{x}_1-\lambda_kI_n\vect{x}_1\right)+
-                    \cdots+
-                    a_k\left(A\vect{x}_k-\lambda_kI_n\vect{x}_k\right)&amp;&amp;
-                        <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
-                    <mrow>&amp;=a_1\left(A\vect{x}_1-\lambda_k\vect{x}_1\right)+
-                    \cdots+
-                    a_k\left(A\vect{x}_k-\lambda_k\vect{x}_k\right)&amp;&amp;
-                        <xref ref="theorem-MMIM" acro="MMIM"/></mrow>
-                    <mrow>&amp;=a_1\left(\lambda_1\vect{x}_1-\lambda_k\vect{x}_1\right)+
-                    \cdots+
-                    a_k\left(\lambda_k\vect{x}_k-\lambda_k\vect{x}_k\right)&amp;&amp;
-                        <xref ref="definition-EEM" acro="EEM"/></mrow>
-                    <mrow>&amp;=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+
-                    \cdots+
-                    a_k\left(\lambda_k-\lambda_k\right)\vect{x}_k&amp;&amp;
-                        <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
-                    <mrow>&amp;=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+
-                    \cdots+
-                    a_{k-1}\left(\lambda_{k-1}-\lambda_k\right)\vect{x}_{k-1}+
-                    a_k\left(0\right)\vect{x}_k&amp;&amp;
-                        <xref ref="property-AICN" acro="AICN"/></mrow>
-                    <mrow>&amp;=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+
-                    \cdots+
-                    a_{k-1}\left(\lambda_{k-1}-\lambda_k\right)\vect{x}_{k-1}+
-                    \zerovector&amp;&amp;
-                        <xref ref="theorem-ZSSM" acro="ZSSM"/></mrow>
-                    <mrow>&amp;=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+
-                    \cdots+
-                    a_{k-1}\left(\lambda_{k-1}-\lambda_k\right)\vect{x}_{k-1}&amp;&amp;
-                        <xref ref="property-Z" acro="Z"/></mrow>
-                </md>.</p>
-                <p>This equation is a relation of linear dependence on the linearly independent set <m>\set{\vectorlist{x}{k-1}}</m>, so the scalars must all be zero.  That is, <m>a_i\left(\lambda_i-\lambda_k\right)=0</m> for <m>1\leq i\leq k-1</m>.  However, we have the hypothesis that the eigenvalues are distinct, so <m>\lambda_i\neq\lambda_k</m> for <m>1\leq i\leq k-1</m> and so <m>\lambda_i-\lambda_k\neq 0</m>.  So   <xref ref="theorem-ZPZT" acro="ZPZT"/> implies <m>a_i=0</m> for <m>1\leq i\leq k-1</m>.</p>
-                <p>This reduces the original relation of linear dependence on <m>\set{\vectorlist{x}{k}}</m> to the simpler equation <m>a_k\vect{x}_k=\zerovector</m>.  By <xref ref="theorem-SMEZV" acro="SMEZV"/> we conclude that <m>a_k=0</m> or <m>\vect{x}_k=\zerovector</m>.  Eigenvectors are never the zero vector (<xref ref="definition-EEM" acro="EEM"/>), so <m>a_k=0</m>.  So now all of the scalars <m>a_i</m>, <m>1\leq i\leq k</m> are zero, contradicting their introduction as the scalars creating a <em>nontrivial</em> relation of linear dependence on the set <m>\set{\vectorlist{x}{k}}</m>.  With a contradiction in hand, we conclude that <m>S</m> must be linearly independent.</p>
+                        <mrow>\zerovector &amp;= \left(A-\lambda_k I_n\right)\zerovector&amp;&amp;<xref ref="theorem-MMZM"/></mrow>
+                        <mrow>&amp;= \left(A-\lambda_k I_n\right)\left(\lincombo{a}{x}{k}\right)&amp;&amp;<xref ref="definition-RLD"/></mrow>
+                        <mrow>&amp;=\left(A-\lambda_k I_n\right)a_1\vect{x}_1+
+                        \cdots+
+                        \left(A-\lambda_k I_n\right)a_k\vect{x}_k&amp;&amp;
+                            <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
+                        <mrow>&amp;=a_1\left(A-\lambda_k I_n\right)\vect{x}_1+
+                        \cdots+
+                        a_k\left(A-\lambda_k I_n\right)\vect{x}_k&amp;&amp;
+                            <xref ref="theorem-MMSMM" acro="MMSMM"/></mrow>
+                        <mrow>&amp;=a_1\left(A\vect{x}_1-\lambda_k I_n\vect{x}_1\right)+
+                        \cdots+
+                        a_k\left(A\vect{x}_k-\lambda_k I_n\vect{x}_k\right)&amp;&amp;
+                            <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
+                        <mrow>&amp;=a_1\left(A\vect{x}_1-\lambda_k\vect{x}_1\right)+
+                        \cdots+
+                        a_k\left(A\vect{x}_k-\lambda_k\vect{x}_k\right)&amp;&amp;
+                            <xref ref="theorem-MMIM" acro="MMIM"/></mrow>
+                        <mrow>&amp;=a_1\left(\lambda_1\vect{x}_1-\lambda_k\vect{x}_1\right)+
+                        \cdots+
+                        a_k\left(\lambda_k\vect{x}_k-\lambda_k\vect{x}_k\right)&amp;&amp;
+                            <xref ref="definition-EEM" acro="EEM"/></mrow>
+                        <mrow>&amp;=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+
+                        \cdots+
+                        a_k\left(\lambda_k-\lambda_k\right)\vect{x}_k&amp;&amp;
+                            <xref ref="property-DSA" acro="DSA"/></mrow>
+                        <mrow>&amp;=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+
+                        \cdots+
+                        a_{k-1}\left(\lambda_{k-1}-\lambda_k\right)\vect{x}_{k-1}+
+                        a_k\left(0\right)\vect{x}_k&amp;&amp;
+                            <xref ref="property-AICN" acro="AICN"/></mrow>
+                        <mrow>&amp;=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+
+                        \cdots+
+                        a_{k-1}\left(\lambda_{k-1}-\lambda_k\right)\vect{x}_{k-1}+
+                        \zerovector&amp;&amp;
+                            <xref ref="theorem-ZSSM" acro="ZSSM"/></mrow>
+                        <mrow>&amp;=a_1\left(\lambda_1-\lambda_k\right)\vect{x}_1+
+                        \cdots+
+                        a_{k-1}\left(\lambda_{k-1}-\lambda_k\right)\vect{x}_{k-1}&amp;&amp;
+                            <xref ref="property-Z" acro="Z"/></mrow>
+                        </md>
+                    </p>
+                    <p>This equation is a relation of linear dependence on the set <m>\set{\vectorlist{x}{k-1}}</m>, which is a linearly independent set by the induction hypothesis.  So the scalars must all be zero by <xref ref="definition-LI"/>.  That is, <m>a_i\left(\lambda_i-\lambda_k\right)=0</m> for <m>1\leq i\leq k-1</m>.  However, we have the hypothesis that the eigenvalues are distinct, so <m>\lambda_i-\lambda_k\neq 0</m> for <m>1\leq i\leq k-1</m>.  So <xref ref="theorem-ZPZT" acro="ZPZT"/> implies <m>a_i=0</m> for <m>1\leq i\leq k-1</m>.</p>
+                    <p>This reduces the original relation of linear dependence on <m>\set{\vectorlist{x}{k}}</m> to the simpler equation <m>a_k\vect{x}_k=\zerovector</m>.  By <xref ref="theorem-SMEZV" acro="SMEZV"/> we conclude that <m>a_k=0</m> or <m>\vect{x}_k=\zerovector</m>.  Eigenvectors are never the zero vector (<xref ref="definition-EEM" acro="EEM"/>), so <m>a_k=0</m>.  Now all of the scalars <m>a_i</m>, <m>1\leq i\leq k</m> are zero, and so the <em>only</em> relation of linear dependence on the set <m>\set{\vectorlist{x}{k}}</m> is trivial.  So by <xref ref="definition-LI"/>, the set <m>\set{\vectorlist{x}{k}}</m> is linearly independent.</p>
+                </case>
             </proof>
         </theorem>
         <p>The next theorem gives us a convenient upper limit on the number of eigenvalues, before we determine the characteristic polynomial and factor it.</p>
