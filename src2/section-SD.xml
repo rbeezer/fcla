@@ -178,13 +178,20 @@
             <title>Similar Matrices have Equal Eigenvalues</title>
             <idx>
                 <h>similar matrices</h>
-                <h>eual eigenvalues</h>
+                <h>equal eigenvalues</h>
             </idx>
             <statement>
-                <p>Suppose <m>A</m> and <m>B</m> are similar matrices.  Then the characteristic polynomials of <m>A</m> and <m>B</m> are equal, that is, <m>\charpoly{A}{x}=\charpoly{B}{x}</m>.</p>
+                <p>Suppose <m>A</m> and <m>B</m> are similar matrices.  Then <m>A</m> and <m>B</m> have the same eigenvalues, with identical algebraic and geometric multiplicities.</p>
             </statement>
             <proof>
-                <p>Let <m>n</m> denote the size of <m>A</m> and <m>B</m>.  Since <m>A</m> and <m>B</m> are similar, there exists a nonsingular matrix <m>S</m>, such that <m>B=\similar{A}{S}</m> (<xref ref="definition-SIM" acro="SIM"/>).  Then<md>
+                <p>Suppose that <m>A</m> and <m>B</m> are similar via <m>S</m>, and let <m>\vect{x}\neq\zerovector</m> be an eigenvector of <m>B</m> for the eigenvalue <m>\lambda</m>.  Since <m>S</m> is nonsingular, <xref ref="definition-NM"/> implies that <m>S\vect{x}\neq\zerovector</m>.  Furthermore
+                <me>A\left(S\vect{x}\right) = \left(AS\right)\vect{x} = \left(SB\right)\vect{x} = S\left(B\vect{x}\right) = S\left(\lambda\vect{x}\right) = \lambda\left(S\vect{x}\right)</me>
+                demonstrating that <m>S\vect{x}</m> is an eigenvector of <m>B</m> for <m>\lambda</m>.  So every eigenvalue of <m>A</m> is an eigenvector of <m>B</m>.  Exchanging the roles of <m>A</m> and <m>B</m> (and employing the nonsingular matrix <m>\inverse{S}</m>) will show that every eigenvalue of <m>B</m> is an eigenvector of <m>A</m>.  So the eigenvalues of <m>A</m> and the eigenvalues of <m>B</m> are equal as sets (<xref ref="definition-SE"/>).</p>
+                <p>Suppose that <m>C=\set{\vectorlist{x}{k}}</m> is a basis for the eigenspace of <m>\lambda</m> for the matrix <m>B</m>.  Then each vector of the set <m>D=\set{S\vect{x}_1,\,S\vect{x}_2,\,S\vect{x}_3,\ldots,\,S\vect{x}_k}</m>  is an eigenvector of <m>A</m> for <m>\lambda</m>, by the same argment in the previous paragraph.  It is an exercise to show that because <m>S</m> is nonsingular, the linear independence of <m>C</m> implies the linear independence of <m>D</m>.  Thus, by <xref ref="theorem-G"/> we have
+                <me>\geomult{B}{\lambda}\leq\geomult{A}{\lambda}</me>.
+                Exchanging the roles of <m>A</m> and <m>B</m> gives the inequality in the other direction, implying equality of the geometric multiplicities.</p>
+                <p>To understand the algebraic multiplicities, it is necessary to consult the characteristic polynomial.
+                <md>
                     <mrow>\charpoly{B}{x}&amp;=\detname{B-xI_n}&amp;&amp;
                         <xref ref="definition-CP" acro="CP"/></mrow>
                     <mrow>&amp;=\detname{\similar{A}{S}-xI_n}&amp;&amp;
@@ -207,10 +214,10 @@
                         <xref ref="definition-DM" acro="DM"/></mrow>
                     <mrow>&amp;=\charpoly{A}{x}&amp;&amp;
                         <xref ref="definition-CP" acro="CP"/></mrow>
-                </md>.</p>
+                </md>.  Since the characteristic polynomials of <m>A</m> and <m>B</m> are equal, they will factor identically, and the algebraic multiplicity of each eigenvalue will be the same for each matrix.</p>
             </proof>
         </theorem>
-        <p>So similar matrices not only have the same <em>set</em> of eigenvalues, the algebraic multiplicities of these eigenvalues will also be the same.  However, be careful with this theorem.  It is tempting to think the converse is true, and argue that if two matrices have the same eigenvalues, then they are similar.  Not so, as the following example illustrates.</p>
+        <p>Be very careful with this theorem.  It is tempting to think the converse is true, and argue that if two matrices have the same eigenvalues, then they are similar.  Not so, as the following example illustrates.  So do not think this theorem is a route to establishing that two matrices are similar.</p>
         <example xml:id="example-EENS" acro="EENS">
             <title>Equal eigenvalues, not similar</title>
             <idx>
