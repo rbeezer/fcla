@@ -1141,18 +1141,10 @@
                 <p>Suppose that <m>A</m> and <m>B</m> are similar matrices of size <m>n</m>.  Prove that <m>A^3</m> and <m>B^3</m> are similar matrices.  Generalize.</p>
             </statement>
             <solution xml:id="solution-SD-T15">
-                <p>By <xref ref="definition-SIM" acro="SIM"/> we know that there is a nonsingular matrix <m>S</m> so that <m>A=\similar{B}{S}</m>.  Then<md>
-                    <mrow>A^3&amp;=(\similar{B}{S})^3</mrow>
-                    <mrow>&amp;=(\similar{B}{S})(\similar{B}{S})(\similar{B}{S})</mrow>
-                    <mrow>&amp;=\inverse{S}B(S\inverse{S})B(S\inverse{S})BS&amp;&amp;
-                        <xref ref="theorem-MMA" acro="MMA"/></mrow>
-                    <mrow>&amp;=\inverse{S}B(I_n)B(I_n)BS&amp;&amp;
-                        <xref ref="definition-MI" acro="MI"/></mrow>
-                    <mrow>&amp;=\inverse{S}BBBS&amp;&amp;
-                        <xref ref="theorem-MMIM" acro="MMIM"/></mrow>
-                    <mrow>&amp;=\inverse{S}B^3S</mrow>
-                </md>.  This equation says that <m>A^3</m> is similar to <m>B^3</m> (via the matrix <m>S</m>).</p>
-                <p>More generally, if <m>A</m> is similar to <m>B</m>, and <m>m</m> is a non-negative integer, then <m>A^m</m> is similar to <m>B^m</m>.  This can be proved using induction (Proof Technique<nbsp/><xref ref="technique-I" acro="I" text="global"/>).</p>
+                <p>By <xref ref="definition-SIM" acro="SIM"/> we know that there is a nonsingular matrix <m>S</m> so that <m>AS=SB</m>.  Then
+                <me>A^3S = A^2AS = A^2SB = AASB = ASBB = ASB^2 = SBB^2 = SB^3</me>
+                So <m>A^3</m> is similar to <m>B^3</m> (via the matrix <m>S</m>).</p>
+                <p>More generally, if <m>A</m> is similar to <m>B</m>, and <m>m</m> is a non-negative integer, then <m>A^m</m> is similar to <m>B^m</m>.  This can be proved carefully using induction (Proof Technique<nbsp/><xref ref="technique-I" acro="I" text="global"/>).</p>
             </solution>
         </exercise>
         <exercise number="T16" xml:id="exercise-SD-T16">
@@ -1160,15 +1152,14 @@
                 <p>Suppose that <m>A</m> and <m>B</m> are similar matrices, with <m>A</m> nonsingular.  Prove that <m>B</m> is nonsingular, and that <m>\inverse{A}</m> is similar to <m>\inverse{B}</m>.</p>
             </statement>
             <solution xml:id="solution-SD-T16" contributor="stevecanfield">
-                <p><m>A</m> being similar to <m>B</m> means that there exists an <m>S</m> such that <m>A=\inverse{S}BS</m>. So, <m>B=SA\inverse{S}</m> and because <m>S</m>, <m>A</m>, and <m>\inverse{S}</m> are nonsingular, by <xref ref="theorem-NPNF" acro="NPNF"/>, <m>B</m> is nonsingular.<md>
-                    <mrow>\inverse{A}
-                    &amp;= \inverse{\left(\inverse{S}BS\right)}&amp;&amp;
-                        <xref ref="definition-SIM" acro="SIM"/></mrow>
-                    <mrow>&amp;= \inverse{S}\inverse{B}\inverse{\left(\inverse{S}\right)}&amp;&amp;
-                        <xref ref="theorem-SS" acro="SS"/></mrow>
-                    <mrow>&amp;= \inverse{S}\inverse{B}S&amp;&amp;
-                        <xref ref="theorem-MIMI" acro="MIMI"/></mrow>
-                </md>.  Then by <xref ref="definition-SIM" acro="SIM"/>, <m>\inverse{A}</m> is similar to <m>\inverse{B}</m>.</p>
+                <p>There is a nonsingular matrix <m>S</m> such that <m>AS=SB</m>.  With our hypothesis that <m>A</m> is nonsingular, <xref ref="theorem-NPNF"/> says <m>AS</m> is nonsingular.  Then <m>SB</m> is nonsingular, and the <q>other half</q> of <xref ref="theorem-NPNF"/> says <m>B</m> is nonsingular.</p>
+                <p>With <m>B</m> nonsingular, <xref ref="theorem-NI"/> allows us to employ <m>\inverse{B}</m>.  Use <xref ref="theorem-SS"/> twice to see
+                <me>\inverse{B}\inverse{S}
+                    = \inverse{(SB)}
+                    = \inverse{(AS)}
+                    = \inverse{S}\inverse{A}
+                </me>
+                So by <xref ref="definition-SIM" acro="SIM"/>, <m>\inverse{A}</m> is similar to <m>\inverse{B}</m>.</p>
             </solution>
         </exercise>
         <exercise number="T17" xml:id="exercise-SD-T17">
@@ -1176,15 +1167,9 @@
                 <p>Suppose that <m>B</m> is a nonsingular matrix.  Prove that <m>AB</m> is similar to <m>BA</m>.</p>
             </statement>
             <solution xml:id="solution-SD-T17">
-                <p>The nonsingular (invertible) matrix <m>B</m> will provide the desired similarity transformation,<md>
-                    <mrow>\inverse{B}\left(BA\right)B
-                    &amp;=\left(\inverse{B}B\right)\left(AB\right)&amp;&amp;
-                        <xref ref="theorem-MMA" acro="MMA"/></mrow>
-                    <mrow>&amp;=I_nAB&amp;&amp;
-                        <xref ref="definition-MI" acro="MI"/></mrow>
-                    <mrow>&amp;=AB&amp;&amp;
-                        <xref ref="theorem-MMIM" acro="MMIM"/></mrow>
-                </md>.</p>
+                <p>The nonsingular matrix <m>B</m> will provide the desired similarity transformation,
+                <me>\left(BA\right)B = B\left(AB\right)</me>.
+                Done.  That was almost too easy!</p>
             </solution>
         </exercise>
     </exercises>
