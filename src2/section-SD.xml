@@ -183,37 +183,31 @@
                 <p>Suppose <m>A</m> and <m>B</m> are similar matrices.  Then <m>A</m> and <m>B</m> have the same eigenvalues, with identical algebraic and geometric multiplicities.</p>
             </statement>
             <proof>
-                <p>Suppose that <m>A</m> and <m>B</m> are similar via <m>S</m>, and let <m>\vect{x}\neq\zerovector</m> be an eigenvector of <m>B</m> for the eigenvalue <m>\lambda</m>.  Since <m>S</m> is nonsingular, <xref ref="definition-NM"/> implies that <m>S\vect{x}\neq\zerovector</m>.  Furthermore
+                <p>Suppose that <m>A</m> and <m>B</m> are similar via <m>S</m>, so <m>AS=SB</m>.  Let <m>\vect{x}\neq\zerovector</m> be an eigenvector of <m>B</m> for the eigenvalue <m>\lambda</m>.  Since <m>S</m> is nonsingular, <xref ref="definition-NM"/> implies that <m>S\vect{x}\neq\zerovector</m>.  Furthermore
                 <me>A\left(S\vect{x}\right) = \left(AS\right)\vect{x} = \left(SB\right)\vect{x} = S\left(B\vect{x}\right) = S\left(\lambda\vect{x}\right) = \lambda\left(S\vect{x}\right)</me>
                 demonstrating that <m>S\vect{x}</m> is an eigenvector of <m>B</m> for <m>\lambda</m>.  So every eigenvalue of <m>A</m> is an eigenvector of <m>B</m>.  Exchanging the roles of <m>A</m> and <m>B</m> (and employing the nonsingular matrix <m>\inverse{S}</m>) will show that every eigenvalue of <m>B</m> is an eigenvector of <m>A</m>.  So the eigenvalues of <m>A</m> and the eigenvalues of <m>B</m> are equal as sets (<xref ref="definition-SE"/>).</p>
                 <p>Suppose that <m>C=\set{\vectorlist{x}{k}}</m> is a basis for the eigenspace of <m>\lambda</m> for the matrix <m>B</m>.  Then each vector of the set <m>D=\set{S\vect{x}_1,\,S\vect{x}_2,\,S\vect{x}_3,\ldots,\,S\vect{x}_k}</m>  is an eigenvector of <m>A</m> for <m>\lambda</m>, by the same argment in the previous paragraph.  It is an exercise to show that because <m>S</m> is nonsingular, the linear independence of <m>C</m> implies the linear independence of <m>D</m>.  Thus, by <xref ref="theorem-G"/> we have
                 <me>\geomult{B}{\lambda}\leq\geomult{A}{\lambda}</me>.
                 Exchanging the roles of <m>A</m> and <m>B</m> gives the inequality in the other direction, implying equality of the geometric multiplicities.</p>
-                <p>To understand the algebraic multiplicities, it is necessary to consult the characteristic polynomial.
+                <p>To understand the algebraic multiplicities, it is necessary to consult the characteristic polynomials of the two matrices.  The initial expression here looks contrived, but its purpose will be clear shortly.
                 <md>
-                    <mrow>\charpoly{B}{x}&amp;=\detname{B-xI_n}&amp;&amp;
-                        <xref ref="definition-CP" acro="CP"/></mrow>
-                    <mrow>&amp;=\detname{\similar{A}{S}-xI_n}&amp;&amp;
-                        <xref ref="definition-SIM" acro="SIM"/></mrow>
-                    <mrow>&amp;=\detname{\similar{A}{S}-x\similar{I_n}{S}}&amp;&amp;
-                        <xref ref="theorem-MMIM" acro="MMIM"/></mrow>
-                    <mrow>&amp;=\detname{\similar{A}{S}-\inverse{S}xI_nS}&amp;&amp;
-                        <xref ref="theorem-MMSMM" acro="MMSMM"/></mrow>
-                    <mrow>&amp;=\detname{\similar{\left(A-xI_n\right)}{S}}&amp;&amp;
-                        <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
-                    <mrow>&amp;=\detname{\inverse{S}}\detname{A-xI_n}\detname{S}&amp;&amp;
-                        <xref ref="theorem-DRMM" acro="DRMM"/></mrow>
-                    <mrow>&amp;=\detname{\inverse{S}}\detname{S}\detname{A-xI_n}&amp;&amp;
-                        <xref ref="property-CMCN" acro="CMCN"/></mrow>
-                    <mrow>&amp;=\detname{\inverse{S}S}\detname{A-xI_n}&amp;&amp;
-                        <xref ref="theorem-DRMM" acro="DRMM"/></mrow>
-                    <mrow>&amp;=\detname{I_n}\detname{A-xI_n}&amp;&amp;
-                        <xref ref="definition-MI" acro="MI"/></mrow>
-                    <mrow>&amp;=1\detname{A-xI_n}&amp;&amp;
-                        <xref ref="definition-DM" acro="DM"/></mrow>
-                    <mrow>&amp;=\charpoly{A}{x}&amp;&amp;
-                        <xref ref="definition-CP" acro="CP"/></mrow>
-                </md>.  Since the characteristic polynomials of <m>A</m> and <m>B</m> are equal, they will factor identically, and the algebraic multiplicity of each eigenvalue will be the same for each matrix.</p>
+                    <mrow>&amp;\detname{S}\left(\charpoly{A}{x}-\charpoly{B}{x}\right)</mrow>
+                    <mrow>&amp;=\detname{S}\left(\detname{A-xI_n}-\detname{B-xI_n}\right)&amp;&amp;
+                          <xref ref="definition-CP"/></mrow>
+                    <mrow>&amp;=\detname{S}\detname{A-xI_n}-\detname{S}\detname{B-xI_n}&amp;&amp;
+                          <xref ref="property-DCN"/></mrow>
+                    <mrow>&amp;=\detname{A-xI_n}\detname{S}-\detname{S}\detname{B-xI_n}&amp;&amp;
+                          <xref ref="property-CMCN"/></mrow>
+                    <mrow>&amp;=\detname{\left(A-xI_n\right)S}-\detname{S\left(B-xI_n\right)}&amp;&amp;
+                          <xref ref="theorem-DRMM"/></mrow>
+                    <mrow>&amp;=\detname{AS-xS}-\detname{SB-xS}&amp;&amp;
+                          <xref ref="theorem-MMDAA"/></mrow>
+                    <mrow>&amp;=\detname{SB-xS}-\detname{SB-xS}&amp;&amp;
+                          <xref ref="definition-SIM"/></mrow>
+                    <mrow>&amp;=0&amp;&amp;
+                          <xref ref="property-AICN"/></mrow>
+                </md>Notice that the expressions in these equalities are scalar quantities, and nearly half of the theorems given as explanations are simply properties from <xref ref="theorem-PCNA"/>.  But the key step is the application of the multiplicative property of the determinant, <xref ref="theorem-DRMM"/>, along with a setup using <em>scalar</em> commutativity, <xref ref="property-CMCN"/>.</p>
+                <p>Because <m>S</m> is nonsingular, its determinant is nonzero (<xref ref="theorem-SMZD"/>), and by <xref ref="theorem-ZPZT"/>, we conclude that <m>\charpoly{A}{x}-\charpoly{B}{x}=0</m>.  Since the characteristic polynomials of <m>A</m> and <m>B</m> are equal, they will factor identically, and the algebraic multiplicity of each eigenvalue will be the same for each matrix.</p>
             </proof>
         </theorem>
         <p>Be very careful with this theorem.  It is tempting to think the converse is true, and argue that if two matrices have the same eigenvalues, then they are similar.  Not so, as the following example illustrates.  So do not think this theorem is a route to establishing that two matrices are similar.</p>
