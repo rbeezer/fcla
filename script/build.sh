@@ -27,6 +27,9 @@ declare MBUSER=${MBX}/user
 declare SOURCE=${SRC}/src2
 declare IMAGES=${SRC}/src2/images
 
+# Wherever we have "pip install"'ed Runestone to get various bits
+declare RUNEDIST=/home/rob/mathbook/local/runestone-virtual/rune/lib/python3.8/site-packages/runestone
+
 # convenience for rsync command, hopefully not OS dependent
 # First does not include  --delete  switch at end due to PDF in directory
 # Second makes *exact* mirror of build directory
@@ -128,9 +131,8 @@ function html_runestone_build {
     # svg and pdf for archive links
     # png is cover
     cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf ${IMAGES}/*.png ./images/
-    # SOME TOTALLY HARDCODED PATHS
-    cp /home/rob/mathbook/python-virtual/env/lib/python3.6/site-packages/runestone/dist/runestone.js ${SCRATCH}/html/_static
-    cp /home/rob/mathbook/python-virtual/env/lib/python3.6/site-packages/runestone/common/js/jquery.idle-timer.js ${SCRATCH}/html/_static
+    cp ${RUNEDIST}/dist/runestone.js ${SCRATCH}/html/_static
+    cp ${RUNEDIST}/common/js/jquery.idle-timer.js ${SCRATCH}/html/_static
     xsltproc -xinclude -stringparam publisher ../publisher/runestone.xml ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
     zip -r ${ZIPFILE} .
 }
