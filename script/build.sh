@@ -81,7 +81,7 @@ function pdf_build {
     cd ${SCRATCH}/pdf
     rm fcla.tex
     cp -a ${IMAGES}/* ./images/
-    xsltproc -o fcla.tex --xinclude ${MBUSER}/fcla-latex.xsl ${SOURCE}/fcla.xml
+    xsltproc -o fcla.tex --stringparam publisher ../publisher/early.xml --xinclude ${MBUSER}/fcla-latex.xsl ${SOURCE}/fcla.xml
     # twice?  Try xelatex, change filename here, and in view
     pdflatex fcla.tex
     pdflatex fcla.tex
