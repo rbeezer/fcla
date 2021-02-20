@@ -380,9 +380,30 @@
     <subsection xml:id="subsection-EE-CEE" acro="CEE">
         <title>Computing Eigenvalues and Eigenvectors</title>
         <p>Fortunately, we need not rely on the procedure of <xref ref="theorem-EMHE" acro="EMHE"/> each time we need an eigenvalue.  It is the determinant, and specifically <xref ref="theorem-SMZD" acro="SMZD"/>, that provides the main tool for computing eigenvalues.  It may already be clear from <xref ref="theorem-EMHE"/> and <xref ref="example-CASE"/> that for an eigenvalue <m>\lambda</m> the matrix <m>A-\lambda I</m> plays an important role.  Here is the formal version as a theorem.</p>
-        <!-- Theorem ESM: Eigenvalues and Singular Matrices -->
-        <custom ref="eigenvalues-singular-matrix-theorem"/>
-        <!--                                            -->
+        <theorem xml:id="theorem-ESM" acro="ESM">
+            <idx>
+                <h>eigenvalue</h>
+                <h>singular matrix</h>
+            </idx>
+            <title>Eigenvalues and Singular Matrices</title>
+            <statement>
+                <p>Suppose <m>A</m> is a square matrix of size <m>n</m>.  Then <m>\lambda</m> is an eigenvalue of <m>A</m> if and only if <m>A-\lambda I_n</m> is a singular matrix.</p>
+            </statement>
+            <proof>
+                <p>Both directions of the proof can be accomplished with the following chain of equivalences,<md>
+                    <mrow>A\vect{x}=\lambda\vect{x} &amp;\iff A\vect{x}=\lambda I_n\vect{x}&amp;&amp;<xref ref="theorem-MMIM"/></mrow>
+                    <mrow>&amp;\iff A\vect{x}-\lambda I_n\vect{x}=\zerovector&amp;&amp;<xref ref="property-AIM"/></mrow>
+                    <mrow>&amp;\iff \left(A-\lambda I_n\right)\vect{x}=\zerovector&amp;&amp;<xref ref="theorem-MMDAA"/></mrow>
+                    <mrow>&amp;\iff \vect{x}\text{ is a solution to }\homosystem{A-\lambda I_n}&amp;&amp;<xref ref="theorem-SLEMM"/></mrow>
+                </md>.</p>
+                <case direction="forward">
+                    <p>Suppose <m>\lambda</m> is an eigenvalue of <m>A</m> with eigenvector <m>\vect{x}\neq\zerovector</m>.  Then the equivalences above and <xref ref="definition-NM"/> show that <m>A-\lambda I_n</m> is singular.</p>
+                </case>
+                <case direction="backward">
+                    <p>Suppose that <m>A-\lambda I_n</m> is singular.  Then <xref ref="definition-NM"/> guarantees the existence of <m>\vect{x}</m>, a nonzero solution to <m>\homosystem{A-\lambda I_n}</m>.  Then the equivalences above show that <m>\vect{x}</m> is an eigenvector of <m>A</m> with eigenvalue <m>\lambda</m>.</p>
+                </case>
+            </proof>
+        </theorem>
         <p>So, for an eigenvalue <m>\lambda</m> and associated eigenvector <m>\vect{x}\neq\zerovector</m>, the vector <m>\vect{x}</m> will be a nonzero element of the null space of <m>A-\lambda I_n</m>, while the matrix <m>A-\lambda I_n</m> will be singular and therefore have zero determinant.  These ideas are made precise in <xref ref="theorem-EMRCP" acro="EMRCP"/> and <xref ref="theorem-EMNS" acro="EMNS"/>, but for now this brief discussion should suffice as motivation for the following definition and example.</p>
         <definition xml:id="definition-CP" acro="CP">
             <title>Characteristic Polynomial</title>
@@ -471,17 +492,71 @@
             \end{bmatrix}</me>to be  <m>\charpoly{F}{x}=-(x-3)(x+1)^2</m>.  Factored, we can find all of its roots easily, they are <m>x=3</m> and <m>x=-1</m>.  By <xref ref="theorem-EMRCP" acro="EMRCP"/>, <m>\lambda=3</m> and <m>\lambda=-1</m> are both eigenvalues of <m>F</m>, and these are the only eigenvalues of <m>F</m>.  We have found them all.</p>
         </example>
         <p>Let us now turn our attention to the computation of eigenvectors.</p>
-        <!-- Definition EM: Eigenspace of a Matrix -->
-        <custom ref="eigenspace-definition"/>
-        <!--                                    -->
+        <definition xml:id="definition-EM" acro="EM">
+            <title>Eigenspace of a Matrix</title>
+            <idx>eigenspace</idx>
+            <statement>
+                <p>Suppose that <m>A</m> is a square matrix and <m>\lambda</m> is an eigenvalue of <m>A</m>.  Then the <term>eigenspace</term> of <m>A</m> for <m>\lambda</m>, <m>\eigenspace{A}{\lambda}</m>, is the set of all the eigenvectors of <m>A</m> for <m>\lambda</m>, together with the inclusion of the zero vector.</p>
+            </statement>
+        </definition>
         <p><xref ref="example-SEE" acro="SEE"/> hinted that the set of eigenvectors for a single eigenvalue might have some closure properties, and with the addition of the one eigenvector that is never an eigenvector, <m>\zerovector</m>, we indeed get a whole subspace.</p>
-        <!-- Theorem EMS: Eigenspace for a Matrix is a Subspace -->
-        <custom ref="eigenspace-is-subspace-theorem"/>
-        <!--                                                -->
+        <theorem xml:id="theorem-EMS" acro="EMS">
+            <idx>
+                <h>eigenspace</h>
+                <h>subspace</h>
+            </idx>
+            <title>Eigenspace for a Matrix is a Subspace</title>
+            <statement>
+                <p>Suppose  <m>A</m> is a square matrix of size <m>n</m> and <m>\lambda</m> is an eigenvalue of <m>A</m>.  Then the eigenspace <m>\eigenspace{A}{\lambda}</m> is a subspace of the vector space <m>\complex{n}</m>.</p>
+            </statement>
+            <proof>
+                <p>We will check the three conditions of <xref ref="theorem-TSS" acro="TSS"/>.  First, <xref ref="definition-EM" acro="EM"/> explicitly includes the zero vector in <m>\eigenspace{A}{\lambda}</m>, so the set is nonempty.</p>
+                <p>Suppose that <m>\vect{x},\,\vect{y}\in\eigenspace{A}{\lambda}</m>, that is, <m>\vect{x}</m> and <m>\vect{y}</m> are two eigenvectors of <m>A</m> for <m>\lambda</m>.  Then<md>
+                    <mrow>A\left(\vect{x}+\vect{y}\right)&amp;=A\vect{x}+A\vect{y}&amp;&amp;
+                        <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
+                    <mrow>&amp;=\lambda\vect{x}+\lambda\vect{y}&amp;&amp;
+                        <xref ref="definition-EEM" acro="EEM"/></mrow>
+                    <mrow>&amp;=\lambda\left(\vect{x}+\vect{y}\right)&amp;&amp;
+                        <xref ref="property-DVAC" acro="DVAC"/></mrow>
+                </md>.</p>
+                <p>So either <m>\vect{x}+\vect{y}=\zerovector</m>,  or <m>\vect{x}+\vect{y}</m> is an eigenvector of <m>A</m> for <m>\lambda</m> (<xref ref="definition-EEM" acro="EEM"/>). So, in either event, <m>\vect{x}+\vect{y}\in\eigenspace{A}{\lambda}</m>, and we have additive closure.</p>
+                <p>Suppose that <m>\alpha\in\complexes</m>, and that <m>\vect{x}\in\eigenspace{A}{\lambda}</m>, that is, <m>\vect{x}</m> is an eigenvector of <m>A</m> for <m>\lambda</m>.  Then<md>
+                    <mrow>A\left(\alpha\vect{x}\right)&amp;=\alpha\left(A\vect{x}\right)&amp;&amp;
+                        <xref ref="theorem-MMSMM" acro="MMSMM"/></mrow>
+                    <mrow>&amp;=\alpha\lambda\vect{x}&amp;&amp;
+                        <xref ref="definition-EEM" acro="EEM"/></mrow>
+                    <mrow>&amp;=\lambda\left(\alpha\vect{x}\right)&amp;&amp;
+                        <xref ref="property-SMAC" acro="SMAC"/></mrow>
+                </md>.</p>
+                <p>So either <m>\alpha\vect{x}=\zerovector</m>, or <m>\alpha\vect{x}</m> is an eigenvector of <m>A</m> for <m>\lambda</m> (<xref ref="definition-EEM" acro="EEM"/>).  So, in either event,  <m>\alpha\vect{x}\in\eigenspace{A}{\lambda}</m>, and we have scalar closure.</p>
+                <p>With the three conditions of <xref ref="theorem-TSS" acro="TSS"/> met, we know <m>\eigenspace{A}{\lambda}</m> is a subspace.</p>
+            </proof>
+        </theorem>
         <p><xref ref="theorem-EMS" acro="EMS"/> tells us that an eigenspace is a subspace (and hence a vector space in its own right).  Our next theorem tells us how to quickly construct this subspace.</p>
-        <!-- Theorem EMNS: Eigenspace of a Matrix is a Null Space -->
-        <custom ref="eigenspace-is-nullspace-theorem"/>
-        <!--                                                -->
+        <theorem xml:id="theorem-EMNS" acro="EMNS">
+            <idx>
+                <h>eigenspace</h>
+                <h> as null space</h>
+            </idx>
+            <title>Eigenspace of a Matrix is a Null Space</title>
+            <statement>
+                <p>Suppose  <m>A</m> is a square matrix of size <m>n</m> and <m>\lambda</m> is an eigenvalue of <m>A</m>.  Then<me>\eigenspace{A}{\lambda}=\nsp{A-\lambda I_n}</me>.</p>
+            </statement>
+            <proof>
+                <p>The conclusion of this theorem is an equality of sets, so normally we would follow the advice of <xref ref="definition-SE" acro="SE"/>.  However, in this case we can construct a sequence of equivalences which will together provide the two subset inclusions we need.  First, notice that <m>\zerovector\in\eigenspace{A}{\lambda}</m> by <xref ref="definition-EM" acro="EM"/> and <m>\zerovector\in\nsp{A-\lambda I_n}</m> by <xref ref="theorem-HSC" acro="HSC"/>.  Now consider any nonzero vector <m>\vect{x}\in\complex{n}</m>,<md>
+                    <mrow>\vect{x}\in\eigenspace{A}{\lambda}&amp;\iff A\vect{x}=\lambda\vect{x}&amp;&amp;
+                        <xref ref="definition-EM" acro="EM"/></mrow>
+                    <mrow>&amp;\iff A\vect{x}-\lambda\vect{x}=\zerovector&amp;&amp;
+                        <xref ref="property-AIC" acro="AIC"/></mrow>
+                    <mrow>&amp;\iff A\vect{x}-\lambda I_n\vect{x}=\zerovector&amp;&amp;
+                        <xref ref="theorem-MMIM" acro="MMIM"/></mrow>
+                    <mrow>&amp;\iff\left(A-\lambda I_n\right)\vect{x}=\zerovector&amp;&amp;
+                        <xref ref="theorem-MMDAA" acro="MMDAA"/></mrow>
+                    <mrow>&amp;\iff\vect{x}\in\nsp{A-\lambda I_n}&amp;&amp;
+                        <xref ref="definition-NSM" acro="NSM"/></mrow>
+                </md>.</p>
+            </proof>
+        </theorem>
         <p>You might notice the close parallels (and differences) between the proofs of <xref ref="theorem-EMRCP" acro="EMRCP"/> and <xref ref="theorem-EMNS" acro="EMNS"/>.  Since <xref ref="theorem-EMNS" acro="EMNS"/> describes the set of all the eigenvectors of <m>A</m> as a null space we can use techniques such as <xref ref="theorem-BNS" acro="BNS"/> to provide concise descriptions of eigenspaces.  <xref ref="theorem-EMNS" acro="EMNS"/> also provides a trivial proof for <xref ref="theorem-EMS" acro="EMS"/>.</p>
         <example xml:id="example-ESMS3" acro="ESMS3">
             <idx>
@@ -573,9 +648,25 @@
             </notation>
         </definition>
         <p>Since an eigenvalue <m>\lambda</m> is a root of the characteristic polynomial, there is always a factor of <m>(x-\lambda)</m>, and the algebraic multiplicity is just the power of this factor in a factorization of <m>\charpoly{A}{x}</m>.  So in particular, <m>\algmult{A}{\lambda}\geq 1</m>.  Compare the definition of algebraic multiplicity with the next definition.</p>
-        <!-- Definition GME: Geometric Multiplicity of an Eigenvalue -->
-        <custom ref="geometric-multiplicity-definition"/>
-        <!--                                                     -->
+        <definition xml:id="definition-GME" acro="GME">
+            <title>Geometric Multiplicity of an Eigenvalue</title>
+            <idx>
+                <h>eigenvalue</h>
+                <h>geometric multiplicity</h>
+            </idx>
+            <statement>
+                <p>Suppose that <m>A</m> is a square matrix and <m>\lambda</m> is an eigenvalue of <m>A</m>.  Then the <term>geometric multiplicity</term> of <m>\lambda</m>, <m>\geomult{A}{\lambda}</m>, is the dimension of the eigenspace <m>\eigenspace{A}{\lambda}</m>.</p>
+            </statement>
+            <notation xml:id="notation-GME" acro="GME">
+                <idx>
+                    <h>eigenvalue</h>
+                    <h>geometric multiplicity</h>
+                    <h>notation</h>
+                </idx>
+                <description>Geometric Multiplicity of an Eigenvalue</description>
+                <usage>\geomult{A}{\lambda}</usage>
+            </notation>
+        </definition>
         <p>Every eigenvalue must have at least one eigenvector, so the associated eigenspace cannot be trivial, and so <m>\geomult{A}{\lambda}\geq 1</m>.</p>
         <example xml:id="example-EMMS4" acro="EMMS4">
             <idx>
