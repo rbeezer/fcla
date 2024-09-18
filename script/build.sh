@@ -59,7 +59,6 @@ function setup {
 
     cp ${SRC}/xsl/fcla-common.xsl  ${MBUSER}
     cp ${SRC}/xsl/fcla-html.xsl    ${MBUSER}
-    cp ${SRC}/xsl/fcla-aim.xsl    ${MBUSER}
     cp ${SRC}/xsl/fcla-latex.xsl   ${MBUSER}
     cp ${SRC}/xsl/fcla-pod.xsl   ${MBUSER}
 }
@@ -135,34 +134,6 @@ function html_runestone_build {
     cp ${RUNEDIST}/common/js/jquery.idle-timer.js ${SCRATCH}/html/_static
     xsltproc -xinclude -stringparam publisher ../publisher/runestone.xml ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
     zip -r ${ZIPFILE} .
-}
-
-# Subroutine to build the AIM HTML Version
-# Right Google ID via sed, two-level ToC via toc.level stringparam
-# EG: http://mathbook.pugetsound.edu/beta/fcla-html-2017-02-19.zip
-function aim_html_build {
-    echo
-    echo "BUILD: Building AIM ZIPPED HTML Version :BUILD"
-    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    declare ZIPFILE=fcla-html-${DATE}.zip
-    install -d ${SCRATCH}/fcla-html ${SCRATCH}/fcla-html/images ${SCRATCH}/fcla-html/knowl
-    cd ${SCRATCH}/fcla-html
-    # rm *.html
-    # rm -rf knowl/* images/*
-    cp -a ${SOURCE}/*.xml .
-    # move over the publisher file, too, with all source XML
-    cp -a ${SOURCE}/../publisher/AIM-test-sites.xml .
-    # svg and pdf for archive links
-    # png is cover
-    cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf  ${IMAGES}/*.png ./images/
-    # Sage/computation temporarily unknowled
-    xsltproc -xinclude -stringparam publisher AIM-test-sites.xml --stringparam toc.level 2 -stringparam html.knowl.remark no ${MBUSER}/fcla-html.xsl fcla.xml
-    # clean-up, pop up a level, make zip
-    rm *.xml
-    cd ${SCRATCH}
-    zip -r ${ZIPFILE} fcla-html/
-    ${RSYNCDELETE} ${ZIPFILE} utmost@utmost.aimath.org:/home/utmost/www/pretextbook.org/htdocs/beta
-    echo "Dropped in http://pretextbook.org/beta/"${ZIPFILE}
 }
 
 function doctest {
@@ -242,10 +213,6 @@ case "$1" in
     setup
     html_runestone_build
     ;;
-    "aimzip")
-    setup
-    aim_html_build
-    ;;
     "doctest")
     setup
     doctest
@@ -267,6 +234,6 @@ case "$1" in
     view_html
     ;;
     *)
-    echo "Supply an option: xmlcheck|pdf|html|runestone|aimzip|doctest|imagegen|website <username>|viewpdf|viewhtml"
+    echo "Supply an option: xmlcheck|pdf|html|runestone|doctest|imagegen|website <username>|viewpdf|viewhtml"
     ;;
 esac
