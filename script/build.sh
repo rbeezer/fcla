@@ -25,7 +25,9 @@ declare MBXSL=${MBX}/xsl
 declare MBXSCR=${MBX}/script
 declare MBUSER=${MBX}/user
 declare SOURCE=${SRC}/src2
+declare PUBLISH=${SRC}/publisher
 declare IMAGES=${SRC}/src2/images
+declare PRETEXT=${MBX}/pretext/pretext
 
 # Wherever we have "pip install"'ed Runestone to get various bits
 declare RUNEDIST=/home/rob/mathbook/local/runestone-virtual/rune/lib/python3.8/site-packages/runestone
@@ -76,14 +78,9 @@ function pdf_build {
     echo
     echo "BUILD: Building PDF Version :BUILD"
     echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    install -d ${SCRATCH}/pdf ${SCRATCH}/pdf/images
+    install -d ${SCRATCH}/pdf
     cd ${SCRATCH}/pdf
-    rm fcla.tex
-    cp -a ${IMAGES}/* ./images/
-    xsltproc -o fcla.tex --stringparam publisher ../publisher/early.xml --xinclude ${MBUSER}/fcla-latex.xsl ${SOURCE}/fcla.xml
-    # twice?  Try xelatex, change filename here, and in view
-    pdflatex fcla.tex
-    pdflatex fcla.tex
+    ${PRETEXT} -vv -d ${SCRATCH}/pdf -c all -f pdf -p ${PUBLISH}/pdf.xml -X ${MBUSER}/fcla-latex.xsl ${SOURCE}/fcla.xml
 }
 
 # Subroutine to build the print-on-demand Version
@@ -106,14 +103,8 @@ function html_build {
     echo
     echo "BUILD: Building HTML Version :BUILD"
     echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    install -d ${SCRATCH}/html ${SCRATCH}/html/images ${SCRATCH}/html/knowl
-    cd ${SCRATCH}/html
-    # rm *.html
-    # rm -rf knowl/* images/*
-    # svg and pdf for archive links
-    # png is cover
-    cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf ${IMAGES}/*.png ./images/
-    xsltproc -xinclude -stringparam publisher ../publisher/public.xml ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
+    install -d ${SCRATCH}/html
+    ${PRETEXT} -vv -d ${SCRATCH}/html -c all -f html -p ${PUBLISH}/public.xml -X ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
 }
 
 # Subroutine to build a Runestone Version as a zip file
