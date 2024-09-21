@@ -29,9 +29,6 @@ declare PUBLISH=${SRC}/publisher
 declare IMAGES=${SRC}/src2/images
 declare PRETEXT=${MBX}/pretext/pretext
 
-# Wherever we have "pip install"'ed Runestone to get various bits
-declare RUNEDIST=/home/rob/mathbook/local/runestone-virtual/rune/lib/python3.8/site-packages/runestone
-
 # convenience for rsync command, hopefully not OS dependent
 # First does not include  --delete  switch at end due to PDF in directory
 # Second makes *exact* mirror of build directory
@@ -107,24 +104,17 @@ function html_build {
     ${PRETEXT} -vv -d ${SCRATCH}/html -c all -f html -p ${PUBLISH}/public.xml -X ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
 }
 
-# Subroutine to build a Runestone Version as a zip file
-# Identical to HTML: w/ publisher, drops a zip file
+# Subroutine to build a Runestone Version
+# Identical to HTML: but w/ Runestone publisher file
+# and stock HTML extra XSL (not CLI-ish one).
+# Sort of pointless, since output is only useful on a Runestone
+# server, but still useful for local testing of source and build
 function html_runestone_build {
     echo
     echo "BUILD: Building Runestone Version :BUILD"
     echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    declare ZIPFILE=../FCLA-runestone-${DATE}.zip
-    install -d ${SCRATCH}/html ${SCRATCH}/html/images ${SCRATCH}/html/knowl ${SCRATCH}/html/_static
-    cd ${SCRATCH}/html
-    # rm *.html
-    # rm -rf knowl/* images/*
-    # svg and pdf for archive links
-    # png is cover
-    cp -a ${IMAGES}/*.svg ${IMAGES}/*.pdf ${IMAGES}/*.png ./images/
-    cp ${RUNEDIST}/dist/runestone.js ${SCRATCH}/html/_static
-    cp ${RUNEDIST}/common/js/jquery.idle-timer.js ${SCRATCH}/html/_static
-    xsltproc -xinclude -stringparam publisher ../publisher/runestone.xml ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
-    zip -r ${ZIPFILE} .
+    install -d ${SCRATCH}/runestone
+    ${PRETEXT} -vv -d ${SCRATCH}/runestone -c all -f html -p ${PUBLISH}/runestone.xml -X ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
 }
 
 function doctest {
