@@ -8,7 +8,11 @@
 <!-- See the file COPYING for copying conditions. -->
 
 <!-- FCLA customizations for HTML runs -->
-<!-- 2024-10-04: coordinate with temporary Runestone-specific version -->
+<!-- 2024-10-04: this is Runestone-specific, and only -->
+<!-- necessary because the CLI wants to locate extra  -->
+<!-- XSL in a different location ("core").  Once this -->
+<!-- changes (soon?) this particular extra XSL can be -->
+<!-- removed.  Coordinate with HTML-only version.     -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
