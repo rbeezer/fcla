@@ -56,15 +56,31 @@
     <xsl:apply-templates select="." mode="get-short-acro" />
     <xsl:text>: </xsl:text>
     <xsl:apply-imports/>
-</xsl:template>    
+</xsl:template>
 
-<!-- 2020-01-13: verbatim from pretext-latex, -->
-<!-- EXCEPT automatic numbering is killed, ** -->
-<!-- Removed or edited entities               -->
 <xsl:template match="definition|theorem|principle|computation|example" mode="environment">
+    <!-- Names of various pieces normally use the      -->
+    <!-- element name, but "exercise" does triple duty -->
+
+    <!-- RAB: simplified, no inline exercise -->
+
     <xsl:variable name="environment-name">
-            <xsl:value-of select="local-name(.)"/>
+        <xsl:value-of select="local-name(.)"/>
     </xsl:variable>
+    <!-- projects and inline exercises sometimes run on their own counters -->
+    <!-- <xsl:variable name="counter"> -->
+        <!-- <xsl:choose> -->
+            <!-- <xsl:when test="(&PROJECT-FILTER;) and $b-number-project-distinct"> -->
+                <!-- <xsl:text>project-distinct</xsl:text> -->
+            <!-- </xsl:when> -->
+            <!-- <xsl:when test="self::exercise and boolean(&INLINE-EXERCISE-FILTER;) and $b-number-exercise-distinct"> -->
+                <!-- <xsl:text>exercise-distinct</xsl:text> -->
+            <!-- </xsl:when> -->
+            <!-- <xsl:otherwise> -->
+                <!-- <xsl:text>block</xsl:text> -->
+            <!-- </xsl:otherwise> -->
+        <!-- </xsl:choose> -->
+    <!-- </xsl:variable> -->
     <xsl:text>%% </xsl:text>
     <!-- per-environment style -->
     <xsl:value-of select="$environment-name"/>
@@ -76,38 +92,54 @@
     <xsl:text>} }&#xa;</xsl:text>
     <!-- create and configure the environment/tcolorbox -->
     <xsl:text>\newtcolorbox</xsl:text>
+    <!-- run on a common, default, faux counter -->
+    <!-- <xsl:text>[</xsl:text> -->
+    <!-- <xsl:text>use counter from=</xsl:text> -->
+    <!-- <xsl:value-of select="$counter"/> -->
+    <!-- <xsl:text>]</xsl:text> -->
+    <!-- environment's tcolorbox name, pair -->
+    <!-- with actual constructions in body  -->
     <xsl:text>{</xsl:text>
     <xsl:value-of select="$environment-name"/>
     <xsl:text>}</xsl:text>
     <!-- number of arguments -->
     <xsl:choose>
         <xsl:when test="self::theorem or self::principle">
-            <xsl:text>[3]</xsl:text>
+            <xsl:text>[4]</xsl:text>
         </xsl:when>
         <xsl:otherwise>
-            <xsl:text>[2]</xsl:text>
+            <xsl:text>[3]</xsl:text>
         </xsl:otherwise>
     </xsl:choose>
     <!-- begin: options -->
     <xsl:text>{</xsl:text>
     <!-- begin: title construction -->
-    <xsl:text>title={{</xsl:text>
-    <!-- Title has no extra spacing needs -->
-    <!-- Theorem creator is in #2, ignored -->
-    <xsl:text>#1</xsl:text>
-    <xsl:text>}}, </xsl:text>
-    <!-- end: title construction -->
-    <!-- label in argument 2 or argument 3 -->
+    <!-- <xsl:text>title={{#1~\thetcbcounter</xsl:text> -->
+    <xsl:text>title={{#1</xsl:text>
     <xsl:choose>
         <xsl:when test="self::theorem or self::principle">
-            <xsl:text>phantomlabel={#3}, </xsl:text>
+            <!-- first space of double space -->
+            <xsl:text>\notblank{#2#3}{\space}{}</xsl:text>
+            <xsl:text>\notblank{#2}{\space#2}{}</xsl:text>
+            <xsl:text>\notblank{#3}{\space(#3)}{}</xsl:text>
         </xsl:when>
         <xsl:otherwise>
-            <xsl:text>phantomlabel={#2}, </xsl:text>
+            <xsl:text>\notblank{#2}{\space\space#2}{}</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>}}, </xsl:text>
+    <!-- end: title construction -->
+    <!-- label in argument 3 or argument 4 -->
+    <xsl:choose>
+        <xsl:when test="self::theorem or self::principle">
+            <xsl:text>phantomlabel={#4}, </xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:text>phantomlabel={#3}, </xsl:text>
         </xsl:otherwise>
     </xsl:choose>
     <!-- always breakable -->
-    <xsl:text>breakable, parbox=false, after={\par}, </xsl:text>
+    <xsl:text>breakable, after={\par}, </xsl:text>
     <!-- italic body (this should be set elsewhere) -->
     <xsl:if test="self::theorem or self::principle">
         <xsl:text>fontupper=\itshape, </xsl:text>
@@ -171,9 +203,9 @@
 <!-- Bold "Figure~" comes from environment/style         -->
 <!-- Caption here adds bold acronym, then "real" caption -->
 <xsl:template match="figure" mode="caption-full">
-    <xsl:text>\textbf{</xsl:text>
+    <!-- <xsl:text>\textbf{</xsl:text> -->
     <xsl:apply-templates select="." mode="get-short-acro" />
-    <xsl:text>}</xsl:text>
+    <!-- <xsl:text>}</xsl:text> -->
     <xsl:text>~</xsl:text>
     <xsl:apply-imports/>
 </xsl:template>
