@@ -117,6 +117,16 @@ function html_runestone_build {
     ${PRETEXT} -vv -d ${SCRATCH}/runestone -c all -f html -p ${PUBLISH}/runestone.xml -X ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
 }
 
+# Subroutine to build the HTML Version
+function proteus_local_build {
+    echo
+    echo "BUILD: Building local PROTEUS Version :BUILD"
+    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    install -d ${SCRATCH}/html
+    ${PRETEXT} -vv -d ${SCRATCH}/html -c all -f html -p ${PUBLISH}/proteus-local.xml -X ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
+}
+
+
 function doctest {
     echo
     echo "BUILD: Creating Sage Doctests :BUILD"
@@ -194,6 +204,10 @@ case "$1" in
     setup
     html_runestone_build
     ;;
+    "proteus-local")
+    setup
+    proteus_local_build
+    ;;
     "doctest")
     setup
     doctest
@@ -215,6 +229,6 @@ case "$1" in
     view_html
     ;;
     *)
-    echo "Supply an option: xmlcheck|pdf|html|runestone|doctest|imagegen|website <username>|viewpdf|viewhtml"
+    echo "Supply an option: xmlcheck|pdf|html|runestone|proteus-local|doctest|imagegen|website <username>|viewpdf|viewhtml"
     ;;
 esac
