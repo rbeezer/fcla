@@ -123,7 +123,7 @@ function proteus_local_build {
     echo "BUILD: Building local PROTEUS Version :BUILD"
     echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     install -d ${SCRATCH}/html
-    ${PRETEXT} -vv -d ${SCRATCH}/html -c all -f html -p ${PUBLISH}/proteus-local.xml -X ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
+    ${PRETEXT} -vv -x author.deprecations.all yes -d ${SCRATCH}/html -c all -f html -p ${PUBLISH}/proteus-local.xml -X ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
 }
 
 
