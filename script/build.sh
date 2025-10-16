@@ -118,12 +118,23 @@ function html_runestone_build {
 }
 
 # Subroutine to build the HTML Version
+# For PROTEUS study use with classes
 function proteus_local_build {
     echo
     echo "BUILD: Building local PROTEUS Version :BUILD"
     echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     install -d ${SCRATCH}/html
     ${PRETEXT} -vv -x author.deprecations.all yes -d ${SCRATCH}/html -c all -f html -p ${PUBLISH}/proteus-local.xml -X ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
+}
+
+# Subroutine to build the HTML Version
+# For PROTEUS problem development
+function proteus_playground_build {
+    echo
+    echo "BUILD: Building playground PROTEUS Version :BUILD"
+    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    install -d ${SCRATCH}/html
+    ${PRETEXT} -vv -x author.deprecations.all yes -d ${SCRATCH}/html -c all -f html -p ${PUBLISH}/proteus-playground.xml -X ${MBUSER}/fcla-html.xsl ${SOURCE}/fcla.xml
 }
 
 
@@ -208,6 +219,10 @@ case "$1" in
     setup
     proteus_local_build
     ;;
+    "proteus-playground")
+    setup
+    proteus_playground_build
+    ;;
     "doctest")
     setup
     doctest
@@ -229,6 +244,6 @@ case "$1" in
     view_html
     ;;
     *)
-    echo "Supply an option: xmlcheck|pdf|html|runestone|proteus-local|doctest|imagegen|website <username>|viewpdf|viewhtml"
+    echo "Supply an option: xmlcheck|pdf|html|runestone|proteus-local|proteus-playground|doctest|imagegen|website <username>|viewpdf|viewhtml"
     ;;
 esac
