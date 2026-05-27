@@ -1122,6 +1122,45 @@
             </statement>
             <response/>
         </exercise>
+        <!-- Issue #181 -->
+        <exercise component="proteus-playground" xml:id="reading-LC-4" label="reading-LC-4-v1">
+            <title>Algorithm for Writing a Linear Combination</title>
+            <statement>
+                <p>Suppose that we wish to find a linear combination of the vectors in the set <me>S=\set{\colvector{1\\3\\-1},\,\colvector{2\\0\\4},\,\colvector{-1\\3\\-5}}</me> equal to the vector <m>\vect{b}=\colvector{1\\-9\\11}</m>.  Put the correct steps in order.</p>
+            </statement>
+            <blocks>
+                <block order="5" correct="yes">
+                    <p>By <xref ref="definition-LCCV" acro="LCCV"/>, we can express the vector <m>\vect{b}</m> as a linear combination of the vectors in <m>S</m> if there are scalars <m>\alpha_1</m>, <m>\alpha_2</m>, <m>\alpha_3</m> such that <me>\alpha_1\colvector{1\\3\\-1}+\alpha_2\colvector{2\\0\\4}+\alpha_3\colvector{-1\\3\\-5}=\colvector{1\\-9\\11}.</me></p>
+                </block>
+                <block order="2" correct="yes">
+                    <p>By <xref ref="definition-CVSM" acro="CVSM"/> we can rewrite the vector equation as <me>\colvector{\alpha_1\\3\alpha_1\\-\alpha_1}+\colvector{2\alpha_2\\0\\4\alpha_2}+\colvector{-\alpha_3\\3\alpha_3\\-5\alpha_3}=\colvector{1\\-9\\11}.</me></p>
+                </block>
+                <block order="4" correct="yes">
+                    <p>By <xref ref="definition-CVA" acro="CVA"/>, we can rewrite the vector equation in the previous step as <me>\colvector{\alpha_1+2\alpha_2-\alpha_3\\3\alpha_1+3\alpha_3\\-\alpha_1+4\alpha_2-5\alpha_3}=\colvector{1\\-9\\11}.</me></p>
+                </block>
+                <block order="3" correct="yes">
+                    <p>By <xref ref="definition-CVE" acro="CVE"/>, we can rewrite the vector equation in the previous step as the system of equations <md>
+                        <mrow>\alpha_1+2\alpha_2-\alpha_3&amp;=1</mrow>
+                        <mrow>3\alpha_1+3\alpha_3&amp;=-9</mrow>
+                        <mrow>-\alpha_1+4\alpha_2-5\alpha_3&amp;=11</mrow>
+                    </md>.</p>
+                </block>
+                <block order="6" correct="yes">
+                    <p>To determine whether the linear system of equations has a solution, we find the reduced row-echelon form of its augmented matrix <me>\begin{bmatrix}
+                    1&amp;2&amp;-1&amp;1\\
+                    3&amp;0&amp;3&amp;-9\\
+                    -1&amp;4&amp;-5&amp;11
+                    \end{bmatrix}\rref\begin{bmatrix}
+                    \leading{1}&amp;0&amp;1&amp;-3\\
+                    0&amp;\leading{1}&amp;-1&amp;2\\
+                    0&amp;0&amp;0&amp;0
+                    \end{bmatrix}.</me></p>
+                </block>
+                <block order="1" correct="yes">
+                    <p>By <xref ref="theorem-SLSLC" acro="SLSLC"/>, one solution <m>\alpha_1=-3</m>, <m>\alpha_2=2</m>, <m>\alpha_3=0</m> gives the linear combination <me>-3\colvector{1\\3\\-1}+2\colvector{2\\0\\4}+0\colvector{-1\\3\\-5}=\colvector{1\\-9\\11}.</me></p>
+                </block>
+            </blocks>
+        </exercise>
     </reading-questions>
     <exercises xml:id="exercises-LC">
         <title>Exercises</title>
